@@ -1,0 +1,18 @@
+﻿@* Copyright © 2015 Dmitry Sikorsky. All rights reserved. *@
+@* Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information. *@
+@model Platformus.Content.Backend.ViewModels.Classes.CreateOrEditViewModel
+@{
+  this.ViewBag.ActiveMenuItem = "classes";
+}
+<h1>@(this.Model.Id == null ? "Create" : "Edit") Class</h1>
+<form method="post">
+  <single-line-text-editor asp-for="Name" />
+  <single-line-text-editor asp-for="PluralizedName" />
+  <check-box asp-for="IsStandalone" />
+  <single-line-text-editor asp-for="ViewName" />
+  <div class="buttons">
+    <button class="positive" type="submit">Save</button>
+    <a class="button neutral" href="@this.Context.Request.CombineUrl("/backend/classes")">Cancel</a>
+    <div class="clear"></div>
+  </div>
+</form>

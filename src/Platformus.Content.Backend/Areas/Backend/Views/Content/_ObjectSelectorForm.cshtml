@@ -1,0 +1,38 @@
+﻿@* Copyright © 2015 Dmitry Sikorsky. All rights reserved. *@
+@* Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information. *@
+@model Platformus.Content.Backend.ViewModels.Content.ObjectSelectorFormViewModel
+<div class="title">
+  @Model.Class.PluralizedName Object Selector
+</div>
+<div class="grid files">
+  <table cellpadding="0" cellspacing="0">
+    <tr>
+      @if (this.Model.Class.IsStandalone)
+      {
+        <th>URL</th>
+      }
+      @foreach (var gridColumn in this.Model.GridColumns)
+      {
+        <th>@gridColumn.Name</th>
+      }
+    </tr>
+    @foreach (var _object in this.Model.Objects)
+    {
+      <tr class="@(this.Model.ObjectIds.Contains(_object.Id) ? "selected" : null)" data-object-id="@_object.Id">
+        @if (_object.Class.IsStandalone)
+        {
+          <td>@_object.Url</td>
+        }
+        @foreach (var property in _object.Properties)
+        {
+          <td>@property</td>
+        }
+      </tr>
+    }
+  </table>
+</div>
+<div class="buttons">
+  <a class="button positive" href="#" onclick="return Platformus.Overlays.form.select();">Select</a>
+  <a class="button neutral" href="#">Cancel</a>
+  <div class="clear"></div>
+</div>

@@ -1,0 +1,52 @@
+﻿@* Copyright © 2015 Dmitry Sikorsky. All rights reserved. *@
+@* Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information. *@
+@model Platformus.Content.Backend.ViewModels.Objects.IndexViewModel
+@{
+  this.ViewBag.ActiveMenuItem = "objects";
+  this.ViewBag.HasSideDetails = true;
+}
+@if (this.Model.Class != null)
+{
+  <h1>@Model.Class.PluralizedName <span>@Model.Grid.Pager.Total</span></h1>
+  @Html.Partial("_Grid", this.Model.Grid)
+  <div class="buttons">
+    <a class="button positive" href="@this.Context.Request.CombineUrl("/backend/objects/create")">Create @Model.Class.Name.ToLower()</a>
+    <div class="clear"></div>
+  </div>
+}
+@section sideDetails
+{
+  <div class="side-details">
+    <div class="title">
+      Objects
+    </div>
+    <div class="menu">
+      <div class="menu-group">
+        <div class="name">
+         Standalone
+        </div>
+        <div class="menu-items">
+          @foreach (var standaloneClass in this.Model.StandaloneClasses)
+          {
+            <a class="menu-item @(this.Model.Class != null && this.Model.Class.Id == standaloneClass.Id ? "active" : null)" href="/backend/objects?classid=@standaloneClass.Id">
+              @standaloneClass.PluralizedName
+            </a>
+          }
+        </div>
+      </div>
+      <div class="menu-group">
+        <div class="name">
+          Embedded
+        </div>
+        <div class="menu-items">
+          @foreach (var embeddedClass in this.Model.EmbeddedClasses)
+          {
+            <a class="menu-item @(this.Model.Class != null && this.Model.Class.Id == embeddedClass.Id ? "active" : null)" href="/backend/objects?classid=@embeddedClass.Id">
+              @embeddedClass.PluralizedName
+            </a>
+          }
+        </div>
+      </div>
+    </div>
+  </div>
+}

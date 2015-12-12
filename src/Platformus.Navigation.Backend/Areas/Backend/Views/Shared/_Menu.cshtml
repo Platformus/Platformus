@@ -1,0 +1,24 @@
+﻿@* Copyright © 2015 Dmitry Sikorsky. All rights reserved. *@
+@* Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information. *@
+@model Platformus.Navigation.Backend.ViewModels.Shared.MenuViewModel
+<div class="tree-node">
+  <div class="tree-node-header">
+    <div class="buttons">
+      <a class="button positive" href="/backend/menus/edit/@Model.Id">Edit</a>
+      <a class="button negative" href="#" onclick="return new Platformus.Overlays.DeleteForm('/backend/menus/delete/@Model.Id').show();"></a>
+      <div class="clear"></div>
+    </div>
+    @Model.Name
+    <div class="clear"></div>
+  </div>
+  <div class="tree-nodes">
+    @foreach (var menuItem in this.Model.MenuItems)
+    {
+      @Html.Partial("_MenuItem", menuItem)
+    }
+    <div class="buttons">
+      <a class="button positive" href="/backend/menuitems/create?menuid=@Model.Id">Create menu item</a>
+      <div class="clear"></div>
+    </div>
+  </div>
+</div>

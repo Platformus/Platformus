@@ -1,0 +1,17 @@
+﻿@* Copyright © 2015 Dmitry Sikorsky. All rights reserved. *@
+@* Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information. *@
+@model Platformus.Security.Backend.ViewModels.Permissions.CreateOrEditViewModel
+@{
+  this.ViewBag.ActiveMenuItem = "permissions";
+}
+<h1>@(this.Model.Id == null ? "Create" : "Edit") Permission</h1>
+<form method="post">
+  <single-line-text-editor asp-for="Code" />
+  <single-line-text-editor asp-for="Name" />
+  <single-line-text-editor asp-for="Position" />
+  <div class="buttons">
+    <button class="positive" type="submit">Save</button>
+    <a class="button neutral" href="@this.Context.Request.CombineUrl("/backend/permissions")">Cancel</a>
+    <div class="clear"></div>
+  </div>
+</form>

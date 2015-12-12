@@ -1,0 +1,12 @@
+﻿@* Copyright © 2015 Dmitry Sikorsky. All rights reserved. *@
+@* Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information. *@
+@model Platformus.Security.Backend.ViewModels.Shared.PermissionViewModel
+<tr>
+  <td>@Model.Name</td>
+  <td>@Model.Position</td>
+  <td class="buttons">
+    <a class="button positive" href="@(this.Context.Request.CombineUrl("/backend/permissions/edit/" + this.Model.Id))">Edit</a>
+    <a class="button negative" href="#" onclick="return new Platformus.Overlays.DeleteForm('/backend/permissions/delete/@Model.Id').show();"></a>
+    <div class="clear"></div>
+  </td>
+</tr>

@@ -1,0 +1,13 @@
+﻿@* Copyright © 2015 Dmitry Sikorsky. All rights reserved. *@
+@* Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information. *@
+@model Platformus.Content.Backend.ViewModels.DataSources.IndexViewModel
+@{
+  this.ViewBag.ActiveMenuItem = "classes";
+}
+<h1>Data Sources <span>@Model.Grid.Pager.Total</span></h1>
+@Html.Partial("_Grid", this.Model.Grid)
+<div class="buttons">
+  <a class="button positive" href="/backend/datasources/create?classid=@Model.ClassId">Create data source</a>
+  <a class="button neutral" href="/backend/classes">Back</a>
+  <div class="clear"></div>
+</div>

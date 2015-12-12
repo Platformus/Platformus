@@ -1,0 +1,11 @@
+﻿@* Copyright © 2015 Dmitry Sikorsky. All rights reserved. *@
+@* Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information. *@
+@model Platformus.Static.Backend.ViewModels.Shared.FileViewModel
+<tr>
+  <td><a href="~/files/@Model.Name">@Model.Name</a></td>
+  <td>@Model.Size</td>
+  <td class="buttons">
+    <a class="button negative" href="#" onclick="return new Platformus.Overlays.DeleteForm('/backend/files/delete/@Model.Id').show();"></a>
+    <div class="clear"></div>
+  </td>
+</tr>

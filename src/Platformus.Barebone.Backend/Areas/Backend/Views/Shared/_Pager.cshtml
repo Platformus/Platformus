@@ -1,0 +1,82 @@
+﻿@* Copyright © 2015 Dmitry Sikorsky. All rights reserved. *@
+@* Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information. *@
+@model Platformus.Barebone.Backend.ViewModels.Shared.PagerViewModel
+@{
+  int maxPagesCount = 5;
+}
+<div class="pager">
+  @if (this.Model.Skip > 0)
+  {
+    <a class="page first-page" href="@this.Context.Request.CombineUrl(
+      new Url.Descriptor(name: "filter", takeFromUrl: true),
+      new Url.Descriptor(name: "orderby", takeFromUrl: true),
+      new Url.Descriptor(name: "direction", takeFromUrl: true),
+      new Url.Descriptor(name: "skip", skip: true),
+      new Url.Descriptor(name: "take", skip: true)
+    )" title="First page"></a>
+    <a class="page previous-page" href="@this.Context.Request.CombineUrl(
+      new Url.Descriptor(name: "filter", takeFromUrl: true),
+      new Url.Descriptor(name: "orderby", takeFromUrl: true),
+      new Url.Descriptor(name: "direction", takeFromUrl: true),
+      new Url.Descriptor(name: "skip", value: this.Model.Skip - this.Model.Take),
+      new Url.Descriptor(name: "take", value: this.Model.Take)
+    )" title="Previous page"></a>
+  }
+  else
+  {
+    <div class="page first-page"></div>
+    <div class="page previous-page"></div>
+  }
+  @if (this.Model.Skip - maxPagesCount * this.Model.Take > 0)
+  {
+    <div class="page skipped-pages"></div>
+  }
+  @for (int i = 0; i * this.Model.Take < this.Model.Total; i++)
+  {
+    if (this.Model.Skip == i * this.Model.Take)
+    {
+      <div class="page active-page">@(i + 1)<div class="arrow-ph"><div class="arrow"></div></div></div>
+    }
+    else if (i * this.Model.Take >= this.Model.Skip - maxPagesCount * this.Model.Take && i * this.Model.Take <= this.Model.Skip + maxPagesCount * this.Model.Take)
+    {
+      <a class="page" href="@this.Context.Request.CombineUrl(
+        new Url.Descriptor(name: "filter", takeFromUrl: true),
+        new Url.Descriptor(name: "orderby", takeFromUrl: true),
+        new Url.Descriptor(name: "direction", takeFromUrl: true),
+        new Url.Descriptor(name: "skip", value: i * this.Model.Take),
+        new Url.Descriptor(name: "take", value: this.Model.Take)
+      )">@(i + 1)</a>
+    }
+  }
+  @if (this.Model.Total == 0)
+  {
+    <div class="page active-page">1<div class="arrow-ph"><div class="arrow"></div></div></div>
+  }
+  @if (this.Model.Skip + maxPagesCount * this.Model.Take < this.Model.Total)
+  {
+    <div class="page skipped-pages"></div>
+  }
+  @if (this.Model.Skip + this.Model.Take < this.Model.Total)
+  {
+    <a class="page next-page" href="@this.Context.Request.CombineUrl(
+      new Url.Descriptor(name: "filter", takeFromUrl: true),
+      new Url.Descriptor(name: "orderby", takeFromUrl: true),
+      new Url.Descriptor(name: "direction", takeFromUrl: true),
+      new Url.Descriptor(name: "skip", value: this.Model.Skip + this.Model.Take),
+      new Url.Descriptor(name: "take", value: this.Model.Take)
+    )" title="Next page"></a>
+    <a class="page last-page" href="@this.Context.Request.CombineUrl(
+      new Url.Descriptor(name: "filter", takeFromUrl: true),
+      new Url.Descriptor(name: "orderby", takeFromUrl: true),
+      new Url.Descriptor(name: "direction", takeFromUrl: true),
+      new Url.Descriptor(name: "skip", value: this.Model.Total - (this.Model.Total % this.Model.Take == 0 ? this.Model.Take : this.Model.Total % this.Model.Take)),
+      new Url.Descriptor(name: "take", value: this.Model.Take)
+    )" title="Last page"></a>
+  }
+  else
+  {
+    <div class="page next-page"></div>
+    <div class="page last-page"></div>
+  }
+  <div class="clear"></div>
+</div>

@@ -1,0 +1,17 @@
+﻿@* Copyright © 2015 Dmitry Sikorsky. All rights reserved. *@
+@* Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information. *@
+@model Platformus.Forms.Backend.ViewModels.Fields.CreateOrEditViewModel
+@{
+  this.ViewBag.ActiveMenuItem = "forms";
+}
+<h1>@(this.Model.Id == null ? "Create" : "Edit") Field</h1>
+<form method="post">
+  <drop-down-list-selector asp-for="FieldTypeId" asp-options="@Model.FieldTypeOptions" />
+  <multilingual-single-line-text-editor asp-for="Name" asp-localizations="@Model.NameLocalizations" />
+  <single-line-text-editor asp-for="Position" />
+  <div class="buttons">
+    <button class="positive" type="submit">Save</button>
+    <a class="button neutral" href="/backend/forms">Cancel</a>
+    <div class="clear"></div>
+  </div>
+</form>

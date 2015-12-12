@@ -1,0 +1,20 @@
+﻿@* Copyright © 2015 Dmitry Sikorsky. All rights reserved. *@
+@* Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information. *@
+@model Platformus.Static.Backend.ViewModels.Files.IndexViewModel
+@{
+  this.ViewBag.ActiveMenuItem = "files";
+}
+<h1>Files <span>@Model.Grid.Pager.Total</span></h1>
+@Html.Partial("_Grid", this.Model.Grid)
+<div id="filesDragAndDropArea" class="files-drag-and-drop-area">
+  Drop files here
+</div>
+<form action="/backend/files/create" enctype="multipart/form-data" method="post">
+  <div class="buttons">
+    <div class="button positive browse">
+      <div>Upload file…</div>
+      <input id="files" name="files" type="file" size="1" multiple onchange="$('form').submit();" />
+    </div>
+    <div class="clear"></div>
+  </div>
+</form>

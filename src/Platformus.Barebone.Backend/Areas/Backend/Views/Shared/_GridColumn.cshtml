@@ -1,0 +1,34 @@
+﻿@* Copyright © 2015 Dmitry Sikorsky. All rights reserved. *@
+@* Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information. *@
+@model Platformus.Barebone.Backend.ViewModels.Shared.GridColumnViewModel
+@if (string.IsNullOrEmpty(this.Model.OrderBy))
+{
+  <th>@Html.Raw(this.Model.Name)</th>
+}
+else
+{
+  if (this.Model.OrderBy == this.Model.Owner.OrderBy)
+  {
+    <th class="ordered-by">
+      <a href="@this.Context.Request.CombineUrl(
+        new Url.Descriptor(name: "filter", takeFromUrl: true),
+        new Url.Descriptor(name: "orderby", value: this.Model.OrderBy),
+        new Url.Descriptor(name: "direction", value: this.Model.Owner.Direction == "asc" ? "desc" : "asc"),
+        new Url.Descriptor(name: "skip", takeFromUrl: true),
+        new Url.Descriptor(name: "take", takeFromUrl: true)
+      )">@Html.Raw(this.Model.Name)</a>
+    </th>
+  }
+  else
+  {
+    <th>
+      <a href="@this.Context.Request.CombineUrl(
+        new Url.Descriptor(name: "filter", takeFromUrl: true),
+        new Url.Descriptor(name: "orderby", value: this.Model.OrderBy),
+        new Url.Descriptor(name: "direction", value: "asc"),
+        new Url.Descriptor(name: "skip", takeFromUrl: true),
+        new Url.Descriptor(name: "take", takeFromUrl: true)
+      )">@Html.Raw(this.Model.Name)</a>
+    </th>
+  }
+}

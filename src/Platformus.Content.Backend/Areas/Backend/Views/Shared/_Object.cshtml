@@ -1,0 +1,24 @@
+﻿@* Copyright © 2015 Dmitry Sikorsky. All rights reserved. *@
+@* Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information. *@
+@model Platformus.Content.Backend.ViewModels.Shared.ObjectViewModel
+<tr>
+  @if (this.Model.Class.IsStandalone)
+  {
+    <td>@Model.Url</td>
+  }
+  @foreach (var property in this.Model.Properties)
+  {
+    <td>@property</td>
+  }
+  @foreach (var relatedClass in this.Model.RelatedClasses)
+  {
+    <td>
+      <a href="/backend/objects?classid=@relatedClass.Id&objectid=@Model.Id">@relatedClass.PluralizedName</a>
+    </td>
+  }
+  <td class="buttons">
+    <a class="button positive" href="@(this.Context.Request.CombineUrl("/backend/objects/edit/" + this.Model.Id))">Edit</a>
+    <a class="button negative" href="#" onclick="return new Platformus.Overlays.DeleteForm('/backend/objects/delete/@Model.Id').show();"></a>
+    <div class="clear"></div>
+  </td>
+</tr>

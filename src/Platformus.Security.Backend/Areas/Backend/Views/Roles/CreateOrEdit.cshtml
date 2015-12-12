@@ -1,0 +1,30 @@
+﻿@* Copyright © 2015 Dmitry Sikorsky. All rights reserved. *@
+@* Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information. *@
+@model Platformus.Security.Backend.ViewModels.Roles.CreateOrEditViewModel
+@{
+  this.ViewBag.ActiveMenuItem = "roles";
+}
+<h1>@(this.Model.Id == null ? "Create" : "Edit") Role</h1>
+<form method="post">
+  <div class="tabs">
+    <div class="tab" data-tab-page-id="General">General</div>
+    <div class="tab" data-tab-page-id="Permissions">Permissions</div>
+    <div class="clear"></div>
+  </div>
+  <div id="tabPageGeneral" class="tab-page">
+    <single-line-text-editor asp-for="Code" />
+    <single-line-text-editor asp-for="Name" />
+    <single-line-text-editor asp-for="Position" />
+  </div>
+  <div id="tabPagePermissions" class="tab-page">
+    @foreach (var rolePermission in this.Model.RolePermissions)
+    {
+      <unbound-check-box asp-identity="permission@(rolePermission.Permission.Id)" asp-text="@rolePermission.Permission.Name" asp-checked="@rolePermission.IsAssigned" />
+    }
+  </div>
+  <div class="buttons">
+    <button class="positive" type="submit">Save</button>
+    <a class="button neutral" href="@this.Context.Request.CombineUrl("/backend/roles")">Cancel</a>
+    <div class="clear"></div>
+  </div>
+</form>

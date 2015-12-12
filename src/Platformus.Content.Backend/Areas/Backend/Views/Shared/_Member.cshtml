@@ -1,0 +1,14 @@
+﻿@* Copyright © 2015 Dmitry Sikorsky. All rights reserved. *@
+@* Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information. *@
+@model Platformus.Content.Backend.ViewModels.Shared.MemberViewModel
+<tr>
+  <td>@(this.Model.RelationClass == null ? "—" : this.Model.RelationClass.Name)</td>
+  <td>@(this.Model.PropertyDataType == null ? "—" : this.Model.PropertyDataType.Name)</td>
+  <td>@Model.Name</td>
+  <td>@Model.Position</td>
+  <td class="buttons">
+    <a class="button positive" href="@(this.Context.Request.CombineUrl("/backend/members/edit/" + this.Model.Id))">Edit</a>
+    <a class="button negative" href="#" onclick="return new Platformus.Overlays.DeleteForm('/backend/members/delete/@Model.Id').show();"></a>
+    <div class="clear"></div>
+  </td>
+</tr>

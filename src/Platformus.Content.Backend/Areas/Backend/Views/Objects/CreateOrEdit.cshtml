@@ -1,0 +1,72 @@
+﻿@* Copyright © 2015 Dmitry Sikorsky. All rights reserved. *@
+@* Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information. *@
+@model Platformus.Content.Backend.ViewModels.Objects.CreateOrEditViewModel
+@{
+  this.ViewBag.ActiveMenuItem = "objects";
+}
+<h1>@(this.Model.Id == null ? "Create" : "Edit") @Model.Class.Name</h1>
+<form method="post">
+  <div id="tabs" class="tabs"></div>
+  <div id="members">
+    <div id="tabPage0" class="tab-page">
+      @if (this.Model.Class.IsStandalone)
+      {
+        <single-line-text-editor asp-for="_Url" />
+      }
+      else
+      {
+        <input id="_url" name="_url" type="hidden" value="@Model._Url" />
+      }
+    </div>
+  </div>
+  <div class="buttons">
+    <button class="positive" type="submit">Save</button>
+    <a class="button neutral" href="@this.Context.Request.CombineUrl("/backend/objects")">Cancel</a>
+    <div class="clear"></div>
+  </div>
+</form>
+<script type="text/javascript">
+  var membersByTabs = [
+    @foreach (var tab in this.Model.MembersByTabs.Keys)
+    {
+      @:{
+        @:id: @tab.Id,
+        @:name: "@tab.Name",
+        @:members: [
+          @foreach (var member in this.Model.MembersByTabs[tab])
+          {
+            @:{
+              @:id: @member.Id,
+              @:name: "@Html.Raw(member.Name)",
+              @if (member.RelationClass != null)
+              {
+                @:relationClass: { id: @member.RelationClass.Id },
+                @:isRelationSingleParent: @member.IsRelationSingleParent.ToString().ToLower(),
+                @:relations: [
+                  @foreach (var relation in member.Relations)
+                  {
+                    @:{ primaryId: @relation.PrimaryId }@(relation != member.Relations.Last() ? "," : null)
+                  }
+                @:]
+                }
+              else if (member.PropertyDataType != null)
+              {
+                @:propertyDataType: { javaScriptEditorClassName: "@member.PropertyDataType.JavaScriptEditorClassName" },
+                @:property: {
+                  @:localizations: [
+                    @foreach (var localization in member.Property.HtmlLocalizations)
+                    {
+                      @: { culture: { code: "@localization.Culture.Code" }, value: "@Html.Raw(string.IsNullOrEmpty(localization.Value) ? null : localization.Value.Replace("\r\n", string.Empty).Replace("\"", "\\\""))" }@(localization != member.Property.HtmlLocalizations.Last() ? "," : null)
+                    }
+                  @:]
+                @:}
+              }
+            @:}@(member.Id != this.Model.MembersByTabs[tab].Last().Id ? "," : null)
+          }
+        @:]
+      @:}@(tab != this.Model.MembersByTabs.Keys.Last() ? "," : null)
+    }
+  ];
+
+  Platformus.Editors.apply(membersByTabs);
+</script>

@@ -1,0 +1,19 @@
+﻿@* Copyright © 2015 Dmitry Sikorsky. All rights reserved. *@
+@* Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information. *@
+@model Platformus.Navigation.Backend.ViewModels.Menus.IndexViewModel
+@{
+  this.ViewBag.ActiveMenuItem = "menus";
+}
+<h1>Menus <span>@Model.Menus.Count()</span></h1>
+<div class="tree">
+  @foreach (var menu in this.Model.Menus)
+  {
+    @Html.Partial("_Menu", menu)
+  }
+  <div class="tree-node">
+    <div class="buttons">
+      <a class="button positive" href="/backend/menus/create">Create menu</a>
+      <div class="clear"></div>
+    </div>
+  </div>
+</div>

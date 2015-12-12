@@ -1,0 +1,12 @@
+﻿@* Copyright © 2015 Dmitry Sikorsky. All rights reserved. *@
+@* Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information. *@
+@model Platformus.Security.Backend.ViewModels.Roles.IndexViewModel
+@{
+  this.ViewBag.ActiveMenuItem = "roles";
+}
+<h1>Roles <span>@Model.Grid.Pager.Total</span></h1>
+@Html.Partial("_Grid", this.Model.Grid)
+<div class="buttons">
+  <a class="button positive" href="@this.Context.Request.CombineUrl("/backend/roles/create")">Create role</a>
+  <div class="clear"></div>
+</div>
