@@ -52,8 +52,8 @@ or many relations to the objects of class Contact.
 It is very easy to use Platformus. Please take a look at our
 [sample project](https://github.com/Platformus/Platformus-Sample) on GitHub.
 
-You can also download our [ready to use sample project](http://platformus.net/files/Platformus-Samle-1.0.0-alpha1.zip).
-It contains everything you need to run Platformus from Visual Studio 2015, including SQLite
+You can also download our [ready to use sample project](http://platformus.net/files/Platformus-Sample-1.0.0-alpha1.zip).
+It contains everything you need to run Platformus-based web application from Visual Studio 2015, including SQLite
 database with the test data.
 
 ## Links

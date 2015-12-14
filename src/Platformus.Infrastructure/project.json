@@ -1,7 +1,7 @@
 ﻿{
   "authors": [ "Dmitry Sikorsky" ],
   "dependencies": {
-    "ExtCore.Infrastructure": "1.0.0-alpha1",
+    "ExtCore.Infrastructure": "1.0.0-alpha2",
     "Microsoft.AspNet.Mvc": "6.0.0-rc1-final"
   },
   "frameworks": {

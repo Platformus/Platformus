@@ -1,8 +1,8 @@
 ﻿{
   "authors": [ "Dmitry Sikorsky" ],
   "dependencies": {
-    "ExtCore.Data.Abstractions": "1.0.0-alpha1",
-    "ExtCore.Infrastructure": "1.0.0-alpha1",
+    "ExtCore.Data.Abstractions": "1.0.0-alpha2",
+    "ExtCore.Infrastructure": "1.0.0-alpha2",
     "Microsoft.AspNet.Mvc": "6.0.0-rc1-final",
     "Platformus.Infrastructure": "1.0.0-alpha1"
   },
