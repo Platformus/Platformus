@@ -1,10 +1,10 @@
 ﻿{
   "authors": [ "Dmitry Sikorsky" ],
   "dependencies": {
-    "ExtCore.Infrastructure": "1.0.0-alpha2",
+    "ExtCore.Infrastructure": "1.0.0-alpha4",
     "Microsoft.AspNet.Mvc": "6.0.0-rc1-final",
     "Microsoft.AspNet.Mvc.TagHelpers": "6.0.0-rc1-final",
-    "Platformus.Barebone": "1.0.0-alpha1"
+    "Platformus.Barebone": "1.0.0-alpha3"
   },
   "exclude": [
     "node_modules"
@@ -14,5 +14,5 @@
     "dnxcore50": { }
   },
   "resource": "wwwroot/**",
-  "version": "1.0.0-alpha1"
+  "version": "1.0.0-alpha3"
 }

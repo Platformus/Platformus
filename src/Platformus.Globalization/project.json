@@ -1,16 +1,16 @@
 ﻿{
   "authors": [ "Dmitry Sikorsky" ],
   "dependencies": {
-    "ExtCore.Infrastructure": "1.0.0-alpha2",
+    "ExtCore.Infrastructure": "1.0.0-alpha4",
     "Microsoft.AspNet.Mvc": "6.0.0-rc1-final",
-    "Platformus.Barebone": "1.0.0-alpha1",
-    "Platformus.Globalization.Data.Abstractions": "1.0.0-alpha1",
-    "Platformus.Globalization.Data.Models": "1.0.0-alpha1",
-    "Platformus.Infrastructure": "1.0.0-alpha1"
+    "Platformus.Barebone": "1.0.0-alpha3",
+    "Platformus.Globalization.Data.Abstractions": "1.0.0-alpha3",
+    "Platformus.Globalization.Data.Models": "1.0.0-alpha3",
+    "Platformus.Infrastructure": "1.0.0-alpha3"
   },
   "frameworks": {
     "dnx451": { },
     "dnxcore50": { }
   },
-  "version": "1.0.0-alpha1"
+  "version": "1.0.0-alpha3"
 }
