@@ -48,23 +48,41 @@ Currently Platformus consists of 8 extensions:
 
 ### Platformus.Barebone
 
-This is the basic extension that contains such things as base controller class, base view component class and
-base view model class, backend UI and controls etc. Every other extension uses Platformus.Barebone to have
-unified look and behavior.
+This fundamental extension provides base classes for controllers, view components, view models etc. Also it
+provides data and storage support, base backend with UI and controls etc. Every other extension can use
+Platformus.Barebone to have unified look and behavior.
 
 ### Platformus.Configuration
 
+This extension provides configuration classes (Section, Variable etc) with backend UI. Every other extension
+can use Platformus.Configuration to work with user-defined configurations in unified way.
+
 ### Platformus.Security
+
+This extension provides security classes (User, Role, Permission, UserManager etc) with backend UI.
 
 ### Platformus.Static
 
+This extension provides static content classes (File etc) with backend UI (simple file manager).
+
 ### Platformus.Globalization
+
+This extension provides multicultural and multilingual content support. Also it provides backend UI for
+editing the list of supported cultures. Every other extension can use Platformus.Globalization to have
+such content in unified way.
 
 ### Platformus.Content
 
+This extension provides object-oriented content support with frontend and backend UI.
+
 ### Platformus.Navigation
 
+This extension provides menus support (creating and displaying) with frontend and backend UI.
+
 ### Platformus.Forms
+
+This extension provides forms support (creating, displaying and user input processing) with frontend and
+backend UI.
 
 ## Quick Start
 
