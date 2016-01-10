@@ -11,9 +11,10 @@ modern tools and languages (Visual Studio 2015, C#, TypeScript, SCSS etc). Join 
 ### Few Facts About Platformus
 
 1. It runs on Windows, Mac and Linux.
-2. It is completely modular and extendable. Using the features of the underlying ExtCore framework
-you can easily create your own extensions to extend its functionality. 
-3. Multicultural and multilingual.
+2. It is completely modular and extendable. Using the features of the underlying
+[ExtCore framework](https://github.com/ExtCore/ExtCore) you can easily create your own extensions
+to extend its functionality.
+3. It is multicultural and multilingual.
 4. It is fast, flexible and easy to use. You can describe even complicated entities and their relationships
 without writing any code!
 
