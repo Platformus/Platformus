@@ -1,0 +1,14 @@
+﻿{
+  "authors": [ "Dmitry Sikorsky" ],
+  "dependencies": {
+    "ExtCore.Data.EntityFramework.PostgreSql": "1.0.0-alpha6",
+    "ExtCore.Infrastructure": "1.0.0-alpha4",
+    "Platformus.Navigation.Data.Abstractions": "1.0.0-alpha3",
+    "Platformus.Navigation.Data.Models": "1.0.0-alpha3"
+  },
+  "frameworks": {
+    "dnx451": { },
+    "dnxcore50": { }
+  },
+  "version": "1.0.0-alpha3"
+}

@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
-VisualStudioVersion = 14.0.23107.0
+VisualStudioVersion = 14.0.24720.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{0D7AEFA3-ABB0-4AF1-A4C1-F8E05C241753}"
 EndProject
@@ -125,6 +125,20 @@ EndProject
 Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "Platformus.Globalization.Frontend", "src\Platformus.Globalization.Frontend\Platformus.Globalization.Frontend.xproj", "{8D565D18-5290-4EAD-A718-F73EB500B695}"
 EndProject
 Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "Platformus.Infrastructure", "src\Platformus.Infrastructure\Platformus.Infrastructure.xproj", "{B6DA19CE-E8FE-4D74-B397-8C08C7C21299}"
+EndProject
+Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "Platformus.Static.Data.EntityFramework.PostgreSql", "src\Platformus.Static.Data.EntityFramework.PostgreSql\Platformus.Static.Data.EntityFramework.PostgreSql.xproj", "{AB19BEDA-D1BA-40F7-8E7A-44F6890E767A}"
+EndProject
+Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "Platformus.Security.Data.EntityFramework.PostgreSql", "src\Platformus.Security.Data.EntityFramework.PostgreSql\Platformus.Security.Data.EntityFramework.PostgreSql.xproj", "{E05ABD63-5AF8-4B94-B9D2-9284F15DD96B}"
+EndProject
+Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "Platformus.Navigation.Data.EntityFramework.PostgreSql", "src\Platformus.Navigation.Data.EntityFramework.PostgreSql\Platformus.Navigation.Data.EntityFramework.PostgreSql.xproj", "{54D5EC70-4283-40E4-BA39-F89AEF212BB1}"
+EndProject
+Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "Platformus.Globalization.Data.EntityFramework.PostgreSql", "src\Platformus.Globalization.Data.EntityFramework.PostgreSql\Platformus.Globalization.Data.EntityFramework.PostgreSql.xproj", "{D68C57C6-57C5-4DFB-89F8-1981E2BE6632}"
+EndProject
+Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "Platformus.Forms.Data.EntityFramework.PostgreSql", "src\Platformus.Forms.Data.EntityFramework.PostgreSql\Platformus.Forms.Data.EntityFramework.PostgreSql.xproj", "{2B42FBED-E94A-46AD-A42C-B62129632467}"
+EndProject
+Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "Platformus.Content.Data.EntityFramework.PostgreSql", "src\Platformus.Content.Data.EntityFramework.PostgreSql\Platformus.Content.Data.EntityFramework.PostgreSql.xproj", "{646535E3-2EF1-4688-9763-D90B834CA4BC}"
+EndProject
+Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "Platformus.Configuration.Data.EntityFramework.PostgreSql", "src\Platformus.Configuration.Data.EntityFramework.PostgreSql\Platformus.Configuration.Data.EntityFramework.PostgreSql.xproj", "{A85253F8-48B2-4884-80F7-46E747F05197}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -332,6 +346,34 @@ Global
 		{B6DA19CE-E8FE-4D74-B397-8C08C7C21299}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B6DA19CE-E8FE-4D74-B397-8C08C7C21299}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B6DA19CE-E8FE-4D74-B397-8C08C7C21299}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AB19BEDA-D1BA-40F7-8E7A-44F6890E767A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AB19BEDA-D1BA-40F7-8E7A-44F6890E767A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AB19BEDA-D1BA-40F7-8E7A-44F6890E767A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AB19BEDA-D1BA-40F7-8E7A-44F6890E767A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E05ABD63-5AF8-4B94-B9D2-9284F15DD96B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E05ABD63-5AF8-4B94-B9D2-9284F15DD96B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E05ABD63-5AF8-4B94-B9D2-9284F15DD96B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E05ABD63-5AF8-4B94-B9D2-9284F15DD96B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{54D5EC70-4283-40E4-BA39-F89AEF212BB1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{54D5EC70-4283-40E4-BA39-F89AEF212BB1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{54D5EC70-4283-40E4-BA39-F89AEF212BB1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{54D5EC70-4283-40E4-BA39-F89AEF212BB1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D68C57C6-57C5-4DFB-89F8-1981E2BE6632}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D68C57C6-57C5-4DFB-89F8-1981E2BE6632}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D68C57C6-57C5-4DFB-89F8-1981E2BE6632}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D68C57C6-57C5-4DFB-89F8-1981E2BE6632}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2B42FBED-E94A-46AD-A42C-B62129632467}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2B42FBED-E94A-46AD-A42C-B62129632467}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2B42FBED-E94A-46AD-A42C-B62129632467}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2B42FBED-E94A-46AD-A42C-B62129632467}.Release|Any CPU.Build.0 = Release|Any CPU
+		{646535E3-2EF1-4688-9763-D90B834CA4BC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{646535E3-2EF1-4688-9763-D90B834CA4BC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{646535E3-2EF1-4688-9763-D90B834CA4BC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{646535E3-2EF1-4688-9763-D90B834CA4BC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A85253F8-48B2-4884-80F7-46E747F05197}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A85253F8-48B2-4884-80F7-46E747F05197}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A85253F8-48B2-4884-80F7-46E747F05197}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A85253F8-48B2-4884-80F7-46E747F05197}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -395,5 +437,12 @@ Global
 		{642F44BD-D153-4EA8-A331-A700FE737E8A} = {6AAB030E-FDFF-49B7-AD82-4871F2BFA43E}
 		{8D565D18-5290-4EAD-A718-F73EB500B695} = {E75AEBF8-62DF-4222-B960-5E509AD644B3}
 		{B6DA19CE-E8FE-4D74-B397-8C08C7C21299} = {0D7AEFA3-ABB0-4AF1-A4C1-F8E05C241753}
+		{AB19BEDA-D1BA-40F7-8E7A-44F6890E767A} = {6FFAC33C-F31A-454E-961B-CD80908E5F88}
+		{E05ABD63-5AF8-4B94-B9D2-9284F15DD96B} = {E0E19C64-C048-4155-A00C-F28D1C28F1B5}
+		{54D5EC70-4283-40E4-BA39-F89AEF212BB1} = {6AAB030E-FDFF-49B7-AD82-4871F2BFA43E}
+		{D68C57C6-57C5-4DFB-89F8-1981E2BE6632} = {E75AEBF8-62DF-4222-B960-5E509AD644B3}
+		{2B42FBED-E94A-46AD-A42C-B62129632467} = {E69F478C-55F9-45D7-9424-47906DFA3F02}
+		{646535E3-2EF1-4688-9763-D90B834CA4BC} = {00C2D90C-A4B3-49F8-8D9A-3249CBDCB625}
+		{A85253F8-48B2-4884-80F7-46E747F05197} = {D8340F5D-3745-4DA9-BF59-D949AA791A73}
 	EndGlobalSection
 EndGlobal
