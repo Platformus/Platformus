@@ -1,7 +1,9 @@
-﻿
+﻿// Copyright © 2015 Dmitry Sikorsky. All rights reserved.
+// Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information.
+
+using ExtCore.Data.EntityFramework.SqlServer;
 using Microsoft.Data.Entity;
 using Platformus.Content.Data.Models;
-using ExtCore.Data.EntityFramework.SqlServer;
 
 namespace Platformus.Content.Data.EntityFramework.SqlServer
 {
