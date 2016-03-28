@@ -77,11 +77,11 @@ html, body {
 }
 
 .side .menu .menu-group .menu-items .active {
-  background: $color-global-dark-hovered url(../resource?name=wwwroot.areas.backend.images.menu_item_active.png) right no-repeat;
+  background: $color-global-dark-hovered url(../wwwroot.areas.backend.images.menu_item_active.png) right no-repeat;
 }
 
 .with-side-details .side .menu .menu-group .menu-items .active {
-  background: $color-global-dark-hovered url(../resource?name=wwwroot.areas.backend.images.with_side_details_menu_item_active.png) right no-repeat;
+  background: $color-global-dark-hovered url(../wwwroot.areas.backend.images.with_side_details_menu_item_active.png) right no-repeat;
 }
 
 .side-details {
@@ -128,7 +128,7 @@ html, body {
 }
 
 .side-details .menu .menu-group .menu-items .active {
-  background: $color-control-hovered url(../resource?name=wwwroot.areas.backend.images.menu_item_active.png) right no-repeat;
+  background: $color-control-hovered url(../wwwroot.areas.backend.images.menu_item_active.png) right no-repeat;
 }
 
 .content {

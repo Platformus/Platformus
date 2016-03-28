@@ -37,15 +37,15 @@
 }
 
 .grid .header .pager .first-page {
-  background-image: url(../resource?name=wwwroot.areas.backend.images.first_page.png);
+  background-image: url(../wwwroot.areas.backend.images.first_page.png);
 }
 
 .grid .header .pager .previous-page {
-  background-image: url(../resource?name=wwwroot.areas.backend.images.previous_page.png);
+  background-image: url(../wwwroot.areas.backend.images.previous_page.png);
 }
 
 .grid .header .pager .skipped-pages {
-  background-image: url(../resource?name=wwwroot.areas.backend.images.skipped_pages.png);
+  background-image: url(../wwwroot.areas.backend.images.skipped_pages.png);
 }
 
 .grid .header .pager .active-page {
@@ -55,14 +55,14 @@
 }
 
 .grid .header .pager .active-page .arrow-ph {
-  background: url(../resource?name=wwwroot.areas.backend.images.active_page.png);
+  background: url(../wwwroot.areas.backend.images.active_page.png);
   position: absolute;
   left: 50%;
   top: $control-size;
 }
 
 .grid .header .pager .active-page .arrow-ph .arrow {
-  background: url(../resource?name=wwwroot.areas.backend.images.active_page.png);
+  background: url(../wwwroot.areas.backend.images.active_page.png);
   position: absolute;
   left: -5px;
   top: 0;
@@ -71,11 +71,11 @@
 }
 
 .grid .header .pager .next-page {
-  background-image: url(../resource?name=wwwroot.areas.backend.images.next_page.png);
+  background-image: url(../wwwroot.areas.backend.images.next_page.png);
 }
 
 .grid .header .pager .last-page {
-  background-image: url(../resource?name=wwwroot.areas.backend.images.last_page.png);
+  background-image: url(../wwwroot.areas.backend.images.last_page.png);
 }
 
 .grid .header .take-selector {
@@ -91,7 +91,7 @@
 }
 
 .grid .header .filter input {
-  background-image: url(../resource?name=wwwroot.areas.backend.images.press_enter.png);
+  background-image: url(../wwwroot.areas.backend.images.press_enter.png);
   background-position: right;
   background-repeat: no-repeat;
   width: 115px;
@@ -169,7 +169,7 @@
 }
 
 .grid table tr .buttons .negative {
-  background-image: url(../resource?name=wwwroot.areas.backend.images.delete.png);
+  background-image: url(../wwwroot.areas.backend.images.delete.png);
   background-position: center;
   background-repeat: no-repeat;
   width: 20px;
