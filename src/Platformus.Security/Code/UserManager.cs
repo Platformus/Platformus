@@ -47,5 +47,10 @@ namespace Platformus.Security
 
       await this.handler.HttpContext.Authentication.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, principal);
     }
+
+    public async void SignOut()
+    {
+      await this.handler.HttpContext.Authentication.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
+    }
   }
 }
