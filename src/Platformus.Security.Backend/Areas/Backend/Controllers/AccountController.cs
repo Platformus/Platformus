@@ -45,5 +45,12 @@ namespace Platformus.Security.Backend.Controllers
 
       return this.CreateRedirectToSelfResult();
     }
+
+    [HttpGet]
+    public IActionResult SignOut()
+    {
+      new UserManager(this).SignOut();
+      return this.RedirectToAction("SignIn");
+    }
   }
 }

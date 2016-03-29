@@ -41,7 +41,7 @@ namespace Platformus.Content
             2000,
             new BackendMenuItem[]
             {
-              new BackendMenuItem("/backend/datatypes", "Data Types", 2000),
+              new BackendMenuItem("/backend/datatypes", "Data types", 2000),
               new BackendMenuItem("/backend/classes", "Classes", 3000)
             }
           )

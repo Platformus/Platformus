@@ -84,6 +84,24 @@ html, body {
   background: $color-global-dark-hovered url(../wwwroot.areas.backend.images.with_side_details_menu_item_active.png) right no-repeat;
 }
 
+.side .user-menu {
+  padding-bottom: $control-size;
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: $side-width;
+}
+
+.side .user-menu .menu-item {
+  color: $color-text-medium;
+  display: block;
+  padding: $spacing-y $spacing;
+}
+
+.side .user-menu .menu-item:hover, .side .user-menu .menu-item:focus {
+  background-color: $color-global-dark-hovered;
+}
+
 .side-details {
   background-color: $color-control;
   position: fixed;

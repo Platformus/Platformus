@@ -22,6 +22,11 @@
       <a class="platformus" href="/backend/">
         Platformus <span>CMS</span></a>
       @Component.Invoke("BackendMenu")
+      <div class="user-menu">
+        <a class="menu-item" href="/backend/account/signout">
+          Sign out
+        </a>
+      </div>
     </div>
     @RenderSection("sideDetails", false)
     <div class="content">
