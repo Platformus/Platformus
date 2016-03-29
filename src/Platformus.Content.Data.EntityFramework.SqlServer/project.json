@@ -3,8 +3,8 @@
   "copyright": "Copyright © 2015 Dmitry Sikorsky",
   "dependencies": {
     "EntityFramework.MicrosoftSqlServer": "7.0.0-rc1-final",
-    "ExtCore.Data.EntityFramework.SqlServer": "1.0.0-alpha6",
-    "ExtCore.Infrastructure": "1.0.0-alpha6",
+    "ExtCore.Data.EntityFramework.SqlServer": "1.0.0-alpha7",
+    "ExtCore.Infrastructure": "1.0.0-alpha7",
     "Platformus.Content.Data.Abstractions": "1.0.0-alpha4",
     "Platformus.Content.Data.Models": "1.0.0-alpha4"
   },
