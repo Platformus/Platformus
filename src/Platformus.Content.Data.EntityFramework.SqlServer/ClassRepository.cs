@@ -64,8 +64,8 @@ namespace Platformus.Content.Data.EntityFramework.SqlServer
           DELETE FROM Dictionaries WHERE Id IN (SELECT Id FROM #Dictionaries);
           DELETE FROM Relations WHERE PrimaryId IN (SELECT Id FROM Objects WHERE ClassId = {0}) OR ForeignId IN (SELECT Id FROM Objects WHERE ClassId = {0});
           DELETE FROM Objects WHERE ClassId = {0};
-          DELETE FROM Tabs WHERE ClassId = {0};
           DELETE FROM Members WHERE ClassId = {0} OR RelationClassId = {0};
+          DELETE FROM Tabs WHERE ClassId = {0};
           DELETE FROM DataSources WHERE ClassId = {0};
         ",
         @class.Id
