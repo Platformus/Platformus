@@ -23,8 +23,8 @@ namespace Platformus.Content.Backend.ViewModels.Classes
     [Display(Name = "Is standalone")]
     public bool IsStandalone { get; set; }
 
-    [Display(Name = "View name")]
+    [Display(Name = "Default view name")]
     [StringLength(32)]
-    public string ViewName { get; set; }
+    public string DefaultViewName { get; set; }
   }
 }

@@ -35,6 +35,7 @@ namespace Platformus.Content.Backend.ViewModels.Objects
       return new CreateOrEditViewModel()
       {
         Id = @object.Id,
+        ViewName = @object.ViewName,
         _Url = @object.Url,
         Class = new ClassViewModelBuilder(this.handler).Build(
           this.handler.Storage.GetRepository<IClassRepository>().WithKey(@object.ClassId)

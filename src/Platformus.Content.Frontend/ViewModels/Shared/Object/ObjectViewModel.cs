@@ -9,7 +9,7 @@ namespace Platformus.Content.Frontend.ViewModels.Shared
   public class ObjectViewModel : ViewModelBase
   {
     public int Id { get; set; }
-    public ClassViewModel Class { get; set; }
+    public string ViewName { get; set; }
     public string Url { get; set; }
     public IDictionary<string, PropertyViewModel> Properties { get; set; }
     public IDictionary<string, DataSourceViewModel> DataSources { get; set; }

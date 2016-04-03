@@ -20,7 +20,7 @@ namespace Platformus.Content.Data.Models
     public int ClassId { get; set; }
 
     //[StringLength(32)]
-    public string ClassViewName { get; set; }
+    public string ViewName { get; set; }
 
     //[StringLength(128)]
     public string Url { get; set; }

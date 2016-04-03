@@ -30,7 +30,7 @@ namespace Platformus.Content.Backend.ViewModels.Classes
         Name = @class.Name,
         PluralizedName = @class.PluralizedName,
         IsStandalone = @class.IsStandalone == true,
-        ViewName = @class.ViewName
+        DefaultViewName = @class.DefaultViewName
       };
     }
   }

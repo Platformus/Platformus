@@ -13,6 +13,10 @@ namespace Platformus.Content.Backend.ViewModels.Objects
     public int? Id { get; set; }
     public int? ClassId { get; set; }
 
+    [Display(Name = "View name")]
+    [StringLength(32)]
+    public string ViewName { get; set; }
+
     [Display(Name = "URL")]
     [StringLength(128)]
     public string _Url { get; set; }

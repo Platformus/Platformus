@@ -37,13 +37,13 @@ namespace Platformus.Content.Frontend.Controllers
 
         ObjectViewModel result = new ObjectViewModelBuilder(this).Build(@object);
 
-        return this.View(result.Class.ViewName, result);
+        return this.View(result.ViewName, result);
       }
 
       {
         ObjectViewModel result = new ObjectViewModelBuilder(this).Build(cachedObject);
 
-        return this.View(result.Class.ViewName, result);
+        return this.View(result.ViewName, result);
       }
     }
   }

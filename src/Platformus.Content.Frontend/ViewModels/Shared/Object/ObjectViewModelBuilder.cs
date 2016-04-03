@@ -42,7 +42,7 @@ namespace Platformus.Content.Frontend.ViewModels.Shared
       return new ObjectViewModel()
       {
         Id = @object.Id,
-        Class = new ClassViewModelBuilder(this.handler).Build(@class.Id, @class.ViewName),
+        ViewName = string.IsNullOrEmpty(@object.ViewName) ? @class.DefaultViewName : @object.ViewName,
         Url = @object.Url,
         Properties = this.handler.Storage.GetRepository<IPropertyRepository>().FilteredByObjectId(@object.Id).ToDictionary(
           p => this.handler.Storage.GetRepository<IMemberRepository>().WithKey(p.MemberId).Code,
@@ -77,7 +77,7 @@ namespace Platformus.Content.Frontend.ViewModels.Shared
       return new ObjectViewModel()
       {
         Id = cachedObject.ObjectId,
-        Class = new ClassViewModelBuilder(this.handler).Build(cachedObject.ClassId, cachedObject.ClassViewName),
+        ViewName = cachedObject.ViewName,
         Url = cachedObject.Url,
         Properties = cachedProperties.ToDictionary(
           cp => cp.MemberCode,

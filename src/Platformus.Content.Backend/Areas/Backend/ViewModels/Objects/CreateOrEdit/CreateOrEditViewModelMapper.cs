@@ -24,6 +24,8 @@ namespace Platformus.Content.Backend.ViewModels.Objects
 
       else @object.ClassId = (int)createOrEdit.ClassId;
 
+      @object.ViewName = createOrEdit.ViewName;
+
       Class @class = this.handler.Storage.GetRepository<IClassRepository>().WithKey(@object.ClassId);
 
       if (@class.IsStandalone == true)

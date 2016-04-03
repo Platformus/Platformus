@@ -34,7 +34,7 @@ namespace Platformus.Content
           CachedObject temp = this.CacheObject(culture, @object);
 
           cachedObject.ClassId = temp.ClassId;
-          cachedObject.ClassViewName = temp.ClassViewName;
+          cachedObject.ViewName = temp.ViewName;
           cachedObject.Url = temp.Url;
           cachedObject.CachedProperties = temp.CachedProperties;
           cachedObject.CachedDataSources = temp.CachedDataSources;
@@ -69,7 +69,7 @@ namespace Platformus.Content
 
       cachedObject.ObjectId = @object.Id;
       cachedObject.ClassId = @class.Id;
-      cachedObject.ClassViewName = @class.ViewName;
+      cachedObject.ViewName = string.IsNullOrEmpty(@object.ViewName) ? @class.DefaultViewName : @object.ViewName;
       cachedObject.Url = @object.Url;
       cachedObject.CultureId = culture.Id;
 

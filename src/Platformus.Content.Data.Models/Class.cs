@@ -21,7 +21,7 @@ namespace Platformus.Content.Data.Models
     public bool? IsStandalone { get; set; }
 
     //[StringLength(32)]
-    public string ViewName { get; set; }
+    public string DefaultViewName { get; set; }
 
     //public virtual ICollection<Tab> Tabs { get; set; }
     //public virtual ICollection<Member> Members { get; set; }

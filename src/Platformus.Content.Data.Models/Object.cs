@@ -15,6 +15,9 @@ namespace Platformus.Content.Data.Models
     //[Required]
     public int ClassId { get; set; }
 
+    //[StringLength(32)]
+    public string ViewName { get; set; }
+
     //[StringLength(128)]
     public string Url { get; set; }
 

@@ -9,6 +9,7 @@
   <div id="tabs" class="tabs"></div>
   <div id="members">
     <div id="tabPage0" class="tab-page">
+      <single-line-text-editor asp-for="ViewName" />
       @if (this.Model.Class.IsStandalone)
       {
         <single-line-text-editor asp-for="_Url" />
@@ -56,7 +57,7 @@
                   @:localizations: [
                     @foreach (var localization in member.Property.HtmlLocalizations)
                     {
-                      @: { culture: { code: "@localization.Culture.Code" }, value: "@Html.Raw(string.IsNullOrEmpty(localization.Value) ? null : localization.Value.Replace("\r\n", string.Empty).Replace("\"", "\\\""))" }@(localization != member.Property.HtmlLocalizations.Last() ? "," : null)
+                      @: { culture: { code: "@localization.Culture.Code" }, value: "@Html.Raw(string.IsNullOrEmpty(localization.Value) ? null : localization.Value.Replace("\r\n", "\\r\\n").Replace("\n", "\\n").Replace("\"", "\\\""))" }@(localization != member.Property.HtmlLocalizations.Last() ? "," : null)
                     }
                   @:]
                 @:}
