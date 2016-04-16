@@ -1,7 +1,8 @@
 .svn/
 .vs/
 artifacts/
-src/Platformus.Barebone.Backend/wwwroot
+src/Platformus.Barebone.Backend/wwwroot/areas/backend/css
+src/Platformus.Barebone.Backend/wwwroot/areas/backend/js
 src/Platformus.Barebone.Backend/node_modules/
 *.xproj.user
 *.lock.json
