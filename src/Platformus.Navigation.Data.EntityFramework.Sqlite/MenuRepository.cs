@@ -24,7 +24,7 @@ namespace Platformus.Navigation.Data.EntityFramework.Sqlite
 
     public IEnumerable<Menu> All()
     {
-      return this.dbSet.OrderBy(m => m.Name);
+      return this.dbSet.OrderBy(m => m.Code);
     }
 
     public void Create(Menu menu)
