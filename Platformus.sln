@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
-VisualStudioVersion = 14.0.24720.0
+VisualStudioVersion = 14.0.25123.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{0D7AEFA3-ABB0-4AF1-A4C1-F8E05C241753}"
 EndProject
@@ -139,6 +139,8 @@ EndProject
 Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "Platformus.Content.Data.EntityFramework.PostgreSql", "src\Platformus.Content.Data.EntityFramework.PostgreSql\Platformus.Content.Data.EntityFramework.PostgreSql.xproj", "{646535E3-2EF1-4688-9763-D90B834CA4BC}"
 EndProject
 Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "Platformus.Configuration.Data.EntityFramework.PostgreSql", "src\Platformus.Configuration.Data.EntityFramework.PostgreSql\Platformus.Configuration.Data.EntityFramework.PostgreSql.xproj", "{A85253F8-48B2-4884-80F7-46E747F05197}"
+EndProject
+Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "Platformus.WebApplication", "src\Platformus.WebApplication\Platformus.WebApplication.xproj", "{0942191A-A90C-440C-BDA6-7565E21547AA}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -374,6 +376,10 @@ Global
 		{A85253F8-48B2-4884-80F7-46E747F05197}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A85253F8-48B2-4884-80F7-46E747F05197}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A85253F8-48B2-4884-80F7-46E747F05197}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0942191A-A90C-440C-BDA6-7565E21547AA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0942191A-A90C-440C-BDA6-7565E21547AA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0942191A-A90C-440C-BDA6-7565E21547AA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0942191A-A90C-440C-BDA6-7565E21547AA}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -444,5 +450,6 @@ Global
 		{2B42FBED-E94A-46AD-A42C-B62129632467} = {E69F478C-55F9-45D7-9424-47906DFA3F02}
 		{646535E3-2EF1-4688-9763-D90B834CA4BC} = {00C2D90C-A4B3-49F8-8D9A-3249CBDCB625}
 		{A85253F8-48B2-4884-80F7-46E747F05197} = {D8340F5D-3745-4DA9-BF59-D949AA791A73}
+		{0942191A-A90C-440C-BDA6-7565E21547AA} = {0D7AEFA3-ABB0-4AF1-A4C1-F8E05C241753}
 	EndGlobalSection
 EndGlobal
