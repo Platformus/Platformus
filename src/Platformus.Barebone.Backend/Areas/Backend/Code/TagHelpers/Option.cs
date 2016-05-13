@@ -11,7 +11,7 @@ namespace Platformus.Barebone.Backend
     public Option(string text = null, string value = null)
     {
       this.Text = text;
-      this.Value = value;
+      this.Value = value ?? text;
     }
   }
 }

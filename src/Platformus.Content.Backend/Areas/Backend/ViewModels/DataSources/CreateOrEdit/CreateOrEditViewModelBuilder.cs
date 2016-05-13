@@ -3,12 +3,12 @@
 
 using System.Collections.Generic;
 using System.Linq;
-using System.Reflection;
+using ExtCore.Infrastructure;
 using Platformus.Barebone;
 using Platformus.Barebone.Backend;
 using Platformus.Content.Data.Abstractions;
-using Platformus.Content.DataSources;
 using Platformus.Content.Data.Models;
+using Platformus.Content.DataSources;
 using Platformus.Globalization.Backend.ViewModels;
 
 namespace Platformus.Content.Backend.ViewModels.DataSources
@@ -42,7 +42,7 @@ namespace Platformus.Content.Backend.ViewModels.DataSources
 
     private IEnumerable<Option> GetCSharpClassNameOptions()
     {
-      return this.GetType().GetTypeInfo().Assembly.GetTypes().Where(t => typeof(IDataSource).IsAssignableFrom(t) && t.GetTypeInfo().IsClass && t != typeof(DataSourceBase)).Select(
+      return ExtensionManager.GetImplementations<IDataSource>().Where(t => t != typeof(DataSourceBase)).Select(
         t => new Option(t.FullName)
       );
     }
