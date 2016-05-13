@@ -1,7 +1,10 @@
 ﻿@* Copyright © 2015 Dmitry Sikorsky. All rights reserved. *@
 @* Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information. *@
 @model Platformus.Security.Backend.ViewModels.Account.SignInViewModel
-<h1>Sign In</h1>
+@{ 
+  this.ViewBag.Title = "Sign In";
+}
+<h1>@ViewBag.Title</h1>
 <form method="post">
   <single-line-text-editor asp-for="Email" />
   <secret-editor asp-for="Password" />

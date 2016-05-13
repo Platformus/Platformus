@@ -2,9 +2,10 @@
 @* Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information. *@
 @model Platformus.Forms.Backend.ViewModels.Fields.CreateOrEditViewModel
 @{
+  this.ViewBag.Title = (this.Model.Id == null ? "Create" : "Edit") + " Field";
   this.ViewBag.ActiveMenuItem = "forms";
 }
-<h1>@(this.Model.Id == null ? "Create" : "Edit") Field</h1>
+<h1>@ViewBag.Title</h1>
 <form method="post">
   <drop-down-list-selector asp-for="FieldTypeId" asp-options="@Model.FieldTypeOptions" />
   <multilingual-single-line-text-editor asp-for="Name" asp-localizations="@Model.NameLocalizations" />

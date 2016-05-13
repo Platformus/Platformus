@@ -2,9 +2,10 @@
 @* Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information. *@
 @model Platformus.Static.Backend.ViewModels.Files.IndexViewModel
 @{
+  this.ViewBag.Title = "Files";
   this.ViewBag.ActiveMenuItem = "files";
 }
-<h1>Files <span>@Model.Grid.Pager.Total</span></h1>
+<h1>@ViewBag.Title <span>@Model.Grid.Pager.Total</span></h1>
 @Html.Partial("_Grid", this.Model.Grid)
 <div id="filesDragAndDropArea" class="files-drag-and-drop-area">
   Drop files here

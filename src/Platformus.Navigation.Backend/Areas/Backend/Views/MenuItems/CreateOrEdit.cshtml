@@ -2,9 +2,10 @@
 @* Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information. *@
 @model Platformus.Navigation.Backend.ViewModels.MenuItems.CreateOrEditViewModel
 @{
+  this.ViewBag.Title = (this.Model.Id == null ? "Create" : "Edit") + " Menu Item";
   this.ViewBag.ActiveMenuItem = "menus";
 }
-<h1>@(this.Model.Id == null ? "Create" : "Edit") Menu Item</h1>
+<h1>@ViewBag.Title</h1>
 <form method="post">
   <multilingual-single-line-text-editor asp-for="Name" asp-localizations="@Model.NameLocalizations" />
   <single-line-text-editor asp-for="Url" />

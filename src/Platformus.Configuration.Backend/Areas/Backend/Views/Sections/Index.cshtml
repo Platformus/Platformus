@@ -2,9 +2,10 @@
 @* Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information. *@
 @model Platformus.Configuration.Backend.ViewModels.Sections.IndexViewModel
 @{
+  this.ViewBag.Title = "Sections";
   this.ViewBag.ActiveMenuItem = "sections";
 }
-<h1>Sections <span>@Model.Sections.Count()</span></h1>
+<h1>@ViewBag.Title <span>@Model.Sections.Count()</span></h1>
 <div class="tree">
   @foreach (var section in this.Model.Sections)
   {

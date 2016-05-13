@@ -2,9 +2,10 @@
 @* Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information. *@
 @model Platformus.Content.Backend.ViewModels.DataTypes.IndexViewModel
 @{
+  this.ViewBag.Title = "Data Types";
   this.ViewBag.ActiveMenuItem = "datatypes";
 }
-<h1>Data Types <span>@Model.Grid.Pager.Total</span></h1>
+<h1>@ViewBag.Title <span>@Model.Grid.Pager.Total</span></h1>
 @Html.Partial("_Grid", this.Model.Grid)
 <div class="buttons">
   <a class="button positive" href="@this.Context.Request.CombineUrl("/backend/datatypes/create")">Create data type</a>

@@ -2,9 +2,10 @@
 @* Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information. *@
 @model Platformus.Globalization.Backend.ViewModels.Cultures.IndexViewModel
 @{
+  this.ViewBag.Title = "Cultures";
   this.ViewBag.ActiveMenuItem = "cultures";
 }
-<h1>Cultures <span>@Model.Grid.Pager.Total</span></h1>
+<h1>@ViewBag.Title <span>@Model.Grid.Pager.Total</span></h1>
 @Html.Partial("_Grid", this.Model.Grid)
 <div class="buttons">
   <a class="button positive" href="@this.Context.Request.CombineUrl("/backend/cultures/create")">Create culture</a>

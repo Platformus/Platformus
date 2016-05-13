@@ -2,9 +2,10 @@
 @* Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information. *@
 @model Platformus.Globalization.Backend.ViewModels.Cultures.CreateOrEditViewModel
 @{
+  this.ViewBag.Title = (this.Model.Id == null ? "Create" : "Edit") + " Culture";
   this.ViewBag.ActiveMenuItem = "cultures";
 }
-<h1>@(this.Model.Id == null ? "Create" : "Edit") Culture</h1>
+<h1>@ViewBag.Title</h1>
 <form method="post">
   <single-line-text-editor asp-for="Code" />
   <single-line-text-editor asp-for="Name" />

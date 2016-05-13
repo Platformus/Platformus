@@ -2,12 +2,20 @@
 @* Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information. *@
 @model Platformus.Content.Backend.ViewModels.Objects.IndexViewModel
 @{
+  if (this.Model.Class == null)
+  {
+    this.ViewBag.Title = "Objects";
+  }
+  else
+  {
+    this.ViewBag.Title = this.Model.Class.PluralizedName;
+  }
   this.ViewBag.ActiveMenuItem = "objects";
   this.ViewBag.HasSideDetails = true;
 }
 @if (this.Model.Class != null)
 {
-  <h1>@Model.Class.PluralizedName <span>@Model.Grid.Pager.Total</span></h1>
+  <h1>@ViewBag.Title <span>@Model.Grid.Pager.Total</span></h1>
   @Html.Partial("_Grid", this.Model.Grid)
   <div class="buttons">
     <a class="button positive" href="@this.Context.Request.CombineUrl("/backend/objects/create")">Create @Model.Class.Name.ToLower()</a>

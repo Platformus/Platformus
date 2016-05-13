@@ -2,9 +2,10 @@
 @* Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information. *@
 @model Platformus.Security.Backend.ViewModels.Permissions.CreateOrEditViewModel
 @{
+  this.ViewBag.Title = (this.Model.Id == null ? "Create" : "Edit") + " Permission";
   this.ViewBag.ActiveMenuItem = "permissions";
 }
-<h1>@(this.Model.Id == null ? "Create" : "Edit") Permission</h1>
+<h1>@ViewBag.Title</h1>
 <form method="post">
   <single-line-text-editor asp-for="Code" />
   <single-line-text-editor asp-for="Name" />

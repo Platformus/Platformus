@@ -2,9 +2,10 @@
 @* Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information. *@
 @model Platformus.Content.Backend.ViewModels.Objects.CreateOrEditViewModel
 @{
+  this.ViewBag.Title = (this.Model.Id == null ? "Create" : "Edit") + " " + this.Model.Class.Name;
   this.ViewBag.ActiveMenuItem = "objects";
 }
-<h1>@(this.Model.Id == null ? "Create" : "Edit") @Model.Class.Name</h1>
+<h1>@ViewBag.Title</h1>
 <form method="post">
   <div id="tabs" class="tabs"></div>
   <div id="members">
