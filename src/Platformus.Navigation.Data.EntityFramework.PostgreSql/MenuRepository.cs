@@ -48,13 +48,12 @@ namespace Platformus.Navigation.Data.EntityFramework.PostgreSql
         @"
           DELETE FROM CachedMenus WHERE MenuId = {0};
           CREATE TEMP TABLE TempMenuItems (Id INT PRIMARY KEY);
-          INSERT INTO TempMenuItems SELECT Id FROM MenuItems WHERE MenuId = {0}
-          WHILE @@ROWCOUNT > 0
-            INSERT INTO TempMenuItems 
-              SELECT DISTINCT MenuItems.Id 
-              FROM MenuItems
-              INNER JOIN TempMenuItems ON MenuItems.MenuItemId = TempMenuItems.Id
-              WHERE MenuItems.Id NOT IN (SELECT Id FROM TempMenuItems);
+          WITH X AS (
+            SELECT Id FROM MenuItems WHERE MenuId = {0}
+            UNION ALL
+            SELECT MenuItems.Id FROM MenuItems INNER JOIN X ON MenuItems.MenuItemId = X.Id
+          )
+          INSERT INTO TempMenuItems SELECT Id FROM X;
           CREATE TEMP TABLE TempDictionaries (Id INT PRIMARY KEY);
           INSERT INTO TempDictionaries VALUES ({1});
           INSERT INTO TempDictionaries SELECT NameId FROM MenuItems WHERE Id IN (SELECT Id FROM TempMenuItems);

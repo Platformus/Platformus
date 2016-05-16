@@ -47,13 +47,12 @@ namespace Platformus.Navigation.Data.EntityFramework.SqlServer
       this.dbContext.Database.ExecuteSqlCommand(
         @"
           CREATE TABLE #MenuItems (Id INT PRIMARY KEY);
-          INSERT INTO #MenuItems VALUES ({0});
-          WHILE @@ROWCOUNT > 0
-            INSERT INTO #MenuItems 
-              SELECT DISTINCT MenuItems.Id 
-              FROM MenuItems
-              INNER JOIN #MenuItems ON MenuItems.MenuItemId = #MenuItems.Id
-              WHERE MenuItems.Id NOT IN (SELECT Id FROM #MenuItems);
+          WITH X AS (
+            SELECT Id FROM MenuItems WHERE Id = {0}
+            UNION ALL
+            SELECT MenuItems.Id FROM MenuItems INNER JOIN X ON MenuItems.MenuItemId = X.Id
+          )
+          INSERT INTO #MenuItems SELECT Id FROM X;
           CREATE TABLE #Dictionaries (Id INT PRIMARY KEY);
           INSERT INTO #Dictionaries SELECT NameId FROM MenuItems WHERE Id IN (SELECT Id FROM #MenuItems);
           DELETE FROM MenuItems WHERE Id IN (SELECT Id FROM #MenuItems);

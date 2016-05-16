@@ -48,13 +48,12 @@ namespace Platformus.Navigation.Data.EntityFramework.SqlServer
         @"
           DELETE FROM CachedMenus WHERE MenuId = {0};
           CREATE TABLE #MenuItems (Id INT PRIMARY KEY);
-          INSERT INTO #MenuItems SELECT Id FROM MenuItems WHERE MenuId = {0}
-          WHILE @@ROWCOUNT > 0
-            INSERT INTO #MenuItems 
-              SELECT DISTINCT MenuItems.Id 
-              FROM MenuItems
-              INNER JOIN #MenuItems ON MenuItems.MenuItemId = #MenuItems.Id
-              WHERE MenuItems.Id NOT IN (SELECT Id FROM #MenuItems);
+          WITH X AS (
+            SELECT Id FROM MenuItems WHERE MenuId = {0}
+            UNION ALL
+            SELECT MenuItems.Id FROM MenuItems INNER JOIN X ON MenuItems.MenuItemId = X.Id
+          )
+          INSERT INTO #MenuItems SELECT Id FROM X;
           CREATE TABLE #Dictionaries (Id INT PRIMARY KEY);
           INSERT INTO #Dictionaries VALUES ({1});
           INSERT INTO #Dictionaries SELECT NameId FROM MenuItems WHERE Id IN (SELECT Id FROM #MenuItems);
