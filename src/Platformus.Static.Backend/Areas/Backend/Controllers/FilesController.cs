@@ -2,28 +2,27 @@
 // Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information.
 
 using System.Collections.Generic;
+using System.IO;
 using System.Threading.Tasks;
 using ExtCore.Data.Abstractions;
-using Microsoft.AspNet.Http;
-using Microsoft.AspNet.Mvc;
-using Microsoft.Extensions.PlatformAbstractions;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Net.Http.Headers;
-using Platformus.Barebone.Backend.Controllers;
 using Platformus.Static.Backend.ViewModels.Files;
 using Platformus.Static.Data.Abstractions;
-using Platformus.Static.Data.Models;
 
 namespace Platformus.Static.Backend.Controllers
 {
   [Area("Backend")]
-  public class FilesController : ControllerBase
+  public class FilesController : Barebone.Backend.Controllers.ControllerBase
   {
-    public IApplicationEnvironment ApplicationEnvironment { get; private set; }
+    public IHostingEnvironment HostingEnvironment { get; private set; }
 
-    public FilesController(IStorage storage, IApplicationEnvironment hostingEnvironment)
+    public FilesController(IStorage storage, IHostingEnvironment hostingEnvironment)
       : base(storage)
     {
-      this.ApplicationEnvironment = hostingEnvironment;
+      this.HostingEnvironment = hostingEnvironment;
     }
 
     public IActionResult Index(string orderBy = "name", string direction = "asc", int skip = 0, int take = 10)
@@ -39,9 +38,11 @@ namespace Platformus.Static.Backend.Controllers
         string filename = ContentDispositionHeaderValue.Parse(source.ContentDisposition).FileName.Trim('"');
 
         filename = this.EnsureCorrectFilename(filename);
-        await source.SaveAsAsync(this.GetPathAndFilename(filename));
 
-        File file = new File();
+        using (FileStream output = System.IO.File.Create(this.GetPathAndFilename(filename)))
+          await source.CopyToAsync(output);
+
+        Platformus.Static.Data.Models.File file = new Platformus.Static.Data.Models.File();
 
         file.Name = filename;
         file.Size = source.Length;
@@ -54,7 +55,7 @@ namespace Platformus.Static.Backend.Controllers
 
     public ActionResult Delete(int id)
     {
-      File file = this.Storage.GetRepository<IFileRepository>().WithKey(id);
+      Platformus.Static.Data.Models.File file = this.Storage.GetRepository<IFileRepository>().WithKey(id);
 
       try
       {
@@ -78,7 +79,7 @@ namespace Platformus.Static.Backend.Controllers
 
     private string GetPathAndFilename(string filename)
     {
-      return this.ApplicationEnvironment.ApplicationBasePath + "\\wwwroot\\files\\" + filename;
+      return this.HostingEnvironment.WebRootPath + "\\files\\" + filename;
     }
   }
 }

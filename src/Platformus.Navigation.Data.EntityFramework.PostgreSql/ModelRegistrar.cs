@@ -2,7 +2,7 @@
 // Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information.
 
 using ExtCore.Data.EntityFramework.PostgreSql;
-using Microsoft.Data.Entity;
+using Microsoft.EntityFrameworkCore;
 using Platformus.Navigation.Data.Models;
 
 namespace Platformus.Navigation.Data.EntityFramework.PostgreSql

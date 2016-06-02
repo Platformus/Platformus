@@ -2,9 +2,8 @@
 // Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information.
 
 using ExtCore.Data.Abstractions;
-using Microsoft.AspNet.Authorization;
-using Microsoft.AspNet.Mvc;
-using Platformus.Barebone.Frontend.Controllers;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Platformus.Content.Data.Abstractions;
 using Platformus.Content.Data.Models;
 using Platformus.Content.Frontend.ViewModels.Shared;
@@ -13,7 +12,7 @@ using Platformus.Globalization;
 namespace Platformus.Content.Frontend.Controllers
 {
   [AllowAnonymous]
-  public class DefaultController : ControllerBase
+  public class DefaultController : Barebone.Frontend.Controllers.ControllerBase
   {
     public DefaultController(IStorage storage)
       : base(storage)
@@ -33,7 +32,7 @@ namespace Platformus.Content.Frontend.Controllers
         Object @object = this.Storage.GetRepository<IObjectRepository>().WithUrl(url);
 
         if (@object == null)
-          return this.HttpNotFound();
+          return this.NotFound();
 
         ObjectViewModel result = new ObjectViewModelBuilder(this).Build(@object);
 

@@ -2,7 +2,7 @@
 // Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information.
 
 using System.Security.Claims;
-using Microsoft.AspNet.Authentication.Cookies;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Platformus.Barebone;
 using Platformus.Security.Data.Abstractions;
 using Platformus.Security.Data.Models;
@@ -51,6 +51,19 @@ namespace Platformus.Security
     public async void SignOut()
     {
       await this.handler.HttpContext.Authentication.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
+    }
+
+    public User GetCurrentUser()
+    {
+      if (!this.handler.HttpContext.User.Identity.IsAuthenticated)
+        return null;
+
+      int currentUserId;
+
+      if (!int.TryParse(this.handler.HttpContext.User.Identity.Name.Replace("user", string.Empty), out currentUserId))
+        return null;
+
+      return this.handler.Storage.GetRepository<IUserRepository>().WithKey(currentUserId);
     }
   }
 }

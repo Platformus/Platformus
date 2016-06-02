@@ -2,9 +2,9 @@
 // Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information.
 
 using System.ComponentModel.DataAnnotations;
-using Microsoft.AspNet.Mvc.ModelBinding;
-using Microsoft.AspNet.Mvc.Rendering;
-using Microsoft.AspNet.Razor.TagHelpers;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
+using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.AspNetCore.Razor.TagHelpers;
 
 namespace Platformus.Barebone.Backend
 {
@@ -26,7 +26,7 @@ namespace Platformus.Barebone.Backend
 
       tb.AddCssClass("culture");
       tb.InnerHtml.Clear();
-      tb.InnerHtml.Append(this.GenerateFlag(localization));
+      tb.InnerHtml.AppendHtml(this.GenerateFlag(localization));
       return tb;
     }
 

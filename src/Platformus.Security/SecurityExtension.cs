@@ -2,13 +2,13 @@
 // Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information.
 
 using System.Collections.Generic;
-using Microsoft.AspNet.Authentication.Cookies;
-using Microsoft.AspNet.Authorization;
-using Microsoft.AspNet.Builder;
-using Microsoft.AspNet.Http;
-using Microsoft.AspNet.Mvc;
-using Microsoft.AspNet.Mvc.Filters;
-using Microsoft.AspNet.Routing;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Authorization;
+using Microsoft.AspNetCore.Routing;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Platformus.Infrastructure;
@@ -63,14 +63,17 @@ namespace Platformus.Security
 
     public void Configure(IApplicationBuilder applicationBuilder)
     {
-      applicationBuilder.UseCookieAuthentication(options => {
-        options.AuthenticationScheme = CookieAuthenticationDefaults.AuthenticationScheme;
-        options.AutomaticAuthenticate = true;
-        options.AutomaticChallenge = true;
-        options.CookieName = "PLATFORMUS";
-        options.ExpireTimeSpan = new System.TimeSpan(1, 0, 0);
-        options.LoginPath = new PathString("/backend/account/signin");
-      });
+      applicationBuilder.UseCookieAuthentication(
+        new CookieAuthenticationOptions()
+        {
+          AuthenticationScheme = CookieAuthenticationDefaults.AuthenticationScheme,
+          AutomaticAuthenticate = true,
+          AutomaticChallenge = true,
+          CookieName = "PLATFORMUS",
+          ExpireTimeSpan = new System.TimeSpan(1, 0, 0),
+          LoginPath = new PathString("/backend/account/signin")
+        }
+      );
     }
 
     public void RegisterRoutes(IRouteBuilder routeBuilder)

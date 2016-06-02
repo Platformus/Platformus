@@ -3,9 +3,9 @@
 
 using System.Collections.Generic;
 using System.Globalization;
-using Microsoft.AspNet.Builder;
-using Microsoft.AspNet.Localization;
-using Microsoft.AspNet.Routing;
+using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Localization;
+using Microsoft.AspNetCore.Routing;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Platformus.Infrastructure;
@@ -56,6 +56,7 @@ namespace Platformus.Globalization
     {
       RequestLocalizationOptions requestLocalizationOptions = new RequestLocalizationOptions();
 
+      requestLocalizationOptions.DefaultRequestCulture = new RequestCulture("en");
       requestLocalizationOptions.SupportedCultures = new List<CultureInfo>
       {
         new CultureInfo("en"),
@@ -69,7 +70,7 @@ namespace Platformus.Globalization
       };
 
       requestLocalizationOptions.RequestCultureProviders.Insert(0, new RouteValueRequestCultureProvider());
-      applicationBuilder.UseRequestLocalization(requestLocalizationOptions, new RequestCulture("en"));
+      applicationBuilder.UseRequestLocalization(requestLocalizationOptions);
     }
 
     public void RegisterRoutes(IRouteBuilder routeBuilder)

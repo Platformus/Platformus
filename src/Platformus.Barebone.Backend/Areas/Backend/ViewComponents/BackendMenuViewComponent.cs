@@ -1,8 +1,9 @@
 ﻿// Copyright © 2015 Dmitry Sikorsky. All rights reserved.
 // Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information.
 
+using System.Threading.Tasks;
 using ExtCore.Data.Abstractions;
-using Microsoft.AspNet.Mvc;
+using Microsoft.AspNetCore.Mvc;
 using Platformus.Barebone.Backend.ViewModels.Shared;
 
 namespace Platformus.Barebone.Backend.ViewComponents
@@ -14,7 +15,7 @@ namespace Platformus.Barebone.Backend.ViewComponents
     {
     }
 
-    public IViewComponentResult Invoke()
+    public async Task<IViewComponentResult> InvokeAsync()
     {
       return this.View(new BackendMenuViewModelBuilder(null).Build());
     }

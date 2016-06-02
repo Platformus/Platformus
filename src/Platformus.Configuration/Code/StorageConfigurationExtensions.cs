@@ -6,11 +6,11 @@ using Microsoft.Extensions.Configuration;
 
 namespace Platformus.Configuration
 {
-  public static class ConfigurationBuilderExtensions
+  public static class StorageConfigurationExtensions
   {
-    public static IConfigurationBuilder AddEnvironmentVariables(this IConfigurationBuilder configurationBuilder, IStorage storage)
+    public static IConfigurationBuilder AddStorage(this IConfigurationBuilder configurationBuilder, IStorage storage)
     { 
-      configurationBuilder.Add(new StorageConfigurationProvider(storage)); 
+      configurationBuilder.Add(new StorageConfigurationSource(storage)); 
       return configurationBuilder; 
     }
   }

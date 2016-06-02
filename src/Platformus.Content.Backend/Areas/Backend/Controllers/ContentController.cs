@@ -3,16 +3,15 @@
 
 using System.Text;
 using ExtCore.Data.Abstractions;
-using Microsoft.AspNet.Mvc;
+using Microsoft.AspNetCore.Mvc;
 using Platformus.Content.Backend.ViewModels.Content;
 using Platformus.Content.Data.Abstractions;
 using Platformus.Content.Data.Models;
-using Platformus.Globalization.Backend.Controllers;
 
 namespace Platformus.Content.Backend.Controllers
 {
   [Area("Backend")]
-  public class ContentController : ControllerBase
+  public class ContentController : Platformus.Globalization.Backend.Controllers.ControllerBase
   {
     public ContentController(IStorage storage)
       : base(storage)

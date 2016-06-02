@@ -3,7 +3,7 @@
 
 using System.Linq;
 using ExtCore.Data.EntityFramework.PostgreSql;
-using Microsoft.Data.Entity;
+using Microsoft.EntityFrameworkCore;
 using Platformus.Globalization.Data.Abstractions;
 using Platformus.Globalization.Data.Models;
 

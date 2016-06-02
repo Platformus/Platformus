@@ -12,7 +12,6 @@
   <script src="~/lib/jquery/jquery.min.js"></script>
   <script src="~/lib/jquery-validation/jquery.validate.min.js"></script>
   <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
-  <script src="~/lib/jquery/jquery.min.js"></script>
   <script src="~/lib/tinymce/tinymce.min.js"></script>
   <script src="~/wwwroot.areas.backend.js.platformus.barebone.min.js"></script>
 </head>
@@ -21,7 +20,7 @@
     <div class="side">
       <a class="platformus" href="/backend/">
         Platformus <span>CMS</span></a>
-      @Component.Invoke("BackendMenu")
+      @await Component.InvokeAsync("BackendMenu")
       <div class="user-menu">
         <a class="menu-item" href="/backend/account/signout">
           Sign out

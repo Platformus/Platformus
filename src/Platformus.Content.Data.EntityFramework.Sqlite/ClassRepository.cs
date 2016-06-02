@@ -4,7 +4,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using ExtCore.Data.EntityFramework.Sqlite;
-using Microsoft.Data.Entity;
+using Microsoft.EntityFrameworkCore;
 using Platformus.Content.Data.Abstractions;
 using Platformus.Content.Data.Models;
 

@@ -1,6 +1,7 @@
 .svn/
 .vs/
-artifacts/
+bin/
+obj/
 src/Platformus.Barebone.Backend/wwwroot/areas/backend/css
 src/Platformus.Barebone.Backend/wwwroot/areas/backend/js
 src/Platformus.Barebone.Backend/node_modules/

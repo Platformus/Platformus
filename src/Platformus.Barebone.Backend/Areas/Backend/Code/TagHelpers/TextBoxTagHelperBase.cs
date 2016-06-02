@@ -1,7 +1,7 @@
 ﻿// Copyright © 2015 Dmitry Sikorsky. All rights reserved.
 // Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information.
 
-using Microsoft.AspNet.Mvc.Rendering;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace Platformus.Barebone.Backend
 {
@@ -17,7 +17,12 @@ namespace Platformus.Barebone.Backend
       tb.MergeAttribute("id", this.GetIdentity(modelExpression, localization));
       tb.MergeAttribute("name", this.GetIdentity(modelExpression, localization));
       tb.MergeAttribute("type", type);
-      tb.MergeAttribute("value", this.GetValue(viewContext, modelExpression, localization));
+
+      string value = this.GetValue(viewContext, modelExpression, localization);
+
+      if (!string.IsNullOrEmpty(value))
+        tb.MergeAttribute("value", value);
+
       this.HandleAttributes(tb, modelExpression);
       tb.TagRenderMode = TagRenderMode.SelfClosing;
       return tb;

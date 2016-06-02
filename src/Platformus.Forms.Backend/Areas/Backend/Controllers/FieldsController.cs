@@ -2,16 +2,15 @@
 // Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information.
 
 using ExtCore.Data.Abstractions;
-using Microsoft.AspNet.Mvc;
+using Microsoft.AspNetCore.Mvc;
 using Platformus.Forms.Backend.ViewModels.Fields;
 using Platformus.Forms.Data.Abstractions;
 using Platformus.Forms.Data.Models;
-using Platformus.Globalization.Backend.Controllers;
 
 namespace Platformus.Forms.Backend.Controllers
 {
   [Area("Backend")]
-  public class FieldsController : ControllerBase
+  public class FieldsController : Platformus.Globalization.Backend.Controllers.ControllerBase
   {
     public FieldsController(IStorage storage)
       : base(storage)

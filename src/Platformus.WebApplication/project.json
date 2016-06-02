@@ -1,24 +1,31 @@
-﻿{
+{
   "authors": [ "Dmitry Sikorsky" ],
   "copyright": "Copyright © 2015 Dmitry Sikorsky",
   "dependencies": {
-    "ExtCore.Data": "1.0.0-alpha7",
-    "ExtCore.Infrastructure": "1.0.0-alpha7",
-    "ExtCore.WebApplication": "1.0.0-alpha7",
-    "Microsoft.AspNet.Diagnostics": "1.0.0-rc1-final",
-    "Microsoft.AspNet.Diagnostics.Entity": "7.0.0-rc1-final",
-    "Microsoft.AspNet.Mvc": "6.0.0-rc1-final",
-    "Microsoft.Extensions.Configuration.Abstractions": "1.0.0-rc1-final",
-    "Microsoft.Extensions.Configuration.Json": "1.0.0-rc1-final",
-    "Microsoft.VisualStudio.Web.BrowserLink.Loader": "14.0.0-rc1-final",
-    "Platformus.Infrastructure": "1.0.0-alpha4"
+    "ExtCore.Data": "1.0.0-alpha8",
+    "ExtCore.Infrastructure": "1.0.0-alpha8",
+    "ExtCore.WebApplication": "1.0.0-alpha8",
+    "Microsoft.AspNetCore.Diagnostics": "1.0.0-rc2-final",
+    "Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore": "1.0.0-rc2-final",
+    "Microsoft.AspNetCore.Mvc": "1.0.0-rc2-final",
+    "Microsoft.AspNetCore.Session": "1.0.0-rc2-final",
+    "Microsoft.Extensions.Configuration.Json": "1.0.0-rc2-final",
+    "Microsoft.VisualStudio.Web.BrowserLink.Loader": "14.0.0-rc2-final",
+    "Platformus.Infrastructure": "1.0.0-alpha5"
   },
   "description": "Free, open source and cross-platform CMS based on ASP.NET Core 1.0 and ExtCore framework.",
   "frameworks": {
-    "dnx451": { },
-    "dnxcore50": { }
+    "netstandard1.5": {
+      "imports": [
+        "dotnet5.6",
+        "dnxcore50",
+        "portable-net45+win8"
+      ]
+    }
   },
-  "iconUrl": "http://platformus.net/platformus_nuget_icon.png",
-  "projectUrl": "http://platformus.net/",
-  "version": "1.0.0-alpha4"
+  "packOptions": {
+    "iconUrl": "http://platformus.net/platformus_nuget_icon.png",
+    "projectUrl": "http://platformus.net/"
+  },
+  "version": "1.0.0-alpha5"
 }

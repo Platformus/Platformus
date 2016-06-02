@@ -2,8 +2,7 @@
 // Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information.
 
 using ExtCore.Data.Abstractions;
-using Microsoft.AspNet.Mvc;
-using Platformus.Barebone.Backend.Controllers;
+using Microsoft.AspNetCore.Mvc;
 using Platformus.Configuration.Backend.ViewModels.Sections;
 using Platformus.Configuration.Data.Abstractions;
 using Platformus.Configuration.Data.Models;
@@ -11,7 +10,7 @@ using Platformus.Configuration.Data.Models;
 namespace Platformus.Configuration.Backend.Controllers
 {
   [Area("Backend")]
-  public class SectionsController : ControllerBase
+  public class SectionsController : Platformus.Barebone.Backend.Controllers.ControllerBase
   {
     public SectionsController(IStorage storage)
       : base(storage)

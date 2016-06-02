@@ -3,7 +3,7 @@
 
 using System.Collections.Generic;
 using System.Linq;
-using Microsoft.AspNet.Mvc.Rendering;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace Platformus.Barebone.Backend
 {
@@ -21,7 +21,7 @@ namespace Platformus.Barebone.Backend
       tb.MergeAttribute("id", this.GetIdentity(modelExpression));
       this.HandleAttributes(tb, modelExpression);
       tb.InnerHtml.Clear();
-      tb.InnerHtml.Append(
+      tb.InnerHtml.AppendHtml(
         new CompositeHtmlContent(
           this.GenerateText(viewContext, modelExpression, options),
           this.GenerateDropDownListItems(options),
@@ -49,7 +49,7 @@ namespace Platformus.Barebone.Backend
 
       tb.AddCssClass("drop-down-list-items");
       tb.InnerHtml.Clear();
-      tb.InnerHtml.Append(new CompositeHtmlContent(options.Select(o => this.GenerateDropDownListItem(o)).ToArray()));
+      tb.InnerHtml.AppendHtml(new CompositeHtmlContent(options.Select(o => this.GenerateDropDownListItem(o)).ToArray()));
       return tb;
     }
 
@@ -72,6 +72,7 @@ namespace Platformus.Barebone.Backend
       tb.Attributes.Add("name", this.GetIdentity(modelExpression));
       tb.Attributes.Add("type", "hidden");
       tb.Attributes.Add("value", this.GetValue(viewContext, modelExpression, options));
+      tb.TagRenderMode = TagRenderMode.SelfClosing;
       return tb;
     }
 

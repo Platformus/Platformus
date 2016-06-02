@@ -7,8 +7,8 @@ using System.Linq;
 using System.Reflection;
 using ExtCore.Data.Abstractions;
 using ExtCore.Data.Models.Abstractions;
-using Microsoft.AspNet.Mvc.Filters;
-using Microsoft.AspNet.Mvc.ModelBinding;
+using Microsoft.AspNetCore.Mvc.Filters;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Platformus.Globalization.Backend.ViewModels;
 using Platformus.Globalization.Data.Abstractions;
 using Platformus.Globalization.Data.Models;
@@ -114,12 +114,15 @@ namespace Platformus.Globalization.Backend.Controllers
             string identity = propertyInfo.Name + culture.Code;
             string value = this.Request.Form[identity];
 
-            ModelStateEntry modelState = new ModelStateEntry();
+            this.ModelState.SetModelValue(identity, value, value);
 
             if (hasRequiredAttribute && string.IsNullOrEmpty(value))
-              this.ModelState.Add(identity, this.CreateInvalidModelState(value));
+            {
+              this.ModelState[identity].ValidationState = ModelValidationState.Invalid;
+              this.ModelState[identity].Errors.Add(string.Empty);
+            }
 
-            else this.ModelState.Add(identity, this.CreateValidModelState(value));
+            else this.ModelState[identity].ValidationState = ModelValidationState.Valid;
           }
         }
       }
@@ -138,24 +141,6 @@ namespace Platformus.Globalization.Backend.Controllers
     private IEnumerable<PropertyInfo> GetMultilingualPropertiesFromViewModel(ViewModelBase viewModel)
     {
       return viewModel.GetType().GetProperties().Where(pi => pi.CustomAttributes.Any(ca => ca.AttributeType == typeof(MultilingualAttribute)));
-    }
-
-    private ModelStateEntry CreateValidModelState(string value)
-    {
-      ModelStateEntry modelState = new ModelStateEntry();
-
-      modelState.ValidationState = ModelValidationState.Valid;
-      modelState.AttemptedValue = value;
-      return modelState;
-    }
-
-    private ModelStateEntry CreateInvalidModelState(string value)
-    {
-      ModelStateEntry modelState = this.CreateValidModelState(value);
-
-      modelState.Errors.Add(string.Empty);
-      modelState.ValidationState = ModelValidationState.Invalid;
-      return modelState;
     }
   }
 }

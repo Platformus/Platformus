@@ -2,16 +2,15 @@
 // Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information.
 
 using ExtCore.Data.Abstractions;
-using Microsoft.AspNet.Mvc;
+using Microsoft.AspNetCore.Mvc;
 using Platformus.Content.Backend.ViewModels.DataTypes;
 using Platformus.Content.Data.Abstractions;
 using Platformus.Content.Data.Models;
-using Platformus.Globalization.Backend.Controllers;
 
 namespace Platformus.Content.Backend.Controllers
 {
   [Area("Backend")]
-  public class DataTypesController : ControllerBase
+  public class DataTypesController : Platformus.Globalization.Backend.Controllers.ControllerBase
   {
     public DataTypesController(IStorage storage)
       : base(storage)

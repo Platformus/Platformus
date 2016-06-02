@@ -2,20 +2,26 @@
   "authors": [ "Dmitry Sikorsky" ],
   "copyright": "Copyright © 2015 Dmitry Sikorsky",
   "dependencies": {
-    "ExtCore.Infrastructure": "1.0.0-alpha7",
-    "Microsoft.AspNet.Authentication.Cookies": "1.0.0-rc1-final",
-    "Microsoft.AspNet.Mvc": "6.0.0-rc1-final",
-    "Platformus.Barebone": "1.0.0-alpha4",
-    "Platformus.Infrastructure": "1.0.0-alpha4",
-    "Platformus.Static.Data.Abstractions": "1.0.0-alpha4",
-    "Platformus.Static.Data.Models": "1.0.0-alpha4"
+    "ExtCore.Infrastructure": "1.0.0-alpha8",
+    "Microsoft.AspNetCore.Mvc": "1.0.0-rc2-final",
+    "Platformus.Barebone": "1.0.0-alpha5",
+    "Platformus.Infrastructure": "1.0.0-alpha5",
+    "Platformus.Static.Data.Abstractions": "1.0.0-alpha5",
+    "Platformus.Static.Data.Models": "1.0.0-alpha5"
   },
   "description": "Part of the Platformus.Static Platformus extension.",
   "frameworks": {
-    "dnx451": { },
-    "dnxcore50": { }
+    "netstandard1.5": {
+      "imports": [
+        "dotnet5.6",
+        "dnxcore50",
+        "portable-net45+win8"
+      ]
+    }
   },
-  "iconUrl": "http://platformus.net/platformus_nuget_icon.png",
-  "projectUrl": "http://platformus.net/",
-  "version": "1.0.0-alpha4"
+  "packOptions": {
+    "iconUrl": "http://platformus.net/platformus_nuget_icon.png",
+    "projectUrl": "http://platformus.net/"
+  },
+  "version": "1.0.0-alpha5"
 }

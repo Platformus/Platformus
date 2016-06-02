@@ -3,7 +3,7 @@
 
 using System.Linq;
 using ExtCore.Data.EntityFramework.Sqlite;
-using Microsoft.Data.Entity;
+using Microsoft.EntityFrameworkCore;
 using Platformus.Navigation.Data.Abstractions;
 using Platformus.Navigation.Data.Models;
 

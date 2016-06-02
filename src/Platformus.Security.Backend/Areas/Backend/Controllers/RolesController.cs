@@ -2,8 +2,7 @@
 // Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information.
 
 using ExtCore.Data.Abstractions;
-using Microsoft.AspNet.Mvc;
-using Platformus.Barebone.Backend.Controllers;
+using Microsoft.AspNetCore.Mvc;
 using Platformus.Security.Backend.ViewModels.Roles;
 using Platformus.Security.Data.Abstractions;
 using Platformus.Security.Data.Models;
@@ -11,7 +10,7 @@ using Platformus.Security.Data.Models;
 namespace Platformus.Security.Backend.Controllers
 {
   [Area("Backend")]
-  public class RolesController : ControllerBase
+  public class RolesController : Barebone.Backend.Controllers.ControllerBase
   {
     public RolesController(IStorage storage)
       : base(storage)

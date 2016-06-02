@@ -4,9 +4,8 @@
 using System.Linq;
 using System.Text;
 using ExtCore.Data.Abstractions;
-using Microsoft.AspNet.Authorization;
-using Microsoft.AspNet.Mvc;
-using Platformus.Barebone.Frontend.Controllers;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Platformus.Forms.Data.Abstractions;
 using Platformus.Forms.Data.Models;
 using Platformus.Globalization.Data.Abstractions;
@@ -14,7 +13,7 @@ using Platformus.Globalization.Data.Abstractions;
 namespace Platformus.Forms.Frontend.Controllers
 {
   [AllowAnonymous]
-  public class FormsController : ControllerBase
+  public class FormsController : Platformus.Barebone.Frontend.Controllers.ControllerBase
   {
     public FormsController(IStorage storage)
       : base(storage)

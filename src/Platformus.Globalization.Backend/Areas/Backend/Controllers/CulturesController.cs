@@ -2,7 +2,7 @@
 // Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information.
 
 using ExtCore.Data.Abstractions;
-using Microsoft.AspNet.Mvc;
+using Microsoft.AspNetCore.Mvc;
 using Platformus.Globalization.Backend.ViewModels.Cultures;
 using Platformus.Globalization.Data.Abstractions;
 using Platformus.Globalization.Data.Models;

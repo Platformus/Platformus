@@ -4,18 +4,17 @@
 using System.Collections.Generic;
 using System.Linq;
 using ExtCore.Data.Abstractions;
-using Microsoft.AspNet.Mvc;
+using Microsoft.AspNetCore.Mvc;
 using Platformus.Content.Backend.ViewModels.Objects;
 using Platformus.Content.Data.Abstractions;
 using Platformus.Content.Data.Models;
-using Platformus.Globalization.Backend.Controllers;
 using Platformus.Globalization.Data.Abstractions;
 using Platformus.Globalization.Data.Models;
 
 namespace Platformus.Content.Backend.Controllers
 {
   [Area("Backend")]
-  public class ObjectsController : ControllerBase
+  public class ObjectsController : Platformus.Globalization.Backend.Controllers.ControllerBase
   {
     public ObjectsController(IStorage storage)
       : base(storage)

@@ -48,14 +48,14 @@ gulp.task(
 );
 
 gulp.task(
-  "backend:clean-scss", function (cb) {
-    del(paths.backend.scss.dest + "/*", cb);
+  "backend:clean-scss", function () {
+    return del(paths.backend.scss.dest + "/*");
   }
 );
 
 gulp.task(
-  "backend:clean-ts", function (cb) {
-    del(paths.backend.ts.dest + "/*", cb);
+  "backend:clean-ts", function () {
+    return del(paths.backend.ts.dest + "/*");
   }
 );
 
@@ -138,14 +138,14 @@ gulp.task(
 );
 
 gulp.task(
-  "backend:delete-unminified-css", function (cb) {
-    del(paths.backend.scss.dest + "/*.css", cb);
+  "backend:delete-unminified-css", function () {
+    return del(paths.backend.scss.dest + "/*.css");
   }
 );
 
 gulp.task(
-  "backend:delete-unminified-js", function (cb) {
-    del(paths.backend.ts.dest + "/*.js", cb);
+  "backend:delete-unminified-js", function () {
+    return del(paths.backend.ts.dest + "/*.js");
   }
 );
 
@@ -178,13 +178,13 @@ gulp.task(
 );
 
 gulp.task(
-  "backend:delete-temp-minified-css", function (cb) {
-    del(paths.backend.scss.dest + "/*.temp", cb);
+  "backend:delete-temp-minified-css", function () {
+    return del(paths.backend.scss.dest + "/*.temp");
   }
 );
 
 gulp.task(
-  "backend:delete-temp-minified-js", function (cb) {
-    del(paths.backend.ts.dest + "/*.temp", cb);
+  "backend:delete-temp-minified-js", function () {
+    return del(paths.backend.ts.dest + "/*.temp");
   }
 );

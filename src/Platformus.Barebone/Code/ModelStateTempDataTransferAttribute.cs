@@ -5,12 +5,11 @@ using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
-using Microsoft.AspNet.Mvc;
-using Microsoft.AspNet.Mvc.Filters;
-using Microsoft.AspNet.Mvc.ModelBinding;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Filters;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
-using Platformus.Barebone.Controllers;
 
 namespace Platformus
 {
@@ -23,7 +22,7 @@ namespace Platformus
   {
     public override void OnActionExecuted(ActionExecutedContext filterContext)
     {
-      ControllerBase controller = filterContext.Controller as ControllerBase;
+      Barebone.Controllers.ControllerBase controller = filterContext.Controller as Barebone.Controllers.ControllerBase;
 
       if (controller != null && !controller.ViewData.ModelState.IsValid)
       {
@@ -43,7 +42,7 @@ namespace Platformus
   {
     public override void OnActionExecuted(ActionExecutedContext filterContext)
     {
-      ControllerBase controller = filterContext.Controller as ControllerBase;
+      Barebone.Controllers.ControllerBase controller = filterContext.Controller as Barebone.Controllers.ControllerBase;
 
       if (controller != null)
       {
@@ -55,19 +54,14 @@ namespace Platformus
           
           if (modelStateWrappers != null)
           {
-            ModelStateDictionary modelState = new ModelStateDictionary();
-
-            foreach (ModelStateWrapper modelStateWrapper in modelStateWrappers)
-            {
-              ModelStateEntry ms = new ModelStateEntry();
-
-              ms.ValidationState = modelStateWrapper.ValidationState;
-              ms.AttemptedValue = modelStateWrapper.Value;
-              modelState.Add(modelStateWrapper.Key, ms);
-            }
-
             if (filterContext.Result is ViewResult)
-              controller.ViewData.ModelState.Merge(modelState);
+            {
+              foreach (ModelStateWrapper modelStateWrapper in modelStateWrappers)
+              {
+                controller.ViewData.ModelState.SetModelValue(modelStateWrapper.Key, modelStateWrapper.Value, modelStateWrapper.Value);
+                controller.ViewData.ModelState[modelStateWrapper.Key].ValidationState = modelStateWrapper.ValidationState;
+              }
+            }
 
             else controller.TempData.Remove(Key);
           }

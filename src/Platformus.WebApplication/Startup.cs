@@ -1,21 +1,21 @@
 ﻿// Copyright © 2015 Dmitry Sikorsky. All rights reserved.
 // Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information.
 
-using Microsoft.AspNet.Builder;
-using Microsoft.AspNet.Hosting;
+using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.PlatformAbstractions;
 
 namespace Platformus.WebApplication
 {
   public class Startup : ExtCore.WebApplication.Startup
   {
-    public Startup(IHostingEnvironment hostingEnvironment, IApplicationEnvironment applicationEnvironment, IAssemblyLoaderContainer assemblyLoaderContainer, IAssemblyLoadContextAccessor assemblyLoadContextAccessor, ILibraryManager libraryManager)
-      : base(hostingEnvironment, applicationEnvironment, assemblyLoaderContainer, assemblyLoadContextAccessor, libraryManager)
+    public Startup(IHostingEnvironment hostingEnvironment)
+      : base(hostingEnvironment)
     {
       IConfigurationBuilder configurationBuilder = new ConfigurationBuilder()
-        .AddJsonFile("config.json");
+        .SetBasePath(hostingEnvironment.ContentRootPath)
+        .AddJsonFile("config.json", optional: true, reloadOnChange: true);
 
       this.configurationRoot = configurationBuilder.Build();
     }
@@ -23,10 +23,13 @@ namespace Platformus.WebApplication
     public override void ConfigureServices(IServiceCollection services)
     {
       base.ConfigureServices(services);
+      services.AddSession();
     }
 
     public override void Configure(IApplicationBuilder applicationBuilder, IHostingEnvironment hostingEnvironment)
     {
+      applicationBuilder.UseSession();
+
       if (hostingEnvironment.IsEnvironment("Development"))
       {
         applicationBuilder.UseBrowserLink();
@@ -36,7 +39,7 @@ namespace Platformus.WebApplication
 
       else
       {
-        applicationBuilder.UseExceptionHandler("/");
+
       }
 
       base.Configure(applicationBuilder, hostingEnvironment);

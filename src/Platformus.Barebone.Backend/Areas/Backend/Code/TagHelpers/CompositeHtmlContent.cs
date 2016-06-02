@@ -2,8 +2,8 @@
 // Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information.
 
 using System.IO;
-using Microsoft.AspNet.Html.Abstractions;
-using Microsoft.Extensions.WebEncoders;
+using System.Text.Encodings.Web;
+using Microsoft.AspNetCore.Html;
 
 namespace Platformus.Barebone.Backend
 {
@@ -16,7 +16,7 @@ namespace Platformus.Barebone.Backend
       this.htmlContents = htmlContents;
     }
 
-    public void WriteTo(TextWriter writer, IHtmlEncoder encoder)
+    public void WriteTo(TextWriter writer, HtmlEncoder encoder)
     {
       foreach (IHtmlContent htmlContent in this.htmlContents)
         htmlContent.WriteTo(writer, encoder);

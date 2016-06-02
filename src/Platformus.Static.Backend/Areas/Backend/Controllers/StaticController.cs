@@ -2,14 +2,13 @@
 // Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information.
 
 using ExtCore.Data.Abstractions;
-using Microsoft.AspNet.Mvc;
-using Platformus.Barebone.Backend.Controllers;
+using Microsoft.AspNetCore.Mvc;
 using Platformus.Static.Backend.ViewModels.Static;
 
 namespace Platformus.Static.Backend.Controllers
 {
   [Area("Backend")]
-  public class StaticController : ControllerBase
+  public class StaticController : Barebone.Backend.Controllers.ControllerBase
   {
     public StaticController(IStorage storage)
       : base(storage)

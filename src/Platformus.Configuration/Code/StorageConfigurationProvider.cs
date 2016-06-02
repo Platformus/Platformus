@@ -4,6 +4,7 @@
 using System.Collections.Generic;
 using ExtCore.Data.Abstractions;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Primitives;
 using Platformus.Configuration.Data.Abstractions;
 using Platformus.Configuration.Data.Models;
 
@@ -18,9 +19,14 @@ namespace Platformus.Configuration
       this.storage = storage;
     }
 
-    public IEnumerable<string> GetChildKeys(IEnumerable<string> earlierKeys, string parentPath, string delimiter)
+    public IEnumerable<string> GetChildKeys(IEnumerable<string> earlierKeys, string parentPath)
     {
       return new string[] { };
+    }
+
+    public IChangeToken GetReloadToken()
+    {
+      return null;
     }
 
     public void Load()

@@ -2,8 +2,7 @@
 // Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information.
 
 using ExtCore.Data.Abstractions;
-using Microsoft.AspNet.Mvc;
-using Platformus.Globalization.Backend.Controllers;
+using Microsoft.AspNetCore.Mvc;
 using Platformus.Navigation.Backend.ViewModels.Menus;
 using Platformus.Navigation.Data.Abstractions;
 using Platformus.Navigation.Data.Models;
@@ -11,7 +10,7 @@ using Platformus.Navigation.Data.Models;
 namespace Platformus.Navigation.Backend.Controllers
 {
   [Area("Backend")]
-  public class MenusController : ControllerBase
+  public class MenusController : Platformus.Globalization.Backend.Controllers.ControllerBase
   {
     public MenusController(IStorage storage)
       : base(storage)
