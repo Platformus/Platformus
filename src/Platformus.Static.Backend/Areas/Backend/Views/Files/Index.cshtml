@@ -8,12 +8,14 @@
 <h1>@ViewBag.Title <span>@Model.Grid.Pager.Total</span></h1>
 @Html.Partial("_Grid", this.Model.Grid)
 <div id="filesDragAndDropArea" class="files-drag-and-drop-area">
-  Drop files here
+  <div class="description">
+    Drag and drop files into this area…
+  </div>
 </div>
 <form action="/backend/files/create" enctype="multipart/form-data" method="post">
   <div class="buttons">
     <div class="button positive browse">
-      <div>Upload file…</div>
+      <div>…or select them on your device</div>
       <input id="files" name="files" type="file" size="1" multiple onchange="$('form').submit();" />
     </div>
     <div class="clear"></div>

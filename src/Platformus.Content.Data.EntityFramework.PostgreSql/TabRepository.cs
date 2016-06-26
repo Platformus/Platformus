@@ -27,7 +27,15 @@ namespace Platformus.Content.Data.EntityFramework.PostgreSql
       return this.dbSet.Where(t => t.ClassId == classId).OrderBy(t => t.Position);
     }
 
-    public IEnumerable<Tab> Range(int classId, string orderBy, string direction, int skip, int take)
+    public IEnumerable<Tab> FilteredByClassIdInlcudingParent(int classId)
+    {
+      return this.dbSet.FromSql(
+        "SELECT * FROM \"Tabs\" WHERE \"ClassId\" = {0} OR \"ClassId\" IN (SELECT \"ClassId\" FROM \"Classes\" WHERE \"Id\" = {0}) ORDER BY \"Position\"",
+        classId
+      );
+    }
+
+    public IEnumerable<Tab> FilteredByClassRange(int classId, string orderBy, string direction, int skip, int take)
     {
       return this.dbSet.Where(t => t.ClassId == classId).OrderBy(t => t.Position).Skip(skip).Take(take);
     }
@@ -51,7 +59,7 @@ namespace Platformus.Content.Data.EntityFramework.PostgreSql
     {
       this.dbContext.Database.ExecuteSqlCommand(
         @"
-          UPDATE Members SET TabId = NULL WHERE TabId = {0};
+          UPDATE ""Members"" SET ""TabId"" = NULL WHERE ""TabId"" = {0};
         ",
         tab.Id
       );

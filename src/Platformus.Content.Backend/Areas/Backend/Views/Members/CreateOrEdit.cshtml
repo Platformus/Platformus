@@ -9,23 +9,24 @@
 <form method="post">
   <div class="tabs">
     <div class="tab" data-tab-page-id="General">General</div>
-    <div class="tab" data-tab-page-id="Relation">Relation</div>
     <div class="tab" data-tab-page-id="Property">Property</div>
+    <div class="tab" data-tab-page-id="Relation">Relation</div>
     <div class="clear"></div>
   </div>
   <div id="tabPageGeneral" class="tab-page">
     <drop-down-list-selector asp-for="TabId" asp-options="@Model.TabOptions" />
     <single-line-text-editor asp-for="Code" />
     <single-line-text-editor asp-for="Name" />
-    <check-box asp-for="DisplayInList" />
     <single-line-text-editor asp-for="Position" />
+  </div>
+  <div id="tabPageProperty" class="tab-page">
+    <drop-down-list-selector asp-for="PropertyDataTypeId" asp-options="@Model.PropertyDataTypeOptions" />
+    <check-box asp-for="IsPropertyLocalizable" />
+    <check-box asp-for="IsPropertyVisibleInList" />
   </div>
   <div id="tabPageRelation" class="tab-page">
     <drop-down-list-selector asp-for="RelationClassId" asp-options="@Model.RelationClassOptions" />
     <check-box asp-for="IsRelationSingleParent" />
-  </div>
-  <div id="tabPageProperty" class="tab-page">
-    <drop-down-list-selector asp-for="PropertyDataTypeId" asp-options="@Model.PropertyDataTypeOptions" />
   </div>
   <div class="buttons">
     <button class="positive" type="submit">Save</button>

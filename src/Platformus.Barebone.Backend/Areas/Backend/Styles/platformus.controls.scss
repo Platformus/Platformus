@@ -36,6 +36,11 @@ input {
   resize: none;
 }
 
+.multilingual input {
+  padding-right: 33px;
+  width: 407px;
+}
+
 textarea {
   background-color: $color-control;
   outline: none;

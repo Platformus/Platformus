@@ -18,7 +18,7 @@ namespace Platformus.Globalization.Frontend.ViewModels.Shared
     {
       return new CulturesViewModel()
       {
-        Cultures = this.handler.Storage.GetRepository<ICultureRepository>().All().Select(
+        Cultures = this.handler.Storage.GetRepository<ICultureRepository>().NotNeutral().Select(
           c => new CultureViewModelBuilder(this.handler).Build(c)
         )
       };

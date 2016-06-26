@@ -1,18 +1,17 @@
 ﻿{
   "authors": [ "Dmitry Sikorsky" ],
-  "buildOptions": { "embed": [ "Areas/Backend/Views/**" ] },
+  "buildOptions": { "embed": [ "Areas/Backend/Views/**", "wwwroot/**" ] },
   "copyright": "Copyright © 2015 Dmitry Sikorsky",
   "dependencies": {
     "ExtCore.Data.Abstractions": "1.0.0-alpha8",
     "ExtCore.Infrastructure": "1.0.0-alpha8",
-    "Microsoft.AspNet.Mvc": "6.0.0-rc1-final",
-    "Microsoft.AspNet.Mvc.TagHelpers": "6.0.0-rc1-final",
-    "Platformus.Barebone.Backend": "1.0.0-alpha5",
-    "Platformus.Content": "1.0.0-alpha5",
-    "Platformus.Content.Data.Abstractions": "1.0.0-alpha5",
-    "Platformus.Content.Data.Models": "1.0.0-alpha5",
-    "Platformus.Globalization.Backend": "1.0.0-alpha5",
-    "Platformus.Globalization.Data.Abstractions": "1.0.0-alpha5"
+    "Microsoft.AspNetCore.Mvc": "1.0.0-rc2-final",
+    "Platformus.Barebone.Backend": "1.0.0-alpha6",
+    "Platformus.Content": "1.0.0-alpha6",
+    "Platformus.Content.Data.Abstractions": "1.0.0-alpha6",
+    "Platformus.Content.Data.Models": "1.0.0-alpha6",
+    "Platformus.Globalization.Backend": "1.0.0-alpha6",
+    "Platformus.Globalization.Data.Abstractions": "1.0.0-alpha6"
   },
   "description": "Part of the Platformus.Content Platformus extension.",
   "frameworks": {
@@ -28,5 +27,5 @@
     "iconUrl": "http://platformus.net/platformus_nuget_icon.png",
     "projectUrl": "http://platformus.net/"
   },
-  "version": "1.0.0-alpha5"
+  "version": "1.0.0-alpha6"
 }

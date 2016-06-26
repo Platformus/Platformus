@@ -1,0 +1,18 @@
+﻿@* Copyright © 2015 Dmitry Sikorsky. All rights reserved. *@
+@* Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information. *@
+@model Platformus.Content.Backend.ViewModels.Content.ImageUploaderFormViewModel
+<div class="title">
+  Image Uploader
+</div>
+<iframe id="imageUploader" name="imageUploader" src="/backend/imageuploader" frameborder="0" marginwidth="0" marginheight="0" width="800" height="600" scrolling="no"></iframe>
+<div id="imageUploadingIndicator" class="image-uploading-indicator">
+  <div class="description">
+    Uploading, please wait…
+  </div>
+</div>
+<div id="imageCropper" class="image-cropper"></div>
+<div class="buttons">
+  <a class="button positive" href="#" onclick="return Platformus.Overlays.form.done();">Done</a>
+  <a class="button neutral" href="#">Cancel</a>
+  <div class="clear"></div>
+</div>

@@ -12,7 +12,8 @@ namespace Platformus.Content.Data.Abstractions
     Tab WithKey(int id);
     IEnumerable<Tab> All();
     IEnumerable<Tab> FilteredByClassId(int classId);
-    IEnumerable<Tab> Range(int classId, string orderBy, string direction, int skip, int take);
+    IEnumerable<Tab> FilteredByClassIdInlcudingParent(int classId);
+    IEnumerable<Tab> FilteredByClassRange(int classId, string orderBy, string direction, int skip, int take);
     void Create(Tab tab);
     void Edit(Tab tab);
     void Delete(int id);

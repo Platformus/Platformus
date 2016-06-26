@@ -41,13 +41,13 @@ namespace Platformus.Forms.Data.EntityFramework.PostgreSql
     {
       this.dbContext.Database.ExecuteSqlCommand(
         @"
-          CREATE TEMP TABLE TempDictionaries (Id INT PRIMARY KEY);
-          INSERT INTO TempDictionaries SELECT ValueId FROM FieldOptions WHERE FieldId = {0};
-          INSERT INTO TempDictionaries SELECT NameId FROM Fields WHERE Id = {0};
-          DELETE FROM FieldOptions WHERE FieldId = {0};
-          DELETE FROM Fields WHERE Id = {0};
-          DELETE FROM Localizations WHERE DictionaryId IN (SELECT Id FROM TempDictionaries);
-          DELETE FROM Dictionaries WHERE Id IN (SELECT Id FROM TempDictionaries);
+          CREATE TEMP TABLE ""TempDictionaries"" (""Id"" INT PRIMARY KEY);
+          INSERT INTO ""TempDictionaries"" SELECT ""ValueId"" FROM ""FieldOptions"" WHERE ""FieldId"" = {0};
+          INSERT INTO ""TempDictionaries"" SELECT ""NameId"" FROM ""Fields"" WHERE ""Id"" = {0};
+          DELETE FROM ""FieldOptions"" WHERE ""FieldId"" = {0};
+          DELETE FROM ""Fields"" WHERE ""Id"" = {0};
+          DELETE FROM ""Localizations"" WHERE ""DictionaryId"" IN (SELECT ""Id"" FROM ""TempDictionaries"");
+          DELETE FROM ""Dictionaries"" WHERE ""Id"" IN (SELECT ""Id"" FROM ""TempDictionaries"");
         ",
         field.Id
       );

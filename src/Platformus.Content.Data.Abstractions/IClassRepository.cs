@@ -12,8 +12,9 @@ namespace Platformus.Content.Data.Abstractions
     Class WithKey(int id);
     IEnumerable<Class> All();
     IEnumerable<Class> Range(string orderBy, string direction, int skip, int take);
-    IEnumerable<Class> StandaloneNotRelationSingleParent();
-    IEnumerable<Class> EmbeddedNotRelationSingleParent();
+    IEnumerable<Class> Abstract();
+    IEnumerable<Class> Standalone();
+    IEnumerable<Class> Embedded();
     void Create(Class @class);
     void Edit(Class @class);
     void Delete(int id);

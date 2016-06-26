@@ -11,10 +11,11 @@ namespace Platformus.Content.Backend.ViewModels.Shared
     public int Id { get; set; }
     public string Name { get; set; }
     public int? Position { get; set; }
+    public DataTypeViewModel PropertyDataType { get; set; }
+    public bool IsPropertyLocalizable { get; set; }
+    public PropertyViewModel Property { get; set; }
     public ClassViewModel RelationClass { get; set; }
     public bool IsRelationSingleParent { get; set; }
     public IEnumerable<RelationViewModel> Relations { get; set; }
-    public DataTypeViewModel PropertyDataType { get; set; }
-    public PropertyViewModel Property { get; set; }
   }
 }

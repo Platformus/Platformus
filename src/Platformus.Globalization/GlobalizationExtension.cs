@@ -3,6 +3,7 @@
 
 using System.Collections.Generic;
 using System.Globalization;
+using System.Linq;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Localization;
 using Microsoft.AspNetCore.Routing;
@@ -24,21 +25,19 @@ namespace Platformus.Globalization
       }
     }
 
-    public IEnumerable<BackendMenuGroup> BackendMenuGroups
+    public IFrontendMetadata FrontendMetadata
     {
       get
       {
-        return new BackendMenuGroup[]
-        {
-          new BackendMenuGroup(
-            "Settings",
-            2000,
-            new BackendMenuItem[]
-            {
-              new BackendMenuItem("/backend/cultures", "Cultures", 1000)
-            }
-          )
-        };
+        return null;
+      }
+    }
+
+    public IBackendMetadata BackendMetadata
+    {
+      get
+      {
+        return new BackendMetadata();
       }
     }
 
@@ -56,18 +55,20 @@ namespace Platformus.Globalization
     {
       RequestLocalizationOptions requestLocalizationOptions = new RequestLocalizationOptions();
 
-      requestLocalizationOptions.DefaultRequestCulture = new RequestCulture("en");
-      requestLocalizationOptions.SupportedCultures = new List<CultureInfo>
-      {
-        new CultureInfo("en"),
-        new CultureInfo("uk")
-      };
+      string defaultCulture = this.configurationRoot["Globalization:DefaultCulture"];
 
-      requestLocalizationOptions.SupportedUICultures = new List<CultureInfo>
+      if (string.IsNullOrEmpty(defaultCulture))
+        defaultCulture = "en";
+
+      requestLocalizationOptions.DefaultRequestCulture = new RequestCulture(defaultCulture);
+
+      string supportedCultures = this.configurationRoot["Globalization:SupportedCultures"];
+
+      if (!string.IsNullOrEmpty(supportedCultures))
       {
-        new CultureInfo("en"),
-        new CultureInfo("uk")
-      };
+        requestLocalizationOptions.SupportedCultures = new List<CultureInfo>(supportedCultures.Split(',').Select(c => new CultureInfo(c)));
+        requestLocalizationOptions.SupportedUICultures = new List<CultureInfo>(supportedCultures.Split(',').Select(c => new CultureInfo(c)));
+      }
 
       requestLocalizationOptions.RequestCultureProviders.Insert(0, new RouteValueRequestCultureProvider());
       applicationBuilder.UseRequestLocalization(requestLocalizationOptions);

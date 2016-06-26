@@ -40,6 +40,7 @@ namespace Platformus.Barebone.Backend
       TagBuilder tb = new TagBuilder("div");
 
       tb.AddCssClass("field");
+      tb.AddCssClass("multilingual");
       tb.InnerHtml.Clear();
       tb.InnerHtml.AppendHtml(
         new CompositeHtmlContent(

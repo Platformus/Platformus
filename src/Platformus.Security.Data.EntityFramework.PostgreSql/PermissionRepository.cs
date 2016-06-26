@@ -46,7 +46,7 @@ namespace Platformus.Security.Data.EntityFramework.PostgreSql
     {
       this.dbContext.Database.ExecuteSqlCommand(
         @"
-          DELETE FROM RolePermissions WHERE PermissionId = {0};
+          DELETE FROM ""RolePermissions"" WHERE ""PermissionId"" = {0};
         ",
         permission.Id
       );

@@ -18,6 +18,11 @@ namespace Platformus.Content.Backend.Controllers
     {
     }
 
+    public ActionResult ImageUploaderForm()
+    {
+      return this.PartialView("_ImageUploaderForm", new ImageUploaderFormViewModelBuilder(this).Build());
+    }
+
     public ActionResult ObjectSelectorForm(int classId, string objectIds)
     {
       return this.PartialView("_ObjectSelectorForm", new ObjectSelectorFormViewModelBuilder(this).Build(classId, objectIds));

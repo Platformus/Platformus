@@ -22,20 +22,7 @@ namespace Platformus.Content.Backend.ViewModels.Shared
       IEnumerable<RelationViewModel> relations = null;
       PropertyViewModel property = null;
 
-      if (member.RelationClassId != null)
-      {
-        if (@object == null && objectId == null)
-          relations = new RelationViewModel[] { };
-
-        else if (@object == null && objectId != null)
-          relations = new RelationViewModel[] { new RelationViewModel() { PrimaryId = (int)objectId } };
-
-        else relations = this.handler.Storage.GetRepository<IRelationRepository>().FilteredByMemberIdAndForeignId(member.Id, @object.Id).Select(
-          r => new RelationViewModelBuilder(this.handler).Build(r)
-        );
-      }
-
-      else if (member.PropertyDataTypeId != null)
+      if (member.PropertyDataTypeId != null)
       {
         if (@object == null)
           property = new PropertyViewModelBuilder(this.handler).Build(
@@ -52,20 +39,34 @@ namespace Platformus.Content.Backend.ViewModels.Shared
         }
       }
 
+      else if (member.RelationClassId != null)
+      {
+        if (@object == null && objectId == null)
+          relations = new RelationViewModel[] { };
+
+        else if (@object == null && objectId != null)
+          relations = new RelationViewModel[] { new RelationViewModel() { PrimaryId = (int)objectId } };
+
+        else relations = this.handler.Storage.GetRepository<IRelationRepository>().FilteredByMemberIdAndForeignId(member.Id, @object.Id).Select(
+          r => new RelationViewModelBuilder(this.handler).Build(r)
+        );
+      }
+
       return new MemberViewModel()
       {
         Id = member.Id,
+        Name = member.Name,
+        Position = member.Position,
+        PropertyDataType = member.PropertyDataTypeId == null ? null : new DataTypeViewModelBuilder(this.handler).Build(
+          this.handler.Storage.GetRepository<IDataTypeRepository>().WithKey((int)member.PropertyDataTypeId)
+        ),
+        IsPropertyLocalizable = member.IsPropertyLocalizable == true,
+        Property = property,
         RelationClass = member.RelationClassId == null ? null : new ClassViewModelBuilder(this.handler).Build(
           this.handler.Storage.GetRepository<IClassRepository>().WithKey((int)member.RelationClassId)
         ),
         IsRelationSingleParent = member.IsRelationSingleParent == true,
-        Relations = relations,
-        PropertyDataType = member.PropertyDataTypeId == null ? null : new DataTypeViewModelBuilder(this.handler).Build(
-          this.handler.Storage.GetRepository<IDataTypeRepository>().WithKey((int)member.PropertyDataTypeId)
-        ),
-        Property = property,
-        Name = member.Name,
-        Position = member.Position
+        Relations = relations
       };
     }
   }

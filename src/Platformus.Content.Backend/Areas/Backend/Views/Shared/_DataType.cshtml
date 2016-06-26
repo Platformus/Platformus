@@ -3,7 +3,7 @@
 @model Platformus.Content.Backend.ViewModels.Shared.DataTypeViewModel
 <tr>
   <td>@Model.Name</td>
-  <td>@Model.Position</td>
+  <td>@(this.Model.Position == null ? "—" : this.Model.Position.ToString())</td>
   <td class="buttons">
     <a class="button positive" href="@(this.Context.Request.CombineUrl("/backend/datatypes/edit/" + this.Model.Id))">Edit</a>
     <a class="button negative" href="#" onclick="return new Platformus.Overlays.DeleteForm('/backend/datatypes/delete/@Model.Id').show();"></a>

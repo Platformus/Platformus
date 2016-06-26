@@ -1,15 +1,15 @@
 ﻿{
   "authors": [ "Dmitry Sikorsky" ],
-  "buildOptions": { "embed": [ "Areas/Backend/Views/**" ] },
+  "buildOptions": { "embed": [ "Areas/Backend/Views/**", "wwwroot/**" ] },
   "copyright": "Copyright © 2015 Dmitry Sikorsky",
   "dependencies": {
     "ExtCore.Data.Abstractions": "1.0.0-alpha8",
     "ExtCore.Infrastructure": "1.0.0-alpha8",
     "Microsoft.AspNetCore.Mvc": "1.0.0-rc2-final",
-    "Platformus.Barebone.Backend": "1.0.0-alpha5",
-    "Platformus.Static": "1.0.0-alpha5",
-    "Platformus.Static.Data.Abstractions": "1.0.0-alpha5",
-    "Platformus.Static.Data.Models": "1.0.0-alpha5"
+    "Platformus.Barebone.Backend": "1.0.0-alpha6",
+    "Platformus.Static": "1.0.0-alpha6",
+    "Platformus.Static.Data.Abstractions": "1.0.0-alpha6",
+    "Platformus.Static.Data.Models": "1.0.0-alpha6"
   },
   "description": "Part of the Platformus.Static Platformus extension.",
   "frameworks": {
@@ -25,5 +25,5 @@
     "iconUrl": "http://platformus.net/platformus_nuget_icon.png",
     "projectUrl": "http://platformus.net/"
   },
-  "version": "1.0.0-alpha5"
+  "version": "1.0.0-alpha6"
 }

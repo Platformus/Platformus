@@ -1,3 +1,6 @@
+// Copyright © 2015 Dmitry Sikorsky. All rights reserved.
+// Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information.
+
 var gulp = require("gulp"),
   autoprefixer = require("gulp-autoprefixer"),
   concat = require("gulp-concat"),
@@ -91,7 +94,7 @@ gulp.task(
   "backend:minify-css", function (cb) {
     return gulp.src(paths.backend.scss.dest + "/*.css")
       .pipe(minifyCss())
-      .pipe(autoprefixer("last 2 version", "safari 5", "ie 8", "ie 9"))
+      .pipe(autoprefixer())
       .pipe(concat("platformus.barebone.min.css.temp"))
       .pipe(gulp.dest(paths.backend.scss.dest));
   }
@@ -105,21 +108,15 @@ gulp.task(
           paths.backend.ts.dest + "/platformus.controls.behaviors.checkbox.js",
           paths.backend.ts.dest + "/platformus.controls.behaviors.dropdownlist.js",
           paths.backend.ts.dest + "/platformus.controls.behaviors.grid.js",
+          paths.backend.ts.dest + "/platformus.controls.behaviors.imageuploader.js",
           paths.backend.ts.dest + "/platformus.controls.behaviors.tabs.js",
           paths.backend.ts.dest + "/platformus.controls.behaviors.uploader.js",
           paths.backend.ts.dest + "/platformus.controls.behaviors.js",
+          paths.backend.ts.dest + "/platformus.controls.extenders.js",
           paths.backend.ts.dest + "/platformus.controls.extenders.maxlengthindicator.js",
           paths.backend.ts.dest + "/platformus.controls.extenders.tabstop.js",
-          paths.backend.ts.dest + "/platformus.controls.extenders.js",
-          paths.backend.ts.dest + "/platformus.editors.relation.js",
-          paths.backend.ts.dest + "/platformus.editors.html.js",
-          paths.backend.ts.dest + "/platformus.editors.multilineplaintext.js",
-          paths.backend.ts.dest + "/platformus.editors.singlelineplaintext.js",
-          paths.backend.ts.dest + "/platformus.editors.js",
           paths.backend.ts.dest + "/platformus.overlays.js",
           paths.backend.ts.dest + "/platformus.overlays.deleteform.js",
-          paths.backend.ts.dest + "/platformus.overlays.filebrowserform.js",
-          paths.backend.ts.dest + "/platformus.overlays.objectbrowserform.js",
           paths.backend.ts.dest + "/platformus.ui.js",
           paths.backend.ts.dest + "/platformus.application.js",
           paths.backend.ts.dest + "/*.js"

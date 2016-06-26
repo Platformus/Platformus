@@ -4,8 +4,8 @@
   "dependencies": {
     "ExtCore.Data.EntityFramework.PostgreSql": "1.0.0-alpha8",
     "ExtCore.Infrastructure": "1.0.0-alpha8",
-    "Platformus.Globalization.Data.Abstractions": "1.0.0-alpha5",
-    "Platformus.Globalization.Data.Models": "1.0.0-alpha5"
+    "Platformus.Globalization.Data.Abstractions": "1.0.0-alpha6",
+    "Platformus.Globalization.Data.Models": "1.0.0-alpha6"
   },
   "description": "Part of the Platformus.Globalization Platformus extension.",
   "frameworks": {
@@ -21,5 +21,5 @@
     "iconUrl": "http://platformus.net/platformus_nuget_icon.png",
     "projectUrl": "http://platformus.net/"
   },
-  "version": "1.0.0-alpha5"
+  "version": "1.0.0-alpha6"
 }

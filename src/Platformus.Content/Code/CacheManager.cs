@@ -48,21 +48,22 @@ namespace Platformus.Content
     private CachedObject CacheObject(Culture culture, Object @object)
     {
       Class @class = this.handler.Storage.GetRepository<IClassRepository>().WithKey(@object.ClassId);
+      Culture neutralCulture = this.handler.Storage.GetRepository<ICultureRepository>().Neutral();
       List<CachedProperty> cachedProperties = new List<CachedProperty>();
 
-      foreach (Member member in this.handler.Storage.GetRepository<IMemberRepository>().FilteredByClassId(@class.Id))
+      foreach (Member member in this.handler.Storage.GetRepository<IMemberRepository>().FilteredByClassIdInlcudingParent(@class.Id))
       {
         if (member.PropertyDataTypeId != null)
         {
           Property property = this.handler.Storage.GetRepository<IPropertyRepository>().WithObjectIdAndMemberId(@object.Id, member.Id);
 
-          cachedProperties.Add(this.CacheProperty(culture, property));
+          cachedProperties.Add(this.CacheProperty(member.IsPropertyLocalizable == true ? culture : neutralCulture, property));
         }
       }
 
       List<CachedDataSource> cachedDataSources = new List<CachedDataSource>();
 
-      foreach (DataSource dataSource in this.handler.Storage.GetRepository<IDataSourceRepository>().FilteredByClassId(@class.Id))
+      foreach (DataSource dataSource in this.handler.Storage.GetRepository<IDataSourceRepository>().FilteredByClassIdInlcudingParent(@class.Id))
         cachedDataSources.Add(this.CacheDataSource(culture, dataSource));
 
       CachedObject cachedObject = new CachedObject();

@@ -6,12 +6,12 @@
     "ExtCore.Data.Abstractions": "1.0.0-alpha8",
     "ExtCore.Infrastructure": "1.0.0-alpha8",
     "Microsoft.AspNetCore.Mvc": "1.0.0-rc2-final",
-    "Platformus.Barebone.Backend": "1.0.0-alpha5",
-    "Platformus.Forms": "1.0.0-alpha5",
-    "Platformus.Forms.Data.Abstractions": "1.0.0-alpha5",
-    "Platformus.Forms.Data.Models": "1.0.0-alpha5",
-    "Platformus.Globalization.Backend": "1.0.0-alpha5",
-    "Platformus.Globalization.Data.Abstractions": "1.0.0-alpha5"
+    "Platformus.Barebone.Backend": "1.0.0-alpha6",
+    "Platformus.Forms": "1.0.0-alpha6",
+    "Platformus.Forms.Data.Abstractions": "1.0.0-alpha6",
+    "Platformus.Forms.Data.Models": "1.0.0-alpha6",
+    "Platformus.Globalization.Backend": "1.0.0-alpha6",
+    "Platformus.Globalization.Data.Abstractions": "1.0.0-alpha6"
   },
   "description": "Part of the Platformus.Forms Platformus extension.",
   "frameworks": {
@@ -27,5 +27,5 @@
     "iconUrl": "http://platformus.net/platformus_nuget_icon.png",
     "projectUrl": "http://platformus.net/"
   },
-  "version": "1.0.0-alpha5"
+  "version": "1.0.0-alpha6"
 }

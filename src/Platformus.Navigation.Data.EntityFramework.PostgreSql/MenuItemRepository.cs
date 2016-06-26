@@ -46,18 +46,18 @@ namespace Platformus.Navigation.Data.EntityFramework.PostgreSql
     {
       this.dbContext.Database.ExecuteSqlCommand(
         @"
-          CREATE TEMP TABLE TempMenuItems (Id INT PRIMARY KEY);
-          WITH X AS (
-            SELECT Id FROM MenuItems WHERE Id = {0}
+          CREATE TEMP TABLE ""TempMenuItems"" (""Id"" INT PRIMARY KEY);
+          WITH ""X"" AS (
+            SELECT ""Id"" FROM ""MenuItems"" WHERE ""Id"" = {0}
             UNION ALL
-            SELECT MenuItems.Id FROM MenuItems INNER JOIN X ON MenuItems.MenuItemId = X.Id
+            SELECT ""MenuItems.Id"" FROM ""MenuItems"" INNER JOIN ""X"" ON ""MenuItems.MenuItemId"" = ""X.Id""
           )
-          INSERT INTO TempMenuItems SELECT Id FROM X;
-          CREATE TEMP TABLE TempDictionaries (Id INT PRIMARY KEY);
-          INSERT INTO TempDictionaries SELECT NameId FROM MenuItems WHERE Id IN (SELECT Id FROM TempMenuItems);
-          DELETE FROM MenuItems WHERE Id IN (SELECT Id FROM TempMenuItems);
-          DELETE FROM Localizations WHERE DictionaryId IN (SELECT Id FROM TempDictionaries);
-          DELETE FROM Dictionaries WHERE Id IN (SELECT Id FROM TempDictionaries);
+          INSERT INTO ""TempMenuItems"" SELECT ""Id"" FROM ""X"";
+          CREATE TEMP TABLE ""TempDictionaries"" (""Id"" INT PRIMARY KEY);
+          INSERT INTO ""TempDictionaries"" SELECT ""NameId"" FROM ""MenuItems"" WHERE ""Id"" IN (SELECT ""Id"" FROM ""TempMenuItems"");
+          DELETE FROM ""MenuItems"" WHERE ""Id"" IN (SELECT ""Id"" FROM ""TempMenuItems"");
+          DELETE FROM ""Localizations"" WHERE ""DictionaryId"" IN (SELECT ""Id"" FROM ""TempDictionaries"");
+          DELETE FROM ""Dictionaries"" WHERE ""Id"" IN (SELECT ""Id"" FROM ""TempDictionaries"");
         ",
         menuItem.Id
       );

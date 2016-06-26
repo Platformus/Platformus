@@ -8,8 +8,10 @@ namespace Platformus.Content.Backend.ViewModels.Shared
   public class ClassViewModel : ViewModelBase
   {
     public int Id { get; set; }
+    public ClassViewModel Parent { get; set; }
     public string Name { get; set; }
     public string PluralizedName { get; set; }
+    public bool IsAbstract { get; set; }
     public bool IsStandalone { get; set; }
   }
 }

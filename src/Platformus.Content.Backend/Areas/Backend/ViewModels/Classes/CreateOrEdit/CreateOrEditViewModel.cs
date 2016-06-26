@@ -1,7 +1,9 @@
 ﻿// Copyright © 2015 Dmitry Sikorsky. All rights reserved.
 // Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information.
 
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using Platformus.Barebone.Backend;
 using Platformus.Globalization.Backend.ViewModels;
 
 namespace Platformus.Content.Backend.ViewModels.Classes
@@ -9,6 +11,10 @@ namespace Platformus.Content.Backend.ViewModels.Classes
   public class CreateOrEditViewModel : ViewModelBase
   {
     public int? Id { get; set; }
+
+    [Display(Name = "Parent class (abstract only)")]
+    public int? ClassId { get; set; }
+    public IEnumerable<Option> ClassOptions { get; set; }
 
     [Display(Name = "Name")]
     [Required]
@@ -19,6 +25,9 @@ namespace Platformus.Content.Backend.ViewModels.Classes
     [Required]
     [StringLength(64)]
     public string PluralizedName { get; set; }
+
+    [Display(Name = "Is abstract")]
+    public bool IsAbstract { get; set; }
 
     [Display(Name = "Is standalone")]
     public bool IsStandalone { get; set; }

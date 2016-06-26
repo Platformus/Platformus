@@ -2,7 +2,10 @@
 @* Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information. *@
 @model Platformus.Content.Backend.ViewModels.Shared.ClassViewModel
 <tr>
+  <td>@(this.Model.Parent == null ? "—" : this.Model.Parent.Name)</td>
   <td>@Model.Name</td>
+  <td>@(this.Model.IsAbstract ? "Yes" : "No")</td>
+  <td>@(this.Model.IsStandalone ? "Yes" : "No")</td>
   <td><a href="/backend/tabs?classid=@Model.Id">Tabs</a></td>
   <td><a href="/backend/members?classid=@Model.Id">Members</a></td>
   <td><a href="/backend/datasources?classid=@Model.Id">Data sources</a></td>

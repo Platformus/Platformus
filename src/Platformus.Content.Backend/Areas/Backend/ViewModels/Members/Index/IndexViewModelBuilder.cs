@@ -27,13 +27,13 @@ namespace Platformus.Content.Backend.ViewModels.Members
         Grid = new GridViewModelBuilder(this.handler).Build(
           orderBy, direction, skip, take, memberRepository.CountByClassId(classId),
           new[] {
-            new GridColumnViewModelBuilder(this.handler).Build("Relation Class"),
-            new GridColumnViewModelBuilder(this.handler).Build("Property Data Type"),
             new GridColumnViewModelBuilder(this.handler).Build("Name", "Name"),
+            new GridColumnViewModelBuilder(this.handler).Build("Property Data Type"),
+            new GridColumnViewModelBuilder(this.handler).Build("Relation Class"),
             new GridColumnViewModelBuilder(this.handler).Build("Position", "Position"),
             new GridColumnViewModelBuilder(this.handler).BuildEmpty()
           },
-          memberRepository.Range(classId, orderBy, direction, skip, take).Select(m => new MemberViewModelBuilder(this.handler).Build(m, null)),
+          memberRepository.FilteredByClassRange(classId, orderBy, direction, skip, take).Select(m => new MemberViewModelBuilder(this.handler).Build(m, null)),
           "_Member"
         )
       };

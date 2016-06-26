@@ -27,11 +27,18 @@ namespace Platformus.Content.Backend.ViewModels.Members
     [StringLength(64)]
     public string Name { get; set; }
 
-    [Display(Name = "Display in list")]
-    public bool DisplayInList { get; set; }
-
     [Display(Name = "Position")]
     public int? Position { get; set; }
+
+    [Display(Name = "Property data type")]
+    public int? PropertyDataTypeId { get; set; }
+    public IEnumerable<Option> PropertyDataTypeOptions { get; set; }
+
+    [Display(Name = "Is property localizable")]
+    public bool IsPropertyLocalizable { get; set; }
+
+    [Display(Name = "Is property visible in list")]
+    public bool IsPropertyVisibleInList { get; set; }
 
     [Display(Name = "Relation class")]
     public int? RelationClassId { get; set; }
@@ -39,9 +46,5 @@ namespace Platformus.Content.Backend.ViewModels.Members
 
     [Display(Name = "Is relation single parent")]
     public bool IsRelationSingleParent { get; set; }
-
-    [Display(Name = "Property data type")]
-    public int? PropertyDataTypeId { get; set; }
-    public IEnumerable<Option> PropertyDataTypeOptions { get; set; }
   }
 }

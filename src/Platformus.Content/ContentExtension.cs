@@ -1,7 +1,6 @@
 ﻿// Copyright © 2015 Dmitry Sikorsky. All rights reserved.
 // Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information.
 
-using System.Collections.Generic;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Routing;
 using Microsoft.Extensions.Configuration;
@@ -22,30 +21,19 @@ namespace Platformus.Content
       }
     }
 
-    public IEnumerable<BackendMenuGroup> BackendMenuGroups
+    public IFrontendMetadata FrontendMetadata
     {
       get
       {
-        return new BackendMenuGroup[]
-        {
-          new BackendMenuGroup(
-            "Content",
-            1000,
-            new BackendMenuItem[]
-            {
-              new BackendMenuItem("/backend/objects", "Objects", 1000)
-            }
-          ),
-          new BackendMenuGroup(
-            "Settings",
-            2000,
-            new BackendMenuItem[]
-            {
-              new BackendMenuItem("/backend/datatypes", "Data types", 2000),
-              new BackendMenuItem("/backend/classes", "Classes", 3000)
-            }
-          )
-        };
+        return null;
+      }
+    }
+
+    public IBackendMetadata BackendMetadata
+    {
+      get
+      {
+        return new BackendMetadata();
       }
     }
 

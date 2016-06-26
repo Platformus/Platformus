@@ -22,8 +22,10 @@ namespace Platformus.Content.Backend.ViewModels.Classes
       if (createOrEdit.Id != null)
         @class = this.handler.Storage.GetRepository<IClassRepository>().WithKey((int)createOrEdit.Id);
 
+      @class.ClassId = createOrEdit.ClassId;
       @class.Name = createOrEdit.Name;
       @class.PluralizedName = createOrEdit.PluralizedName;
+      @class.IsAbstract = createOrEdit.IsAbstract ? true : (bool?)null;
       @class.IsStandalone = createOrEdit.IsStandalone ? true : (bool?)null;
       @class.DefaultViewName = createOrEdit.DefaultViewName;
       return @class;

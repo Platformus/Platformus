@@ -6,10 +6,10 @@
     "ExtCore.Data.Abstractions": "1.0.0-alpha8",
     "ExtCore.Infrastructure": "1.0.0-alpha8",
     "Microsoft.AspNetCore.Mvc": "1.0.0-rc2-final",
-    "Platformus.Barebone.Backend": "1.0.0-alpha5",
-    "Platformus.Security": "1.0.0-alpha5",
-    "Platformus.Security.Data.Abstractions": "1.0.0-alpha5",
-    "Platformus.Security.Data.Models": "1.0.0-alpha5"
+    "Platformus.Barebone.Backend": "1.0.0-alpha6",
+    "Platformus.Security": "1.0.0-alpha6",
+    "Platformus.Security.Data.Abstractions": "1.0.0-alpha6",
+    "Platformus.Security.Data.Models": "1.0.0-alpha6"
   },
   "description": "Part of the Platformus.Security Platformus extension.",
   "frameworks": {
@@ -25,5 +25,5 @@
     "iconUrl": "http://platformus.net/platformus_nuget_icon.png",
     "projectUrl": "http://platformus.net/"
   },
-  "version": "1.0.0-alpha5"
+  "version": "1.0.0-alpha6"
 }

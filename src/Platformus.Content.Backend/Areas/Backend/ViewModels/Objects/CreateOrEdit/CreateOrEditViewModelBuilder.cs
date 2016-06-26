@@ -50,10 +50,10 @@ namespace Platformus.Content.Backend.ViewModels.Objects
 
       membersByTabs.Add(new TabViewModel() { Name = "General" }, new List<MemberViewModel>());
 
-      foreach (Tab tab in this.handler.Storage.GetRepository<ITabRepository>().FilteredByClassId(@object != null ? @object.ClassId : (int)classId))
+      foreach (Tab tab in this.handler.Storage.GetRepository<ITabRepository>().FilteredByClassIdInlcudingParent(@object != null ? @object.ClassId : (int)classId))
         membersByTabs.Add(new TabViewModelBuilder(this.handler).Build(tab), new List<MemberViewModel>());
 
-      foreach (Member member in this.handler.Storage.GetRepository<IMemberRepository>().FilteredByClassId(@object != null ? @object.ClassId : (int)classId))
+      foreach (Member member in this.handler.Storage.GetRepository<IMemberRepository>().FilteredByClassIdInlcudingParent(@object != null ? @object.ClassId : (int)classId))
       {
         TabViewModel tab = null;
 

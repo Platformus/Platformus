@@ -7,7 +7,7 @@ namespace Platformus.Infrastructure
 {
   public class BackendMenuGroup
   {
-    public string Name { get; }
+    public string Name { get; set; }
     public int Position { get; set; }
     public IEnumerable<BackendMenuItem> BackendMenuItems { get; set; }
 

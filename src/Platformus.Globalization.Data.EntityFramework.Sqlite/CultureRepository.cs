@@ -22,9 +22,19 @@ namespace Platformus.Globalization.Data.EntityFramework.Sqlite
       return this.dbSet.FirstOrDefault(c => string.Equals(c.Code, code, System.StringComparison.OrdinalIgnoreCase));
     }
 
+    public Culture Neutral()
+    {
+      return this.dbSet.FirstOrDefault(c => c.IsNeutral == true);
+    }
+
     public IEnumerable<Culture> All()
     {
-      return this.dbSet.OrderBy(c => c.Code);
+      return this.dbSet.OrderBy(c => c.Name);
+    }
+
+    public IEnumerable<Culture> NotNeutral()
+    {
+      return this.dbSet.Where(c => c.IsNeutral == null).OrderBy(c => c.Name);
     }
 
     public IEnumerable<Culture> Range(string orderBy, string direction, int skip, int take)

@@ -27,7 +27,15 @@ namespace Platformus.Content.Data.EntityFramework.Sqlite
       return this.dbSet.Where(t => t.ClassId == classId).OrderBy(t => t.Position);
     }
 
-    public IEnumerable<Tab> Range(int classId, string orderBy, string direction, int skip, int take)
+    public IEnumerable<Tab> FilteredByClassIdInlcudingParent(int classId)
+    {
+      return this.dbSet.FromSql(
+        "SELECT * FROM Tabs WHERE ClassId = {0} OR ClassId IN (SELECT ClassId FROM Classes WHERE Id = {0}) ORDER BY Position",
+        classId
+      );
+    }
+
+    public IEnumerable<Tab> FilteredByClassRange(int classId, string orderBy, string direction, int skip, int take)
     {
       return this.dbSet.Where(t => t.ClassId == classId).OrderBy(t => t.Position).Skip(skip).Take(take);
     }

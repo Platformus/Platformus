@@ -23,24 +23,21 @@ namespace Platformus.Content
     {
       List<string> properties = new List<string>();
 
-      foreach (Member member in this.handler.Storage.GetRepository<IMemberRepository>().FilteredByClassId(@object.ClassId))
+      foreach (Member member in this.handler.Storage.GetRepository<IMemberRepository>().FilteredByClassIdInlcudingParentPropertyVisibleInList(@object.ClassId))
       {
-        if (member.DisplayInList == true)
-        {
-          Property property = this.handler.Storage.GetRepository<IPropertyRepository>().WithObjectIdAndMemberId(@object.Id, member.Id);
+        Property property = this.handler.Storage.GetRepository<IPropertyRepository>().WithObjectIdAndMemberId(@object.Id, member.Id);
 
-          if (property == null)
+        if (property == null)
+          properties.Add(string.Empty);
+
+        else
+        {
+          Localization localization = this.handler.Storage.GetRepository<ILocalizationRepository>().WithDictionaryIdAndCultureId(property.HtmlId, 1);
+
+          if (localization == null)
             properties.Add(string.Empty);
 
-          else
-          {
-            Localization localization = this.handler.Storage.GetRepository<ILocalizationRepository>().WithDictionaryIdAndCultureId(property.HtmlId, 1);
-
-            if (localization == null)
-              properties.Add(string.Empty);
-
-            else properties.Add(localization.Value);
-          }
+          else properties.Add(localization.Value);
         }
       }
 

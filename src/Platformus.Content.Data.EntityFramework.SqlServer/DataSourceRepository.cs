@@ -22,6 +22,14 @@ namespace Platformus.Content.Data.EntityFramework.SqlServer
       return this.dbSet.Where(ds => ds.ClassId == classId).OrderBy(ds => ds.CSharpClassName);
     }
 
+    public IEnumerable<DataSource> FilteredByClassIdInlcudingParent(int classId)
+    {
+      return this.dbSet.FromSql(
+        "SELECT * FROM DataSources WHERE ClassId = {0} OR ClassId IN (SELECT ClassId FROM Classes WHERE Id = {0}) ORDER BY CSharpClassName",
+        classId
+      );
+    }
+
     public IEnumerable<DataSource> FilteredByClassIdRange(int classId, string orderBy, string direction, int skip, int take)
     {
       return this.dbSet.Where(ds => ds.ClassId == classId).OrderBy(ds => ds.CSharpClassName).Skip(skip).Take(take);

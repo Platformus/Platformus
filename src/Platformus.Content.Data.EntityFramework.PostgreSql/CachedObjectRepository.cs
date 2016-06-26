@@ -29,22 +29,22 @@ namespace Platformus.Content.Data.EntityFramework.PostgreSql
 
     public IEnumerable<CachedObject> Primary(int cultureId, int objectId)
     {
-      return this.dbSet.FromSql("SELECT * FROM CachedObjects WHERE CultureId = {0} AND ObjectId IN (SELECT PrimaryId FROM Relations WHERE ForeignId = {1})", cultureId, objectId);
+      return this.dbSet.FromSql("SELECT * FROM \"CachedObjects\" WHERE \"CultureId\" = {0} AND \"ObjectId\" IN (SELECT \"PrimaryId\" FROM \"Relations\" WHERE \"ForeignId\" = {1})", cultureId, objectId);
     }
 
     public IEnumerable<CachedObject> Primary(int cultureId, int memberId, int objectId)
     {
-      return this.dbSet.FromSql("SELECT * FROM CachedObjects WHERE CultureId = {0} AND ObjectId IN (SELECT PrimaryId FROM Relations WHERE MemberId = {1} AND ForeignId = {2})", cultureId, memberId, objectId);
+      return this.dbSet.FromSql("SELECT * FROM \"CachedObjects\" WHERE \"CultureId\" = {0} AND \"ObjectId\" IN (SELECT \"PrimaryId\" FROM \"Relations\" WHERE \"MemberId\" = {1} AND \"ForeignId\" = {2})", cultureId, memberId, objectId);
     }
 
     public IEnumerable<CachedObject> Foreign(int cultureId, int objectId)
     {
-      return this.dbSet.FromSql("SELECT * FROM CachedObjects WHERE CultureId = {0} AND ObjectId IN (SELECT ForeignId FROM Relations WHERE PrimaryId = {1})", cultureId, objectId);
+      return this.dbSet.FromSql("SELECT * FROM \"CachedObjects\" WHERE \"CultureId\" = {0} AND \"ObjectId\" IN (SELECT \"ForeignId\" FROM \"Relations\" WHERE \"PrimaryId\" = {1})", cultureId, objectId);
     }
 
     public IEnumerable<CachedObject> Foreign(int cultureId, int memberId, int objectId)
     {
-      return this.dbSet.FromSql("SELECT * FROM CachedObjects WHERE CultureId = {0} AND ObjectId IN (SELECT ForeignId FROM Relations WHERE MemberId = {1} AND PrimaryId = {2})", cultureId, memberId, objectId);
+      return this.dbSet.FromSql("SELECT * FROM \"CachedObjects\" WHERE \"CultureId\" = {0} AND \"ObjectId\" IN (SELECT \"ForeignId\" FROM \"Relations\" WHERE \"MemberId\" = {1} AND \"PrimaryId\" = {2})", cultureId, memberId, objectId);
     }
 
     public void Create(CachedObject cachedObject)

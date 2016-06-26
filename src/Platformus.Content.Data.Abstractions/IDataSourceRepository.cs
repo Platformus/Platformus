@@ -11,6 +11,7 @@ namespace Platformus.Content.Data.Abstractions
   {
     DataSource WithKey(int id);
     IEnumerable<DataSource> FilteredByClassId(int classId);
+    IEnumerable<DataSource> FilteredByClassIdInlcudingParent(int classId);
     IEnumerable<DataSource> FilteredByClassIdRange(int classId, string orderBy, string direction, int skip, int take);
     void Create(DataSource dataSource);
     void Edit(DataSource dataSource);

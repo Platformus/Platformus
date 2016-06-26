@@ -4,12 +4,12 @@
   "dependencies": {
     "ExtCore.Infrastructure": "1.0.0-alpha8",
     "Microsoft.AspNetCore.Mvc": "1.0.0-rc2-final",
-    "Platformus.Barebone": "1.0.0-alpha5",
-    "Platformus.Globalization.Data.Abstractions": "1.0.0-alpha5",
-    "Platformus.Globalization.Data.Models": "1.0.0-alpha5",
-    "Platformus.Infrastructure": "1.0.0-alpha5",
-    "Platformus.Navigation.Data.Abstractions": "1.0.0-alpha5",
-    "Platformus.Navigation.Data.Models": "1.0.0-alpha5"
+    "Platformus.Barebone": "1.0.0-alpha6",
+    "Platformus.Globalization.Data.Abstractions": "1.0.0-alpha6",
+    "Platformus.Globalization.Data.Models": "1.0.0-alpha6",
+    "Platformus.Infrastructure": "1.0.0-alpha6",
+    "Platformus.Navigation.Data.Abstractions": "1.0.0-alpha6",
+    "Platformus.Navigation.Data.Models": "1.0.0-alpha6"
   },
   "description": "Part of the Platformus.Navigation Platformus extension.",
   "frameworks": {
@@ -25,5 +25,5 @@
     "iconUrl": "http://platformus.net/platformus_nuget_icon.png",
     "projectUrl": "http://platformus.net/"
   },
-  "version": "1.0.0-alpha5"
+  "version": "1.0.0-alpha6"
 }

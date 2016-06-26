@@ -22,11 +22,13 @@ namespace Platformus.Content.Data.Models
     //[Required]
     //[StringLength(64)]
     public string Name { get; set; }
-    public bool? DisplayInList { get; set; }
+    
     public int? Position { get; set; }
+    public int? PropertyDataTypeId { get; set; }
+    public bool? IsPropertyLocalizable { get; set; }
+    public bool? IsPropertyVisibleInList { get; set; }
     public int? RelationClassId { get; set; }
     public bool? IsRelationSingleParent { get; set; }
-    public int? PropertyDataTypeId { get; set; }
 
     public virtual Class Class { get; set; }
     public virtual Tab Tab { get; set; }

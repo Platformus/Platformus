@@ -38,7 +38,7 @@ namespace Platformus.Configuration.Backend.Controllers
         else this.Storage.GetRepository<IVariableRepository>().Edit(variable);
 
         this.Storage.Save();
-        return this.RedirectToAction("Index", "Configurations");
+        return this.RedirectToAction("Index", "Sections");
       }
 
       return this.CreateRedirectToSelfResult();
@@ -48,7 +48,7 @@ namespace Platformus.Configuration.Backend.Controllers
     {
       this.Storage.GetRepository<IVariableRepository>().Delete(id);
       this.Storage.Save();
-      return this.RedirectToAction("Index", "Configurations");
+      return this.RedirectToAction("Index", "Sections");
     }
   }
 }

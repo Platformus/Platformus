@@ -26,7 +26,10 @@ namespace Platformus.Content.Backend.ViewModels.Classes
         Grid = new GridViewModelBuilder(this.handler).Build(
           orderBy, direction, skip, take, @classRepository.Count(),
           new[] {
+            new GridColumnViewModelBuilder(this.handler).Build("Parent"),
             new GridColumnViewModelBuilder(this.handler).Build("Name", "Name"),
+            new GridColumnViewModelBuilder(this.handler).Build("Is abstract", "IsAbstract"),
+            new GridColumnViewModelBuilder(this.handler).Build("Is standalone", "IsStandalone"),
             new GridColumnViewModelBuilder(this.handler).Build("Tabs"),
             new GridColumnViewModelBuilder(this.handler).Build("Properties"),
             new GridColumnViewModelBuilder(this.handler).Build("Data sources"),

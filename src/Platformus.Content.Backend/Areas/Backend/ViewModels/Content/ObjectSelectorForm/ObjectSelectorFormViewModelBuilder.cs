@@ -35,7 +35,7 @@ namespace Platformus.Content.Backend.ViewModels.Content
 
     private IEnumerable<GridColumnViewModel> GetGridColumns(int classId)
     {
-      return this.handler.Storage.GetRepository<IMemberRepository>().FilteredByClassIdDisplayInList((int)classId).Select(m => new GridColumnViewModelBuilder(this.handler).Build(m.Name));
+      return this.handler.Storage.GetRepository<IMemberRepository>().FilteredByClassIdPropertyVisibleInList((int)classId).Select(m => new GridColumnViewModelBuilder(this.handler).Build(m.Name));
     }
   }
 }

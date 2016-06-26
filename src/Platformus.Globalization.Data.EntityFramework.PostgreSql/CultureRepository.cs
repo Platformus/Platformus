@@ -22,9 +22,19 @@ namespace Platformus.Globalization.Data.EntityFramework.PostgreSql
       return this.dbSet.FirstOrDefault(c => string.Equals(c.Code, code, System.StringComparison.OrdinalIgnoreCase));
     }
 
+    public Culture Neutral()
+    {
+      return this.dbSet.FirstOrDefault(c => c.IsNeutral == true);
+    }
+
     public IEnumerable<Culture> All()
     {
-      return this.dbSet.OrderBy(c => c.Code);
+      return this.dbSet.OrderBy(c => c.Name);
+    }
+
+    public IEnumerable<Culture> NotNeutral()
+    {
+      return this.dbSet.Where(c => c.IsNeutral == null).OrderBy(c => c.Name);
     }
 
     public IEnumerable<Culture> Range(string orderBy, string direction, int skip, int take)
@@ -51,10 +61,10 @@ namespace Platformus.Globalization.Data.EntityFramework.PostgreSql
     {
       this.dbContext.Database.ExecuteSqlCommand(
         @"
-          DELETE FROM CachedObjects WHERE CultureId = {0};
-          DELETE FROM CachedMenus WHERE CultureId = {0};
-          DELETE FROM CachedForms WHERE CultureId = {0};
-          DELETE FROM Localizations WHERE CultureId = {0};
+          DELETE FROM ""CachedObjects"" WHERE ""CultureId"" = {0};
+          DELETE FROM ""CachedMenus"" WHERE ""CultureId"" = {0};
+          DELETE FROM ""CachedForms"" WHERE ""CultureId"" = {0};
+          DELETE FROM ""Localizations"" WHERE ""CultureId"" = {0};
         ",
         culture.Id
       );

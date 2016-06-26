@@ -29,10 +29,10 @@ namespace Platformus.Content.Backend.ViewModels.Objects
         Class = classId == null ? null : new ClassViewModelBuilder(this.handler).Build(
           classRepository.WithKey((int)classId)
         ),
-        StandaloneClasses = classRepository.StandaloneNotRelationSingleParent().Select(
+        StandaloneClasses = classRepository.Standalone().Select(
           c => new ClassViewModelBuilder(this.handler).Build(c)
         ),
-        EmbeddedClasses = classRepository.EmbeddedNotRelationSingleParent().Select(
+        EmbeddedClasses = classRepository.Embedded().Select(
           c => new ClassViewModelBuilder(this.handler).Build(c)
         ),
         Grid = classId == null ? null : new GridViewModelBuilder(this.handler).Build(
@@ -53,7 +53,7 @@ namespace Platformus.Content.Backend.ViewModels.Objects
         gridColumns.Add(new GridColumnViewModelBuilder(this.handler).Build("URL", "Url"));
 
       gridColumns.AddRange(
-        memberRepository.FilteredByClassIdDisplayInList(classId).Select(m => new GridColumnViewModelBuilder(this.handler).Build(m.Name))
+        memberRepository.FilteredByClassIdInlcudingParentPropertyVisibleInList(classId).Select(m => new GridColumnViewModelBuilder(this.handler).Build(m.Name))
       );
 
       foreach (Member member in memberRepository.FilteredByRelationClassIdRelationSingleParent(classId))

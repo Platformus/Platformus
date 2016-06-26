@@ -22,9 +22,25 @@ namespace Platformus.Content.Data.EntityFramework.PostgreSql
       return this.dbSet.Where(m => m.ClassId == classId).OrderBy(m => m.Position);
     }
 
-    public IEnumerable<Member> FilteredByClassIdDisplayInList(int classId)
+    public IEnumerable<Member> FilteredByClassIdInlcudingParent(int classId)
     {
-      return this.dbSet.Where(m => m.ClassId == classId && m.DisplayInList == true).OrderBy(m => m.Position);
+      return this.dbSet.FromSql(
+        "SELECT * FROM \"Members\" WHERE \"ClassId\" = {0} OR \"ClassId\" IN (SELECT \"ClassId\" FROM \"Classes\" WHERE \"Id\" = {0}) ORDER BY \"Position\"",
+        classId
+      );
+    }
+
+    public IEnumerable<Member> FilteredByClassIdPropertyVisibleInList(int classId)
+    {
+      return this.dbSet.Where(m => m.ClassId == classId && m.IsPropertyVisibleInList == true).OrderBy(m => m.Position);
+    }
+
+    public IEnumerable<Member> FilteredByClassIdInlcudingParentPropertyVisibleInList(int classId)
+    {
+      return this.dbSet.FromSql(
+        "SELECT * FROM \"Members\" WHERE (\"ClassId\" = {0} OR \"ClassId\" IN (SELECT \"ClassId\" FROM \"Classes\" WHERE \"Id\" = {0})) AND \"IsPropertyVisibleInList\" = {1} ORDER BY \"Position\"",
+        classId, true
+      );
     }
 
     public IEnumerable<Member> FilteredByRelationClassIdRelationSingleParent(int relationClassId)
@@ -32,7 +48,7 @@ namespace Platformus.Content.Data.EntityFramework.PostgreSql
       return this.dbSet.Where(m => m.RelationClassId == relationClassId && m.IsRelationSingleParent == true).OrderBy(m => m.Position);
     }
 
-    public IEnumerable<Member> Range(int classId, string orderBy, string direction, int skip, int take)
+    public IEnumerable<Member> FilteredByClassRange(int classId, string orderBy, string direction, int skip, int take)
     {
       return this.dbSet.Where(m => m.ClassId == classId).OrderBy(m => m.Position).Skip(skip).Take(take);
     }
@@ -56,12 +72,12 @@ namespace Platformus.Content.Data.EntityFramework.PostgreSql
     {
       this.dbContext.Database.ExecuteSqlCommand(
         @"
-          DELETE FROM CachedObjects WHERE ClassId IN (SELECT ClassId FROM Members WHERE Id = {0});
-          CREATE TEMP TABLE TempDictionaries (Id INT PRIMARY KEY);
-          INSERT INTO TempDictionaries SELECT HtmlId FROM Properties WHERE MemberId = {0};
-          DELETE FROM Properties WHERE MemberId = {0};
-          DELETE FROM Localizations WHERE DictionaryId IN (SELECT Id FROM TempDictionaries);
-          DELETE FROM Dictionaries WHERE Id IN (SELECT Id FROM TempDictionaries);
+          DELETE FROM ""CachedObjects"" WHERE ""ClassId"" IN (SELECT ""ClassId"" FROM ""Members"" WHERE ""Id"" = {0});
+          CREATE TEMP TABLE ""TempDictionaries"" (""Id"" INT PRIMARY KEY);
+          INSERT INTO ""TempDictionaries"" SELECT ""HtmlId"" FROM ""Properties"" WHERE ""MemberId"" = {0};
+          DELETE FROM ""Properties"" WHERE ""MemberId"" = {0};
+          DELETE FROM ""Localizations"" WHERE ""DictionaryId"" IN (SELECT ""Id"" FROM ""TempDictionaries"");
+          DELETE FROM ""Dictionaries"" WHERE ""Id"" IN (SELECT ""Id"" FROM ""TempDictionaries"");
         ",
         member.Id
       );

@@ -1,4 +1,4 @@
-﻿# Platformus 1.0.0-alpha5
+﻿# Platformus 1.0.0-alpha6
 
 [![Join the chat at https://gitter.im/Platformus/Platformus](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/Platformus/Platformus?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
@@ -90,7 +90,7 @@ backend UI.
 
 Please take a look at our [sample](https://github.com/Platformus/Platformus-Sample) on GitHub.
 
-You can also download our [ready to use sample](http://platformus.net/files/Platformus-Sample-1.0.0-alpha5.zip).
+You can also download our [ready to use sample](http://platformus.net/files/Platformus-Sample-1.0.0-alpha6.zip).
 It contains everything you need to run Platformus-based web application from Visual Studio 2015, including SQLite
 database with the test data.
 

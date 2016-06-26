@@ -40,7 +40,20 @@
             @:{
               @:id: @member.Id,
               @:name: "@Html.Raw(member.Name)",
-              @if (member.RelationClass != null)
+              @if (member.PropertyDataType != null)
+              {
+                @:propertyDataType: { javaScriptEditorClassName: "@member.PropertyDataType.JavaScriptEditorClassName" },
+                @:isPropertyLocalizable: @member.IsPropertyLocalizable.ToString().ToLower(),
+                @:property: {
+                  @:localizations: [
+                    @foreach (var localization in member.Property.HtmlLocalizations)
+                    {
+                      @: { culture: { code: "@localization.Culture.Code" }, value: "@Html.Raw(string.IsNullOrEmpty(localization.Value) ? null : localization.Value.Replace("\r\n", "\\r\\n").Replace("\n", "\\n").Replace("\"", "\\\""))" }@(localization != member.Property.HtmlLocalizations.Last() ? "," : null)
+                    }
+                  @:]
+                @:}
+              }
+              else if (member.RelationClass != null)
               {
                 @:relationClass: { id: @member.RelationClass.Id },
                 @:isRelationSingleParent: @member.IsRelationSingleParent.ToString().ToLower(),
@@ -50,18 +63,6 @@
                     @:{ primaryId: @relation.PrimaryId }@(relation != member.Relations.Last() ? "," : null)
                   }
                 @:]
-                }
-              else if (member.PropertyDataType != null)
-              {
-                @:propertyDataType: { javaScriptEditorClassName: "@member.PropertyDataType.JavaScriptEditorClassName" },
-                @:property: {
-                  @:localizations: [
-                    @foreach (var localization in member.Property.HtmlLocalizations)
-                    {
-                      @: { culture: { code: "@localization.Culture.Code" }, value: "@Html.Raw(string.IsNullOrEmpty(localization.Value) ? null : localization.Value.Replace("\r\n", "\\r\\n").Replace("\n", "\\n").Replace("\"", "\\\""))" }@(localization != member.Property.HtmlLocalizations.Last() ? "," : null)
-                    }
-                  @:]
-                @:}
               }
             @:}@(member.Id != this.Model.MembersByTabs[tab].Last().Id ? "," : null)
           }

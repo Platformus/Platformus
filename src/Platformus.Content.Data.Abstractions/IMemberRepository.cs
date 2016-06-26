@@ -11,9 +11,11 @@ namespace Platformus.Content.Data.Abstractions
   {
     Member WithKey(int id);
     IEnumerable<Member> FilteredByClassId(int classId);
-    IEnumerable<Member> FilteredByClassIdDisplayInList(int classId);
+    IEnumerable<Member> FilteredByClassIdInlcudingParent(int classId);
+    IEnumerable<Member> FilteredByClassIdPropertyVisibleInList(int classId);
+    IEnumerable<Member> FilteredByClassIdInlcudingParentPropertyVisibleInList(int classId);
     IEnumerable<Member> FilteredByRelationClassIdRelationSingleParent(int relationClassId);
-    IEnumerable<Member> Range(int classId, string orderBy, string direction, int skip, int take);
+    IEnumerable<Member> FilteredByClassRange(int classId, string orderBy, string direction, int skip, int take);
     void Create(Member member);
     void Edit(Member member);
     void Delete(int id);

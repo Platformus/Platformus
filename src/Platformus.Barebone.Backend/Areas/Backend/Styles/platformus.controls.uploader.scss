@@ -2,10 +2,6 @@
 
 .files-drag-and-drop-area {
   background: $color-control;
-  color: $color-text-medium;
-  font-style: italic;
-  text-align: center;
-  line-height: 100px;
   margin-top: $spacing;
   height: 100px;
 }
@@ -14,9 +10,16 @@
   background-color: $color-control-hovered;
 }
 
+.files-drag-and-drop-area .description {
+  color: $color-text-medium;
+  font-style: italic;
+  text-align: center;
+  line-height: 100px;
+}
+
 .browse {
   text-align: center;
-  width: 100px;
+  width: 250px;
   height: 20px;
   overflow: hidden !important;
 }

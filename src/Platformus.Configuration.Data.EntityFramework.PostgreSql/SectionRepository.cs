@@ -46,7 +46,7 @@ namespace Platformus.Configuration.Data.EntityFramework.PostgreSql
     {
       this.dbContext.Database.ExecuteSqlCommand(
         @"
-          DELETE FROM Variables WHERE SectionId = {0};
+          DELETE FROM ""Variables"" WHERE ""SectionId"" = {0};
         ",
         section.Id
       );

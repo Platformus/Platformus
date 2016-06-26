@@ -27,14 +27,19 @@ namespace Platformus.Content.Data.EntityFramework.PostgreSql
       return this.dbSet.OrderBy(c => c.Name).Skip(skip).Take(take);
     }
 
-    public IEnumerable<Class> StandaloneNotRelationSingleParent()
+    public IEnumerable<Class> Abstract()
     {
-      return this.dbSet.FromSql("SELECT * FROM Classes WHERE Id NOT IN (SELECT ClassId FROM Members WHERE IsRelationSingleParent IS NOT NULL) AND IsStandalone IS NOT NULL ORDER BY Name");
+      return this.dbSet.Where(c => c.IsAbstract == true).OrderBy(c => c.Name);
     }
 
-    public IEnumerable<Class> EmbeddedNotRelationSingleParent()
+    public IEnumerable<Class> Standalone()
     {
-      return this.dbSet.FromSql("SELECT * FROM Classes WHERE Id NOT IN (SELECT ClassId FROM Members WHERE IsRelationSingleParent IS NOT NULL) AND IsStandalone IS NULL ORDER BY Name");
+      return this.dbSet.FromSql("SELECT * FROM \"Classes\" WHERE \"Id\" NOT IN (SELECT \"ClassId\" FROM \"Members\" WHERE \"IsRelationSingleParent\" IS NOT NULL) AND \"IsAbstract\" IS NULL AND \"IsStandalone\" IS NOT NULL ORDER BY \"Name\"");
+    }
+
+    public IEnumerable<Class> Embedded()
+    {
+      return this.dbSet.FromSql("SELECT * FROM \"Classes\" WHERE \"Id\" NOT IN (SELECT \"ClassId\" FROM \"Members\" WHERE \"IsRelationSingleParent\" IS NOT NULL) AND \"IsAbstract\" IS NULL AND \"IsStandalone\" IS NULL ORDER BY \"Name\"");
     }
 
     public void Create(Class @class)
@@ -56,17 +61,17 @@ namespace Platformus.Content.Data.EntityFramework.PostgreSql
     {
       this.dbContext.Database.ExecuteSqlCommand(
         @"
-          DELETE FROM CachedObjects WHERE ClassId = {0};
-          CREATE TEMP TABLE TempDictionaries (Id INT PRIMARY KEY);
-          INSERT INTO TempDictionaries SELECT HtmlId FROM Properties WHERE ObjectId IN (SELECT Id FROM Objects WHERE ClassId = {0});
-          DELETE FROM Properties WHERE ObjectId IN (SELECT Id FROM Objects WHERE ClassId = {0});
-          DELETE FROM Localizations WHERE DictionaryId IN (SELECT Id FROM TempDictionaries);
-          DELETE FROM Dictionaries WHERE Id IN (SELECT Id FROM TempDictionaries);
-          DELETE FROM Relations WHERE PrimaryId IN (SELECT Id FROM Objects WHERE ClassId = {0}) OR ForeignId IN (SELECT Id FROM Objects WHERE ClassId = {0});
-          DELETE FROM Objects WHERE ClassId = {0};
-          DELETE FROM Members WHERE ClassId = {0} OR RelationClassId = {0};
-          DELETE FROM Tabs WHERE ClassId = {0};
-          DELETE FROM DataSources WHERE ClassId = {0};
+          DELETE FROM ""CachedObjects"" WHERE ""ClassId"" = {0};
+          CREATE TEMP TABLE ""TempDictionaries"" (""Id"" INT PRIMARY KEY);
+          INSERT INTO ""TempDictionaries"" SELECT ""HtmlId"" FROM ""Properties"" WHERE ""ObjectId"" IN (SELECT ""Id"" FROM ""Objects"" WHERE ""ClassId"" = {0});
+          DELETE FROM ""Properties"" WHERE ""ObjectId"" IN (SELECT ""Id"" FROM ""Objects"" WHERE ""ClassId"" = {0});
+          DELETE FROM ""Localizations"" WHERE ""DictionaryId"" IN (SELECT ""Id"" FROM ""TempDictionaries"");
+          DELETE FROM ""Dictionaries"" WHERE ""Id"" IN (SELECT ""Id"" FROM ""TempDictionaries"");
+          DELETE FROM ""Relations"" WHERE ""PrimaryId"" IN (SELECT ""Id"" FROM ""Objects"" WHERE ""ClassId"" = {0}) OR ""ForeignId"" IN (SELECT ""Id"" FROM ""Objects"" WHERE ""ClassId"" = {0});
+          DELETE FROM ""Objects"" WHERE ""ClassId"" = {0};
+          DELETE FROM ""Members"" WHERE ""ClassId"" = {0} OR ""RelationClassId"" = {0};
+          DELETE FROM ""Tabs"" WHERE ""ClassId"" = {0};
+          DELETE FROM ""DataSources"" WHERE ""ClassId"" = {0};
         ",
         @class.Id
       );

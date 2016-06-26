@@ -22,19 +22,22 @@ namespace Platformus.Barebone.Backend.ViewModels.Shared
       {
         if (extension is Platformus.Infrastructure.IExtension)
         {
-          foreach (Platformus.Infrastructure.BackendMenuGroup backendMenuGroup in (extension as Platformus.Infrastructure.IExtension).BackendMenuGroups)
+          if ((extension as Platformus.Infrastructure.IExtension).BackendMetadata != null && (extension as Platformus.Infrastructure.IExtension).BackendMetadata.BackendMenuGroups != null)
           {
-            List<BackendMenuItemViewModel> backendMenuItemViewModels = new List<BackendMenuItemViewModel>();
+            foreach (Platformus.Infrastructure.BackendMenuGroup backendMenuGroup in (extension as Platformus.Infrastructure.IExtension).BackendMetadata.BackendMenuGroups)
+            {
+              List<BackendMenuItemViewModel> backendMenuItemViewModels = new List<BackendMenuItemViewModel>();
 
-            foreach (Platformus.Infrastructure.BackendMenuItem backendMenuItem in backendMenuGroup.BackendMenuItems)
-              backendMenuItemViewModels.Add(new BackendMenuItemViewModelBuilder(this.handler).Build(backendMenuItem));
+              foreach (Platformus.Infrastructure.BackendMenuItem backendMenuItem in backendMenuGroup.BackendMenuItems)
+                backendMenuItemViewModels.Add(new BackendMenuItemViewModelBuilder(this.handler).Build(backendMenuItem));
 
-            BackendMenuGroupViewModel backendMenuGroupViewModel = this.GetBackendMenuGroup(backendMenuGroupViewModels, backendMenuGroup);
+              BackendMenuGroupViewModel backendMenuGroupViewModel = this.GetBackendMenuGroup(backendMenuGroupViewModels, backendMenuGroup);
 
-            if (backendMenuGroupViewModel.BackendMenuItems != null)
-              backendMenuItemViewModels.AddRange(backendMenuGroupViewModel.BackendMenuItems);
+              if (backendMenuGroupViewModel.BackendMenuItems != null)
+                backendMenuItemViewModels.AddRange(backendMenuGroupViewModel.BackendMenuItems);
 
-            backendMenuGroupViewModel.BackendMenuItems = backendMenuItemViewModels.OrderBy(bmi => bmi.Position);
+              backendMenuGroupViewModel.BackendMenuItems = backendMenuItemViewModels.OrderBy(bmi => bmi.Position);
+            }
           }
         }
       }

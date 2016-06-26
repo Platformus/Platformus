@@ -27,14 +27,19 @@ namespace Platformus.Content.Data.EntityFramework.SqlServer
       return this.dbSet.OrderBy(c => c.Name).Skip(skip).Take(take);
     }
 
-    public IEnumerable<Class> StandaloneNotRelationSingleParent()
+    public IEnumerable<Class> Abstract()
     {
-      return this.dbSet.FromSql("SELECT * FROM Classes WHERE Id NOT IN (SELECT ClassId FROM Members WHERE IsRelationSingleParent IS NOT NULL) AND IsStandalone IS NOT NULL ORDER BY Name");
+      return this.dbSet.Where(c => c.IsAbstract == true).OrderBy(c => c.Name);
     }
 
-    public IEnumerable<Class> EmbeddedNotRelationSingleParent()
+    public IEnumerable<Class> Standalone()
     {
-      return this.dbSet.FromSql("SELECT * FROM Classes WHERE Id NOT IN (SELECT ClassId FROM Members WHERE IsRelationSingleParent IS NOT NULL) AND IsStandalone IS NULL ORDER BY Name");
+      return this.dbSet.FromSql("SELECT * FROM Classes WHERE Id NOT IN (SELECT ClassId FROM Members WHERE IsRelationSingleParent IS NOT NULL) AND IsAbstract IS NULL AND IsStandalone IS NOT NULL ORDER BY Name");
+    }
+
+    public IEnumerable<Class> Embedded()
+    {
+      return this.dbSet.FromSql("SELECT * FROM Classes WHERE Id NOT IN (SELECT ClassId FROM Members WHERE IsRelationSingleParent IS NOT NULL) AND IsAbstract IS NULL AND IsStandalone IS NULL ORDER BY Name");
     }
 
     public void Create(Class @class)

@@ -7,8 +7,10 @@
 }
 <h1>@ViewBag.Title</h1>
 <form method="post">
+  <drop-down-list-selector asp-for="ClassId" asp-options="@Model.ClassOptions" />
   <single-line-text-editor asp-for="Name" />
   <single-line-text-editor asp-for="PluralizedName" />
+  <check-box asp-for="IsAbstract" />
   <check-box asp-for="IsStandalone" />
   <single-line-text-editor asp-for="DefaultViewName" />
   <div class="buttons">

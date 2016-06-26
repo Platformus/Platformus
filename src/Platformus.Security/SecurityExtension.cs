@@ -1,7 +1,6 @@
 ﻿// Copyright © 2015 Dmitry Sikorsky. All rights reserved.
 // Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information.
 
-using System.Collections.Generic;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
@@ -27,23 +26,19 @@ namespace Platformus.Security
       }
     }
 
-    public IEnumerable<BackendMenuGroup> BackendMenuGroups
+    public IFrontendMetadata FrontendMetadata
     {
       get
       {
-        return new BackendMenuGroup[]
-        {
-          new BackendMenuGroup(
-            "Audience",
-            3000,
-            new BackendMenuItem[]
-            {
-              new BackendMenuItem("/backend/permissions", "Permissions", 1000),
-              new BackendMenuItem("/backend/roles", "Roles", 2000),
-              new BackendMenuItem("/backend/users", "Users", 3000)
-            }
-          )
-        };
+        return null;
+      }
+    }
+
+    public IBackendMetadata BackendMetadata
+    {
+      get
+      {
+        return new BackendMetadata();
       }
     }
 

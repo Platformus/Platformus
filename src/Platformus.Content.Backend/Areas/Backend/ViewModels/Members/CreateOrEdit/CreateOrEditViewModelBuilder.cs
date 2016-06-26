@@ -24,8 +24,8 @@ namespace Platformus.Content.Backend.ViewModels.Members
         return new CreateOrEditViewModel()
         {
           TabOptions = this.GetTabOptions((int)classId),
-          RelationClassOptions = this.GetRelationClassOptions(),
-          PropertyDataTypeOptions = this.GetPropertyDataTypeOptions()
+          PropertyDataTypeOptions = this.GetPropertyDataTypeOptions(),
+          RelationClassOptions = this.GetRelationClassOptions()
         };
 
       Member member = this.handler.Storage.GetRepository<IMemberRepository>().WithKey((int)id);
@@ -37,13 +37,14 @@ namespace Platformus.Content.Backend.ViewModels.Members
         TabOptions = this.GetTabOptions(member.ClassId),
         Code = member.Code,
         Name = member.Name,
-        DisplayInList = member.DisplayInList == true,
         Position = member.Position,
+        PropertyDataTypeId = member.PropertyDataTypeId,
+        PropertyDataTypeOptions = this.GetPropertyDataTypeOptions(),
+        IsPropertyLocalizable = member.IsPropertyLocalizable == true,
+        IsPropertyVisibleInList = member.IsPropertyVisibleInList == true,
         RelationClassId = member.RelationClassId,
         RelationClassOptions = this.GetRelationClassOptions(),
-        IsRelationSingleParent = member.IsRelationSingleParent == true,
-        PropertyDataTypeId = member.PropertyDataTypeId,
-        PropertyDataTypeOptions = this.GetPropertyDataTypeOptions()
+        IsRelationSingleParent = member.IsRelationSingleParent == true
       };
     }
 
@@ -61,20 +62,6 @@ namespace Platformus.Content.Backend.ViewModels.Members
       return options;
     }
 
-    private IEnumerable<Option> GetRelationClassOptions()
-    {
-      List<Option> options = new List<Option>();
-
-      options.Add(new Option("Relation class not specified", string.Empty));
-      options.AddRange(
-        this.handler.Storage.GetRepository<IClassRepository>().All().Select(
-          c => new Option(c.Name, c.Id.ToString())
-        )
-      );
-
-      return options;
-    }
-
     private IEnumerable<Option> GetPropertyDataTypeOptions()
     {
       List<Option> options = new List<Option>();
@@ -83,6 +70,20 @@ namespace Platformus.Content.Backend.ViewModels.Members
       options.AddRange(
         this.handler.Storage.GetRepository<IDataTypeRepository>().All().Select(
           dt => new Option(dt.Name, dt.Id.ToString())
+        )
+      );
+
+      return options;
+    }
+
+    private IEnumerable<Option> GetRelationClassOptions()
+    {
+      List<Option> options = new List<Option>();
+
+      options.Add(new Option("Relation class not specified", string.Empty));
+      options.AddRange(
+        this.handler.Storage.GetRepository<IClassRepository>().All().Select(
+          c => new Option(c.Name, c.Id.ToString())
         )
       );
 

@@ -1,5 +1,10 @@
-﻿/// <reference path="../../../scripts/typings/jquery/jquery.d.ts" />
-/// <reference path="platformus.ui.ts" />
+﻿// Copyright © 2015 Dmitry Sikorsky. All rights reserved.
+// Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information.
+
+/// <reference path="../../../scripts/typings/jquery/jquery.d.ts" />
+/// <reference path="../../../scripts/typings/platformus/platformus.d.ts" />
+/// <reference path="platformus.overlays.objectselectorform.ts" />
+
 module Platformus.Editors.Relation {
   export function create(container: JQuery, member: any): void {
     createField(container, member);
@@ -57,7 +62,14 @@ module Platformus.Editors.Relation {
 
     return $("<button>").addClass("positive").attr("type", "button").html("Select…").click(
       function () {
-        Platformus.Ui.showObjectSelectorForm(member.relationClass.id, identity);
+        new Platformus.Overlays.ObjectSelectorForm(
+          member.relationClass.id,
+          $("#" + identity).val(),
+          function (objectIds: string) {
+            $("#" + identity).val(objectIds);
+            $("#" + identity).trigger("change");
+          }
+        ).show();
       }
     );
   }

@@ -39,22 +39,22 @@ namespace Platformus.Content.Data.EntityFramework.PostgreSql
 
     public IEnumerable<Object> Primary(int objectId)
     {
-      return this.dbSet.FromSql("SELECT * FROM Objects WHERE Id IN (SELECT PrimaryId FROM Relations WHERE ForeignId = {0})", objectId);
+      return this.dbSet.FromSql("SELECT * FROM \"Objects\" WHERE \"Id\" IN (SELECT \"PrimaryId\" FROM \"Relations\" WHERE \"ForeignId\" = {0})", objectId);
     }
 
     public IEnumerable<Object> Primary(int memberId, int objectId)
     {
-      return this.dbSet.FromSql("SELECT * FROM Objects WHERE Id IN (SELECT PrimaryId FROM Relations WHERE MemberId = {0} AND ForeignId = {1})", memberId, objectId);
+      return this.dbSet.FromSql("SELECT * FROM \"Objects\" WHERE \"Id\" IN (SELECT \"PrimaryId\" FROM \"Relations\" WHERE \"MemberId\" = {0} AND \"ForeignId\" = {1})", memberId, objectId);
     }
 
     public IEnumerable<Object> Foreign(int objectId)
     {
-      return this.dbSet.FromSql("SELECT * FROM Objects WHERE Id IN (SELECT ForeignId FROM Relations WHERE PrimaryId = {0})", objectId);
+      return this.dbSet.FromSql("SELECT * FROM \"Objects\" WHERE \"Id\" IN (SELECT \"ForeignId\" FROM \"Relations\" WHERE \"PrimaryId\" = {0})", objectId);
     }
 
     public IEnumerable<Object> Foreign(int memberId, int objectId)
     {
-      return this.dbSet.FromSql("SELECT * FROM Objects WHERE Id IN (SELECT ForeignId FROM Relations WHERE MemberId = {0} AND PrimaryId = {1})", memberId, objectId);
+      return this.dbSet.FromSql("SELECT * FROM \"Objects\" WHERE \"Id\" IN (SELECT \"ForeignId\" FROM \"Relations\" WHERE \"MemberId\" = {0} AND \"PrimaryId\" = {1})", memberId, objectId);
     }
 
     public IEnumerable<Object> Standalone()

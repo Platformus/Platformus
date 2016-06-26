@@ -27,11 +27,12 @@ namespace Platformus.Content.Backend.ViewModels.Members
       member.TabId = createOrEdit.TabId;
       member.Code = createOrEdit.Code;
       member.Name = createOrEdit.Name;
-      member.DisplayInList = createOrEdit.DisplayInList ? true : (bool?)null;
       member.Position = createOrEdit.Position;
+      member.PropertyDataTypeId = createOrEdit.PropertyDataTypeId;
+      member.IsPropertyLocalizable = createOrEdit.IsPropertyLocalizable ? true : (bool?)null;
+      member.IsPropertyVisibleInList = createOrEdit.IsPropertyVisibleInList ? true : (bool?)null;
       member.RelationClassId = createOrEdit.RelationClassId;
       member.IsRelationSingleParent = createOrEdit.IsRelationSingleParent ? true : (bool?)null;
-      member.PropertyDataTypeId = createOrEdit.PropertyDataTypeId;
       return member;
     }
   }
