@@ -1,6 +1,8 @@
 ﻿// Copyright © 2015 Dmitry Sikorsky. All rights reserved.
 // Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information.
 
+using System;
+using System.Collections.Generic;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Routing;
 using Microsoft.Extensions.Configuration;
@@ -18,6 +20,14 @@ namespace Platformus.Configuration
       get
       {
         return "Configuration Extension";
+      }
+    }
+
+    public IDictionary<int, Action<IRouteBuilder>> RouteRegistrarsByPriorities
+    {
+      get
+      {
+        return null;
       }
     }
 
@@ -49,10 +59,6 @@ namespace Platformus.Configuration
     public void Configure(IApplicationBuilder applicationBuilder)
     {
 
-    }
-
-    public void RegisterRoutes(IRouteBuilder routeBuilder)
-    {
     }
   }
 }

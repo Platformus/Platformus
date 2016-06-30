@@ -73,7 +73,7 @@ namespace Platformus.Globalization.Backend.Controllers
 
     private void CreateLocalizations(PropertyInfo propertyInfo, Dictionary dictionary)
     {
-      IEnumerable<Culture> cultures = this.Storage.GetRepository<ICultureRepository>().All();
+      IEnumerable<Culture> cultures = this.Storage.GetRepository<ICultureRepository>().NotNeutral();
 
       foreach (Culture culture in cultures)
       {
@@ -101,7 +101,7 @@ namespace Platformus.Globalization.Backend.Controllers
 
       try
       {
-        IEnumerable<Culture> cultures = this.Storage.GetRepository<ICultureRepository>().All();
+        IEnumerable<Culture> cultures = this.Storage.GetRepository<ICultureRepository>().NotNeutral();
 
         foreach (PropertyInfo propertyInfo in this.GetMultilingualPropertiesFromViewModel(viewModel))
         {

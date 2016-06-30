@@ -1,6 +1,7 @@
 ﻿// Copyright © 2015 Dmitry Sikorsky. All rights reserved.
 // Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information.
 
+using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
@@ -22,6 +23,14 @@ namespace Platformus.Globalization
       get
       {
         return "Globalization Extension";
+      }
+    }
+
+    public IDictionary<int, Action<IRouteBuilder>> RouteRegistrarsByPriorities
+    {
+      get
+      {
+        return null;
       }
     }
 
@@ -72,10 +81,6 @@ namespace Platformus.Globalization
 
       requestLocalizationOptions.RequestCultureProviders.Insert(0, new RouteValueRequestCultureProvider());
       applicationBuilder.UseRequestLocalization(requestLocalizationOptions);
-    }
-
-    public void RegisterRoutes(IRouteBuilder routeBuilder)
-    {
     }
   }
 }

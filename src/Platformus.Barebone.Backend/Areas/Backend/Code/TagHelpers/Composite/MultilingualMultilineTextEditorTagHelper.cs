@@ -58,11 +58,14 @@ namespace Platformus.Barebone.Backend
 
       foreach (Localization localization in this.Localizations)
       {
-        tbs.Add(this.GenerateCulture(localization));
-        tbs.Add(this.GenerateTextArea(this.ViewContext, this.For, localization));
+        if (localization.Culture.Code != "__")
+        {
+          tbs.Add(this.GenerateCulture(localization));
+          tbs.Add(this.GenerateTextArea(this.ViewContext, this.For, localization));
 
-        if (localization != this.Localizations.Last())
-          tbs.Add(this.GenerateMultilingualSeparator());
+          if (localization != this.Localizations.Last())
+            tbs.Add(this.GenerateMultilingualSeparator());
+        }
       }
 
       return new CompositeHtmlContent(tbs.ToArray());

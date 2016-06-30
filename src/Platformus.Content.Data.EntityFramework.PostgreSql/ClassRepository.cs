@@ -29,7 +29,9 @@ namespace Platformus.Content.Data.EntityFramework.PostgreSql
 
     public IEnumerable<Class> Abstract()
     {
-      return this.dbSet.Where(c => c.IsAbstract == true).OrderBy(c => c.Name);
+      // TODO: workaround for #5899
+      //return this.dbSet.Where(c => c.IsAbstract == true).OrderBy(c => c.Name);
+      return this.dbSet.Where(c => c.IsAbstract != null).OrderBy(c => c.Name);
     }
 
     public IEnumerable<Class> Standalone()

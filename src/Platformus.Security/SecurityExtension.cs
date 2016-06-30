@@ -1,6 +1,8 @@
 ﻿// Copyright © 2015 Dmitry Sikorsky. All rights reserved.
 // Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information.
 
+using System;
+using System.Collections.Generic;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
@@ -23,6 +25,14 @@ namespace Platformus.Security
       get
       {
         return "Security Extension";
+      }
+    }
+
+    public IDictionary<int, Action<IRouteBuilder>> RouteRegistrarsByPriorities
+    {
+      get
+      {
+        return null;
       }
     }
 
@@ -69,10 +79,6 @@ namespace Platformus.Security
           LoginPath = new PathString("/backend/account/signin")
         }
       );
-    }
-
-    public void RegisterRoutes(IRouteBuilder routeBuilder)
-    {
     }
   }
 }

@@ -24,7 +24,9 @@ namespace Platformus.Globalization.Data.EntityFramework.Sqlite
 
     public Culture Neutral()
     {
-      return this.dbSet.FirstOrDefault(c => c.IsNeutral == true);
+      // TODO: workaround for #5899
+      //return this.dbSet.FirstOrDefault(c => c.IsNeutral == true);
+      return this.dbSet.FirstOrDefault(c => c.IsNeutral != null);
     }
 
     public IEnumerable<Culture> All()

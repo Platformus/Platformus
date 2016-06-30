@@ -32,7 +32,9 @@ namespace Platformus.Content.Data.EntityFramework.PostgreSql
 
     public IEnumerable<Member> FilteredByClassIdPropertyVisibleInList(int classId)
     {
-      return this.dbSet.Where(m => m.ClassId == classId && m.IsPropertyVisibleInList == true).OrderBy(m => m.Position);
+      // TODO: workaround for #5899
+      //return this.dbSet.Where(m => m.ClassId == classId && m.IsPropertyVisibleInList == true).OrderBy(m => m.Position);
+      return this.dbSet.Where(m => m.ClassId == classId && m.IsPropertyVisibleInList != null).OrderBy(m => m.Position);
     }
 
     public IEnumerable<Member> FilteredByClassIdInlcudingParentPropertyVisibleInList(int classId)
@@ -45,7 +47,9 @@ namespace Platformus.Content.Data.EntityFramework.PostgreSql
 
     public IEnumerable<Member> FilteredByRelationClassIdRelationSingleParent(int relationClassId)
     {
-      return this.dbSet.Where(m => m.RelationClassId == relationClassId && m.IsRelationSingleParent == true).OrderBy(m => m.Position);
+      // TODO: workaround for #5899
+      //return this.dbSet.Where(m => m.RelationClassId == relationClassId && m.IsRelationSingleParent == true).OrderBy(m => m.Position);
+      return this.dbSet.Where(m => m.RelationClassId == relationClassId && m.IsRelationSingleParent != null).OrderBy(m => m.Position);
     }
 
     public IEnumerable<Member> FilteredByClassRange(int classId, string orderBy, string direction, int skip, int take)
