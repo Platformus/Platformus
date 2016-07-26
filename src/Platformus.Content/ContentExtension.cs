@@ -5,69 +5,32 @@ using System;
 using System.Collections.Generic;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Routing;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
 using Platformus.Infrastructure;
 
 namespace Platformus.Content
 {
-  public class ContentExtension : IExtension
+  public class ContentExtension : ExtensionBase
   {
-    private IConfigurationRoot configurationRoot;
-
-    public string Name
+    public override IEnumerable<KeyValuePair<int, Action<IRouteBuilder>>> UseMvcActionsByPriorities
     {
       get
       {
-        return "Content Extension";
-      }
-    }
-
-    public IDictionary<int, Action<IRouteBuilder>> RouteRegistrarsByPriorities
-    {
-      get
-      {
-        Dictionary<int, Action<IRouteBuilder>> routeRegistrarsByPriorities = new Dictionary<int, Action<IRouteBuilder>>();
-
-        routeRegistrarsByPriorities.Add(
-          10000,
-          routeBuilder =>
+        return new Dictionary<int, Action<IRouteBuilder>>()
+        {
+          [10000] = routeBuilder =>
           {
             routeBuilder.MapRoute(name: "Default", template: "{culture=en}/{*url}", defaults: new { controller = "Default", action = "Index" });
           }
-        );
-
-        return routeRegistrarsByPriorities;
+        };
       }
     }
 
-    public IFrontendMetadata FrontendMetadata
-    {
-      get
-      {
-        return null;
-      }
-    }
-
-    public IBackendMetadata BackendMetadata
+    public override IBackendMetadata BackendMetadata
     {
       get
       {
         return new BackendMetadata();
       }
-    }
-
-    public void SetConfigurationRoot(IConfigurationRoot configurationRoot)
-    {
-      this.configurationRoot = configurationRoot;
-    }
-
-    public void ConfigureServices(IServiceCollection services)
-    {
-    }
-
-    public void Configure(IApplicationBuilder applicationBuilder)
-    {
     }
   }
 }

@@ -5,13 +5,14 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
 
 namespace Platformus.WebApplication
 {
   public class Startup : ExtCore.WebApplication.Startup
   {
-    public Startup(IHostingEnvironment hostingEnvironment)
-      : base(hostingEnvironment)
+    public Startup(IHostingEnvironment hostingEnvironment, ILoggerFactory loggerFactory)
+      : base(hostingEnvironment, loggerFactory)
     {
       IConfigurationBuilder configurationBuilder = new ConfigurationBuilder()
         .SetBasePath(hostingEnvironment.ContentRootPath)
@@ -23,14 +24,11 @@ namespace Platformus.WebApplication
     public override void ConfigureServices(IServiceCollection services)
     {
       base.ConfigureServices(services);
-      services.AddSession();
     }
 
-    public override void Configure(IApplicationBuilder applicationBuilder, IHostingEnvironment hostingEnvironment)
+    public override void Configure(IApplicationBuilder applicationBuilder)
     {
-      applicationBuilder.UseSession();
-
-      if (hostingEnvironment.IsEnvironment("Development"))
+      if (this.hostingEnvironment.IsEnvironment("Development"))
       {
         applicationBuilder.UseBrowserLink();
         applicationBuilder.UseDeveloperExceptionPage();
@@ -42,7 +40,7 @@ namespace Platformus.WebApplication
 
       }
 
-      base.Configure(applicationBuilder, hostingEnvironment);
+      base.Configure(applicationBuilder);
     }
   }
 }

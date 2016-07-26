@@ -9,76 +9,61 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Authorization;
-using Microsoft.AspNetCore.Routing;
-using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Platformus.Infrastructure;
 
 namespace Platformus.Security
 {
-  public class SecurityExtension : IExtension
+  public class SecurityExtension : ExtensionBase
   {
-    private IConfigurationRoot configurationRoot;
-
-    public string Name
+    public override IEnumerable<KeyValuePair<int, Action<IServiceCollection>>> ConfigureServicesActionsByPriorities
     {
       get
       {
-        return "Security Extension";
+        return new Dictionary<int, Action<IServiceCollection>>()
+        {
+          [2000] = services =>
+          {
+            services.Configure<MvcOptions>(options =>
+              {
+                options.Filters.Add(new AuthorizeFilter(new AuthorizationPolicyBuilder().RequireAuthenticatedUser().Build()));
+              }
+            );
+          }
+        };
       }
     }
 
-    public IDictionary<int, Action<IRouteBuilder>> RouteRegistrarsByPriorities
+    public override IEnumerable<KeyValuePair<int, Action<IApplicationBuilder>>> ConfigureActionsByPriorities
     {
       get
       {
-        return null;
+        return new Dictionary<int, Action<IApplicationBuilder>>()
+        {
+          [2000] = applicationBuilder =>
+          {
+            applicationBuilder.UseCookieAuthentication(
+              new CookieAuthenticationOptions()
+              {
+                AuthenticationScheme = CookieAuthenticationDefaults.AuthenticationScheme,
+                AutomaticAuthenticate = true,
+                AutomaticChallenge = true,
+                CookieName = "PLATFORMUS",
+                ExpireTimeSpan = new System.TimeSpan(1, 0, 0),
+                LoginPath = new PathString("/backend/account/signin")
+              }
+            );
+          }
+        };
       }
     }
 
-    public IFrontendMetadata FrontendMetadata
-    {
-      get
-      {
-        return null;
-      }
-    }
-
-    public IBackendMetadata BackendMetadata
+    public override IBackendMetadata BackendMetadata
     {
       get
       {
         return new BackendMetadata();
       }
-    }
-
-    public void SetConfigurationRoot(IConfigurationRoot configurationRoot)
-    {
-      this.configurationRoot = configurationRoot;
-    }
-
-    public void ConfigureServices(IServiceCollection services)
-    {
-      services.Configure<MvcOptions>(options =>
-        {
-          options.Filters.Add(new AuthorizeFilter(new AuthorizationPolicyBuilder().RequireAuthenticatedUser().Build()));
-        }
-      );
-    }
-
-    public void Configure(IApplicationBuilder applicationBuilder)
-    {
-      applicationBuilder.UseCookieAuthentication(
-        new CookieAuthenticationOptions()
-        {
-          AuthenticationScheme = CookieAuthenticationDefaults.AuthenticationScheme,
-          AutomaticAuthenticate = true,
-          AutomaticChallenge = true,
-          CookieName = "PLATFORMUS",
-          ExpireTimeSpan = new System.TimeSpan(1, 0, 0),
-          LoginPath = new PathString("/backend/account/signin")
-        }
-      );
     }
   }
 }

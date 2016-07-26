@@ -6,17 +6,9 @@ using Platformus.Infrastructure;
 
 namespace Platformus.Content
 {
-  public class BackendMetadata : IBackendMetadata
+  public class BackendMetadata : BackendMetadataBase
   {
-    public IEnumerable<BackendStyleSheet> BackendStyleSheets
-    {
-      get
-      {
-        return null;
-      }
-    }
-
-    public IEnumerable<BackendScript> BackendScripts
+    public override IEnumerable<BackendScript> BackendScripts
     {
       get
       {
@@ -27,7 +19,7 @@ namespace Platformus.Content
       }
     }
 
-    public IEnumerable<BackendMenuGroup> BackendMenuGroups
+    public override IEnumerable<BackendMenuGroup> BackendMenuGroups
     {
       get
       {

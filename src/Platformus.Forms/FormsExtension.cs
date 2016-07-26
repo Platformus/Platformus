@@ -5,69 +5,32 @@ using System;
 using System.Collections.Generic;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Routing;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
 using Platformus.Infrastructure;
 
 namespace Platformus.Security
 {
-  public class SecurityExtension : IExtension
+  public class FormsExtension : ExtensionBase
   {
-    private IConfigurationRoot configurationRoot;
-
-    public string Name
+    public override IEnumerable<KeyValuePair<int, Action<IRouteBuilder>>> UseMvcActionsByPriorities
     {
       get
       {
-        return "Forms Extension";
-      }
-    }
-
-    public IDictionary<int, Action<IRouteBuilder>> RouteRegistrarsByPriorities
-    {
-      get
-      {
-        Dictionary<int, Action<IRouteBuilder>> routeRegistrarsByPriorities = new Dictionary<int, Action<IRouteBuilder>>();
-
-        routeRegistrarsByPriorities.Add(
-          1000,
-          routeBuilder =>
+        return new Dictionary<int, Action<IRouteBuilder>>()
+        {
+          [1000] = routeBuilder =>
           {
             routeBuilder.MapRoute(name: "Forms", template: "{culture=en}/forms/send", defaults: new { controller = "Forms", action = "Send" });
           }
-        );
-
-        return routeRegistrarsByPriorities;
+        };
       }
     }
 
-    public IFrontendMetadata FrontendMetadata
-    {
-      get
-      {
-        return null;
-      }
-    }
-
-    public IBackendMetadata BackendMetadata
+    public override IBackendMetadata BackendMetadata
     {
       get
       {
         return new BackendMetadata();
       }
-    }
-
-    public void SetConfigurationRoot(IConfigurationRoot configurationRoot)
-    {
-      this.configurationRoot = configurationRoot;
-    }
-
-    public void ConfigureServices(IServiceCollection services)
-    {
-    }
-
-    public void Configure(IApplicationBuilder applicationBuilder)
-    {
     }
   }
 }

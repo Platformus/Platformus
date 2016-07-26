@@ -7,80 +7,87 @@ using System.Globalization;
 using System.Linq;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Localization;
-using Microsoft.AspNetCore.Routing;
-using Microsoft.Extensions.Configuration;
+using Microsoft.AspNetCore.Mvc.Razor;
 using Microsoft.Extensions.DependencyInjection;
 using Platformus.Infrastructure;
 
 namespace Platformus.Globalization
 {
-  public class GlobalizationExtension : IExtension
+  public class GlobalizationExtension : ExtensionBase
   {
-    private IConfigurationRoot configurationRoot;
-
-    public string Name
+    public override IEnumerable<KeyValuePair<int, Action<IServiceCollection>>> ConfigureServicesActionsByPriorities
     {
       get
       {
-        return "Globalization Extension";
+        return new Dictionary<int, Action<IServiceCollection>>()
+        {
+          [3000] = services =>
+          {
+            services.AddLocalization(
+              localizationOptions =>
+              {
+                localizationOptions.ResourcesPath = "Resources";
+              }
+            );
+          }
+        };
       }
     }
 
-    public IDictionary<int, Action<IRouteBuilder>> RouteRegistrarsByPriorities
+    public override IEnumerable<KeyValuePair<int, Action<IMvcBuilder>>> AddMvcActionsByPriorities
     {
       get
       {
-        return null;
+        return new Dictionary<int, Action<IMvcBuilder>>()
+        {
+          [3000] = mvcBuilder =>
+          {
+            mvcBuilder
+              .AddViewLocalization(LanguageViewLocationExpanderFormat.Suffix)
+              .AddDataAnnotationsLocalization();
+          }
+        };
       }
     }
 
-    public IFrontendMetadata FrontendMetadata
+    public override IEnumerable<KeyValuePair<int, Action<IApplicationBuilder>>> ConfigureActionsByPriorities
     {
       get
       {
-        return null;
+        return new Dictionary<int, Action<IApplicationBuilder>>()
+        {
+          [3000] = applicationBuilder =>
+          {
+            RequestLocalizationOptions requestLocalizationOptions = new RequestLocalizationOptions();
+
+            string defaultCulture = this.configurationRoot["Globalization:DefaultCulture"];
+
+            if (string.IsNullOrEmpty(defaultCulture))
+              defaultCulture = "en";
+
+            requestLocalizationOptions.DefaultRequestCulture = new RequestCulture(defaultCulture);
+
+            string supportedCultures = this.configurationRoot["Globalization:SupportedCultures"];
+
+            if (!string.IsNullOrEmpty(supportedCultures))
+            {
+              requestLocalizationOptions.SupportedCultures = new List<CultureInfo>(supportedCultures.Split(',').Select(c => new CultureInfo(c)));
+              requestLocalizationOptions.SupportedUICultures = new List<CultureInfo>(supportedCultures.Split(',').Select(c => new CultureInfo(c)));
+            }
+
+            requestLocalizationOptions.RequestCultureProviders.Insert(0, new RouteValueRequestCultureProvider());
+            applicationBuilder.UseRequestLocalization(requestLocalizationOptions);
+          }
+        };
       }
     }
 
-    public IBackendMetadata BackendMetadata
+    public override IBackendMetadata BackendMetadata
     {
       get
       {
         return new BackendMetadata();
       }
-    }
-
-    public void SetConfigurationRoot(IConfigurationRoot configurationRoot)
-    {
-      this.configurationRoot = configurationRoot;
-    }
-
-    public void ConfigureServices(IServiceCollection services)
-    {
-      services.AddLocalization();
-    }
-
-    public void Configure(IApplicationBuilder applicationBuilder)
-    {
-      RequestLocalizationOptions requestLocalizationOptions = new RequestLocalizationOptions();
-
-      string defaultCulture = this.configurationRoot["Globalization:DefaultCulture"];
-
-      if (string.IsNullOrEmpty(defaultCulture))
-        defaultCulture = "en";
-
-      requestLocalizationOptions.DefaultRequestCulture = new RequestCulture(defaultCulture);
-
-      string supportedCultures = this.configurationRoot["Globalization:SupportedCultures"];
-
-      if (!string.IsNullOrEmpty(supportedCultures))
-      {
-        requestLocalizationOptions.SupportedCultures = new List<CultureInfo>(supportedCultures.Split(',').Select(c => new CultureInfo(c)));
-        requestLocalizationOptions.SupportedUICultures = new List<CultureInfo>(supportedCultures.Split(',').Select(c => new CultureInfo(c)));
-      }
-
-      requestLocalizationOptions.RequestCultureProviders.Insert(0, new RouteValueRequestCultureProvider());
-      applicationBuilder.UseRequestLocalization(requestLocalizationOptions);
     }
   }
 }

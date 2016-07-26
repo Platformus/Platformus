@@ -2,13 +2,13 @@
   "authors": [ "Dmitry Sikorsky" ],
   "copyright": "Copyright © 2015 Dmitry Sikorsky",
   "dependencies": {
-    "ExtCore.Infrastructure": "1.0.0-alpha9",
+    "ExtCore.Infrastructure": "1.0.0-alpha12",
     "Microsoft.AspNetCore.Authentication.Cookies": "1.0.0",
     "Microsoft.AspNetCore.Mvc": "1.0.0",
-    "Platformus.Barebone": "1.0.0-alpha7",
-    "Platformus.Infrastructure": "1.0.0-alpha7",
-    "Platformus.Security.Data.Abstractions": "1.0.0-alpha7",
-    "Platformus.Security.Data.Models": "1.0.0-alpha7"
+    "Platformus.Barebone": "1.0.0-alpha8",
+    "Platformus.Infrastructure": "1.0.0-alpha8",
+    "Platformus.Security.Data.Abstractions": "1.0.0-alpha8",
+    "Platformus.Security.Data.Models": "1.0.0-alpha8"
   },
   "description": "Part of the Platformus.Security Platformus extension.",
   "frameworks": {
@@ -24,5 +24,5 @@
     "iconUrl": "http://platformus.net/platformus_nuget_icon.png",
     "projectUrl": "http://platformus.net/"
   },
-  "version": "1.0.0-alpha7"
+  "version": "1.0.0-alpha8"
 }

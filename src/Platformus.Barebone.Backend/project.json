@@ -3,9 +3,9 @@
   "buildOptions": { "embed": [ "Areas/Backend/Views/**", "wwwroot/**" ] },
   "copyright": "Copyright © 2015 Dmitry Sikorsky",
   "dependencies": {
-    "ExtCore.Infrastructure": "1.0.0-alpha9",
+    "ExtCore.Infrastructure": "1.0.0-alpha12",
     "Microsoft.AspNetCore.Mvc": "1.0.0",
-    "Platformus.Barebone": "1.0.0-alpha7"
+    "Platformus.Barebone": "1.0.0-alpha8"
   },
   "description": "Part of the Platformus.Barebone Platformus extension.",
   "frameworks": {
@@ -21,5 +21,5 @@
     "iconUrl": "http://platformus.net/platformus_nuget_icon.png",
     "projectUrl": "http://platformus.net/"
   },
-  "version": "1.0.0-alpha7"
+  "version": "1.0.0-alpha8"
 }

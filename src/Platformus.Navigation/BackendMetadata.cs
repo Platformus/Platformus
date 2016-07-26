@@ -6,25 +6,9 @@ using Platformus.Infrastructure;
 
 namespace Platformus.Navigation
 {
-  public class BackendMetadata : IBackendMetadata
+  public class BackendMetadata : BackendMetadataBase
   {
-    public IEnumerable<BackendStyleSheet> BackendStyleSheets
-    {
-      get
-      {
-        return null;
-      }
-    }
-
-    public IEnumerable<BackendScript> BackendScripts
-    {
-      get
-      {
-        return null;
-      }
-    }
-
-    public IEnumerable<BackendMenuGroup> BackendMenuGroups
+    public override IEnumerable<BackendMenuGroup> BackendMenuGroups
     {
       get
       {

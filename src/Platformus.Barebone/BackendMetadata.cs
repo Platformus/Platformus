@@ -6,9 +6,9 @@ using Platformus.Infrastructure;
 
 namespace Platformus.Barebone
 {
-  public class BackendMetadata : IBackendMetadata
+  public class BackendMetadata : BackendMetadataBase
   {
-    public IEnumerable<BackendStyleSheet> BackendStyleSheets
+    public override IEnumerable<BackendStyleSheet> BackendStyleSheets
     {
       get
       {
@@ -20,7 +20,7 @@ namespace Platformus.Barebone
       }
     }
 
-    public IEnumerable<BackendScript> BackendScripts
+    public override IEnumerable<BackendScript> BackendScripts
     {
       get
       {
@@ -32,14 +32,6 @@ namespace Platformus.Barebone
           new BackendScript("/lib/tinymce/tinymce.min.js", 400),
           new BackendScript("/wwwroot.areas.backend.js.platformus.barebone.min.js", 1000)
         };
-      }
-    }
-
-    public IEnumerable<BackendMenuGroup> BackendMenuGroups
-    {
-      get
-      {
-        return null;
       }
     }
   }
