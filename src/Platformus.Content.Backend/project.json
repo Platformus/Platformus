@@ -5,13 +5,9 @@
   "dependencies": {
     "ExtCore.Data.Abstractions": "1.0.0-alpha12",
     "ExtCore.Infrastructure": "1.0.0-alpha12",
-    "Microsoft.AspNetCore.Mvc": "1.0.0",
     "Platformus.Barebone.Backend": "1.0.0-alpha8",
     "Platformus.Content": "1.0.0-alpha8",
-    "Platformus.Content.Data.Abstractions": "1.0.0-alpha8",
-    "Platformus.Content.Data.Models": "1.0.0-alpha8",
-    "Platformus.Globalization.Backend": "1.0.0-alpha8",
-    "Platformus.Globalization.Data.Abstractions": "1.0.0-alpha8"
+    "Platformus.Globalization.Backend": "1.0.0-alpha8"
   },
   "description": "Part of the Platformus.Content Platformus extension.",
   "frameworks": {

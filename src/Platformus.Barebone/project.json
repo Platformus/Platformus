@@ -4,7 +4,6 @@
   "dependencies": {
     "ExtCore.Data.Abstractions": "1.0.0-alpha12",
     "ExtCore.Infrastructure": "1.0.0-alpha12",
-    "Microsoft.AspNetCore.Mvc": "1.0.0",
     "Microsoft.AspNetCore.Session": "1.0.0",
     "Platformus.Infrastructure": "1.0.0-alpha8"
   },

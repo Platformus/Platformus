@@ -4,11 +4,8 @@
   "dependencies": {
     "ExtCore.Infrastructure": "1.0.0-alpha12",
     "Microsoft.AspNetCore.Authentication.Cookies": "1.0.0",
-    "Microsoft.AspNetCore.Mvc": "1.0.0",
     "Platformus.Barebone": "1.0.0-alpha8",
-    "Platformus.Infrastructure": "1.0.0-alpha8",
-    "Platformus.Security.Data.Abstractions": "1.0.0-alpha8",
-    "Platformus.Security.Data.Models": "1.0.0-alpha8"
+    "Platformus.Security.Data.Abstractions": "1.0.0-alpha8"
   },
   "description": "Part of the Platformus.Security Platformus extension.",
   "frameworks": {

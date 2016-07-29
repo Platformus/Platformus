@@ -3,14 +3,9 @@
   "copyright": "Copyright © 2015 Dmitry Sikorsky",
   "dependencies": {
     "ExtCore.Infrastructure": "1.0.0-alpha12",
-    "Microsoft.AspNetCore.Mvc": "1.0.0",
     "Platformus.Barebone": "1.0.0-alpha8",
     "Platformus.Content.Data.Abstractions": "1.0.0-alpha8",
-    "Platformus.Content.Data.Models": "1.0.0-alpha8",
-    "Platformus.Globalization": "1.0.0-alpha8",
-    "Platformus.Globalization.Data.Abstractions": "1.0.0-alpha8",
-    "Platformus.Globalization.Data.Models": "1.0.0-alpha8",
-    "Platformus.Infrastructure": "1.0.0-alpha8"
+    "Platformus.Globalization": "1.0.0-alpha8"
   },
   "description": "Part of the Platformus.Content Platformus extension.",
   "frameworks": {
