@@ -5,11 +5,8 @@
   "dependencies": {
     "ExtCore.Data.Abstractions": "1.0.0-alpha12",
     "ExtCore.Infrastructure": "1.0.0-alpha12",
-    "Microsoft.AspNet.Mvc": "6.0.0-rc1-final",
     "Platformus.Barebone.Backend": "1.0.0-alpha8",
-    "Platformus.Globalization": "1.0.0-alpha8",
-    "Platformus.Globalization.Data.Abstractions": "1.0.0-alpha8",
-    "Platformus.Globalization.Data.Models": "1.0.0-alpha8"
+    "Platformus.Globalization": "1.0.0-alpha8"
   },
   "description": "Part of the Platformus.Globalization Platformus extension.",
   "frameworks": {
