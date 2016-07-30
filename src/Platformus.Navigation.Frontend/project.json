@@ -3,11 +3,11 @@
   "buildOptions": { "embed": [ "Views/**" ] },
   "copyright": "Copyright © 2015 Dmitry Sikorsky",
   "dependencies": {
-    "ExtCore.Data.Abstractions": "1.0.0-alpha12",
-    "ExtCore.Infrastructure": "1.0.0-alpha12",
-    "Platformus.Barebone.Frontend": "1.0.0-alpha8",
-    "Platformus.Globalization.Frontend": "1.0.0-alpha8",
-    "Platformus.Navigation": "1.0.0-alpha8"
+    "ExtCore.Data.Abstractions": "1.0.0-alpha14",
+    "ExtCore.Infrastructure": "1.0.0-alpha14",
+    "Platformus.Barebone.Frontend": "1.0.0-alpha9",
+    "Platformus.Globalization.Frontend": "1.0.0-alpha9",
+    "Platformus.Navigation": "1.0.0-alpha9"
   },
   "description": "Part of the Platformus.Navigation Platformus extension.",
   "frameworks": {
@@ -23,5 +23,5 @@
     "iconUrl": "http://platformus.net/platformus_nuget_icon.png",
     "projectUrl": "http://platformus.net/"
   },
-  "version": "1.0.0-alpha8"
+  "version": "1.0.0-alpha9"
 }
