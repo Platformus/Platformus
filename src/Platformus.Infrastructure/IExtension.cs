@@ -3,7 +3,7 @@
 
 namespace Platformus.Infrastructure
 {
-  public interface IExtension : ExtCore.Infrastructure.IExtension
+  public interface IExtension : ExtCore.Mvc.Infrastructure.IExtension
   {
     IFrontendMetadata FrontendMetadata { get; }
     IBackendMetadata BackendMetadata { get; }

@@ -59,7 +59,7 @@ namespace Platformus.Content.Data.EntityFramework.PostgreSql
 
     public IEnumerable<Object> Standalone()
     {
-      return this.dbSet.FromSql("SELECT * FROM Objects WHERE ClassId IN (SELECT Id FROM Classes WHERE IsStandalone IS NOT NULL)");
+      return this.dbSet.FromSql("SELECT * FROM \"Objects\" WHERE \"ClassId\" IN (SELECT \"Id\" FROM \"Classes\" WHERE \"IsStandalone\" IS NOT NULL)");
     }
 
     public void Create(Object @object)

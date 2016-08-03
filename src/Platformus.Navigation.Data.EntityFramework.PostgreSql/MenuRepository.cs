@@ -51,7 +51,7 @@ namespace Platformus.Navigation.Data.EntityFramework.PostgreSql
           WITH ""X"" AS (
             SELECT ""Id"" FROM ""MenuItems"" WHERE ""MenuId"" = {0}
             UNION ALL
-            SELECT ""MenuItems.Id"" FROM ""MenuItems"" INNER JOIN ""X"" ON ""MenuItems.MenuItemId"" = ""X.Id""
+            SELECT ""MenuItems"".""Id"" FROM ""MenuItems"" INNER JOIN ""X"" ON ""MenuItems"".""MenuItemId"" = ""X"".""Id""
           )
           INSERT INTO ""TempMenuItems"" SELECT ""Id"" FROM ""X"";
           CREATE TEMP TABLE ""TempDictionaries"" (""Id"" INT PRIMARY KEY);

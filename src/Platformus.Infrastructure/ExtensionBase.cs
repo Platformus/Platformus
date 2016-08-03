@@ -3,7 +3,7 @@
 
 namespace Platformus.Infrastructure
 {
-  public abstract class ExtensionBase : ExtCore.Infrastructure.ExtensionBase, IExtension
+  public abstract class ExtensionBase : ExtCore.Mvc.Infrastructure.ExtensionBase, IExtension
   {
     public virtual IBackendMetadata BackendMetadata
     {
