@@ -54,7 +54,7 @@ namespace Platformus.Content.Data.EntityFramework.PostgreSql
     {
       this.dbContext.Database.ExecuteSqlCommand(
         @"
-          DELETE FROM CachedObjects WHERE ClassId IN (SELECT ClassId FROM DataSources WHERE Id = {0});
+          DELETE FROM ""CachedObjects"" WHERE ""ClassId"" IN (SELECT ""ClassId"" FROM ""DataSources"" WHERE ""Id"" = {0});
         ",
         dataSource.Id
       );
