@@ -80,16 +80,13 @@ namespace Platformus.Content.Data.EntityFramework.PostgreSql
     public void Delete(Object @object)
     {
       this.dbContext.Database.ExecuteSqlCommand(
-        @"
-          DELETE FROM CachedObjects WHERE ObjectId = {0};
-          CREATE TEMP TABLE TempDictionaries (Id INT PRIMARY KEY);
-          INSERT INTO TempDictionaries SELECT HtmlId FROM Properties WHERE ObjectId = {0};
-          DELETE FROM Properties WHERE ObjectId = {0};
-          DELETE FROM Localizations WHERE DictionaryId IN (SELECT Id FROM TempDictionaries);
-          DELETE FROM Dictionaries WHERE Id IN (SELECT Id FROM TempDictionaries);
-          DELETE FROM Relations WHERE PrimaryId = {0} OR ForeignId = {0};
-        ",
-        @object.Id
+        $"DELETE FROM \"CachedObjects\" WHERE \"ObjectId\" = {@object.Id};" +
+        "CREATE TEMP TABLE TempDictionaries (Id INT PRIMARY KEY);" +
+        $"INSERT INTO TempDictionaries SELECT \"HtmlId\" FROM \"Properties\" WHERE \"ObjectId\" = {@object.Id};" +
+        $"DELETE FROM \"Properties\" WHERE \"ObjectId\" = {@object.Id};" +
+        "DELETE FROM \"Localizations\" WHERE \"DictionaryId\" IN (SELECT Id FROM TempDictionaries);" +
+        "DELETE FROM \"Dictionaries\" WHERE \"Id\" IN (SELECT Id FROM TempDictionaries);" +
+        $"DELETE FROM \"Relations\" WHERE \"PrimaryId\" = {@object.Id} OR \"ForeignId\" = {@object.Id};"
       );
 
       this.dbSet.Remove(@object);
