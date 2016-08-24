@@ -86,7 +86,7 @@ namespace Platformus.Content.Data.EntityFramework.PostgreSql
           INSERT INTO ""TempDictionaries"" SELECT ""HtmlId"" FROM ""Properties"" WHERE ""ObjectId"" = {0};
           DELETE FROM ""Properties"" WHERE ""ObjectId"" = {0};
           DELETE FROM ""Localizations"" WHERE ""DictionaryId"" IN (SELECT ""Id"" FROM ""TempDictionaries"");
-          DELETE FROM ""Dictionaries"" WHERE ""Id IN (SELECT ""Id"" FROM TempDictionaries"");
+          DELETE FROM ""Dictionaries"" WHERE ""Id"" IN (SELECT ""Id"" FROM TempDictionaries"");
           DELETE FROM ""Relations"" WHERE ""PrimaryId"" = {0} OR ""ForeignId"" = {0};
         ",
         @object.Id
