@@ -31,7 +31,7 @@ namespace Platformus.Content.Backend.ViewModels.Classes
             new GridColumnViewModelBuilder(this.handler).Build("Is abstract", "IsAbstract"),
             new GridColumnViewModelBuilder(this.handler).Build("Is standalone", "IsStandalone"),
             new GridColumnViewModelBuilder(this.handler).Build("Tabs"),
-            new GridColumnViewModelBuilder(this.handler).Build("Properties"),
+            new GridColumnViewModelBuilder(this.handler).Build("Members"),
             new GridColumnViewModelBuilder(this.handler).Build("Data sources"),
             new GridColumnViewModelBuilder(this.handler).BuildEmpty()
           },

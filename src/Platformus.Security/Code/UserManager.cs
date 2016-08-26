@@ -14,20 +14,21 @@ namespace Platformus.Security
   public class UserManager
   {
     private IHandler handler;
-    private ICredentialRepository credentialRepository;
-    private ICredentialTypeRepository credentialTypeRepository;
+    private IRoleRepository roleRepository;
     private IUserRepository userRepository;
     private IUserRoleRepository userRoleRepository;
-    private IRoleRepository roleRepository;    
+    private ICredentialTypeRepository credentialTypeRepository;
+    private ICredentialRepository credentialRepository;
+
 
     public UserManager(IHandler handler)
     {
       this.handler = handler;
-      credentialRepository = handler.Storage.GetRepository<ICredentialRepository>();
-      credentialTypeRepository = handler.Storage.GetRepository<ICredentialTypeRepository>();
-      userRepository = handler.Storage.GetRepository<IUserRepository>();
-      userRoleRepository = handler.Storage.GetRepository<IUserRoleRepository>();
-      roleRepository = handler.Storage.GetRepository<IRoleRepository>();      
+      this.roleRepository = handler.Storage.GetRepository<IRoleRepository>();
+      this.userRepository = handler.Storage.GetRepository<IUserRepository>();
+      this.userRoleRepository = handler.Storage.GetRepository<IUserRoleRepository>();
+      this.credentialTypeRepository = handler.Storage.GetRepository<ICredentialTypeRepository>();
+      this.credentialRepository = handler.Storage.GetRepository<ICredentialRepository>();
     }
 
     public User Validate(string loginTypeCode, string identifier, string secret)
@@ -50,13 +51,17 @@ namespace Platformus.Security
     public async void SignIn(User user)
     {
       List<Claim> claims = new List<Claim>();      
-      IEnumerable<int> roles = this.userRoleRepository.FilteredByUserId(user.Id)?.Select(x=>x.RoleId);      
-      if(roles != null)
-        foreach (var element in roles)
+      IEnumerable<int> roleIds = this.userRoleRepository.FilteredByUserId(user.Id)?.Select(ur => ur.RoleId);
+
+      if (roleIds != null)
+      {
+        foreach (int roleId in roleIds)
         {
-          Role role = roleRepository.WithKey(element);
+          Role role = roleRepository.WithKey(roleId);
+
           claims.Add(new Claim(ClaimTypes.Role, role.Name));
         }
+      }
       
       claims.Add(new Claim(ClaimTypes.Name, string.Format("user{0}", user.Id)));
       
