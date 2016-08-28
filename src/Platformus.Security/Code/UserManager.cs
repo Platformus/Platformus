@@ -18,7 +18,32 @@ namespace Platformus.Security
     private ICredentialTypeRepository credentialTypeRepository;
     private IUserRepository userRepository;
     private IUserRoleRepository userRoleRepository;
-    private IRoleRepository roleRepository;    
+    private IRoleRepository roleRepository;
+    private IRolePermissionRepository rolePermissionRepository;
+    private IPermissionRepository permissionRepository;
+
+    private void AddUserRoles(List<Claim> claims, int UserId)
+    {
+      IEnumerable<int> roles = this.userRoleRepository.FilteredByUserId(UserId)?.Select(x => x.RoleId);
+      if (roles != null)
+        foreach (int element in roles)
+        {
+          Role role = roleRepository.WithKey(element);
+          claims.Add(new Claim(ClaimTypes.Role, role.Name));
+          AddUserPermissions(claims, element);
+        }
+    }
+
+    private void AddUserPermissions(List<Claim> claims, int RoleId)
+    {
+      IEnumerable<int> permissions = this.rolePermissionRepository.FilteredByRoleId(RoleId)?.Select(x=>x.PermissionId);
+      if(permissions!=null)
+        foreach(int element in permissions)
+        {
+          Permission permission = this.permissionRepository.WithKey(element);
+          claims.Add(new Claim(PlatformusClaimTypes.Permission, permission.Name));
+        }
+    }
 
     public UserManager(IHandler handler)
     {
@@ -27,7 +52,9 @@ namespace Platformus.Security
       credentialTypeRepository = handler.Storage.GetRepository<ICredentialTypeRepository>();
       userRepository = handler.Storage.GetRepository<IUserRepository>();
       userRoleRepository = handler.Storage.GetRepository<IUserRoleRepository>();
-      roleRepository = handler.Storage.GetRepository<IRoleRepository>();      
+      roleRepository = handler.Storage.GetRepository<IRoleRepository>();
+      rolePermissionRepository = handler.Storage.GetRepository<IRolePermissionRepository>();
+      permissionRepository = handler.Storage.GetRepository<IPermissionRepository>();                    
     }
 
     public User Validate(string loginTypeCode, string identifier, string secret)
@@ -49,15 +76,9 @@ namespace Platformus.Security
 
     public async void SignIn(User user)
     {
-      List<Claim> claims = new List<Claim>();      
-      IEnumerable<int> roles = this.userRoleRepository.FilteredByUserId(user.Id)?.Select(x=>x.RoleId);      
-      if(roles != null)
-        foreach (var element in roles)
-        {
-          Role role = roleRepository.WithKey(element);
-          claims.Add(new Claim(ClaimTypes.Role, role.Name));
-        }
-      
+      List<Claim> claims = new List<Claim>();
+
+      AddUserRoles(claims, user.Id);
       claims.Add(new Claim(ClaimTypes.Name, string.Format("user{0}", user.Id)));
       
       ClaimsIdentity identity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
