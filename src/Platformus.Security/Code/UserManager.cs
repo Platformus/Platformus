@@ -19,29 +19,28 @@ namespace Platformus.Security
     private IUserRoleRepository userRoleRepository;
     private ICredentialTypeRepository credentialTypeRepository;
     private ICredentialRepository credentialRepository;
-
     private IRolePermissionRepository rolePermissionRepository;
     private IPermissionRepository permissionRepository;
 
     private void AddUserRoles(List<Claim> claims, int UserId)
     {
-      IEnumerable<int> roles = this.userRoleRepository.FilteredByUserId(UserId)?.Select(x => x.RoleId);
-      if (roles != null)
-        foreach (int element in roles)
+      IEnumerable<int> roleIds = this.userRoleRepository.FilteredByUserId(UserId)?.Select(x => x.RoleId);
+      if (roleIds != null)
+        foreach (int roleId in roleIds)
         {
-          Role role = roleRepository.WithKey(element);
+          Role role = roleRepository.WithKey(roleId);
           claims.Add(new Claim(ClaimTypes.Role, role.Name));
-          AddUserPermissions(claims, element);
+          AddUserPermissions(claims, roleId);
         }
     }
 
-    private void AddUserPermissions(List<Claim> claims, int RoleId)
+    private void AddUserPermissions(List<Claim> claims, int roleId)
     {
-      IEnumerable<int> permissions = this.rolePermissionRepository.FilteredByRoleId(RoleId)?.Select(x=>x.PermissionId);
-      if(permissions!=null)
-        foreach(int element in permissions)
+      IEnumerable<int> permissionIds = this.rolePermissionRepository.FilteredByRoleId(roleId)?.Select(x=>x.PermissionId);
+      if(permissionIds != null)
+        foreach(int permissionId in permissionIds)
         {
-          Permission permission = this.permissionRepository.WithKey(element);
+          Permission permission = this.permissionRepository.WithKey(permissionId);
           claims.Add(new Claim(PlatformusClaimTypes.Permission, permission.Name));
         }
     }
@@ -54,8 +53,8 @@ namespace Platformus.Security
       this.userRoleRepository = handler.Storage.GetRepository<IUserRoleRepository>();
       this.credentialTypeRepository = handler.Storage.GetRepository<ICredentialTypeRepository>();
       this.credentialRepository = handler.Storage.GetRepository<ICredentialRepository>();
-      rolePermissionRepository = handler.Storage.GetRepository<IRolePermissionRepository>();
-      permissionRepository = handler.Storage.GetRepository<IPermissionRepository>();                    
+      this.rolePermissionRepository = handler.Storage.GetRepository<IRolePermissionRepository>();
+      this.permissionRepository = handler.Storage.GetRepository<IPermissionRepository>();                    
     }
 
     public User Validate(string loginTypeCode, string identifier, string secret)

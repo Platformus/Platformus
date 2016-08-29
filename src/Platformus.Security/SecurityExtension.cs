@@ -26,7 +26,7 @@ namespace Platformus.Security
           [2000] = services =>
           {
             AuthorizationPolicyBuilder builder = new AuthorizationPolicyBuilder();
-            foreach (IExtension extension in ExtCore.Infrastructure.ExtensionManager.Extensions)
+            foreach (ExtCore.Infrastructure.IExtension extension in ExtCore.Infrastructure.ExtensionManager.Extensions)
             {
               if(extension is ISecurityExtension)
               {
@@ -79,7 +79,7 @@ namespace Platformus.Security
     {
       return builder.RequireAssertion(handler =>
         {
-          var context = handler.Resource as AuthorizationFilterContext;
+          AuthorizationFilterContext context = handler.Resource as AuthorizationFilterContext;
           return !context.HttpContext.Request.Path.StartsWithSegments(new PathString("/backend")) || handler.User.IsInRole("Administrator");
         });            
     }
