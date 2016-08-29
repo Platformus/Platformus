@@ -14,11 +14,12 @@ namespace Platformus.Security
   public class UserManager
   {
     private IHandler handler;
-    private ICredentialRepository credentialRepository;
-    private ICredentialTypeRepository credentialTypeRepository;
+    private IRoleRepository roleRepository;
     private IUserRepository userRepository;
     private IUserRoleRepository userRoleRepository;
-    private IRoleRepository roleRepository;
+    private ICredentialTypeRepository credentialTypeRepository;
+    private ICredentialRepository credentialRepository;
+
     private IRolePermissionRepository rolePermissionRepository;
     private IPermissionRepository permissionRepository;
 
@@ -48,11 +49,11 @@ namespace Platformus.Security
     public UserManager(IHandler handler)
     {
       this.handler = handler;
-      credentialRepository = handler.Storage.GetRepository<ICredentialRepository>();
-      credentialTypeRepository = handler.Storage.GetRepository<ICredentialTypeRepository>();
-      userRepository = handler.Storage.GetRepository<IUserRepository>();
-      userRoleRepository = handler.Storage.GetRepository<IUserRoleRepository>();
-      roleRepository = handler.Storage.GetRepository<IRoleRepository>();
+      this.roleRepository = handler.Storage.GetRepository<IRoleRepository>();
+      this.userRepository = handler.Storage.GetRepository<IUserRepository>();
+      this.userRoleRepository = handler.Storage.GetRepository<IUserRoleRepository>();
+      this.credentialTypeRepository = handler.Storage.GetRepository<ICredentialTypeRepository>();
+      this.credentialRepository = handler.Storage.GetRepository<ICredentialRepository>();
       rolePermissionRepository = handler.Storage.GetRepository<IRolePermissionRepository>();
       permissionRepository = handler.Storage.GetRepository<IPermissionRepository>();                    
     }
