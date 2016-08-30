@@ -14,47 +14,24 @@ namespace Platformus.Security
   public class UserManager
   {
     private IHandler handler;
+    private IPermissionRepository permissionRepository;
+    private IRolePermissionRepository rolePermissionRepository;
     private IRoleRepository roleRepository;
     private IUserRepository userRepository;
     private IUserRoleRepository userRoleRepository;
     private ICredentialTypeRepository credentialTypeRepository;
     private ICredentialRepository credentialRepository;
-    private IRolePermissionRepository rolePermissionRepository;
-    private IPermissionRepository permissionRepository;
-
-    private void AddUserRoles(List<Claim> claims, int UserId)
-    {
-      IEnumerable<int> roleIds = this.userRoleRepository.FilteredByUserId(UserId)?.Select(x => x.RoleId);
-      if (roleIds != null)
-        foreach (int roleId in roleIds)
-        {
-          Role role = roleRepository.WithKey(roleId);
-          claims.Add(new Claim(ClaimTypes.Role, role.Name));
-          AddUserPermissions(claims, roleId);
-        }
-    }
-
-    private void AddUserPermissions(List<Claim> claims, int roleId)
-    {
-      IEnumerable<int> permissionIds = this.rolePermissionRepository.FilteredByRoleId(roleId)?.Select(x=>x.PermissionId);
-      if(permissionIds != null)
-        foreach(int permissionId in permissionIds)
-        {
-          Permission permission = this.permissionRepository.WithKey(permissionId);
-          claims.Add(new Claim(PlatformusClaimTypes.Permission, permission.Name));
-        }
-    }
-
+    
     public UserManager(IHandler handler)
     {
       this.handler = handler;
+      this.permissionRepository = handler.Storage.GetRepository<IPermissionRepository>();
       this.roleRepository = handler.Storage.GetRepository<IRoleRepository>();
+      this.rolePermissionRepository = handler.Storage.GetRepository<IRolePermissionRepository>();
       this.userRepository = handler.Storage.GetRepository<IUserRepository>();
       this.userRoleRepository = handler.Storage.GetRepository<IUserRoleRepository>();
       this.credentialTypeRepository = handler.Storage.GetRepository<ICredentialTypeRepository>();
       this.credentialRepository = handler.Storage.GetRepository<ICredentialRepository>();
-      this.rolePermissionRepository = handler.Storage.GetRepository<IRolePermissionRepository>();
-      this.permissionRepository = handler.Storage.GetRepository<IPermissionRepository>();                    
     }
 
     public User Validate(string loginTypeCode, string identifier, string secret)
@@ -76,12 +53,7 @@ namespace Platformus.Security
 
     public async void SignIn(User user)
     {
-      List<Claim> claims = new List<Claim>();
-
-      AddUserRoles(claims, user.Id);
-      claims.Add(new Claim(ClaimTypes.Name, string.Format("user{0}", user.Id)));
-      
-      ClaimsIdentity identity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
+      ClaimsIdentity identity = new ClaimsIdentity(this.GetUserClaims(user), CookieAuthenticationDefaults.AuthenticationScheme);
       ClaimsPrincipal principal = new ClaimsPrincipal(identity);
 
       await this.handler.HttpContext.Authentication.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, principal);
@@ -103,6 +75,52 @@ namespace Platformus.Security
         return null;
 
       return this.userRepository.WithKey(currentUserId);
+    }
+
+    private IEnumerable<Claim> GetUserClaims(User user)
+    {
+      List<Claim> claims = new List<Claim>();
+
+      claims.Add(new Claim(ClaimTypes.Name, string.Format("user{0}", user.Id)));
+      claims.AddRange(this.GetUserRoleClaims(user));
+      return claims;
+    }
+
+    private IEnumerable<Claim> GetUserRoleClaims(User user)
+    {
+      List<Claim> claims = new List<Claim>();
+      IEnumerable<int> roleIds = this.userRoleRepository.FilteredByUserId(user.Id)?.Select(ur => ur.RoleId);
+
+      if (roleIds != null)
+      {
+        foreach (int roleId in roleIds)
+        {
+          Role role = roleRepository.WithKey(roleId);
+
+          claims.Add(new Claim(ClaimTypes.Role, role.Name));
+          claims.AddRange(this.GetUserPermissionClaims(role));
+        }
+      }
+
+      return claims;
+    }
+
+    private IEnumerable<Claim> GetUserPermissionClaims(Role role)
+    {
+      List<Claim> claims = new List<Claim>();
+      IEnumerable<int> permissionIds = this.rolePermissionRepository.FilteredByRoleId(role.Id)?.Select(rp => rp.PermissionId);
+
+      if (permissionIds != null)
+      {
+        foreach (int permissionId in permissionIds)
+        {
+          Permission permission = this.permissionRepository.WithKey(permissionId);
+
+          claims.Add(new Claim(PlatformusClaimTypes.Permission, permission.Name));
+        }
+      }
+
+      return claims;
     }
   }
 }

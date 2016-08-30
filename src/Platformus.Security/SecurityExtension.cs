@@ -8,14 +8,13 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Filters;
 using Microsoft.AspNetCore.Mvc.Authorization;
 using Microsoft.Extensions.DependencyInjection;
 using Platformus.Infrastructure;
 
 namespace Platformus.Security
 {
-  public class SecurityExtension : ExtensionBase, ISecurityExtension
+  public class SecurityExtension : Platformus.Infrastructure.ExtensionBase
   {
     public override IEnumerable<KeyValuePair<int, Action<IServiceCollection>>> ConfigureServicesActionsByPriorities
     {
@@ -25,17 +24,14 @@ namespace Platformus.Security
         {
           [2000] = services =>
           {
-            AuthorizationPolicyBuilder builder = new AuthorizationPolicyBuilder();
-            foreach (ExtCore.Infrastructure.IExtension extension in ExtCore.Infrastructure.ExtensionManager.Extensions)
-            {
-              if(extension is ISecurityExtension)
-              {
-                builder = (extension as ISecurityExtension).ConfigurePolicy(builder);
-              }
-            }            
+            AuthorizationPolicyBuilder authorizationPolicyBuilder = new AuthorizationPolicyBuilder();
+
+            foreach (IAuthorizationPolicyRegistrar authorizationPolicyRegistrar in ExtCore.Infrastructure.ExtensionManager.GetInstances<IAuthorizationPolicyRegistrar>())
+              authorizationPolicyRegistrar.RegisterAuthorizationPolicy(authorizationPolicyBuilder);
+
             services.Configure<MvcOptions>(options =>
               {
-                options.Filters.Add(new AuthorizeFilter(builder.Build()));
+                options.Filters.Add(new AuthorizeFilter(authorizationPolicyBuilder.Build()));
               }
             );
           }
@@ -73,15 +69,6 @@ namespace Platformus.Security
       {
         return new BackendMetadata();
       }
-    }
-
-    public AuthorizationPolicyBuilder ConfigurePolicy(AuthorizationPolicyBuilder builder)
-    {
-      return builder.RequireAssertion(handler =>
-        {
-          AuthorizationFilterContext context = handler.Resource as AuthorizationFilterContext;
-          return !context.HttpContext.Request.Path.StartsWithSegments(new PathString("/backend")) || handler.User.IsInRole("Administrator");
-        });            
     }
   }
 }
