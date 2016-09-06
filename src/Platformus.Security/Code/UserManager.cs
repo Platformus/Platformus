@@ -97,7 +97,7 @@ namespace Platformus.Security
         {
           Role role = roleRepository.WithKey(roleId);
 
-          claims.Add(new Claim(ClaimTypes.Role, role.Name));
+          claims.Add(new Claim(ClaimTypes.Role, role.Code));
           claims.AddRange(this.GetUserPermissionClaims(role));
         }
       }
@@ -116,7 +116,7 @@ namespace Platformus.Security
         {
           Permission permission = this.permissionRepository.WithKey(permissionId);
 
-          claims.Add(new Claim(PlatformusClaimTypes.Permission, permission.Name));
+          claims.Add(new Claim(PlatformusClaimTypes.Permission, permission.Code));
         }
       }
 
