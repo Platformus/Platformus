@@ -15,7 +15,7 @@ namespace Platformus.Barebone
         return new BackendStyleSheet[]
         {
           new BackendStyleSheet("/wwwroot.areas.backend.css.platformus.barebone.min.css", 1000),
-          new BackendStyleSheet("http://fonts.googleapis.com/css?family=PT+Sans:400,400italic&subset=latin,cyrillic", 10000)
+          new BackendStyleSheet("//fonts.googleapis.com/css?family=PT+Sans:400,400italic&subset=latin,cyrillic", 10000)
         };
       }
     }
