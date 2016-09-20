@@ -24,9 +24,12 @@ namespace Platformus.Globalization.Data.EntityFramework.PostgreSql
 
     public Culture Neutral()
     {
-      // TODO: workaround for #5899
-      //return this.dbSet.FirstOrDefault(c => c.IsNeutral == true);
-      return this.dbSet.FirstOrDefault(c => c.IsNeutral != null);
+      return this.dbSet.FirstOrDefault(c => c.IsNeutral);
+    }
+
+    public Culture Default()
+    {
+      return this.dbSet.FirstOrDefault(c => c.IsDefault);
     }
 
     public IEnumerable<Culture> All()
@@ -36,7 +39,7 @@ namespace Platformus.Globalization.Data.EntityFramework.PostgreSql
 
     public IEnumerable<Culture> NotNeutral()
     {
-      return this.dbSet.Where(c => c.IsNeutral == null).OrderBy(c => c.Name);
+      return this.dbSet.Where(c => !c.IsNeutral).OrderBy(c => c.Name);
     }
 
     public IEnumerable<Culture> Range(string orderBy, string direction, int skip, int take)

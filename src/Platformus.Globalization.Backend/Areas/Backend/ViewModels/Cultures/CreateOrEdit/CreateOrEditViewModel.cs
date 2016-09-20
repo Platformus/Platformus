@@ -18,5 +18,8 @@ namespace Platformus.Globalization.Backend.ViewModels.Cultures
     [Required]
     [StringLength(64)]
     public string Name { get; set; }
+
+    [Display(Name = "Is default")]
+    public bool IsDefault { get; set; }
   }
 }

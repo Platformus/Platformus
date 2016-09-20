@@ -9,6 +9,7 @@
 <form method="post">
   <single-line-text-editor asp-for="Code" />
   <single-line-text-editor asp-for="Name" />
+  <check-box asp-for="IsDefault" />
   <div class="buttons">
     <button class="positive" type="submit">Save</button>
     <a class="button neutral" href="@this.Context.Request.CombineUrl("/backend/cultures")">Cancel</a>

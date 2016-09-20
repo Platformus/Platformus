@@ -12,6 +12,7 @@ namespace Platformus.Globalization.Data.Abstractions
     Culture WithKey(int id);
     Culture WithCode(string code);
     Culture Neutral();
+    Culture Default();
     IEnumerable<Culture> All();
     IEnumerable<Culture> NotNeutral();
     IEnumerable<Culture> Range(string orderBy, string direction, int skip, int take);

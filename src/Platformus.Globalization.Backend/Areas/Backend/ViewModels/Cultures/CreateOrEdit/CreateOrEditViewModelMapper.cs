@@ -23,6 +23,7 @@ namespace Platformus.Globalization.Backend.ViewModels.Cultures
 
       culture.Code = createOrEdit.Code;
       culture.Name = createOrEdit.Name;
+      culture.IsDefault = createOrEdit.IsDefault;
       return culture;
     }
   }

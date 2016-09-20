@@ -19,7 +19,8 @@ namespace Platformus.Globalization.Data.Models
     //[Required]
     //[StringLength(64)]
     public string Name { get; set; }
-    public bool? IsNeutral { get; set; }
+    public bool IsNeutral { get; set; }
+    public bool IsDefault { get; set; }
 
     public virtual ICollection<Localization> Localizations { get; set; }
   }
