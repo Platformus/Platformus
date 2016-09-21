@@ -18,7 +18,7 @@ namespace Platformus.Globalization.Frontend.ViewModels
     public string GetObjectLocalizationValue(int dictionaryId)
     {
       Localization localization = this.handler.Storage.GetRepository<ILocalizationRepository>().WithDictionaryIdAndCultureId(
-        dictionaryId, CultureProvider.GetCulture(this.handler.Storage).Id
+        dictionaryId, CultureManager.GetCurrentCulture(this.handler.Storage).Id
       );
 
       if (localization == null)

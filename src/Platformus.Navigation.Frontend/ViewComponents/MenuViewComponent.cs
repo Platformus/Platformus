@@ -22,7 +22,7 @@ namespace Platformus.Navigation.Frontend.ViewComponents
     public async Task<IViewComponentResult> InvokeAsync(string code)
     {
       CachedMenu cachedMenu = this.Storage.GetRepository<ICachedMenuRepository>().WithCultureIdAndCode(
-        CultureProvider.GetCulture(this.Storage).Id, code
+        CultureManager.GetCurrentCulture(this.Storage).Id, code
       );
 
       if (cachedMenu == null)

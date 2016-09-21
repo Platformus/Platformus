@@ -22,7 +22,7 @@ namespace Platformus.Forms.Frontend.ViewComponents
     public async Task<IViewComponentResult> InvokeAsync(string code)
     {
       CachedForm cachedForm = this.Storage.GetRepository<ICachedFormRepository>().WithCultureIdAndCode(
-        CultureProvider.GetCulture(this.Storage).Id, code
+        CultureManager.GetCurrentCulture(this.Storage).Id, code
       );
 
       if (cachedForm == null)

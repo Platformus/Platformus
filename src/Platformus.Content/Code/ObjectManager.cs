@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using Platformus.Barebone;
 using Platformus.Content.Data.Abstractions;
 using Platformus.Content.Data.Models;
+using Platformus.Globalization;
 using Platformus.Globalization.Data.Abstractions;
 using Platformus.Globalization.Data.Models;
 
@@ -23,21 +24,26 @@ namespace Platformus.Content
     {
       List<string> properties = new List<string>();
 
-      foreach (Member member in this.handler.Storage.GetRepository<IMemberRepository>().FilteredByClassIdInlcudingParentPropertyVisibleInList(@object.ClassId))
+      Culture defaultCulture = CultureManager.GetDefaultCulture(this.handler.Storage);
+
+      if (defaultCulture != null)
       {
-        Property property = this.handler.Storage.GetRepository<IPropertyRepository>().WithObjectIdAndMemberId(@object.Id, member.Id);
-
-        if (property == null)
-          properties.Add(string.Empty);
-
-        else
+        foreach (Member member in this.handler.Storage.GetRepository<IMemberRepository>().FilteredByClassIdInlcudingParentPropertyVisibleInList(@object.ClassId))
         {
-          Localization localization = this.handler.Storage.GetRepository<ILocalizationRepository>().WithDictionaryIdAndCultureId(property.HtmlId, 1);
+          Property property = this.handler.Storage.GetRepository<IPropertyRepository>().WithObjectIdAndMemberId(@object.Id, member.Id);
 
-          if (localization == null)
+          if (property == null)
             properties.Add(string.Empty);
 
-          else properties.Add(localization.Value);
+          else
+          {
+            Localization localization = this.handler.Storage.GetRepository<ILocalizationRepository>().WithDictionaryIdAndCultureId(property.HtmlId, defaultCulture.Id);
+
+            if (localization == null)
+              properties.Add(string.Empty);
+
+            else properties.Add(localization.Value);
+          }
         }
       }
 

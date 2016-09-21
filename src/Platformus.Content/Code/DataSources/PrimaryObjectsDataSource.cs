@@ -22,11 +22,11 @@ namespace Platformus.Content.DataSources
     {
       if (this.args.ContainsKey("MemberId"))
         return this.handler.Storage.GetRepository<ICachedObjectRepository>().Primary(
-          CultureProvider.GetCulture(this.handler.Storage).Id, int.Parse(this.args["MemberId"]), this.cachedObject.ObjectId
+          CultureManager.GetCurrentCulture(this.handler.Storage).Id, int.Parse(this.args["MemberId"]), this.cachedObject.ObjectId
         );
 
       return this.handler.Storage.GetRepository<ICachedObjectRepository>().Primary(
-        CultureProvider.GetCulture(this.handler.Storage).Id, this.cachedObject.ObjectId
+        CultureManager.GetCurrentCulture(this.handler.Storage).Id, this.cachedObject.ObjectId
       );
     }
   }

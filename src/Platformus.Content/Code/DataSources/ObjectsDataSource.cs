@@ -18,7 +18,7 @@ namespace Platformus.Content.DataSources
 
     public override IEnumerable<CachedObject> GetCachedObjects()
     {
-      return this.handler.Storage.GetRepository<ICachedObjectRepository>().FilteredByCultureId(CultureProvider.GetCulture(this.handler.Storage).Id).Where(o => o.ClassId == int.Parse(this.args["ClassId"]));
+      return this.handler.Storage.GetRepository<ICachedObjectRepository>().FilteredByCultureId(CultureManager.GetCurrentCulture(this.handler.Storage).Id).Where(o => o.ClassId == int.Parse(this.args["ClassId"]));
     }
   }
 }

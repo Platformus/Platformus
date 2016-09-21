@@ -3,7 +3,6 @@
 
 using System.Linq;
 using Platformus.Barebone;
-using Platformus.Globalization.Data.Abstractions;
 
 namespace Platformus.Globalization.Frontend.ViewModels.Shared
 {
@@ -18,7 +17,7 @@ namespace Platformus.Globalization.Frontend.ViewModels.Shared
     {
       return new CulturesViewModel()
       {
-        Cultures = this.handler.Storage.GetRepository<ICultureRepository>().NotNeutral().Select(
+        Cultures = CultureManager.GetCultures(this.handler.Storage).Where(c => !c.IsNeutral).Select(
           c => new CultureViewModelBuilder(this.handler).Build(c)
         )
       };

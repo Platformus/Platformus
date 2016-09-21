@@ -24,7 +24,7 @@ namespace Platformus.Content.Frontend.Controllers
       url = string.Format("/{0}", url);
 
       CachedObject cachedObject = this.Storage.GetRepository<ICachedObjectRepository>().WithCultureIdAndUrl(
-        CultureProvider.GetCulture(this.Storage).Id, url
+        CultureManager.GetCurrentCulture(this.Storage).Id, url
       );
 
       if (cachedObject == null)
