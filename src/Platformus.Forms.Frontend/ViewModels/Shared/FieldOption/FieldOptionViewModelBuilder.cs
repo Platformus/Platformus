@@ -18,7 +18,7 @@ namespace Platformus.Forms.Frontend.ViewModels.Shared
     {
       return new FieldOptionViewModel()
       {
-        Value = this.GetObjectLocalizationValue(fieldOption.ValueId)
+        Value = this.GetLocalizationValue(fieldOption.ValueId)
       };
     }
 

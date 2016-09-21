@@ -6,7 +6,6 @@ using Platformus.Barebone;
 using Platformus.Forms.Data.Abstractions;
 using Platformus.Forms.Data.Models;
 using Platformus.Globalization.Backend.ViewModels;
-using Platformus.Globalization.Data.Abstractions;
 
 namespace Platformus.Forms.Backend.ViewModels.Shared
 {
@@ -22,7 +21,7 @@ namespace Platformus.Forms.Backend.ViewModels.Shared
       return new FormViewModel()
       {
         Id = form.Id,
-        Name = this.handler.Storage.GetRepository<ILocalizationRepository>().FilteredByDictionaryId(form.NameId).First().Value,
+        Name = this.GetLocalizationValue(form.NameId),
         Fields = this.handler.Storage.GetRepository<IFieldRepository>().FilteredByFormId(form.Id).Select(
           f => new FieldViewModelBuilder(this.handler).Build(f)
         )

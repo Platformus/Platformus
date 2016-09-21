@@ -4,7 +4,6 @@
 using System.Linq;
 using Platformus.Barebone;
 using Platformus.Globalization.Backend.ViewModels;
-using Platformus.Globalization.Data.Abstractions;
 using Platformus.Navigation.Data.Abstractions;
 using Platformus.Navigation.Data.Models;
 
@@ -22,7 +21,7 @@ namespace Platformus.Navigation.Backend.ViewModels.Shared
       return new MenuItemViewModel()
       {
         Id = menuItem.Id,
-        Name = this.handler.Storage.GetRepository<ILocalizationRepository>().FilteredByDictionaryId(menuItem.NameId).First().Value,
+        Name = this.GetLocalizationValue(menuItem.NameId),
         MenuItems = this.handler.Storage.GetRepository<IMenuItemRepository>().FilteredByMenuItemId(menuItem.Id).Select(
           mi => new MenuItemViewModelBuilder(this.handler).Build(mi)
         )

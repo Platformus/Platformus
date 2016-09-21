@@ -15,7 +15,7 @@ namespace Platformus.Globalization.Frontend.ViewModels
       this.handler = handler;
     }
 
-    public string GetObjectLocalizationValue(int dictionaryId)
+    public string GetLocalizationValue(int dictionaryId)
     {
       Localization localization = this.handler.Storage.GetRepository<ILocalizationRepository>().WithDictionaryIdAndCultureId(
         dictionaryId, CultureManager.GetCurrentCulture(this.handler.Storage).Id

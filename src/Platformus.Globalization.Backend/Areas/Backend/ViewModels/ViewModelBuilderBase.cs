@@ -17,6 +17,18 @@ namespace Platformus.Globalization.Backend.ViewModels
       this.handler = handler;
     }
 
+    public string GetLocalizationValue(int dictionaryId)
+    {
+      Localization localization = this.handler.Storage.GetRepository<ILocalizationRepository>().WithDictionaryIdAndCultureId(
+        dictionaryId, CultureManager.GetCurrentCulture(this.handler.Storage).Id
+      );
+
+      if (localization == null)
+        return string.Empty;
+
+      return localization.Value;
+    }
+
     protected IEnumerable<Platformus.Barebone.Backend.Localization> GetLocalizations(Dictionary dictionary = null)
     {
       List<Platformus.Barebone.Backend.Localization> localizations = new List<Platformus.Barebone.Backend.Localization>();

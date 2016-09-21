@@ -20,7 +20,7 @@ namespace Platformus.Content.Frontend.ViewModels.Shared
       return new PropertyViewModel()
       {
         MemberCode = this.handler.Storage.GetRepository<IMemberRepository>().WithKey(property.MemberId).Code,
-        Html = this.GetObjectLocalizationValue(property.HtmlId)
+        Html = this.GetLocalizationValue(property.HtmlId)
       };
     }
 

@@ -1,11 +1,9 @@
 ﻿// Copyright © 2015 Dmitry Sikorsky. All rights reserved.
 // Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information.
 
-using System.Linq;
 using Platformus.Barebone;
 using Platformus.Forms.Data.Models;
 using Platformus.Globalization.Backend.ViewModels;
-using Platformus.Globalization.Data.Abstractions;
 
 namespace Platformus.Forms.Backend.ViewModels.Shared
 {
@@ -21,7 +19,7 @@ namespace Platformus.Forms.Backend.ViewModels.Shared
       return new FieldOptionViewModel()
       {
         Id = fieldOption.Id,
-        Value = this.handler.Storage.GetRepository<ILocalizationRepository>().FilteredByDictionaryId(fieldOption.ValueId).First().Value,
+        Value = this.GetLocalizationValue(fieldOption.ValueId)
       };
     }
   }
