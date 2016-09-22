@@ -34,7 +34,14 @@ namespace Platformus.Globalization
     {
       CultureManager.CacheCultures(storage);
 
-      return CultureManager.cultures;
+      return CultureManager.cultures.OrderBy(c => c.Name);
+    }
+
+    public static IEnumerable<Culture> GetNotNeutralCultures(IStorage storage)
+    {
+      CultureManager.CacheCultures(storage);
+
+      return CultureManager.cultures.Where(c => !c.IsNeutral).OrderBy(c => c.Name);
     }
 
     public static void InvalidateCache()

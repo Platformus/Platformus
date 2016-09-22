@@ -5,10 +5,12 @@ using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
+using ExtCore.Data.Abstractions;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Localization;
 using Microsoft.AspNetCore.Mvc.Razor;
 using Microsoft.Extensions.DependencyInjection;
+using Platformus.Globalization.Data.Models;
 using Platformus.Infrastructure;
 
 namespace Platformus.Globalization
@@ -59,20 +61,35 @@ namespace Platformus.Globalization
           [3000] = applicationBuilder =>
           {
             RequestLocalizationOptions requestLocalizationOptions = new RequestLocalizationOptions();
+            IStorage storage = this.serviceProvider.GetService<IStorage>();
 
-            string defaultCulture = this.configurationRoot["Globalization:DefaultCulture"];
-
-            if (string.IsNullOrEmpty(defaultCulture))
-              defaultCulture = "en";
-
-            requestLocalizationOptions.DefaultRequestCulture = new RequestCulture(defaultCulture);
-
-            string supportedCultures = this.configurationRoot["Globalization:SupportedCultures"];
-
-            if (!string.IsNullOrEmpty(supportedCultures))
+            if (storage == null)
             {
-              requestLocalizationOptions.SupportedCultures = new List<CultureInfo>(supportedCultures.Split(',').Select(c => new CultureInfo(c)));
-              requestLocalizationOptions.SupportedUICultures = new List<CultureInfo>(supportedCultures.Split(',').Select(c => new CultureInfo(c)));
+              requestLocalizationOptions.DefaultRequestCulture = new RequestCulture("en");
+              requestLocalizationOptions.SupportedCultures = requestLocalizationOptions.SupportedUICultures =
+                new CultureInfo[] { new CultureInfo("en") }.ToList();
+            }
+
+            else
+            {
+              Culture defaultCulture = CultureManager.GetDefaultCulture(storage);
+
+              if (defaultCulture == null)
+                requestLocalizationOptions.DefaultRequestCulture = new RequestCulture("en");
+
+              else requestLocalizationOptions.DefaultRequestCulture = new RequestCulture(defaultCulture.Code);
+
+              if (CultureManager.GetCultures(storage).Count() == 0)
+              {
+                requestLocalizationOptions.SupportedCultures = requestLocalizationOptions.SupportedUICultures =
+                  new CultureInfo[] { new CultureInfo("en") }.ToList();
+              }
+
+              else
+              {
+                requestLocalizationOptions.SupportedCultures = requestLocalizationOptions.SupportedUICultures =
+                  CultureManager.GetNotNeutralCultures(storage).Select(c => new CultureInfo(c.Code)).ToList();
+              }
             }
 
             requestLocalizationOptions.RequestCultureProviders.Insert(0, new RouteValueRequestCultureProvider(this.serviceProvider));
