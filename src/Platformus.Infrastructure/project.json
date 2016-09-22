@@ -2,7 +2,7 @@
   "authors": [ "Dmitry Sikorsky" ],
   "copyright": "Copyright © 2015 Dmitry Sikorsky",
   "dependencies": {
-    "ExtCore.Mvc.Infrastructure": "1.0.0-alpha16"
+    "ExtCore.Mvc.Infrastructure": "1.0.0-beta2"
   },
   "description": "Free, open source and cross-platform CMS based on ASP.NET Core 1.0 and ExtCore framework.",
   "frameworks": {

@@ -2,7 +2,7 @@
   "authors": [ "Dmitry Sikorsky" ],
   "copyright": "Copyright © 2015 Dmitry Sikorsky",
   "dependencies": {
-    "ExtCore.Data.Abstractions": "1.0.0-alpha16",
+    "ExtCore.Data.Abstractions": "1.0.0-beta2",
     "Microsoft.AspNetCore.Mvc": "1.0.0",
     "Microsoft.AspNetCore.Session": "1.0.0",
     "Platformus.Infrastructure": "1.0.0-alpha10"

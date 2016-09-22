@@ -75,7 +75,7 @@ namespace Platformus.Globalization
               requestLocalizationOptions.SupportedUICultures = new List<CultureInfo>(supportedCultures.Split(',').Select(c => new CultureInfo(c)));
             }
 
-            requestLocalizationOptions.RequestCultureProviders.Insert(0, new RouteValueRequestCultureProvider());
+            requestLocalizationOptions.RequestCultureProviders.Insert(0, new RouteValueRequestCultureProvider(this.serviceProvider));
             applicationBuilder.UseRequestLocalization(requestLocalizationOptions);
           }
         };

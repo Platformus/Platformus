@@ -2,7 +2,7 @@
   "authors": [ "Dmitry Sikorsky" ],
   "copyright": "Copyright © 2015 Dmitry Sikorsky",
   "dependencies": {
-    "ExtCore.Data.EntityFramework.Sqlite": "1.0.0-alpha16",
+    "ExtCore.Data.EntityFramework.Sqlite": "1.0.0-beta2",
     "Platformus.Navigation.Data.Abstractions": "1.0.0-alpha10"
   },
   "description": "Part of the Platformus.Navigation Platformus extension.",
