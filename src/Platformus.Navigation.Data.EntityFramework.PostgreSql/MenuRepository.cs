@@ -48,7 +48,7 @@ namespace Platformus.Navigation.Data.EntityFramework.PostgreSql
         @"
           DELETE FROM ""CachedMenus"" WHERE ""MenuId"" = {0};
           CREATE TEMP TABLE ""TempMenuItems"" (""Id"" INT PRIMARY KEY);
-          WITH ""X"" AS (
+          WITH RECURSIVE ""X"" AS (
             SELECT ""Id"" FROM ""MenuItems"" WHERE ""MenuId"" = {0}
             UNION ALL
             SELECT ""MenuItems"".""Id"" FROM ""MenuItems"" INNER JOIN ""X"" ON ""MenuItems"".""MenuItemId"" = ""X"".""Id""

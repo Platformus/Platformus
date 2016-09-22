@@ -47,7 +47,7 @@ namespace Platformus.Navigation.Data.EntityFramework.PostgreSql
       this.dbContext.Database.ExecuteSqlCommand(
         @"
           CREATE TEMP TABLE ""TempMenuItems"" (""Id"" INT PRIMARY KEY);
-          WITH ""X"" AS (
+          WITH RECURSIVE ""X"" AS (
             SELECT ""Id"" FROM ""MenuItems"" WHERE ""Id"" = {0}
             UNION ALL
             SELECT ""MenuItems"".""Id"" FROM ""MenuItems"" INNER JOIN ""X"" ON ""MenuItems"".""MenuItemId"" = ""X"".""Id""
