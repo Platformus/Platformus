@@ -1,16 +1,14 @@
 ﻿// Copyright © 2015 Dmitry Sikorsky. All rights reserved.
 // Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information.
 
-using System.Collections.Generic;
 using ExtCore.Data.Abstractions;
 using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.Primitives;
 using Platformus.Configuration.Data.Abstractions;
 using Platformus.Configuration.Data.Models;
 
 namespace Platformus.Configuration
 {
-  public class StorageConfigurationProvider : IConfigurationProvider
+  public class StorageConfigurationProvider : ConfigurationProvider
   {
     private IStorage storage;
 
@@ -19,25 +17,11 @@ namespace Platformus.Configuration
       this.storage = storage;
     }
 
-    public IEnumerable<string> GetChildKeys(IEnumerable<string> earlierKeys, string parentPath)
-    {
-      return new string[] { };
-    }
-
-    public IChangeToken GetReloadToken()
-    {
-      return null;
-    }
-
-    public void Load()
+    public override void Set(string key, string value)
     {
     }
 
-    public void Set(string key, string value)
-    {
-    }
-
-    public bool TryGet(string key, out string value)
+    public override bool TryGet(string key, out string value)
     {
       try
       {
