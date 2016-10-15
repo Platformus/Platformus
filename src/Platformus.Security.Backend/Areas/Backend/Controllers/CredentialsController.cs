@@ -19,14 +19,14 @@ namespace Platformus.Security.Backend.Controllers
 
     public IActionResult Index(int userId, string orderBy = "identifier", string direction = "asc", int skip = 0, int take = 10)
     {
-      return this.View(new IndexViewModelBuilder(this).Build(userId, orderBy, direction, skip, take));
+      return this.View(new IndexViewModelFactory(this).Create(userId, orderBy, direction, skip, take));
     }
 
     [HttpGet]
     [ImportModelStateFromTempData]
     public IActionResult CreateOrEdit(int? id)
     {
-      return this.View(new CreateOrEditViewModelBuilder(this).Build(id));
+      return this.View(new CreateOrEditViewModelFactory(this).Create(id));
     }
 
     [HttpPost]

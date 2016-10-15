@@ -1,0 +1,21 @@
+﻿// Copyright © 2015 Dmitry Sikorsky. All rights reserved.
+// Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information.
+
+namespace Platformus.Barebone.Backend.ViewModels.Barebone
+{
+  public class DeleteFormViewModelFactory : ViewModelFactoryBase
+  {
+    public DeleteFormViewModelFactory(IHandler handler)
+      : base(handler)
+    {
+    }
+
+    public DeleteFormViewModel Create(string targetUrl)
+    {
+      return new DeleteFormViewModel()
+      {
+        TargetUrl = targetUrl
+      };
+    }
+  }
+}

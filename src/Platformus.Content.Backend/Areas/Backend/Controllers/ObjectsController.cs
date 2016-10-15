@@ -23,14 +23,14 @@ namespace Platformus.Content.Backend.Controllers
 
     public IActionResult Index(int? classId, string orderBy = "url", string direction = "asc", int skip = 0, int take = 10)
     {
-      return this.View(new IndexViewModelBuilder(this).Build(classId, orderBy, direction, skip, take));
+      return this.View(new IndexViewModelFactory(this).Create(classId, orderBy, direction, skip, take));
     }
 
     [HttpGet]
     [ImportModelStateFromTempData]
     public IActionResult CreateOrEdit(int? id, int? classId, int? objectId)
     {
-      return this.View(new CreateOrEditViewModelBuilder(this).Build(id, classId, objectId));
+      return this.View(new CreateOrEditViewModelFactory(this).Create(id, classId, objectId));
     }
 
     [HttpPost]

@@ -18,7 +18,7 @@ namespace Platformus.Globalization.Frontend.ViewComponents
 
     public async Task<IViewComponentResult> InvokeAsync()
     {
-      return this.View(new CulturesViewModelBuilder(this).Build());
+      return this.View(new CulturesViewModelFactory(this).Create());
     }
   }
 }

@@ -17,7 +17,7 @@ namespace Platformus.Barebone.Backend.ViewComponents
 
     public async Task<IViewComponentResult> InvokeAsync()
     {
-      return this.View(new BackendMenuViewModelBuilder(null).Build());
+      return this.View(new BackendMenuViewModelFactory(null).Create());
     }
   }
 }

@@ -34,13 +34,13 @@ namespace Platformus.Content.Frontend.Controllers
         if (@object == null)
           return this.NotFound();
 
-        ObjectViewModel result = new ObjectViewModelBuilder(this).Build(@object);
+        ObjectViewModel result = new ObjectViewModelFactory(this).Create(@object);
 
         return this.View(result.ViewName, result);
       }
 
       {
-        ObjectViewModel result = new ObjectViewModelBuilder(this).Build(cachedObject);
+        ObjectViewModel result = new ObjectViewModelFactory(this).Create(cachedObject);
 
         return this.View(result.ViewName, result);
       }

@@ -17,7 +17,7 @@ namespace Platformus.Barebone.Backend.Controllers
 
     public ActionResult DeleteForm(string targetUrl)
     {
-      return this.PartialView("_DeleteForm", new DeleteFormViewModelBuilder(this).Build(targetUrl));
+      return this.PartialView("_DeleteForm", new DeleteFormViewModelFactory(this).Create(targetUrl));
     }
   }
 }

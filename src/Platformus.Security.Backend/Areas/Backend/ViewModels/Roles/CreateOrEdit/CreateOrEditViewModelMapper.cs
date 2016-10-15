@@ -8,7 +8,7 @@ using Platformus.Security.Data.Models;
 
 namespace Platformus.Security.Backend.ViewModels.Roles
 {
-  public class CreateOrEditViewModelMapper : ViewModelBuilderBase
+  public class CreateOrEditViewModelMapper : ViewModelFactoryBase
   {
     public CreateOrEditViewModelMapper(IHandler handler)
       : base(handler)

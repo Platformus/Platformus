@@ -19,14 +19,14 @@ namespace Platformus.Configuration.Backend.Controllers
 
     public IActionResult Index()
     {
-      return this.View(new IndexViewModelBuilder(this).Build());
+      return this.View(new IndexViewModelFactory(this).Create());
     }
 
     [HttpGet]
     [ImportModelStateFromTempData]
     public IActionResult CreateOrEdit(int? id)
     {
-      return this.View(new CreateOrEditViewModelBuilder(this).Build(id));
+      return this.View(new CreateOrEditViewModelFactory(this).Create(id));
     }
 
     [HttpPost]

@@ -8,7 +8,7 @@ using Platformus.Navigation.Data.Models;
 
 namespace Platformus.Navigation.Backend.ViewModels.Menus
 {
-  public class CreateOrEditViewModelMapper : ViewModelBuilderBase
+  public class CreateOrEditViewModelMapper : ViewModelFactoryBase
   {
     public CreateOrEditViewModelMapper(IHandler handler)
       : base(handler)

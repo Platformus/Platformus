@@ -32,10 +32,10 @@ namespace Platformus.Navigation.Frontend.ViewComponents
         if (menu == null)
           return null;
 
-        return this.View(new MenuViewModelBuilder(this).Build(menu));
+        return this.View(new MenuViewModelFactory(this).Create(menu));
       }
 
-      return this.View(new MenuViewModelBuilder(this).Build(cachedMenu));
+      return this.View(new MenuViewModelFactory(this).Create(cachedMenu));
     }
   }
 }

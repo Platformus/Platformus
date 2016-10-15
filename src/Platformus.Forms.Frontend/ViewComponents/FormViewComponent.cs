@@ -32,10 +32,10 @@ namespace Platformus.Forms.Frontend.ViewComponents
         if (form == null)
           return null;
 
-        return this.View(new FormViewModelBuilder(this).Build(form));
+        return this.View(new FormViewModelFactory(this).Create(form));
       }
 
-      return this.View(new FormViewModelBuilder(this).Build(cachedForm));
+      return this.View(new FormViewModelFactory(this).Build(cachedForm));
     }
   }
 }

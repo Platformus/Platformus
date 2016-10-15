@@ -7,7 +7,7 @@ using Platformus.Globalization.Data.Models;
 
 namespace Platformus.Globalization.Backend.ViewModels.Cultures
 {
-  public class CreateOrEditViewModelMapper : ViewModelBuilderBase
+  public class CreateOrEditViewModelMapper : ViewModelFactoryBase
   {
     public CreateOrEditViewModelMapper(IHandler handler)
       : base(handler)

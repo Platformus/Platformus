@@ -3,14 +3,14 @@
   "buildOptions": { "embed": [ "Views/**" ] },
   "copyright": "Copyright © 2015 Dmitry Sikorsky",
   "dependencies": {
-    "ExtCore.Data.Abstractions": "1.0.0-beta2",
-    "ExtCore.Infrastructure": "1.0.0-beta2",
+    "ExtCore.Data.Abstractions": "1.0.0-rc1",
+    "ExtCore.Infrastructure": "1.0.0-rc1",
     "MailKit":  "1.8.1",
     "Microsoft.Extensions.Configuration": "1.0.0",
-    "Platformus.Barebone.Frontend": "1.0.0-alpha10",
-    "Platformus.Configuration": "1.0.0-alpha10",
-    "Platformus.Forms": "1.0.0-alpha10",
-    "Platformus.Globalization.Frontend": "1.0.0-alpha10"
+    "Platformus.Barebone.Frontend": "1.0.0-alpha11",
+    "Platformus.Configuration": "1.0.0-alpha11",
+    "Platformus.Forms": "1.0.0-alpha11",
+    "Platformus.Globalization.Frontend": "1.0.0-alpha11"
   },
   "description": "Part of the Platformus.Forms Platformus extension.",
   "frameworks": {
@@ -26,5 +26,5 @@
     "iconUrl": "http://platformus.net/platformus_nuget_icon.png",
     "projectUrl": "http://platformus.net/"
   },
-  "version": "1.0.0-alpha10"
+  "version": "1.0.0-alpha11"
 }

@@ -27,7 +27,7 @@ namespace Platformus.Static.Backend.Controllers
 
     public IActionResult Index(string orderBy = "name", string direction = "asc", int skip = 0, int take = 10)
     {
-      return this.View(new IndexViewModelBuilder(this).Build(orderBy, direction, skip, take));
+      return this.View(new IndexViewModelFactory(this).Create(orderBy, direction, skip, take));
     }
 
     [HttpPost]

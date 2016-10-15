@@ -17,7 +17,7 @@ namespace Platformus.Static.Backend.Controllers
 
     public ActionResult FileSelectorForm()
     {
-      return this.PartialView("_FileSelectorForm", new FileSelectorFormViewModelBuilder(this).Build());
+      return this.PartialView("_FileSelectorForm", new FileSelectorFormViewModelFactory(this).Create());
     }
   }
 }
