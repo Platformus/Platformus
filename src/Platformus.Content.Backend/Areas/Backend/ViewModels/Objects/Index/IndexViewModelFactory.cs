@@ -63,7 +63,7 @@ namespace Platformus.Content.Backend.ViewModels.Objects
         gridColumns.Add(new GridColumnViewModelFactory(this.handler).Create(@class.PluralizedName));
       }
 
-      gridColumns.Add(new GridColumnViewModelFactory(this.handler).BuildEmpty());
+      gridColumns.Add(new GridColumnViewModelFactory(this.handler).CreateEmpty());
       return gridColumns;
     }
 

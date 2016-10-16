@@ -31,7 +31,7 @@ namespace Platformus.Content.Backend.ViewModels.Members
             new GridColumnViewModelFactory(this.handler).Create("Property Data Type"),
             new GridColumnViewModelFactory(this.handler).Create("Relation Class"),
             new GridColumnViewModelFactory(this.handler).Create("Position", "Position"),
-            new GridColumnViewModelFactory(this.handler).BuildEmpty()
+            new GridColumnViewModelFactory(this.handler).CreateEmpty()
           },
           memberRepository.FilteredByClassRange(classId, orderBy, direction, skip, take).Select(m => new MemberViewModelFactory(this.handler).Create(m, null)),
           "_Member"

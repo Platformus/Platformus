@@ -26,7 +26,7 @@ namespace Platformus.Globalization.Backend.ViewModels.Cultures
           orderBy, direction, skip, take, @classRepository.Count(),
           new[] {
             new GridColumnViewModelFactory(this.handler).Create("Name", "Name"),
-            new GridColumnViewModelFactory(this.handler).BuildEmpty()
+            new GridColumnViewModelFactory(this.handler).CreateEmpty()
           },
           @classRepository.Range(orderBy, direction, skip, take).Select(c => new CultureViewModelFactory(this.handler).Create(c)),
           "_Culture"

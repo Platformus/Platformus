@@ -29,7 +29,7 @@ namespace Platformus.Content.Backend.ViewModels.Tabs
           new[] {
             new GridColumnViewModelFactory(this.handler).Create("Name", "Name"),
             new GridColumnViewModelFactory(this.handler).Create("Position", "Position"),
-            new GridColumnViewModelFactory(this.handler).BuildEmpty()
+            new GridColumnViewModelFactory(this.handler).CreateEmpty()
           },
           tabRepository.FilteredByClassRange(classId, orderBy, direction, skip, take).Select(t => new TabViewModelFactory(this.handler).Create(t)),
           "_Tab"

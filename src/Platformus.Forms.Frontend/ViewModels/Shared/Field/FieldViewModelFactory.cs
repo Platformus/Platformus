@@ -31,7 +31,7 @@ namespace Platformus.Forms.Frontend.ViewModels.Shared
       };
     }
 
-    public FieldViewModel Build(CachedField cachedField)
+    public FieldViewModel Create(CachedField cachedField)
     {
       IEnumerable<CachedFieldOption> cachedFieldOptions = new CachedFieldOption[] { };
 

@@ -30,7 +30,7 @@ namespace Platformus.Forms.Frontend.ViewModels.Shared
       };
     }
 
-    public FormViewModel Build(CachedForm cachedForm)
+    public FormViewModel Create(CachedForm cachedForm)
     {
       IEnumerable<CachedField> cachedFields = new CachedField[] { };
 
@@ -42,7 +42,7 @@ namespace Platformus.Forms.Frontend.ViewModels.Shared
         Id = cachedForm.FormId,
         Name = cachedForm.Name,
         Fields = cachedFields.Select(
-          cf => new FieldViewModelFactory(this.handler).Build(cf)
+          cf => new FieldViewModelFactory(this.handler).Create(cf)
         )
       };
     }

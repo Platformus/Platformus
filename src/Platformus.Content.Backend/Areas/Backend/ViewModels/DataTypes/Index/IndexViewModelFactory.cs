@@ -28,7 +28,7 @@ namespace Platformus.Content.Backend.ViewModels.DataTypes
           new[] {
             new GridColumnViewModelFactory(this.handler).Create("Name", "Name"),
             new GridColumnViewModelFactory(this.handler).Create("Position", "Position"),
-            new GridColumnViewModelFactory(this.handler).BuildEmpty()
+            new GridColumnViewModelFactory(this.handler).CreateEmpty()
           },
           dataTypeRepository.Range(orderBy, direction, skip, take).Select(dt => new DataTypeViewModelFactory(this.handler).Create(dt)),
           "_DataType"

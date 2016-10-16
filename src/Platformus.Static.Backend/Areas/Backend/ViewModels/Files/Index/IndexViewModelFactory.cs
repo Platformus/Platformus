@@ -28,7 +28,7 @@ namespace Platformus.Static.Backend.ViewModels.Files
           new[] {
             new GridColumnViewModelFactory(this.handler).Create("Name", "Name"),
             new GridColumnViewModelFactory(this.handler).Create("Size", "Size"),
-            new GridColumnViewModelFactory(this.handler).BuildEmpty()
+            new GridColumnViewModelFactory(this.handler).CreateEmpty()
           },
           fileRepository.Range(orderBy, direction, skip, take).Select(f => new FileViewModelFactory(this.handler).Create(f)),
           "_File"

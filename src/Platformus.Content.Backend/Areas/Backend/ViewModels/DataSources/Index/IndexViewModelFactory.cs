@@ -28,7 +28,7 @@ namespace Platformus.Content.Backend.ViewModels.DataSources
           orderBy, direction, skip, take, dataSourceRepository.CountByClassId(classId),
           new[] {
             new GridColumnViewModelFactory(this.handler).Create("C# class name"),
-            new GridColumnViewModelFactory(this.handler).BuildEmpty()
+            new GridColumnViewModelFactory(this.handler).CreateEmpty()
           },
           dataSourceRepository.FilteredByClassIdRange(classId, orderBy, direction, skip, take).Select(ds => new DataSourceViewModelFactory(this.handler).Create(ds)),
           "_DataSource"

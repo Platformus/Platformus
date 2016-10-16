@@ -29,7 +29,7 @@ namespace Platformus.Security.Backend.ViewModels.Users
             new GridColumnViewModelFactory(this.handler).Create("Name", "Name"),
             new GridColumnViewModelFactory(this.handler).Create("Credentials"),
             new GridColumnViewModelFactory(this.handler).Create("Created", "Created"),
-            new GridColumnViewModelFactory(this.handler).BuildEmpty()
+            new GridColumnViewModelFactory(this.handler).CreateEmpty()
           },
           userRepository.Range(orderBy, direction, skip, take).Select(u => new UserViewModelFactory(this.handler).Create(u)),
           "_User"

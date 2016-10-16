@@ -29,7 +29,7 @@ namespace Platformus.Security.Backend.ViewModels.Credentials
           new[] {
             new GridColumnViewModelFactory(this.handler).Create("Credential Type"),
             new GridColumnViewModelFactory(this.handler).Create("Identifier", "Identifier"),
-            new GridColumnViewModelFactory(this.handler).BuildEmpty()
+            new GridColumnViewModelFactory(this.handler).CreateEmpty()
           },
           credentialRepository.Range(userId, orderBy, direction, skip, take).Select(c => new CredentialViewModelFactory(this.handler).Create(c)),
           "_Credential"

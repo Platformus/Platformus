@@ -28,7 +28,7 @@ namespace Platformus.Security.Backend.ViewModels.Roles
           new[] {
             new GridColumnViewModelFactory(this.handler).Create("Name", "Name"),
             new GridColumnViewModelFactory(this.handler).Create("Position", "Position"),
-            new GridColumnViewModelFactory(this.handler).BuildEmpty()
+            new GridColumnViewModelFactory(this.handler).CreateEmpty()
           },
           roleRepository.Range(orderBy, direction, skip, take).Select(r => new RoleViewModelFactory(this.handler).Create(r)),
           "_Role"

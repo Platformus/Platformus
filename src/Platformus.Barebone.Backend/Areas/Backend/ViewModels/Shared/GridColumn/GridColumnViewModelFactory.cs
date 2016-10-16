@@ -19,7 +19,7 @@ namespace Platformus.Barebone.Backend.ViewModels.Shared
       };
     }
 
-    public GridColumnViewModel BuildEmpty()
+    public GridColumnViewModel CreateEmpty()
     {
       return new GridColumnViewModel()
       {

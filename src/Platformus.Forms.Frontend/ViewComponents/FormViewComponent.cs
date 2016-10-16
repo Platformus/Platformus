@@ -35,7 +35,7 @@ namespace Platformus.Forms.Frontend.ViewComponents
         return this.View(new FormViewModelFactory(this).Create(form));
       }
 
-      return this.View(new FormViewModelFactory(this).Build(cachedForm));
+      return this.View(new FormViewModelFactory(this).Create(cachedForm));
     }
   }
 }
