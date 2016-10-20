@@ -2,6 +2,8 @@
 
 [![Join the chat at https://gitter.im/Platformus/Platformus](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/Platformus/Platformus?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
+![Platformus logotype](http://platformus.net/platformus_github_icon.png)
+
 ## Introduction
 
 Platformus is free, open source and cross-platform CMS based on ASP.NET Core and
