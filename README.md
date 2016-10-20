@@ -18,11 +18,11 @@ to extend its functionality.
 4. It is fast, flexible and easy to use. You can describe even complicated entities and their relationships
 without writing any code!
 
-## Basic Concepts
+### Basic Concepts
 
-With the full set of extensions listed below Platformus is object-oriented CMS and object is the central unit
-of its data model. Objects can be standalone and embedded. While standalone objects can be accessed via URL
-(using some specified view), embedded objects can only be used as the part of others.
+With the full set of the extensions Platformus is object-oriented CMS and object is the central unit of its
+data model. Objects can be standalone and embedded. While standalone object can be accessed via URL (using
+some specified view), embedded object can only be used as the part of others.
 
 Each object consists of properties and relations and is described by its class. Classes describe properties and
 relations of the objects with the members. Each member has code, name, data type (for properties) or class (for
@@ -33,58 +33,7 @@ For example, let’s say we have Developer class and Team class. Also, we can ha
 developer should have first name and last name properties and one relation to the object of class Team and one
 or many relations to the objects of class Contact.
 
-## Extensions
-
-Currently Platformus consists of 8 extensions:
-
-*	Platformus.Barebone;
-*	Platformus.Configuration;
-*	Platformus.Security;
-*	Platformus.Static;
-*	Platformus.Globalization;
-*	Platformus.Content;
-*	Platformus.Navigation;
-*	Platformus.Forms.
-
-### Platformus.Barebone
-
-This fundamental extension provides base classes for controllers, view components, view models etc. Also it
-provides data and storage support, base backend with UI and controls etc. Every other extension can use
-Platformus.Barebone to have unified look and behavior.
-
-### Platformus.Configuration
-
-This extension provides configuration classes (Section, Variable etc) with backend UI. Every other extension
-can use Platformus.Configuration to work with user-defined configurations in unified way.
-
-### Platformus.Security
-
-This extension provides security classes (User, Role, Permission, UserManager etc) with backend UI.
-
-### Platformus.Static
-
-This extension provides static content classes (File etc) with backend UI (simple file manager).
-
-### Platformus.Globalization
-
-This extension provides multicultural and multilingual content support. Also it provides backend UI for
-editing the list of supported cultures. Every other extension can use Platformus.Globalization to have
-such content in unified way.
-
-### Platformus.Content
-
-This extension provides object-oriented content support with frontend and backend UI.
-
-### Platformus.Navigation
-
-This extension provides menus support (creating and displaying) with frontend and backend UI.
-
-### Platformus.Forms
-
-This extension provides forms support (creating, displaying and user input processing) with frontend and
-backend UI.
-
-## Quick Start
+## Getting Started
 
 ### Samples
 
@@ -93,6 +42,11 @@ Please take a look at our [sample](https://github.com/Platformus/Platformus-Samp
 You can also download our [ready to use sample](http://platformus.net/files/Platformus-Sample-1.0.0-alpha11.zip).
 It contains everything you need to run Platformus-based web application from Visual Studio 2015, including SQLite
 database with the test data.
+
+### Tutorials
+
+We have written [several tutorials](http://docs.platformus.net/en/latest/getting_started/index.html)
+to help you start developing your Platformus-based web applications.
 
 ## Links
 
