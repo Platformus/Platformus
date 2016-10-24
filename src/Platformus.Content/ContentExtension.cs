@@ -19,7 +19,8 @@ namespace Platformus.Content
         {
           [10000] = routeBuilder =>
           {
-            routeBuilder.MapRoute(name: "Default", template: "{culture=en}/{*url}", defaults: new { controller = "Default", action = "Index" });
+            routeBuilder.MapRoute(name: "DefaultWithCulture", template: "{culture=en}/{*url}", defaults: new { controller = "Default", action = "Index" });
+            routeBuilder.MapRoute(name: "Default", template: "{*url}", defaults: new { controller = "Default", action = "Index" });
           }
         };
       }
