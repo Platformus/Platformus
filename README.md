@@ -12,12 +12,13 @@ modern tools and languages (Visual Studio 2015, C#, TypeScript, SCSS etc). Join 
 
 ### Few Facts About Platformus
 
-1. It runs on Windows, Mac and Linux.
-2. It is completely modular and extendable. Using the features of the underlying
+1. It is free and open source.
+2. It runs on Windows, Mac and Linux.
+3. It is completely modular and extendable. Using the features of the underlying
 [ExtCore framework](https://github.com/ExtCore/ExtCore) you can easily create your own extensions
 to extend its functionality.
-3. It is multicultural and multilingual.
-4. It is fast, flexible and easy to use. You can describe even complicated entities and their relationships
+4. It is multicultural and multilingual.
+5. It is fast, flexible and easy to use. You can describe even complicated entities and their relationships
 without writing any code!
 
 ### Basic Concepts
@@ -34,6 +35,17 @@ the object.
 For example, let’s say we have Developer class and Team class. Also, we can have Contact class too. Each
 developer should have first name and last name properties and one relation to the object of class Team and one
 or many relations to the objects of class Contact.
+
+### Backend Screenshots
+
+![List of objects](http://platformus.net/files/list_of_objects.png)
+*List of objects*
+
+![Edit object](http://platformus.net/files/edit_object.png)
+*Edit object*
+
+![List menus](http://platformus.net/files/list_menus.png)
+*List menus*
 
 ## Getting Started
 
