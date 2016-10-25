@@ -46,18 +46,9 @@ namespace Platformus.Security
         return new Dictionary<int, Action<IApplicationBuilder>>()
         {
           [2000] = applicationBuilder =>
-          {
-            applicationBuilder.UseCookieAuthentication(
-              new CookieAuthenticationOptions()
-              {
-                AuthenticationScheme = CookieAuthenticationDefaults.AuthenticationScheme,
-                AutomaticAuthenticate = true,
-                AutomaticChallenge = true,
-                CookieName = "PLATFORMUS",
-                ExpireTimeSpan = new System.TimeSpan(1, 0, 0),
-                LoginPath = new PathString("/backend/account/signin")
-              }
-            );
+          {              
+             applicationBuilder.UsePlatformusCookie(x => x.Request.Path.StartsWithSegments(new PathString("/backend")), "/backend/account/signin");
+             applicationBuilder.UsePlatformusCookie(x => !x.Request.Path.StartsWithSegments(new PathString("/backend")), "/frontend/account/signin");
           }
         };
       }
