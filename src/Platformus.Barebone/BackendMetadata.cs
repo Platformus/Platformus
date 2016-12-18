@@ -26,10 +26,10 @@ namespace Platformus.Barebone
       {
         return new BackendScript[]
         {
-          new BackendScript("/lib/jquery/jquery.min.js", 100),
-          new BackendScript("/lib/jquery-validation/jquery.validate.min.js", 200),
-          new BackendScript("/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js", 300),
-          new BackendScript("/lib/tinymce/tinymce.min.js", 400),
+          new BackendScript("//ajax.aspnetcdn.com/ajax/jquery/jquery-1.11.3.min.js", 100),
+          new BackendScript("//ajax.aspnetcdn.com/ajax/jquery.validate/1.14.0/jquery.validate.min.js", 200),
+          new BackendScript("//ajax.aspnetcdn.com/ajax/jquery.validation.unobtrusive/3.2.6/jquery.validate.unobtrusive.min.js", 300),
+          new BackendScript("//cdn.tinymce.com/4/tinymce.min.js", 400),
           new BackendScript("/wwwroot.areas.backend.js.platformus.barebone.min.js", 1000)
         };
       }

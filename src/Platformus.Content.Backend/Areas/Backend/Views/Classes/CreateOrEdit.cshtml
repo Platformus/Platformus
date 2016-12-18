@@ -5,17 +5,18 @@
   this.ViewBag.Title = (this.Model.Id == null ? "Create" : "Edit") + " Class";
   this.ViewBag.ActiveMenuItem = "classes";
 }
-<h1>@ViewBag.Title</h1>
-<form method="post">
-  <drop-down-list-selector asp-for="ClassId" asp-options="@Model.ClassOptions" />
-  <single-line-text-editor asp-for="Name" />
-  <single-line-text-editor asp-for="PluralizedName" />
-  <check-box asp-for="IsAbstract" />
-  <check-box asp-for="IsStandalone" />
-  <single-line-text-editor asp-for="DefaultViewName" />
-  <div class="buttons">
-    <button class="positive" type="submit">Save</button>
-    <a class="button neutral" href="@this.Context.Request.CombineUrl("/backend/classes")">Cancel</a>
-    <div class="clear"></div>
+@section title {
+  @ViewBag.Title
+}
+<form class="form" method="post">
+  <drop-down-list-field asp-for="ClassId" asp-options="@Model.ClassOptions" />
+  <single-line-text-field asp-for="Name" />
+  <single-line-text-field asp-for="PluralizedName" />
+  <checkbox-field asp-for="IsAbstract" />
+  <checkbox-field asp-for="IsStandalone" />
+  <single-line-text-field asp-for="DefaultViewName" />
+  <div class="form__buttons buttons">
+    <button class="buttons__button button button--positive" type="submit">Save</button>
+    <a class="buttons__button button button--neutral" href="@this.Context.Request.CombineUrl("/backend/classes")">Cancel</a>
   </div>
 </form>

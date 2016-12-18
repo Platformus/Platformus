@@ -1,0 +1,44 @@
+﻿/* Copyright © 2015 Dmitry Sikorsky. All rights reserved. */
+/* Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information. */
+
+.tree {
+}
+
+.tree__node {
+}
+
+.tree__node-header {
+  background: #f0f0f0;
+  padding: 5px 0 5px 10px;
+}
+
+.tree__node-header:hover {
+  background: #ffff96;
+}
+
+.tree__node-header::after {
+  content: '';
+  display: block;
+  clear: both;
+}
+
+.tree__node-content {
+  border-left: 1px solid #f0f0f0;
+  margin-left: 20px;
+  padding-left: 20px;
+}
+
+.tree__buttons {
+  padding: 5px 5px 5px 0;
+}
+
+.tree__buttons--node-header {
+  visibility: hidden;
+  float: right;
+  padding-top: 0;
+  padding-bottom: 0;
+}
+
+.tree__node-header:hover .tree__buttons--node-header {
+  visibility: visible;
+}

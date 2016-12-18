@@ -9,9 +9,9 @@ namespace Platformus.Static.Data.EntityFramework.PostgreSql
 {
   public class ModelRegistrar : IModelRegistrar
   {
-    public void RegisterModels(ModelBuilder modelbuilder)
+    public void RegisterModels(ModelBuilder modelBuilder)
     {
-      modelbuilder.Entity<File>(etb =>
+      modelBuilder.Entity<File>(etb =>
         {
           etb.HasKey(e => e.Id);
           etb.Property(e => e.Id);

@@ -54,8 +54,9 @@ namespace Platformus.Security
                 AutomaticAuthenticate = true,
                 AutomaticChallenge = true,
                 CookieName = "PLATFORMUS",
-                ExpireTimeSpan = new System.TimeSpan(1, 0, 0),
-                LoginPath = new PathString("/backend/account/signin")
+                ExpireTimeSpan = TimeSpan.FromDays(7),
+                LoginPath = new PathString("/backend/account/signin"),
+                ReturnUrlParameter = "returnurl"
               }
             );
           }

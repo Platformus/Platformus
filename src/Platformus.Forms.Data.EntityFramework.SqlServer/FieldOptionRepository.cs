@@ -29,7 +29,7 @@ namespace Platformus.Forms.Data.EntityFramework.SqlServer
 
     public void Edit(FieldOption fieldOption)
     {
-      this.dbContext.Entry(fieldOption).State = EntityState.Modified;
+      this.storageContext.Entry(fieldOption).State = EntityState.Modified;
     }
 
     public void Delete(int id)
@@ -39,7 +39,7 @@ namespace Platformus.Forms.Data.EntityFramework.SqlServer
 
     public void Delete(FieldOption fieldOption)
     {
-      this.dbContext.Database.ExecuteSqlCommand(
+      this.storageContext.Database.ExecuteSqlCommand(
         @"
           CREATE TABLE #Dictionaries (Id INT PRIMARY KEY);
           INSERT INTO #Dictionaries SELECT ValueId FROM FieldOptions WHERE Id = {0};

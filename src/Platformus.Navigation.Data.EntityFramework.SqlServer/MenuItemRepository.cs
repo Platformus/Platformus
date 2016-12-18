@@ -34,7 +34,7 @@ namespace Platformus.Navigation.Data.EntityFramework.SqlServer
 
     public void Edit(MenuItem menuItem)
     {
-      this.dbContext.Entry(menuItem).State = EntityState.Modified;
+      this.storageContext.Entry(menuItem).State = EntityState.Modified;
     }
 
     public void Delete(int id)
@@ -44,7 +44,7 @@ namespace Platformus.Navigation.Data.EntityFramework.SqlServer
 
     public void Delete(MenuItem menuItem)
     {
-      this.dbContext.Database.ExecuteSqlCommand(
+      this.storageContext.Database.ExecuteSqlCommand(
         @"
           CREATE TABLE #MenuItems (Id INT PRIMARY KEY);
           WITH X AS (

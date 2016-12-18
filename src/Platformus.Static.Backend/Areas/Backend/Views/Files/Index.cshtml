@@ -5,18 +5,20 @@
   this.ViewBag.Title = "Files";
   this.ViewBag.ActiveMenuItem = "files";
 }
-<h1>@ViewBag.Title <span>@Model.Grid.Pager.Total</span></h1>
+@section title {
+  @ViewBag.Title <span class="master-detail__detail-header-counter">@Model.Grid.Pager.Total</span>
+}
 @Html.Partial("_Grid", this.Model.Grid)
-<div id="filesDragAndDropArea" class="files-drag-and-drop-area">
-  <div class="description">
+<div class="files-drag-and-drop-area" id="filesDragAndDropArea">
+  <div class="files-drag-and-drop-area__description">
     Drag and drop files into this area…
   </div>
 </div>
-<form action="/backend/files/create" enctype="multipart/form-data" method="post">
-  <div class="buttons">
-    <div class="button positive browse">
+<form class="form" action="/backend/files/create" enctype="multipart/form-data" method="post">
+  <div class="form__buttons buttons">
+    <div class="files-drag-and-drop-area__browse-button buttons__button button button--positive">
       <div>…or select them on your device</div>
-      <input id="files" name="files" type="file" size="1" multiple onchange="$('form').submit();" />
+      <input class="files-drag-and-drop-area__browse-input" id="files" name="files" type="file" size="1" multiple onchange="platformus.fileUploader.fileSelected();" />
     </div>
     <div class="clear"></div>
   </div>

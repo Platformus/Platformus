@@ -34,7 +34,7 @@ namespace Platformus.Globalization.Data.EntityFramework.PostgreSql
 
     public void Edit(Localization localization)
     {
-      this.dbContext.Entry(localization).State = EntityState.Modified;
+      this.storageContext.Entry(localization).State = EntityState.Modified;
     }
 
     public void Delete(int id)

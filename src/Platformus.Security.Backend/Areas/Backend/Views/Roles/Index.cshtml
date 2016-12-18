@@ -5,9 +5,10 @@
   this.ViewBag.Title = "Roles";
   this.ViewBag.ActiveMenuItem = "roles";
 }
-<h1>@ViewBag.Title <span>@Model.Grid.Pager.Total</span></h1>
+@section title {
+  @ViewBag.Title <span class="master-detail__detail-header-counter">@Model.Grid.Pager.Total</span>
+}
 @Html.Partial("_Grid", this.Model.Grid)
-<div class="buttons">
-  <a class="button positive" href="@this.Context.Request.CombineUrl("/backend/roles/create")">Create role</a>
-  <div class="clear"></div>
+<div class="master-detail__detail-buttons buttons">
+  <a class="buttons__button button button--positive" href="@this.Context.Request.CombineUrl("/backend/roles/create")">Create role</a>
 </div>

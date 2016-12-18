@@ -1,0 +1,49 @@
+﻿/* Copyright © 2015 Dmitry Sikorsky. All rights reserved. */
+/* Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information. */
+
+.checkbox {
+  color: #323232;
+  text-decoration: none;
+  display: block;
+  padding-left: 30px;
+  position: relative;
+}
+
+.checkbox:hover {
+  color: #323232;
+}
+
+.checkbox__indicator {
+  background-color: #f0f0f0;
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 20px;
+  height: 20px;
+}
+
+.checkbox:hover .checkbox__indicator {
+  background-color: #f5f5f5;
+}
+
+.checkbox__indicator--checked {
+  background-image: url(/wwwroot.areas.backend.images.checkbox_indicator_checked.png);
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+.checkbox__label {
+}
+
+@media
+only screen and (-webkit-min-device-pixel-ratio: 2),
+only screen and (   min--moz-device-pixel-ratio: 2),
+only screen and (     -o-min-device-pixel-ratio: 2/1),
+only screen and (        min-device-pixel-ratio: 2),
+only screen and (                min-resolution: 192dpi),
+only screen and (                min-resolution: 2dppx) {
+  .checkbox__indicator--checked {
+    background-image: url(/wwwroot.areas.backend.images.checkbox_indicator_checked@2x.png);
+    background-size: 16px 16px;
+  }
+}

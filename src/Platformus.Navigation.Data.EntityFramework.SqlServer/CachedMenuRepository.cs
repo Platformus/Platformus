@@ -28,7 +28,7 @@ namespace Platformus.Navigation.Data.EntityFramework.SqlServer
 
     public void Edit(CachedMenu cachedMenu)
     {
-      this.dbContext.Entry(cachedMenu).State = EntityState.Modified;
+      this.storageContext.Entry(cachedMenu).State = EntityState.Modified;
     }
 
     public void Delete(int cultureId, int menuId)

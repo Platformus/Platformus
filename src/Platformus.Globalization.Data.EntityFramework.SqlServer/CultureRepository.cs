@@ -54,7 +54,7 @@ namespace Platformus.Globalization.Data.EntityFramework.SqlServer
 
     public void Edit(Culture culture)
     {
-      this.dbContext.Entry(culture).State = EntityState.Modified;
+      this.storageContext.Entry(culture).State = EntityState.Modified;
     }
 
     public void Delete(int id)
@@ -64,7 +64,7 @@ namespace Platformus.Globalization.Data.EntityFramework.SqlServer
 
     public void Delete(Culture culture)
     {
-      this.dbContext.Database.ExecuteSqlCommand(
+      this.storageContext.Database.ExecuteSqlCommand(
         @"
           DELETE FROM CachedObjects WHERE CultureId = {0};
           DELETE FROM CachedMenus WHERE CultureId = {0};

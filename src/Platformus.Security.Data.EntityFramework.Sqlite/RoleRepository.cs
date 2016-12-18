@@ -34,7 +34,7 @@ namespace Platformus.Security.Data.EntityFramework.Sqlite
 
     public void Edit(Role role)
     {
-      this.dbContext.Entry(role).State = EntityState.Modified;
+      this.storageContext.Entry(role).State = EntityState.Modified;
     }
 
     public void Delete(int id)
@@ -44,7 +44,7 @@ namespace Platformus.Security.Data.EntityFramework.Sqlite
 
     public void Delete(Role role)
     {
-      this.dbContext.Database.ExecuteSqlCommand(
+      this.storageContext.Database.ExecuteSqlCommand(
         @"
           DELETE FROM RolePermissions WHERE RoleId = {0};
           DELETE FROM UserRoles WHERE RoleId = {0};

@@ -28,7 +28,7 @@ namespace Platformus.Forms.Data.EntityFramework.PostgreSql
 
     public void Edit(CachedForm cachedForm)
     {
-      this.dbContext.Entry(cachedForm).State = EntityState.Modified;
+      this.storageContext.Entry(cachedForm).State = EntityState.Modified;
     }
 
     public void Delete(int cultureId, int formId)

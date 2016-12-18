@@ -3,24 +3,26 @@
   "buildOptions": { "embed": [ "Areas/Backend/Views/**", "wwwroot/**" ] },
   "copyright": "Copyright © 2015 Dmitry Sikorsky",
   "dependencies": {
-    "ExtCore.Data.Abstractions": "1.0.0-rc1",
-    "ExtCore.Infrastructure": "1.0.0-rc1",
+    "ExtCore.Data.Abstractions": "1.1.0-beta1",
+    "ExtCore.Infrastructure": "1.1.0-beta1",
     "Platformus.Barebone.Backend": "1.0.0-alpha11",
     "Platformus.Static": "1.0.0-alpha11"
   },
   "description": "Part of the Platformus.Static Platformus extension.",
   "frameworks": {
-    "netstandard1.6": {
-      "imports": [
-        "dotnet5.6",
-        "dnxcore50",
-        "portable-net45+win8"
-      ]
-    }
+    "netstandard1.6": {}
   },
   "packOptions": {
     "iconUrl": "http://platformus.net/platformus_nuget_icon.png",
     "projectUrl": "http://platformus.net/"
+  },
+  "scripts": {
+    "precompile": [
+      "dotnet bundle"
+    ]
+  },
+  "tools": {
+    "BundlerMinifier.Core": "2.2.306"
   },
   "version": "1.0.0-alpha11"
 }

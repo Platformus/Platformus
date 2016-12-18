@@ -1,0 +1,60 @@
+﻿/* Copyright © 2015 Dmitry Sikorsky. All rights reserved. */
+/* Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information. */
+
+.field {
+}
+
+.field--multilingual {
+}
+
+.field__label {
+  display: block;
+  margin-bottom: 1px;
+}
+
+.field__text-box {
+  width: 430px;
+}
+
+.field__text-box--multilingual {
+  padding-right: 30px;
+  width: 410px;
+}
+
+.field__text-area {
+  width: 430px;
+  height: 290px;
+}
+
+.field__text-area--multilingual {
+}
+
+.field__drop-down-list {
+  width: 450px;
+}
+
+.field__culture {
+  position: relative;
+  left: 450px;
+  width: 0;
+  z-index: 10;
+}
+
+.field__culture-flag {
+  background-color: #323232;
+  color: #fff;
+  cursor: default;
+  font-size: 8px;
+  line-height: 16px;
+  text-align: center;
+  text-transform: uppercase;
+  position: absolute;
+  left: -23px;
+  top: 7px;
+  width: 16px;
+  height: 16px;
+}
+
+.field__multilingual-separator {
+  height: 1px;
+}

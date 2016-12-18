@@ -29,7 +29,7 @@ namespace Platformus.Security.Data.EntityFramework.SqlServer
 
     public void Edit(RolePermission rolePermission)
     {
-      this.dbContext.Entry(rolePermission).State = EntityState.Modified;
+      this.storageContext.Entry(rolePermission).State = EntityState.Modified;
     }
 
     public void Delete(int roleId, int permissionId)

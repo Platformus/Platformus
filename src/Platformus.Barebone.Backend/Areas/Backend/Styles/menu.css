@@ -1,0 +1,22 @@
+﻿/* Copyright © 2015 Dmitry Sikorsky. All rights reserved. */
+/* Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information. */
+
+.menu {
+}
+
+.menu__menu-group {
+}
+
+.menu__menu-group-header {
+  font-size: 20px;
+  line-height: 40px;
+  padding: 0 20px;
+}
+
+.menu__menu-group-content {
+}
+
+.menu__menu-item {
+  display: block;
+  padding: 5px 20px;
+}

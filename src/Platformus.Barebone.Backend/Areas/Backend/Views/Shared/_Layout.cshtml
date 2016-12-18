@@ -11,20 +11,34 @@
   @await Component.InvokeAsync("BackendScripts")
 </head>
 <body>
-  <div class="container with-side @(this.ViewBag.HasSideDetails == null ? null : "with-side-details")">
-    <div class="side">
-      <a class="platformus" href="/backend/">
-        Platformus <span>CMS</span></a>
-      @await Component.InvokeAsync("BackendMenu")
-      <div class="user-menu">
-        <a class="menu-item" href="/backend/account/signout">
-          Sign out
-        </a>
-      </div>
+  <div class="master-detail">
+    <div class="master-detail__master master-detail__master--primary">
+      <a class="master-detail__master-header master-detail__master-header--primary" href="/backend/">Platformus CMS</a>
+      @if (this.User.Identity.IsAuthenticated)
+      {
+        <div class="master-detail__master-content">
+          @await Component.InvokeAsync("BackendMenu")
+          <div class="master-detail__master-user-menu menu">
+            <div class="menu__menu-group">
+              <div class="menu__menu-group-header">
+                @User.Identity.Name
+              </div>
+              <div class="menu__menu-group-content">
+                <a class="master-detail__master-menu-item--primary master-detail__master-menu-item--user menu__menu-item" href="/backend/account/signout">Sign out</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      }
     </div>
-    @RenderSection("sideDetails", false)
-    <div class="content">
-      @RenderBody()
+    @RenderSection("side", false)
+    <div class="master-detail__detail">
+      <h1 class="master-detail__detail-header">
+        @RenderSection("title", false)
+      </h1>
+      <div class="master-detail__detail-content">
+        @RenderBody()
+      </div>
     </div>
   </div>
 </body>

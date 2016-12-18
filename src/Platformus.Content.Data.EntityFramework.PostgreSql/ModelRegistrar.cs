@@ -9,16 +9,16 @@ namespace Platformus.Content.Data.EntityFramework.PostgreSql
 {
   public class ModelRegistrar : IModelRegistrar
   {
-    public void RegisterModels(ModelBuilder modelbuilder)
+    public void RegisterModels(ModelBuilder modelBuilder)
     {
-      modelbuilder.Entity<CachedObject>(etb =>
+      modelBuilder.Entity<CachedObject>(etb =>
         {
           etb.HasKey(e => new { e.CultureId, e.ObjectId });
           etb.ForNpgsqlToTable("CachedObjects");
         }
       );
 
-      modelbuilder.Entity<Class>(etb =>
+      modelBuilder.Entity<Class>(etb =>
         {
           etb.HasKey(e => e.Id);
           etb.Property(e => e.Id);// .UseSqlServerIdentityColumn();
@@ -26,7 +26,7 @@ namespace Platformus.Content.Data.EntityFramework.PostgreSql
         }
       );
 
-      modelbuilder.Entity<Tab>(etb =>
+      modelBuilder.Entity<Tab>(etb =>
         {
           etb.HasKey(e => e.Id);
           etb.Property(e => e.Id);// .UseSqlServerIdentityColumn();
@@ -34,7 +34,7 @@ namespace Platformus.Content.Data.EntityFramework.PostgreSql
         }
       );
 
-      modelbuilder.Entity<Member>(etb =>
+      modelBuilder.Entity<Member>(etb =>
         {
           etb.HasKey(e => e.Id);
           etb.Property(e => e.Id);// .UseSqlServerIdentityColumn();
@@ -42,7 +42,7 @@ namespace Platformus.Content.Data.EntityFramework.PostgreSql
         }
       );
 
-      modelbuilder.Entity<DataType>(etb =>
+      modelBuilder.Entity<DataType>(etb =>
         {
           etb.HasKey(e => e.Id);
           etb.Property(e => e.Id);// .UseSqlServerIdentityColumn();
@@ -50,7 +50,7 @@ namespace Platformus.Content.Data.EntityFramework.PostgreSql
         }
       );
 
-      modelbuilder.Entity<DataSource>(etb =>
+      modelBuilder.Entity<DataSource>(etb =>
         {
           etb.HasKey(e => e.Id);
           etb.Property(e => e.Id);// .UseSqlServerIdentityColumn();
@@ -58,7 +58,7 @@ namespace Platformus.Content.Data.EntityFramework.PostgreSql
         }
       );
 
-      modelbuilder.Entity<Object>(etb =>
+      modelBuilder.Entity<Object>(etb =>
         {
           etb.HasKey(e => e.Id);
           etb.Property(e => e.Id);// .UseSqlServerIdentityColumn();
@@ -66,7 +66,7 @@ namespace Platformus.Content.Data.EntityFramework.PostgreSql
         }
       );
 
-       modelbuilder.Entity<Property>(etb =>
+       modelBuilder.Entity<Property>(etb =>
         {
           etb.HasKey(e => e.Id);
           etb.Property(e => e.Id);// .UseSqlServerIdentityColumn();
@@ -74,7 +74,7 @@ namespace Platformus.Content.Data.EntityFramework.PostgreSql
         }
       );
 
-      modelbuilder.Entity<Relation>(etb =>
+      modelBuilder.Entity<Relation>(etb =>
         {
           etb.HasKey(e => e.Id);
           etb.Property(e => e.Id);// .UseSqlServerIdentityColumn();

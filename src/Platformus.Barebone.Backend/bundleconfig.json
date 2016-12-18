@@ -1,0 +1,52 @@
+﻿[
+  {
+    "outputFileName": "wwwroot/areas/backend/css/platformus.barebone.min.css",
+    "inputFiles": [
+      "Areas/Backend/Styles/global.css",
+      "Areas/Backend/Styles/max_length_indicator.css",
+      "Areas/Backend/Styles/label.css",
+      "Areas/Backend/Styles/text_box.css",
+      "Areas/Backend/Styles/text_area.css",
+      "Areas/Backend/Styles/checkbox.css",
+      "Areas/Backend/Styles/drop_down_list.css",
+      "Areas/Backend/Styles/input_validation_error.css",
+      "Areas/Backend/Styles/field.css",
+      "Areas/Backend/Styles/button.css",
+      "Areas/Backend/Styles/buttons.css",
+      "Areas/Backend/Styles/form.css",
+      "Areas/Backend/Styles/menu.css",
+      "Areas/Backend/Styles/tabs.css",
+      "Areas/Backend/Styles/tab_pages.css",
+      "Areas/Backend/Styles/pager.css",
+      "Areas/Backend/Styles/table.css",
+      "Areas/Backend/Styles/tree.css",
+      "Areas/Backend/Styles/grid.css",
+      "Areas/Backend/Styles/master_detail.css",
+      "Areas/Backend/Styles/pop_up_modal.css",
+      "Areas/Backend/Styles/pop_up_form.css"
+    ]
+  },
+  {
+    "outputFileName": "wwwroot/areas/backend/js/platformus.barebone.min.js",
+    "inputFiles": [
+      "Areas/Backend/Scripts/string.js",
+      "Areas/Backend/Scripts/url.js",
+      "Areas/Backend/Scripts/ui.js",
+      "Areas/Backend/Scripts/behaviors.js",
+      "Areas/Backend/Scripts/tab_index_behavior.js",
+      "Areas/Backend/Scripts/max_length_indicator_behavior.js",
+      "Areas/Backend/Scripts/checkbox_behavior.js",
+      "Areas/Backend/Scripts/drop_down_list_behavior.js",
+      "Areas/Backend/Scripts/tabs_behavior.js",
+      "Areas/Backend/Scripts/grid_behavior.js",
+      "Areas/Backend/Scripts/base_form.js",
+      "Areas/Backend/Scripts/delete_form.js",
+      "Areas/Backend/Scripts/global.js"
+    ],
+    "minify": {
+      "enabled": true,
+      "renameLocals": true
+    },
+    "sourceMap": false
+  }
+]

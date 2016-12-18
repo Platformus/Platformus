@@ -1,0 +1,24 @@
+﻿/* Copyright © 2015 Dmitry Sikorsky. All rights reserved. */
+/* Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information. */
+
+.pop-up-form {
+  background: #fff;
+  box-shadow: 0 0 10px rgba(0, 150, 250, 0.5);
+  opacity: 0;
+  padding: 0 20px 20px;
+  position: fixed;
+  width: 400px;
+  z-index: 100010;
+}
+
+.pop-up-form__header {
+  font-size: 30px;
+  line-height: 60px;
+}
+
+.pop-up-form__content {
+}
+
+.pop-up-form__buttons {
+  margin-top: 20px;
+}

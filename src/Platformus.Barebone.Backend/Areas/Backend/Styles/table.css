@@ -1,0 +1,85 @@
+﻿/* Copyright © 2015 Dmitry Sikorsky. All rights reserved. */
+/* Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information. */
+
+.table {
+  border-collapse: collapse;
+  display: table;
+  width: 100%;
+}
+
+.table__row {
+  display: table-row;
+}
+
+.table__cell {
+  font-weight: normal;
+  text-align: left;
+  vertical-align: top;
+  display: table-cell;
+  padding: 5px 10px;
+}
+
+.table__row:hover .table__cell {
+  background: #ffff96;
+}
+
+.table__cell--ordered-by {
+  background: #f0f0f0;
+}
+
+.table__row:hover .table__cell--ordered-by {
+  background: #ffff96;
+}
+
+.table__cell--header {
+  background: #f0f0f0;
+}
+
+.table__row:hover .table__cell--header {
+  background: #f0f0f0;
+}
+
+.table__cell--header-ordered-by {
+  background: #323232;
+}
+
+.table__row:hover .table__cell--header-ordered-by {
+  background: #323232;
+}
+
+.table__row--selected .table__cell {
+  background: #0096fa;
+  color: #fff;
+}
+
+.table__row--selected:hover .table__cell {
+  background: #5abeff;
+  color: #fff;
+}
+
+.table__cell--last {
+  width: 0;
+}
+
+.table__order-by {
+}
+
+.table__order-by--ordered-by {
+  color: #fff;
+}
+
+.table__order-by--ordered-by:hover {
+  color: #fff;
+}
+
+.table__buttons {
+  padding: 5px;
+}
+
+.table__button {
+  visibility: hidden;
+}
+
+.table__row:hover .table__button {
+  visibility: visible;
+}

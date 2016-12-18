@@ -1,14 +1,12 @@
 ﻿@* Copyright © 2015 Dmitry Sikorsky. All rights reserved. *@
 @* Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information. *@
 @model Platformus.Forms.Backend.ViewModels.Shared.FieldOptionViewModel
-<div class="tree-node">
-  <div class="tree-node-header">
-    <div class="buttons">
-      <a class="button positive" href="/backend/fieldoptions/edit/@Model.Id">Edit</a>
-      <a class="button negative" href="#" onclick="return new Platformus.Overlays.DeleteForm('/backend/fieldoptions/delete/@Model.Id').show();"></a>
-      <div class="clear"></div>
+<div class="tree__node">
+  <div class="tree__node-header">
+    <div class="tree__buttons tree__buttons--node-header buttons">
+      <a class="buttons__button buttons__button--minor button button--positive button--minor" href="/backend/fieldoptions/edit/@Model.Id">Edit</a>
+      <a class="buttons__button buttons__button--minor button button--negative button--minor button--delete" href="#" onclick="return platformus.forms.deleteForm.show('/backend/fieldoptions/delete/@Model.Id');"></a>
     </div>
     @Model.Value
-    <div class="clear"></div>
   </div>
 </div>

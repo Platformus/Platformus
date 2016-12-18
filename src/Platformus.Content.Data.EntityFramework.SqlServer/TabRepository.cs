@@ -47,7 +47,7 @@ namespace Platformus.Content.Data.EntityFramework.SqlServer
 
     public void Edit(Tab tab)
     {
-      this.dbContext.Entry(tab).State = EntityState.Modified;
+      this.storageContext.Entry(tab).State = EntityState.Modified;
     }
 
     public void Delete(int id)
@@ -57,7 +57,7 @@ namespace Platformus.Content.Data.EntityFramework.SqlServer
 
     public void Delete(Tab tab)
     {
-      this.dbContext.Database.ExecuteSqlCommand(
+      this.storageContext.Database.ExecuteSqlCommand(
         @"
           UPDATE Members SET TabId = NULL WHERE TabId = {0};
         ",

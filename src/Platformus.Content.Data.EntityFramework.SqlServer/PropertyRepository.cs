@@ -34,7 +34,7 @@ namespace Platformus.Content.Data.EntityFramework.SqlServer
 
     public void Edit(Property property)
     {
-      this.dbContext.Entry(property).State = EntityState.Modified;
+      this.storageContext.Entry(property).State = EntityState.Modified;
     }
 
     public void Delete(int id)
@@ -44,7 +44,7 @@ namespace Platformus.Content.Data.EntityFramework.SqlServer
 
     public void Delete(Property property)
     {
-      this.dbContext.Database.ExecuteSqlCommand(
+      this.storageContext.Database.ExecuteSqlCommand(
         @"
           CREATE TABLE #Dictionaries (Id INT PRIMARY KEY);
           INSERT INTO #Dictionaries SELECT HtmlId FROM Properties WHERE Id = {0};

@@ -2,36 +2,36 @@
 @* Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information. *@
 @model Platformus.Barebone.Backend.ViewModels.Shared.GridViewModel
 <div class="grid">
-  <div class="header">
+  <div class="grid__header">
     @Html.Partial("_Pager", this.Model.Pager)
     @Html.Partial("_TakeSelector", this.Model.TakeSelector)
     @Html.Partial("_Filter", this.Model.Filter)
-    <div class="clear"></div>
   </div>
-  <table cellpadding="0" cellspacing="0">
-    <colgroup>
-      @foreach (var item in this.Model.GridColumns)
+  <div class="grid__content">
+    <table class="table">
+      <colgroup>
+        @foreach (var item in this.Model.GridColumns)
+        {
+          if (item.OrderBy == this.Model.OrderBy)
+          {
+            <col class="table__cell--ordered-by" />
+          }
+          else
+          {
+            <col />
+          }
+        }
+      </colgroup>
+      <tr class="table__row">
+        @foreach (var item in this.Model.GridColumns)
+        {
+          @Html.Partial("_GridColumn", item)
+        }
+      </tr>
+      @foreach (var item in this.Model.Items)
       {
-      if (item.OrderBy == this.Model.OrderBy)
-      {
-      <col class="ordered-by" />
+        @Html.Partial(this.Model.TemplateName, item)
       }
-
-      else
-      {
-      <col />
-      }
-      }
-    </colgroup>
-    <tr>
-      @foreach (var item in this.Model.GridColumns)
-      {
-      @Html.Partial("_GridColumn", item)
-      }
-    </tr>
-    @foreach (var item in this.Model.Items)
-    {
-    @Html.Partial(this.Model.TemplateName, item)
-    }
-  </table>
+    </table>
+  </div>
 </div>

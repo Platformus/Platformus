@@ -9,16 +9,16 @@ namespace Platformus.Navigation.Data.EntityFramework.Sqlite
 {
   public class ModelRegistrar : IModelRegistrar
   {
-    public void RegisterModels(ModelBuilder modelbuilder)
+    public void RegisterModels(ModelBuilder modelBuilder)
     {
-      modelbuilder.Entity<CachedMenu>(etb =>
+      modelBuilder.Entity<CachedMenu>(etb =>
         {
           etb.HasKey(e => new { e.CultureId, e.MenuId });
           etb.ForSqliteToTable("CachedMenus");
         }
       );
 
-      modelbuilder.Entity<Menu>(etb =>
+      modelBuilder.Entity<Menu>(etb =>
         {
           etb.HasKey(e => e.Id);
           etb.Property(e => e.Id);// .UseSqlServerIdentityColumn();
@@ -26,7 +26,7 @@ namespace Platformus.Navigation.Data.EntityFramework.Sqlite
         }
       );
 
-      modelbuilder.Entity<MenuItem>(etb =>
+      modelBuilder.Entity<MenuItem>(etb =>
         {
           etb.HasKey(e => e.Id);
           etb.Property(e => e.Id);// .UseSqlServerIdentityColumn();

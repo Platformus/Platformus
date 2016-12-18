@@ -9,6 +9,7 @@
   <meta charset="utf-8" />
   <title>Image Uploader | Platformus CMS</title>
   <link href="~/wwwroot.areas.backend.css.platformus.barebone.min.css" rel="stylesheet" />
+  <link href="~/wwwroot.areas.backend.css.platformus.content.min.css" rel="stylesheet" />
   <link href="//fonts.googleapis.com/css?family=PT+Sans:400,400italic&subset=latin,cyrillic" type="text/css" rel="stylesheet" />
   <script src="~/lib/jquery/jquery.min.js"></script>
   <script src="~/lib/jquery-validation/jquery.validate.min.js"></script>
@@ -19,14 +20,14 @@
 </head>
 <body>
   <div id="imageDragAndDropArea" class="image-drag-and-drop-area">
-    <div class="description">
+    <div class="image-drag-and-drop-area__description">
       Drag and drop image into this area…
     </div>
     <form id="form" name="form" action="/backend/imageuploader" enctype="multipart/form-data" method="post">
-      <div class="buttons">
-        <div class="button positive browse">
+      <div class="image-drag-and-drop-area__buttons buttons">
+        <div class="image-drag-and-drop-area__browse-button buttons__button button button--positive">
           <div>…or select it on your device</div>
-          <input id="files" name="files" type="file" size="1" onchange="Platformus.Controls.Behaviors.ImageUploader.imageSelected();" />
+          <input class="image-drag-and-drop-area__browse-input" id="files" name="files" type="file" size="1" onchange="platformus.imageUploader.imageSelected();" />
         </div>
       </div>
     </form>

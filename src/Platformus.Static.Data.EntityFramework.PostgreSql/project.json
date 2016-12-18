@@ -2,18 +2,12 @@
   "authors": [ "Dmitry Sikorsky" ],
   "copyright": "Copyright © 2015 Dmitry Sikorsky",
   "dependencies": {
-    "ExtCore.Data.EntityFramework.PostgreSql": "1.0.0-rc1",
+    "ExtCore.Data.EntityFramework.PostgreSql": "1.1.0-beta1",
     "Platformus.Static.Data.Abstractions": "1.0.0-alpha11"
   },
   "description": "Part of the Platformus.Static Platformus extension.",
   "frameworks": {
-    "netstandard1.6": {
-      "imports": [
-        "dotnet5.6",
-        "dnxcore50",
-        "portable-net45+win8"
-      ]
-    }
+    "netstandard1.6": {}
   },
   "packOptions": {
     "iconUrl": "http://platformus.net/platformus_nuget_icon.png",

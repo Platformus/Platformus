@@ -28,6 +28,10 @@ namespace Platformus.Barebone.Backend.ViewModels.Shared
       };
 
       gridColumns.ToList().ForEach(gc => gc.Owner = grid);
+
+      if (gridColumns.Count() != 0)
+        gridColumns.ToList().Last().IsLast = true;
+
       return grid;
     }
   }

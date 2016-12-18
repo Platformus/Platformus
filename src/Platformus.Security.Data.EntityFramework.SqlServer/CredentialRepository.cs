@@ -34,7 +34,7 @@ namespace Platformus.Security.Data.EntityFramework.SqlServer
 
     public void Edit(Credential credential)
     {
-      this.dbContext.Entry(credential).State = EntityState.Modified;
+      this.storageContext.Entry(credential).State = EntityState.Modified;
     }
 
     public void Delete(int id)

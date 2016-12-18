@@ -1,0 +1,57 @@
+﻿/* Copyright © 2015 Dmitry Sikorsky. All rights reserved. */
+/* Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information. */
+
+.grid {
+}
+
+.grid__header {
+}
+
+.grid__header::after {
+  content: '';
+  display: block;
+  clear: both;
+}
+
+.grid__header-pager {
+  float: left;
+  margin-right: 1px;
+}
+
+.grid__header-take-selector {
+  float: left;
+}
+
+/* TODO: remove cascade */
+.grid__header-take-selector .drop-down-list {
+  width: 100px;
+}
+
+.grid__header-filter {
+  float: right;
+}
+
+/* TODO: remove cascade */
+.grid__header-filter .text-box {
+  background-image: url(/wwwroot.areas.backend.images.press_enter.png);
+  background-position: right;
+  background-repeat: no-repeat;
+  width: 130px;
+}
+
+.grid__content {
+  margin-top: 20px;
+}
+
+@media
+only screen and (-webkit-min-device-pixel-ratio: 2),
+only screen and (   min--moz-device-pixel-ratio: 2),
+only screen and (     -o-min-device-pixel-ratio: 2/1),
+only screen and (        min-device-pixel-ratio: 2),
+only screen and (                min-resolution: 192dpi),
+only screen and (                min-resolution: 2dppx) {
+  .grid__header-filter .text-box {
+    background-image: url(/wwwroot.areas.backend.images.press_enter@2x.png);
+    background-size: 22px 7px;
+  }
+}

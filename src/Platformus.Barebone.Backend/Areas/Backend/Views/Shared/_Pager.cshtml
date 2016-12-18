@@ -4,17 +4,17 @@
 @{
   int maxPagesCount = 5;
 }
-<div class="pager">
+<div class="grid__header-pager pager">
   @if (this.Model.Skip > 0)
   {
-    <a class="page first-page" href="@this.Context.Request.CombineUrl(
+    <a class="pager__page pager__page--first" href="@this.Context.Request.CombineUrl(
       new Url.Descriptor(name: "filter", takeFromUrl: true),
       new Url.Descriptor(name: "orderby", takeFromUrl: true),
       new Url.Descriptor(name: "direction", takeFromUrl: true),
       new Url.Descriptor(name: "skip", skip: true),
       new Url.Descriptor(name: "take", skip: true)
     )" title="First page"></a>
-    <a class="page previous-page" href="@this.Context.Request.CombineUrl(
+    <a class="pager__page  pager__page--previous" href="@this.Context.Request.CombineUrl(
       new Url.Descriptor(name: "filter", takeFromUrl: true),
       new Url.Descriptor(name: "orderby", takeFromUrl: true),
       new Url.Descriptor(name: "direction", takeFromUrl: true),
@@ -24,22 +24,22 @@
   }
   else
   {
-    <div class="page first-page"></div>
-    <div class="page previous-page"></div>
+    <div class="pager__page pager__page--first pager__page--disabled"></div>
+    <div class="pager__page pager__page--previous pager__page--disabled"></div>
   }
   @if (this.Model.Skip - maxPagesCount * this.Model.Take > 0)
   {
-    <div class="page skipped-pages"></div>
+    <div class="pager__page pager__page--skipped pager__page--disabled"></div>
   }
   @for (int i = 0; i * this.Model.Take < this.Model.Total; i++)
   {
     if (this.Model.Skip == i * this.Model.Take)
     {
-      <div class="page active-page">@(i + 1)<div class="arrow-ph"><div class="arrow"></div></div></div>
+      <div class="pager__page pager__page--current pager__page--disabled">@(i + 1)<div class="pager__page-arrow"></div></div>
     }
     else if (i * this.Model.Take >= this.Model.Skip - maxPagesCount * this.Model.Take && i * this.Model.Take <= this.Model.Skip + maxPagesCount * this.Model.Take)
     {
-      <a class="page" href="@this.Context.Request.CombineUrl(
+      <a class="pager__page" href="@this.Context.Request.CombineUrl(
         new Url.Descriptor(name: "filter", takeFromUrl: true),
         new Url.Descriptor(name: "orderby", takeFromUrl: true),
         new Url.Descriptor(name: "direction", takeFromUrl: true),
@@ -50,22 +50,22 @@
   }
   @if (this.Model.Total == 0)
   {
-    <div class="page active-page">1<div class="arrow-ph"><div class="arrow"></div></div></div>
+    <div class="pager__page pager__page--current pager__page--disabled">1<div class="pager__page-arrow-placeholder"><div class="pager__page-arrow"></div></div></div>
   }
   @if (this.Model.Skip + maxPagesCount * this.Model.Take < this.Model.Total)
   {
-    <div class="page skipped-pages"></div>
+    <div class="pager__page pager__page--skipped pager__page--disabled"></div>
   }
   @if (this.Model.Skip + this.Model.Take < this.Model.Total)
   {
-    <a class="page next-page" href="@this.Context.Request.CombineUrl(
+    <a class="pager__page pager__page--next" href="@this.Context.Request.CombineUrl(
       new Url.Descriptor(name: "filter", takeFromUrl: true),
       new Url.Descriptor(name: "orderby", takeFromUrl: true),
       new Url.Descriptor(name: "direction", takeFromUrl: true),
       new Url.Descriptor(name: "skip", value: this.Model.Skip + this.Model.Take),
       new Url.Descriptor(name: "take", value: this.Model.Take)
     )" title="Next page"></a>
-    <a class="page last-page" href="@this.Context.Request.CombineUrl(
+    <a class="pager__page pager__page--last" href="@this.Context.Request.CombineUrl(
       new Url.Descriptor(name: "filter", takeFromUrl: true),
       new Url.Descriptor(name: "orderby", takeFromUrl: true),
       new Url.Descriptor(name: "direction", takeFromUrl: true),
@@ -75,8 +75,7 @@
   }
   else
   {
-    <div class="page next-page"></div>
-    <div class="page last-page"></div>
+    <div class="pager__page pager__page--next pager__page--disabled"></div>
+    <div class="pager__page pager__page--last pager__page--disabled"></div>
   }
-  <div class="clear"></div>
 </div>

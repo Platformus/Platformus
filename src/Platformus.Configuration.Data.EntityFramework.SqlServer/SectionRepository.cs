@@ -34,7 +34,7 @@ namespace Platformus.Configuration.Data.EntityFramework.SqlServer
 
     public void Edit(Section section)
     {
-      this.dbContext.Entry(section).State = EntityState.Modified;
+      this.storageContext.Entry(section).State = EntityState.Modified;
     }
 
     public void Delete(int id)
@@ -44,7 +44,7 @@ namespace Platformus.Configuration.Data.EntityFramework.SqlServer
 
     public void Delete(Section section)
     {
-      this.dbContext.Database.ExecuteSqlCommand(
+      this.storageContext.Database.ExecuteSqlCommand(
         @"
           DELETE FROM Sections WHERE SectionId = {0};
         ",

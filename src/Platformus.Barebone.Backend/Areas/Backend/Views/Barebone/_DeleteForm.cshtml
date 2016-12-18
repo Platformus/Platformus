@@ -1,11 +1,12 @@
 ﻿@* Copyright © 2015 Dmitry Sikorsky. All rights reserved. *@
 @* Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information. *@
 @model Platformus.Barebone.Backend.ViewModels.Barebone.DeleteFormViewModel
-<div class="title">
+<div class="pop-up-form__header">
   Are you sure to delete?
 </div>
-<div class="buttons">
-  <a class="button negative" href="@Model.TargetUrl">Yes, I am</a>
-  <a class="button neutral" href="#">Cancel</a>
-  <div class="clear"></div>
+<div class="pop-up-form__content">
+  <div class="pop-up-form__buttons buttons">
+    <a class="buttons__button button button--negative" href="@Model.TargetUrl">Yes, I am</a>
+    <a class="buttons__button button button--neutral" href="#" onclick="return platformus.forms.deleteForm.hideAndRemove();">Cancel</a>
+  </div>
 </div>

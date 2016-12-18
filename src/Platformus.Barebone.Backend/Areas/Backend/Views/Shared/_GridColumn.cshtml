@@ -3,14 +3,14 @@
 @model Platformus.Barebone.Backend.ViewModels.Shared.GridColumnViewModel
 @if (string.IsNullOrEmpty(this.Model.OrderBy))
 {
-  <th>@Html.Raw(this.Model.Name)</th>
+  <th class="table__cell table__cell--header @(this.Model.IsLast ? "table__cell--last" : string.Empty)">@Html.Raw(this.Model.Name)</th>
 }
 else
 {
   if (this.Model.OrderBy == this.Model.Owner.OrderBy)
   {
-    <th class="ordered-by">
-      <a href="@this.Context.Request.CombineUrl(
+    <th class="table__cell table__cell--header table__cell--header-ordered-by @(this.Model.IsLast ? "table__cell--last" : string.Empty)">
+      <a class="table__order-by table__order-by--ordered-by" href="@this.Context.Request.CombineUrl(
         new Url.Descriptor(name: "filter", takeFromUrl: true),
         new Url.Descriptor(name: "orderby", value: this.Model.OrderBy),
         new Url.Descriptor(name: "direction", value: this.Model.Owner.Direction == "asc" ? "desc" : "asc"),
@@ -21,8 +21,8 @@ else
   }
   else
   {
-    <th>
-      <a href="@this.Context.Request.CombineUrl(
+    <th class="table__cell table__cell--header @(this.Model.IsLast ? "table__cell--last" : string.Empty)">
+      <a class="table__order-by" href="@this.Context.Request.CombineUrl(
         new Url.Descriptor(name: "filter", takeFromUrl: true),
         new Url.Descriptor(name: "orderby", value: this.Model.OrderBy),
         new Url.Descriptor(name: "direction", value: "asc"),

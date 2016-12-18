@@ -5,16 +5,17 @@
   this.ViewBag.Title = "Sections";
   this.ViewBag.ActiveMenuItem = "sections";
 }
-<h1>@ViewBag.Title <span>@Model.Sections.Count()</span></h1>
+@section title {
+  @ViewBag.Title <span class="master-detail__detail-header-counter">@Model.Sections.Count()</span>
+}
 <div class="tree">
   @foreach (var section in this.Model.Sections)
   {
     @Html.Partial("_Section", section)
   }
-  <div class="tree-node">
-    <div class="buttons">
-      <a class="button positive" href="/backend/sections/create">Create section</a>
-      <div class="clear"></div>
+  <div class="tree__node">
+    <div class="tree__buttons buttons">
+      <a class="buttons__button buttons__button--minor button button--positive button--minor" href="/backend/sections/create">Create section</a>
     </div>
   </div>
 </div>

@@ -42,7 +42,7 @@ namespace Platformus.Content.Data.EntityFramework.Sqlite
 
     public void Edit(DataSource dataSource)
     {
-      this.dbContext.Entry(dataSource).State = EntityState.Modified;
+      this.storageContext.Entry(dataSource).State = EntityState.Modified;
     }
 
     public void Delete(int id)
@@ -52,7 +52,7 @@ namespace Platformus.Content.Data.EntityFramework.Sqlite
 
     public void Delete(DataSource dataSource)
     {
-      this.dbContext.Database.ExecuteSqlCommand(
+      this.storageContext.Database.ExecuteSqlCommand(
         @"
           DELETE FROM CachedObjects WHERE ClassId IN (SELECT ClassId FROM DataSources WHERE Id = {0});
         ",

@@ -29,7 +29,7 @@ namespace Platformus.Security.Data.EntityFramework.SqlServer
 
     public void Edit(User user)
     {
-      this.dbContext.Entry(user).State = EntityState.Modified;
+      this.storageContext.Entry(user).State = EntityState.Modified;
     }
 
     public void Delete(int id)
@@ -39,7 +39,7 @@ namespace Platformus.Security.Data.EntityFramework.SqlServer
 
     public void Delete(User user)
     {
-      this.dbContext.Database.ExecuteSqlCommand(
+      this.storageContext.Database.ExecuteSqlCommand(
         @"
           DELETE FROM UserRoles WHERE UserId = {0};
           DELETE FROM Credentials WHERE UserId = {0};

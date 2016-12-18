@@ -34,7 +34,7 @@ namespace Platformus.Static.Data.EntityFramework.SqlServer
 
     public void Edit(File file)
     {
-      this.dbContext.Entry(file).State = EntityState.Modified;
+      this.storageContext.Entry(file).State = EntityState.Modified;
     }
 
     public void Delete(int id)

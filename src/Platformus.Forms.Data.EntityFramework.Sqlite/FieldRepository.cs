@@ -29,7 +29,7 @@ namespace Platformus.Forms.Data.EntityFramework.Sqlite
 
     public void Edit(Field field)
     {
-      this.dbContext.Entry(field).State = EntityState.Modified;
+      this.storageContext.Entry(field).State = EntityState.Modified;
     }
 
     public void Delete(int id)
@@ -39,7 +39,7 @@ namespace Platformus.Forms.Data.EntityFramework.Sqlite
 
     public void Delete(Field field)
     {
-      this.dbContext.Database.ExecuteSqlCommand(
+      this.storageContext.Database.ExecuteSqlCommand(
         @"
           CREATE TEMP TABLE TempDictionaries (Id INT PRIMARY KEY);
           INSERT INTO TempDictionaries SELECT ValueId FROM FieldOptions WHERE FieldId = {0};

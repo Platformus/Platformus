@@ -5,15 +5,17 @@
   this.ViewBag.Title = (this.Model.Id == null ? "Create" : "Edit") + " " + this.Model.Class.Name;
   this.ViewBag.ActiveMenuItem = "objects";
 }
-<h1>@ViewBag.Title</h1>
-<form method="post">
+@section title {
+  @ViewBag.Title
+}
+<form class="forms" method="post">
   <div id="tabs" class="tabs"></div>
-  <div id="members">
-    <div id="tabPage0" class="tab-page">
-      <single-line-text-editor asp-for="ViewName" />
+  <div id="tabPages" class="tab-pages">
+    <div id="tabPage0" class="tab-pages__tab-page">
+      <single-line-text-field asp-for="ViewName" />
       @if (this.Model.Class.IsStandalone)
       {
-        <single-line-text-editor asp-for="_Url" />
+        <single-line-text-field asp-for="_Url" />
       }
       else
       {
@@ -21,10 +23,9 @@
       }
     </div>
   </div>
-  <div class="buttons">
-    <button class="positive" type="submit">Save</button>
-    <a class="button neutral" href="@this.Context.Request.CombineUrl("/backend/objects")">Cancel</a>
-    <div class="clear"></div>
+  <div class="form__buttons buttons">
+    <button class="buttons__button button button--positive" type="submit">Save</button>
+    <a class="buttons__button button button--neutral" href="@this.Context.Request.CombineUrl("/backend/objects")">Cancel</a>
   </div>
 </form>
 <script type="text/javascript">
@@ -71,5 +72,5 @@
     }
   ];
 
-  Platformus.Editors.apply(membersByTabs);
+  platformus.editors.create(membersByTabs);
 </script>

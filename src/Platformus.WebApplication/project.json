@@ -2,23 +2,17 @@
   "authors": [ "Dmitry Sikorsky" ],
   "copyright": "Copyright © 2015 Dmitry Sikorsky",
   "dependencies": {
-    "ExtCore.Data": "1.0.0-rc1",
-    "ExtCore.Mvc": "1.0.0-rc1",
-    "ExtCore.WebApplication": "1.0.0-rc1",
-    "Microsoft.AspNetCore.Diagnostics": "1.0.0",
-    "Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore": "1.0.0",
-    "Microsoft.Extensions.Configuration.Json": "1.0.0",
+    "ExtCore.Data": "1.1.0-beta1",
+    "ExtCore.Mvc": "1.1.0-beta1",
+    "ExtCore.WebApplication": "1.1.0-beta1",
+    "Microsoft.AspNetCore.Diagnostics": "1.1.0",
+    "Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore": "1.1.0",
+    "Microsoft.Extensions.Configuration.Json": "1.1.0",
     "Microsoft.VisualStudio.Web.BrowserLink.Loader": "14.0.0"
   },
   "description": "Free, open source and cross-platform CMS based on ASP.NET Core 1.0 and ExtCore framework.",
   "frameworks": {
-    "netstandard1.6": {
-      "imports": [
-        "dotnet5.6",
-        "dnxcore50",
-        "portable-net45+win8"
-      ]
-    }
+    "netstandard1.6": {}
   },
   "packOptions": {
     "iconUrl": "http://platformus.net/platformus_nuget_icon.png",

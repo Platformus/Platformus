@@ -34,7 +34,7 @@ namespace Platformus.Configuration.Data.EntityFramework.PostgreSql
 
     public void Edit(Variable variable)
     {
-      this.dbContext.Entry(variable).State = EntityState.Modified;
+      this.storageContext.Entry(variable).State = EntityState.Modified;
     }
 
     public void Delete(int id)

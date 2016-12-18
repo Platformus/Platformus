@@ -39,7 +39,7 @@ namespace Platformus.Content.Data.EntityFramework.SqlServer
 
     public void Edit(Relation relation)
     {
-      this.dbContext.Entry(relation).State = EntityState.Modified;
+      this.storageContext.Entry(relation).State = EntityState.Modified;
     }
 
     public void Delete(int id)

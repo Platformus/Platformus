@@ -11,48 +11,49 @@
     this.ViewBag.Title = this.Model.Class.PluralizedName;
   }
   this.ViewBag.ActiveMenuItem = "objects";
-  this.ViewBag.HasSideDetails = true;
+  this.ViewBag.HasSecondaryMaster = true;
 }
 @if (this.Model.Class != null)
 {
-  <h1>@ViewBag.Title <span>@Model.Grid.Pager.Total</span></h1>
+  <h1>@ViewBag.Title <span class="master-detail__detail-header-counter">@Model.Grid.Pager.Total</span></h1>
   @Html.Partial("_Grid", this.Model.Grid)
-  <div class="buttons">
-    <a class="button positive" href="@this.Context.Request.CombineUrl("/backend/objects/create")">Create @Model.Class.Name.ToLower()</a>
-    <div class="clear"></div>
+  <div class="master-detail__detail-buttons buttons">
+    <a class="buttons__button button button--positive" href="@this.Context.Request.CombineUrl("/backend/objects/create")">Create @Model.Class.Name.ToLower()</a>
   </div>
 }
-@section sideDetails
+@section side
 {
-  <div class="side-details">
-    <div class="title">
+  <div class="master-detail__master master-detail__master--secondary">
+    <div class="master-detail__master-header master-detail__master-header--secondary">
       Objects
     </div>
-    <div class="menu">
-      <div class="menu-group">
-        <div class="name">
-         Standalone
+    <div class="master-detail__master-content">
+      <div class="menu">
+        <div class="menu__menu-group">
+          <div class="menu__menu-group-header">
+            Standalone
+          </div>
+          <div class="menu__menu-group-content">
+            @foreach (var standaloneClass in this.Model.StandaloneClasses)
+            {
+              <a class="master-detail__master-menu-item--secondary @(this.Model.Class != null && this.Model.Class.Id == standaloneClass.Id ? "master-detail__master-menu-item--secondary-active" : null) menu__menu-item" href="/backend/objects?classid=@standaloneClass.Id">
+                @standaloneClass.PluralizedName
+              </a>
+            }
+          </div>
         </div>
-        <div class="menu-items">
-          @foreach (var standaloneClass in this.Model.StandaloneClasses)
-          {
-            <a class="menu-item @(this.Model.Class != null && this.Model.Class.Id == standaloneClass.Id ? "active" : null)" href="/backend/objects?classid=@standaloneClass.Id">
-              @standaloneClass.PluralizedName
-            </a>
-          }
-        </div>
-      </div>
-      <div class="menu-group">
-        <div class="name">
-          Embedded
-        </div>
-        <div class="menu-items">
-          @foreach (var embeddedClass in this.Model.EmbeddedClasses)
-          {
-            <a class="menu-item @(this.Model.Class != null && this.Model.Class.Id == embeddedClass.Id ? "active" : null)" href="/backend/objects?classid=@embeddedClass.Id">
-              @embeddedClass.PluralizedName
-            </a>
-          }
+        <div class="menu__menu-group">
+          <div class="menu__menu-group-header">
+            Embedded
+          </div>
+          <div class="menu__menu-group-content">
+            @foreach (var embeddedClass in this.Model.EmbeddedClasses)
+            {
+              <a class="master-detail__master-menu-item--secondary @(this.Model.Class != null && this.Model.Class.Id == embeddedClass.Id ? "master-detail__master-menu-item--secondary-active" : null) menu__menu-item" href="/backend/objects?classid=@embeddedClass.Id">
+                @embeddedClass.PluralizedName
+              </a>
+            }
+          </div>
         </div>
       </div>
     </div>

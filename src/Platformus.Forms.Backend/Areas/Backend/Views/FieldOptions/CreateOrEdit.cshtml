@@ -5,13 +5,14 @@
   this.ViewBag.Title = (this.Model.Id == null ? "Create" : "Edit") + " Field Item";
   this.ViewBag.ActiveMenuItem = "forms";
 }
-<h1>@ViewBag.Title</h1>
-<form method="post">
-  <multilingual-single-line-text-editor asp-for="Value" asp-localizations="@Model.ValueLocalizations" />
-  <single-line-text-editor asp-for="Position" />
-  <div class="buttons">
-    <button class="positive" type="submit">Save</button>
-    <a class="button neutral" href="/backend/forms">Cancel</a>
-    <div class="clear"></div>
+@section title {
+  @ViewBag.Title
+}
+<form class="form" method="post">
+  <multilingual-single-line-text-field asp-for="Value" asp-localizations="@Model.ValueLocalizations" />
+  <single-line-text-field asp-for="Position" />
+  <div class="form__buttons buttons">
+    <button class="buttons__button button button--positive" type="submit">Save</button>
+    <a class="buttons__button button button--neutral" href="/backend/forms">Cancel</a>
   </div>
 </form>

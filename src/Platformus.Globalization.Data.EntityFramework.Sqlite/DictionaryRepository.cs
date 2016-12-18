@@ -23,7 +23,7 @@ namespace Platformus.Globalization.Data.EntityFramework.Sqlite
 
     public void Edit(Dictionary dictionary)
     {
-      this.dbContext.Entry(dictionary).State = EntityState.Modified;
+      this.storageContext.Entry(dictionary).State = EntityState.Modified;
     }
 
     public void Delete(int id)

@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Authentication.Cookies;
 using Platformus.Barebone;
 using Platformus.Security.Data.Abstractions;
 using Platformus.Security.Data.Models;
+using Microsoft.AspNetCore.Http.Authentication;
 
 namespace Platformus.Security
 {
@@ -51,12 +52,14 @@ namespace Platformus.Security
       return this.userRepository.WithKey(login.UserId);
     }
 
-    public async void SignIn(User user)
+    public async void SignIn(User user, bool isPersistent = false)
     {
       ClaimsIdentity identity = new ClaimsIdentity(this.GetUserClaims(user), CookieAuthenticationDefaults.AuthenticationScheme);
       ClaimsPrincipal principal = new ClaimsPrincipal(identity);
 
-      await this.handler.HttpContext.Authentication.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, principal);
+      await this.handler.HttpContext.Authentication.SignInAsync(
+        CookieAuthenticationDefaults.AuthenticationScheme, principal, new AuthenticationProperties() { IsPersistent = isPersistent }
+      );
     }
 
     public async void SignOut()
@@ -64,14 +67,29 @@ namespace Platformus.Security
       await this.handler.HttpContext.Authentication.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
     }
 
-    public User GetCurrentUser()
+    public int GetCurrentUserId()
     {
       if (!this.handler.HttpContext.User.Identity.IsAuthenticated)
-        return null;
+        return -1;
+
+      Claim claim = this.handler.HttpContext.User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier);
+
+      if (claim == null)
+        return -1;
 
       int currentUserId;
 
-      if (!int.TryParse(this.handler.HttpContext.User.Identity.Name.Replace("user", string.Empty), out currentUserId))
+      if (!int.TryParse(claim.Value, out currentUserId))
+        return -1;
+
+      return currentUserId;
+    }
+
+    public User GetCurrentUser()
+    {
+      int currentUserId = this.GetCurrentUserId();
+
+      if (currentUserId == -1)
         return null;
 
       return this.userRepository.WithKey(currentUserId);
@@ -81,7 +99,8 @@ namespace Platformus.Security
     {
       List<Claim> claims = new List<Claim>();
 
-      claims.Add(new Claim(ClaimTypes.Name, string.Format("user{0}", user.Id)));
+      claims.Add(new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()));
+      claims.Add(new Claim(ClaimTypes.Name, user.Name));
       claims.AddRange(this.GetUserRoleClaims(user));
       return claims;
     }

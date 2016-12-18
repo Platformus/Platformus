@@ -1,0 +1,33 @@
+﻿/* Copyright © 2015 Dmitry Sikorsky. All rights reserved. */
+/* Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information. */
+
+.tabs {
+  border-bottom: 5px solid #323232;
+}
+
+.tabs::after {
+  content: '';
+  display: block;
+  clear: both;
+}
+
+.tabs__tab {
+  background: #f0f0f0;
+  cursor: pointer;
+  float: left;
+  padding: 5px 10px;
+}
+
+.tabs__tab:hover {
+  background: #f5f5f5;
+}
+
+.tabs__tab--active {
+  background: #323232;
+  color: #fff;
+}
+
+.tabs__tab--active:hover {
+  background: #323232;
+  color: #fff;
+}

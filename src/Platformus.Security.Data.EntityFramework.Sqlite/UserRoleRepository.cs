@@ -29,7 +29,7 @@ namespace Platformus.Security.Data.EntityFramework.Sqlite
 
     public void Edit(UserRole userRole)
     {
-      this.dbContext.Entry(userRole).State = EntityState.Modified;
+      this.storageContext.Entry(userRole).State = EntityState.Modified;
     }
 
     public void Delete(int userId, int roleId)

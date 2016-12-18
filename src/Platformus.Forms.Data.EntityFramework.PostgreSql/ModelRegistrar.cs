@@ -9,9 +9,9 @@ namespace Platformus.Forms.Data.EntityFramework.PostgreSql
 {
   public class ModelRegistrar : IModelRegistrar
   {
-    public void RegisterModels(ModelBuilder modelbuilder)
+    public void RegisterModels(ModelBuilder modelBuilder)
     {
-      modelbuilder.Entity<CachedForm>(etb =>
+      modelBuilder.Entity<CachedForm>(etb =>
         {
           etb.HasKey(e => e.FormId);
           etb.Property(e => e.FormId);// .UseSqlServerIdentityColumn();
@@ -19,7 +19,7 @@ namespace Platformus.Forms.Data.EntityFramework.PostgreSql
         }
       );
 
-      modelbuilder.Entity<Form>(etb =>
+      modelBuilder.Entity<Form>(etb =>
         {
           etb.HasKey(e => e.Id);
           etb.Property(e => e.Id);// .UseSqlServerIdentityColumn();
@@ -27,7 +27,7 @@ namespace Platformus.Forms.Data.EntityFramework.PostgreSql
         }
       );
 
-      modelbuilder.Entity<FieldType>(etb =>
+      modelBuilder.Entity<FieldType>(etb =>
         {
           etb.HasKey(e => e.Id);
           etb.Property(e => e.Id);// .UseSqlServerIdentityColumn();
@@ -35,7 +35,7 @@ namespace Platformus.Forms.Data.EntityFramework.PostgreSql
         }
       );
 
-      modelbuilder.Entity<Field>(etb =>
+      modelBuilder.Entity<Field>(etb =>
         {
           etb.HasKey(e => e.Id);
           etb.Property(e => e.Id);// .UseSqlServerIdentityColumn();
@@ -43,7 +43,7 @@ namespace Platformus.Forms.Data.EntityFramework.PostgreSql
         }
       );
 
-      modelbuilder.Entity<FieldOption>(etb =>
+      modelBuilder.Entity<FieldOption>(etb =>
         {
           etb.HasKey(e => e.Id);
           etb.Property(e => e.Id);// .UseSqlServerIdentityColumn();

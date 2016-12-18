@@ -8,5 +8,6 @@ namespace Platformus.Barebone.Backend.ViewModels.Shared
     public GridViewModel Owner { get; set; }
     public string Name { get; set; }
     public string OrderBy { get; set; }
+    public bool IsLast { get; set; }
   }
 }

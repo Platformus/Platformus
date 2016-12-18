@@ -69,7 +69,7 @@ namespace Platformus.Content.Data.EntityFramework.PostgreSql
 
     public void Edit(Object @object)
     {
-      this.dbContext.Entry(@object).State = EntityState.Modified;
+      this.storageContext.Entry(@object).State = EntityState.Modified;
     }
 
     public void Delete(int id)
@@ -79,7 +79,7 @@ namespace Platformus.Content.Data.EntityFramework.PostgreSql
 
     public void Delete(Object @object)
     {
-      this.dbContext.Database.ExecuteSqlCommand(
+      this.storageContext.Database.ExecuteSqlCommand(
         @"
           DELETE FROM ""CachedObjects"" WHERE ""ObjectId"" = {0};
           CREATE TEMP TABLE ""TempDictionaries"" (""Id"" INT PRIMARY KEY);

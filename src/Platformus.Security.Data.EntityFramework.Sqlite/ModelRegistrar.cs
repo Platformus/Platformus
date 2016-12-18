@@ -9,9 +9,9 @@ namespace Platformus.Security.Data.EntityFramework.Sqlite
 {
   public class ModelRegistrar : IModelRegistrar
   {
-    public void RegisterModels(ModelBuilder modelbuilder)
+    public void RegisterModels(ModelBuilder modelBuilder)
     {
-      modelbuilder.Entity<Permission>(etb =>
+      modelBuilder.Entity<Permission>(etb =>
         {
           etb.HasKey(e => e.Id);
           etb.Property(e => e.Id);// .UseSqlServerIdentityColumn();
@@ -19,7 +19,7 @@ namespace Platformus.Security.Data.EntityFramework.Sqlite
         }
       );
 
-      modelbuilder.Entity<Role>(etb =>
+      modelBuilder.Entity<Role>(etb =>
         {
           etb.HasKey(e => e.Id);
           etb.Property(e => e.Id);// .UseSqlServerIdentityColumn();
@@ -27,14 +27,14 @@ namespace Platformus.Security.Data.EntityFramework.Sqlite
         }
       );
 
-      modelbuilder.Entity<RolePermission>(etb =>
+      modelBuilder.Entity<RolePermission>(etb =>
         {
           etb.HasKey(e => new { e.RoleId, e.PermissionId });
           etb.ForSqliteToTable("RolePermissions");
         }
       );
 
-      modelbuilder.Entity<User>(etb =>
+      modelBuilder.Entity<User>(etb =>
         {
           etb.HasKey(e => e.Id);
           etb.Property(e => e.Id);// .UseSqlServerIdentityColumn();
@@ -42,14 +42,14 @@ namespace Platformus.Security.Data.EntityFramework.Sqlite
         }
       );
 
-      modelbuilder.Entity<UserRole>(etb =>
+      modelBuilder.Entity<UserRole>(etb =>
         {
           etb.HasKey(e => new { e.UserId, e.RoleId });
           etb.ForSqliteToTable("UserRoles");
         }
       );
 
-      modelbuilder.Entity<CredentialType>(etb =>
+      modelBuilder.Entity<CredentialType>(etb =>
         {
           etb.HasKey(e => e.Id);
           etb.Property(e => e.Id);// .UseSqlServerIdentityColumn();
@@ -57,7 +57,7 @@ namespace Platformus.Security.Data.EntityFramework.Sqlite
         }
       );
 
-      modelbuilder.Entity<Credential>(etb =>
+      modelBuilder.Entity<Credential>(etb =>
         {
           etb.HasKey(e => e.Id);
           etb.Property(e => e.Id);// .UseSqlServerIdentityColumn();

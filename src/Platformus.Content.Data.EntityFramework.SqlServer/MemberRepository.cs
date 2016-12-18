@@ -64,7 +64,7 @@ namespace Platformus.Content.Data.EntityFramework.SqlServer
 
     public void Edit(Member member)
     {
-      this.dbContext.Entry(member).State = EntityState.Modified;
+      this.storageContext.Entry(member).State = EntityState.Modified;
     }
 
     public void Delete(int id)
@@ -74,7 +74,7 @@ namespace Platformus.Content.Data.EntityFramework.SqlServer
 
     public void Delete(Member member)
     {
-      this.dbContext.Database.ExecuteSqlCommand(
+      this.storageContext.Database.ExecuteSqlCommand(
         @"
           DELETE FROM CachedObjects WHERE ClassId IN (SELECT ClassId FROM Members WHERE Id = {0});
           CREATE TABLE #Dictionaries (Id INT PRIMARY KEY);

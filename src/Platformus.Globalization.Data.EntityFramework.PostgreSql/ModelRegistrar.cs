@@ -9,9 +9,9 @@ namespace Platformus.Globalization.Data.EntityFramework.PostgreSql
 {
   public class ModelRegistrar : IModelRegistrar
   {
-    public void RegisterModels(ModelBuilder modelbuilder)
+    public void RegisterModels(ModelBuilder modelBuilder)
     {
-      modelbuilder.Entity<Dictionary>(etb =>
+      modelBuilder.Entity<Dictionary>(etb =>
         {
           etb.HasKey(e => e.Id);
           etb.Property(e => e.Id);// .UseSqlServerIdentityColumn();
@@ -19,7 +19,7 @@ namespace Platformus.Globalization.Data.EntityFramework.PostgreSql
         }
       );
 
-      modelbuilder.Entity<Culture>(etb =>
+      modelBuilder.Entity<Culture>(etb =>
         {
           etb.HasKey(e => e.Id);
           etb.Property(e => e.Id);// .UseSqlServerIdentityColumn();
@@ -27,7 +27,7 @@ namespace Platformus.Globalization.Data.EntityFramework.PostgreSql
         }
       );
 
-      modelbuilder.Entity<Localization>(etb =>
+      modelBuilder.Entity<Localization>(etb =>
         {
           etb.HasKey(e => e.Id);
           etb.Property(e => e.Id);// .UseSqlServerIdentityColumn();

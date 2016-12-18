@@ -9,16 +9,16 @@ namespace Platformus.Forms.Data.EntityFramework.SqlServer
 {
   public class ModelRegistrar : IModelRegistrar
   {
-    public void RegisterModels(ModelBuilder modelbuilder)
+    public void RegisterModels(ModelBuilder modelBuilder)
     {
-      modelbuilder.Entity<CachedForm>(etb =>
+      modelBuilder.Entity<CachedForm>(etb =>
         {
           etb.HasKey(e => new { e.CultureId, e.FormId });
           etb.ForSqlServerToTable("CachedForms");
         }
       );
 
-      modelbuilder.Entity<Form>(etb =>
+      modelBuilder.Entity<Form>(etb =>
         {
           etb.HasKey(e => e.Id);
           etb.Property(e => e.Id).UseSqlServerIdentityColumn();
@@ -26,7 +26,7 @@ namespace Platformus.Forms.Data.EntityFramework.SqlServer
         }
       );
 
-      modelbuilder.Entity<FieldType>(etb =>
+      modelBuilder.Entity<FieldType>(etb =>
         {
           etb.HasKey(e => e.Id);
           etb.Property(e => e.Id).UseSqlServerIdentityColumn();
@@ -34,7 +34,7 @@ namespace Platformus.Forms.Data.EntityFramework.SqlServer
         }
       );
 
-      modelbuilder.Entity<Field>(etb =>
+      modelBuilder.Entity<Field>(etb =>
         {
           etb.HasKey(e => e.Id);
           etb.Property(e => e.Id).UseSqlServerIdentityColumn();
@@ -42,7 +42,7 @@ namespace Platformus.Forms.Data.EntityFramework.SqlServer
         }
       );
 
-      modelbuilder.Entity<FieldOption>(etb =>
+      modelBuilder.Entity<FieldOption>(etb =>
         {
           etb.HasKey(e => e.Id);
           etb.Property(e => e.Id).UseSqlServerIdentityColumn();

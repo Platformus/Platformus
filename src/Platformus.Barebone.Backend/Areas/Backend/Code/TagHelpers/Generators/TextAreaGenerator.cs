@@ -1,0 +1,39 @@
+﻿// Copyright © 2015 Dmitry Sikorsky. All rights reserved.
+// Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information.
+
+using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.AspNetCore.Mvc.ViewFeatures;
+
+namespace Platformus.Barebone.Backend
+{
+  public class TextAreaGenerator : GeneratorBase
+  {
+    public TagBuilder GenerateTextArea(ViewContext viewContext, ModelExpression modelExpression, Localization localization = null, string additionalCssClass = null)
+    {
+      TagBuilder tb = new TagBuilder("textarea");
+
+      if (!string.IsNullOrEmpty(additionalCssClass))
+        tb.AddCssClass(additionalCssClass);
+
+      tb.AddCssClass("text-area");
+
+      if (!this.IsValid(viewContext, modelExpression, localization))
+        tb.AddCssClass("input-validation-error");
+
+      tb.MergeAttribute("id", this.GetIdentity(modelExpression, localization));
+      tb.MergeAttribute("name", this.GetIdentity(modelExpression, localization));
+
+      string value = this.GetValue(viewContext, modelExpression, localization);
+
+      if (!string.IsNullOrEmpty(value))
+      {
+        tb.InnerHtml.Clear();
+        tb.InnerHtml.Append(value);
+      }
+
+      this.MergeRequiredAttribute(tb, modelExpression, "text-area--required");
+      this.MergeStringLengthAttribute(tb, modelExpression);
+      return tb;
+    }
+  }
+}

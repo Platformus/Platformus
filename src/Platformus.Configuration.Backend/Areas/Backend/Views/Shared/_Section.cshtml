@@ -1,24 +1,21 @@
 ﻿@* Copyright © 2015 Dmitry Sikorsky. All rights reserved. *@
 @* Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information. *@
 @model Platformus.Configuration.Backend.ViewModels.Shared.SectionViewModel
-<div class="tree-node">
-  <div class="tree-node-header">
-    <div class="buttons">
-      <a class="button positive" href="/backend/sections/edit/@Model.Id">Edit</a>
-      <a class="button negative" href="#" onclick="return new Platformus.Overlays.DeleteForm('/backend/sections/delete/@Model.Id').show();"></a>
-      <div class="clear"></div>
+<div class="tree__node">
+  <div class="tree__node-header">
+    <div class="tree__buttons tree__buttons--node-header buttons">
+      <a class="buttons__button buttons__button--minor button button--positive button--minor" href="/backend/sections/edit/@Model.Id">Edit</a>
+      <a class="buttons__button buttons__button--minor button button--negative button--minor button--delete" href="#" onclick="return platformus.forms.deleteForm.show('/backend/sections/delete/@Model.Id');"></a>
     </div>
     @Model.Name
-    <div class="clear"></div>
   </div>
-  <div class="tree-nodes">
+  <div class="tree__node-content">
     @foreach (var variable in this.Model.Variables)
     {
       @Html.Partial("_Variable", variable)
     }
-    <div class="buttons">
-      <a class="button positive" href="/backend/variables/create?sectionid=@Model.Id">Create variable</a>
-      <div class="clear"></div>
+    <div class="tree__buttons buttons">
+      <a class="buttons__button buttons__button--minor button button--positive button--minor" href="/backend/variables/create?sectionid=@Model.Id">Create variable</a>
     </div>
   </div>
 </div>

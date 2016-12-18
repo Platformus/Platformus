@@ -54,7 +54,7 @@ namespace Platformus.Content.Data.EntityFramework.SqlServer
 
     public void Edit(CachedObject cachedObject)
     {
-      this.dbContext.Entry(cachedObject).State = EntityState.Modified;
+      this.storageContext.Entry(cachedObject).State = EntityState.Modified;
     }
 
     public void Delete(int cultureId, int objectId)

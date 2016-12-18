@@ -8,6 +8,17 @@ namespace Platformus.Content
 {
   public class BackendMetadata : BackendMetadataBase
   {
+    public override IEnumerable<BackendStyleSheet> BackendStyleSheets
+    {
+      get
+      {
+        return new BackendStyleSheet[]
+        {
+          new BackendStyleSheet("/wwwroot.areas.backend.css.platformus.content.min.css", 2000)
+        };
+      }
+    }
+
     public override IEnumerable<BackendScript> BackendScripts
     {
       get

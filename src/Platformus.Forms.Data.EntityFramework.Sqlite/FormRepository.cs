@@ -34,7 +34,7 @@ namespace Platformus.Forms.Data.EntityFramework.Sqlite
 
     public void Edit(Form form)
     {
-      this.dbContext.Entry(form).State = EntityState.Modified;
+      this.storageContext.Entry(form).State = EntityState.Modified;
     }
 
     public void Delete(int id)
@@ -44,7 +44,7 @@ namespace Platformus.Forms.Data.EntityFramework.Sqlite
 
     public void Delete(Form form)
     {
-      this.dbContext.Database.ExecuteSqlCommand(
+      this.storageContext.Database.ExecuteSqlCommand(
         @"
           DELETE FROM CachedForms WHERE FormId = {0};
           CREATE TEMP TABLE TempDictionaries (Id INT PRIMARY KEY);
