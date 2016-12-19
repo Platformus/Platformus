@@ -140,7 +140,7 @@ namespace Platformus.Content.Backend.Controllers
     {
       foreach (string key in this.Request.Form.Keys)
       {
-        if (key.StartsWith("relationMember"))
+        if (key.StartsWith("relationMember") && !string.IsNullOrEmpty(this.Request.Form[key]))
         {
           string memberId = key.Replace("relationMember", string.Empty);
           IEnumerable<int> primaryIds = this.Request.Form[key].ToString().Split(',').Select(id => int.Parse(id));
