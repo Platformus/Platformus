@@ -14,6 +14,8 @@ namespace Platformus.Content.Data.Models
 
     public int? ClassId { get; set; }
 
+    public string Code { get; set; }
+
     //[Required]
     //[StringLength(64)]
     public string Name { get; set; }

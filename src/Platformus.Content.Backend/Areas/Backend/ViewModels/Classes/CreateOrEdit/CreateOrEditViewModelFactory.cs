@@ -33,6 +33,7 @@ namespace Platformus.Content.Backend.ViewModels.Classes
         Id = @class.Id,
         ClassId = @class.ClassId,
         ClassOptions = this.GetClassOptions(),
+        Code = @class.Code,
         Name = @class.Name,
         PluralizedName = @class.PluralizedName,
         IsAbstract = @class.IsAbstract == true,

@@ -2,9 +2,9 @@
   "authors": [ "Dmitry Sikorsky" ],
   "copyright": "Copyright © 2015 Dmitry Sikorsky",
   "dependencies": {
-    "ExtCore.Data": "1.1.0-beta1",
-    "ExtCore.Mvc": "1.1.0-beta1",
-    "ExtCore.WebApplication": "1.1.0-beta1",
+    "ExtCore.Data": "1.1.0",
+    "ExtCore.Mvc": "1.1.0",
+    "ExtCore.WebApplication": "1.1.0",
     "Microsoft.AspNetCore.Diagnostics": "1.1.0",
     "Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore": "1.1.0",
     "Microsoft.Extensions.Configuration.Json": "1.1.0",

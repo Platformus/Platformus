@@ -17,6 +17,11 @@ namespace Platformus.Content.Data.EntityFramework.SqlServer
       return this.dbSet.FirstOrDefault(m => m.Id == id);
     }
 
+    public Member WithClassIdAndCode(int classId, string code)
+    {
+      return this.dbSet.FirstOrDefault(m => m.ClassId == classId && m.Code == code);
+    }
+
     public IEnumerable<Member> FilteredByClassId(int classId)
     {
       return this.dbSet.Where(m => m.ClassId == classId).OrderBy(m => m.Position);

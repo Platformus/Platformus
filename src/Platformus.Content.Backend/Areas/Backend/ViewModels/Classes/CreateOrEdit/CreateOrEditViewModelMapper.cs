@@ -23,6 +23,7 @@ namespace Platformus.Content.Backend.ViewModels.Classes
         @class = this.handler.Storage.GetRepository<IClassRepository>().WithKey((int)createOrEdit.Id);
 
       @class.ClassId = createOrEdit.ClassId;
+      @class.Code = createOrEdit.Code;
       @class.Name = createOrEdit.Name;
       @class.PluralizedName = createOrEdit.PluralizedName;
       @class.IsAbstract = createOrEdit.IsAbstract ? true : (bool?)null;

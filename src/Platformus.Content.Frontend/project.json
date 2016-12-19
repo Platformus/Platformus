@@ -2,8 +2,8 @@
   "authors": [ "Dmitry Sikorsky" ],
   "copyright": "Copyright © 2015 Dmitry Sikorsky",
   "dependencies": {
-    "ExtCore.Data.Abstractions": "1.1.0-beta1",
-    "ExtCore.Infrastructure": "1.1.0-beta1",
+    "ExtCore.Data.Abstractions": "1.1.0",
+    "ExtCore.Infrastructure": "1.1.0",
     "Platformus.Barebone.Frontend": "1.0.0-alpha11",
     "Platformus.Content": "1.0.0-alpha11",
     "Platformus.Globalization.Frontend": "1.0.0-alpha11"

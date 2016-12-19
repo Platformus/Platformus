@@ -10,6 +10,7 @@
 }
 <form class="form" method="post">
   <drop-down-list-field asp-for="ClassId" asp-options="@Model.ClassOptions" />
+  <single-line-text-field asp-for="Code" />
   <single-line-text-field asp-for="Name" />
   <single-line-text-field asp-for="PluralizedName" />
   <checkbox-field asp-for="IsAbstract" />

@@ -17,6 +17,11 @@ namespace Platformus.Content.Data.EntityFramework.PostgreSql
       return this.dbSet.FirstOrDefault(c => c.Id == id);
     }
 
+    public Class WithCode(string code)
+    {
+      return this.dbSet.FirstOrDefault(c => c.Code == code);
+    }
+
     public IEnumerable<Class> All()
     {
       return this.dbSet.OrderBy(c => c.Name);

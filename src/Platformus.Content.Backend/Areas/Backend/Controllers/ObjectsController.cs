@@ -89,16 +89,16 @@ namespace Platformus.Content.Backend.Controllers
           string memberId = memberIdAndCultureCode.Remove(memberIdAndCultureCode.Length - 2);
           string cultureCode = memberIdAndCultureCode.Substring(memberIdAndCultureCode.Length - 2);
 
-          this.CreateProperty(@object, int.Parse(memberId), cultureCode, this.Request.Form[key]);
+          this.CreateProperty(@object.Id, int.Parse(memberId), cultureCode, this.Request.Form[key]);
         }
       }
 
       this.Storage.Save();
     }
 
-    private void CreateProperty(Object @object, int memberId, string cultureCode, string value)
+    private void CreateProperty(int objectId, int memberId, string cultureCode, string value)
     {
-      Property property = this.Storage.GetRepository<IPropertyRepository>().WithObjectIdAndMemberId(@object.Id, memberId);
+      Property property = this.Storage.GetRepository<IPropertyRepository>().WithObjectIdAndMemberId(objectId, memberId);
 
       if (property == null)
       {
@@ -107,7 +107,7 @@ namespace Platformus.Content.Backend.Controllers
         this.Storage.GetRepository<IDictionaryRepository>().Create(html);
         this.Storage.Save();
         property = new Property();
-        property.ObjectId = @object.Id;
+        property.ObjectId = objectId;
         property.MemberId = memberId;
         property.HtmlId = html.Id;
         this.Storage.GetRepository<IPropertyRepository>().Create(property);

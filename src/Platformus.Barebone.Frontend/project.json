@@ -2,7 +2,7 @@
   "authors": [ "Dmitry Sikorsky" ],
   "copyright": "Copyright © 2015 Dmitry Sikorsky",
   "dependencies": {
-    "ExtCore.Infrastructure": "1.1.0-beta1",
+    "ExtCore.Infrastructure": "1.1.0",
     "Platformus.Barebone": "1.0.0-alpha11"
   },
   "description": "Part of the Platformus.Barebone Platformus extension.",

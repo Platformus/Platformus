@@ -3,8 +3,8 @@
   "buildOptions": { "embed": [ "Areas/Backend/Views/**" ] },
   "copyright": "Copyright © 2015 Dmitry Sikorsky",
   "dependencies": {
-    "ExtCore.Data.Abstractions": "1.1.0-beta1",
-    "ExtCore.Infrastructure": "1.1.0-beta1",
+    "ExtCore.Data.Abstractions": "1.1.0",
+    "ExtCore.Infrastructure": "1.1.0",
     "Platformus.Barebone.Backend": "1.0.0-alpha11",
     "Platformus.Globalization": "1.0.0-alpha11"
   },

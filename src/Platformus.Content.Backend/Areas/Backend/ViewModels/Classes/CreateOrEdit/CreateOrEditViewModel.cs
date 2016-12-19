@@ -16,6 +16,11 @@ namespace Platformus.Content.Backend.ViewModels.Classes
     public int? ClassId { get; set; }
     public IEnumerable<Option> ClassOptions { get; set; }
 
+    [Display(Name = "Code")]
+    [Required]
+    [StringLength(32)]
+    public string Code { get; set; }
+
     [Display(Name = "Name")]
     [Required]
     [StringLength(64)]
