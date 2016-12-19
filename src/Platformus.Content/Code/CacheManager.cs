@@ -22,7 +22,7 @@ namespace Platformus.Content
 
     public void CacheObject(Object @object)
     {
-      foreach (Culture culture in this.handler.Storage.GetRepository<ICultureRepository>().All())
+      foreach (Culture culture in this.handler.Storage.GetRepository<ICultureRepository>().NotNeutral())
       {
         CachedObject cachedObject = this.handler.Storage.GetRepository<ICachedObjectRepository>().WithKey(culture.Id, @object.Id);
 

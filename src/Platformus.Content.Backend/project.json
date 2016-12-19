@@ -5,9 +5,9 @@
   "dependencies": {
     "ExtCore.Data.Abstractions": "1.1.0",
     "ExtCore.Infrastructure": "1.1.0",
-    "Platformus.Barebone.Backend": "1.0.0-alpha11",
-    "Platformus.Content": "1.0.0-alpha11",
-    "Platformus.Globalization.Backend": "1.0.0-alpha11"
+    "Platformus.Barebone.Backend": "1.0.0-alpha12",
+    "Platformus.Content": "1.0.0-alpha12",
+    "Platformus.Globalization.Backend": "1.0.0-alpha12"
   },
   "description": "Part of the Platformus.Content Platformus extension.",
   "frameworks": {
@@ -25,5 +25,5 @@
   "tools": {
     "BundlerMinifier.Core": "2.2.306"
   },
-  "version": "1.0.0-alpha11"
+  "version": "1.0.0-alpha12"
 }

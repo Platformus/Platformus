@@ -22,7 +22,7 @@ namespace Platformus.Navigation
 
     public void CacheMenu(Menu menu)
     {
-      foreach (Culture culture in this.handler.Storage.GetRepository<ICultureRepository>().All())
+      foreach (Culture culture in this.handler.Storage.GetRepository<ICultureRepository>().NotNeutral())
       {
         CachedMenu cachedMenu = this.handler.Storage.GetRepository<ICachedMenuRepository>().WithKey(culture.Id, menu.Id);
 

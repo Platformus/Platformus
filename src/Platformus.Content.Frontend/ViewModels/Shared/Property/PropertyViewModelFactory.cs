@@ -4,6 +4,8 @@
 using Platformus.Barebone;
 using Platformus.Content.Data.Abstractions;
 using Platformus.Content.Data.Models;
+using Platformus.Globalization;
+using Platformus.Globalization.Data.Models;
 using Platformus.Globalization.Frontend.ViewModels;
 
 namespace Platformus.Content.Frontend.ViewModels.Shared
@@ -17,10 +19,13 @@ namespace Platformus.Content.Frontend.ViewModels.Shared
 
     public PropertyViewModel Create(Property property)
     {
+      Member member = this.handler.Storage.GetRepository<IMemberRepository>().WithKey(property.MemberId);
+      Culture neutralCulture = CultureManager.GetNeutralCulture(this.handler.Storage);
+
       return new PropertyViewModel()
       {
-        MemberCode = this.handler.Storage.GetRepository<IMemberRepository>().WithKey(property.MemberId).Code,
-        Html = this.GetLocalizationValue(property.HtmlId)
+        MemberCode = member.Code,
+        Html = member.IsPropertyLocalizable == true ? this.GetLocalizationValue(property.HtmlId) : this.GetLocalizationValue(property.HtmlId, neutralCulture.Id)
       };
     }
 

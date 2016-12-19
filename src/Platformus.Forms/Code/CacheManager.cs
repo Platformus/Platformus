@@ -22,7 +22,7 @@ namespace Platformus.Forms
 
     public void CacheForm(Form form)
     {
-      foreach (Culture culture in this.handler.Storage.GetRepository<ICultureRepository>().All())
+      foreach (Culture culture in this.handler.Storage.GetRepository<ICultureRepository>().NotNeutral())
       {
         CachedForm cachedForm = this.handler.Storage.GetRepository<ICachedFormRepository>().WithKey(culture.Id, form.Id);
 

@@ -14,6 +14,13 @@ namespace Platformus.Globalization
   {
     private static IEnumerable<Culture> cultures;
 
+    public static Culture GetNeutralCulture(IStorage storage)
+    {
+      CultureManager.CacheCultures(storage);
+
+      return CultureManager.cultures.FirstOrDefault(c => c.IsNeutral);
+    }
+
     public static Culture GetDefaultCulture(IStorage storage)
     {
       CultureManager.CacheCultures(storage);
