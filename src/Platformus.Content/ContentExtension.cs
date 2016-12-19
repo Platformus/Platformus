@@ -3,8 +3,12 @@
 
 using System;
 using System.Collections.Generic;
+using ExtCore.Data.Abstractions;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Routing;
+using Microsoft.Extensions.DependencyInjection;
+using Platformus.Globalization;
+using Platformus.Globalization.Data.Models;
 using Platformus.Infrastructure;
 
 namespace Platformus.Content
@@ -19,7 +23,22 @@ namespace Platformus.Content
         {
           [10000] = routeBuilder =>
           {
-            routeBuilder.MapRoute(name: "Default", template: "{culture=en}/{*url}", defaults: new { controller = "Default", action = "Index" });
+            string defaultCultureCode = "en";
+            IStorage storage = this.serviceProvider.GetService<IStorage>();
+
+            if (storage != null)
+            {
+              Culture defaultCulture = CultureManager.GetDefaultCulture(storage);
+
+              if (defaultCulture != null)
+                defaultCultureCode = defaultCulture.Code;
+            }
+
+            routeBuilder.MapRoute(
+              name: "Default",
+              template: "{culture=" + defaultCultureCode + "}/{*url}",
+              defaults: new { controller = "Default", action = "Index" }
+            );
           }
         };
       }
