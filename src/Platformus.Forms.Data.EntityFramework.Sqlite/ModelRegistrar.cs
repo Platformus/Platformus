@@ -13,8 +13,7 @@ namespace Platformus.Forms.Data.EntityFramework.Sqlite
     {
       modelBuilder.Entity<CachedForm>(etb =>
         {
-          etb.HasKey(e => e.FormId);
-          etb.Property(e => e.FormId);// .UseSqlServerIdentityColumn();
+          etb.HasKey(e => new { e.CultureId, e.FormId });
           etb.ForSqliteToTable("CachedForms");
         }
       );
