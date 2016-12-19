@@ -43,6 +43,7 @@ namespace Platformus.Globalization.Backend.Controllers
         else this.Storage.GetRepository<ICultureRepository>().Edit(culture);
 
         this.Storage.Save();
+        CultureManager.InvalidateCache();
         return this.Redirect(this.Request.CombineUrl("/backend/cultures"));
       }
 
@@ -53,6 +54,7 @@ namespace Platformus.Globalization.Backend.Controllers
     {
       this.Storage.GetRepository<ICultureRepository>().Delete(id);
       this.Storage.Save();
+      CultureManager.InvalidateCache();
       return this.RedirectToAction("Index");
     }
   }
