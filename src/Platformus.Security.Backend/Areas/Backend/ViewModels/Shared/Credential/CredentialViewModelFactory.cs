@@ -10,8 +10,8 @@ namespace Platformus.Security.Backend.ViewModels.Shared
 {
   public class CredentialViewModelFactory : ViewModelFactoryBase
   {
-    public CredentialViewModelFactory(IHandler handler)
-      : base(handler)
+    public CredentialViewModelFactory(IRequestHandler requestHandler)
+      : base(requestHandler)
     {
     }
 
@@ -20,8 +20,8 @@ namespace Platformus.Security.Backend.ViewModels.Shared
       return new CredentialViewModel()
       {
         Id = credential.Id,
-        CredentialType = new CredentialTypeViewModelFactory(this.handler).Create(
-          this.handler.Storage.GetRepository<ICredentialTypeRepository>().WithKey(credential.CredentialTypeId)
+        CredentialType = new CredentialTypeViewModelFactory(this.RequestHandler).Create(
+          this.RequestHandler.Storage.GetRepository<ICredentialTypeRepository>().WithKey(credential.CredentialTypeId)
         ),
         Identifier = credential.Identifier
       };

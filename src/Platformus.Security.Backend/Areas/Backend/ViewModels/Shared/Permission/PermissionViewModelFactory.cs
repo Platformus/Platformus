@@ -9,8 +9,8 @@ namespace Platformus.Security.Backend.ViewModels.Shared
 {
   public class PermissionViewModelFactory : ViewModelFactoryBase
   {
-    public PermissionViewModelFactory(IHandler handler)
-      : base(handler)
+    public PermissionViewModelFactory(IRequestHandler requestHandler)
+      : base(requestHandler)
     {
     }
 

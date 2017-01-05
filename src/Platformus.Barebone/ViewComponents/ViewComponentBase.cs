@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Platformus.Barebone.ViewComponents
 {
-  public abstract class ViewComponentBase : ViewComponent, IHandler
+  public abstract class ViewComponentBase : ViewComponent, IRequestHandler
   {
     public IStorage Storage { get; private set; }
 

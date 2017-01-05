@@ -8,8 +8,8 @@ namespace Platformus.Globalization.Frontend.ViewModels.Shared
 {
   public class CulturesViewModelFactory : ViewModelFactoryBase
   {
-    public CulturesViewModelFactory(IHandler handler)
-      : base(handler)
+    public CulturesViewModelFactory(IRequestHandler requestHandler)
+      : base(requestHandler)
     {
     }
 
@@ -17,8 +17,8 @@ namespace Platformus.Globalization.Frontend.ViewModels.Shared
     {
       return new CulturesViewModel()
       {
-        Cultures = CultureManager.GetCultures(this.handler.Storage).Where(c => !c.IsNeutral).Select(
-          c => new CultureViewModelFactory(this.handler).Create(c)
+        Cultures = CultureManager.GetCultures(this.RequestHandler.Storage).Where(c => !c.IsNeutral).Select(
+          c => new CultureViewModelFactory(this.RequestHandler).Create(c)
         )
       };
     }

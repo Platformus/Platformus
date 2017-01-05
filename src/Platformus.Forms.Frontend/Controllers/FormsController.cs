@@ -1,6 +1,7 @@
 ﻿// Copyright © 2015 Dmitry Sikorsky. All rights reserved.
 // Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information.
 
+using System;
 using System.Linq;
 using System.Text;
 using ExtCore.Data.Abstractions;
@@ -9,7 +10,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using MimeKit;
-using Platformus.Configuration;
+using Platformus.Configurations;
 using Platformus.Forms.Data.Abstractions;
 using Platformus.Forms.Data.Models;
 using Platformus.Globalization.Data.Abstractions;
@@ -34,6 +35,12 @@ namespace Platformus.Forms.Frontend.Controllers
     {
       StringBuilder body = new StringBuilder();
       Form form = this.Storage.GetRepository<IFormRepository>().WithKey(int.Parse(this.Request.Form["formId"]));
+      CompletedForm completedForm = new CompletedForm();
+
+      completedForm.FormId = form.Id;
+      completedForm.Created = DateTime.Now.ToUnixTimestamp();
+      this.Storage.GetRepository<ICompletedFormRepository>().Create(completedForm);
+      this.Storage.Save();
 
       foreach (Field field in this.Storage.GetRepository<IFieldRepository>().FilteredByFormId(form.Id))
       {
@@ -45,8 +52,16 @@ namespace Platformus.Forms.Frontend.Controllers
           this.Storage.GetRepository<ILocalizationRepository>().FilteredByDictionaryId(field.NameId).First().Value,
           value
         );
+
+        CompletedField completedField = new CompletedField();
+
+        completedField.CompletedFormId = completedForm.Id;
+        completedField.FieldId = field.Id;
+        completedField.Value = value;
+        this.Storage.GetRepository<ICompletedFieldRepository>().Create(completedField);
       }
 
+      this.Storage.Save();
       this.SendEmail(form, body.ToString());
 
       // TODO: add RedirectUrl property to the Form class

@@ -9,8 +9,8 @@ namespace Platformus.Globalization.Backend.ViewModels.Cultures
 {
   public class CreateOrEditViewModelFactory : ViewModelFactoryBase
   {
-    public CreateOrEditViewModelFactory(IHandler handler)
-      : base(handler)
+    public CreateOrEditViewModelFactory(IRequestHandler requestHandler)
+      : base(requestHandler)
     {
     }
 
@@ -21,7 +21,7 @@ namespace Platformus.Globalization.Backend.ViewModels.Cultures
         {
         };
 
-      Culture culture = this.handler.Storage.GetRepository<ICultureRepository>().WithKey((int)id);
+      Culture culture = this.RequestHandler.Storage.GetRepository<ICultureRepository>().WithKey((int)id);
 
       return new CreateOrEditViewModel()
       {

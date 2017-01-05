@@ -8,14 +8,8 @@ namespace Platformus.Security.Data.Models
 {
   public class User : IEntity
   {
-    //[Key]
-    //[Required]
     public int Id { get; set; }
-
-    //[StringLength(64)]
     public string Name { get; set; }
-
-    //[Required]
     public long Created { get; set; }
 
     public virtual ICollection<Credential> Credentials { get; set; }

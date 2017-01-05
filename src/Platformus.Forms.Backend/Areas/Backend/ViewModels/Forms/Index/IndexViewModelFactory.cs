@@ -11,8 +11,8 @@ namespace Platformus.Forms.Backend.ViewModels.Forms
 {
   public class IndexViewModelFactory : ViewModelFactoryBase
   {
-    public IndexViewModelFactory(IHandler handler)
-      : base(handler)
+    public IndexViewModelFactory(IRequestHandler requestHandler)
+      : base(requestHandler)
     {
     }
 
@@ -20,8 +20,8 @@ namespace Platformus.Forms.Backend.ViewModels.Forms
     {
       return new IndexViewModel()
       {
-        Forms = this.handler.Storage.GetRepository<IFormRepository>().All().Select(
-          f => new FormViewModelFactory(this.handler).Create(f)
+        Forms = this.RequestHandler.Storage.GetRepository<IFormRepository>().All().Select(
+          f => new FormViewModelFactory(this.RequestHandler).Create(f)
         )
       };
     }

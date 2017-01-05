@@ -1,0 +1,28 @@
+﻿{
+  "authors": [ "Dmitry Sikorsky" ],
+  "buildOptions": { "embed": [ "Areas/Backend/Views/**", "wwwroot/**" ] },
+  "copyright": "Copyright © 2015 Dmitry Sikorsky",
+  "dependencies": {
+    "ExtCore.Data.Abstractions": "1.1.0",
+    "ExtCore.Infrastructure": "1.1.0",
+    "Platformus.Barebone.Backend": "1.0.0-alpha12",
+    "Platformus.FileManager": "1.0.0-alpha12"
+  },
+  "description": "Part of the Platformus.FileManager Platformus extension.",
+  "frameworks": {
+    "netstandard1.6": {}
+  },
+  "packOptions": {
+    "iconUrl": "http://platformus.net/platformus_nuget_icon.png",
+    "projectUrl": "http://platformus.net/"
+  },
+  "scripts": {
+    "precompile": [
+      "dotnet bundle"
+    ]
+  },
+  "tools": {
+    "BundlerMinifier.Core": "2.2.306"
+  },
+  "version": "1.0.0-alpha12"
+}

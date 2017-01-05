@@ -1,0 +1,23 @@
+﻿@* Copyright © 2015 Dmitry Sikorsky. All rights reserved. *@
+@* Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information. *@
+@model Platformus.Domain.Backend.ViewModels.Classes.CreateOrEditViewModel
+@{
+  this.ViewBag.Title = (this.Model.Id == null ? "Create" : "Edit") + " Class";
+  this.ViewBag.ActiveMenuItem = "classes";
+}
+@section title {
+  @ViewBag.Title
+}
+<form class="form" method="post">
+  <drop-down-list-field asp-for="ClassId" asp-options="@Model.ClassOptions" />
+  <single-line-text-field asp-for="Code" />
+  <single-line-text-field asp-for="Name" />
+  <single-line-text-field asp-for="PluralizedName" />
+  <checkbox-field asp-for="IsAbstract" />
+  <checkbox-field asp-for="IsStandalone" />
+  <single-line-text-field asp-for="DefaultViewName" />
+  <div class="form__buttons buttons">
+    <button class="buttons__button button button--positive" type="submit">Save</button>
+    <a class="buttons__button button button--neutral" href="@this.Context.Request.CombineUrl("/backend/classes")">Cancel</a>
+  </div>
+</form>

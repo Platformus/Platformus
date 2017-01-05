@@ -3,6 +3,7 @@
   "copyright": "Copyright © 2015 Dmitry Sikorsky",
   "dependencies": {
     "Platformus.Barebone": "1.0.0-alpha12",
+    "Platformus.Configurations": "1.0.0-alpha12",
     "Platformus.Globalization.Data.Abstractions": "1.0.0-alpha12"
   },
   "description": "Part of the Platformus.Globalization Platformus extension.",

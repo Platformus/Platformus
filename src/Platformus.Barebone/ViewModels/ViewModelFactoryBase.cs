@@ -5,11 +5,11 @@ namespace Platformus.Barebone.ViewModels
 {
   public abstract class ViewModelFactoryBase
   {
-    protected IHandler handler;
+    protected IRequestHandler RequestHandler { get; set; }
 
-    public ViewModelFactoryBase(IHandler handler)
+    public ViewModelFactoryBase(IRequestHandler requestHandler)
     {
-      this.handler = handler;
+      this.RequestHandler = requestHandler;
     }
   }
 }

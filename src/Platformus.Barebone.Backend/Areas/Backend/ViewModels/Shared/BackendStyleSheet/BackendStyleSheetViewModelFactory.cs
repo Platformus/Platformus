@@ -7,8 +7,8 @@ namespace Platformus.Barebone.Backend.ViewModels.Shared
 {
   public class BackendStyleSheetViewModelFactory : ViewModelFactoryBase
   {
-    public BackendStyleSheetViewModelFactory(IHandler handler)
-      : base(handler)
+    public BackendStyleSheetViewModelFactory(IRequestHandler requestHandler)
+      : base(requestHandler)
     {
     }
 

@@ -9,8 +9,8 @@ namespace Platformus.Security.Backend.ViewModels.Shared
 {
   public class RoleViewModelFactory : ViewModelFactoryBase
   {
-    public RoleViewModelFactory(IHandler handler)
-      : base(handler)
+    public RoleViewModelFactory(IRequestHandler requestHandler)
+      : base(requestHandler)
     {
     }
 

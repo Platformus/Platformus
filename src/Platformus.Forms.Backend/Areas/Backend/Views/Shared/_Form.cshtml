@@ -4,6 +4,7 @@
 <div class="tree__node">
   <div class="tree__node-header">
     <div class="tree__buttons tree__buttons--node-header buttons">
+      <a class="buttons__button buttons__button--minor button button--neutral button--minor" href="/backend/completedforms?formid=@Model.Id">Completed forms</a>
       <a class="buttons__button buttons__button--minor button button--positive button--minor" href="/backend/forms/edit/@Model.Id">Edit</a>
       <a class="buttons__button buttons__button--minor button button--negative button--minor button--delete" href="#" onclick="return platformus.forms.deleteForm.show('/backend/forms/delete/@Model.Id');"></a>
     </div>

@@ -1,0 +1,18 @@
+﻿@* Copyright © 2015 Dmitry Sikorsky. All rights reserved. *@
+@* Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information. *@
+@model Platformus.Configurations.Backend.ViewModels.Configurations.CreateOrEditViewModel
+@{
+  this.ViewBag.Title = (this.Model.Id == null ? "Create" : "Edit") + " Configuration";
+  this.ViewBag.ActiveMenuItem = "configurations";
+}
+@section title {
+  @ViewBag.Title
+}
+<form class="form" method="post">
+  <single-line-text-field asp-for="Code" />
+  <single-line-text-field asp-for="Name" />
+  <div class="form__buttons buttons">
+    <button class="buttons__button button button--positive" type="submit">Save</button>
+    <a class="buttons__button button button--neutral" href="/backend/configurations">Cancel</a>
+  </div>
+</form>

@@ -14,6 +14,8 @@ namespace Platformus.Forms.Data.EntityFramework.SqlServer
       modelBuilder.Entity<CachedForm>(etb =>
         {
           etb.HasKey(e => new { e.CultureId, e.FormId });
+          etb.Property(e => e.Code).IsRequired().HasMaxLength(32);
+          etb.Property(e => e.Name).IsRequired().HasMaxLength(64);
           etb.ForSqlServerToTable("CachedForms");
         }
       );
@@ -21,7 +23,9 @@ namespace Platformus.Forms.Data.EntityFramework.SqlServer
       modelBuilder.Entity<Form>(etb =>
         {
           etb.HasKey(e => e.Id);
-          etb.Property(e => e.Id).UseSqlServerIdentityColumn();
+          etb.Property(e => e.Id).ForSqlServerUseSequenceHiLo();
+          etb.Property(e => e.Code).IsRequired().HasMaxLength(32);
+          etb.Property(e => e.Email).IsRequired().HasMaxLength(64);
           etb.ForSqlServerToTable("Forms");
         }
       );
@@ -29,7 +33,9 @@ namespace Platformus.Forms.Data.EntityFramework.SqlServer
       modelBuilder.Entity<FieldType>(etb =>
         {
           etb.HasKey(e => e.Id);
-          etb.Property(e => e.Id).UseSqlServerIdentityColumn();
+          etb.Property(e => e.Id).ForSqlServerUseSequenceHiLo();
+          etb.Property(e => e.Code).IsRequired().HasMaxLength(32);
+          etb.Property(e => e.Name).IsRequired().HasMaxLength(64);
           etb.ForSqlServerToTable("FieldTypes");
         }
       );
@@ -37,7 +43,7 @@ namespace Platformus.Forms.Data.EntityFramework.SqlServer
       modelBuilder.Entity<Field>(etb =>
         {
           etb.HasKey(e => e.Id);
-          etb.Property(e => e.Id).UseSqlServerIdentityColumn();
+          etb.Property(e => e.Id).ForSqlServerUseSequenceHiLo();
           etb.ForSqlServerToTable("Fields");
         }
       );
@@ -45,8 +51,24 @@ namespace Platformus.Forms.Data.EntityFramework.SqlServer
       modelBuilder.Entity<FieldOption>(etb =>
         {
           etb.HasKey(e => e.Id);
-          etb.Property(e => e.Id).UseSqlServerIdentityColumn();
+          etb.Property(e => e.Id).ForSqlServerUseSequenceHiLo();
           etb.ForSqlServerToTable("FieldOptions");
+        }
+      );
+
+      modelBuilder.Entity<CompletedForm>(etb =>
+        {
+          etb.HasKey(e => e.Id);
+          etb.Property(e => e.Id).ForSqlServerUseSequenceHiLo();
+          etb.ForSqlServerToTable("CompletedForms");
+        }
+      );
+
+      modelBuilder.Entity<CompletedField>(etb =>
+        {
+          etb.HasKey(e => e.Id);
+          etb.Property(e => e.Id).ForSqlServerUseSequenceHiLo();
+          etb.ForSqlServerToTable("CompletedFields");
         }
       );
     }

@@ -10,8 +10,8 @@ namespace Platformus.Forms.Backend.ViewModels.FieldOptions
 {
   public class CreateOrEditViewModelMapper : ViewModelFactoryBase
   {
-    public CreateOrEditViewModelMapper(IHandler handler)
-      : base(handler)
+    public CreateOrEditViewModelMapper(IRequestHandler requestHandler)
+      : base(requestHandler)
     {
     }
 
@@ -20,7 +20,7 @@ namespace Platformus.Forms.Backend.ViewModels.FieldOptions
       FieldOption fieldOption = new FieldOption();
 
       if (createOrEdit.Id != null)
-        fieldOption = this.handler.Storage.GetRepository<IFieldOptionRepository>().WithKey((int)createOrEdit.Id);
+        fieldOption = this.RequestHandler.Storage.GetRepository<IFieldOptionRepository>().WithKey((int)createOrEdit.Id);
 
       else fieldOption.FieldId = createOrEdit.FieldId;
 

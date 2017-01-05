@@ -11,8 +11,8 @@ namespace Platformus.Security.Backend.ViewModels.Users
 {
   public class CreateOrEditViewModelMapper : ViewModelFactoryBase
   {
-    public CreateOrEditViewModelMapper(IHandler handler)
-      : base(handler)
+    public CreateOrEditViewModelMapper(IRequestHandler requestHandler)
+      : base(requestHandler)
     {
     }
 
@@ -21,7 +21,7 @@ namespace Platformus.Security.Backend.ViewModels.Users
       User user = new User();
 
       if (createOrEdit.Id != null)
-        user = this.handler.Storage.GetRepository<IUserRepository>().WithKey((int)createOrEdit.Id);
+        user = this.RequestHandler.Storage.GetRepository<IUserRepository>().WithKey((int)createOrEdit.Id);
 
       else user.Created = DateTime.Now.ToUnixTimestamp();
 

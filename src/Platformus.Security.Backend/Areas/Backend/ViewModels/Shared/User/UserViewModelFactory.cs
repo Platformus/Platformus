@@ -9,8 +9,8 @@ namespace Platformus.Security.Backend.ViewModels.Shared
 {
   public class UserViewModelFactory : ViewModelFactoryBase
   {
-    public UserViewModelFactory(IHandler handler)
-      : base(handler)
+    public UserViewModelFactory(IRequestHandler requestHandler)
+      : base(requestHandler)
     {
     }
 

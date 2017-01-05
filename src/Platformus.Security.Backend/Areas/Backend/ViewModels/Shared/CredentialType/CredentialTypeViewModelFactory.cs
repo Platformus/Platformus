@@ -9,8 +9,8 @@ namespace Platformus.Security.Backend.ViewModels.Shared
 {
   public class CredentialTypeViewModelFactory : ViewModelFactoryBase
   {
-    public CredentialTypeViewModelFactory(IHandler handler)
-      : base(handler)
+    public CredentialTypeViewModelFactory(IRequestHandler requestHandler)
+      : base(requestHandler)
     {
     }
 

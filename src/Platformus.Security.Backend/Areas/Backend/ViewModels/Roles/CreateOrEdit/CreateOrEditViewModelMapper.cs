@@ -10,8 +10,8 @@ namespace Platformus.Security.Backend.ViewModels.Roles
 {
   public class CreateOrEditViewModelMapper : ViewModelFactoryBase
   {
-    public CreateOrEditViewModelMapper(IHandler handler)
-      : base(handler)
+    public CreateOrEditViewModelMapper(IRequestHandler requestHandler)
+      : base(requestHandler)
     {
     }
 
@@ -20,7 +20,7 @@ namespace Platformus.Security.Backend.ViewModels.Roles
       Role role = new Role();
 
       if (createOrEdit.Id != null)
-        role = this.handler.Storage.GetRepository<IRoleRepository>().WithKey((int)createOrEdit.Id);
+        role = this.RequestHandler.Storage.GetRepository<IRoleRepository>().WithKey((int)createOrEdit.Id);
 
       role.Code = createOrEdit.Code;
       role.Name = createOrEdit.Name;

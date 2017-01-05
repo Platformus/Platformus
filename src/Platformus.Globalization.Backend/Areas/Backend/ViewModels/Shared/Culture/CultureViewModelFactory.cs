@@ -8,8 +8,8 @@ namespace Platformus.Globalization.Backend.ViewModels.Shared
 {
   public class CultureViewModelFactory : ViewModelFactoryBase
   {
-    public CultureViewModelFactory(IHandler handler)
-      : base(handler)
+    public CultureViewModelFactory(IRequestHandler requestHandler)
+      : base(requestHandler)
     {
     }
 

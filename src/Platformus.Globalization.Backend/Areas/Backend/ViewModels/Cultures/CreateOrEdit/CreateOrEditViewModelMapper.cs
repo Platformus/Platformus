@@ -9,8 +9,8 @@ namespace Platformus.Globalization.Backend.ViewModels.Cultures
 {
   public class CreateOrEditViewModelMapper : ViewModelFactoryBase
   {
-    public CreateOrEditViewModelMapper(IHandler handler)
-      : base(handler)
+    public CreateOrEditViewModelMapper(IRequestHandler requestHandler)
+      : base(requestHandler)
     {
     }
 
@@ -19,7 +19,7 @@ namespace Platformus.Globalization.Backend.ViewModels.Cultures
       Culture culture = new Culture();
 
       if (createOrEdit.Id != null)
-        culture = this.handler.Storage.GetRepository<ICultureRepository>().WithKey((int)createOrEdit.Id);
+        culture = this.RequestHandler.Storage.GetRepository<ICultureRepository>().WithKey((int)createOrEdit.Id);
 
       culture.Code = createOrEdit.Code;
       culture.Name = createOrEdit.Name;

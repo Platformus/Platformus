@@ -10,8 +10,8 @@ namespace Platformus.Security.Backend.ViewModels.Credentials
 {
   public class CreateOrEditViewModelMapper : ViewModelFactoryBase
   {
-    public CreateOrEditViewModelMapper(IHandler handler)
-      : base(handler)
+    public CreateOrEditViewModelMapper(IRequestHandler requestHandler)
+      : base(requestHandler)
     {
     }
 
@@ -20,7 +20,7 @@ namespace Platformus.Security.Backend.ViewModels.Credentials
       Credential credential = new Credential();
 
       if (createOrEdit.Id != null)
-        credential = this.handler.Storage.GetRepository<ICredentialRepository>().WithKey((int)createOrEdit.Id);
+        credential = this.RequestHandler.Storage.GetRepository<ICredentialRepository>().WithKey((int)createOrEdit.Id);
 
       else credential.UserId = createOrEdit.UserId;
 

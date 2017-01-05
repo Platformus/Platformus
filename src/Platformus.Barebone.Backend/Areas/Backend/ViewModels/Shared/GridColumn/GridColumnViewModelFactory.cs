@@ -5,8 +5,8 @@ namespace Platformus.Barebone.Backend.ViewModels.Shared
 {
   public class GridColumnViewModelFactory : ViewModelFactoryBase
   {
-    public GridColumnViewModelFactory(IHandler handler)
-      : base(handler)
+    public GridColumnViewModelFactory(IRequestHandler requestHandler)
+      : base(requestHandler)
     {
     }
 

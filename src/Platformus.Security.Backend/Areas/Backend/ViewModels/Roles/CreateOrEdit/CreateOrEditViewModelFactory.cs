@@ -13,8 +13,8 @@ namespace Platformus.Security.Backend.ViewModels.Roles
 {
   public class CreateOrEditViewModelFactory : ViewModelFactoryBase
   {
-    public CreateOrEditViewModelFactory(IHandler handler)
-      : base(handler)
+    public CreateOrEditViewModelFactory(IRequestHandler requestHandler)
+      : base(requestHandler)
     {
     }
 
@@ -26,7 +26,7 @@ namespace Platformus.Security.Backend.ViewModels.Roles
           RolePermissions = this.GetRolePermissions()
         };
 
-      Role role = this.handler.Storage.GetRepository<IRoleRepository>().WithKey((int)id);
+      Role role = this.RequestHandler.Storage.GetRepository<IRoleRepository>().WithKey((int)id);
 
       return new CreateOrEditViewModel()
       {
@@ -40,8 +40,8 @@ namespace Platformus.Security.Backend.ViewModels.Roles
 
     public IEnumerable<RolePermissionViewModel> GetRolePermissions(Role role = null)
     {
-      return this.handler.Storage.GetRepository<IPermissionRepository>().All().Select(
-        p => new RolePermissionViewModelFactory(this.handler).Create(role, p)
+      return this.RequestHandler.Storage.GetRepository<IPermissionRepository>().All().Select(
+        p => new RolePermissionViewModelFactory(this.RequestHandler).Create(role, p)
       );
     }
   }

@@ -8,8 +8,6 @@ namespace Platformus.Globalization.Data.Models
 {
   public class Dictionary : IEntity
   {
-    //[Key]
-    //[Required]
     public int Id { get; set; }
 
     public virtual ICollection<Localization> Localizations { get; set; }

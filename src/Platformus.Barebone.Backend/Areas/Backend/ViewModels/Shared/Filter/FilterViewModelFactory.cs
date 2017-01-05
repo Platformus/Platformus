@@ -5,8 +5,8 @@ namespace Platformus.Barebone.Backend.ViewModels.Shared
 {
   public class FilterViewModelFactory : ViewModelFactoryBase
   {
-    public FilterViewModelFactory(IHandler handler)
-      : base(handler)
+    public FilterViewModelFactory(IRequestHandler requestHandler)
+      : base(requestHandler)
     {
     }
 

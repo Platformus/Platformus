@@ -13,8 +13,8 @@ namespace Platformus.Forms.Frontend.ViewModels.Shared
 {
   public class FieldViewModelFactory : ViewModelFactoryBase
   {
-    public FieldViewModelFactory(IHandler handler)
-      : base(handler)
+    public FieldViewModelFactory(IRequestHandler requestHandler)
+      : base(requestHandler)
     {
     }
 
@@ -23,10 +23,10 @@ namespace Platformus.Forms.Frontend.ViewModels.Shared
       return new FieldViewModel()
       {
         Id = field.Id,
-        FieldType = new FieldTypeViewModelFactory(this.handler).Create(this.handler.Storage.GetRepository<IFieldTypeRepository>().WithKey(field.FieldTypeId)),
+        FieldType = new FieldTypeViewModelFactory(this.RequestHandler).Create(this.RequestHandler.Storage.GetRepository<IFieldTypeRepository>().WithKey(field.FieldTypeId)),
         Name = this.GetLocalizationValue(field.NameId),
-        FieldOptions = this.handler.Storage.GetRepository<IFieldOptionRepository>().FilteredByFieldId(field.Id).Select(
-          fi => new FieldOptionViewModelFactory(this.handler).Create(fi)
+        FieldOptions = this.RequestHandler.Storage.GetRepository<IFieldOptionRepository>().FilteredByFieldId(field.Id).Select(
+          fi => new FieldOptionViewModelFactory(this.RequestHandler).Create(fi)
         )
       };
     }
@@ -44,7 +44,7 @@ namespace Platformus.Forms.Frontend.ViewModels.Shared
         FieldType = new FieldTypeViewModel() { Code = cachedField.FieldTypeCode },
         Name = cachedField.Name,
         FieldOptions = cachedFieldOptions.Select(
-          fo => new FieldOptionViewModelFactory(this.handler).Create(fo)
+          fo => new FieldOptionViewModelFactory(this.RequestHandler).Create(fo)
         )
       };
     }

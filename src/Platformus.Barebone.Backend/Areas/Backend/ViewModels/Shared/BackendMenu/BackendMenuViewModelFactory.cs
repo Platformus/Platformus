@@ -9,8 +9,8 @@ namespace Platformus.Barebone.Backend.ViewModels.Shared
 {
   public class BackendMenuViewModelFactory : ViewModelFactoryBase
   {
-    public BackendMenuViewModelFactory(IHandler handler)
-      : base(handler)
+    public BackendMenuViewModelFactory(IRequestHandler requestHandler)
+      : base(requestHandler)
     {
     }
 
@@ -29,7 +29,7 @@ namespace Platformus.Barebone.Backend.ViewModels.Shared
               List<BackendMenuItemViewModel> backendMenuItemViewModels = new List<BackendMenuItemViewModel>();
 
               foreach (Platformus.Infrastructure.BackendMenuItem backendMenuItem in backendMenuGroup.BackendMenuItems)
-                backendMenuItemViewModels.Add(new BackendMenuItemViewModelFactory(this.handler).Create(backendMenuItem));
+                backendMenuItemViewModels.Add(new BackendMenuItemViewModelFactory(this.RequestHandler).Create(backendMenuItem));
 
               BackendMenuGroupViewModel backendMenuGroupViewModel = this.GetBackendMenuGroup(backendMenuGroupViewModels, backendMenuGroup);
 
@@ -54,7 +54,7 @@ namespace Platformus.Barebone.Backend.ViewModels.Shared
 
       if (backendMenuGroupViewModel == null)
       {
-        backendMenuGroupViewModel = new BackendMenuGroupViewModelFactory(this.handler).Create(backendMenuGroup);
+        backendMenuGroupViewModel = new BackendMenuGroupViewModelFactory(this.RequestHandler).Create(backendMenuGroup);
         backendMenuGroupViewModels.Add(backendMenuGroupViewModel);
       }
 

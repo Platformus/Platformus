@@ -14,7 +14,9 @@ namespace Platformus.Security.Data.EntityFramework.Sqlite
       modelBuilder.Entity<Permission>(etb =>
         {
           etb.HasKey(e => e.Id);
-          etb.Property(e => e.Id);// .UseSqlServerIdentityColumn();
+          etb.Property(e => e.Id).ValueGeneratedOnAdd();
+          etb.Property(e => e.Code).IsRequired().HasMaxLength(32);
+          etb.Property(e => e.Name).IsRequired().HasMaxLength(64);
           etb.ForSqliteToTable("Permissions");
         }
       );
@@ -22,7 +24,9 @@ namespace Platformus.Security.Data.EntityFramework.Sqlite
       modelBuilder.Entity<Role>(etb =>
         {
           etb.HasKey(e => e.Id);
-          etb.Property(e => e.Id);// .UseSqlServerIdentityColumn();
+          etb.Property(e => e.Id).ValueGeneratedOnAdd();
+          etb.Property(e => e.Code).IsRequired().HasMaxLength(32);
+          etb.Property(e => e.Name).IsRequired().HasMaxLength(64);
           etb.ForSqliteToTable("Roles");
         }
       );
@@ -37,7 +41,8 @@ namespace Platformus.Security.Data.EntityFramework.Sqlite
       modelBuilder.Entity<User>(etb =>
         {
           etb.HasKey(e => e.Id);
-          etb.Property(e => e.Id);// .UseSqlServerIdentityColumn();
+          etb.Property(e => e.Id).ValueGeneratedOnAdd();
+          etb.Property(e => e.Name).IsRequired().HasMaxLength(64);
           etb.ForSqliteToTable("Users");
         }
       );
@@ -52,7 +57,9 @@ namespace Platformus.Security.Data.EntityFramework.Sqlite
       modelBuilder.Entity<CredentialType>(etb =>
         {
           etb.HasKey(e => e.Id);
-          etb.Property(e => e.Id);// .UseSqlServerIdentityColumn();
+          etb.Property(e => e.Id).ValueGeneratedOnAdd();
+          etb.Property(e => e.Code).IsRequired().HasMaxLength(32);
+          etb.Property(e => e.Name).IsRequired().HasMaxLength(64);
           etb.ForSqliteToTable("CredentialTypes");
         }
       );
@@ -60,7 +67,9 @@ namespace Platformus.Security.Data.EntityFramework.Sqlite
       modelBuilder.Entity<Credential>(etb =>
         {
           etb.HasKey(e => e.Id);
-          etb.Property(e => e.Id);// .UseSqlServerIdentityColumn();
+          etb.Property(e => e.Id).ValueGeneratedOnAdd();
+          etb.Property(e => e.Identifier).IsRequired().HasMaxLength(64);
+          etb.Property(e => e.Secret).HasMaxLength(1024);
           etb.ForSqliteToTable("Credentials");
         }
       );

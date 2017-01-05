@@ -13,8 +13,8 @@ namespace Platformus.Forms.Frontend.ViewModels.Shared
 {
   public class FormViewModelFactory : ViewModelFactoryBase
   {
-    public FormViewModelFactory(IHandler handler)
-      : base(handler)
+    public FormViewModelFactory(IRequestHandler requestHandler)
+      : base(requestHandler)
     {
     }
 
@@ -24,8 +24,8 @@ namespace Platformus.Forms.Frontend.ViewModels.Shared
       {
         Id = form.Id,
         Name = this.GetLocalizationValue(form.NameId),
-        Fields = this.handler.Storage.GetRepository<IFieldRepository>().FilteredByFormId(form.Id).Select(
-          f => new FieldViewModelFactory(this.handler).Create(f)
+        Fields = this.RequestHandler.Storage.GetRepository<IFieldRepository>().FilteredByFormId(form.Id).Select(
+          f => new FieldViewModelFactory(this.RequestHandler).Create(f)
         )
       };
     }
@@ -42,7 +42,7 @@ namespace Platformus.Forms.Frontend.ViewModels.Shared
         Id = cachedForm.FormId,
         Name = cachedForm.Name,
         Fields = cachedFields.Select(
-          cf => new FieldViewModelFactory(this.handler).Create(cf)
+          cf => new FieldViewModelFactory(this.RequestHandler).Create(cf)
         )
       };
     }

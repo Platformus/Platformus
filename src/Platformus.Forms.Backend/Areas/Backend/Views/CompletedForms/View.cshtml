@@ -1,0 +1,22 @@
+﻿@* Copyright © 2015 Dmitry Sikorsky. All rights reserved. *@
+@* Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information. *@
+@model Platformus.Forms.Backend.ViewModels.CompletedForms.ViewViewModel
+@{
+  this.ViewBag.Title = "View Completed Form";
+  this.ViewBag.ActiveMenuItem = "forms";
+}
+@section title {
+  @ViewBag.Title
+}
+<div class="form">
+  @foreach (var completedField in this.Model.CompletedFields)
+  {
+    <div class="form__field field">
+      <label class="field__label label">@completedField.Field.Name</label>
+      <input class="field__text-box text-box" readonly="readonly" type="text" value="@completedField.Value" />
+    </div>
+  }
+  <div class="form__buttons buttons">
+    <a class="buttons__button button button--neutral" href="@this.Context.Request.CombineUrl("/backend/completedforms")">Back</a>
+  </div>
+</div>

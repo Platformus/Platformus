@@ -9,17 +9,9 @@ namespace Platformus.Forms.Data.Models
 {
   public class Field : IEntity
   {
-    //[Key]
-    //[Required]
     public int Id { get; set; }
-
-    //[Required]
     public int FormId { get; set; }
-
-    //[Required]
     public int FieldTypeId { get; set; }
-
-    //[Required]
     public int NameId { get; set; }
     public int? Position { get; set; }
 

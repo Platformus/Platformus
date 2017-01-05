@@ -14,7 +14,7 @@ namespace Platformus.Globalization.Data.EntityFramework.Sqlite
       modelBuilder.Entity<Dictionary>(etb =>
         {
           etb.HasKey(e => e.Id);
-          etb.Property(e => e.Id);// .UseSqlServerIdentityColumn();
+          etb.Property(e => e.Id).ValueGeneratedOnAdd();
           etb.ForSqliteToTable("Dictionaries");
         }
       );
@@ -22,7 +22,9 @@ namespace Platformus.Globalization.Data.EntityFramework.Sqlite
       modelBuilder.Entity<Culture>(etb =>
         {
           etb.HasKey(e => e.Id);
-          etb.Property(e => e.Id);// .UseSqlServerIdentityColumn();
+          etb.Property(e => e.Id).ValueGeneratedOnAdd();
+          etb.Property(e => e.Code).IsRequired().HasMaxLength(32);
+          etb.Property(e => e.Name).IsRequired().HasMaxLength(64);
           etb.ForSqliteToTable("Cultures");
         }
       );
@@ -30,7 +32,7 @@ namespace Platformus.Globalization.Data.EntityFramework.Sqlite
       modelBuilder.Entity<Localization>(etb =>
         {
           etb.HasKey(e => e.Id);
-          etb.Property(e => e.Id);// .UseSqlServerIdentityColumn();
+          etb.Property(e => e.Id).ValueGeneratedOnAdd();
           etb.ForSqliteToTable("Localizations");
         }
       );

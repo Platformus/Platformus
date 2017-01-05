@@ -11,8 +11,8 @@ namespace Platformus.Forms.Backend.ViewModels.Shared
 {
   public class FormViewModelFactory : ViewModelFactoryBase
   {
-    public FormViewModelFactory(IHandler handler)
-      : base(handler)
+    public FormViewModelFactory(IRequestHandler requestHandler)
+      : base(requestHandler)
     {
     }
 
@@ -22,8 +22,8 @@ namespace Platformus.Forms.Backend.ViewModels.Shared
       {
         Id = form.Id,
         Name = this.GetLocalizationValue(form.NameId),
-        Fields = this.handler.Storage.GetRepository<IFieldRepository>().FilteredByFormId(form.Id).Select(
-          f => new FieldViewModelFactory(this.handler).Create(f)
+        Fields = this.RequestHandler.Storage.GetRepository<IFieldRepository>().FilteredByFormId(form.Id).Select(
+          f => new FieldViewModelFactory(this.RequestHandler).Create(f)
         )
       };
     }

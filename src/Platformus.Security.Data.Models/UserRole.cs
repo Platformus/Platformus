@@ -7,12 +7,7 @@ namespace Platformus.Security.Data.Models
 {
   public class UserRole : IEntity
   {
-    //[Key]
-    //[Required]
     public int UserId { get; set; }
-
-    //[Key]
-    //[Required]
     public int RoleId { get; set; }
 
     public virtual User User { get; set; }

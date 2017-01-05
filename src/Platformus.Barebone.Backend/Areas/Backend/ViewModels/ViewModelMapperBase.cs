@@ -5,10 +5,10 @@ namespace Platformus.Barebone.Backend.ViewModels
 {
   public abstract class ViewModelMapperBase : Platformus.Barebone.ViewModels.ViewModelMapperBase
   {
-    public ViewModelMapperBase(IHandler handler)
-      : base(handler)
+    public ViewModelMapperBase(IRequestHandler requestHandler)
+      : base(requestHandler)
     {
-      this.handler = handler;
+      this.RequestHandler = requestHandler;
     }
   }
 }

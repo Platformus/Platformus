@@ -4,19 +4,19 @@
 .menu {
 }
 
-.menu__menu-group {
+.menu__group {
 }
 
-.menu__menu-group-header {
+.menu__group-header {
   font-size: 20px;
   line-height: 40px;
   padding: 0 20px;
 }
 
-.menu__menu-group-content {
+.menu__group-content {
 }
 
-.menu__menu-item {
+.menu__item {
   display: block;
   padding: 5px 20px;
 }

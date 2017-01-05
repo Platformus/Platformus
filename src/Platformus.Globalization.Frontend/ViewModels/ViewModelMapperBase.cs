@@ -7,10 +7,10 @@ namespace Platformus.Globalization.Frontend.ViewModels
 {
   public abstract class ViewModelMapperBase : Platformus.Barebone.Frontend.ViewModels.ViewModelMapperBase
   {
-    public ViewModelMapperBase(IHandler handler)
-      : base(handler)
+    public ViewModelMapperBase(IRequestHandler requestHandler)
+      : base(requestHandler)
     {
-      this.handler = handler;
+      this.RequestHandler = requestHandler;
     }
   }
 }

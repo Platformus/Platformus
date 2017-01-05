@@ -9,8 +9,8 @@ namespace Platformus.Barebone.Backend.ViewModels.Shared
 {
   public class BackendStyleSheetsViewModelFactory : ViewModelFactoryBase
   {
-    public BackendStyleSheetsViewModelFactory(IHandler handler)
-      : base(handler)
+    public BackendStyleSheetsViewModelFactory(IRequestHandler requestHandler)
+      : base(requestHandler)
     {
     }
 
@@ -22,7 +22,7 @@ namespace Platformus.Barebone.Backend.ViewModels.Shared
         if (extension is Platformus.Infrastructure.IExtension)
           if ((extension as Platformus.Infrastructure.IExtension).BackendMetadata != null && (extension as Platformus.Infrastructure.IExtension).BackendMetadata.BackendStyleSheets != null)
             foreach (Platformus.Infrastructure.BackendStyleSheet backendStyleSheet in (extension as Platformus.Infrastructure.IExtension).BackendMetadata.BackendStyleSheets)
-              backendStyleSheetViewModels.Add(new BackendStyleSheetViewModelFactory(this.handler).Create(backendStyleSheet));
+              backendStyleSheetViewModels.Add(new BackendStyleSheetViewModelFactory(this.RequestHandler).Create(backendStyleSheet));
 
       return new BackendStyleSheetsViewModel()
       {

@@ -5,8 +5,8 @@ namespace Platformus.Barebone.Backend.ViewModels.Shared
 {
   public class PagerViewModelFactory : ViewModelFactoryBase
   {
-    public PagerViewModelFactory(IHandler handler)
-      : base(handler)
+    public PagerViewModelFactory(IRequestHandler requestHandler)
+      : base(requestHandler)
     {
     }
 

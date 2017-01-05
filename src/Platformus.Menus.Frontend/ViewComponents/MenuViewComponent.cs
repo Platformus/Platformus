@@ -1,0 +1,41 @@
+﻿// Copyright © 2015 Dmitry Sikorsky. All rights reserved.
+// Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information.
+
+using System.Threading.Tasks;
+using ExtCore.Data.Abstractions;
+using Microsoft.AspNetCore.Mvc;
+using Platformus.Barebone.Frontend.ViewComponents;
+using Platformus.Globalization;
+using Platformus.Menus.Data.Abstractions;
+using Platformus.Menus.Data.Models;
+using Platformus.Menus.Frontend.ViewModels.Shared;
+
+namespace Platformus.Menus.Frontend.ViewComponents
+{
+  public class MenuViewComponent : ViewComponentBase
+  {
+    public MenuViewComponent(IStorage storage)
+      : base(storage)
+    {
+    }
+
+    public async Task<IViewComponentResult> InvokeAsync(string code)
+    {
+      CachedMenu cachedMenu = this.Storage.GetRepository<ICachedMenuRepository>().WithCultureIdAndCode(
+        CultureManager.GetCurrentCulture(this.Storage).Id, code
+      );
+
+      if (cachedMenu == null)
+      {
+        Menu menu = this.Storage.GetRepository<IMenuRepository>().WithCode(code);
+
+        if (menu == null)
+          return null;
+
+        return this.View(new MenuViewModelFactory(this).Create(menu));
+      }
+
+      return this.View(new MenuViewModelFactory(this).Create(cachedMenu));
+    }
+  }
+}

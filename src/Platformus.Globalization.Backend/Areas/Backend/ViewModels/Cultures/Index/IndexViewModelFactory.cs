@@ -11,24 +11,24 @@ namespace Platformus.Globalization.Backend.ViewModels.Cultures
 {
   public class IndexViewModelFactory : ViewModelFactoryBase
   {
-    public IndexViewModelFactory(IHandler handler)
-      : base(handler)
+    public IndexViewModelFactory(IRequestHandler requestHandler)
+      : base(requestHandler)
     {
     }
 
     public IndexViewModel Create(string orderBy, string direction, int skip, int take)
     {
-      ICultureRepository @classRepository = this.handler.Storage.GetRepository<ICultureRepository>();
+      ICultureRepository cultureRepository = this.RequestHandler.Storage.GetRepository<ICultureRepository>();
 
       return new IndexViewModel()
       {
-        Grid = new GridViewModelFactory(this.handler).Create(
-          orderBy, direction, skip, take, @classRepository.Count(),
+        Grid = new GridViewModelFactory(this.RequestHandler).Create(
+          orderBy, direction, skip, take, cultureRepository.Count(),
           new[] {
-            new GridColumnViewModelFactory(this.handler).Create("Name", "Name"),
-            new GridColumnViewModelFactory(this.handler).CreateEmpty()
+            new GridColumnViewModelFactory(this.RequestHandler).Create("Name", "Name"),
+            new GridColumnViewModelFactory(this.RequestHandler).CreateEmpty()
           },
-          @classRepository.Range(orderBy, direction, skip, take).Select(c => new CultureViewModelFactory(this.handler).Create(c)),
+          cultureRepository.Range(orderBy, direction, skip, take).Select(c => new CultureViewModelFactory(this.RequestHandler).Create(c)),
           "_Culture"
         )
       };

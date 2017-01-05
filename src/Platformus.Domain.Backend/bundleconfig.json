@@ -1,0 +1,32 @@
+﻿[
+  {
+    "outputFileName": "wwwroot/areas/backend/css/platformus.domain.min.css",
+    "inputFiles": [
+      "Areas/Backend/Styles/image_editor.css",
+      "Areas/Backend/Styles/relation_editor.css",
+      "Areas/Backend/Styles/image_drag_and_drop_area.css",
+      "Areas/Backend/Styles/image_uploader_pop_up_form.css",
+      "Areas/Backend/Styles/object_selector_pop_up_form.css"
+    ]
+  },
+  {
+    "outputFileName": "wwwroot/areas/backend/js/platformus.domain.min.js",
+    "inputFiles": [
+      "Areas/Backend/Scripts/image_uploader_behavior.js",
+      "Areas/Backend/Scripts/image_uploader_form.js",
+      "Areas/Backend/Scripts/object_selector_form.js",
+      "Areas/Backend/Scripts/editors.js",
+      "Areas/Backend/Scripts/base_editor.js",
+      "Areas/Backend/Scripts/single_line_plain_text_editor.js",
+      "Areas/Backend/Scripts/multiline_plain_text_editor.js",
+      "Areas/Backend/Scripts/html_editor.js",
+      "Areas/Backend/Scripts/image_editor.js",
+      "Areas/Backend/Scripts/relation_editor.js"
+    ],
+    "minify": {
+      "enabled": true,
+      "renameLocals": true
+    },
+    "sourceMap": false
+  }
+]

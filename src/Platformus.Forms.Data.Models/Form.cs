@@ -9,19 +9,9 @@ namespace Platformus.Forms.Data.Models
 {
   public class Form : IEntity
   {
-    //[Key]
-    //[Required]
     public int Id { get; set; }
-
-    //[Required]
-    //[StringLength(32)]
     public string Code { get; set; }
-
-    //[Required]
     public int NameId { get; set; }
-
-    //[Required]
-    //[StringLength(64)]
     public string Email { get; set; }
 
     public virtual Dictionary Name { get; set; }

@@ -7,8 +7,8 @@ namespace Platformus.Barebone.Backend.ViewModels.Shared
 {
   public class BackendMenuGroupViewModelFactory : ViewModelFactoryBase
   {
-    public BackendMenuGroupViewModelFactory(IHandler handler)
-      : base(handler)
+    public BackendMenuGroupViewModelFactory(IRequestHandler requestHandler)
+      : base(requestHandler)
     {
     }
 

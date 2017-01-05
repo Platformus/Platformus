@@ -10,8 +10,8 @@ namespace Platformus.Forms.Backend.ViewModels.Fields
 {
   public class CreateOrEditViewModelMapper : ViewModelFactoryBase
   {
-    public CreateOrEditViewModelMapper(IHandler handler)
-      : base(handler)
+    public CreateOrEditViewModelMapper(IRequestHandler requestHandler)
+      : base(requestHandler)
     {
     }
 
@@ -20,7 +20,7 @@ namespace Platformus.Forms.Backend.ViewModels.Fields
       Field field = new Field();
 
       if (createOrEdit.Id != null)
-        field = this.handler.Storage.GetRepository<IFieldRepository>().WithKey((int)createOrEdit.Id);
+        field = this.RequestHandler.Storage.GetRepository<IFieldRepository>().WithKey((int)createOrEdit.Id);
 
       else field.FormId = createOrEdit.FormId;
 

@@ -3,6 +3,7 @@
     "outputFileName": "wwwroot/areas/backend/css/platformus.barebone.min.css",
     "inputFiles": [
       "Areas/Backend/Styles/global.css",
+      "Areas/Backend/Styles/marker.css",
       "Areas/Backend/Styles/max_length_indicator.css",
       "Areas/Backend/Styles/label.css",
       "Areas/Backend/Styles/text_box.css",

@@ -13,8 +13,8 @@ namespace Platformus.Security.Backend.ViewModels.Credentials
 {
   public class CreateOrEditViewModelFactory : ViewModelFactoryBase
   {
-    public CreateOrEditViewModelFactory(IHandler handler)
-      : base(handler)
+    public CreateOrEditViewModelFactory(IRequestHandler requestHandler)
+      : base(requestHandler)
     {
     }
 
@@ -26,7 +26,7 @@ namespace Platformus.Security.Backend.ViewModels.Credentials
           CredentialTypeOptions = this.GetCredentialTypeOptions()
         };
 
-      Credential credential = this.handler.Storage.GetRepository<ICredentialRepository>().WithKey((int)id);
+      Credential credential = this.RequestHandler.Storage.GetRepository<ICredentialRepository>().WithKey((int)id);
 
       return new CreateOrEditViewModel()
       {
@@ -39,7 +39,7 @@ namespace Platformus.Security.Backend.ViewModels.Credentials
 
     private IEnumerable<Option> GetCredentialTypeOptions()
     {
-      return this.handler.Storage.GetRepository<ICredentialTypeRepository>().All().Select(
+      return this.RequestHandler.Storage.GetRepository<ICredentialTypeRepository>().All().Select(
         ct => new Option(ct.Name, ct.Id.ToString())
       );
     }

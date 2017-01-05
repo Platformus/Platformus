@@ -7,14 +7,8 @@ namespace Platformus.Globalization.Data.Models
 {
   public class Localization : IEntity
   {
-    //[Key]
-    //[Required]
     public int Id { get; set; }
-
-    //[Required]
     public int DictionaryId { get; set; }
-
-    //[Required]
     public int CultureId { get; set; }
     public string Value { get; set; }
 

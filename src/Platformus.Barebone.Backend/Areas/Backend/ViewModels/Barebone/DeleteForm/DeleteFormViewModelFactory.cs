@@ -5,8 +5,8 @@ namespace Platformus.Barebone.Backend.ViewModels.Barebone
 {
   public class DeleteFormViewModelFactory : ViewModelFactoryBase
   {
-    public DeleteFormViewModelFactory(IHandler handler)
-      : base(handler)
+    public DeleteFormViewModelFactory(IRequestHandler requestHandler)
+      : base(requestHandler)
     {
     }
 

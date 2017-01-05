@@ -1,0 +1,19 @@
+﻿@* Copyright © 2015 Dmitry Sikorsky. All rights reserved. *@
+@* Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information. *@
+@model Platformus.Domain.Backend.ViewModels.DataTypes.CreateOrEditViewModel
+@{
+  this.ViewBag.Title = (this.Model.Id == null ? "Create" : "Edit") + " Data Type";
+  this.ViewBag.ActiveMenuItem = "datatypes";
+}
+@section title {
+  @ViewBag.Title
+}
+<form class="form" method="post">
+  <single-line-text-field asp-for="JavaScriptEditorClassName" />
+  <single-line-text-field asp-for="Name" />
+  <single-line-text-field asp-for="Position" />
+  <div class="form__buttons buttons">
+    <button class="buttons__button button button--positive" type="submit">Save</button>
+    <a class="buttons__button button button--neutral" href="@this.Context.Request.CombineUrl("/backend/datatypes")">Cancel</a>
+  </div>
+</form>

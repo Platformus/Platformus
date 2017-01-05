@@ -10,8 +10,8 @@ namespace Platformus.Security.Backend.ViewModels.Shared
 {
   public class RolePermissionViewModelFactory : ViewModelFactoryBase
   {
-    public RolePermissionViewModelFactory(IHandler handler)
-      : base(handler)
+    public RolePermissionViewModelFactory(IRequestHandler requestHandler)
+      : base(requestHandler)
     {
     }
 
@@ -20,11 +20,11 @@ namespace Platformus.Security.Backend.ViewModels.Shared
       RolePermission rolePermission = null;
 
       if (role != null)
-        rolePermission = this.handler.Storage.GetRepository<IRolePermissionRepository>().WithKey(role.Id, permission.Id);
+        rolePermission = this.RequestHandler.Storage.GetRepository<IRolePermissionRepository>().WithKey(role.Id, permission.Id);
 
       return new RolePermissionViewModel()
       {
-        Permission = new PermissionViewModelFactory(this.handler).Create(permission),
+        Permission = new PermissionViewModelFactory(this.RequestHandler).Create(permission),
         IsAssigned = rolePermission != null
       };
     }

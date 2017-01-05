@@ -11,16 +11,16 @@ namespace Platformus.Globalization.Backend.ViewModels
 {
   public abstract class ViewModelFactoryBase : Platformus.Barebone.Backend.ViewModels.ViewModelFactoryBase
   {
-    public ViewModelFactoryBase(IHandler handler)
-      : base(handler)
+    public ViewModelFactoryBase(IRequestHandler requestHandler)
+      : base(requestHandler)
     {
-      this.handler = handler;
+      this.RequestHandler = requestHandler;
     }
 
     public string GetLocalizationValue(int dictionaryId)
     {
-      Localization localization = this.handler.Storage.GetRepository<ILocalizationRepository>().WithDictionaryIdAndCultureId(
-        dictionaryId, CultureManager.GetCurrentCulture(this.handler.Storage).Id
+      Localization localization = this.RequestHandler.Storage.GetRepository<ILocalizationRepository>().WithDictionaryIdAndCultureId(
+        dictionaryId, CultureManager.GetCurrentCulture(this.RequestHandler.Storage).Id
       );
 
       if (localization == null)
@@ -33,12 +33,12 @@ namespace Platformus.Globalization.Backend.ViewModels
     {
       List<Platformus.Barebone.Backend.Localization> localizations = new List<Platformus.Barebone.Backend.Localization>();
 
-      foreach (Platformus.Globalization.Data.Models.Culture culture in this.handler.Storage.GetRepository<ICultureRepository>().All())
+      foreach (Platformus.Globalization.Data.Models.Culture culture in this.RequestHandler.Storage.GetRepository<ICultureRepository>().All())
       {
         Platformus.Globalization.Data.Models.Localization localization = null;
 
         if (dictionary != null)
-          localization = this.handler.Storage.GetRepository<ILocalizationRepository>().FilteredByDictionaryId(dictionary.Id).FirstOrDefault(l => l.CultureId == culture.Id);
+          localization = this.RequestHandler.Storage.GetRepository<ILocalizationRepository>().FilteredByDictionaryId(dictionary.Id).FirstOrDefault(l => l.CultureId == culture.Id);
 
         localizations.Add(
           new Platformus.Barebone.Backend.Localization(

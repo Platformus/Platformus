@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Platformus.Barebone.Controllers
 {
-  public abstract class ControllerBase : Controller, IHandler
+  public abstract class ControllerBase : Controller, IRequestHandler
   {
     public IStorage Storage { get; private set; }
 

@@ -11,8 +11,8 @@ namespace Platformus.Forms.Backend.ViewModels.FieldOptions
 {
   public class CreateOrEditViewModelFactory : ViewModelFactoryBase
   {
-    public CreateOrEditViewModelFactory(IHandler handler)
-      : base(handler)
+    public CreateOrEditViewModelFactory(IRequestHandler requestHandler)
+      : base(requestHandler)
     {
     }
 
@@ -24,12 +24,12 @@ namespace Platformus.Forms.Backend.ViewModels.FieldOptions
           ValueLocalizations = this.GetLocalizations()
         };
 
-      FieldOption fieldOption = this.handler.Storage.GetRepository<IFieldOptionRepository>().WithKey((int)id);
+      FieldOption fieldOption = this.RequestHandler.Storage.GetRepository<IFieldOptionRepository>().WithKey((int)id);
 
       return new CreateOrEditViewModel()
       {
         Id = fieldOption.Id,
-        ValueLocalizations = this.GetLocalizations(this.handler.Storage.GetRepository<IDictionaryRepository>().WithKey(fieldOption.ValueId)),
+        ValueLocalizations = this.GetLocalizations(this.RequestHandler.Storage.GetRepository<IDictionaryRepository>().WithKey(fieldOption.ValueId)),
         Position = fieldOption.Position
       };
     }

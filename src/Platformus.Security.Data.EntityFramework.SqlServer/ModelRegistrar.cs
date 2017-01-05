@@ -14,7 +14,9 @@ namespace Platformus.Security.Data.EntityFramework.SqlServer
       modelBuilder.Entity<Permission>(etb =>
         {
           etb.HasKey(e => e.Id);
-          etb.Property(e => e.Id).UseSqlServerIdentityColumn();
+          etb.Property(e => e.Id).ForSqlServerUseSequenceHiLo();
+          etb.Property(e => e.Code).IsRequired().HasMaxLength(32);
+          etb.Property(e => e.Name).IsRequired().HasMaxLength(64);
           etb.ForSqlServerToTable("Permissions");
         }
       );
@@ -22,7 +24,9 @@ namespace Platformus.Security.Data.EntityFramework.SqlServer
       modelBuilder.Entity<Role>(etb =>
         {
           etb.HasKey(e => e.Id);
-          etb.Property(e => e.Id).UseSqlServerIdentityColumn();
+          etb.Property(e => e.Id).ForSqlServerUseSequenceHiLo();
+          etb.Property(e => e.Code).IsRequired().HasMaxLength(32);
+          etb.Property(e => e.Name).IsRequired().HasMaxLength(64);
           etb.ForSqlServerToTable("Roles");
         }
       );
@@ -37,7 +41,8 @@ namespace Platformus.Security.Data.EntityFramework.SqlServer
       modelBuilder.Entity<User>(etb =>
         {
           etb.HasKey(e => e.Id);
-          etb.Property(e => e.Id).UseSqlServerIdentityColumn();
+          etb.Property(e => e.Id).ForSqlServerUseSequenceHiLo();
+          etb.Property(e => e.Name).IsRequired().HasMaxLength(64);
           etb.ForSqlServerToTable("Users");
         }
       );
@@ -52,7 +57,9 @@ namespace Platformus.Security.Data.EntityFramework.SqlServer
       modelBuilder.Entity<CredentialType>(etb =>
         {
           etb.HasKey(e => e.Id);
-          etb.Property(e => e.Id).UseSqlServerIdentityColumn();
+          etb.Property(e => e.Id).ForSqlServerUseSequenceHiLo();
+          etb.Property(e => e.Code).IsRequired().HasMaxLength(32);
+          etb.Property(e => e.Name).IsRequired().HasMaxLength(64);
           etb.ForSqlServerToTable("CredentialTypes");
         }
       );
@@ -60,7 +67,9 @@ namespace Platformus.Security.Data.EntityFramework.SqlServer
       modelBuilder.Entity<Credential>(etb =>
         {
           etb.HasKey(e => e.Id);
-          etb.Property(e => e.Id).UseSqlServerIdentityColumn();
+          etb.Property(e => e.Id).ForSqlServerUseSequenceHiLo();
+          etb.Property(e => e.Identifier).IsRequired().HasMaxLength(64);
+          etb.Property(e => e.Secret).HasMaxLength(1024);
           etb.ForSqlServerToTable("Credentials");
         }
       );

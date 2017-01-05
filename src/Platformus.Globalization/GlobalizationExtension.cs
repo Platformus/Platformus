@@ -9,7 +9,9 @@ using ExtCore.Data.Abstractions;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Localization;
 using Microsoft.AspNetCore.Mvc.Razor;
+using Microsoft.AspNetCore.Routing;
 using Microsoft.Extensions.DependencyInjection;
+using Platformus.Configurations;
 using Platformus.Globalization.Data.Models;
 using Platformus.Infrastructure;
 
@@ -94,6 +96,41 @@ namespace Platformus.Globalization
 
             requestLocalizationOptions.RequestCultureProviders.Insert(0, new RouteValueRequestCultureProvider(this.serviceProvider));
             applicationBuilder.UseRequestLocalization(requestLocalizationOptions);
+          }
+        };
+      }
+    }
+
+    public override IEnumerable<KeyValuePair<int, Action<IRouteBuilder>>> UseMvcActionsByPriorities
+    {
+      get
+      {
+        return new Dictionary<int, Action<IRouteBuilder>>()
+        {
+          [10000] = routeBuilder =>
+          {
+            string defaultCultureCode = "en";
+            bool specifyCultureInUrl = true;
+            IStorage storage = this.serviceProvider.GetService<IStorage>();
+
+            if (storage != null)
+            {
+              Culture defaultCulture = CultureManager.GetDefaultCulture(storage);
+
+              if (defaultCulture != null)
+                defaultCultureCode = defaultCulture.Code;
+
+              specifyCultureInUrl = new ConfigurationManager(storage)["Globalization", "SpecifyCultureInUrl"] != "no";
+            }
+
+            string template = "";
+
+            if (specifyCultureInUrl)
+              template = "{culture=" + defaultCultureCode + "}/{*url}";
+
+            else template = "{*url}";
+
+            routeBuilder.MapRoute(name: "Default", template: template, defaults: new { controller = "Default", action = "Index" });
           }
         };
       }

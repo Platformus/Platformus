@@ -9,20 +9,20 @@ namespace Platformus.Globalization.Frontend.ViewModels
 {
   public abstract class ViewModelFactoryBase : Platformus.Barebone.Frontend.ViewModels.ViewModelFactoryBase
   {
-    public ViewModelFactoryBase(IHandler handler)
-      : base(handler)
+    public ViewModelFactoryBase(IRequestHandler requestHandler)
+      : base(requestHandler)
     {
-      this.handler = handler;
+      this.RequestHandler = requestHandler;
     }
 
     public string GetLocalizationValue(int dictionaryId)
     {
-      return this.GetLocalizationValue(dictionaryId, CultureManager.GetCurrentCulture(this.handler.Storage).Id);
+      return this.GetLocalizationValue(dictionaryId, CultureManager.GetCurrentCulture(this.RequestHandler.Storage).Id);
     }
 
     public string GetLocalizationValue(int dictionaryId, int cultureId)
     {
-      Localization localization = this.handler.Storage.GetRepository<ILocalizationRepository>().WithDictionaryIdAndCultureId(
+      Localization localization = this.RequestHandler.Storage.GetRepository<ILocalizationRepository>().WithDictionaryIdAndCultureId(
         dictionaryId, cultureId
       );
 

@@ -8,14 +8,8 @@ namespace Platformus.Forms.Data.Models
 {
   public class FieldOption : IEntity
   {
-    //[Key]
-    //[Required]
     public int Id { get; set; }
-
-    //[Required]
     public int FieldId { get; set; }
-
-    //[Required]
     public int ValueId { get; set; }
     public int? Position { get; set; }
 

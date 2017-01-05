@@ -12,26 +12,26 @@ namespace Platformus.Security.Backend.ViewModels.Users
 {
   public class IndexViewModelFactory : ViewModelFactoryBase
   {
-    public IndexViewModelFactory(IHandler handler)
-      : base(handler)
+    public IndexViewModelFactory(IRequestHandler requestHandler)
+      : base(requestHandler)
     {
     }
 
     public IndexViewModel Create(string orderBy, string direction, int skip, int take)
     {
-      IUserRepository userRepository = this.handler.Storage.GetRepository<IUserRepository>();
+      IUserRepository userRepository = this.RequestHandler.Storage.GetRepository<IUserRepository>();
 
       return new IndexViewModel()
       {
-        Grid = new GridViewModelFactory(this.handler).Create(
+        Grid = new GridViewModelFactory(this.RequestHandler).Create(
           orderBy, direction, skip, take, userRepository.Count(),
           new[] {
-            new GridColumnViewModelFactory(this.handler).Create("Name", "Name"),
-            new GridColumnViewModelFactory(this.handler).Create("Credentials"),
-            new GridColumnViewModelFactory(this.handler).Create("Created", "Created"),
-            new GridColumnViewModelFactory(this.handler).CreateEmpty()
+            new GridColumnViewModelFactory(this.RequestHandler).Create("Name", "Name"),
+            new GridColumnViewModelFactory(this.RequestHandler).Create("Credentials"),
+            new GridColumnViewModelFactory(this.RequestHandler).Create("Created", "Created"),
+            new GridColumnViewModelFactory(this.RequestHandler).CreateEmpty()
           },
-          userRepository.Range(orderBy, direction, skip, take).Select(u => new UserViewModelFactory(this.handler).Create(u)),
+          userRepository.Range(orderBy, direction, skip, take).Select(u => new UserViewModelFactory(this.RequestHandler).Create(u)),
           "_User"
         )
       };

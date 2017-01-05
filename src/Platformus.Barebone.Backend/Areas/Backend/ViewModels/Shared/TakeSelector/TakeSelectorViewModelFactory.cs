@@ -5,8 +5,8 @@ namespace Platformus.Barebone.Backend.ViewModels.Shared
 {
   public class TakeSelectorViewModelFactory : ViewModelFactoryBase
   {
-    public TakeSelectorViewModelFactory(IHandler handler)
-      : base(handler)
+    public TakeSelectorViewModelFactory(IRequestHandler requestHandler)
+      : base(requestHandler)
     {
     }
 

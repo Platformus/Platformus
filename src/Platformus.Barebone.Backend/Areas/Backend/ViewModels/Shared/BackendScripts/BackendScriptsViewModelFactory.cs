@@ -9,8 +9,8 @@ namespace Platformus.Barebone.Backend.ViewModels.Shared
 {
   public class BackendScriptsViewModelFactory : ViewModelFactoryBase
   {
-    public BackendScriptsViewModelFactory(IHandler handler)
-      : base(handler)
+    public BackendScriptsViewModelFactory(IRequestHandler requestHandler)
+      : base(requestHandler)
     {
     }
 
@@ -22,7 +22,7 @@ namespace Platformus.Barebone.Backend.ViewModels.Shared
         if (extension is Platformus.Infrastructure.IExtension)
           if ((extension as Platformus.Infrastructure.IExtension).BackendMetadata != null && (extension as Platformus.Infrastructure.IExtension).BackendMetadata.BackendScripts != null)
             foreach (Platformus.Infrastructure.BackendScript backendScript in (extension as Platformus.Infrastructure.IExtension).BackendMetadata.BackendScripts)
-              backendScriptViewModels.Add(new BackendScriptViewModelFactory(this.handler).Create(backendScript));
+              backendScriptViewModels.Add(new BackendScriptViewModelFactory(this.RequestHandler).Create(backendScript));
 
       return new BackendScriptsViewModel()
       {

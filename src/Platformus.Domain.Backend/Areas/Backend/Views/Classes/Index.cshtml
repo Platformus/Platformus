@@ -1,0 +1,14 @@
+﻿@* Copyright © 2015 Dmitry Sikorsky. All rights reserved. *@
+@* Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information. *@
+@model Platformus.Domain.Backend.ViewModels.Classes.IndexViewModel
+@{
+  this.ViewBag.Title = "Classes";
+  this.ViewBag.ActiveMenuItem = "classes";
+}
+@section title {
+  @ViewBag.Title <span class="master-detail__detail-header-counter">@Model.Grid.Pager.Total</span>
+}
+@Html.Partial("_Grid", this.Model.Grid)
+<div class="master-detail__detail-buttons buttons">
+  <a class="buttons__button button button--positive" href="@this.Context.Request.CombineUrl("/backend/classes/create")">Create class</a>
+</div>

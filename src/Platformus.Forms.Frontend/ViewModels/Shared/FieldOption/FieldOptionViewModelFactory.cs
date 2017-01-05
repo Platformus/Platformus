@@ -9,8 +9,8 @@ namespace Platformus.Forms.Frontend.ViewModels.Shared
 {
   public class FieldOptionViewModelFactory : ViewModelFactoryBase
   {
-    public FieldOptionViewModelFactory(IHandler handler)
-      : base(handler)
+    public FieldOptionViewModelFactory(IRequestHandler requestHandler)
+      : base(requestHandler)
     {
     }
 

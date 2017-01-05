@@ -11,8 +11,8 @@ namespace Platformus.Forms.Backend.ViewModels.Forms
 {
   public class CreateOrEditViewModelFactory : ViewModelFactoryBase
   {
-    public CreateOrEditViewModelFactory(IHandler handler)
-      : base(handler)
+    public CreateOrEditViewModelFactory(IRequestHandler requestHandler)
+      : base(requestHandler)
     {
     }
 
@@ -24,14 +24,14 @@ namespace Platformus.Forms.Backend.ViewModels.Forms
           NameLocalizations = this.GetLocalizations()
         };
 
-      Form form = this.handler.Storage.GetRepository<IFormRepository>().WithKey((int)id);
+      Form form = this.RequestHandler.Storage.GetRepository<IFormRepository>().WithKey((int)id);
 
       return new CreateOrEditViewModel()
       {
         Id = form.Id,
         Code = form.Code,
         Email = form.Email,
-        NameLocalizations = this.GetLocalizations(this.handler.Storage.GetRepository<IDictionaryRepository>().WithKey(form.NameId))
+        NameLocalizations = this.GetLocalizations(this.RequestHandler.Storage.GetRepository<IDictionaryRepository>().WithKey(form.NameId))
       };
     }
   }

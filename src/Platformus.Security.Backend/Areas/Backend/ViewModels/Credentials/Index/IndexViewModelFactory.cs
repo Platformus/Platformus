@@ -12,26 +12,26 @@ namespace Platformus.Security.Backend.ViewModels.Credentials
 {
   public class IndexViewModelFactory : ViewModelFactoryBase
   {
-    public IndexViewModelFactory(IHandler handler)
-      : base(handler)
+    public IndexViewModelFactory(IRequestHandler requestHandler)
+      : base(requestHandler)
     {
     }
 
     public IndexViewModel Create(int userId, string orderBy, string direction, int skip, int take)
     {
-      ICredentialRepository credentialRepository = this.handler.Storage.GetRepository<ICredentialRepository>();
+      ICredentialRepository credentialRepository = this.RequestHandler.Storage.GetRepository<ICredentialRepository>();
 
       return new IndexViewModel()
       {
         UserId = userId,
-        Grid = new GridViewModelFactory(this.handler).Create(
+        Grid = new GridViewModelFactory(this.RequestHandler).Create(
           orderBy, direction, skip, take, credentialRepository.CountByUserId(userId),
           new[] {
-            new GridColumnViewModelFactory(this.handler).Create("Credential Type"),
-            new GridColumnViewModelFactory(this.handler).Create("Identifier", "Identifier"),
-            new GridColumnViewModelFactory(this.handler).CreateEmpty()
+            new GridColumnViewModelFactory(this.RequestHandler).Create("Credential Type"),
+            new GridColumnViewModelFactory(this.RequestHandler).Create("Identifier", "Identifier"),
+            new GridColumnViewModelFactory(this.RequestHandler).CreateEmpty()
           },
-          credentialRepository.Range(userId, orderBy, direction, skip, take).Select(c => new CredentialViewModelFactory(this.handler).Create(c)),
+          credentialRepository.Range(userId, orderBy, direction, skip, take).Select(c => new CredentialViewModelFactory(this.RequestHandler).Create(c)),
           "_Credential"
         )
       };

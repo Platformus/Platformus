@@ -19,12 +19,12 @@
         <div class="master-detail__master-content">
           @await Component.InvokeAsync("BackendMenu")
           <div class="master-detail__master-user-menu menu">
-            <div class="menu__menu-group">
-              <div class="menu__menu-group-header">
+            <div class="menu__group">
+              <div class="menu__group-header">
                 @User.Identity.Name
               </div>
-              <div class="menu__menu-group-content">
-                <a class="master-detail__master-menu-item--primary master-detail__master-menu-item--user menu__menu-item" href="/backend/account/signout">Sign out</a>
+              <div class="menu__group-content">
+                <a class="master-detail__master-menu-item--primary master-detail__master-menu-item--user menu__item" href="/backend/account/signout">Sign out</a>
               </div>
             </div>
           </div>

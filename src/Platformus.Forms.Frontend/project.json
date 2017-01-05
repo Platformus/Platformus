@@ -8,7 +8,7 @@
     "MailKit":  "1.8.1",
     "Microsoft.Extensions.Configuration": "1.1.0",
     "Platformus.Barebone.Frontend": "1.0.0-alpha12",
-    "Platformus.Configuration": "1.0.0-alpha12",
+    "Platformus.Configurations": "1.0.0-alpha12",
     "Platformus.Forms": "1.0.0-alpha12",
     "Platformus.Globalization.Frontend": "1.0.0-alpha12"
   },

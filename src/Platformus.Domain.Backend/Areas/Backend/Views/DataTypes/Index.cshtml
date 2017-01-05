@@ -1,0 +1,14 @@
+﻿@* Copyright © 2015 Dmitry Sikorsky. All rights reserved. *@
+@* Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information. *@
+@model Platformus.Domain.Backend.ViewModels.DataTypes.IndexViewModel
+@{
+  this.ViewBag.Title = "Data Types";
+  this.ViewBag.ActiveMenuItem = "datatypes";
+}
+@section title {
+  @ViewBag.Title <span class="master-detail__detail-header-counter">@Model.Grid.Pager.Total</span>
+}
+@Html.Partial("_Grid", this.Model.Grid)
+<div class="master-detail__detail-buttons buttons">
+  <a class="buttons__button button button--positive" href="@this.Context.Request.CombineUrl("/backend/datatypes/create")">Create data type</a>
+</div>

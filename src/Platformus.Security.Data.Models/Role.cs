@@ -7,16 +7,8 @@ namespace Platformus.Security.Data.Models
 {
   public class Role : IEntity
   {
-    //[Key]
-    //[Required]
     public int Id { get; set; }
-
-    //[Required]
-    //[StringLength(32)]
     public string Code { get; set; }
-
-    //[Required]
-    //[StringLength(64)]
     public string Name { get; set; }
     public int? Position { get; set; }
   }

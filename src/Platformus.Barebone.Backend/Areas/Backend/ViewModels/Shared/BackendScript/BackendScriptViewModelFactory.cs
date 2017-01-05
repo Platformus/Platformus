@@ -7,8 +7,8 @@ namespace Platformus.Barebone.Backend.ViewModels.Shared
 {
   public class BackendScriptViewModelFactory : ViewModelFactoryBase
   {
-    public BackendScriptViewModelFactory(IHandler handler)
-      : base(handler)
+    public BackendScriptViewModelFactory(IRequestHandler requestHandler)
+      : base(requestHandler)
     {
     }
 
