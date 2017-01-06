@@ -14,7 +14,7 @@ namespace Platformus.Security
 {
   public class UserManager
   {
-    private IRequestHandler handler;
+    private IRequestHandler requestHandler;
     private IPermissionRepository permissionRepository;
     private IRolePermissionRepository rolePermissionRepository;
     private IRoleRepository roleRepository;
@@ -25,14 +25,14 @@ namespace Platformus.Security
     
     public UserManager(IRequestHandler requestHandler)
     {
-      this.handler = handler;
-      this.permissionRepository = handler.Storage.GetRepository<IPermissionRepository>();
-      this.roleRepository = handler.Storage.GetRepository<IRoleRepository>();
-      this.rolePermissionRepository = handler.Storage.GetRepository<IRolePermissionRepository>();
-      this.userRepository = handler.Storage.GetRepository<IUserRepository>();
-      this.userRoleRepository = handler.Storage.GetRepository<IUserRoleRepository>();
-      this.credentialTypeRepository = handler.Storage.GetRepository<ICredentialTypeRepository>();
-      this.credentialRepository = handler.Storage.GetRepository<ICredentialRepository>();
+      this.requestHandler = requestHandler;
+      this.permissionRepository = this.requestHandler.Storage.GetRepository<IPermissionRepository>();
+      this.roleRepository = this.requestHandler.Storage.GetRepository<IRoleRepository>();
+      this.rolePermissionRepository = this.requestHandler.Storage.GetRepository<IRolePermissionRepository>();
+      this.userRepository = this.requestHandler.Storage.GetRepository<IUserRepository>();
+      this.userRoleRepository = this.requestHandler.Storage.GetRepository<IUserRoleRepository>();
+      this.credentialTypeRepository = this.requestHandler.Storage.GetRepository<ICredentialTypeRepository>();
+      this.credentialRepository = this.requestHandler.Storage.GetRepository<ICredentialRepository>();
     }
 
     public User Validate(string loginTypeCode, string identifier, string secret)
@@ -57,22 +57,22 @@ namespace Platformus.Security
       ClaimsIdentity identity = new ClaimsIdentity(this.GetUserClaims(user), CookieAuthenticationDefaults.AuthenticationScheme);
       ClaimsPrincipal principal = new ClaimsPrincipal(identity);
 
-      await this.handler.HttpContext.Authentication.SignInAsync(
+      await this.requestHandler.HttpContext.Authentication.SignInAsync(
         CookieAuthenticationDefaults.AuthenticationScheme, principal, new AuthenticationProperties() { IsPersistent = isPersistent }
       );
     }
 
     public async void SignOut()
     {
-      await this.handler.HttpContext.Authentication.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
+      await this.requestHandler.HttpContext.Authentication.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
     }
 
     public int GetCurrentUserId()
     {
-      if (!this.handler.HttpContext.User.Identity.IsAuthenticated)
+      if (!this.requestHandler.HttpContext.User.Identity.IsAuthenticated)
         return -1;
 
-      Claim claim = this.handler.HttpContext.User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier);
+      Claim claim = this.requestHandler.HttpContext.User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier);
 
       if (claim == null)
         return -1;

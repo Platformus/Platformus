@@ -13,21 +13,21 @@ namespace Platformus.Forms
 {
   public class CacheManager
   {
-    public IRequestHandler handler;
+    public IRequestHandler requestHandler;
 
     public CacheManager(IRequestHandler requestHandler)
     {
-      this.handler = handler;
+      this.requestHandler = requestHandler;
     }
 
     public void CacheForm(Form form)
     {
-      foreach (Culture culture in this.handler.Storage.GetRepository<ICultureRepository>().NotNeutral())
+      foreach (Culture culture in this.requestHandler.Storage.GetRepository<ICultureRepository>().NotNeutral())
       {
-        CachedForm cachedForm = this.handler.Storage.GetRepository<ICachedFormRepository>().WithKey(culture.Id, form.Id);
+        CachedForm cachedForm = this.requestHandler.Storage.GetRepository<ICachedFormRepository>().WithKey(culture.Id, form.Id);
 
         if (cachedForm == null)
-          this.handler.Storage.GetRepository<ICachedFormRepository>().Create(this.CacheForm(culture, form));
+          this.requestHandler.Storage.GetRepository<ICachedFormRepository>().Create(this.CacheForm(culture, form));
 
         else
         {
@@ -36,18 +36,18 @@ namespace Platformus.Forms
           cachedForm.Code = temp.Code;
           cachedForm.Name = temp.Name;
           cachedForm.CachedFields = temp.CachedFields;
-          this.handler.Storage.GetRepository<ICachedFormRepository>().Edit(cachedForm);
+          this.requestHandler.Storage.GetRepository<ICachedFormRepository>().Edit(cachedForm);
         }
       }
 
-      this.handler.Storage.Save();
+      this.requestHandler.Storage.Save();
     }
 
     private CachedForm CacheForm(Culture culture, Form form)
     {
       List<CachedField> cachedFields = new List<CachedField>();
 
-      foreach (Field field in this.handler.Storage.GetRepository<IFieldRepository>().FilteredByFormId(form.Id))
+      foreach (Field field in this.requestHandler.Storage.GetRepository<IFieldRepository>().FilteredByFormId(form.Id))
         cachedFields.Add(this.CacheField(culture, field));
 
       CachedForm cachedForm = new CachedForm();
@@ -67,13 +67,13 @@ namespace Platformus.Forms
     {
       List<CachedFieldOption> cachedFieldOptions = new List<CachedFieldOption>();
 
-      foreach (FieldOption fieldOption in this.handler.Storage.GetRepository<IFieldOptionRepository>().FilteredByFieldId(field.Id))
+      foreach (FieldOption fieldOption in this.requestHandler.Storage.GetRepository<IFieldOptionRepository>().FilteredByFieldId(field.Id))
         cachedFieldOptions.Add(this.CacheFieldOption(culture, fieldOption));
 
       CachedField cachedField = new CachedField();
 
       cachedField.FieldId = field.Id;
-      cachedField.FieldTypeCode = this.handler.Storage.GetRepository<IFieldTypeRepository>().WithKey(field.FieldTypeId).Code;
+      cachedField.FieldTypeCode = this.requestHandler.Storage.GetRepository<IFieldTypeRepository>().WithKey(field.FieldTypeId).Code;
       cachedField.Name = this.GetLocalizationValue(culture.Id, field.NameId);
       cachedField.Position = field.Position;
 
@@ -95,7 +95,7 @@ namespace Platformus.Forms
 
     private string GetLocalizationValue(int cultureId, int dictionaryId)
     {
-      Localization localization = this.handler.Storage.GetRepository<ILocalizationRepository>().WithDictionaryIdAndCultureId(dictionaryId, cultureId);
+      Localization localization = this.requestHandler.Storage.GetRepository<ILocalizationRepository>().WithDictionaryIdAndCultureId(dictionaryId, cultureId);
 
       if (localization == null)
         return null;

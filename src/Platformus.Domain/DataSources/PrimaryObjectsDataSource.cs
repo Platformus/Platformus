@@ -13,20 +13,20 @@ namespace Platformus.Domain.DataSources
     public override IEnumerable<Object> GetObjects()
     {
       if (this.args.ContainsKey("MemberId"))
-        return this.handler.Storage.GetRepository<IObjectRepository>().Primary(int.Parse(this.args["MemberId"]), this.@object.Id);
+        return this.requestHandler.Storage.GetRepository<IObjectRepository>().Primary(int.Parse(this.args["MemberId"]), this.@object.Id);
 
-      return this.handler.Storage.GetRepository<IObjectRepository>().Primary(this.@object.Id);
+      return this.requestHandler.Storage.GetRepository<IObjectRepository>().Primary(this.@object.Id);
     }
 
     public override IEnumerable<CachedObject> GetCachedObjects()
     {
       if (this.args.ContainsKey("MemberId"))
-        return this.handler.Storage.GetRepository<ICachedObjectRepository>().Primary(
-          CultureManager.GetCurrentCulture(this.handler.Storage).Id, int.Parse(this.args["MemberId"]), this.cachedObject.ObjectId
+        return this.requestHandler.Storage.GetRepository<ICachedObjectRepository>().Primary(
+          CultureManager.GetCurrentCulture(this.requestHandler.Storage).Id, int.Parse(this.args["MemberId"]), this.cachedObject.ObjectId
         );
 
-      return this.handler.Storage.GetRepository<ICachedObjectRepository>().Primary(
-        CultureManager.GetCurrentCulture(this.handler.Storage).Id, this.cachedObject.ObjectId
+      return this.requestHandler.Storage.GetRepository<ICachedObjectRepository>().Primary(
+        CultureManager.GetCurrentCulture(this.requestHandler.Storage).Id, this.cachedObject.ObjectId
       );
     }
   }

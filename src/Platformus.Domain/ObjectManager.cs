@@ -13,31 +13,31 @@ namespace Platformus.Domain
 {
   public class ObjectManager
   {
-    private IRequestHandler handler;
+    private IRequestHandler requestHandler;
 
     public ObjectManager(IRequestHandler requestHandler)
     {
-      this.handler = handler;
+      this.requestHandler = requestHandler;
     }
 
     public IEnumerable<string> GetDisplayProperties(Object @object)
     {
       List<string> properties = new List<string>();
 
-      Culture defaultCulture = CultureManager.GetDefaultCulture(this.handler.Storage);
+      Culture defaultCulture = CultureManager.GetDefaultCulture(this.requestHandler.Storage);
 
       if (defaultCulture != null)
       {
-        foreach (Member member in this.handler.Storage.GetRepository<IMemberRepository>().FilteredByClassIdInlcudingParentPropertyVisibleInList(@object.ClassId))
+        foreach (Member member in this.requestHandler.Storage.GetRepository<IMemberRepository>().FilteredByClassIdInlcudingParentPropertyVisibleInList(@object.ClassId))
         {
-          Property property = this.handler.Storage.GetRepository<IPropertyRepository>().WithObjectIdAndMemberId(@object.Id, member.Id);
+          Property property = this.requestHandler.Storage.GetRepository<IPropertyRepository>().WithObjectIdAndMemberId(@object.Id, member.Id);
 
           if (property == null)
             properties.Add(string.Empty);
 
           else
           {
-            Localization localization = this.handler.Storage.GetRepository<ILocalizationRepository>().WithDictionaryIdAndCultureId(property.HtmlId, defaultCulture.Id);
+            Localization localization = this.requestHandler.Storage.GetRepository<ILocalizationRepository>().WithDictionaryIdAndCultureId(property.HtmlId, defaultCulture.Id);
 
             if (localization == null)
               properties.Add(string.Empty);

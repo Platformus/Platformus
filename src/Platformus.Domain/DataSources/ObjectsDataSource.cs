@@ -13,12 +13,12 @@ namespace Platformus.Domain.DataSources
   {
     public override IEnumerable<Object> GetObjects()
     {
-      return this.handler.Storage.GetRepository<IObjectRepository>().All().Where(o => o.ClassId == int.Parse(this.args["ClassId"]));
+      return this.requestHandler.Storage.GetRepository<IObjectRepository>().All().Where(o => o.ClassId == int.Parse(this.args["ClassId"]));
     }
 
     public override IEnumerable<CachedObject> GetCachedObjects()
     {
-      return this.handler.Storage.GetRepository<ICachedObjectRepository>().FilteredByCultureId(CultureManager.GetCurrentCulture(this.handler.Storage).Id).Where(o => o.ClassId == int.Parse(this.args["ClassId"]));
+      return this.requestHandler.Storage.GetRepository<ICachedObjectRepository>().FilteredByCultureId(CultureManager.GetCurrentCulture(this.requestHandler.Storage).Id).Where(o => o.ClassId == int.Parse(this.args["ClassId"]));
     }
   }
 }

@@ -13,21 +13,21 @@ namespace Platformus.Menus
 {
   public class CacheManager
   {
-    public IRequestHandler handler;
+    public IRequestHandler requestHandler;
 
     public CacheManager(IRequestHandler requestHandler)
     {
-      this.handler = handler;
+      this.requestHandler = requestHandler;
     }
 
     public void CacheMenu(Menu menu)
     {
-      foreach (Culture culture in this.handler.Storage.GetRepository<ICultureRepository>().NotNeutral())
+      foreach (Culture culture in this.requestHandler.Storage.GetRepository<ICultureRepository>().NotNeutral())
       {
-        CachedMenu cachedMenu = this.handler.Storage.GetRepository<ICachedMenuRepository>().WithKey(culture.Id, menu.Id);
+        CachedMenu cachedMenu = this.requestHandler.Storage.GetRepository<ICachedMenuRepository>().WithKey(culture.Id, menu.Id);
 
         if (cachedMenu == null)
-          this.handler.Storage.GetRepository<ICachedMenuRepository>().Create(this.CacheMenu(culture, menu));
+          this.requestHandler.Storage.GetRepository<ICachedMenuRepository>().Create(this.CacheMenu(culture, menu));
 
         else
         {
@@ -35,18 +35,18 @@ namespace Platformus.Menus
 
           cachedMenu.Code = temp.Code;
           cachedMenu.CachedMenuItems = temp.CachedMenuItems;
-          this.handler.Storage.GetRepository<ICachedMenuRepository>().Edit(cachedMenu);
+          this.requestHandler.Storage.GetRepository<ICachedMenuRepository>().Edit(cachedMenu);
         }
       }
 
-      this.handler.Storage.Save();
+      this.requestHandler.Storage.Save();
     }
 
     private CachedMenu CacheMenu(Culture culture, Menu menu)
     {
       List<CachedMenuItem> cachedMenuItems = new List<CachedMenuItem>();
 
-      foreach (MenuItem menuItem in this.handler.Storage.GetRepository<IMenuItemRepository>().FilteredByMenuId(menu.Id))
+      foreach (MenuItem menuItem in this.requestHandler.Storage.GetRepository<IMenuItemRepository>().FilteredByMenuId(menu.Id))
         cachedMenuItems.Add(this.CacheMenuItem(culture, menuItem));
 
       CachedMenu cachedForm = new CachedMenu();
@@ -65,7 +65,7 @@ namespace Platformus.Menus
     {
       List<CachedMenuItem> cachedChildMenuItems = new List<CachedMenuItem>();
 
-      foreach (MenuItem childMenuItem in this.handler.Storage.GetRepository<IMenuItemRepository>().FilteredByMenuItemId(menuItem.Id))
+      foreach (MenuItem childMenuItem in this.requestHandler.Storage.GetRepository<IMenuItemRepository>().FilteredByMenuItemId(menuItem.Id))
         cachedChildMenuItems.Add(this.CacheMenuItem(culture, childMenuItem));
 
       CachedMenuItem cachedMenuItem = new CachedMenuItem();
@@ -83,7 +83,7 @@ namespace Platformus.Menus
 
     private string GetLocalizationValue(int cultureId, int dictionaryId)
     {
-      Localization localization = this.handler.Storage.GetRepository<ILocalizationRepository>().WithDictionaryIdAndCultureId(dictionaryId, cultureId);
+      Localization localization = this.requestHandler.Storage.GetRepository<ILocalizationRepository>().WithDictionaryIdAndCultureId(dictionaryId, cultureId);
 
       if (localization == null)
         return null;

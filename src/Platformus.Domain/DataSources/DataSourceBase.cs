@@ -10,21 +10,21 @@ namespace Platformus.Domain.DataSources
 {
   public abstract class DataSourceBase : IDataSource
   {
-    protected IRequestHandler handler;
+    protected IRequestHandler requestHandler;
     protected Object @object;
     protected CachedObject cachedObject;
     protected Dictionary<string, string> args;
 
-    public void Initialize(IRequestHandler handler, Object @object, params KeyValuePair<string, string>[] args)
+    public void Initialize(IRequestHandler requestHandler, Object @object, params KeyValuePair<string, string>[] args)
     {
-      this.handler = handler;
+      this.requestHandler = requestHandler;
       this.@object = @object;
       this.args = args.ToDictionary(a => a.Key, a => a.Value);
     }
 
-    public void Initialize(IRequestHandler handler, CachedObject cachedObject, params KeyValuePair<string, string>[] args)
+    public void Initialize(IRequestHandler requestHandler, CachedObject cachedObject, params KeyValuePair<string, string>[] args)
     {
-      this.handler = handler;
+      this.requestHandler = requestHandler;
       this.cachedObject = cachedObject;
       this.args = args.ToDictionary(a => a.Key, a => a.Value);
     }
