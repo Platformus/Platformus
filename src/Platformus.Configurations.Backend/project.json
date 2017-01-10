@@ -5,8 +5,8 @@
   "dependencies": {
     "ExtCore.Data.Abstractions": "1.1.0",
     "ExtCore.Infrastructure": "1.1.0",
-    "Platformus.Barebone.Backend": "1.0.0-alpha12",
-    "Platformus.Configurations": "1.0.0-alpha12"
+    "Platformus.Barebone.Backend": "1.0.0-alpha13",
+    "Platformus.Configurations": "1.0.0-alpha13"
   },
   "description": "Part of the Platformus.Configurations Platformus extension.",
   "frameworks": {
@@ -16,5 +16,5 @@
     "iconUrl": "http://platformus.net/platformus_nuget_icon.png",
     "projectUrl": "http://platformus.net/"
   },
-  "version": "1.0.0-alpha12"
+  "version": "1.0.0-alpha13"
 }
