@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using ExtCore.Data.EntityFramework.SqlServer;
 using Microsoft.EntityFrameworkCore;
+using Platformus.Barebone.Data.Extensions;
 using Platformus.Domain.Data.Abstractions;
 using Platformus.Domain.Data.Models;
 
@@ -30,9 +31,9 @@ namespace Platformus.Domain.Data.EntityFramework.SqlServer
       );
     }
 
-    public IEnumerable<DataSource> FilteredByClassIdRange(int classId, string orderBy, string direction, int skip, int take)
+    public IEnumerable<DataSource> FilteredByClassIdRange(int classId, string orderBy, string direction, int skip, int take, string filter)
     {
-      return this.dbSet.Where(ds => ds.ClassId == classId).OrderBy(ds => ds.CSharpClassName).Skip(skip).Take(take);
+      return this.GetFilteredDataSources(dbSet, classId, filter).OrderBy(orderBy, direction).Skip(skip).Take(take);
     }
 
     public void Create(DataSource dataSource)
@@ -62,9 +63,19 @@ namespace Platformus.Domain.Data.EntityFramework.SqlServer
       this.dbSet.Remove(dataSource);
     }
 
-    public int CountByClassId(int classId)
+    public int CountByClassId(int classId, string filter)
     {
-      return this.dbSet.Count(ds => ds.ClassId == classId);
+      return this.GetFilteredDataSources(dbSet, classId, filter).Count();
+    }
+
+    private IQueryable<DataSource> GetFilteredDataSources(IQueryable<DataSource> dataSources, int classId, string filter)
+    {
+      dataSources = dataSources.Where(ds => ds.ClassId == classId);
+
+      if (string.IsNullOrEmpty(filter))
+        return dataSources;
+
+      return dataSources.Where(ds => ds.CSharpClassName.ToLower().Contains(filter.ToLower()));
     }
   }
 }

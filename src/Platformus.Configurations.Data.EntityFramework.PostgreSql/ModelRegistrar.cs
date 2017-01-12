@@ -14,7 +14,7 @@ namespace Platformus.Configurations.Data.EntityFramework.PostgreSql
       modelBuilder.Entity<Configuration>(etb =>
         {
           etb.HasKey(e => e.Id);
-          etb.Property(e => e.Id).ForNpgsqlUseSequenceHiLo();
+          etb.Property(e => e.Id).ValueGeneratedOnAdd();
           etb.Property(e => e.Code).IsRequired().HasMaxLength(32);
           etb.Property(e => e.Name).IsRequired().HasMaxLength(64);
           etb.ForNpgsqlToTable("Configurations");
@@ -24,7 +24,7 @@ namespace Platformus.Configurations.Data.EntityFramework.PostgreSql
       modelBuilder.Entity<Variable>(etb =>
         {
           etb.HasKey(e => e.Id);
-          etb.Property(e => e.Id).ForNpgsqlUseSequenceHiLo();
+          etb.Property(e => e.Id).ValueGeneratedOnAdd();
           etb.Property(e => e.Code).IsRequired().HasMaxLength(32);
           etb.Property(e => e.Name).IsRequired().HasMaxLength(64);
           etb.Property(e => e.Value).IsRequired().HasMaxLength(1024);

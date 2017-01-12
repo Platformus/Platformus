@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using ExtCore.Data.EntityFramework.SqlServer;
 using Microsoft.EntityFrameworkCore;
+using Platformus.Barebone.Data.Extensions;
 using Platformus.Globalization.Data.Abstractions;
 using Platformus.Globalization.Data.Models;
 
@@ -42,9 +43,9 @@ namespace Platformus.Globalization.Data.EntityFramework.SqlServer
       return this.dbSet.Where(c => !c.IsNeutral).OrderBy(c => c.Name);
     }
 
-    public IEnumerable<Culture> Range(string orderBy, string direction, int skip, int take)
+    public IEnumerable<Culture> Range(string orderBy, string direction, int skip, int take, string filter)
     {
-      return this.dbSet.OrderBy(c => c.Name).Skip(skip).Take(take);
+      return this.GetFilteredCultures(dbSet, filter).OrderBy(orderBy, direction).Skip(skip).Take(take);
     }
 
     public void Create(Culture culture)
@@ -77,9 +78,17 @@ namespace Platformus.Globalization.Data.EntityFramework.SqlServer
       this.dbSet.Remove(culture);
     }
 
-    public int Count()
+    public int Count(string filter)
     {
-      return this.dbSet.Count();
+      return this.GetFilteredCultures(dbSet, filter).Count();
+    }
+
+    private IQueryable<Culture> GetFilteredCultures(IQueryable<Culture> cultures, string filter)
+    {
+      if (string.IsNullOrEmpty(filter))
+        return cultures;
+
+      return cultures.Where(c => c.Name.ToLower().Contains(filter.ToLower()));
     }
   }
 }

@@ -13,11 +13,11 @@ namespace Platformus.Domain.Data.Abstractions
     IEnumerable<Tab> All();
     IEnumerable<Tab> FilteredByClassId(int classId);
     IEnumerable<Tab> FilteredByClassIdInlcudingParent(int classId);
-    IEnumerable<Tab> FilteredByClassRange(int classId, string orderBy, string direction, int skip, int take);
+    IEnumerable<Tab> FilteredByClassIdRange(int classId, string orderBy, string direction, int skip, int take, string filter);
     void Create(Tab tab);
     void Edit(Tab tab);
     void Delete(int id);
     void Delete(Tab tab);
-    int CountByClassId(int classId);
+    int CountByClassId(int classId, string filter);
   }
 }

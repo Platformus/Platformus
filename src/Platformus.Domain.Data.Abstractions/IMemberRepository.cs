@@ -16,11 +16,11 @@ namespace Platformus.Domain.Data.Abstractions
     IEnumerable<Member> FilteredByClassIdPropertyVisibleInList(int classId);
     IEnumerable<Member> FilteredByClassIdInlcudingParentPropertyVisibleInList(int classId);
     IEnumerable<Member> FilteredByRelationClassIdRelationSingleParent(int relationClassId);
-    IEnumerable<Member> FilteredByClassRange(int classId, string orderBy, string direction, int skip, int take);
+    IEnumerable<Member> FilteredByClassIdRange(int classId, string orderBy, string direction, int skip, int take, string filter);
     void Create(Member member);
     void Edit(Member member);
     void Delete(int id);
     void Delete(Member member);
-    int CountByClassId(int classId);
+    int CountByClassId(int classId, string filter);
   }
 }

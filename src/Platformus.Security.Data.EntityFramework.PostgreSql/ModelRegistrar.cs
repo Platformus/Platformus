@@ -14,7 +14,7 @@ namespace Platformus.Security.Data.EntityFramework.PostgreSql
       modelBuilder.Entity<Permission>(etb =>
         {
           etb.HasKey(e => e.Id);
-          etb.Property(e => e.Id).ForNpgsqlUseSequenceHiLo();
+          etb.Property(e => e.Id).ValueGeneratedOnAdd();
           etb.Property(e => e.Code).IsRequired().HasMaxLength(32);
           etb.Property(e => e.Name).IsRequired().HasMaxLength(64);
           etb.ForNpgsqlToTable("Permissions");
@@ -24,7 +24,7 @@ namespace Platformus.Security.Data.EntityFramework.PostgreSql
       modelBuilder.Entity<Role>(etb =>
         {
           etb.HasKey(e => e.Id);
-          etb.Property(e => e.Id).ForNpgsqlUseSequenceHiLo();
+          etb.Property(e => e.Id).ValueGeneratedOnAdd();
           etb.Property(e => e.Code).IsRequired().HasMaxLength(32);
           etb.Property(e => e.Name).IsRequired().HasMaxLength(64);
           etb.ForNpgsqlToTable("Roles");
@@ -41,7 +41,7 @@ namespace Platformus.Security.Data.EntityFramework.PostgreSql
       modelBuilder.Entity<User>(etb =>
         {
           etb.HasKey(e => e.Id);
-          etb.Property(e => e.Id).ForNpgsqlUseSequenceHiLo();
+          etb.Property(e => e.Id).ValueGeneratedOnAdd();
           etb.Property(e => e.Name).IsRequired().HasMaxLength(64);
           etb.ForNpgsqlToTable("Users");
         }
@@ -57,7 +57,7 @@ namespace Platformus.Security.Data.EntityFramework.PostgreSql
       modelBuilder.Entity<CredentialType>(etb =>
         {
           etb.HasKey(e => e.Id);
-          etb.Property(e => e.Id).ForNpgsqlUseSequenceHiLo();
+          etb.Property(e => e.Id).ValueGeneratedOnAdd();
           etb.Property(e => e.Code).IsRequired().HasMaxLength(32);
           etb.Property(e => e.Name).IsRequired().HasMaxLength(64);
           etb.ForNpgsqlToTable("CredentialTypes");
@@ -67,7 +67,7 @@ namespace Platformus.Security.Data.EntityFramework.PostgreSql
       modelBuilder.Entity<Credential>(etb =>
         {
           etb.HasKey(e => e.Id);
-          etb.Property(e => e.Id).ForNpgsqlUseSequenceHiLo();
+          etb.Property(e => e.Id).ValueGeneratedOnAdd();
           etb.Property(e => e.Identifier).IsRequired().HasMaxLength(64);
           etb.Property(e => e.Secret).HasMaxLength(1024);
           etb.ForNpgsqlToTable("Credentials");

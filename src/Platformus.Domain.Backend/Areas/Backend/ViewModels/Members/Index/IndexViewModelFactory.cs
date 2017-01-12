@@ -17,7 +17,7 @@ namespace Platformus.Domain.Backend.ViewModels.Members
     {
     }
 
-    public IndexViewModel Create(int classId, string orderBy, string direction, int skip, int take)
+    public IndexViewModel Create(int classId, string orderBy, string direction, int skip, int take, string filter)
     {
       IMemberRepository memberRepository = this.RequestHandler.Storage.GetRepository<IMemberRepository>();
 
@@ -25,7 +25,7 @@ namespace Platformus.Domain.Backend.ViewModels.Members
       {
         ClassId = classId,
         Grid = new GridViewModelFactory(this.RequestHandler).Create(
-          orderBy, direction, skip, take, memberRepository.CountByClassId(classId),
+          orderBy, direction, skip, take, memberRepository.CountByClassId(classId, filter),
           new[] {
             new GridColumnViewModelFactory(this.RequestHandler).Create("Name", "Name"),
             new GridColumnViewModelFactory(this.RequestHandler).Create("Property Data Type"),
@@ -33,7 +33,7 @@ namespace Platformus.Domain.Backend.ViewModels.Members
             new GridColumnViewModelFactory(this.RequestHandler).Create("Position", "Position"),
             new GridColumnViewModelFactory(this.RequestHandler).CreateEmpty()
           },
-          memberRepository.FilteredByClassRange(classId, orderBy, direction, skip, take).Select(m => new MemberViewModelFactory(this.RequestHandler).Create(m, null)),
+          memberRepository.FilteredByClassIdRange(classId, orderBy, direction, skip, take, filter).Select(m => new MemberViewModelFactory(this.RequestHandler).Create(m, null)),
           "_Member"
         )
       };

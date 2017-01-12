@@ -14,7 +14,7 @@ namespace Platformus.FileManager.Data.EntityFramework.PostgreSql
       modelBuilder.Entity<File>(etb =>
         {
           etb.HasKey(e => e.Id);
-          etb.Property(e => e.Id).ForNpgsqlUseSequenceHiLo();
+          etb.Property(e => e.Id).ValueGeneratedOnAdd();
           etb.Property(e => e.Name).IsRequired().HasMaxLength(64);
           etb.ForNpgsqlToTable("Files");
         }

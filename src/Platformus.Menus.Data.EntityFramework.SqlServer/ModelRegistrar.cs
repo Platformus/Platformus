@@ -22,7 +22,7 @@ namespace Platformus.Menus.Data.EntityFramework.SqlServer
       modelBuilder.Entity<Menu>(etb =>
         {
           etb.HasKey(e => e.Id);
-          etb.Property(e => e.Id).ForSqlServerUseSequenceHiLo();
+          etb.Property(e => e.Id).UseSqlServerIdentityColumn();
           etb.Property(e => e.Code).IsRequired().HasMaxLength(32);
           etb.ForSqlServerToTable("Menus");
         }
@@ -31,7 +31,7 @@ namespace Platformus.Menus.Data.EntityFramework.SqlServer
       modelBuilder.Entity<MenuItem>(etb =>
         {
           etb.HasKey(e => e.Id);
-          etb.Property(e => e.Id).ForSqlServerUseSequenceHiLo();
+          etb.Property(e => e.Id).UseSqlServerIdentityColumn();
           etb.Property(e => e.Url).HasMaxLength(128);
           etb.ForSqlServerToTable("MenuItems");
         }

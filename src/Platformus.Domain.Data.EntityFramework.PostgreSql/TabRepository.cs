@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using ExtCore.Data.EntityFramework.PostgreSql;
 using Microsoft.EntityFrameworkCore;
+using Platformus.Barebone.Data.Extensions;
 using Platformus.Domain.Data.Abstractions;
 using Platformus.Domain.Data.Models;
 
@@ -35,9 +36,9 @@ namespace Platformus.Domain.Data.EntityFramework.PostgreSql
       );
     }
 
-    public IEnumerable<Tab> FilteredByClassRange(int classId, string orderBy, string direction, int skip, int take)
+    public IEnumerable<Tab> FilteredByClassIdRange(int classId, string orderBy, string direction, int skip, int take, string filter)
     {
-      return this.dbSet.Where(t => t.ClassId == classId).OrderBy(t => t.Position).Skip(skip).Take(take);
+      return this.GetFilteredTabs(dbSet, classId, filter).OrderBy(orderBy, direction).Skip(skip).Take(take);
     }
 
     public void Create(Tab tab)
@@ -67,9 +68,19 @@ namespace Platformus.Domain.Data.EntityFramework.PostgreSql
       this.dbSet.Remove(tab);
     }
 
-    public int CountByClassId(int classId)
+    public int CountByClassId(int classId, string filter)
     {
-      return this.dbSet.Count(t => t.ClassId == classId);
+      return this.GetFilteredTabs(dbSet, classId, filter).Count();
+    }
+
+    private IQueryable<Tab> GetFilteredTabs(IQueryable<Tab> tabs, int classId, string filter)
+    {
+      tabs = tabs.Where(t => t.ClassId == classId);
+
+      if (string.IsNullOrEmpty(filter))
+        return tabs;
+
+      return tabs.Where(t => t.Name.ToLower().Contains(filter.ToLower()));
     }
   }
 }

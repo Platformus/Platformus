@@ -17,14 +17,14 @@ namespace Platformus.Domain.Backend.ViewModels.Classes
     {
     }
 
-    public IndexViewModel Create(string orderBy, string direction, int skip, int take)
+    public IndexViewModel Create(string orderBy, string direction, int skip, int take, string filter)
     {
       IClassRepository @classRepository = this.RequestHandler.Storage.GetRepository<IClassRepository>();
 
       return new IndexViewModel()
       {
         Grid = new GridViewModelFactory(this.RequestHandler).Create(
-          orderBy, direction, skip, take, @classRepository.Count(),
+          orderBy, direction, skip, take, @classRepository.Count(filter),
           new[] {
             new GridColumnViewModelFactory(this.RequestHandler).Create("Parent"),
             new GridColumnViewModelFactory(this.RequestHandler).Create("Name", "Name"),
@@ -35,7 +35,7 @@ namespace Platformus.Domain.Backend.ViewModels.Classes
             new GridColumnViewModelFactory(this.RequestHandler).Create("Data sources"),
             new GridColumnViewModelFactory(this.RequestHandler).CreateEmpty()
           },
-          @classRepository.Range(orderBy, direction, skip, take).Select(c => new ClassViewModelFactory(this.RequestHandler).Create(c)),
+          @classRepository.Range(orderBy, direction, skip, take, filter).Select(c => new ClassViewModelFactory(this.RequestHandler).Create(c)),
           "_Class"
         )
       };

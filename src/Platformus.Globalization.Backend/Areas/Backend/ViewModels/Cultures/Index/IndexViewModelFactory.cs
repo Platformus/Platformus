@@ -16,19 +16,19 @@ namespace Platformus.Globalization.Backend.ViewModels.Cultures
     {
     }
 
-    public IndexViewModel Create(string orderBy, string direction, int skip, int take)
+    public IndexViewModel Create(string orderBy, string direction, int skip, int take, string filter)
     {
       ICultureRepository cultureRepository = this.RequestHandler.Storage.GetRepository<ICultureRepository>();
 
       return new IndexViewModel()
       {
         Grid = new GridViewModelFactory(this.RequestHandler).Create(
-          orderBy, direction, skip, take, cultureRepository.Count(),
+          orderBy, direction, skip, take, cultureRepository.Count(filter),
           new[] {
             new GridColumnViewModelFactory(this.RequestHandler).Create("Name", "Name"),
             new GridColumnViewModelFactory(this.RequestHandler).CreateEmpty()
           },
-          cultureRepository.Range(orderBy, direction, skip, take).Select(c => new CultureViewModelFactory(this.RequestHandler).Create(c)),
+          cultureRepository.Range(orderBy, direction, skip, take, filter).Select(c => new CultureViewModelFactory(this.RequestHandler).Create(c)),
           "_Culture"
         )
       };

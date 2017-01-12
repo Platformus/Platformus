@@ -17,20 +17,20 @@ namespace Platformus.Security.Backend.ViewModels.Roles
     {
     }
 
-    public IndexViewModel Create(string orderBy, string direction, int skip, int take)
+    public IndexViewModel Create(string orderBy, string direction, int skip, int take, string filter)
     {
       IRoleRepository roleRepository = this.RequestHandler.Storage.GetRepository<IRoleRepository>();
 
       return new IndexViewModel()
       {
         Grid = new GridViewModelFactory(this.RequestHandler).Create(
-          orderBy, direction, skip, take, roleRepository.Count(),
+          orderBy, direction, skip, take, roleRepository.Count(filter),
           new[] {
             new GridColumnViewModelFactory(this.RequestHandler).Create("Name", "Name"),
             new GridColumnViewModelFactory(this.RequestHandler).Create("Position", "Position"),
             new GridColumnViewModelFactory(this.RequestHandler).CreateEmpty()
           },
-          roleRepository.Range(orderBy, direction, skip, take).Select(r => new RoleViewModelFactory(this.RequestHandler).Create(r)),
+          roleRepository.Range(orderBy, direction, skip, take, filter).Select(r => new RoleViewModelFactory(this.RequestHandler).Create(r)),
           "_Role"
         )
       };

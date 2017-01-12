@@ -11,11 +11,11 @@ namespace Platformus.Security.Data.Abstractions
   {
     Credential WithKey(int id);
     Credential WithCredentialTypeIdAndIdentifierAndSecret(int credentialTypeId, string identifier, string secret);
-    IEnumerable<Credential> Range(int userId, string orderBy, string direction, int skip, int take);
+    IEnumerable<Credential> FilteredByUserIdRange(int userId, string orderBy, string direction, int skip, int take, string filter);
     void Create(Credential credential);
     void Edit(Credential credential);
     void Delete(int id);
     void Delete(Credential credential);
-    int CountByUserId(int userId);
+    int CountByUserId(int userId, string filter);
   }
 }

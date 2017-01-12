@@ -15,11 +15,11 @@ namespace Platformus.Globalization.Data.Abstractions
     Culture Default();
     IEnumerable<Culture> All();
     IEnumerable<Culture> NotNeutral();
-    IEnumerable<Culture> Range(string orderBy, string direction, int skip, int take);
+    IEnumerable<Culture> Range(string orderBy, string direction, int skip, int take, string filter);
     void Create(Culture culture);
     void Edit(Culture culture);
     void Delete(int id);
     void Delete(Culture culture);
-    int Count();
+    int Count(string filter);
   }
 }

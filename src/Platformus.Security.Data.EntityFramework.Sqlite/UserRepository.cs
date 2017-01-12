@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using ExtCore.Data.EntityFramework.Sqlite;
 using Microsoft.EntityFrameworkCore;
+using Platformus.Barebone.Data.Extensions;
 using Platformus.Security.Data.Abstractions;
 using Platformus.Security.Data.Models;
 
@@ -17,9 +18,9 @@ namespace Platformus.Security.Data.EntityFramework.Sqlite
       return this.dbSet.FirstOrDefault(u => u.Id == id);
     }
 
-    public IEnumerable<User> Range(string orderBy, string direction, int skip, int take)
+    public IEnumerable<User> Range(string orderBy, string direction, int skip, int take, string filter)
     {
-      return this.dbSet.OrderBy(u => u.Name).Skip(skip).Take(take);
+      return this.GetFilteredUsers(this.dbSet, filter).OrderBy(orderBy, direction).Skip(skip).Take(take);
     }
 
     public void Create(User user)
@@ -50,9 +51,17 @@ namespace Platformus.Security.Data.EntityFramework.Sqlite
       this.dbSet.Remove(user);
     }
 
-    public int Count()
+    public int Count(string filter)
     {
-      return this.dbSet.Count();
+      return this.GetFilteredUsers(this.dbSet, filter).Count();
+    }
+
+    private IQueryable<User> GetFilteredUsers(IQueryable<User> users, string filter)
+    {
+      if (string.IsNullOrEmpty(filter))
+        return users;
+
+      return users.Where(u => u.Name.ToLower().Contains(filter.ToLower()));
     }
   }
 }

@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using ExtCore.Data.EntityFramework.SqlServer;
 using Microsoft.EntityFrameworkCore;
+using Platformus.Barebone.Data.Extensions;
 using Platformus.Domain.Data.Abstractions;
 using Platformus.Domain.Data.Models;
 
@@ -34,7 +35,7 @@ namespace Platformus.Domain.Data.EntityFramework.SqlServer
 
     public IEnumerable<Object> FilteredByClassIdRange(int classId, string orderBy, string direction, int skip, int take)
     {
-      return this.dbSet.Where(o => o.ClassId == classId).OrderBy(o => o.Url).Skip(skip).Take(take);
+      return this.dbSet.Where(o => o.ClassId == classId).OrderBy(orderBy, direction).Skip(skip).Take(take);
     }
 
     public IEnumerable<Object> Primary(int objectId)

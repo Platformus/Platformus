@@ -3,6 +3,7 @@
   "copyright": "Copyright © 2015 Dmitry Sikorsky",
   "dependencies": {
     "ExtCore.Data.EntityFramework.Sqlite": "1.1.0",
+    "Platformus.Barebone.Data.Extensions": "1.0.0-alpha13",
     "Platformus.Globalization.Data.Abstractions": "1.0.0-alpha13"
   },
   "description": "Part of the Platformus.Globalization Platformus extension.",

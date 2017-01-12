@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using ExtCore.Data.EntityFramework.SqlServer;
 using Microsoft.EntityFrameworkCore;
+using Platformus.Barebone.Data.Extensions;
 using Platformus.Domain.Data.Abstractions;
 using Platformus.Domain.Data.Models;
 
@@ -22,9 +23,9 @@ namespace Platformus.Domain.Data.EntityFramework.SqlServer
       return this.dbSet.OrderBy(dt => dt.Position);
     }
 
-    public IEnumerable<DataType> Range(string orderBy, string direction, int skip, int take)
+    public IEnumerable<DataType> Range(string orderBy, string direction, int skip, int take, string filter)
     {
-      return this.dbSet.OrderBy(dt => dt.Position).Skip(skip).Take(take);
+      return this.GetFilteredDataTypes(dbSet, filter).OrderBy(orderBy, direction).Skip(skip).Take(take);
     }
 
     public void Create(DataType dataType)
@@ -60,9 +61,17 @@ namespace Platformus.Domain.Data.EntityFramework.SqlServer
       this.dbSet.Remove(dataType);
     }
 
-    public int Count()
+    public int Count(string filter)
     {
-      return this.dbSet.Count();
+      return this.GetFilteredDataTypes(dbSet, filter).Count();
+    }
+
+    private IQueryable<DataType> GetFilteredDataTypes(IQueryable<DataType> dataTypes, string filter)
+    {
+      if (string.IsNullOrEmpty(filter))
+        return dataTypes;
+
+      return dataTypes.Where(dt => dt.Name.ToLower().Contains(filter.ToLower()));
     }
   }
 }

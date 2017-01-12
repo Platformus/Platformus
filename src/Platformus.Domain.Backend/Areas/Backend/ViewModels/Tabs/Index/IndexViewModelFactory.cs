@@ -17,7 +17,7 @@ namespace Platformus.Domain.Backend.ViewModels.Tabs
     {
     }
 
-    public IndexViewModel Create(int classId, string orderBy, string direction, int skip, int take)
+    public IndexViewModel Create(int classId, string orderBy, string direction, int skip, int take, string filter)
     {
       ITabRepository tabRepository = this.RequestHandler.Storage.GetRepository<ITabRepository>();
 
@@ -25,13 +25,13 @@ namespace Platformus.Domain.Backend.ViewModels.Tabs
       {
         ClassId = classId,
         Grid = new GridViewModelFactory(this.RequestHandler).Create(
-          orderBy, direction, skip, take, tabRepository.CountByClassId(classId),
+          orderBy, direction, skip, take, tabRepository.CountByClassId(classId, filter),
           new[] {
             new GridColumnViewModelFactory(this.RequestHandler).Create("Name", "Name"),
             new GridColumnViewModelFactory(this.RequestHandler).Create("Position", "Position"),
             new GridColumnViewModelFactory(this.RequestHandler).CreateEmpty()
           },
-          tabRepository.FilteredByClassRange(classId, orderBy, direction, skip, take).Select(t => new TabViewModelFactory(this.RequestHandler).Create(t)),
+          tabRepository.FilteredByClassIdRange(classId, orderBy, direction, skip, take, filter).Select(t => new TabViewModelFactory(this.RequestHandler).Create(t)),
           "_Tab"
         )
       };

@@ -17,20 +17,20 @@ namespace Platformus.Security.Backend.ViewModels.Permissions
     {
     }
 
-    public IndexViewModel Create(string orderBy, string direction, int skip, int take)
+    public IndexViewModel Create(string orderBy, string direction, int skip, int take, string filter)
     {
       IPermissionRepository permissionRepository = this.RequestHandler.Storage.GetRepository<IPermissionRepository>();
 
       return new IndexViewModel()
       {
         Grid = new GridViewModelFactory(this.RequestHandler).Create(
-          orderBy, direction, skip, take, permissionRepository.Count(),
+          orderBy, direction, skip, take, permissionRepository.Count(filter),
           new[] {
             new GridColumnViewModelFactory(this.RequestHandler).Create("Name", "Name"),
             new GridColumnViewModelFactory(this.RequestHandler).Create("Position", "Position"),
             new GridColumnViewModelFactory(this.RequestHandler).CreateEmpty()
           },
-          permissionRepository.Range(orderBy, direction, skip, take).Select(p => new PermissionViewModelFactory(this.RequestHandler).Create(p)),
+          permissionRepository.Range(orderBy, direction, skip, take, filter).Select(p => new PermissionViewModelFactory(this.RequestHandler).Create(p)),
           "_Permission"
         )
       };

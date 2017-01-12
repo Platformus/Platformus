@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using ExtCore.Data.EntityFramework.Sqlite;
 using Microsoft.EntityFrameworkCore;
+using Platformus.Barebone.Data.Extensions;
 using Platformus.FileManager.Data.Abstractions;
 using Platformus.FileManager.Data.Models;
 
@@ -22,9 +23,9 @@ namespace Platformus.FileManager.Data.EntityFramework.Sqlite
       return this.dbSet.OrderBy(f => f.Name);
     }
 
-    public IEnumerable<File> Range(string orderBy, string direction, int skip, int take)
+    public IEnumerable<File> Range(string orderBy, string direction, int skip, int take, string filter)
     {
-      return this.dbSet.OrderBy(f => f.Name).Skip(skip).Take(take);
+      return this.GetFilteredFiles(this.dbSet, filter).OrderBy(orderBy, direction).Skip(skip).Take(take);
     }
 
     public void Create(File file)
@@ -47,9 +48,17 @@ namespace Platformus.FileManager.Data.EntityFramework.Sqlite
       this.dbSet.Remove(file);
     }
 
-    public int Count()
+    public int Count(string filter)
     {
-      return this.dbSet.Count();
+      return this.GetFilteredFiles(this.dbSet, filter).Count();
+    }
+
+    private IQueryable<File> GetFilteredFiles(IQueryable<File> files, string filter)
+    {
+      if (string.IsNullOrEmpty(filter))
+        return files;
+
+      return files.Where(f => f.Name.ToLower().Contains(filter.ToLower()));
     }
   }
 }

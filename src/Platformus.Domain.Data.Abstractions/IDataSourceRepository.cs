@@ -12,11 +12,11 @@ namespace Platformus.Domain.Data.Abstractions
     DataSource WithKey(int id);
     IEnumerable<DataSource> FilteredByClassId(int classId);
     IEnumerable<DataSource> FilteredByClassIdInlcudingParent(int classId);
-    IEnumerable<DataSource> FilteredByClassIdRange(int classId, string orderBy, string direction, int skip, int take);
+    IEnumerable<DataSource> FilteredByClassIdRange(int classId, string orderBy, string direction, int skip, int take, string filter);
     void Create(DataSource dataSource);
     void Edit(DataSource dataSource);
     void Delete(int id);
     void Delete(DataSource dataSource);
-    int CountByClassId(int classId);
+    int CountByClassId(int classId, string filter);
   }
 }

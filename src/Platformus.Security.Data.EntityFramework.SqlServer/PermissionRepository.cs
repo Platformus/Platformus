@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using ExtCore.Data.EntityFramework.SqlServer;
 using Microsoft.EntityFrameworkCore;
+using Platformus.Barebone.Data.Extensions;
 using Platformus.Security.Data.Abstractions;
 using Platformus.Security.Data.Models;
 
@@ -22,9 +23,9 @@ namespace Platformus.Security.Data.EntityFramework.SqlServer
       return this.dbSet.OrderBy(p => p.Position);
     }
 
-    public IEnumerable<Permission> Range(string orderBy, string direction, int skip, int take)
+    public IEnumerable<Permission> Range(string orderBy, string direction, int skip, int take, string filter)
     {
-      return this.dbSet.OrderBy(p => p.Position).Skip(skip).Take(take);
+      return this.GetFilteredPermissions(dbSet, filter).OrderBy(orderBy, direction).Skip(skip).Take(take);
     }
 
     public void Create(Permission permission)
@@ -54,9 +55,17 @@ namespace Platformus.Security.Data.EntityFramework.SqlServer
       this.dbSet.Remove(permission);
     }
 
-    public int Count()
+    public int Count(string filter)
     {
-      return this.dbSet.Count();
+      return this.GetFilteredPermissions(dbSet, filter).Count();
+    }
+
+    private IQueryable<Permission> GetFilteredPermissions(IQueryable<Permission> permissions, string filter)
+    {
+      if (string.IsNullOrEmpty(filter))
+        return permissions;
+
+      return permissions.Where(p => p.Name.ToLower().Contains(filter.ToLower()));
     }
   }
 }

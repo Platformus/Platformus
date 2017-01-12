@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using ExtCore.Data.EntityFramework.Sqlite;
 using Microsoft.EntityFrameworkCore;
+using Platformus.Barebone.Data.Extensions;
 using Platformus.Security.Data.Abstractions;
 using Platformus.Security.Data.Models;
 
@@ -22,9 +23,9 @@ namespace Platformus.Security.Data.EntityFramework.Sqlite
       return this.dbSet.FirstOrDefault(c => c.CredentialTypeId == credentialTypeId && string.Equals(c.Identifier, identifier, System.StringComparison.OrdinalIgnoreCase) && c.Secret == secret);
     }
 
-    public IEnumerable<Credential> Range(int userId, string orderBy, string direction, int skip, int take)
+    public IEnumerable<Credential> FilteredByUserIdRange(int userId, string orderBy, string direction, int skip, int take, string filter)
     {
-      return this.dbSet.Where(c => c.UserId == userId).Skip(skip).Take(take);
+      return this.GetFilteredCredentials(dbSet, userId, filter).OrderBy(orderBy, direction).Skip(skip).Take(take);
     }
 
     public void Create(Credential credential)
@@ -47,9 +48,19 @@ namespace Platformus.Security.Data.EntityFramework.Sqlite
       this.dbSet.Remove(credential);
     }
 
-    public int CountByUserId(int userId)
+    public int CountByUserId(int userId, string filter)
     {
-      return this.dbSet.Count(c => c.UserId == userId);
+      return this.GetFilteredCredentials(dbSet, userId, filter).Count();
+    }
+
+    private IQueryable<Credential> GetFilteredCredentials(IQueryable<Credential> credentials, int userId, string filter)
+    {
+      credentials = credentials.Where(c => c.UserId == userId);
+
+      if (string.IsNullOrEmpty(filter))
+        return credentials;
+
+      return credentials.Where(c => c.Identifier.ToLower().Contains(filter.ToLower()));
     }
   }
 }

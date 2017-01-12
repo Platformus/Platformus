@@ -12,7 +12,7 @@ namespace Platformus.Domain.Data.Abstractions
     Class WithKey(int id);
     Class WithCode(string code);
     IEnumerable<Class> All();
-    IEnumerable<Class> Range(string orderBy, string direction, int skip, int take);
+    IEnumerable<Class> Range(string orderBy, string direction, int skip, int take, string filter);
     IEnumerable<Class> Abstract();
     IEnumerable<Class> Standalone();
     IEnumerable<Class> Embedded();
@@ -20,6 +20,6 @@ namespace Platformus.Domain.Data.Abstractions
     void Edit(Class @class);
     void Delete(int id);
     void Delete(Class @class);
-    int Count();
+    int Count(string filter);
   }
 }

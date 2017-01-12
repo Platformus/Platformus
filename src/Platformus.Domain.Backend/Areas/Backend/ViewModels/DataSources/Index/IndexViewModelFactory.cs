@@ -17,7 +17,7 @@ namespace Platformus.Domain.Backend.ViewModels.DataSources
     {
     }
 
-    public IndexViewModel Create(int classId, string orderBy, string direction, int skip, int take)
+    public IndexViewModel Create(int classId, string orderBy, string direction, int skip, int take, string filter)
     {
       IDataSourceRepository dataSourceRepository = this.RequestHandler.Storage.GetRepository<IDataSourceRepository>();
 
@@ -25,12 +25,12 @@ namespace Platformus.Domain.Backend.ViewModels.DataSources
       {
         ClassId = classId,
         Grid = new GridViewModelFactory(this.RequestHandler).Create(
-          orderBy, direction, skip, take, dataSourceRepository.CountByClassId(classId),
+          orderBy, direction, skip, take, dataSourceRepository.CountByClassId(classId, filter),
           new[] {
-            new GridColumnViewModelFactory(this.RequestHandler).Create("C# class name"),
+            new GridColumnViewModelFactory(this.RequestHandler).Create("C# class name", "CSharpClassName"),
             new GridColumnViewModelFactory(this.RequestHandler).CreateEmpty()
           },
-          dataSourceRepository.FilteredByClassIdRange(classId, orderBy, direction, skip, take).Select(ds => new DataSourceViewModelFactory(this.RequestHandler).Create(ds)),
+          dataSourceRepository.FilteredByClassIdRange(classId, orderBy, direction, skip, take, filter).Select(ds => new DataSourceViewModelFactory(this.RequestHandler).Create(ds)),
           "_DataSource"
         )
       };

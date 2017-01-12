@@ -14,7 +14,7 @@ namespace Platformus.Globalization.Data.EntityFramework.PostgreSql
       modelBuilder.Entity<Dictionary>(etb =>
         {
           etb.HasKey(e => e.Id);
-          etb.Property(e => e.Id).ForNpgsqlUseSequenceHiLo();
+          etb.Property(e => e.Id).ValueGeneratedOnAdd();
           etb.ForNpgsqlToTable("Dictionaries");
         }
       );
@@ -22,7 +22,7 @@ namespace Platformus.Globalization.Data.EntityFramework.PostgreSql
       modelBuilder.Entity<Culture>(etb =>
         {
           etb.HasKey(e => e.Id);
-          etb.Property(e => e.Id).ForNpgsqlUseSequenceHiLo();
+          etb.Property(e => e.Id).ValueGeneratedOnAdd();
           etb.Property(e => e.Code).IsRequired().HasMaxLength(32);
           etb.Property(e => e.Name).IsRequired().HasMaxLength(64);
           etb.ForNpgsqlToTable("Cultures");
@@ -32,7 +32,7 @@ namespace Platformus.Globalization.Data.EntityFramework.PostgreSql
       modelBuilder.Entity<Localization>(etb =>
         {
           etb.HasKey(e => e.Id);
-          etb.Property(e => e.Id).ForNpgsqlUseSequenceHiLo();
+          etb.Property(e => e.Id).ValueGeneratedOnAdd();
           etb.ForNpgsqlToTable("Localizations");
         }
       );

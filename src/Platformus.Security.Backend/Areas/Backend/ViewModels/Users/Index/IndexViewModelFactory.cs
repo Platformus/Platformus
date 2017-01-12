@@ -17,21 +17,21 @@ namespace Platformus.Security.Backend.ViewModels.Users
     {
     }
 
-    public IndexViewModel Create(string orderBy, string direction, int skip, int take)
+    public IndexViewModel Create(string orderBy, string direction, int skip, int take, string filter)
     {
       IUserRepository userRepository = this.RequestHandler.Storage.GetRepository<IUserRepository>();
 
       return new IndexViewModel()
       {
         Grid = new GridViewModelFactory(this.RequestHandler).Create(
-          orderBy, direction, skip, take, userRepository.Count(),
+          orderBy, direction, skip, take, userRepository.Count(filter),
           new[] {
             new GridColumnViewModelFactory(this.RequestHandler).Create("Name", "Name"),
             new GridColumnViewModelFactory(this.RequestHandler).Create("Credentials"),
             new GridColumnViewModelFactory(this.RequestHandler).Create("Created", "Created"),
             new GridColumnViewModelFactory(this.RequestHandler).CreateEmpty()
           },
-          userRepository.Range(orderBy, direction, skip, take).Select(u => new UserViewModelFactory(this.RequestHandler).Create(u)),
+          userRepository.Range(orderBy, direction, skip, take, filter).Select(u => new UserViewModelFactory(this.RequestHandler).Create(u)),
           "_User"
         )
       };

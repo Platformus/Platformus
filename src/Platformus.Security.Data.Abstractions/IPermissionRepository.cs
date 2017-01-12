@@ -11,11 +11,11 @@ namespace Platformus.Security.Data.Abstractions
   {
     Permission WithKey(int id);
     IEnumerable<Permission> All();
-    IEnumerable<Permission> Range(string orderBy, string direction, int skip, int take);
+    IEnumerable<Permission> Range(string orderBy, string direction, int skip, int take, string filter);
     void Create(Permission permission);
     void Edit(Permission permission);
     void Delete(int id);
     void Delete(Permission permission);
-    int Count();
+    int Count(string filter);
   }
 }

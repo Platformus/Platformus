@@ -22,7 +22,7 @@ namespace Platformus.Menus.Data.EntityFramework.PostgreSql
       modelBuilder.Entity<Menu>(etb =>
         {
           etb.HasKey(e => e.Id);
-          etb.Property(e => e.Id).ForNpgsqlUseSequenceHiLo();
+          etb.Property(e => e.Id).ValueGeneratedOnAdd();
           etb.Property(e => e.Code).IsRequired().HasMaxLength(32);
           etb.ForNpgsqlToTable("Menus");
         }
@@ -31,7 +31,7 @@ namespace Platformus.Menus.Data.EntityFramework.PostgreSql
       modelBuilder.Entity<MenuItem>(etb =>
         {
           etb.HasKey(e => e.Id);
-          etb.Property(e => e.Id).ForNpgsqlUseSequenceHiLo();
+          etb.Property(e => e.Id).ValueGeneratedOnAdd();
           etb.Property(e => e.Url).HasMaxLength(128);
           etb.ForNpgsqlToTable("MenuItems");
         }

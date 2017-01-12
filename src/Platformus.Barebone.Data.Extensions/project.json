@@ -2,11 +2,9 @@
   "authors": [ "Dmitry Sikorsky" ],
   "copyright": "Copyright © 2015 Dmitry Sikorsky",
   "dependencies": {
-    "ExtCore.Data.EntityFramework.SqlServer": "1.1.0",
-    "Platformus.Barebone.Data.Extensions": "1.0.0-alpha13",
-    "Platformus.FileManager.Data.Abstractions": "1.0.0-alpha13"
+    "System.Linq.Queryable": "4.3.0"
   },
-  "description": "Part of the Platformus.FileManager Platformus extension.",
+  "description": "Part of the Platformus.Barebone Platformus extension.",
   "frameworks": {
     "netstandard1.6": {}
   },

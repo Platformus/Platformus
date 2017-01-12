@@ -17,20 +17,20 @@ namespace Platformus.Domain.Backend.ViewModels.DataTypes
     {
     }
 
-    public IndexViewModel Create(string orderBy, string direction, int skip, int take)
+    public IndexViewModel Create(string orderBy, string direction, int skip, int take, string filter)
     {
       IDataTypeRepository dataTypeRepository = this.RequestHandler.Storage.GetRepository<IDataTypeRepository>();
 
       return new IndexViewModel()
       {
         Grid = new GridViewModelFactory(this.RequestHandler).Create(
-          orderBy, direction, skip, take, dataTypeRepository.Count(),
+          orderBy, direction, skip, take, dataTypeRepository.Count(filter),
           new[] {
             new GridColumnViewModelFactory(this.RequestHandler).Create("Name", "Name"),
             new GridColumnViewModelFactory(this.RequestHandler).Create("Position", "Position"),
             new GridColumnViewModelFactory(this.RequestHandler).CreateEmpty()
           },
-          dataTypeRepository.Range(orderBy, direction, skip, take).Select(dt => new DataTypeViewModelFactory(this.RequestHandler).Create(dt)),
+          dataTypeRepository.Range(orderBy, direction, skip, take, filter).Select(dt => new DataTypeViewModelFactory(this.RequestHandler).Create(dt)),
           "_DataType"
         )
       };

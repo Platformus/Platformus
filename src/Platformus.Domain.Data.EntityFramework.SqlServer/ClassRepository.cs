@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using ExtCore.Data.EntityFramework.SqlServer;
 using Microsoft.EntityFrameworkCore;
+using Platformus.Barebone.Data.Extensions;
 using Platformus.Domain.Data.Abstractions;
 using Platformus.Domain.Data.Models;
 
@@ -27,16 +28,14 @@ namespace Platformus.Domain.Data.EntityFramework.SqlServer
       return this.dbSet.OrderBy(c => c.Name);
     }
 
-    public IEnumerable<Class> Range(string orderBy, string direction, int skip, int take)
+    public IEnumerable<Class> Range(string orderBy, string direction, int skip, int take, string filter)
     {
-      return this.dbSet.OrderBy(c => c.Name).Skip(skip).Take(take);
+      return this.GetFilteredClasses(dbSet, filter).OrderBy(orderBy, direction).Skip(skip).Take(take);
     }
 
     public IEnumerable<Class> Abstract()
     {
-      // TODO: workaround for #5899
-      //return this.dbSet.Where(c => c.IsAbstract == true).OrderBy(c => c.Name);
-      return this.dbSet.Where(c => c.IsAbstract != null).OrderBy(c => c.Name);
+      return this.dbSet.Where(c => c.IsAbstract == true).OrderBy(c => c.Name);
     }
 
     public IEnumerable<Class> Standalone()
@@ -86,9 +85,17 @@ namespace Platformus.Domain.Data.EntityFramework.SqlServer
       this.dbSet.Remove(@class);
     }
 
-    public int Count()
+    public int Count(string filter)
     {
-      return this.dbSet.Count();
+      return this.GetFilteredClasses(dbSet, filter).Count();
+    }
+
+    private IQueryable<Class> GetFilteredClasses(IQueryable<Class> classes, string filter)
+    {
+      if (string.IsNullOrEmpty(filter))
+        return classes;
+
+      return classes.Where(c => c.Name.ToLower().Contains(filter.ToLower()));
     }
   }
 }

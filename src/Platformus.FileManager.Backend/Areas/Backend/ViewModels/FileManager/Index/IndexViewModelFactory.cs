@@ -17,20 +17,20 @@ namespace Platformus.FileManager.Backend.ViewModels.FileManager
     {
     }
 
-    public IndexViewModel Create(string orderBy, string direction, int skip, int take)
+    public IndexViewModel Create(string orderBy, string direction, int skip, int take, string filter)
     {
       IFileRepository fileRepository = this.RequestHandler.Storage.GetRepository<IFileRepository>();
 
       return new IndexViewModel()
       {
         Grid = new GridViewModelFactory(this.RequestHandler).Create(
-          orderBy, direction, skip, take, fileRepository.Count(),
+          orderBy, direction, skip, take, fileRepository.Count(filter),
           new[] {
             new GridColumnViewModelFactory(this.RequestHandler).Create("Name", "Name"),
             new GridColumnViewModelFactory(this.RequestHandler).Create("Size", "Size"),
             new GridColumnViewModelFactory(this.RequestHandler).CreateEmpty()
           },
-          fileRepository.Range(orderBy, direction, skip, take).Select(f => new FileViewModelFactory(this.RequestHandler).Create(f)),
+          fileRepository.Range(orderBy, direction, skip, take, filter).Select(f => new FileViewModelFactory(this.RequestHandler).Create(f)),
           "_File"
         )
       };

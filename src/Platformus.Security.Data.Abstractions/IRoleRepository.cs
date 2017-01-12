@@ -11,11 +11,11 @@ namespace Platformus.Security.Data.Abstractions
   {
     Role WithKey(int id);
     IEnumerable<Role> All();
-    IEnumerable<Role> Range(string orderBy, string direction, int skip, int take);
+    IEnumerable<Role> Range(string orderBy, string direction, int skip, int take, string filter);
     void Create(Role role);
     void Edit(Role role);
     void Delete(int id);
     void Delete(Role role);
-    int Count();
+    int Count(string filter);
   }
 }

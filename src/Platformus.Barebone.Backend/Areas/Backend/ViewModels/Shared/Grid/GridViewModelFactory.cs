@@ -21,7 +21,8 @@ namespace Platformus.Barebone.Backend.ViewModels.Shared
         Direction = direction,
         Pager = new PagerViewModelFactory(this.RequestHandler).Create(skip, take, total),
         TakeSelector = new TakeSelectorViewModelFactory(this.RequestHandler).Create(take),
-        Filter = new FilterViewModelFactory(this.RequestHandler).Create(null),
+        // TODO: replace with the parameter
+        Filter = new FilterViewModelFactory(this.RequestHandler).Create(this.RequestHandler.HttpContext.Request.Query["filter"]),
         GridColumns = gridColumns,
         Items = items,
         TemplateName = templateName

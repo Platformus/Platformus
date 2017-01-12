@@ -11,11 +11,11 @@ namespace Platformus.FileManager.Data.Abstractions
   {
     File WithKey(int id);
     IEnumerable<File> All();
-    IEnumerable<File> Range(string orderBy, string direction, int skip, int take);
+    IEnumerable<File> Range(string orderBy, string direction, int skip, int take, string filter);
     void Create(File file);
     void Edit(File file);
     void Delete(int id);
     void Delete(File file);
-    int Count();
+    int Count(string filter);
   }
 }

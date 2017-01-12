@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using ExtCore.Data.EntityFramework.PostgreSql;
 using Microsoft.EntityFrameworkCore;
+using Platformus.Barebone.Data.Extensions;
 using Platformus.Domain.Data.Abstractions;
 using Platformus.Domain.Data.Models;
 
@@ -37,9 +38,7 @@ namespace Platformus.Domain.Data.EntityFramework.PostgreSql
 
     public IEnumerable<Member> FilteredByClassIdPropertyVisibleInList(int classId)
     {
-      // TODO: workaround for #5899
-      //return this.dbSet.Where(m => m.ClassId == classId && m.IsPropertyVisibleInList == true).OrderBy(m => m.Position);
-      return this.dbSet.Where(m => m.ClassId == classId && m.IsPropertyVisibleInList != null).OrderBy(m => m.Position);
+      return this.dbSet.Where(m => m.ClassId == classId && m.IsPropertyVisibleInList == true).OrderBy(m => m.Position);
     }
 
     public IEnumerable<Member> FilteredByClassIdInlcudingParentPropertyVisibleInList(int classId)
@@ -52,14 +51,12 @@ namespace Platformus.Domain.Data.EntityFramework.PostgreSql
 
     public IEnumerable<Member> FilteredByRelationClassIdRelationSingleParent(int relationClassId)
     {
-      // TODO: workaround for #5899
-      //return this.dbSet.Where(m => m.RelationClassId == relationClassId && m.IsRelationSingleParent == true).OrderBy(m => m.Position);
-      return this.dbSet.Where(m => m.RelationClassId == relationClassId && m.IsRelationSingleParent != null).OrderBy(m => m.Position);
+      return this.dbSet.Where(m => m.RelationClassId == relationClassId && m.IsRelationSingleParent == true).OrderBy(m => m.Position);
     }
 
-    public IEnumerable<Member> FilteredByClassRange(int classId, string orderBy, string direction, int skip, int take)
+    public IEnumerable<Member> FilteredByClassIdRange(int classId, string orderBy, string direction, int skip, int take, string filter)
     {
-      return this.dbSet.Where(m => m.ClassId == classId).OrderBy(m => m.Position).Skip(skip).Take(take);
+      return this.GetFilteredMembers(dbSet, classId, filter).OrderBy(orderBy, direction).Skip(skip).Take(take);
     }
 
     public void Create(Member member)
@@ -94,9 +91,19 @@ namespace Platformus.Domain.Data.EntityFramework.PostgreSql
       this.dbSet.Remove(member);
     }
 
-    public int CountByClassId(int classId)
+    public int CountByClassId(int classId, string filter)
     {
-      return this.dbSet.Count(m => m.ClassId == classId);
+      return this.GetFilteredMembers(dbSet, classId, filter).Count();
+    }
+
+    private IQueryable<Member> GetFilteredMembers(IQueryable<Member> members, int classId, string filter)
+    {
+      members = members.Where(m => m.ClassId == classId);
+
+      if (string.IsNullOrEmpty(filter))
+        return members;
+
+      return members.Where(m => m.Name.ToLower().Contains(filter.ToLower()));
     }
   }
 }

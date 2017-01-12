@@ -10,11 +10,11 @@ namespace Platformus.Security.Data.Abstractions
   public interface IUserRepository : IRepository
   {
     User WithKey(int id);
-    IEnumerable<User> Range(string orderBy, string direction, int skip, int take);
+    IEnumerable<User> Range(string orderBy, string direction, int skip, int take, string filter);
     void Create(User user);
     void Edit(User user);
     void Delete(int id);
     void Delete(User user);
-    int Count();
+    int Count(string filter);
   }
 }

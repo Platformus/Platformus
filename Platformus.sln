@@ -144,6 +144,8 @@ Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "Platformus.WebApplication",
 EndProject
 Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "Platformus.Domain.Api", "src\Platformus.Domain.Api\Platformus.Domain.Api.xproj", "{2353801A-6144-484A-9ECA-99C91036BBBB}"
 EndProject
+Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "Platformus.Barebone.Data.Extensions", "src\Platformus.Barebone.Data.Extensions\Platformus.Barebone.Data.Extensions.xproj", "{2533A794-B2AA-44D4-B3B9-4EAE76B893DA}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -386,6 +388,10 @@ Global
 		{2353801A-6144-484A-9ECA-99C91036BBBB}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2353801A-6144-484A-9ECA-99C91036BBBB}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2353801A-6144-484A-9ECA-99C91036BBBB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2533A794-B2AA-44D4-B3B9-4EAE76B893DA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2533A794-B2AA-44D4-B3B9-4EAE76B893DA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2533A794-B2AA-44D4-B3B9-4EAE76B893DA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2533A794-B2AA-44D4-B3B9-4EAE76B893DA}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -458,6 +464,7 @@ Global
 		{A85253F8-48B2-4884-80F7-46E747F05197} = {D8340F5D-3745-4DA9-BF59-D949AA791A73}
 		{0942191A-A90C-440C-BDA6-7565E21547AA} = {0D7AEFA3-ABB0-4AF1-A4C1-F8E05C241753}
 		{2353801A-6144-484A-9ECA-99C91036BBBB} = {00C2D90C-A4B3-49F8-8D9A-3249CBDCB625}
+		{2533A794-B2AA-44D4-B3B9-4EAE76B893DA} = {C328CBFD-E093-4093-A45A-84CFAE344714}
 	EndGlobalSection
 	GlobalSection(SolutionConfigurationsPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
