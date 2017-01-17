@@ -8,7 +8,6 @@
   <meta name="description" content="" />
   <meta name="keywords" content="" />
   @await Component.InvokeAsync("BackendStyleSheets")
-  @await Component.InvokeAsync("BackendScripts")
 </head>
 <body>
   <div class="master-detail">
@@ -41,5 +40,13 @@
       </div>
     </div>
   </div>
+  @await Component.InvokeAsync("BackendScripts")
+  <script>
+    $(document).ready(
+      function () {
+        @RenderSection("startUpScript", false)
+      }
+    );
+  </script>
 </body>
 </html>

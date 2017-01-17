@@ -1,0 +1,54 @@
+﻿@* Copyright © 2017 Dmitry Sikorsky. All rights reserved. *@
+@* Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information. *@
+@model Platformus.Designers.Backend.ViewModels.Views.IndexViewModel
+@{
+  this.ViewBag.Title = "Views";
+
+  if (this.Model.Subdirectory != null)
+  {
+    this.ViewBag.Title += "\\" + this.Model.Subdirectory.Name;
+  }
+
+  this.ViewBag.ActiveMenuItem = "views";
+  this.ViewBag.HasSecondaryMaster = true;
+}
+@{
+  string path = "\\";
+
+  if (this.Model.Subdirectory != null)
+  {
+    path += this.Model.Subdirectory.Name;
+  }
+}
+@section title {
+  @path
+}
+@Html.Partial("_Grid", this.Model.Grid)
+<div class="master-detail__detail-buttons buttons">
+  <a class="buttons__button button button--positive" href="@this.Context.Request.CombineUrl("/backend/views/create")">Create view</a>
+</div>
+@section side
+{
+  <div class="master-detail__master master-detail__master--secondary">
+    <div class="master-detail__master-header master-detail__master-header--secondary">
+      Views
+    </div>
+    <div class="master-detail__master-content">
+      <div class="menu">
+        <div class="menu__group">
+          <div class="menu__group-header">
+            Subdirectories
+          </div>
+          <div class="menu__group-content">
+            @foreach (var subdirectory in this.Model.Subdirectories)
+            {
+              <a class="master-detail__master-menu-item--secondary @(this.Model.Subdirectory != null && this.Model.Subdirectory.Name.ToLower() == subdirectory.Name.ToLower() ? "master-detail__master-menu-item--secondary-active" : null) menu__item" href="/backend/views?subdirectory=@subdirectory.Name.ToLower()">
+                @subdirectory.Name
+              </a>
+            }
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+}

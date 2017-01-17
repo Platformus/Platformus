@@ -10,7 +10,7 @@
     _callback = callback;
 
     return platformus.forms.baseForm.show(
-      "/backend/content/objectselectorform?classid=" + relationClassId + "&objectids=" + objectIds,
+      "/backend/domain/objectselectorform?classid=" + relationClassId + "&objectids=" + objectIds,
       defineHandlers,
       "object-selector-pop-up-form"
     );

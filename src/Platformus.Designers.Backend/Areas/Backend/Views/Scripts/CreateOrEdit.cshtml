@@ -1,0 +1,29 @@
+﻿@* Copyright © 2017 Dmitry Sikorsky. All rights reserved. *@
+@* Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information. *@
+@model Platformus.Designers.Backend.ViewModels.Scripts.CreateOrEditViewModel
+@{
+  this.ViewBag.Title = (string.IsNullOrEmpty(this.Model.Filename) ? "Create" : "Edit") + " Script";
+  this.ViewBag.ActiveMenuItem = "scripts";
+}
+<h1>@ViewBag.Title</h1>
+<form class="form" method="post">
+  <single-line-text-field asp-for="Filename" />
+  <div class="form__field field">
+    <label class="field__label label">Content</label>
+    <div class="code-editor">
+      <div class="code-editor__widget" id="codeEditor">@Model.Content</div>
+    </div>
+    <input id="content" name="content" type="hidden" value="@Model.Content" />
+  </div>
+  <div class="form__buttons buttons">
+    <button class="buttons__button button button--positive" type="submit">Save</button>
+    <a class="buttons__button button button--neutral" href="@this.Context.Request.CombineUrl("/backend/scripts")">Cancel</a>
+  </div>
+</form>
+@section startUpScript {
+  var codeEditor = ace.edit("codeEditor");
+
+  codeEditor.setTheme("ace/theme/chrome");
+  codeEditor.getSession().setMode("ace/mode/javascript");
+  codeEditor.getSession().on("change", function () { $("#content").val(codeEditor.getSession().getValue()); });
+}

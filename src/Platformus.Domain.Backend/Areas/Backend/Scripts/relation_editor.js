@@ -85,7 +85,7 @@
     var identity = "relationMember" + member.id;
 
     $.get(
-      "/backend/content/getobjectdisplayvalues?objectids=" + $("#" + identity).val(),
+      "/backend/domain/getobjectdisplayvalues?objectids=" + $("#" + identity).val(),
       function (result) {
         $("#" + identity + "DisplayValues").html(result);
       }

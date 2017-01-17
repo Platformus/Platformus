@@ -22,7 +22,7 @@
   platformus.forms.imageUploaderForm.show = function (callback) {
     _callback = callback;
 
-    return platformus.forms.baseForm.show("/backend/content/imageuploaderform", defineHandlers, "image-uploader-pop-up-form");
+    return platformus.forms.baseForm.show("/backend/domain/imageuploaderform", defineHandlers, "image-uploader-pop-up-form");
   };
 
   platformus.forms.imageUploaderForm.uploadingStarted = function (checkIsFinished) {

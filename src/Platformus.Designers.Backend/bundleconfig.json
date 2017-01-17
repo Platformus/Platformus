@@ -1,0 +1,8 @@
+﻿[
+  {
+    "outputFileName": "wwwroot/areas/backend/css/platformus.designers.min.css",
+    "inputFiles": [
+      "Areas/Backend/Styles/code_editor.css"
+    ]
+  }
+]
