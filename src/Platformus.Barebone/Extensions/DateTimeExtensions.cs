@@ -9,7 +9,7 @@ namespace Platformus
   {
     public static long ToUnixTimestamp(this DateTime value)
     {
-      return (long)(value - new DateTime(1970, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc).ToLocalTime()).TotalSeconds;
+      return (long)value.ToUniversalTime().Subtract(new DateTime(1970, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc)).TotalSeconds;
     }
   }
 }
