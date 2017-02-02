@@ -48,7 +48,7 @@
   }
 
   function showMaxLengthIndicator(maxLengthIndicator) {
-    maxLengthIndicator.animate({ opacity: 1 }, "fast");
+    maxLengthIndicator.fadeIn("fast");
   }
 
   function bindMaxLengthIndicatorToControl(maxLengthIndicator, control) {
@@ -71,8 +71,7 @@
   }
 
   function hideAndRemoveMaxLengthIndicator(maxLengthIndicator) {
-    maxLengthIndicator.animate(
-      { opacity: 0 },
+    maxLengthIndicator.fadeOut(
       "fast",
       function () {
         maxLengthIndicator.remove();

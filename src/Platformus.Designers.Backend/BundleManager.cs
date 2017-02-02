@@ -12,11 +12,17 @@ namespace Platformus.Designers.Backend
 {
   public static class BandleManager
   {
-    public static void Bundle(IRequestHandler requestHandler, string filename)
+    public static void RebuildAllBundles(IRequestHandler requestHandler)
+    {
+      foreach (FileInfo bundleFileInfo in FileSystemRepository.GetFiles(PathManager.GetBundlesPath(requestHandler), "*.json", null))
+        BandleManager.RebuildBundle(requestHandler, bundleFileInfo.Name);
+    }
+
+    public static void RebuildBundle(IRequestHandler requestHandler, string bundleFilename)
     {
       try
       {
-        dynamic bundle = JsonConvert.DeserializeObject(File.ReadAllText(PathManager.GetBundlePath(requestHandler, filename)));
+        dynamic bundle = JsonConvert.DeserializeObject(File.ReadAllText(PathManager.GetBundlePath(requestHandler, bundleFilename)));
         string outputFile = bundle.outputFile;
         IEnumerable<string> inputFiles = bundle.inputFiles.ToObject<IEnumerable<string>>();
         string input = BandleManager.ConcatFiles(requestHandler, inputFiles);

@@ -1,0 +1,96 @@
+﻿/* Copyright © 2017 Dmitry Sikorsky. All rights reserved. */
+/* Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information. */
+
+.calendar {
+  background: #323232;
+  text-align: center;
+}
+
+.calendar__header {
+  color: #fff;
+  padding: 5px 0;
+  position: relative;
+}
+
+.calendar__previous-month {
+  background: url(/wwwroot.areas.backend.images.previous_month.png) no-repeat;
+  cursor: pointer;
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 30px;
+  height: 30px;
+}
+
+.calendar__previous-month:hover {
+  background-color: #3c3c3c;
+}
+
+.calendar__next-month {
+  background: url(/wwwroot.areas.backend.images.next_month.png) no-repeat;
+  cursor: pointer;
+  position: absolute;
+  right: 0;
+  top: 0;
+  width: 30px;
+  height: 30px;
+}
+
+.calendar__next-month:hover {
+  background-color: #3c3c3c;
+}
+
+.calendar__month {
+  display: table;
+  width: 100%;
+}
+
+.calendar__week {
+  display: table-row;
+}
+
+.calendar__day {
+  text-decoration: none;
+  color: #fff;
+  display: table-cell;
+  padding: 5px 0;
+}
+
+.calendar__day:hover {
+  background-color: #3c3c3c;
+  color: #fff;
+}
+
+.calendar__day--today {
+  background: #0096fa;
+}
+
+.calendar__day--today:hover {
+  background: #5abeff;
+}
+
+.calendar__day--outer {
+  color: #666;
+}
+
+.calendar__day--outer:hover {
+  color: #666;
+}
+
+@media
+only screen and (-webkit-min-device-pixel-ratio: 2),
+only screen and (   min--moz-device-pixel-ratio: 2),
+only screen and (     -o-min-device-pixel-ratio: 2/1),
+only screen and (        min-device-pixel-ratio: 2),
+only screen and (                min-resolution: 192dpi),
+only screen and (                min-resolution: 2dppx) {
+  .calendar__previous-month {
+    background-image: url(/wwwroot.areas.backend.images.previous_month@2x.png);
+    background-size: 30px;
+  }
+
+  .calendar__next-month {
+    background-image: url(/wwwroot.areas.backend.images.next_month@2x.png);
+    background-size: 30px;
+  }
+}

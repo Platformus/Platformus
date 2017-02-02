@@ -35,7 +35,7 @@ namespace Platformus.Barebone.Backend
     {
       TagBuilder tb = new TagBuilder("a");
 
-      tb.AddCssClass("drop-down-list-item drop-down-list-item--selected");
+      tb.AddCssClass("drop-down-list__item drop-down-list__item--selected");
       tb.MergeAttribute("href", "#");
       tb.InnerHtml.Clear();
       tb.InnerHtml.AppendHtml(this.GetSelectedOptionText(viewContext, modelExpression, options));
@@ -46,7 +46,7 @@ namespace Platformus.Barebone.Backend
     {
       TagBuilder tb = new TagBuilder("div");
 
-      tb.AddCssClass("drop-down-list-items");
+      tb.AddCssClass("drop-down-list__items");
       tb.InnerHtml.Clear();
 
       foreach (Option option in options)
@@ -59,7 +59,7 @@ namespace Platformus.Barebone.Backend
     {
       TagBuilder tb = new TagBuilder("a");
 
-      tb.AddCssClass("drop-down-list-item");
+      tb.AddCssClass("drop-down-list__item");
       tb.MergeAttribute("data-value", option.Value);
       tb.MergeAttribute("href", "#");
       tb.InnerHtml.Clear();

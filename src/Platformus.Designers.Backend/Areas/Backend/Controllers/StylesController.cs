@@ -37,6 +37,7 @@ namespace Platformus.Designers.Backend.Controllers
           System.IO.File.Delete(PathManager.GetStylePath(this, createOrEdit.Id));
 
         System.IO.File.WriteAllText(PathManager.GetStylePath(this, createOrEdit.Filename), createOrEdit.Content);
+        BandleManager.RebuildAllBundles(this);
         return this.RedirectToAction("Index");
       }
 

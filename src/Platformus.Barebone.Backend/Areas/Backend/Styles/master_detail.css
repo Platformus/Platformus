@@ -81,11 +81,11 @@
 }
 
 .master-detail__master-menu-item--user {
-  color: #ccc;
+  color: #666;
 }
 
 .master-detail__master-menu-item--user:hover {
-  color: #ccc;
+  color: #666;
 }
 
 .master-detail__detail {

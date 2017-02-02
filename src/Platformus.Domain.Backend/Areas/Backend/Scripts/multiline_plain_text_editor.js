@@ -51,6 +51,11 @@
       textArea.addClass("field__text-area--multilingual");
     }
 
-    return textArea.addClass("text-area").attr("id", identity).attr("name", identity).html(localization.value);
+    return textArea
+      .addClass("text-area")
+      .attr("id", identity)
+      .attr("name", identity)
+      .attr("data-culture", localization.culture.code)
+      .html(localization.value);
   }
 })(window.platformus = window.platformus || {});

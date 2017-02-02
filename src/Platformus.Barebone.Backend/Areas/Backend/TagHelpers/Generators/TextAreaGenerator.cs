@@ -23,6 +23,12 @@ namespace Platformus.Barebone.Backend
       tb.MergeAttribute("id", this.GetIdentity(modelExpression, localization));
       tb.MergeAttribute("name", this.GetIdentity(modelExpression, localization));
 
+      if (localization != null)
+        tb.MergeAttribute("data-culture", localization.Culture.Code);
+
+      this.MergeRequiredAttribute(tb, modelExpression, "text-area--required");
+      this.MergeStringLengthAttribute(tb, modelExpression);
+
       string value = this.GetValue(viewContext, modelExpression, localization);
 
       if (!string.IsNullOrEmpty(value))
@@ -31,8 +37,6 @@ namespace Platformus.Barebone.Backend
         tb.InnerHtml.Append(value);
       }
 
-      this.MergeRequiredAttribute(tb, modelExpression, "text-area--required");
-      this.MergeStringLengthAttribute(tb, modelExpression);
       return tb;
     }
   }

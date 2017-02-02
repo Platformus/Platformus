@@ -31,6 +31,9 @@ namespace Platformus.Barebone.Backend
       if (!string.IsNullOrEmpty(value))
         tb.MergeAttribute("value", value);
 
+      if (localization != null)
+        tb.MergeAttribute("data-culture", localization.Culture.Code);
+
       this.MergeRequiredAttribute(tb, modelExpression, "text-box--required");
       this.MergeStringLengthAttribute(tb, modelExpression);
       return tb;

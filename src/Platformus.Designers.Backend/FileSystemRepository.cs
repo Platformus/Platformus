@@ -14,10 +14,17 @@ namespace Platformus.Designers.Backend
       return Directory.GetDirectories(path).Select(p => new DirectoryInfo(p));
     }
 
-    public static IEnumerable<FileInfo> GetFiles(string path, string searchPattern, string filter, string orderBy, string direction, int skip, int take)
+    public static IEnumerable<FileInfo> GetFiles(string path, string searchPattern, string filter)
     {
       string[] paths = FileSystemRepository.GetFilteredFiles(path, searchPattern, filter);
       IEnumerable<FileInfo> files = paths.Select(p => new FileInfo(p));
+
+      return files;
+    }
+
+    public static IEnumerable<FileInfo> GetFiles(string path, string searchPattern, string filter, string orderBy, string direction, int skip, int take)
+    {
+      IEnumerable<FileInfo> files = FileSystemRepository.GetFiles(path, searchPattern, filter);
 
       if (orderBy == "filename" && direction == "asc")
         files = files.OrderBy(f => f.Name);

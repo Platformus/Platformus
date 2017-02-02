@@ -1,28 +1,18 @@
-﻿/* Copyright © 2015 Dmitry Sikorsky. All rights reserved. */
+﻿/* Copyright © 2017 Dmitry Sikorsky. All rights reserved. */
 /* Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information. */
 
-.max-length-indicator {
-  background: #ffff96;
-  cursor: default;
+.picker {
   display: none;
   position: absolute;
-  min-width: 50px;
-  z-index: 10;
 }
 
-.max-length-indicator__arrow {
-  background: url(/wwwroot.areas.backend.images.max_length_indicator.png) center no-repeat;
+.picker__arrow {
+  background: url(/wwwroot.areas.backend.images.picker.png) no-repeat;
   position: absolute;
   left: -5px;
-  top: 0;
+  top: 10px;
   width: 5px;
-  height: 100%;
-}
-
-.max-length-indicator__remaining-length {
-  font-style: italic;
-  line-height: 30px;
-  text-align: center;
+  height: 10px;
 }
 
 @media
@@ -32,8 +22,8 @@ only screen and (     -o-min-device-pixel-ratio: 2/1),
 only screen and (        min-device-pixel-ratio: 2),
 only screen and (                min-resolution: 192dpi),
 only screen and (                min-resolution: 2dppx) {
-  .max-length-indicator__arrow {
-    background: url(/wwwroot.areas.backend.images.max_length_indicator@2x.png) center no-repeat;
+  .picker__arrow {
+    background-image: url(/wwwroot.areas.backend.images.picker@2x.png);
     background-size: 5px 10px;
   }
 }

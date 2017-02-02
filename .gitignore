@@ -4,12 +4,9 @@ bin/
 obj/
 src/Platformus.Barebone.Backend/wwwroot/areas/backend/css
 src/Platformus.Barebone.Backend/wwwroot/areas/backend/js
-src/Platformus.Barebone.Backend/node_modules/
-src/Platformus.Content.Backend/wwwroot/areas/backend/css
-src/Platformus.Content.Backend/wwwroot/areas/backend/js
-src/Platformus.Content.Backend/node_modules/
-src/Platformus.Static.Backend/wwwroot/areas/backend/css
-src/Platformus.Static.Backend/wwwroot/areas/backend/js
-src/Platformus.Static.Backend/node_modules/
+src/Platformus.Domain.Backend/wwwroot/areas/backend/css
+src/Platformus.Domain.Backend/wwwroot/areas/backend/js
+src/Platformus.FileManager.Backend/wwwroot/areas/backend/css
+src/Platformus.FileManager.Backend/wwwroot/areas/backend/js
 *.xproj.user
 *.lock.json

@@ -20,6 +20,7 @@
       "Areas/Backend/Scripts/single_line_plain_text_editor.js",
       "Areas/Backend/Scripts/multiline_plain_text_editor.js",
       "Areas/Backend/Scripts/html_editor.js",
+      "Areas/Backend/Scripts/date_editor.js",
       "Areas/Backend/Scripts/image_editor.js",
       "Areas/Backend/Scripts/relation_editor.js"
     ],

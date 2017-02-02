@@ -1,13 +1,14 @@
 ﻿@* Copyright © 2015 Dmitry Sikorsky. All rights reserved. *@
 @* Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information. *@
 <!DOCTYPE html>
-<html>
+<html lang="@System.Globalization.CultureInfo.CurrentCulture.TwoLetterISOLanguageName" data-culture="@System.Globalization.CultureInfo.CurrentCulture.TwoLetterISOLanguageName">
 <head>
   <meta charset="utf-8" />
   <title>@ViewBag.Title | Platformus CMS</title>
   <meta name="description" content="" />
   <meta name="keywords" content="" />
   @await Component.InvokeAsync("BackendStyleSheets")
+  @await Component.InvokeAsync("BackendScripts")
 </head>
 <body>
   <div class="master-detail">
@@ -40,7 +41,6 @@
       </div>
     </div>
   </div>
-  @await Component.InvokeAsync("BackendScripts")
   <script>
     $(document).ready(
       function () {

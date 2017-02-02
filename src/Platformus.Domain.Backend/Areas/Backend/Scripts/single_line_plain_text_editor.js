@@ -51,6 +51,12 @@
       textBox.addClass("field__text-box--multilingual");
     }
 
-    return textBox.addClass("text-box").attr("id", identity).attr("name", identity).attr("type", "text").attr("value", localization.value);
+    return textBox
+      .addClass("text-box")
+      .attr("id", identity)
+      .attr("name", identity)
+      .attr("type", "text")
+      .attr("value", localization.value)
+      .attr("data-culture", localization.culture.code);
   }
 })(window.platformus = window.platformus || {});
