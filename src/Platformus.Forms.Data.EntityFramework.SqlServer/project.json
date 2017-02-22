@@ -3,7 +3,7 @@
   "copyright": "Copyright © 2015 Dmitry Sikorsky",
   "dependencies": {
     "ExtCore.Data.EntityFramework.SqlServer": "1.1.0",
-    "Platformus.Forms.Data.Abstractions": "1.0.0-alpha13"
+    "Platformus.Forms.Data.Abstractions": "1.0.0-alpha14"
   },
   "description": "Part of the Platformus.Forms Platformus extension.",
   "frameworks": {
@@ -13,5 +13,5 @@
     "iconUrl": "http://platformus.net/platformus_nuget_icon.png",
     "projectUrl": "http://platformus.net/"
   },
-  "version": "1.0.0-alpha13"
+  "version": "1.0.0-alpha14"
 }

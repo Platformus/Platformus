@@ -1,0 +1,18 @@
+﻿/* Copyright © 2015 Dmitry Sikorsky. All rights reserved. */
+/* Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information. */
+
+.intro {
+  text-align: center;
+  padding-top: 15%;
+}
+
+.intro__logo {
+  width: 15%;
+}
+
+.intro__title {
+}
+
+.intro__buttons {
+  margin-top: 20px;
+}

@@ -1,0 +1,11 @@
+﻿[
+  {
+    "outputFileName": "wwwroot/css/platformus.installer.min.css",
+    "inputFiles": [
+      "Styles/global.css",
+      "Styles/button.css",
+      "Styles/buttons.css",
+      "Styles/intro.css"
+    ]
+  }
+]

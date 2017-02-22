@@ -113,17 +113,20 @@ namespace Platformus.Globalization
             bool specifyCultureInUrl = true;
             IStorage storage = this.serviceProvider.GetService<IStorage>();
 
-            if (storage != null)
+            if (storage == null)
             {
-              Culture defaultCulture = CultureManager.GetDefaultCulture(storage);
-
-              if (defaultCulture != null)
-                defaultCultureCode = defaultCulture.Code;
-
-              specifyCultureInUrl = new ConfigurationManager(storage)["Globalization", "SpecifyCultureInUrl"] != "no";
+              routeBuilder.MapRoute(name: "Default", template: "", defaults: new { controller = "Installation", action = "Index" });
+              return;
             }
 
-            string template = "";
+            Culture defaultCulture = CultureManager.GetDefaultCulture(storage);
+
+            if (defaultCulture != null)
+              defaultCultureCode = defaultCulture.Code;
+
+            specifyCultureInUrl = new ConfigurationManager(storage)["Globalization", "SpecifyCultureInUrl"] != "no";
+
+            string template = string.Empty;
 
             if (specifyCultureInUrl)
               template = "{culture=" + defaultCultureCode + "}/{*url}";
