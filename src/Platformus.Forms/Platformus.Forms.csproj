@@ -1,0 +1,21 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <Description>Part of the Platformus.Forms Platformus extension.</Description>
+    <Copyright>Copyright © 2015 Dmitry Sikorsky</Copyright>
+    <VersionPrefix>1.0.0-alpha14</VersionPrefix>
+    <Authors>Dmitry Sikorsky</Authors>
+    <TargetFramework>netstandard1.6</TargetFramework>
+    <AssemblyName>Platformus.Forms</AssemblyName>
+    <PackageId>Platformus.Forms</PackageId>
+    <PackageIconUrl>http://platformus.net/platformus_nuget_icon.png</PackageIconUrl>
+    <PackageProjectUrl>http://platformus.net/</PackageProjectUrl>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Platformus.Barebone\Platformus.Barebone.csproj" />
+    <ProjectReference Include="..\Platformus.Forms.Data.Abstractions\Platformus.Forms.Data.Abstractions.csproj" />
+    <ProjectReference Include="..\Platformus.Globalization.Data.Abstractions\Platformus.Globalization.Data.Abstractions.csproj" />
+  </ItemGroup>
+
+</Project>

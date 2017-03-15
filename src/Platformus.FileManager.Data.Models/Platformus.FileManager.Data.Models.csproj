@@ -1,0 +1,19 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <Description>Part of the Platformus.FileManager Platformus extension.</Description>
+    <Copyright>Copyright © 2015 Dmitry Sikorsky</Copyright>
+    <VersionPrefix>1.0.0-alpha14</VersionPrefix>
+    <Authors>Dmitry Sikorsky</Authors>
+    <TargetFramework>netstandard1.6</TargetFramework>
+    <AssemblyName>Platformus.FileManager.Data.Models</AssemblyName>
+    <PackageId>Platformus.FileManager.Data.Models</PackageId>
+    <PackageIconUrl>http://platformus.net/platformus_nuget_icon.png</PackageIconUrl>
+    <PackageProjectUrl>http://platformus.net/</PackageProjectUrl>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="ExtCore.Data.Models.Abstractions" Version="1.1.1" />
+  </ItemGroup>
+
+</Project>

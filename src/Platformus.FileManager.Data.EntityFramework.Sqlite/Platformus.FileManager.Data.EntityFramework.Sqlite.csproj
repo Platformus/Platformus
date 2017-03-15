@@ -1,0 +1,24 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <Description>Part of the Platformus.FileManager Platformus extension.</Description>
+    <Copyright>Copyright © 2015 Dmitry Sikorsky</Copyright>
+    <VersionPrefix>1.0.0-alpha14</VersionPrefix>
+    <Authors>Dmitry Sikorsky</Authors>
+    <TargetFramework>netstandard1.6</TargetFramework>
+    <AssemblyName>Platformus.FileManager.Data.EntityFramework.Sqlite</AssemblyName>
+    <PackageId>Platformus.FileManager.Data.EntityFramework.Sqlite</PackageId>
+    <PackageIconUrl>http://platformus.net/platformus_nuget_icon.png</PackageIconUrl>
+    <PackageProjectUrl>http://platformus.net/</PackageProjectUrl>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Platformus.Barebone.Data.Extensions\Platformus.Barebone.Data.Extensions.csproj" />
+    <ProjectReference Include="..\Platformus.FileManager.Data.Abstractions\Platformus.FileManager.Data.Abstractions.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="ExtCore.Data.EntityFramework.Sqlite" Version="1.1.1" />
+  </ItemGroup>
+
+</Project>

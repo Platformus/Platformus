@@ -1,150 +1,175 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 14
-VisualStudioVersion = 14.0.25420.1
+# Visual Studio 15
+VisualStudioVersion = 15.0.26228.9
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{0D7AEFA3-ABB0-4AF1-A4C1-F8E05C241753}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{ABB81F71-8F88-41F7-A235-9458DB99BB7D}"
-	ProjectSection(SolutionItems) = preProject
-		global.json = global.json
-	EndProjectSection
-EndProject
-Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "Platformus.Domain", "src\Platformus.Domain\Platformus.Domain.xproj", "{D76E2FF2-FDEF-44D5-8774-2EB942476ABE}"
-EndProject
-Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "Platformus.Domain.Data.Models", "src\Platformus.Domain.Data.Models\Platformus.Domain.Data.Models.xproj", "{790B72DA-CAB7-44FB-A3BA-411D4CA82220}"
-EndProject
-Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "Platformus.Domain.Data.Abstractions", "src\Platformus.Domain.Data.Abstractions\Platformus.Domain.Data.Abstractions.xproj", "{7E99AD76-CF1C-44ED-B4F7-D271D445D04D}"
-EndProject
-Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "Platformus.Domain.Data.EntityFramework.SqlServer", "src\Platformus.Domain.Data.EntityFramework.SqlServer\Platformus.Domain.Data.EntityFramework.SqlServer.xproj", "{3B808DB4-925B-458F-80E9-9602A6189609}"
-EndProject
-Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "Platformus.Domain.Data.EntityFramework.Sqlite", "src\Platformus.Domain.Data.EntityFramework.Sqlite\Platformus.Domain.Data.EntityFramework.Sqlite.xproj", "{84969C4E-283B-4A85-ABF0-63EED55405FC}"
-EndProject
-Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "Platformus.Domain.Backend", "src\Platformus.Domain.Backend\Platformus.Domain.Backend.xproj", "{E5DF71BB-986E-44FA-8E85-364C50F322FC}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Domain", "Domain", "{00C2D90C-A4B3-49F8-8D9A-3249CBDCB625}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Security", "Security", "{E0E19C64-C048-4155-A00C-F28D1C28F1B5}"
 EndProject
-Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "Platformus.Security.Data.Models", "src\Platformus.Security.Data.Models\Platformus.Security.Data.Models.xproj", "{4447DB0A-96EC-4D95-B80C-A2D6CA4DC2B1}"
-EndProject
-Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "Platformus.Security.Data.Abstractions", "src\Platformus.Security.Data.Abstractions\Platformus.Security.Data.Abstractions.xproj", "{9DA42087-B86E-47ED-9FCC-218DE0381451}"
-EndProject
-Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "Platformus.Security.Data.EntityFramework.Sqlite", "src\Platformus.Security.Data.EntityFramework.Sqlite\Platformus.Security.Data.EntityFramework.Sqlite.xproj", "{EE3F90F9-D13C-42A4-B93A-B856F992348D}"
-EndProject
-Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "Platformus.Security.Data.EntityFramework.SqlServer", "src\Platformus.Security.Data.EntityFramework.SqlServer\Platformus.Security.Data.EntityFramework.SqlServer.xproj", "{3DA491A9-0427-4534-963F-7ED4F5675009}"
-EndProject
-Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "Platformus.Security", "src\Platformus.Security\Platformus.Security.xproj", "{94D8F2C9-C2C4-4D92-9ACA-3C88CAC4AF36}"
-EndProject
-Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "Platformus.Security.Backend", "src\Platformus.Security.Backend\Platformus.Security.Backend.xproj", "{37D9DD58-7E94-4498-A03D-0D99369118C2}"
-EndProject
-Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "Platformus.Domain.Frontend", "src\Platformus.Domain.Frontend\Platformus.Domain.Frontend.xproj", "{A29FAB93-9CB7-4AF4-8461-89143CBD6FCC}"
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Barebone", "Barebone", "{C328CBFD-E093-4093-A45A-84CFAE344714}"
-EndProject
-Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "Platformus.Barebone", "src\Platformus.Barebone\Platformus.Barebone.xproj", "{62E2F7DA-4F8B-45F7-B3FF-DC4CDD74C026}"
-EndProject
-Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "Platformus.Barebone.Frontend", "src\Platformus.Barebone.Frontend\Platformus.Barebone.Frontend.xproj", "{47E7DFD9-69D4-4DFF-9A61-22B2F294EC98}"
-EndProject
-Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "Platformus.Barebone.Backend", "src\Platformus.Barebone.Backend\Platformus.Barebone.Backend.xproj", "{98A339DC-6CEE-42CB-BE23-EF50C0FBFC87}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Globalization", "Globalization", "{E75AEBF8-62DF-4222-B960-5E509AD644B3}"
 EndProject
-Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "Platformus.Globalization", "src\Platformus.Globalization\Platformus.Globalization.xproj", "{98742792-181E-4F39-B743-77FF31F854CC}"
-EndProject
-Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "Platformus.Globalization.Data.Abstractions", "src\Platformus.Globalization.Data.Abstractions\Platformus.Globalization.Data.Abstractions.xproj", "{28A327D1-084F-4647-AF48-6030539EA6D0}"
-EndProject
-Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "Platformus.Globalization.Data.EntityFramework.Sqlite", "src\Platformus.Globalization.Data.EntityFramework.Sqlite\Platformus.Globalization.Data.EntityFramework.Sqlite.xproj", "{4F8EF22B-5B92-4301-A895-D625DA82D773}"
-EndProject
-Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "Platformus.Globalization.Data.EntityFramework.SqlServer", "src\Platformus.Globalization.Data.EntityFramework.SqlServer\Platformus.Globalization.Data.EntityFramework.SqlServer.xproj", "{C1364FA5-CCE5-45A3-BA97-0833EB1BBC8E}"
-EndProject
-Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "Platformus.Globalization.Data.Models", "src\Platformus.Globalization.Data.Models\Platformus.Globalization.Data.Models.xproj", "{2E4B77D0-8D86-4E50-8C01-966405170180}"
-EndProject
-Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "Platformus.Globalization.Backend", "src\Platformus.Globalization.Backend\Platformus.Globalization.Backend.xproj", "{ED49FFFF-C66D-4A7D-88D6-DB8EB1E20F11}"
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Configurations", "Configurations", "{D8340F5D-3745-4DA9-BF59-D949AA791A73}"
-EndProject
-Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "Platformus.Configurations", "src\Platformus.Configurations\Platformus.Configurations.xproj", "{1AE32C04-99DA-4581-A624-00DCB3061F21}"
-EndProject
-Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "Platformus.Configurations.Data.Models", "src\Platformus.Configurations.Data.Models\Platformus.Configurations.Data.Models.xproj", "{B07E4296-9C59-4A5F-BC42-91DA8222BD89}"
-EndProject
-Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "Platformus.Configurations.Data.Abstractions", "src\Platformus.Configurations.Data.Abstractions\Platformus.Configurations.Data.Abstractions.xproj", "{E2DEC5AE-748E-47B6-A24F-D8322F90A1F1}"
-EndProject
-Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "Platformus.Configurations.Data.EntityFramework.Sqlite", "src\Platformus.Configurations.Data.EntityFramework.Sqlite\Platformus.Configurations.Data.EntityFramework.Sqlite.xproj", "{9435B0B6-D2F4-48A8-A098-C867EC2738A5}"
-EndProject
-Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "Platformus.Configurations.Backend", "src\Platformus.Configurations.Backend\Platformus.Configurations.Backend.xproj", "{C986737E-A18A-41CD-934A-1133C22AD8E0}"
-EndProject
-Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "Platformus.Configurations.Data.EntityFramework.SqlServer", "src\Platformus.Configurations.Data.EntityFramework.SqlServer\Platformus.Configurations.Data.EntityFramework.SqlServer.xproj", "{F35FCA73-1B05-40AD-B154-2702DFDA0C11}"
-EndProject
-Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "Platformus.Forms", "src\Platformus.Forms\Platformus.Forms.xproj", "{5975B30E-EA5F-4D59-9995-540E6C242409}"
-EndProject
-Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "Platformus.Forms.Data.Models", "src\Platformus.Forms.Data.Models\Platformus.Forms.Data.Models.xproj", "{F60A7B58-72AA-41EF-A42D-478977AD36C9}"
-EndProject
-Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "Platformus.Forms.Backend", "src\Platformus.Forms.Backend\Platformus.Forms.Backend.xproj", "{274C0139-A1EB-41DB-9B0E-1CB023F36BC6}"
-EndProject
-Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "Platformus.Forms.Data.Abstractions", "src\Platformus.Forms.Data.Abstractions\Platformus.Forms.Data.Abstractions.xproj", "{98BEE570-B1C0-4A5D-B484-3D0C409A315A}"
-EndProject
-Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "Platformus.Forms.Data.EntityFramework.Sqlite", "src\Platformus.Forms.Data.EntityFramework.Sqlite\Platformus.Forms.Data.EntityFramework.Sqlite.xproj", "{395D5E56-33FD-4183-AAD3-B140A6E6807A}"
-EndProject
-Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "Platformus.Forms.Data.EntityFramework.SqlServer", "src\Platformus.Forms.Data.EntityFramework.SqlServer\Platformus.Forms.Data.EntityFramework.SqlServer.xproj", "{ECCE4EB3-E31B-4A96-A9C1-A7103BA7D4DC}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Forms", "Forms", "{E69F478C-55F9-45D7-9424-47906DFA3F02}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "FileManager", "FileManager", "{6FFAC33C-F31A-454E-961B-CD80908E5F88}"
 EndProject
-Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "Platformus.FileManager", "src\Platformus.FileManager\Platformus.FileManager.xproj", "{C935E2F4-A9C6-4D6F-8CA6-191792B0820C}"
-EndProject
-Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "Platformus.FileManager.Data.Models", "src\Platformus.FileManager.Data.Models\Platformus.FileManager.Data.Models.xproj", "{01D2DE1A-0ECE-4231-A1EB-F41C87314136}"
-EndProject
-Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "Platformus.FileManager.Backend", "src\Platformus.FileManager.Backend\Platformus.FileManager.Backend.xproj", "{1F6C0B37-0F5D-4514-A301-B0D8CC04B0C6}"
-EndProject
-Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "Platformus.FileManager.Data.Abstractions", "src\Platformus.FileManager.Data.Abstractions\Platformus.FileManager.Data.Abstractions.xproj", "{51FB6833-9DDD-4E99-A2E3-FF3AD4A2E418}"
-EndProject
-Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "Platformus.FileManager.Data.EntityFramework.Sqlite", "src\Platformus.FileManager.Data.EntityFramework.Sqlite\Platformus.FileManager.Data.EntityFramework.Sqlite.xproj", "{272A4BA3-3E38-42F9-A7E1-781595D84544}"
-EndProject
-Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "Platformus.FileManager.Data.EntityFramework.SqlServer", "src\Platformus.FileManager.Data.EntityFramework.SqlServer\Platformus.FileManager.Data.EntityFramework.SqlServer.xproj", "{EE203C6C-4043-44CC-97E3-403C4C53DD07}"
-EndProject
-Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "Platformus.Menus", "src\Platformus.Menus\Platformus.Menus.xproj", "{21285B6B-31D6-4214-8A97-93AC77F158D4}"
-EndProject
-Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "Platformus.Menus.Data.Models", "src\Platformus.Menus.Data.Models\Platformus.Menus.Data.Models.xproj", "{BD448EAD-3F90-4363-BF0D-A2307BE115E1}"
-EndProject
-Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "Platformus.Menus.Backend", "src\Platformus.Menus.Backend\Platformus.Menus.Backend.xproj", "{67374D31-113B-480C-9866-F7A596A532A4}"
-EndProject
-Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "Platformus.Menus.Data.Abstractions", "src\Platformus.Menus.Data.Abstractions\Platformus.Menus.Data.Abstractions.xproj", "{7825B5C6-A077-4B3E-816D-E9C27F525904}"
-EndProject
-Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "Platformus.Menus.Data.EntityFramework.Sqlite", "src\Platformus.Menus.Data.EntityFramework.Sqlite\Platformus.Menus.Data.EntityFramework.Sqlite.xproj", "{35E4136A-43E7-455A-B54A-AC7521BA18C8}"
-EndProject
-Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "Platformus.Menus.Data.EntityFramework.SqlServer", "src\Platformus.Menus.Data.EntityFramework.SqlServer\Platformus.Menus.Data.EntityFramework.SqlServer.xproj", "{84044C80-F0B4-4B19-935D-20DA5A0C7C39}"
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Menus", "Menus", "{6AAB030E-FDFF-49B7-AD82-4871F2BFA43E}"
 EndProject
-Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "Platformus.Forms.Frontend", "src\Platformus.Forms.Frontend\Platformus.Forms.Frontend.xproj", "{DC68B352-7D3F-4709-B076-6F74BFAC823D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Platformus.Domain", "src\Platformus.Domain\Platformus.Domain.csproj", "{D76E2FF2-FDEF-44D5-8774-2EB942476ABE}"
 EndProject
-Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "Platformus.Menus.Frontend", "src\Platformus.Menus.Frontend\Platformus.Menus.Frontend.xproj", "{642F44BD-D153-4EA8-A331-A700FE737E8A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Platformus.Domain.Data.Models", "src\Platformus.Domain.Data.Models\Platformus.Domain.Data.Models.csproj", "{790B72DA-CAB7-44FB-A3BA-411D4CA82220}"
 EndProject
-Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "Platformus.Globalization.Frontend", "src\Platformus.Globalization.Frontend\Platformus.Globalization.Frontend.xproj", "{8D565D18-5290-4EAD-A718-F73EB500B695}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Platformus.Domain.Data.Abstractions", "src\Platformus.Domain.Data.Abstractions\Platformus.Domain.Data.Abstractions.csproj", "{7E99AD76-CF1C-44ED-B4F7-D271D445D04D}"
 EndProject
-Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "Platformus.Infrastructure", "src\Platformus.Infrastructure\Platformus.Infrastructure.xproj", "{B6DA19CE-E8FE-4D74-B397-8C08C7C21299}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Platformus.Domain.Data.EntityFramework.SqlServer", "src\Platformus.Domain.Data.EntityFramework.SqlServer\Platformus.Domain.Data.EntityFramework.SqlServer.csproj", "{3B808DB4-925B-458F-80E9-9602A6189609}"
 EndProject
-Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "Platformus.FileManager.Data.EntityFramework.PostgreSql", "src\Platformus.FileManager.Data.EntityFramework.PostgreSql\Platformus.FileManager.Data.EntityFramework.PostgreSql.xproj", "{AB19BEDA-D1BA-40F7-8E7A-44F6890E767A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Platformus.Domain.Data.EntityFramework.Sqlite", "src\Platformus.Domain.Data.EntityFramework.Sqlite\Platformus.Domain.Data.EntityFramework.Sqlite.csproj", "{84969C4E-283B-4A85-ABF0-63EED55405FC}"
 EndProject
-Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "Platformus.Security.Data.EntityFramework.PostgreSql", "src\Platformus.Security.Data.EntityFramework.PostgreSql\Platformus.Security.Data.EntityFramework.PostgreSql.xproj", "{E05ABD63-5AF8-4B94-B9D2-9284F15DD96B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Platformus.Domain.Backend", "src\Platformus.Domain.Backend\Platformus.Domain.Backend.csproj", "{E5DF71BB-986E-44FA-8E85-364C50F322FC}"
 EndProject
-Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "Platformus.Menus.Data.EntityFramework.PostgreSql", "src\Platformus.Menus.Data.EntityFramework.PostgreSql\Platformus.Menus.Data.EntityFramework.PostgreSql.xproj", "{54D5EC70-4283-40E4-BA39-F89AEF212BB1}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Platformus.Security.Data.Models", "src\Platformus.Security.Data.Models\Platformus.Security.Data.Models.csproj", "{4447DB0A-96EC-4D95-B80C-A2D6CA4DC2B1}"
 EndProject
-Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "Platformus.Globalization.Data.EntityFramework.PostgreSql", "src\Platformus.Globalization.Data.EntityFramework.PostgreSql\Platformus.Globalization.Data.EntityFramework.PostgreSql.xproj", "{D68C57C6-57C5-4DFB-89F8-1981E2BE6632}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Platformus.Security.Data.Abstractions", "src\Platformus.Security.Data.Abstractions\Platformus.Security.Data.Abstractions.csproj", "{9DA42087-B86E-47ED-9FCC-218DE0381451}"
 EndProject
-Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "Platformus.Forms.Data.EntityFramework.PostgreSql", "src\Platformus.Forms.Data.EntityFramework.PostgreSql\Platformus.Forms.Data.EntityFramework.PostgreSql.xproj", "{2B42FBED-E94A-46AD-A42C-B62129632467}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Platformus.Security.Data.EntityFramework.Sqlite", "src\Platformus.Security.Data.EntityFramework.Sqlite\Platformus.Security.Data.EntityFramework.Sqlite.csproj", "{EE3F90F9-D13C-42A4-B93A-B856F992348D}"
 EndProject
-Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "Platformus.Domain.Data.EntityFramework.PostgreSql", "src\Platformus.Domain.Data.EntityFramework.PostgreSql\Platformus.Domain.Data.EntityFramework.PostgreSql.xproj", "{646535E3-2EF1-4688-9763-D90B834CA4BC}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Platformus.Security.Data.EntityFramework.SqlServer", "src\Platformus.Security.Data.EntityFramework.SqlServer\Platformus.Security.Data.EntityFramework.SqlServer.csproj", "{3DA491A9-0427-4534-963F-7ED4F5675009}"
 EndProject
-Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "Platformus.Configurations.Data.EntityFramework.PostgreSql", "src\Platformus.Configurations.Data.EntityFramework.PostgreSql\Platformus.Configurations.Data.EntityFramework.PostgreSql.xproj", "{A85253F8-48B2-4884-80F7-46E747F05197}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Platformus.Security", "src\Platformus.Security\Platformus.Security.csproj", "{94D8F2C9-C2C4-4D92-9ACA-3C88CAC4AF36}"
 EndProject
-Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "Platformus.WebApplication", "src\Platformus.WebApplication\Platformus.WebApplication.xproj", "{0942191A-A90C-440C-BDA6-7565E21547AA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Platformus.Security.Backend", "src\Platformus.Security.Backend\Platformus.Security.Backend.csproj", "{37D9DD58-7E94-4498-A03D-0D99369118C2}"
 EndProject
-Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "Platformus.Domain.Api", "src\Platformus.Domain.Api\Platformus.Domain.Api.xproj", "{2353801A-6144-484A-9ECA-99C91036BBBB}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Platformus.Domain.Frontend", "src\Platformus.Domain.Frontend\Platformus.Domain.Frontend.csproj", "{A29FAB93-9CB7-4AF4-8461-89143CBD6FCC}"
 EndProject
-Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "Platformus.Barebone.Data.Extensions", "src\Platformus.Barebone.Data.Extensions\Platformus.Barebone.Data.Extensions.xproj", "{2533A794-B2AA-44D4-B3B9-4EAE76B893DA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Platformus.Barebone", "src\Platformus.Barebone\Platformus.Barebone.csproj", "{62E2F7DA-4F8B-45F7-B3FF-DC4CDD74C026}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Platformus.Barebone.Frontend", "src\Platformus.Barebone.Frontend\Platformus.Barebone.Frontend.csproj", "{47E7DFD9-69D4-4DFF-9A61-22B2F294EC98}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Platformus.Barebone.Backend", "src\Platformus.Barebone.Backend\Platformus.Barebone.Backend.csproj", "{98A339DC-6CEE-42CB-BE23-EF50C0FBFC87}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Platformus.Globalization", "src\Platformus.Globalization\Platformus.Globalization.csproj", "{98742792-181E-4F39-B743-77FF31F854CC}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Platformus.Globalization.Data.Abstractions", "src\Platformus.Globalization.Data.Abstractions\Platformus.Globalization.Data.Abstractions.csproj", "{28A327D1-084F-4647-AF48-6030539EA6D0}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Platformus.Globalization.Data.EntityFramework.Sqlite", "src\Platformus.Globalization.Data.EntityFramework.Sqlite\Platformus.Globalization.Data.EntityFramework.Sqlite.csproj", "{4F8EF22B-5B92-4301-A895-D625DA82D773}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Platformus.Globalization.Data.EntityFramework.SqlServer", "src\Platformus.Globalization.Data.EntityFramework.SqlServer\Platformus.Globalization.Data.EntityFramework.SqlServer.csproj", "{C1364FA5-CCE5-45A3-BA97-0833EB1BBC8E}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Platformus.Globalization.Data.Models", "src\Platformus.Globalization.Data.Models\Platformus.Globalization.Data.Models.csproj", "{2E4B77D0-8D86-4E50-8C01-966405170180}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Platformus.Globalization.Backend", "src\Platformus.Globalization.Backend\Platformus.Globalization.Backend.csproj", "{ED49FFFF-C66D-4A7D-88D6-DB8EB1E20F11}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Platformus.Configurations", "src\Platformus.Configurations\Platformus.Configurations.csproj", "{1AE32C04-99DA-4581-A624-00DCB3061F21}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Platformus.Configurations.Data.Models", "src\Platformus.Configurations.Data.Models\Platformus.Configurations.Data.Models.csproj", "{B07E4296-9C59-4A5F-BC42-91DA8222BD89}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Platformus.Configurations.Data.Abstractions", "src\Platformus.Configurations.Data.Abstractions\Platformus.Configurations.Data.Abstractions.csproj", "{E2DEC5AE-748E-47B6-A24F-D8322F90A1F1}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Platformus.Configurations.Data.EntityFramework.Sqlite", "src\Platformus.Configurations.Data.EntityFramework.Sqlite\Platformus.Configurations.Data.EntityFramework.Sqlite.csproj", "{9435B0B6-D2F4-48A8-A098-C867EC2738A5}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Platformus.Configurations.Backend", "src\Platformus.Configurations.Backend\Platformus.Configurations.Backend.csproj", "{C986737E-A18A-41CD-934A-1133C22AD8E0}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Platformus.Configurations.Data.EntityFramework.SqlServer", "src\Platformus.Configurations.Data.EntityFramework.SqlServer\Platformus.Configurations.Data.EntityFramework.SqlServer.csproj", "{F35FCA73-1B05-40AD-B154-2702DFDA0C11}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Platformus.Forms", "src\Platformus.Forms\Platformus.Forms.csproj", "{5975B30E-EA5F-4D59-9995-540E6C242409}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Platformus.Forms.Data.Models", "src\Platformus.Forms.Data.Models\Platformus.Forms.Data.Models.csproj", "{F60A7B58-72AA-41EF-A42D-478977AD36C9}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Platformus.Forms.Backend", "src\Platformus.Forms.Backend\Platformus.Forms.Backend.csproj", "{274C0139-A1EB-41DB-9B0E-1CB023F36BC6}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Platformus.Forms.Data.Abstractions", "src\Platformus.Forms.Data.Abstractions\Platformus.Forms.Data.Abstractions.csproj", "{98BEE570-B1C0-4A5D-B484-3D0C409A315A}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Platformus.Forms.Data.EntityFramework.Sqlite", "src\Platformus.Forms.Data.EntityFramework.Sqlite\Platformus.Forms.Data.EntityFramework.Sqlite.csproj", "{395D5E56-33FD-4183-AAD3-B140A6E6807A}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Platformus.Forms.Data.EntityFramework.SqlServer", "src\Platformus.Forms.Data.EntityFramework.SqlServer\Platformus.Forms.Data.EntityFramework.SqlServer.csproj", "{ECCE4EB3-E31B-4A96-A9C1-A7103BA7D4DC}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Platformus.FileManager", "src\Platformus.FileManager\Platformus.FileManager.csproj", "{C935E2F4-A9C6-4D6F-8CA6-191792B0820C}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Platformus.FileManager.Data.Models", "src\Platformus.FileManager.Data.Models\Platformus.FileManager.Data.Models.csproj", "{01D2DE1A-0ECE-4231-A1EB-F41C87314136}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Platformus.FileManager.Backend", "src\Platformus.FileManager.Backend\Platformus.FileManager.Backend.csproj", "{1F6C0B37-0F5D-4514-A301-B0D8CC04B0C6}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Platformus.FileManager.Data.Abstractions", "src\Platformus.FileManager.Data.Abstractions\Platformus.FileManager.Data.Abstractions.csproj", "{51FB6833-9DDD-4E99-A2E3-FF3AD4A2E418}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Platformus.FileManager.Data.EntityFramework.Sqlite", "src\Platformus.FileManager.Data.EntityFramework.Sqlite\Platformus.FileManager.Data.EntityFramework.Sqlite.csproj", "{272A4BA3-3E38-42F9-A7E1-781595D84544}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Platformus.FileManager.Data.EntityFramework.SqlServer", "src\Platformus.FileManager.Data.EntityFramework.SqlServer\Platformus.FileManager.Data.EntityFramework.SqlServer.csproj", "{EE203C6C-4043-44CC-97E3-403C4C53DD07}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Platformus.Menus", "src\Platformus.Menus\Platformus.Menus.csproj", "{21285B6B-31D6-4214-8A97-93AC77F158D4}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Platformus.Menus.Data.Models", "src\Platformus.Menus.Data.Models\Platformus.Menus.Data.Models.csproj", "{BD448EAD-3F90-4363-BF0D-A2307BE115E1}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Platformus.Menus.Backend", "src\Platformus.Menus.Backend\Platformus.Menus.Backend.csproj", "{67374D31-113B-480C-9866-F7A596A532A4}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Platformus.Menus.Data.Abstractions", "src\Platformus.Menus.Data.Abstractions\Platformus.Menus.Data.Abstractions.csproj", "{7825B5C6-A077-4B3E-816D-E9C27F525904}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Platformus.Menus.Data.EntityFramework.Sqlite", "src\Platformus.Menus.Data.EntityFramework.Sqlite\Platformus.Menus.Data.EntityFramework.Sqlite.csproj", "{35E4136A-43E7-455A-B54A-AC7521BA18C8}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Platformus.Menus.Data.EntityFramework.SqlServer", "src\Platformus.Menus.Data.EntityFramework.SqlServer\Platformus.Menus.Data.EntityFramework.SqlServer.csproj", "{84044C80-F0B4-4B19-935D-20DA5A0C7C39}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Platformus.Forms.Frontend", "src\Platformus.Forms.Frontend\Platformus.Forms.Frontend.csproj", "{DC68B352-7D3F-4709-B076-6F74BFAC823D}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Platformus.Menus.Frontend", "src\Platformus.Menus.Frontend\Platformus.Menus.Frontend.csproj", "{642F44BD-D153-4EA8-A331-A700FE737E8A}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Platformus.Globalization.Frontend", "src\Platformus.Globalization.Frontend\Platformus.Globalization.Frontend.csproj", "{8D565D18-5290-4EAD-A718-F73EB500B695}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Platformus.Infrastructure", "src\Platformus.Infrastructure\Platformus.Infrastructure.csproj", "{B6DA19CE-E8FE-4D74-B397-8C08C7C21299}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Platformus.FileManager.Data.EntityFramework.PostgreSql", "src\Platformus.FileManager.Data.EntityFramework.PostgreSql\Platformus.FileManager.Data.EntityFramework.PostgreSql.csproj", "{AB19BEDA-D1BA-40F7-8E7A-44F6890E767A}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Platformus.Security.Data.EntityFramework.PostgreSql", "src\Platformus.Security.Data.EntityFramework.PostgreSql\Platformus.Security.Data.EntityFramework.PostgreSql.csproj", "{E05ABD63-5AF8-4B94-B9D2-9284F15DD96B}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Platformus.Menus.Data.EntityFramework.PostgreSql", "src\Platformus.Menus.Data.EntityFramework.PostgreSql\Platformus.Menus.Data.EntityFramework.PostgreSql.csproj", "{54D5EC70-4283-40E4-BA39-F89AEF212BB1}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Platformus.Globalization.Data.EntityFramework.PostgreSql", "src\Platformus.Globalization.Data.EntityFramework.PostgreSql\Platformus.Globalization.Data.EntityFramework.PostgreSql.csproj", "{D68C57C6-57C5-4DFB-89F8-1981E2BE6632}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Platformus.Forms.Data.EntityFramework.PostgreSql", "src\Platformus.Forms.Data.EntityFramework.PostgreSql\Platformus.Forms.Data.EntityFramework.PostgreSql.csproj", "{2B42FBED-E94A-46AD-A42C-B62129632467}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Platformus.Domain.Data.EntityFramework.PostgreSql", "src\Platformus.Domain.Data.EntityFramework.PostgreSql\Platformus.Domain.Data.EntityFramework.PostgreSql.csproj", "{646535E3-2EF1-4688-9763-D90B834CA4BC}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Platformus.Configurations.Data.EntityFramework.PostgreSql", "src\Platformus.Configurations.Data.EntityFramework.PostgreSql\Platformus.Configurations.Data.EntityFramework.PostgreSql.csproj", "{A85253F8-48B2-4884-80F7-46E747F05197}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Platformus.WebApplication", "src\Platformus.WebApplication\Platformus.WebApplication.csproj", "{0942191A-A90C-440C-BDA6-7565E21547AA}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Platformus.Domain.Api", "src\Platformus.Domain.Api\Platformus.Domain.Api.csproj", "{2353801A-6144-484A-9ECA-99C91036BBBB}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Platformus.Barebone.Data.Extensions", "src\Platformus.Barebone.Data.Extensions\Platformus.Barebone.Data.Extensions.csproj", "{2533A794-B2AA-44D4-B3B9-4EAE76B893DA}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Platformus.Installer", "src\Platformus.Installer\Platformus.Installer.csproj", "{3503DEB1-3240-4372-A637-18A48FD96543}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Installer", "Installer", "{62EA4914-1FA2-4394-A389-FCE8DC07BA50}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Platformus.Designers", "src\Platformus.Designers\Platformus.Designers.csproj", "{3F19EA1F-8F47-4105-9BA0-9B4BF6AD2A5E}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Platformus.Designers.Backend", "src\Platformus.Designers.Backend\Platformus.Designers.Backend.csproj", "{D7F0784C-DC81-442D-A734-712D59422576}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Designers", "Designers", "{9F0ACDA3-B3B8-4C4F-8579-DDD0016EECD8}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Platformus.ECommerce", "src\Platformus.ECommerce\Platformus.ECommerce.csproj", "{94D2B341-F7EC-44AD-80F8-1D36C7604762}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Platformus.ECommerce.Backend", "src\Platformus.ECommerce.Backend\Platformus.ECommerce.Backend.csproj", "{E75E0CF7-57CA-4A0F-819E-BDDF3B411B33}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Platformus.ECommerce.Data.Abstractions", "src\Platformus.ECommerce.Data.Abstractions\Platformus.ECommerce.Data.Abstractions.csproj", "{D501766B-B878-4B09-AC3D-0D66AEB9CFA0}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Platformus.ECommerce.Data.EntityFramework.PostgreSql", "src\Platformus.ECommerce.Data.EntityFramework.PostgreSql\Platformus.ECommerce.Data.EntityFramework.PostgreSql.csproj", "{DE8AB4B0-D42B-489C-AE49-2B2A3F4879CC}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Platformus.ECommerce.Data.EntityFramework.Sqlite", "src\Platformus.ECommerce.Data.EntityFramework.Sqlite\Platformus.ECommerce.Data.EntityFramework.Sqlite.csproj", "{36BEB8BC-E6CC-4DAE-AD42-270960C27DB4}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Platformus.ECommerce.Data.EntityFramework.SqlServer", "src\Platformus.ECommerce.Data.EntityFramework.SqlServer\Platformus.ECommerce.Data.EntityFramework.SqlServer.csproj", "{26645ABC-9EBA-4DC1-990E-1DE3038175BA}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Platformus.ECommerce.Data.Models", "src\Platformus.ECommerce.Data.Models\Platformus.ECommerce.Data.Models.csproj", "{34B1565A-3ABC-49BC-A0A0-92789A9D9B91}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Platformus.ECommerce.Frontend", "src\Platformus.ECommerce.Frontend\Platformus.ECommerce.Frontend.csproj", "{82BA6246-94B4-499A-BF4C-239D24DA905E}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ECommerce", "ECommerce", "{161BDC88-CACD-4FDF-87A7-A559FBF1CCDC}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -392,19 +417,69 @@ Global
 		{2533A794-B2AA-44D4-B3B9-4EAE76B893DA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2533A794-B2AA-44D4-B3B9-4EAE76B893DA}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2533A794-B2AA-44D4-B3B9-4EAE76B893DA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3503DEB1-3240-4372-A637-18A48FD96543}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3503DEB1-3240-4372-A637-18A48FD96543}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3503DEB1-3240-4372-A637-18A48FD96543}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3503DEB1-3240-4372-A637-18A48FD96543}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3F19EA1F-8F47-4105-9BA0-9B4BF6AD2A5E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3F19EA1F-8F47-4105-9BA0-9B4BF6AD2A5E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3F19EA1F-8F47-4105-9BA0-9B4BF6AD2A5E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3F19EA1F-8F47-4105-9BA0-9B4BF6AD2A5E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D7F0784C-DC81-442D-A734-712D59422576}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D7F0784C-DC81-442D-A734-712D59422576}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D7F0784C-DC81-442D-A734-712D59422576}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D7F0784C-DC81-442D-A734-712D59422576}.Release|Any CPU.Build.0 = Release|Any CPU
+		{94D2B341-F7EC-44AD-80F8-1D36C7604762}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{94D2B341-F7EC-44AD-80F8-1D36C7604762}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{94D2B341-F7EC-44AD-80F8-1D36C7604762}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{94D2B341-F7EC-44AD-80F8-1D36C7604762}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E75E0CF7-57CA-4A0F-819E-BDDF3B411B33}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E75E0CF7-57CA-4A0F-819E-BDDF3B411B33}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E75E0CF7-57CA-4A0F-819E-BDDF3B411B33}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E75E0CF7-57CA-4A0F-819E-BDDF3B411B33}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D501766B-B878-4B09-AC3D-0D66AEB9CFA0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D501766B-B878-4B09-AC3D-0D66AEB9CFA0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D501766B-B878-4B09-AC3D-0D66AEB9CFA0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D501766B-B878-4B09-AC3D-0D66AEB9CFA0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DE8AB4B0-D42B-489C-AE49-2B2A3F4879CC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DE8AB4B0-D42B-489C-AE49-2B2A3F4879CC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DE8AB4B0-D42B-489C-AE49-2B2A3F4879CC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DE8AB4B0-D42B-489C-AE49-2B2A3F4879CC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{36BEB8BC-E6CC-4DAE-AD42-270960C27DB4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{36BEB8BC-E6CC-4DAE-AD42-270960C27DB4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{36BEB8BC-E6CC-4DAE-AD42-270960C27DB4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{36BEB8BC-E6CC-4DAE-AD42-270960C27DB4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{26645ABC-9EBA-4DC1-990E-1DE3038175BA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{26645ABC-9EBA-4DC1-990E-1DE3038175BA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{26645ABC-9EBA-4DC1-990E-1DE3038175BA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{26645ABC-9EBA-4DC1-990E-1DE3038175BA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{34B1565A-3ABC-49BC-A0A0-92789A9D9B91}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{34B1565A-3ABC-49BC-A0A0-92789A9D9B91}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{34B1565A-3ABC-49BC-A0A0-92789A9D9B91}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{34B1565A-3ABC-49BC-A0A0-92789A9D9B91}.Release|Any CPU.Build.0 = Release|Any CPU
+		{82BA6246-94B4-499A-BF4C-239D24DA905E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{82BA6246-94B4-499A-BF4C-239D24DA905E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{82BA6246-94B4-499A-BF4C-239D24DA905E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{82BA6246-94B4-499A-BF4C-239D24DA905E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
+		{00C2D90C-A4B3-49F8-8D9A-3249CBDCB625} = {0D7AEFA3-ABB0-4AF1-A4C1-F8E05C241753}
+		{E0E19C64-C048-4155-A00C-F28D1C28F1B5} = {0D7AEFA3-ABB0-4AF1-A4C1-F8E05C241753}
+		{C328CBFD-E093-4093-A45A-84CFAE344714} = {0D7AEFA3-ABB0-4AF1-A4C1-F8E05C241753}
+		{E75AEBF8-62DF-4222-B960-5E509AD644B3} = {0D7AEFA3-ABB0-4AF1-A4C1-F8E05C241753}
+		{D8340F5D-3745-4DA9-BF59-D949AA791A73} = {0D7AEFA3-ABB0-4AF1-A4C1-F8E05C241753}
+		{E69F478C-55F9-45D7-9424-47906DFA3F02} = {0D7AEFA3-ABB0-4AF1-A4C1-F8E05C241753}
+		{6FFAC33C-F31A-454E-961B-CD80908E5F88} = {0D7AEFA3-ABB0-4AF1-A4C1-F8E05C241753}
+		{6AAB030E-FDFF-49B7-AD82-4871F2BFA43E} = {0D7AEFA3-ABB0-4AF1-A4C1-F8E05C241753}
 		{D76E2FF2-FDEF-44D5-8774-2EB942476ABE} = {00C2D90C-A4B3-49F8-8D9A-3249CBDCB625}
 		{790B72DA-CAB7-44FB-A3BA-411D4CA82220} = {00C2D90C-A4B3-49F8-8D9A-3249CBDCB625}
 		{7E99AD76-CF1C-44ED-B4F7-D271D445D04D} = {00C2D90C-A4B3-49F8-8D9A-3249CBDCB625}
 		{3B808DB4-925B-458F-80E9-9602A6189609} = {00C2D90C-A4B3-49F8-8D9A-3249CBDCB625}
 		{84969C4E-283B-4A85-ABF0-63EED55405FC} = {00C2D90C-A4B3-49F8-8D9A-3249CBDCB625}
 		{E5DF71BB-986E-44FA-8E85-364C50F322FC} = {00C2D90C-A4B3-49F8-8D9A-3249CBDCB625}
-		{00C2D90C-A4B3-49F8-8D9A-3249CBDCB625} = {0D7AEFA3-ABB0-4AF1-A4C1-F8E05C241753}
-		{E0E19C64-C048-4155-A00C-F28D1C28F1B5} = {0D7AEFA3-ABB0-4AF1-A4C1-F8E05C241753}
 		{4447DB0A-96EC-4D95-B80C-A2D6CA4DC2B1} = {E0E19C64-C048-4155-A00C-F28D1C28F1B5}
 		{9DA42087-B86E-47ED-9FCC-218DE0381451} = {E0E19C64-C048-4155-A00C-F28D1C28F1B5}
 		{EE3F90F9-D13C-42A4-B93A-B856F992348D} = {E0E19C64-C048-4155-A00C-F28D1C28F1B5}
@@ -412,18 +487,15 @@ Global
 		{94D8F2C9-C2C4-4D92-9ACA-3C88CAC4AF36} = {E0E19C64-C048-4155-A00C-F28D1C28F1B5}
 		{37D9DD58-7E94-4498-A03D-0D99369118C2} = {E0E19C64-C048-4155-A00C-F28D1C28F1B5}
 		{A29FAB93-9CB7-4AF4-8461-89143CBD6FCC} = {00C2D90C-A4B3-49F8-8D9A-3249CBDCB625}
-		{C328CBFD-E093-4093-A45A-84CFAE344714} = {0D7AEFA3-ABB0-4AF1-A4C1-F8E05C241753}
 		{62E2F7DA-4F8B-45F7-B3FF-DC4CDD74C026} = {C328CBFD-E093-4093-A45A-84CFAE344714}
 		{47E7DFD9-69D4-4DFF-9A61-22B2F294EC98} = {C328CBFD-E093-4093-A45A-84CFAE344714}
 		{98A339DC-6CEE-42CB-BE23-EF50C0FBFC87} = {C328CBFD-E093-4093-A45A-84CFAE344714}
-		{E75AEBF8-62DF-4222-B960-5E509AD644B3} = {0D7AEFA3-ABB0-4AF1-A4C1-F8E05C241753}
 		{98742792-181E-4F39-B743-77FF31F854CC} = {E75AEBF8-62DF-4222-B960-5E509AD644B3}
 		{28A327D1-084F-4647-AF48-6030539EA6D0} = {E75AEBF8-62DF-4222-B960-5E509AD644B3}
 		{4F8EF22B-5B92-4301-A895-D625DA82D773} = {E75AEBF8-62DF-4222-B960-5E509AD644B3}
 		{C1364FA5-CCE5-45A3-BA97-0833EB1BBC8E} = {E75AEBF8-62DF-4222-B960-5E509AD644B3}
 		{2E4B77D0-8D86-4E50-8C01-966405170180} = {E75AEBF8-62DF-4222-B960-5E509AD644B3}
 		{ED49FFFF-C66D-4A7D-88D6-DB8EB1E20F11} = {E75AEBF8-62DF-4222-B960-5E509AD644B3}
-		{D8340F5D-3745-4DA9-BF59-D949AA791A73} = {0D7AEFA3-ABB0-4AF1-A4C1-F8E05C241753}
 		{1AE32C04-99DA-4581-A624-00DCB3061F21} = {D8340F5D-3745-4DA9-BF59-D949AA791A73}
 		{B07E4296-9C59-4A5F-BC42-91DA8222BD89} = {D8340F5D-3745-4DA9-BF59-D949AA791A73}
 		{E2DEC5AE-748E-47B6-A24F-D8322F90A1F1} = {D8340F5D-3745-4DA9-BF59-D949AA791A73}
@@ -436,8 +508,6 @@ Global
 		{98BEE570-B1C0-4A5D-B484-3D0C409A315A} = {E69F478C-55F9-45D7-9424-47906DFA3F02}
 		{395D5E56-33FD-4183-AAD3-B140A6E6807A} = {E69F478C-55F9-45D7-9424-47906DFA3F02}
 		{ECCE4EB3-E31B-4A96-A9C1-A7103BA7D4DC} = {E69F478C-55F9-45D7-9424-47906DFA3F02}
-		{E69F478C-55F9-45D7-9424-47906DFA3F02} = {0D7AEFA3-ABB0-4AF1-A4C1-F8E05C241753}
-		{6FFAC33C-F31A-454E-961B-CD80908E5F88} = {0D7AEFA3-ABB0-4AF1-A4C1-F8E05C241753}
 		{C935E2F4-A9C6-4D6F-8CA6-191792B0820C} = {6FFAC33C-F31A-454E-961B-CD80908E5F88}
 		{01D2DE1A-0ECE-4231-A1EB-F41C87314136} = {6FFAC33C-F31A-454E-961B-CD80908E5F88}
 		{1F6C0B37-0F5D-4514-A301-B0D8CC04B0C6} = {6FFAC33C-F31A-454E-961B-CD80908E5F88}
@@ -450,7 +520,6 @@ Global
 		{7825B5C6-A077-4B3E-816D-E9C27F525904} = {6AAB030E-FDFF-49B7-AD82-4871F2BFA43E}
 		{35E4136A-43E7-455A-B54A-AC7521BA18C8} = {6AAB030E-FDFF-49B7-AD82-4871F2BFA43E}
 		{84044C80-F0B4-4B19-935D-20DA5A0C7C39} = {6AAB030E-FDFF-49B7-AD82-4871F2BFA43E}
-		{6AAB030E-FDFF-49B7-AD82-4871F2BFA43E} = {0D7AEFA3-ABB0-4AF1-A4C1-F8E05C241753}
 		{DC68B352-7D3F-4709-B076-6F74BFAC823D} = {E69F478C-55F9-45D7-9424-47906DFA3F02}
 		{642F44BD-D153-4EA8-A331-A700FE737E8A} = {6AAB030E-FDFF-49B7-AD82-4871F2BFA43E}
 		{8D565D18-5290-4EAD-A718-F73EB500B695} = {E75AEBF8-62DF-4222-B960-5E509AD644B3}
@@ -465,6 +534,20 @@ Global
 		{0942191A-A90C-440C-BDA6-7565E21547AA} = {0D7AEFA3-ABB0-4AF1-A4C1-F8E05C241753}
 		{2353801A-6144-484A-9ECA-99C91036BBBB} = {00C2D90C-A4B3-49F8-8D9A-3249CBDCB625}
 		{2533A794-B2AA-44D4-B3B9-4EAE76B893DA} = {C328CBFD-E093-4093-A45A-84CFAE344714}
+		{3503DEB1-3240-4372-A637-18A48FD96543} = {62EA4914-1FA2-4394-A389-FCE8DC07BA50}
+		{62EA4914-1FA2-4394-A389-FCE8DC07BA50} = {0D7AEFA3-ABB0-4AF1-A4C1-F8E05C241753}
+		{3F19EA1F-8F47-4105-9BA0-9B4BF6AD2A5E} = {9F0ACDA3-B3B8-4C4F-8579-DDD0016EECD8}
+		{D7F0784C-DC81-442D-A734-712D59422576} = {9F0ACDA3-B3B8-4C4F-8579-DDD0016EECD8}
+		{9F0ACDA3-B3B8-4C4F-8579-DDD0016EECD8} = {0D7AEFA3-ABB0-4AF1-A4C1-F8E05C241753}
+		{94D2B341-F7EC-44AD-80F8-1D36C7604762} = {161BDC88-CACD-4FDF-87A7-A559FBF1CCDC}
+		{E75E0CF7-57CA-4A0F-819E-BDDF3B411B33} = {161BDC88-CACD-4FDF-87A7-A559FBF1CCDC}
+		{D501766B-B878-4B09-AC3D-0D66AEB9CFA0} = {161BDC88-CACD-4FDF-87A7-A559FBF1CCDC}
+		{DE8AB4B0-D42B-489C-AE49-2B2A3F4879CC} = {161BDC88-CACD-4FDF-87A7-A559FBF1CCDC}
+		{36BEB8BC-E6CC-4DAE-AD42-270960C27DB4} = {161BDC88-CACD-4FDF-87A7-A559FBF1CCDC}
+		{26645ABC-9EBA-4DC1-990E-1DE3038175BA} = {161BDC88-CACD-4FDF-87A7-A559FBF1CCDC}
+		{34B1565A-3ABC-49BC-A0A0-92789A9D9B91} = {161BDC88-CACD-4FDF-87A7-A559FBF1CCDC}
+		{82BA6246-94B4-499A-BF4C-239D24DA905E} = {161BDC88-CACD-4FDF-87A7-A559FBF1CCDC}
+		{161BDC88-CACD-4FDF-87A7-A559FBF1CCDC} = {0D7AEFA3-ABB0-4AF1-A4C1-F8E05C241753}
 	EndGlobalSection
 	GlobalSection(SolutionConfigurationsPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
