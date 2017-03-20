@@ -1,4 +1,4 @@
-﻿# Platformus 1.0.0-alpha16
+# Platformus 1.0.0-alpha16
 
 [![Join the chat at https://gitter.im/Platformus/Platformus](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/Platformus/Platformus?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
