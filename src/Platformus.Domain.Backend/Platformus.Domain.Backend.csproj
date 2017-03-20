@@ -3,7 +3,7 @@
   <PropertyGroup>
     <Description>Part of the Platformus.Domain Platformus extension.</Description>
     <Copyright>Copyright © 2015 Dmitry Sikorsky</Copyright>
-    <VersionPrefix>1.0.0-alpha16</VersionPrefix>
+    <VersionPrefix>1.0.0-alpha17</VersionPrefix>
     <Authors>Dmitry Sikorsky</Authors>
     <TargetFramework>netstandard1.6</TargetFramework>
     <AssemblyName>Platformus.Domain.Backend</AssemblyName>
@@ -13,28 +13,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <EmbeddedResource Include="Areas\Backend\Views\Classes\CreateOrEdit.cshtml" />
-    <EmbeddedResource Include="Areas\Backend\Views\Classes\Index.cshtml" />
-    <EmbeddedResource Include="Areas\Backend\Views\DataSources\CreateOrEdit.cshtml" />
-    <EmbeddedResource Include="Areas\Backend\Views\DataSources\Index.cshtml" />
-    <EmbeddedResource Include="Areas\Backend\Views\DataTypes\CreateOrEdit.cshtml" />
-    <EmbeddedResource Include="Areas\Backend\Views\DataTypes\Index.cshtml" />
-    <EmbeddedResource Include="Areas\Backend\Views\Domain\_ImageUploaderForm.cshtml" />
-    <EmbeddedResource Include="Areas\Backend\Views\Domain\_ObjectSelectorForm.cshtml" />
-    <EmbeddedResource Include="Areas\Backend\Views\ImageUploader\Index.cshtml" />
-    <EmbeddedResource Include="Areas\Backend\Views\Members\CreateOrEdit.cshtml" />
-    <EmbeddedResource Include="Areas\Backend\Views\Members\Index.cshtml" />
-    <EmbeddedResource Include="Areas\Backend\Views\Objects\CreateOrEdit.cshtml" />
-    <EmbeddedResource Include="Areas\Backend\Views\Objects\Index.cshtml" />
-    <EmbeddedResource Include="Areas\Backend\Views\Shared\_Class.cshtml" />
-    <EmbeddedResource Include="Areas\Backend\Views\Shared\_DataSource.cshtml" />
-    <EmbeddedResource Include="Areas\Backend\Views\Shared\_DataType.cshtml" />
-    <EmbeddedResource Include="Areas\Backend\Views\Shared\_Member.cshtml" />
-    <EmbeddedResource Include="Areas\Backend\Views\Shared\_Object.cshtml" />
-    <EmbeddedResource Include="Areas\Backend\Views\Shared\_Tab.cshtml" />
-    <EmbeddedResource Include="Areas\Backend\Views\Tabs\CreateOrEdit.cshtml" />
-    <EmbeddedResource Include="Areas\Backend\Views\Tabs\Index.cshtml" />
-    <EmbeddedResource Include="Areas\Backend\Views\_ViewImports.cshtml" />
+    <EmbeddedResource Include="Areas\Backend\Views\**;wwwroot\**" />
   </ItemGroup>
 
   <ItemGroup>
@@ -54,11 +33,6 @@
 
   <ItemGroup>
     <DotNetCliToolReference Include="BundlerMinifier.Core" Version="2.2.301" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="wwwroot\areas\backend\css\" />
-    <Folder Include="wwwroot\areas\backend\js\" />
   </ItemGroup>
 
 </Project>

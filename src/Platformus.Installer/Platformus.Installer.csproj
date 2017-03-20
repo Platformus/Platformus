@@ -3,7 +3,7 @@
   <PropertyGroup>
     <Description>Free, open source and cross-platform CMS based on ASP.NET Core 1.0 and ExtCore framework.</Description>
     <Copyright>Copyright © 2017 Dmitry Sikorsky</Copyright>
-    <VersionPrefix>1.0.0-alpha16</VersionPrefix>
+    <VersionPrefix>1.0.0-alpha17</VersionPrefix>
     <Authors>Dmitry Sikorsky</Authors>
     <TargetFramework>netstandard1.6</TargetFramework>
     <AssemblyName>Platformus.Installer</AssemblyName>
@@ -19,8 +19,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <EmbeddedResource Include="Views\Installation\Index.cshtml" />
-    <EmbeddedResource Include="wwwroot\images\platformus.png" />
+    <EmbeddedResource Include="Areas\Backend\Views\**;wwwroot\**" />
   </ItemGroup>
 
   <ItemGroup>
@@ -38,10 +37,6 @@
 
   <ItemGroup>
     <DotNetCliToolReference Include="BundlerMinifier.Core" Version="2.2.301" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="wwwroot\css\" />
   </ItemGroup>
 
 </Project>

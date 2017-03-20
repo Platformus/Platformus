@@ -3,7 +3,7 @@
   <PropertyGroup>
     <Description>Part of the Platformus.Barebone Platformus extension.</Description>
     <Copyright>Copyright © 2015 Dmitry Sikorsky</Copyright>
-    <VersionPrefix>1.0.0-alpha16</VersionPrefix>
+    <VersionPrefix>1.0.0-alpha17</VersionPrefix>
     <Authors>Dmitry Sikorsky</Authors>
     <TargetFramework>netstandard1.6</TargetFramework>
     <AssemblyName>Platformus.Barebone.Backend</AssemblyName>
@@ -13,60 +13,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <EmbeddedResource Include="Areas\Backend\Views\Barebone\_DeleteForm.cshtml" />
-    <EmbeddedResource Include="Areas\Backend\Views\Default\Index.cshtml" />
-    <EmbeddedResource Include="Areas\Backend\Views\Shared\Components\BackendMenu\Default.cshtml" />
-    <EmbeddedResource Include="Areas\Backend\Views\Shared\Components\BackendScripts\Default.cshtml" />
-    <EmbeddedResource Include="Areas\Backend\Views\Shared\Components\BackendStyleSheets\Default.cshtml" />
-    <EmbeddedResource Include="Areas\Backend\Views\Shared\_BackendMenu.cshtml" />
-    <EmbeddedResource Include="Areas\Backend\Views\Shared\_BackendMenuGroup.cshtml" />
-    <EmbeddedResource Include="Areas\Backend\Views\Shared\_BackendMenuItem.cshtml" />
-    <EmbeddedResource Include="Areas\Backend\Views\Shared\_BackendScript.cshtml" />
-    <EmbeddedResource Include="Areas\Backend\Views\Shared\_BackendScripts.cshtml" />
-    <EmbeddedResource Include="Areas\Backend\Views\Shared\_BackendStyleSheet.cshtml" />
-    <EmbeddedResource Include="Areas\Backend\Views\Shared\_BackendStyleSheets.cshtml" />
-    <EmbeddedResource Include="Areas\Backend\Views\Shared\_Filter.cshtml" />
-    <EmbeddedResource Include="Areas\Backend\Views\Shared\_Grid.cshtml" />
-    <EmbeddedResource Include="Areas\Backend\Views\Shared\_GridColumn.cshtml" />
-    <EmbeddedResource Include="Areas\Backend\Views\Shared\_Layout.cshtml" />
-    <EmbeddedResource Include="Areas\Backend\Views\Shared\_Pager.cshtml" />
-    <EmbeddedResource Include="Areas\Backend\Views\Shared\_TakeSelector.cshtml" />
-    <EmbeddedResource Include="Areas\Backend\Views\_ViewImports.cshtml" />
-    <EmbeddedResource Include="Areas\Backend\Views\_ViewStart.cshtml" />
-    <EmbeddedResource Include="wwwroot\areas\backend\images\button_delete.png" />
-    <EmbeddedResource Include="wwwroot\areas\backend\images\button_delete%402x.png" />
-    <EmbeddedResource Include="wwwroot\areas\backend\images\checkbox_indicator_checked.png" />
-    <EmbeddedResource Include="wwwroot\areas\backend\images\checkbox_indicator_checked%402x.png" />
-    <EmbeddedResource Include="wwwroot\areas\backend\images\current_page.png" />
-    <EmbeddedResource Include="wwwroot\areas\backend\images\current_page%402x.png" />
-    <EmbeddedResource Include="wwwroot\areas\backend\images\drop_down_list.png" />
-    <EmbeddedResource Include="wwwroot\areas\backend\images\drop_down_list%402x.png" />
-    <EmbeddedResource Include="wwwroot\areas\backend\images\first_page.png" />
-    <EmbeddedResource Include="wwwroot\areas\backend\images\first_page%402x.png" />
-    <EmbeddedResource Include="wwwroot\areas\backend\images\last_page.png" />
-    <EmbeddedResource Include="wwwroot\areas\backend\images\last_page%402x.png" />
-    <EmbeddedResource Include="wwwroot\areas\backend\images\max_length_indicator.png" />
-    <EmbeddedResource Include="wwwroot\areas\backend\images\max_length_indicator%402x.png" />
-    <EmbeddedResource Include="wwwroot\areas\backend\images\menu_item_active.png" />
-    <EmbeddedResource Include="wwwroot\areas\backend\images\menu_item_active%402x.png" />
-    <EmbeddedResource Include="wwwroot\areas\backend\images\menu_item_active_with_secondary_master.png" />
-    <EmbeddedResource Include="wwwroot\areas\backend\images\menu_item_active_with_secondary_master%402x.png" />
-    <EmbeddedResource Include="wwwroot\areas\backend\images\next_month.png" />
-    <EmbeddedResource Include="wwwroot\areas\backend\images\next_month%402x.png" />
-    <EmbeddedResource Include="wwwroot\areas\backend\images\next_page.png" />
-    <EmbeddedResource Include="wwwroot\areas\backend\images\next_page%402x.png" />
-    <EmbeddedResource Include="wwwroot\areas\backend\images\picker.png" />
-    <EmbeddedResource Include="wwwroot\areas\backend\images\picker%402x.png" />
-    <EmbeddedResource Include="wwwroot\areas\backend\images\press_enter.png" />
-    <EmbeddedResource Include="wwwroot\areas\backend\images\press_enter%402x.png" />
-    <EmbeddedResource Include="wwwroot\areas\backend\images\previous_month.png" />
-    <EmbeddedResource Include="wwwroot\areas\backend\images\previous_month%402x.png" />
-    <EmbeddedResource Include="wwwroot\areas\backend\images\previous_page.png" />
-    <EmbeddedResource Include="wwwroot\areas\backend\images\previous_page%402x.png" />
-    <EmbeddedResource Include="wwwroot\areas\backend\images\radio_indicator_checked.png" />
-    <EmbeddedResource Include="wwwroot\areas\backend\images\radio_indicator_checked%402x.png" />
-    <EmbeddedResource Include="wwwroot\areas\backend\images\skipped_pages.png" />
-    <EmbeddedResource Include="wwwroot\areas\backend\images\skipped_pages%402x.png" />
+    <EmbeddedResource Include="Areas\Backend\Views\**;wwwroot\**" />
   </ItemGroup>
 
   <ItemGroup>
@@ -83,13 +30,6 @@
 
   <ItemGroup>
     <DotNetCliToolReference Include="BundlerMinifier.Core" Version="2.2.301" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="wwwroot\areas\backend\css\" />
-    <Folder Include="wwwroot\areas\backend\css\" />
-    <Folder Include="wwwroot\areas\backend\js\" />
-    <Folder Include="wwwroot\areas\backend\js\" />
   </ItemGroup>
 
 </Project>
