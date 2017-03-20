@@ -28,7 +28,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="ExtCore.Infrastructure" Version="1.1.1" />
+    <PackageReference Include="ExtCore.Infrastructure" Version="1.1.3" />
   </ItemGroup>
 
   <Target Name="PrecompileScript" BeforeTargets="BeforeBuild">

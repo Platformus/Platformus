@@ -13,7 +13,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="ExtCore.Mvc.Infrastructure" Version="1.1.1" />
+    <PackageReference Include="ExtCore.Mvc.Infrastructure" Version="1.1.3" />
   </ItemGroup>
 
 </Project>

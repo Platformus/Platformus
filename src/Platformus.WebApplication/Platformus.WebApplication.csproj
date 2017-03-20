@@ -19,9 +19,9 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="ExtCore.Data" Version="1.1.1" />
-    <PackageReference Include="ExtCore.Mvc" Version="1.1.1" />
-    <PackageReference Include="ExtCore.WebApplication" Version="1.1.1" />
+    <PackageReference Include="ExtCore.Data" Version="1.1.3" />
+    <PackageReference Include="ExtCore.Mvc" Version="1.1.3" />
+    <PackageReference Include="ExtCore.WebApplication" Version="1.1.3" />
     <PackageReference Include="Microsoft.AspNetCore.Diagnostics" Version="1.1.1" />
     <PackageReference Include="Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore" Version="1.1.1" />
     <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="1.1.1" />
