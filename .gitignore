@@ -1,4 +1,3 @@
-.svn/
 .vs/
 bin/
 obj/
@@ -8,5 +7,3 @@ src/Platformus.Domain.Backend/wwwroot/areas/backend/css
 src/Platformus.Domain.Backend/wwwroot/areas/backend/js
 src/Platformus.FileManager.Backend/wwwroot/areas/backend/css
 src/Platformus.FileManager.Backend/wwwroot/areas/backend/js
-*.xproj.user
-*.lock.json
