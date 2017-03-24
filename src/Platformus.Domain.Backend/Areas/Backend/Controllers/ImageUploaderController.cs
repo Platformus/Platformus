@@ -2,6 +2,7 @@
 // Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information.
 
 using System.Collections.Generic;
+using System.Drawing;
 using System.IO;
 using System.Threading.Tasks;
 using ExtCore.Data.Abstractions;
@@ -39,7 +40,7 @@ namespace Platformus.Domain.Backend.Controllers
         filename = ContentDispositionHeaderValue.Parse(source.ContentDisposition).FileName.Trim('"');
         filename = this.EnsureCorrectFilename(filename);
 
-        using (FileStream output = System.IO.File.Create(this.GetPathAndFilename(filename)))
+        using (FileStream output = System.IO.File.Create(this.GetPathAndFilename("\\images\\temp\\", filename)))
           await source.CopyToAsync(output);
       }
 
@@ -47,10 +48,38 @@ namespace Platformus.Domain.Backend.Controllers
     }
 
     [HttpGet]
-    public ActionResult GetCroppedImageUrl(string imageUrl, int x, int y, int width, int height, int sourceWidth, int sourceHeight)
+    public ActionResult GetCroppedImageUrl(string sourceImageUrl, int sourceX, int sourceY, int sourceWidth, int sourceHeight, string destinationImageBaseUrl, int destinationWidth, int destinationHeight)
     {
-      // TODO: implement real cropping here
-      return this.Content(imageUrl);
+      string filename = sourceImageUrl.Substring(sourceImageUrl.LastIndexOf("/") + 1);
+      Image sourceImage = this.LoadImageFromFile(this.GetPathAndFilename("\\images\\temp\\", filename));
+
+      if (sourceImage.Width == destinationWidth && sourceImage.Height == destinationHeight)
+        return this.Content(sourceImageUrl);
+
+      using (Image destinationImage = new Bitmap(destinationWidth, destinationHeight))
+      {
+        Graphics g = Graphics.FromImage(destinationImage);
+
+        g.DrawImage(
+          sourceImage,
+          new Rectangle(0, 0, destinationWidth, destinationHeight),
+          new Rectangle(sourceX, sourceY, sourceWidth, sourceHeight),
+          GraphicsUnit.Pixel
+        );
+
+        destinationImage.Save(this.GetPathAndFilename(destinationImageBaseUrl, filename));
+        return this.Content(destinationImageBaseUrl + filename);
+      }
+    }
+
+    private Image LoadImageFromFile(string pathAndFilename)
+    {
+      Image image = null;
+
+      using (Bitmap temp = new Bitmap(pathAndFilename))
+        image = new Bitmap(temp);
+
+      return image;
     }
 
     private string EnsureCorrectFilename(string filename)
@@ -61,9 +90,9 @@ namespace Platformus.Domain.Backend.Controllers
       return filename;
     }
 
-    private string GetPathAndFilename(string filename)
+    private string GetPathAndFilename(string basePath, string filename)
     {
-      return this.HostingEnvironment.WebRootPath + "\\images\\temp\\" + filename;
+      return this.HostingEnvironment.WebRootPath + basePath.Replace('/', '\\') + filename;
     }
   }
 }

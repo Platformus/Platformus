@@ -62,6 +62,9 @@
     return $("<button>").addClass("buttons__button").addClass("buttons__button--minor").addClass("button").addClass("button--positive").addClass("button--minor").attr("type", "button").html("Upload…").click(
       function () {
         new platformus.forms.imageUploaderForm.show(
+          "/images/objects/",
+          -1,
+          -1,
           function (imageUrl) {
             $("#" + identity).val(imageUrl);
             $("#" + identity + "Image").attr("src", imageUrl).show();

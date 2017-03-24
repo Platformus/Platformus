@@ -2,6 +2,9 @@
 // Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information.
 
 (function (platformus) {
+  var _destinationImageBaseUrl = "/images/";
+  var _destinationWidth = -1;
+  var _destinationHeight = -1;
   var _callback = null;
   var _isCropping = false;
   var _isMoving = false;
@@ -19,7 +22,10 @@
 
   platformus.forms = platformus.forms || {};
   platformus.forms.imageUploaderForm = {};
-  platformus.forms.imageUploaderForm.show = function (callback) {
+  platformus.forms.imageUploaderForm.show = function (destinationImageBaseUrl, width, height, callback) {
+    _destinationImageBaseUrl = destinationImageBaseUrl;
+    _destinationWidth = width;
+    _destinationHeight = height;
     _callback = callback;
 
     return platformus.forms.baseForm.show("/backend/domain/imageuploaderform", defineHandlers, "image-uploader-pop-up-form");
@@ -138,7 +144,16 @@
 
     $.get(
       "/backend/imageuploader/getcroppedimageurl",
-      { imageUrl: image.attr("src"), x: x, y: y, width: width, height: height, sourceWidth: this.width == null ? -1 : this.width, sourceHeight: this.height == null ? -1 : this.height },
+      {
+        sourceImageUrl: image.attr("src"),
+        sourceX: x,
+        sourceY: y,
+        sourceWidth: width,
+        sourceHeight: height,
+        destinationImageBaseUrl: _destinationImageBaseUrl,
+        destinationWidth: _destinationWidth == -1 ? width : _destinationWidth,
+        destinationHeight: _destinationHeight == -1 ? height : _destinationHeight
+      },
       function (result) {
         if (_callback != null) {
           _callback(result);
