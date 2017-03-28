@@ -45,8 +45,8 @@ namespace Platformus.Domain
             }
           ),
           new BackendMenuGroup(
-            "Settings",
-            2000,
+            "Administration",
+            3000,
             new BackendMenuItem[]
             {
               new BackendMenuItem("/backend/datatypes", "Data types", 2000),

@@ -7,15 +7,18 @@
       <a class="buttons__button buttons__button--minor button button--positive button--minor" href="/backend/fields/edit/@Model.Id">Edit</a>
       <a class="buttons__button buttons__button--minor button button--negative button--minor button--delete" href="#" onclick="return platformus.forms.deleteForm.show('/backend/fields/delete/@Model.Id');"></a>
     </div>
-    @Model.Name
+    @Model.Name <span class="marker marker--neutral">@Model.FieldType.Name</span>
   </div>
-  <div class="tree__node-content">
-    @foreach (var fieldOption in this.Model.FieldOptions)
-    {
-    @Html.Partial("_FieldOption", fieldOption)
-    }
-    <div class="tree__buttons buttons">
-      <a class="buttons__button buttons__button--minor button button--positive button--minor" href="/backend/fieldoptions/create?fieldid=@Model.Id">Create field item</a>
+  @if (this.Model.FieldType.Code == "DropDownList")
+  {
+    <div class="tree__node-content">
+      @foreach (var fieldOption in this.Model.FieldOptions)
+      {
+      @Html.Partial("_FieldOption", fieldOption)
+      }
+      <div class="tree__buttons buttons">
+        <a class="buttons__button buttons__button--minor button button--positive button--minor" href="/backend/fieldoptions/create?fieldid=@Model.Id">Create field item</a>
+      </div>
     </div>
-  </div>
+  }
 </div>

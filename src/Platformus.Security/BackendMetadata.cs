@@ -16,7 +16,7 @@ namespace Platformus.Security
         {
           new BackendMenuGroup(
             "Audience",
-            3000,
+            2000,
             new BackendMenuItem[]
             {
               new BackendMenuItem("/backend/permissions", "Permissions", 1000),

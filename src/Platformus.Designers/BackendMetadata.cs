@@ -37,8 +37,8 @@ namespace Platformus.Designers
         return new BackendMenuGroup[]
         {
           new BackendMenuGroup(
-            "Settings",
-            2000,
+            "Development",
+            4000,
             new BackendMenuItem[]
             {
               new BackendMenuItem("/backend/views", "Views", 10000),

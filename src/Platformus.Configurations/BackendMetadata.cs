@@ -15,8 +15,8 @@ namespace Platformus.Configurations
         return new BackendMenuGroup[]
         {
           new BackendMenuGroup(
-            "Settings",
-            2000,
+            "Administration",
+            3000,
             new BackendMenuItem[]
             {
               new BackendMenuItem("/backend/configurations", "Configurations", 4000)

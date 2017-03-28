@@ -15,8 +15,8 @@ namespace Platformus.Globalization
         return new BackendMenuGroup[]
         {
           new BackendMenuGroup(
-            "Settings",
-            2000,
+            "Administration",
+            3000,
             new BackendMenuItem[]
             {
               new BackendMenuItem("/backend/cultures", "Cultures", 1000)
