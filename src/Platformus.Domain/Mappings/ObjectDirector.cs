@@ -16,6 +16,7 @@ namespace Platformus.Domain
     private IRequestHandler requestHandler;
     private IClassRepository classRepository;
     private IMemberRepository memberRepository;
+    private IDataTypeRepository dataTypeRepository;
     private IPropertyRepository propertyRepository;
     private ILocalizationRepository localizationRepository;
 
@@ -24,40 +25,64 @@ namespace Platformus.Domain
       this.requestHandler = requestHandler;
       this.classRepository = this.requestHandler.Storage.GetRepository<IClassRepository>();
       this.memberRepository = this.requestHandler.Storage.GetRepository<IMemberRepository>();
+      this.dataTypeRepository = this.requestHandler.Storage.GetRepository<IDataTypeRepository>();
       this.propertyRepository = this.requestHandler.Storage.GetRepository<IPropertyRepository>();
       this.localizationRepository = this.requestHandler.Storage.GetRepository<ILocalizationRepository>();
     }
 
     public void ConstructObject(ObjectBuilderBase objectBuilder, Object @object)
     {
-      objectBuilder.BuildBasics(@object);
+      objectBuilder.BuildId(@object);
 
       Class @class = this.classRepository.WithKey(@object.ClassId);
 
       foreach (Member member in this.memberRepository.FilteredByClassIdInlcudingParent(@class.Id))
       {
         if (member.PropertyDataTypeId != null)
-          this.ConstructProperty(objectBuilder, @object, member);
+        {
+          DataType dataType = this.dataTypeRepository.WithKey((int)member.PropertyDataTypeId);
+
+          this.ConstructProperty(objectBuilder, @object, member, dataType);
+        }
 
         else if (member.RelationClassId != null)
           this.ConstructRelation(objectBuilder, @object, member);
       }
     }
 
-    private void ConstructProperty(ObjectBuilderBase objectBuilder, Object @object, Member member)
+    private void ConstructProperty(ObjectBuilderBase objectBuilder, Object @object, Member member, DataType dataType)
     {
       Property property = this.propertyRepository.WithObjectIdAndMemberId(@object.Id, member.Id);
-      IDictionary<Culture, Localization> localizationsByCultures = new Dictionary<Culture, Localization>();
 
-      foreach (Culture culture in CultureManager.GetCultures(this.requestHandler.Storage))
-        localizationsByCultures.Add(culture, this.localizationRepository.WithDictionaryIdAndCultureId(property.HtmlId, culture.Id));
+      if (dataType.StorageDataType == StorageDataType.Integer)
+        objectBuilder.BuildIntegerProperty(member.Code, property.IntegerValue);
 
-      objectBuilder.BuildProperty(@object, member, property, localizationsByCultures);
+      else if (dataType.StorageDataType == StorageDataType.Decimal)
+        objectBuilder.BuildDecimalProperty(member.Code, property.DecimalValue);
+
+      if (dataType.StorageDataType == StorageDataType.String)
+        objectBuilder.BuildStringProperty(member.Code, this.GetLocalizationValuesByCultureCodes(property));
+
+      if (dataType.StorageDataType == StorageDataType.DateTime)
+        objectBuilder.BuildDateTimeProperty(member.Code, property.DateTimeValue);
     }
 
     private void ConstructRelation(ObjectBuilderBase objectBuilder, Object @object, Member member)
     {
       // TODO: implement relations processing
+    }
+
+    private IDictionary<string, string> GetLocalizationValuesByCultureCodes(Property property)
+    {
+      Dictionary<string, string> localizationValuesByCultureCodes = new Dictionary<string, string>();
+
+      foreach (Culture culture in CultureManager.GetCultures(this.requestHandler.Storage))
+        localizationValuesByCultureCodes.Add(
+          culture.Code,
+          this.localizationRepository.WithDictionaryIdAndCultureId((int)property.StringValueId, culture.Id)?.Value
+        );
+
+      return localizationValuesByCultureCodes;
     }
   }
 }

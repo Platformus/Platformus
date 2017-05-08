@@ -19,6 +19,7 @@ namespace Platformus.Domain.Backend.ViewModels.Shared
       return new DataTypeViewModel()
       {
         Id = dataType.Id,
+        StorageDataType = dataType.StorageDataType,
         JavaScriptEditorClassName = dataType.JavaScriptEditorClassName,
         Name = dataType.Name,
         Position = dataType.Position

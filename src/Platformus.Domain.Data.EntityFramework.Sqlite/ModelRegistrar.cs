@@ -11,12 +11,11 @@ namespace Platformus.Domain.Data.EntityFramework.Sqlite
   {
     public void RegisterModels(ModelBuilder modelBuilder)
     {
-      modelBuilder.Entity<CachedObject>(etb =>
+      modelBuilder.Entity<SerializedObject>(etb =>
         {
           etb.HasKey(e => new { e.CultureId, e.ObjectId });
-          etb.Property(e => e.ViewName).HasMaxLength(32);
-          etb.Property(e => e.Url).HasMaxLength(128);
-          etb.ForSqliteToTable("CachedObjects");
+          etb.Property(e => e.UrlPropertyStringValue).HasMaxLength(128);
+          etb.ForSqliteToTable("SerializedObjects");
         }
       );
 
@@ -27,7 +26,6 @@ namespace Platformus.Domain.Data.EntityFramework.Sqlite
           etb.Property(e => e.Code).IsRequired().HasMaxLength(32);
           etb.Property(e => e.Name).IsRequired().HasMaxLength(64);
           etb.Property(e => e.PluralizedName).IsRequired().HasMaxLength(64);
-          etb.Property(e => e.DefaultViewName).HasMaxLength(32);
           etb.ForSqliteToTable("Classes");
         }
       );
@@ -55,6 +53,7 @@ namespace Platformus.Domain.Data.EntityFramework.Sqlite
         {
           etb.HasKey(e => e.Id);
           etb.Property(e => e.Id).ValueGeneratedOnAdd();
+          etb.Property(e => e.StorageDataType).IsRequired().HasMaxLength(32);
           etb.Property(e => e.JavaScriptEditorClassName).IsRequired().HasMaxLength(128);
           etb.Property(e => e.Name).IsRequired().HasMaxLength(64);
           etb.ForSqliteToTable("DataTypes");
@@ -76,8 +75,6 @@ namespace Platformus.Domain.Data.EntityFramework.Sqlite
         {
           etb.HasKey(e => e.Id);
           etb.Property(e => e.Id).ValueGeneratedOnAdd();
-          etb.Property(e => e.ViewName).HasMaxLength(32);
-          etb.Property(e => e.Url).HasMaxLength(128);
           etb.ForSqliteToTable("Objects");
         }
       );
@@ -95,6 +92,18 @@ namespace Platformus.Domain.Data.EntityFramework.Sqlite
           etb.HasKey(e => e.Id);
           etb.Property(e => e.Id).ValueGeneratedOnAdd();
           etb.ForSqliteToTable("Relations");
+        }
+      );
+
+      modelBuilder.Entity<Microcontroller>(etb =>
+        {
+          etb.HasKey(e => e.Id);
+          etb.Property(e => e.Id).ValueGeneratedOnAdd();
+          etb.Property(e => e.Name).IsRequired().HasMaxLength(64);
+          etb.Property(e => e.UrlTemplate).HasMaxLength(128);
+          etb.Property(e => e.ViewName).IsRequired().HasMaxLength(64);
+          etb.Property(e => e.CSharpClassName).IsRequired().HasMaxLength(128);
+          etb.ForSqliteToTable("Microcontrollers");
         }
       );
     }

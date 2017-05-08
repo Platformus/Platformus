@@ -14,13 +14,10 @@ namespace Platformus.Domain.Data.Models
     public string Name { get; set; }
     public string PluralizedName { get; set; }
     public bool? IsAbstract { get; set; }
-    public bool? IsStandalone { get; set; }
-    public string DefaultViewName { get; set; }
 
     public virtual Class Parent { get; set; }
     public virtual ICollection<Tab> Tabs { get; set; }
     //public virtual ICollection<Member> Members { get; set; }
-    public virtual ICollection<DataSource> DataSources { get; set; }
     public virtual ICollection<Object> Objects { get; set; }
   }
 }

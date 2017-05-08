@@ -47,16 +47,22 @@ namespace Platformus.Security
         {
           [2000] = applicationBuilder =>
           {
-            applicationBuilder.UseCookieAuthentication(
-              new CookieAuthenticationOptions()
+            applicationBuilder.UseWhen(
+              context => context.Request.Path.StartsWithSegments(new PathString("/backend")),
+              backendApplicationBuilder =>
               {
-                AuthenticationScheme = CookieAuthenticationDefaults.AuthenticationScheme,
-                AutomaticAuthenticate = true,
-                AutomaticChallenge = true,
-                CookieName = "PLATFORMUS",
-                ExpireTimeSpan = TimeSpan.FromDays(7),
-                LoginPath = new PathString("/backend/account/signin"),
-                ReturnUrlParameter = "returnurl"
+                backendApplicationBuilder.UseCookieAuthentication(
+                  new CookieAuthenticationOptions()
+                  {
+                    AuthenticationScheme = CookieAuthenticationDefaults.AuthenticationScheme,
+                    AutomaticAuthenticate = true,
+                    AutomaticChallenge = true,
+                    CookieName = "PLATFORMUS",
+                    ExpireTimeSpan = TimeSpan.FromDays(7),
+                    LoginPath = new PathString("/backend/account/signin"),
+                    ReturnUrlParameter = "returnurl"
+                  }
+                );
               }
             );
           }

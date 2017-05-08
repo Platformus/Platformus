@@ -18,16 +18,6 @@ namespace Platformus.Domain.Data.EntityFramework.SqlServer
       return this.dbSet.FirstOrDefault(m => m.Id == id);
     }
 
-    public Member WithClassIdAndCode(int classId, string code)
-    {
-      return this.dbSet.FirstOrDefault(m => m.ClassId == classId && m.Code == code);
-    }
-
-    public IEnumerable<Member> FilteredByClassId(int classId)
-    {
-      return this.dbSet.Where(m => m.ClassId == classId).OrderBy(m => m.Position);
-    }
-
     public IEnumerable<Member> FilteredByClassIdInlcudingParent(int classId)
     {
       return this.dbSet.FromSql(
@@ -78,9 +68,9 @@ namespace Platformus.Domain.Data.EntityFramework.SqlServer
     {
       this.storageContext.Database.ExecuteSqlCommand(
         @"
-          DELETE FROM CachedObjects WHERE ClassId IN (SELECT ClassId FROM Members WHERE Id = {0});
+          DELETE FROM SerializedObjects WHERE Id IN (SELECT Id FROM Objects WHERE ClassId IN (SELECT ClassId FROM Members WHERE Id = {0}));
           CREATE TABLE #Dictionaries (Id INT PRIMARY KEY);
-          INSERT INTO #Dictionaries SELECT HtmlId FROM Properties WHERE MemberId = {0};
+          INSERT INTO #Dictionaries SELECT StringValueId FROM Properties WHERE MemberId = {0};
           DELETE FROM Properties WHERE MemberId = {0};
           DELETE FROM Localizations WHERE DictionaryId IN (SELECT Id FROM #Dictionaries);
           DELETE FROM Dictionaries WHERE Id IN (SELECT Id FROM #Dictionaries);

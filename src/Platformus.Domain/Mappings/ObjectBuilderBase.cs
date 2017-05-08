@@ -3,13 +3,15 @@
 
 using System.Collections.Generic;
 using Platformus.Domain.Data.Models;
-using Platformus.Globalization.Data.Models;
 
 namespace Platformus.Domain
 {
   public abstract class ObjectBuilderBase
   {
-    public abstract void BuildBasics(Object @object);
-    public abstract void BuildProperty(Object @object, Member member, Property property, IDictionary<Culture, Localization> localizationsByCultures);
+    public abstract void BuildId(Object @object);
+    public abstract void BuildIntegerProperty(string memberCode, int? value);
+    public abstract void BuildDecimalProperty(string memberCode, decimal? value);
+    public abstract void BuildStringProperty(string memberCode, IDictionary<string, string> value);
+    public abstract void BuildDateTimeProperty(string memberCode, System.DateTime? value);
   }
 }

@@ -47,9 +47,9 @@ namespace Platformus.Domain.Data.EntityFramework.Sqlite
     {
       this.storageContext.Database.ExecuteSqlCommand(
         @"
-          DELETE FROM CachedObjects WHERE ClassId IN (SELECT ClassId FROM Members WHERE PropertyDataTypeId = {0});
+          DELETE FROM SerializedObjects WHERE ObjectId IN (SELECT Id FROM Objects WHERE ClassId IN (SELECT ClassId FROM Members WHERE PropertyDataTypeId = {0}));
           CREATE TEMP TABLE TempDictionaries (Id INT PRIMARY KEY);
-          INSERT INTO TempDictionaries SELECT HtmlId FROM Properties WHERE MemberId IN (SELECT Id FROM Members WHERE PropertyDataTypeId = {0});
+          INSERT INTO TempDictionaries SELECT StringValueId FROM Properties WHERE MemberId IN (SELECT Id FROM Members WHERE PropertyDataTypeId = {0});
           DELETE FROM Properties WHERE MemberId IN (SELECT Id FROM Members WHERE PropertyDataTypeId = {0});
           DELETE FROM Localizations WHERE DictionaryId IN (SELECT Id FROM TempDictionaries);
           DELETE FROM Dictionaries WHERE Id IN (SELECT Id FROM TempDictionaries);

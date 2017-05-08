@@ -17,20 +17,20 @@ namespace Platformus.Domain.Backend.ViewModels.DataSources
     {
     }
 
-    public IndexViewModel Create(int classId, string orderBy, string direction, int skip, int take, string filter)
+    public IndexViewModel Create(int microcontrollerId, string orderBy, string direction, int skip, int take, string filter)
     {
       IDataSourceRepository dataSourceRepository = this.RequestHandler.Storage.GetRepository<IDataSourceRepository>();
 
       return new IndexViewModel()
       {
-        ClassId = classId,
+        MicrocontrollerId = microcontrollerId,
         Grid = new GridViewModelFactory(this.RequestHandler).Create(
-          orderBy, direction, skip, take, dataSourceRepository.CountByClassId(classId, filter),
+          orderBy, direction, skip, take, dataSourceRepository.CountByMicrocontrollerId(microcontrollerId, filter),
           new[] {
             new GridColumnViewModelFactory(this.RequestHandler).Create("C# class name", "CSharpClassName"),
             new GridColumnViewModelFactory(this.RequestHandler).CreateEmpty()
           },
-          dataSourceRepository.FilteredByClassIdRange(classId, orderBy, direction, skip, take, filter).Select(ds => new DataSourceViewModelFactory(this.RequestHandler).Create(ds)),
+          dataSourceRepository.FilteredByMicrocontrollerIdRange(microcontrollerId, orderBy, direction, skip, take, filter).Select(ds => new DataSourceViewModelFactory(this.RequestHandler).Create(ds)),
           "_DataSource"
         )
       };

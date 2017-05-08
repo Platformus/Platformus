@@ -114,7 +114,7 @@
               hideAndRemovePicker(getPicker());
               return false;
             };
-          }(date.locale(textBox.data("culture")).format("L"))
+          }(date.locale(platformus.culture.server()).format("L"))
         );
 
         if (date.month() != thisMonth.month()) {

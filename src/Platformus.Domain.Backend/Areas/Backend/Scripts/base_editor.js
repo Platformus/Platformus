@@ -24,6 +24,6 @@
   };
 
   platformus.editors.base.getIdentity = function (member, localization) {
-    return "propertyMember" + member.id + (localization == null ? platformus.string.empty : localization.culture.code);
+    return "propertyMember" + member.id + (localization == null ? "__" : localization.culture.code);
   };
 })(window.platformus = window.platformus || {});

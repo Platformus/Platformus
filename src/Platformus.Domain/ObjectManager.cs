@@ -23,7 +23,7 @@ namespace Platformus.Domain
     public IEnumerable<string> GetDisplayProperties(Object @object)
     {
       List<string> properties = new List<string>();
-
+      Culture neutralCulture = CultureManager.GetNeutralCulture(this.requestHandler.Storage);
       Culture defaultCulture = CultureManager.GetDefaultCulture(this.requestHandler.Storage);
 
       if (defaultCulture != null)
@@ -37,7 +37,13 @@ namespace Platformus.Domain
 
           else
           {
-            Localization localization = this.requestHandler.Storage.GetRepository<ILocalizationRepository>().WithDictionaryIdAndCultureId(property.HtmlId, defaultCulture.Id);
+            Localization localization = null;
+
+            if (member.IsPropertyLocalizable == true && defaultCulture != null)
+              localization = this.requestHandler.Storage.GetRepository<ILocalizationRepository>().WithDictionaryIdAndCultureId((int)property.StringValueId, defaultCulture.Id);
+
+            else if (neutralCulture != null)
+              localization = this.requestHandler.Storage.GetRepository<ILocalizationRepository>().WithDictionaryIdAndCultureId((int)property.StringValueId, neutralCulture.Id);
 
             if (localization == null)
               properties.Add(string.Empty);

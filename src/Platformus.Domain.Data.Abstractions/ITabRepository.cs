@@ -10,7 +10,6 @@ namespace Platformus.Domain.Data.Abstractions
   public interface ITabRepository : IRepository
   {
     Tab WithKey(int id);
-    IEnumerable<Tab> All();
     IEnumerable<Tab> FilteredByClassId(int classId);
     IEnumerable<Tab> FilteredByClassIdInlcudingParent(int classId);
     IEnumerable<Tab> FilteredByClassIdRange(int classId, string orderBy, string direction, int skip, int take, string filter);

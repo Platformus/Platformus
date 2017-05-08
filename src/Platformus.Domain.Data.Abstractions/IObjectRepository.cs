@@ -18,7 +18,6 @@ namespace Platformus.Domain.Data.Abstractions
     IEnumerable<Object> Primary(int memberId, int objectId);
     IEnumerable<Object> Foreign(int objectId);
     IEnumerable<Object> Foreign(int memberId, int objectId);
-    IEnumerable<Object> Standalone();
     void Create(Object @object);
     void Edit(Object @object);
     void Delete(int id);

@@ -31,7 +31,8 @@ namespace Platformus.Domain.Api.Controllers
       ObjectDirector objectDirector = new ObjectDirector(this);
 
       return objects.Select(
-        o => {
+        o =>
+        {
           DynamicObjectBuilder objectBuilder = new DynamicObjectBuilder();
 
           objectDirector.ConstructObject(objectBuilder, o);

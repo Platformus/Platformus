@@ -1,129 +1,63 @@
-﻿// Copyright © 2016 Dmitry Sikorsky. All rights reserved.
+﻿// Copyright © 2017 Dmitry Sikorsky. All rights reserved.
 // Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information.
 
 using System.Collections.Generic;
 using System.Linq;
-using System.Reflection;
 using Platformus.Barebone;
 using Platformus.Domain.Data.Abstractions;
 using Platformus.Domain.Data.Models;
-using Platformus.Globalization.Data.Abstractions;
-using Platformus.Globalization.Data.Models;
 
 namespace Platformus.Domain
 {
-  public class DomainObjectMapper
+  public class StronglyTypedObjectMapper
   {
     private IRequestHandler requestHandler;
     private IClassRepository classRepository;
-    private IMemberRepository memberRepositor;
     private IObjectRepository objectRepository;
-    private IPropertyRepository propertyRepository;
-    private IDictionaryRepository dictionaryRepository;
-    private ICultureRepository cultureRepository;
-    private ILocalizationRepository localizationRepository;
 
-    public DomainObjectMapper(IRequestHandler requestHandler)
+    public StronglyTypedObjectMapper(IRequestHandler requestHandler)
     {
       this.requestHandler = requestHandler;
       this.classRepository = this.requestHandler.Storage.GetRepository<IClassRepository>();
-      this.memberRepositor = this.requestHandler.Storage.GetRepository<IMemberRepository>();
       this.objectRepository = this.requestHandler.Storage.GetRepository<IObjectRepository>();
-      this.propertyRepository = this.requestHandler.Storage.GetRepository<IPropertyRepository>();
-      this.dictionaryRepository = this.requestHandler.Storage.GetRepository<IDictionaryRepository>();
-      this.cultureRepository = this.requestHandler.Storage.GetRepository<ICultureRepository>();
-      this.localizationRepository = this.requestHandler.Storage.GetRepository<ILocalizationRepository>();
     }
 
-    public T WithKey<T>(int id) where T : DomainObject
+    public T WithKey<T>(int id)
     {
       Object @object = this.objectRepository.WithKey(id);
-      DomainObjectBuilder<T> objectBuilder = new DomainObjectBuilder<T>();
+      StronglyTypedObjectBuilder<T> stronglyTypedObjectBuilder = new StronglyTypedObjectBuilder<T>();
 
-      new ObjectDirector(this.requestHandler).ConstructObject(objectBuilder, @object);
-      return objectBuilder.Build();
+      new ObjectDirector(this.requestHandler).ConstructObject(stronglyTypedObjectBuilder, @object);
+      return stronglyTypedObjectBuilder.Build();
     }
 
-    public IEnumerable<T> All<T>() where T : DomainObject
+    public IEnumerable<T> All<T>()
     {
       Class @class = this.classRepository.WithCode(typeof(T).Name);
       IEnumerable<Object> objects = this.objectRepository.FilteredByClassId(@class.Id);
       ObjectDirector objectDirector = new ObjectDirector(this.requestHandler);
 
       return objects.Select(
-        o => {
-          DomainObjectBuilder<T> objectBuilder = new DomainObjectBuilder<T>();
+        o =>
+        {
+          StronglyTypedObjectBuilder<T> stronglyTypedObjectBuilder = new StronglyTypedObjectBuilder<T>();
 
-          objectDirector.ConstructObject(objectBuilder, o);
-          return objectBuilder.Build();
+          objectDirector.ConstructObject(stronglyTypedObjectBuilder, o);
+          return stronglyTypedObjectBuilder.Build();
         }
       );
     }
 
-    public void Create<T>(T domainObject) where T : DomainObject
+    public void Create<T>(T @object)
     {
-      Class @class = this.classRepository.WithCode(typeof(T).Name);
-      Object @object = new Object();
-
-      @object.ClassId = @class.Id;
-      @object.ViewName = domainObject.ViewName;
-      @object.Url = domainObject.Url;
-      this.objectRepository.Create(@object);
-      this.requestHandler.Storage.Save();
-      domainObject.Id = @object.Id;
-      this.CreateProperties(@class, @object, domainObject);
-      this.CreateRelations(@class, @object, domainObject);
     }
 
-    private void CreateProperties<T>(Class @class, Object @object, T domainObject) where T : DomainObject
+    public void Edit<T>(T @object)
     {
-      foreach (PropertyInfo propertyInfo in typeof(T).GetProperties().Where(pi => pi.PropertyType == typeof(DomainProperty)))
-      {
-        DomainProperty domainProperty = propertyInfo.GetValue(domainObject) as DomainProperty;
-
-        if (domainProperty != null)
-        {
-          Member member = this.memberRepositor.WithClassIdAndCode(@class.Id, propertyInfo.Name);
-
-          if (member == null && @class.ClassId != null)
-            member = this.memberRepositor.WithClassIdAndCode((int)@class.ClassId, propertyInfo.Name);
-
-          if (member != null)
-          {
-            foreach (string cultureCode in domainProperty.Keys)
-              this.CreateProperty(@object.Id, member.Id, cultureCode, domainProperty[cultureCode]);
-          }
-        }
-      }
     }
 
-    private void CreateProperty(int objectId, int memberId, string cultureCode, string value)
+    public void Delete<T>(T @object)
     {
-      Dictionary html = new Dictionary();
-
-      this.dictionaryRepository.Create(html);
-      this.requestHandler.Storage.Save();
-
-      Property property = new Property();
-
-      property.ObjectId = objectId;
-      property.MemberId = memberId;
-      property.HtmlId = html.Id;
-      this.propertyRepository.Create(property);
-      this.requestHandler.Storage.Save();
-
-      Localization localization = new Localization();
-
-      localization.DictionaryId = property.HtmlId;
-      localization.CultureId = this.cultureRepository.WithCode(cultureCode).Id;
-      localization.Value = value;
-      this.localizationRepository.Create(localization);
-      this.requestHandler.Storage.Save();
-    }
-
-    private void CreateRelations<T>(Class @class, Object @object, T domainObject) where T : DomainObject
-    {
-      // TODO: implement relations creating
     }
   }
 }

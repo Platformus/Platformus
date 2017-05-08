@@ -10,26 +10,37 @@ namespace Platformus.Domain.DataSources
 {
   public abstract class DataSourceBase : IDataSource
   {
-    protected IRequestHandler requestHandler;
-    protected Object @object;
-    protected CachedObject cachedObject;
-    protected Dictionary<string, string> args;
+    private Dictionary<string, string> args;
 
-    public void Initialize(IRequestHandler requestHandler, Object @object, params KeyValuePair<string, string>[] args)
+    public abstract IEnumerable<SerializedObject> GetSerializedObjects(IRequestHandler requestHandler, SerializedObject serializedPage, params KeyValuePair<string, string>[] args);
+    public abstract IEnumerable<Object> GetObjects(IRequestHandler requestHandler, Object page, params KeyValuePair<string, string>[] args);
+
+    protected bool HasArgument(KeyValuePair<string, string>[] args, string key)
     {
-      this.requestHandler = requestHandler;
-      this.@object = @object;
-      this.args = args.ToDictionary(a => a.Key, a => a.Value);
+      this.CacheArguments(args);
+      return this.args.ContainsKey(key);
     }
 
-    public void Initialize(IRequestHandler requestHandler, CachedObject cachedObject, params KeyValuePair<string, string>[] args)
+    protected int GetIntArgument(KeyValuePair<string, string>[] args, string key)
     {
-      this.requestHandler = requestHandler;
-      this.cachedObject = cachedObject;
-      this.args = args.ToDictionary(a => a.Key, a => a.Value);
+      this.CacheArguments(args);
+
+      if (int.TryParse(this.args[key], out int result))
+        return result;
+
+      return 0;
     }
 
-    public abstract IEnumerable<Object> GetObjects();
-    public abstract IEnumerable<CachedObject> GetCachedObjects();
+    protected string GetStringArgument(KeyValuePair<string, string>[] args, string key)
+    {
+      this.CacheArguments(args);
+      return this.args[key];
+    }
+
+    private void CacheArguments(KeyValuePair<string, string>[] args)
+    {
+      if (this.args == null)
+        this.args = args.ToDictionary(a => a.Key, a => a.Value);
+    }
   }
 }

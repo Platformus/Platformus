@@ -67,7 +67,7 @@ namespace Platformus.Globalization.Data.EntityFramework.PostgreSql
     {
       this.storageContext.Database.ExecuteSqlCommand(
         @"
-          DELETE FROM ""CachedObjects"" WHERE ""CultureId"" = {0};
+          DELETE FROM ""SerializedObjects"" WHERE ""CultureId"" = {0};
           DELETE FROM ""CachedMenus"" WHERE ""CultureId"" = {0};
           DELETE FROM ""CachedForms"" WHERE ""CultureId"" = {0};
           DELETE FROM ""Localizations"" WHERE ""CultureId"" = {0};

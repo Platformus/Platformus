@@ -18,11 +18,6 @@ namespace Platformus.Domain.Data.EntityFramework.Sqlite
       return this.dbSet.FirstOrDefault(t => t.Id == id);
     }
 
-    public IEnumerable<Tab> All()
-    {
-      return this.dbSet.OrderBy(t => t.Position);
-    }
-
     public IEnumerable<Tab> FilteredByClassId(int classId)
     {
       return this.dbSet.Where(t => t.ClassId == classId).OrderBy(t => t.Position);

@@ -20,9 +20,13 @@ namespace Platformus.Domain.Backend.ViewModels.Shared
       return new PropertyViewModel()
       {
         Id = property.Id,
-        HtmlLocalizations = this.GetLocalizations(
-          this.RequestHandler.Storage.GetRepository<IDictionaryRepository>().WithKey(property.HtmlId)
-        )
+        IntegerValue = property.IntegerValue,
+        DecimalValue = property.DecimalValue,
+        StringValueLocalizations = this.GetLocalizations(
+          property.StringValueId == null ?
+            null : this.RequestHandler.Storage.GetRepository<IDictionaryRepository>().WithKey((int)property.StringValueId)
+        ),
+        DateTimeValue = property.DateTimeValue
       };
     }
   }

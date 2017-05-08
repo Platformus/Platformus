@@ -14,19 +14,8 @@
       <span class="marker marker--neutral">No</span>
     }
   </td>
-  <td class="table__cell">
-    @if (this.Model.IsStandalone)
-    {
-      <span class="marker marker--positive">Yes</span>
-    }
-    else
-    {
-      <span class="marker marker--neutral">No</span>
-    }
-  </td>
   <td class="table__cell"><a href="/backend/tabs?classid=@Model.Id">Tabs</a></td>
   <td class="table__cell"><a href="/backend/members?classid=@Model.Id">Members</a></td>
-  <td class="table__cell"><a href="/backend/datasources?classid=@Model.Id">Data sources</a></td>
   <td class="table__cell table__buttons buttons">
     <a class="table__button buttons__button buttons__button--minor button button--positive button--minor" href="@(this.Context.Request.CombineUrl("/backend/classes/edit/" + this.Model.Id))">Edit</a>
     <a class="table__button buttons__button buttons__button--minor button button--negative button--minor button--delete" href="#" onclick="return platformus.forms.deleteForm.show('/backend/classes/delete/@Model.Id');"></a>

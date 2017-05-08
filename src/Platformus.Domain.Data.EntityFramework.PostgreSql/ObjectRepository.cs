@@ -20,12 +20,13 @@ namespace Platformus.Domain.Data.EntityFramework.PostgreSql
 
     public Object WithUrl(string url)
     {
-      return this.dbSet.FirstOrDefault(o => string.Equals(o.Url, url, System.StringComparison.OrdinalIgnoreCase));
+      return null;
+      //return this.dbSet.FirstOrDefault(o => string.Equals(o.Url, url, System.StringComparison.OrdinalIgnoreCase));
     }
 
     public IEnumerable<Object> All()
     {
-      return this.dbSet.OrderBy(o => o.Url);
+      return this.dbSet.OrderBy(o => o.Id);
     }
 
     public IEnumerable<Object> FilteredByClassId(int classId)
@@ -58,11 +59,6 @@ namespace Platformus.Domain.Data.EntityFramework.PostgreSql
       return this.dbSet.FromSql("SELECT * FROM \"Objects\" WHERE \"Id\" IN (SELECT \"ForeignId\" FROM \"Relations\" WHERE \"MemberId\" = {0} AND \"PrimaryId\" = {1})", memberId, objectId);
     }
 
-    public IEnumerable<Object> Standalone()
-    {
-      return this.dbSet.FromSql("SELECT * FROM \"Objects\" WHERE \"ClassId\" IN (SELECT \"Id\" FROM \"Classes\" WHERE \"IsStandalone\" IS NOT NULL)");
-    }
-
     public void Create(Object @object)
     {
       this.dbSet.Add(@object);
@@ -82,9 +78,9 @@ namespace Platformus.Domain.Data.EntityFramework.PostgreSql
     {
       this.storageContext.Database.ExecuteSqlCommand(
         @"
-          DELETE FROM ""CachedObjects"" WHERE ""ObjectId"" = {0};
+          DELETE FROM ""SerializedObjects"" WHERE ""ObjectId"" = {0};
           CREATE TEMP TABLE ""TempDictionaries"" (""Id"" INT PRIMARY KEY);
-          INSERT INTO ""TempDictionaries"" SELECT ""HtmlId"" FROM ""Properties"" WHERE ""ObjectId"" = {0};
+          INSERT INTO ""TempDictionaries"" SELECT ""StringValueId"" FROM ""Properties"" WHERE ""ObjectId"" = {0};
           DELETE FROM ""Properties"" WHERE ""ObjectId"" = {0};
           DELETE FROM ""Localizations"" WHERE ""DictionaryId"" IN (SELECT ""Id"" FROM ""TempDictionaries"");
           DELETE FROM ""Dictionaries"" WHERE ""Id"" IN (SELECT ""Id"" FROM TempDictionaries"");

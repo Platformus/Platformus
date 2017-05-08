@@ -8,6 +8,6 @@ namespace Platformus.Globalization
 {
   public interface IDefaultRouteHandler
   {
-    ActionResult TryHandle(IRequestHandler handler, string url);
+    IActionResult TryHandle(IRequestHandler handler, string url);
   }
 }

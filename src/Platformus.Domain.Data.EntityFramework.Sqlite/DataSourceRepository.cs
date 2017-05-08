@@ -18,22 +18,14 @@ namespace Platformus.Domain.Data.EntityFramework.Sqlite
       return this.dbSet.FirstOrDefault(ds => ds.Id == id);
     }
 
-    public IEnumerable<DataSource> FilteredByClassId(int classId)
+    public IEnumerable<DataSource> FilteredByMicrocontrollerId(int microcontrollerId)
     {
-      return this.dbSet.Where(ds => ds.ClassId == classId).OrderBy(ds => ds.CSharpClassName);
+      return this.dbSet.Where(ds => ds.MicrocontrollerId == microcontrollerId).OrderBy(ds => ds.CSharpClassName);
     }
 
-    public IEnumerable<DataSource> FilteredByClassIdInlcudingParent(int classId)
+    public IEnumerable<DataSource> FilteredByMicrocontrollerIdRange(int microcontrollerId, string orderBy, string direction, int skip, int take, string filter)
     {
-      return this.dbSet.FromSql(
-        "SELECT * FROM DataSources WHERE ClassId = {0} OR ClassId IN (SELECT ClassId FROM Classes WHERE Id = {0}) ORDER BY CSharpClassName",
-        classId
-      );
-    }
-
-    public IEnumerable<DataSource> FilteredByClassIdRange(int classId, string orderBy, string direction, int skip, int take, string filter)
-    {
-      return this.GetFilteredDataSources(dbSet, classId, filter).OrderBy(orderBy, direction).Skip(skip).Take(take);
+      return this.GetFilteredDataSources(dbSet, microcontrollerId, filter).OrderBy(orderBy, direction).Skip(skip).Take(take);
     }
 
     public void Create(DataSource dataSource)
@@ -53,24 +45,17 @@ namespace Platformus.Domain.Data.EntityFramework.Sqlite
 
     public void Delete(DataSource dataSource)
     {
-      this.storageContext.Database.ExecuteSqlCommand(
-        @"
-          DELETE FROM CachedObjects WHERE ClassId IN (SELECT ClassId FROM DataSources WHERE Id = {0});
-        ",
-        dataSource.Id
-      );
-
       this.dbSet.Remove(dataSource);
     }
 
-    public int CountByClassId(int classId, string filter)
+    public int CountByMicrocontrollerId(int microcontrollerId, string filter)
     {
-      return this.GetFilteredDataSources(dbSet, classId, filter).Count();
+      return this.GetFilteredDataSources(dbSet, microcontrollerId, filter).Count();
     }
 
-    private IQueryable<DataSource> GetFilteredDataSources(IQueryable<DataSource> dataSources, int classId, string filter)
+    private IQueryable<DataSource> GetFilteredDataSources(IQueryable<DataSource> dataSources, int microcontrollerId, string filter)
     {
-      dataSources = dataSources.Where(ds => ds.ClassId == classId);
+      dataSources = dataSources.Where(ds => ds.MicrocontrollerId == microcontrollerId);
 
       if (string.IsNullOrEmpty(filter))
         return dataSources;

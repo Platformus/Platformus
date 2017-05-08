@@ -9,6 +9,7 @@
   @ViewBag.Title
 }
 <form class="form" method="post">
+  <drop-down-list-field asp-for="StorageDataType" asp-options="@Model.StorageDataTypeOptions" />
   <single-line-text-field asp-for="JavaScriptEditorClassName" />
   <single-line-text-field asp-for="Name" />
   <single-line-text-field asp-for="Position" />

@@ -11,8 +11,7 @@ namespace Platformus.Domain.Backend.ViewModels.Objects
   public class IndexViewModel : ViewModelBase
   {
     public ClassViewModel Class { get; set; }
-    public IEnumerable<ClassViewModel> StandaloneClasses { get; set; }
-    public IEnumerable<ClassViewModel> EmbeddedClasses { get; set; }
+    public IDictionary<ClassViewModel, IEnumerable<ClassViewModel>> ClassesByAbstractClasses { get; set; }
     public GridViewModel Grid { get; set; }
   }
 }

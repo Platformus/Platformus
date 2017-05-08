@@ -11,12 +11,11 @@ namespace Platformus.Domain.Data.EntityFramework.SqlServer
   {
     public void RegisterModels(ModelBuilder modelBuilder)
     {
-      modelBuilder.Entity<CachedObject>(etb =>
+      modelBuilder.Entity<SerializedObject>(etb =>
         {
           etb.HasKey(e => new { e.CultureId, e.ObjectId });
-          etb.Property(e => e.ViewName).HasMaxLength(32);
-          etb.Property(e => e.Url).HasMaxLength(128);
-          etb.ForSqlServerToTable("CachedObjects");
+          etb.Property(e => e.UrlPropertyStringValue).HasMaxLength(128);
+          etb.ForSqlServerToTable("SerializedObjects");
         }
       );
 
@@ -27,7 +26,6 @@ namespace Platformus.Domain.Data.EntityFramework.SqlServer
           etb.Property(e => e.Code).IsRequired().HasMaxLength(32);
           etb.Property(e => e.Name).IsRequired().HasMaxLength(64);
           etb.Property(e => e.PluralizedName).IsRequired().HasMaxLength(64);
-          etb.Property(e => e.DefaultViewName).HasMaxLength(32);
           etb.ForSqlServerToTable("Classes");
         }
       );
@@ -55,6 +53,7 @@ namespace Platformus.Domain.Data.EntityFramework.SqlServer
         {
           etb.HasKey(e => e.Id);
           etb.Property(e => e.Id).UseSqlServerIdentityColumn();
+          etb.Property(e => e.StorageDataType).IsRequired().HasMaxLength(32);
           etb.Property(e => e.JavaScriptEditorClassName).IsRequired().HasMaxLength(128);
           etb.Property(e => e.Name).IsRequired().HasMaxLength(64);
           etb.ForSqlServerToTable("DataTypes");
@@ -76,8 +75,6 @@ namespace Platformus.Domain.Data.EntityFramework.SqlServer
         {
           etb.HasKey(e => e.Id);
           etb.Property(e => e.Id).UseSqlServerIdentityColumn();
-          etb.Property(e => e.ViewName).HasMaxLength(32);
-          etb.Property(e => e.Url).HasMaxLength(128);
           etb.ForSqlServerToTable("Objects");
         }
       );
@@ -95,6 +92,18 @@ namespace Platformus.Domain.Data.EntityFramework.SqlServer
           etb.HasKey(e => e.Id);
           etb.Property(e => e.Id).UseSqlServerIdentityColumn();
           etb.ForSqlServerToTable("Relations");
+        }
+      );
+
+      modelBuilder.Entity<Microcontroller>(etb =>
+        {
+          etb.HasKey(e => e.Id);
+          etb.Property(e => e.Id).UseSqlServerIdentityColumn();
+          etb.Property(e => e.Name).IsRequired().HasMaxLength(64);
+          etb.Property(e => e.UrlTemplate).HasMaxLength(128);
+          etb.Property(e => e.ViewName).IsRequired().HasMaxLength(64);
+          etb.Property(e => e.CSharpClassName).IsRequired().HasMaxLength(128);
+          etb.ForSqlServerToTable("Microcontrollers");
         }
       );
     }

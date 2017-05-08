@@ -3,13 +3,13 @@
 @model Platformus.Domain.Backend.ViewModels.DataSources.IndexViewModel
 @{
   this.ViewBag.Title = "Data Sources";
-  this.ViewBag.ActiveMenuItem = "classes";
+  this.ViewBag.ActiveMenuItem = "microcontrollers";
 }
 @section title {
   @ViewBag.Title <span class="master-detail__detail-header-counter">@Model.Grid.Pager.Total</span>
 }
 @Html.Partial("_Grid", this.Model.Grid)
 <div class="master-detail__detail-buttons buttons">
-  <a class="buttons__button button button--positive" href="/backend/datasources/create?classid=@Model.ClassId">Create data source</a>
-  <a class="buttons__button button button--neutral" href="/backend/classes">Back</a>
+  <a class="buttons__button button button--positive" href="/backend/datasources/create?microcontrollerid=@Model.MicrocontrollerId">Create data source</a>
+  <a class="buttons__button button button--neutral" href="/backend/microcontrollers">Back</a>
 </div>

@@ -17,8 +17,8 @@
     }
 
     else {
-      for (var i = 0; i < member.property.localizations.length; i++) {
-        var localization = member.property.localizations[i];
+      for (var i = 0; i < member.property.stringValue.localizations.length; i++) {
+        var localization = member.property.stringValue.localizations[i];
 
         if (localization.culture.code == "__") {
           createInput(member, localization).appendTo(field);

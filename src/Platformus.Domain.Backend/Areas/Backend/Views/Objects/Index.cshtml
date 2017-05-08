@@ -31,32 +31,22 @@
     </div>
     <div class="master-detail__master-content">
       <div class="menu">
-        <div class="menu__group">
-          <div class="menu__group-header">
-            Standalone
+        @foreach (var abstractClass in this.Model.ClassesByAbstractClasses.Keys)
+        {
+          <div class="menu__group">
+            <div class="menu__group-header">
+              @abstractClass.PluralizedName
+            </div>
+            <div class="menu__group-content">
+              @foreach (var @class in this.Model.ClassesByAbstractClasses[abstractClass])
+              {
+                <a class="master-detail__master-menu-item--secondary @(this.Model.Class != null && this.Model.Class.Id == @class.Id ? "master-detail__master-menu-item--secondary-active" : null) menu__item" href="/backend/objects?classid=@(@class.Id)">
+                  @(@class.PluralizedName)
+                </a>
+              }
+            </div>
           </div>
-          <div class="menu__group-content">
-            @foreach (var standaloneClass in this.Model.StandaloneClasses)
-            {
-              <a class="master-detail__master-menu-item--secondary @(this.Model.Class != null && this.Model.Class.Id == standaloneClass.Id ? "master-detail__master-menu-item--secondary-active" : null) menu__item" href="/backend/objects?classid=@standaloneClass.Id">
-                @standaloneClass.PluralizedName
-              </a>
-            }
-          </div>
-        </div>
-        <div class="menu__group">
-          <div class="menu__group-header">
-            Embedded
-          </div>
-          <div class="menu__group-content">
-            @foreach (var embeddedClass in this.Model.EmbeddedClasses)
-            {
-              <a class="master-detail__master-menu-item--secondary @(this.Model.Class != null && this.Model.Class.Id == embeddedClass.Id ? "master-detail__master-menu-item--secondary-active" : null) menu__item" href="/backend/objects?classid=@embeddedClass.Id">
-                @embeddedClass.PluralizedName
-              </a>
-            }
-          </div>
-        </div>
+        }
       </div>
     </div>
   </div>

@@ -2,6 +2,7 @@
 // Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information.
 
 using System.Collections.Generic;
+using Platformus.Barebone;
 using Platformus.Domain.Data.Abstractions;
 using Platformus.Domain.Data.Models;
 using Platformus.Globalization;
@@ -10,24 +11,20 @@ namespace Platformus.Domain.DataSources
 {
   public class ForeignObjectsDataSource : DataSourceBase
   {
-    public override IEnumerable<Object> GetObjects()
+    public override IEnumerable<SerializedObject> GetSerializedObjects(IRequestHandler requestHandler, SerializedObject serializedPage, params KeyValuePair<string, string>[] args)
     {
-      if (this.args.ContainsKey("MemberId"))
-        return this.requestHandler.Storage.GetRepository<IObjectRepository>().Foreign(int.Parse(this.args["MemberId"]), this.@object.Id);
+      if (this.HasArgument(args, "MemberId"))
+        return requestHandler.Storage.GetRepository<ISerializedObjectRepository>().Foreign(CultureManager.GetCurrentCulture(requestHandler.Storage).Id, this.GetIntArgument(args, "MemberId"), serializedPage.ObjectId);
 
-      return this.requestHandler.Storage.GetRepository<IObjectRepository>().Foreign(this.@object.Id);
+      return requestHandler.Storage.GetRepository<ISerializedObjectRepository>().Foreign(CultureManager.GetCurrentCulture(requestHandler.Storage).Id, serializedPage.ObjectId);
     }
 
-    public override IEnumerable<CachedObject> GetCachedObjects()
+    public override IEnumerable<Object> GetObjects(IRequestHandler requestHandler, Object page, params KeyValuePair<string, string>[] args)
     {
-      if (this.args.ContainsKey("MemberId"))
-        return this.requestHandler.Storage.GetRepository<ICachedObjectRepository>().Foreign(
-          CultureManager.GetCurrentCulture(this.requestHandler.Storage).Id, int.Parse(this.args["MemberId"]), this.cachedObject.ObjectId
-        );
+      if (this.HasArgument(args, "MemberId"))
+        return requestHandler.Storage.GetRepository<IObjectRepository>().Foreign(this.GetIntArgument(args, "MemberId"), page.Id);
 
-      return this.requestHandler.Storage.GetRepository<ICachedObjectRepository>().Foreign(
-        CultureManager.GetCurrentCulture(this.requestHandler.Storage).Id, this.cachedObject.ObjectId
-      );
+      return requestHandler.Storage.GetRepository<IObjectRepository>().Foreign(page.Id);
     }
   }
 }

@@ -3,12 +3,10 @@
 
 using ExtCore.Data.Abstractions;
 using ExtCore.Infrastructure;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Platformus.Globalization.Frontend.Controllers
 {
-  [AllowAnonymous]
   public class DefaultController : Barebone.Frontend.Controllers.ControllerBase
   {
     public DefaultController(IStorage storage)
@@ -20,7 +18,7 @@ namespace Platformus.Globalization.Frontend.Controllers
     {
       foreach (IDefaultRouteHandler defaultRouteHandler in ExtensionManager.GetInstances<IDefaultRouteHandler>())
       {
-        ActionResult result = defaultRouteHandler.TryHandle(this, url);
+        IActionResult result = defaultRouteHandler.TryHandle(this, url);
 
         if (result != null)
           return result;

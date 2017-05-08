@@ -23,7 +23,6 @@ namespace Platformus.Domain.Backend.ViewModels.Objects
       if (id == null)
         return new CreateOrEditViewModel()
         {
-          _Url = "/",
           Class = new ClassViewModelFactory(this.RequestHandler).Create(
             this.RequestHandler.Storage.GetRepository<IClassRepository>().WithKey((int)classId)
           ),
@@ -35,8 +34,6 @@ namespace Platformus.Domain.Backend.ViewModels.Objects
       return new CreateOrEditViewModel()
       {
         Id = @object.Id,
-        ViewName = @object.ViewName,
-        _Url = @object.Url,
         Class = new ClassViewModelFactory(this.RequestHandler).Create(
           this.RequestHandler.Storage.GetRepository<IClassRepository>().WithKey(@object.ClassId)
         ),

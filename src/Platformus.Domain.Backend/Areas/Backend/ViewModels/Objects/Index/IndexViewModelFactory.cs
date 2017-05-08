@@ -29,12 +29,7 @@ namespace Platformus.Domain.Backend.ViewModels.Objects
         Class = classId == null ? null : new ClassViewModelFactory(this.RequestHandler).Create(
           classRepository.WithKey((int)classId)
         ),
-        StandaloneClasses = classRepository.Standalone().Select(
-          c => new ClassViewModelFactory(this.RequestHandler).Create(c)
-        ),
-        EmbeddedClasses = classRepository.Embedded().Select(
-          c => new ClassViewModelFactory(this.RequestHandler).Create(c)
-        ),
+        ClassesByAbstractClasses = this.GetClassesByAbstractClasses(),
         Grid = classId == null ? null : new GridViewModelFactory(this.RequestHandler).Create(
           orderBy, direction, skip, take, objectRepository.CountByClassId((int)classId),
           this.GetGridColumns((int)classId),
@@ -44,13 +39,32 @@ namespace Platformus.Domain.Backend.ViewModels.Objects
       };
     }
 
+    private IDictionary<ClassViewModel, IEnumerable<ClassViewModel>> GetClassesByAbstractClasses()
+    {
+      Dictionary<ClassViewModel, IEnumerable<ClassViewModel>> classesByAbstractClasses = new Dictionary<ClassViewModel, IEnumerable<ClassViewModel>>();
+
+      foreach (Class abstractClass in this.RequestHandler.Storage.GetRepository<IClassRepository>().Abstract())
+        classesByAbstractClasses.Add(
+          new ClassViewModelFactory(this.RequestHandler).Create(abstractClass),
+          this.RequestHandler.Storage.GetRepository<IClassRepository>().FilteredByClassId(abstractClass.Id).Select(
+            c => new ClassViewModelFactory(this.RequestHandler).Create(c)
+          )
+        );
+
+      classesByAbstractClasses.Add(
+        new ClassViewModel() { PluralizedName = "Others" },
+        this.RequestHandler.Storage.GetRepository<IClassRepository>().FilteredByClassId(null).Select(
+          c => new ClassViewModelFactory(this.RequestHandler).Create(c)
+        )
+      );
+
+      return classesByAbstractClasses;
+    }
+
     private IEnumerable<GridColumnViewModel> GetGridColumns(int classId)
     {
       List<GridColumnViewModel> gridColumns = new List<GridColumnViewModel>();
       IMemberRepository memberRepository = this.RequestHandler.Storage.GetRepository<IMemberRepository>();
-
-      if (this.IsClassStandalone(classId))
-        gridColumns.Add(new GridColumnViewModelFactory(this.RequestHandler).Create("URL", "Url"));
 
       gridColumns.AddRange(
         memberRepository.FilteredByClassIdInlcudingParentPropertyVisibleInList(classId).Select(m => new GridColumnViewModelFactory(this.RequestHandler).Create(m.Name))
@@ -65,11 +79,6 @@ namespace Platformus.Domain.Backend.ViewModels.Objects
 
       gridColumns.Add(new GridColumnViewModelFactory(this.RequestHandler).CreateEmpty());
       return gridColumns;
-    }
-
-    private bool IsClassStandalone(int classId)
-    {
-      return this.RequestHandler.Storage.GetRepository<IClassRepository>().WithKey(classId).IsStandalone == true;
     }
   }
 }

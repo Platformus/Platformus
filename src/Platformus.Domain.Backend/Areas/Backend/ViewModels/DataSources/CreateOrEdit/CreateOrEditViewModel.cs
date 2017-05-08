@@ -11,7 +11,7 @@ namespace Platformus.Domain.Backend.ViewModels.DataSources
   public class CreateOrEditViewModel : ViewModelBase
   {
     public int? Id { get; set; }
-    public int ClassId { get; set; }
+    public int MicrocontrollerId { get; set; }
 
     [Display(Name = "Code")]
     [Required]

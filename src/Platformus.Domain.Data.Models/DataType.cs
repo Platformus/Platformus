@@ -9,6 +9,7 @@ namespace Platformus.Domain.Data.Models
   public class DataType : IEntity
   {
     public int Id { get; set; }
+    public string StorageDataType { get; set; }
     public string JavaScriptEditorClassName { get; set; }
     public string Name { get; set; }
     public int? Position { get; set; }

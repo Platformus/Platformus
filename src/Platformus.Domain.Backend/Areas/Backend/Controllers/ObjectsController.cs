@@ -21,7 +21,7 @@ namespace Platformus.Domain.Backend.Controllers
     {
     }
 
-    public IActionResult Index(int? classId, string orderBy = "url", string direction = "asc", int skip = 0, int take = 10)
+    public IActionResult Index(int? classId, string orderBy = "id", string direction = "asc", int skip = 0, int take = 10)
     {
       return this.View(new IndexViewModelFactory(this).Create(classId, orderBy, direction, skip, take));
     }
@@ -49,7 +49,7 @@ namespace Platformus.Domain.Backend.Controllers
         this.Storage.Save();
         this.CreateOrEditProperties(@object);
         this.CreateOrEditRelations(@object);      
-        new CacheManager(this).CacheObject(@object);
+        new SerializationManager(this).SerializeObject(@object);
         return this.Redirect(this.Request.CombineUrl("/backend/objects"));
       }
 
@@ -99,27 +99,67 @@ namespace Platformus.Domain.Backend.Controllers
     private void CreateProperty(int objectId, int memberId, string cultureCode, string value)
     {
       Property property = this.Storage.GetRepository<IPropertyRepository>().WithObjectIdAndMemberId(objectId, memberId);
+      Member member = this.Storage.GetRepository<IMemberRepository>().WithKey(memberId);
+      DataType dataType = this.Storage.GetRepository<IDataTypeRepository>().WithKey((int)member.PropertyDataTypeId);
 
+      if (dataType.StorageDataType == StorageDataType.Integer)
+        this.CreateIntegerProperty(property, objectId, memberId, value);
+
+      else if (dataType.StorageDataType == StorageDataType.Decimal)
+        this.CreateDecimalProperty(property, objectId, memberId, value);
+
+      else if (dataType.StorageDataType == StorageDataType.String)
+        this.CreateStringProperty(property, objectId, memberId, cultureCode, value);
+
+      else if (dataType.StorageDataType == StorageDataType.DateTime)
+        this.CreateDateTimeProperty(property, objectId, memberId, value);
+    }
+
+    private void CreateIntegerProperty(Property property, int objectId, int memberId, string value)
+    {
+      property = new Property() { ObjectId = objectId, MemberId = memberId };
+      property.IntegerValue = value.ToIntWithDefaultValue(0);
+      this.Storage.GetRepository<IPropertyRepository>().Create(property);
+      this.Storage.Save();
+    }
+
+    private void CreateDecimalProperty(Property property, int objectId, int memberId, string value)
+    {
+      property = new Property() { ObjectId = objectId, MemberId = memberId };
+      property.DecimalValue = value.ToDecimalWithDefaultValue(0m);
+      this.Storage.GetRepository<IPropertyRepository>().Create(property);
+      this.Storage.Save();
+    }
+
+    private void CreateStringProperty(Property property, int objectId, int memberId, string cultureCode, string value)
+    {
       if (property == null)
       {
-        Dictionary html = new Dictionary();
+        Dictionary stringValue = new Dictionary();
 
-        this.Storage.GetRepository<IDictionaryRepository>().Create(html);
+        this.Storage.GetRepository<IDictionaryRepository>().Create(stringValue);
         this.Storage.Save();
-        property = new Property();
-        property.ObjectId = objectId;
-        property.MemberId = memberId;
-        property.HtmlId = html.Id;
+        property = new Property() { ObjectId = objectId, MemberId = memberId };
+        property.StringValueId = stringValue.Id;
         this.Storage.GetRepository<IPropertyRepository>().Create(property);
         this.Storage.Save();
       }
 
       Localization localization = new Localization();
 
-      localization.DictionaryId = property.HtmlId;
+      localization.DictionaryId = (int)property.StringValueId;
       localization.CultureId = this.Storage.GetRepository<ICultureRepository>().WithCode(cultureCode).Id;
       localization.Value = value;
       this.Storage.GetRepository<ILocalizationRepository>().Create(localization);
+      this.Storage.Save();
+    }
+
+    private void CreateDateTimeProperty(Property property, int objectId, int memberId, string value)
+    {
+      property = new Property() { ObjectId = objectId, MemberId = memberId };
+      property.DateTimeValue = value.ToDateTimeWithDefaultValue(System.DateTime.Now);
+      this.Storage.GetRepository<IPropertyRepository>().Create(property);
+      this.Storage.Save();
     }
 
     private void CreateOrEditRelations(Object @object)
@@ -147,8 +187,6 @@ namespace Platformus.Domain.Backend.Controllers
 
           foreach (int primaryId in primaryIds)
             this.CreateRelation(int.Parse(memberId), primaryId, @object.Id);
-
-          this.Storage.Save();
         }
       }
     }
@@ -161,6 +199,7 @@ namespace Platformus.Domain.Backend.Controllers
       relation.PrimaryId = primaryId;
       relation.ForeignId = foreignId;
       this.Storage.GetRepository<IRelationRepository>().Create(relation);
+      this.Storage.Save();
     }
   }
 }

@@ -24,15 +24,6 @@ namespace Platformus.Domain.Backend.ViewModels.Objects
 
       else @object.ClassId = (int)createOrEdit.ClassId;
 
-      @object.ViewName = createOrEdit.ViewName;
-
-      Class @class = this.RequestHandler.Storage.GetRepository<IClassRepository>().WithKey(@object.ClassId);
-
-      if (@class.IsStandalone == true)
-        @object.Url = createOrEdit._Url;
-
-      else @object.Url = null;
-
       return @object;
     }
   }

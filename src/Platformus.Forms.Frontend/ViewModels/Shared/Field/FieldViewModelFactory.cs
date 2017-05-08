@@ -24,7 +24,7 @@ namespace Platformus.Forms.Frontend.ViewModels.Shared
       {
         Id = field.Id,
         FieldType = new FieldTypeViewModelFactory(this.RequestHandler).Create(this.RequestHandler.Storage.GetRepository<IFieldTypeRepository>().WithKey(field.FieldTypeId)),
-        Name = this.GetLocalizationValue(field.NameId),
+        Name = this.RequestHandler.GetLocalizationValue(field.NameId),
         FieldOptions = this.RequestHandler.Storage.GetRepository<IFieldOptionRepository>().FilteredByFieldId(field.Id).Select(
           fi => new FieldOptionViewModelFactory(this.RequestHandler).Create(fi)
         )

@@ -16,14 +16,14 @@
     if (member.isPropertyLocalizable) {
       field.addClass("field--multilingual")
 
-      for (var i = 0; i < member.property.localizations.length; i++) {
-        var localization = member.property.localizations[i];
+      for (var i = 0; i < member.property.stringValue.localizations.length; i++) {
+        var localization = member.property.stringValue.localizations[i];
 
         if (localization.culture.code != "__") {
           platformus.editors.base.createCulture(localization).appendTo(field);
           createTextArea(member, localization).appendTo(field);
 
-          if (i != member.property.localizations.length - 1) {
+          if (i != member.property.stringValue.localizations.length - 1) {
             platformus.editors.base.createMultilingualSeparator().appendTo(field);
           }
         }
@@ -31,8 +31,8 @@
     }
 
     else {
-      for (var i = 0; i < member.property.localizations.length; i++) {
-        var localization = member.property.localizations[i];
+      for (var i = 0; i < member.property.stringValue.localizations.length; i++) {
+        var localization = member.property.stringValue.localizations[i];
 
         if (localization.culture.code == "__") {
           createTextArea(member, localization).appendTo(field);

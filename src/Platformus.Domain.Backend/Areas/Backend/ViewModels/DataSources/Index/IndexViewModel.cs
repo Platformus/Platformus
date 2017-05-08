@@ -8,7 +8,7 @@ namespace Platformus.Domain.Backend.ViewModels.DataSources
 {
   public class IndexViewModel : ViewModelBase
   {
-    public int ClassId { get; set; }
+    public int MicrocontrollerId { get; set; }
     public GridViewModel Grid { get; set; }
   }
 }

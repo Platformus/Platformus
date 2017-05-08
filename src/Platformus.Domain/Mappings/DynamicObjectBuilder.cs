@@ -4,39 +4,46 @@
 using System.Collections.Generic;
 using System.Dynamic;
 using Platformus.Domain.Data.Models;
-using Platformus.Globalization.Data.Models;
 
 namespace Platformus.Domain
 {
   public class DynamicObjectBuilder : ObjectBuilderBase
   {
-    private ExpandoObject dynamicObject;
+    private ExpandoObject result;
 
     public DynamicObjectBuilder()
     {
-      this.dynamicObject = new ExpandoObject();
+      this.result = new ExpandoObject();
     }
 
-    public override void BuildBasics(Object @object)
+    public override void BuildId(Object @object)
     {
-      (this.dynamicObject as IDictionary<string, dynamic>).Add("Id", @object.Id);
-      (this.dynamicObject as IDictionary<string, dynamic>).Add("Url", @object.Url);
-      (this.dynamicObject as IDictionary<string, dynamic>).Add("ViewName", @object.ViewName);
+      (this.result as IDictionary<string, dynamic>).Add("Id", @object.Id);
     }
 
-    public override void BuildProperty(Object @object, Member member, Property property, IDictionary<Culture, Localization> localizationsByCultures)
+    public override void BuildIntegerProperty(string memberCode, int? value)
     {
-      ExpandoObject dynamicProperty = new ExpandoObject();
+      (this.result as IDictionary<string, dynamic>).Add(memberCode, value);
+    }
 
-      foreach (Culture culture in localizationsByCultures.Keys)
-        (dynamicProperty as IDictionary<string, dynamic>).Add(culture.Code, localizationsByCultures[culture]?.Value);
+    public override void BuildDecimalProperty(string memberCode, decimal? value)
+    {
+      (this.result as IDictionary<string, dynamic>).Add(memberCode, value);
+    }
 
-      (this.dynamicObject as IDictionary<string, dynamic>).Add(member.Code, dynamicProperty);
+    public override void BuildStringProperty(string memberCode, IDictionary<string, string> value)
+    {
+      (this.result as IDictionary<string, dynamic>).Add(memberCode, value);
+    }
+
+    public override void BuildDateTimeProperty(string memberCode, System.DateTime? value)
+    {
+      (this.result as IDictionary<string, dynamic>).Add(memberCode, value);
     }
 
     public dynamic Build()
     {
-      return this.dynamicObject;
+      return this.result;
     }
   }
 }

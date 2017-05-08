@@ -23,7 +23,7 @@ namespace Platformus.Forms.Frontend.ViewModels.Shared
       return new FormViewModel()
       {
         Id = form.Id,
-        Name = this.GetLocalizationValue(form.NameId),
+        Name = this.RequestHandler.GetLocalizationValue(form.NameId),
         Fields = this.RequestHandler.Storage.GetRepository<IFieldRepository>().FilteredByFormId(form.Id).Select(
           f => new FieldViewModelFactory(this.RequestHandler).Create(f)
         )

@@ -27,8 +27,6 @@ namespace Platformus.Domain.Backend.ViewModels.Classes
       @class.Name = createOrEdit.Name;
       @class.PluralizedName = createOrEdit.PluralizedName;
       @class.IsAbstract = createOrEdit.IsAbstract ? true : (bool?)null;
-      @class.IsStandalone = createOrEdit.IsStandalone ? true : (bool?)null;
-      @class.DefaultViewName = createOrEdit.DefaultViewName;
       return @class;
     }
   }

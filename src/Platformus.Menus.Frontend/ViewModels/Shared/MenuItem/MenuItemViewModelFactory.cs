@@ -23,7 +23,7 @@ namespace Platformus.Menus.Frontend.ViewModels.Shared
     {
       return new MenuItemViewModel()
       {
-        Name = this.GetLocalizationValue(menuItem.NameId),
+        Name = this.RequestHandler.GetLocalizationValue(menuItem.NameId),
         Url = GlobalizedUrlFormatter.Format(this.RequestHandler.Storage, menuItem.Url),
         MenuItems = this.RequestHandler.Storage.GetRepository<IMenuItemRepository>().FilteredByMenuItemId(menuItem.Id).Select(
           mi => new MenuItemViewModelFactory(this.RequestHandler).Create(mi)

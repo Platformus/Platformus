@@ -2,23 +2,28 @@
 // Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information.
 
 using System.Collections.Generic;
-using System.Linq;
+using Platformus.Barebone;
 using Platformus.Domain.Data.Abstractions;
 using Platformus.Domain.Data.Models;
-using Platformus.Globalization;
 
 namespace Platformus.Domain.DataSources
 {
   public class ObjectsDataSource : DataSourceBase
   {
-    public override IEnumerable<Object> GetObjects()
+    public override IEnumerable<SerializedObject> GetSerializedObjects(IRequestHandler requestHandler, SerializedObject serializedPage, params KeyValuePair<string, string>[] args)
     {
-      return this.requestHandler.Storage.GetRepository<IObjectRepository>().All().Where(o => o.ClassId == int.Parse(this.args["ClassId"]));
+      if (!this.HasArgument(args, "ClassId"))
+        return new SerializedObject[] { };
+
+      return requestHandler.Storage.GetRepository<ISerializedObjectRepository>().FilteredByClassId(this.GetIntArgument(args, "ClassId"));
     }
 
-    public override IEnumerable<CachedObject> GetCachedObjects()
+    public override IEnumerable<Object> GetObjects(IRequestHandler requestHandler, Object page, params KeyValuePair<string, string>[] args)
     {
-      return this.requestHandler.Storage.GetRepository<ICachedObjectRepository>().FilteredByCultureId(CultureManager.GetCurrentCulture(this.requestHandler.Storage).Id).Where(o => o.ClassId == int.Parse(this.args["ClassId"]));
+      if (!this.HasArgument(args, "ClassId"))
+        return new Object[] { };
+
+      return requestHandler.Storage.GetRepository<IObjectRepository>().FilteredByClassId(this.GetIntArgument(args, "ClassId"));
     }
   }
 }

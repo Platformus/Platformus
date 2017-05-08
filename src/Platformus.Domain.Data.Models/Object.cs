@@ -10,10 +10,7 @@ namespace Platformus.Domain.Data.Models
   {
     public int Id { get; set; }
     public int ClassId { get; set; }
-    public string ViewName { get; set; }
-    public string Url { get; set; }
 
     public virtual Class Class { get; set; }
-    public virtual ICollection<Property> Properties { get; set; }
   }
 }

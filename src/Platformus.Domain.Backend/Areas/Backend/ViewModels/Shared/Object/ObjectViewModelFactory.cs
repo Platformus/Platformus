@@ -31,7 +31,6 @@ namespace Platformus.Domain.Backend.ViewModels.Shared
       return new ObjectViewModel()
       {
         Id = @object.Id,
-        Url = @object.Url,
         Class = new ClassViewModelFactory(this.RequestHandler).Create(
           this.RequestHandler.Storage.GetRepository<IClassRepository>().WithKey(@object.ClassId)
         ),

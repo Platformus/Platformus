@@ -11,17 +11,7 @@
 <form class="forms" method="post">
   <div id="tabs" class="tabs"></div>
   <div id="tabPages" class="tab-pages">
-    <div id="tabPage0" class="tab-pages__tab-page">
-      <single-line-text-field asp-for="ViewName" />
-      @if (this.Model.Class.IsStandalone)
-      {
-        <single-line-text-field asp-for="_Url" />
-      }
-      else
-      {
-        <input id="_url" name="_url" type="hidden" value="@Model._Url" />
-      }
-    </div>
+    <div id="tabPage0" class="tab-pages__tab-page"></div>
   </div>
   <div class="form__buttons buttons">
     <button class="buttons__button button button--positive" type="submit">Save</button>
@@ -46,12 +36,29 @@
                 @:propertyDataType: { javaScriptEditorClassName: "@member.PropertyDataType.JavaScriptEditorClassName" },
                 @:isPropertyLocalizable: @member.IsPropertyLocalizable.ToString().ToLower(),
                 @:property: {
-                  @:localizations: [
-                    @foreach (var localization in member.Property.HtmlLocalizations)
-                    {
-                      @: { culture: { code: "@localization.Culture.Code" }, value: "@Html.Raw(string.IsNullOrEmpty(localization.Value) ? null : localization.Value.Replace("\r\n", "\\r\\n").Replace("\n", "\\n").Replace("\"", "\\\""))" }@(localization != member.Property.HtmlLocalizations.Last() ? "," : null)
-                    }
-                  @:]
+                  @if (member.PropertyDataType.StorageDataType == Platformus.Domain.StorageDataType.Integer)
+                  {
+                    @:integerValue: @member.Property.IntegerValue
+                  }
+                  else if (member.PropertyDataType.StorageDataType == Platformus.Domain.StorageDataType.Decimal)
+                  {
+                    @:decimalValue: @member.Property.DecimalValue
+                  }
+                  else if (member.PropertyDataType.StorageDataType == Platformus.Domain.StorageDataType.String)
+                  {
+                    @:stringValue: {
+                      @:localizations: [
+                        foreach (var localization in member.Property.StringValueLocalizations)
+                        {
+                          @: { culture: { code: "@localization.Culture.Code" }, value: "@Html.Raw(string.IsNullOrEmpty(localization.Value) ? null : localization.Value.Replace("\r\n", "\\r\\n").Replace("\n", "\\n").Replace("\"", "\\\""))" }@(localization != member.Property.StringValueLocalizations.Last() ? "," : null)
+                        }
+                      @:]
+                    @:}
+                  }
+                  else if (member.PropertyDataType.StorageDataType == Platformus.Domain.StorageDataType.DateTime)
+                  {
+                    @:dateTimeValue: "@member.Property.DateTimeValue"
+                  }
                 @:}
               }
               else if (member.RelationClass != null)

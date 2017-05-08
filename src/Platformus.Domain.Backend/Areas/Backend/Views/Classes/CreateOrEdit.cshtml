@@ -14,8 +14,6 @@
   <single-line-text-field asp-for="Name" />
   <single-line-text-field asp-for="PluralizedName" />
   <checkbox-field asp-for="IsAbstract" />
-  <checkbox-field asp-for="IsStandalone" />
-  <single-line-text-field asp-for="DefaultViewName" />
   <div class="form__buttons buttons">
     <button class="buttons__button button button--positive" type="submit">Save</button>
     <a class="buttons__button button button--neutral" href="@this.Context.Request.CombineUrl("/backend/classes")">Cancel</a>

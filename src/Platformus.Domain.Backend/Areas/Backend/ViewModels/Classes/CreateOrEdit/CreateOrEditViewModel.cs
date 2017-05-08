@@ -33,12 +33,5 @@ namespace Platformus.Domain.Backend.ViewModels.Classes
 
     [Display(Name = "Is abstract")]
     public bool IsAbstract { get; set; }
-
-    [Display(Name = "Is standalone")]
-    public bool IsStandalone { get; set; }
-
-    [Display(Name = "Default view name")]
-    [StringLength(32)]
-    public string DefaultViewName { get; set; }
   }
 }

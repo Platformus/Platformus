@@ -10,13 +10,12 @@ namespace Platformus.Domain.Data.Abstractions
   public interface IDataSourceRepository : IRepository
   {
     DataSource WithKey(int id);
-    IEnumerable<DataSource> FilteredByClassId(int classId);
-    IEnumerable<DataSource> FilteredByClassIdInlcudingParent(int classId);
-    IEnumerable<DataSource> FilteredByClassIdRange(int classId, string orderBy, string direction, int skip, int take, string filter);
+    IEnumerable<DataSource> FilteredByMicrocontrollerId(int microcontrollerId);
+    IEnumerable<DataSource> FilteredByMicrocontrollerIdRange(int microcontrollerId, string orderBy, string direction, int skip, int take, string filter);
     void Create(DataSource dataSource);
     void Edit(DataSource dataSource);
     void Delete(int id);
     void Delete(DataSource dataSource);
-    int CountByClassId(int classId, string filter);
+    int CountByMicrocontrollerId(int microcontrollerId, string filter);
   }
 }

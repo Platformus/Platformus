@@ -22,6 +22,7 @@ namespace Platformus.Domain.Backend.ViewModels.DataTypes
       if (createOrEdit.Id != null)
         dataType = this.RequestHandler.Storage.GetRepository<IDataTypeRepository>().WithKey((int)createOrEdit.Id);
 
+      dataType.StorageDataType = createOrEdit.StorageDataType;
       dataType.JavaScriptEditorClassName = createOrEdit.JavaScriptEditorClassName;
       dataType.Name = createOrEdit.Name;
       dataType.Position = createOrEdit.Position;

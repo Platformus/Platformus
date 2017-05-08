@@ -22,7 +22,7 @@ namespace Platformus.Domain.Backend.ViewModels.DataSources
       if (createOrEdit.Id != null)
         dataSource = this.RequestHandler.Storage.GetRepository<IDataSourceRepository>().WithKey((int)createOrEdit.Id);
 
-      else dataSource.ClassId = createOrEdit.ClassId;
+      else dataSource.MicrocontrollerId = createOrEdit.MicrocontrollerId;
 
       dataSource.Code = createOrEdit.Code;
       dataSource.CSharpClassName = createOrEdit.CSharpClassName;
