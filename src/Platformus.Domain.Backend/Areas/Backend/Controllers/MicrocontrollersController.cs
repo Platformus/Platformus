@@ -17,7 +17,7 @@ namespace Platformus.Domain.Backend.Controllers
     {
     }
 
-    public IActionResult Index(string orderBy = "name", string direction = "asc", int skip = 0, int take = 10, string filter = null)
+    public IActionResult Index(string orderBy = "position", string direction = "asc", int skip = 0, int take = 10, string filter = null)
     {
       return this.View(new IndexViewModelFactory(this).Create(orderBy, direction, skip, take, filter));
     }

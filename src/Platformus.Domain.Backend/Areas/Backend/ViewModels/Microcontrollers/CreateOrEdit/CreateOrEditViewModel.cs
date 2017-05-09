@@ -31,5 +31,8 @@ namespace Platformus.Domain.Backend.ViewModels.Microcontrollers
     [StringLength(128)]
     public string CSharpClassName { get; set; }
     public IEnumerable<Option> CSharpClassNameOptions { get; set; }
+
+    [Display(Name = "Position")]
+    public int? Position { get; set; }
   }
 }

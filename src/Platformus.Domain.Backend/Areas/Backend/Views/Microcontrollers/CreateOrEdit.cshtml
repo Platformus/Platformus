@@ -13,6 +13,7 @@
   <single-line-text-field asp-for="UrlTemplate" />
   <single-line-text-field asp-for="ViewName" />
   <drop-down-list-field asp-for="CSharpClassName" asp-options="@Model.CSharpClassNameOptions" />
+  <single-line-text-field asp-for="Position" />
   <div class="form__buttons buttons">
     <button class="buttons__button button button--positive" type="submit">Save</button>
     <a class="buttons__button button button--neutral" href="@this.Context.Request.CombineUrl("/backend/microcontrollers")">Cancel</a>

@@ -36,7 +36,8 @@ namespace Platformus.Domain.Backend.ViewModels.Microcontrollers
         UrlTemplate = microcontroller.UrlTemplate,
         ViewName = microcontroller.ViewName,
         CSharpClassName = microcontroller.CSharpClassName,
-        CSharpClassNameOptions = this.GetCSharpClassNameOptions()
+        CSharpClassNameOptions = this.GetCSharpClassNameOptions(),
+        Position = microcontroller.Position
       };
     }
 

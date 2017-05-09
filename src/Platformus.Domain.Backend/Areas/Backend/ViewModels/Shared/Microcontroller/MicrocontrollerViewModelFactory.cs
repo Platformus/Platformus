@@ -19,7 +19,8 @@ namespace Platformus.Domain.Backend.ViewModels.Shared
       return new MicrocontrollerViewModel()
       {
         Id = microcontroller.Id,
-        Name = microcontroller.Name
+        Name = microcontroller.Name,
+        Position = microcontroller.Position
       };
     }
   }

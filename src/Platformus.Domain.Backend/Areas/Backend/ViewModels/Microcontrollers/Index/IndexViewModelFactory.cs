@@ -28,6 +28,7 @@ namespace Platformus.Domain.Backend.ViewModels.Microcontrollers
           new[] {
             new GridColumnViewModelFactory(this.RequestHandler).Create("Name", "Name"),
             new GridColumnViewModelFactory(this.RequestHandler).Create("Data sources"),
+            new GridColumnViewModelFactory(this.RequestHandler).Create("Position", "Position"),
             new GridColumnViewModelFactory(this.RequestHandler).CreateEmpty()
           },
           microcontrollerRepository.Range(orderBy, direction, skip, take, filter).Select(m => new MicrocontrollerViewModelFactory(this.RequestHandler).Create(m)),

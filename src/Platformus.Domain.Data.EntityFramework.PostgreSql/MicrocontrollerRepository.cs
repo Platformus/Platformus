@@ -1,4 +1,4 @@
-﻿// Copyright © 2015 Dmitry Sikorsky. All rights reserved.
+﻿// Copyright © 2017 Dmitry Sikorsky. All rights reserved.
 // Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information.
 
 using System.Collections.Generic;
@@ -20,7 +20,7 @@ namespace Platformus.Domain.Data.EntityFramework.PostgreSql
 
     public IEnumerable<Microcontroller> All()
     {
-      return this.dbSet.OrderBy(m => m.Name);
+      return this.dbSet.OrderBy(m => m.Position);
     }
 
     public IEnumerable<Microcontroller> Range(string orderBy, string direction, int skip, int take, string filter)

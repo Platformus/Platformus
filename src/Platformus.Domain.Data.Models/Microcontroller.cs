@@ -13,6 +13,7 @@ namespace Platformus.Domain.Data.Models
     public string UrlTemplate { get; set; }
     public string ViewName { get; set; }
     public string CSharpClassName { get; set; }
+    public int? Position { get; set; }
 
     public virtual ICollection<DataSource> DataSources { get; set; }
   }
