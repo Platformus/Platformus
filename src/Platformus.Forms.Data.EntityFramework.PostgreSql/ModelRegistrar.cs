@@ -11,12 +11,12 @@ namespace Platformus.Forms.Data.EntityFramework.PostgreSql
   {
     public void RegisterModels(ModelBuilder modelBuilder)
     {
-      modelBuilder.Entity<CachedForm>(etb =>
+      modelBuilder.Entity<SerializedForm>(etb =>
         {
           etb.HasKey(e => new { e.CultureId, e.FormId });
           etb.Property(e => e.Code).IsRequired().HasMaxLength(32);
           etb.Property(e => e.Name).IsRequired().HasMaxLength(64);
-          etb.ForNpgsqlToTable("CachedForms");
+          etb.ForNpgsqlToTable("SerializedForms");
         }
       );
 

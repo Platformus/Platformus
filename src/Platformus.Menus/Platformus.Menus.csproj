@@ -14,7 +14,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Platformus.Barebone\Platformus.Barebone.csproj" />
-    <ProjectReference Include="..\Platformus.Globalization.Data.Abstractions\Platformus.Globalization.Data.Abstractions.csproj" />
+    <ProjectReference Include="..\Platformus.Globalization\Platformus.Globalization.csproj" />
     <ProjectReference Include="..\Platformus.Menus.Data.Abstractions\Platformus.Menus.Data.Abstractions.csproj" />
   </ItemGroup>
 

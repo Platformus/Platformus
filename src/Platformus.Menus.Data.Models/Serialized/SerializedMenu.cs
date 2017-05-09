@@ -1,20 +1,19 @@
-﻿// Copyright © 2015 Dmitry Sikorsky. All rights reserved.
+﻿// Copyright © 2017 Dmitry Sikorsky. All rights reserved.
 // Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information.
 
 using ExtCore.Data.Models.Abstractions;
 using Platformus.Globalization.Data.Models;
 
-namespace Platformus.Forms.Data.Models
+namespace Platformus.Menus.Data.Models
 {
-  public class CachedForm : IEntity
+  public class SerializedMenu : IEntity
   {
     public int CultureId { get; set; }
-    public int FormId { get; set; }
+    public int MenuId { get; set; }
     public string Code { get; set; }
-    public string Name { get; set; }
-    public string CachedFields { get; set; }
+    public string SerializedMenuItems { get; set; }
 
     public virtual Culture Culture { get; set; }
-    public virtual Form Form { get; set; }
+    public virtual Menu Menu { get; set; }
   }
 }

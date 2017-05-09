@@ -46,7 +46,7 @@ namespace Platformus.Forms.Data.EntityFramework.PostgreSql
     {
       this.storageContext.Database.ExecuteSqlCommand(
         @"
-          DELETE FROM ""CachedForms"" WHERE ""FormId"" = {0};
+          DELETE FROM ""SerializedForms"" WHERE ""FormId"" = {0};
           CREATE TEMP TABLE ""TempDictionaries"" (""Id"" INT PRIMARY KEY);
           INSERT INTO ""TempDictionaries"" SELECT ""ValueId"" FROM ""FieldOptions"" WHERE ""FieldId"" IN (SELECT ""Id"" FROM ""Fields"" WHERE ""FormId"" = {0});
           INSERT INTO ""TempDictionaries"" SELECT ""NameId"" FROM ""Fields"" WHERE ""FormId"" = {0};

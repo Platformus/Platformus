@@ -11,11 +11,11 @@ namespace Platformus.Menus.Data.EntityFramework.PostgreSql
   {
     public void RegisterModels(ModelBuilder modelBuilder)
     {
-      modelBuilder.Entity<CachedMenu>(etb =>
+      modelBuilder.Entity<SerializedMenu>(etb =>
         {
           etb.HasKey(e => new { e.CultureId, e.MenuId });
           etb.Property(e => e.Code).IsRequired().HasMaxLength(32);
-          etb.ForNpgsqlToTable("CachedMenus");
+          etb.ForNpgsqlToTable("SerializedMenus");
         }
       );
 

@@ -21,7 +21,7 @@ namespace Platformus.Forms.Frontend.ViewComponents
 
     public async Task<IViewComponentResult> InvokeAsync(string code)
     {
-      CachedForm cachedForm = this.Storage.GetRepository<ICachedFormRepository>().WithCultureIdAndCode(
+      SerializedForm cachedForm = this.Storage.GetRepository<ISerializedFormRepository>().WithCultureIdAndCode(
         CultureManager.GetCurrentCulture(this.Storage).Id, code
       );
 

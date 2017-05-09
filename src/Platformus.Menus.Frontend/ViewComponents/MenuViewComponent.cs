@@ -21,11 +21,11 @@ namespace Platformus.Menus.Frontend.ViewComponents
 
     public async Task<IViewComponentResult> InvokeAsync(string code)
     {
-      CachedMenu cachedMenu = this.Storage.GetRepository<ICachedMenuRepository>().WithCultureIdAndCode(
+      SerializedMenu serializedMenu = this.Storage.GetRepository<ISerializedMenuRepository>().WithCultureIdAndCode(
         CultureManager.GetCurrentCulture(this.Storage).Id, code
       );
 
-      if (cachedMenu == null)
+      if (serializedMenu == null)
       {
         Menu menu = this.Storage.GetRepository<IMenuRepository>().WithCode(code);
 
@@ -35,7 +35,7 @@ namespace Platformus.Menus.Frontend.ViewComponents
         return this.View(new MenuViewModelFactory(this).Create(menu));
       }
 
-      return this.View(new MenuViewModelFactory(this).Create(cachedMenu));
+      return this.View(new MenuViewModelFactory(this).Create(serializedMenu));
     }
   }
 }

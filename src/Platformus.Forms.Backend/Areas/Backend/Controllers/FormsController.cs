@@ -45,7 +45,7 @@ namespace Platformus.Forms.Backend.Controllers
         else this.Storage.GetRepository<IFormRepository>().Edit(form);
 
         this.Storage.Save();
-        new CacheManager(this).CacheForm(form);
+        new SerializationManager(this).SerializeForm(form);
         return this.RedirectToAction("Index");
       }
 

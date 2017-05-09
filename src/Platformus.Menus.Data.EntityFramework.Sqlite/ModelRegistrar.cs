@@ -11,11 +11,11 @@ namespace Platformus.Menus.Data.EntityFramework.Sqlite
   {
     public void RegisterModels(ModelBuilder modelBuilder)
     {
-      modelBuilder.Entity<CachedMenu>(etb =>
+      modelBuilder.Entity<SerializedMenu>(etb =>
         {
           etb.HasKey(e => new { e.CultureId, e.MenuId });
           etb.Property(e => e.Code).IsRequired().HasMaxLength(32);
-          etb.ForSqliteToTable("CachedMenus");
+          etb.ForSqliteToTable("SerializedMenus");
         }
       );
 

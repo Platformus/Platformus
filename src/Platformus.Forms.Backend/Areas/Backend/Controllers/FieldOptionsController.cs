@@ -54,13 +54,13 @@ namespace Platformus.Forms.Backend.Controllers
 
       this.Storage.GetRepository<IFieldOptionRepository>().Delete(fieldOption);
       this.Storage.Save();
-      new CacheManager(this).CacheForm(form);
+      new SerializationManager(this).SerializeForm(form);
       return this.RedirectToAction("Index", "Forms");
     }
 
     private void CacheForm(FieldOption fieldOption)
     {
-      new CacheManager(this).CacheForm(this.GetForm(fieldOption));
+      new SerializationManager(this).SerializeForm(this.GetForm(fieldOption));
     }
 
     private Form GetForm(FieldOption fieldOption)

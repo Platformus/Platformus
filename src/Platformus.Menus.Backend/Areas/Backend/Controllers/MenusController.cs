@@ -45,7 +45,7 @@ namespace Platformus.Menus.Backend.Controllers
         else this.Storage.GetRepository<IMenuRepository>().Edit(menu);
 
         this.Storage.Save();
-        new CacheManager(this).CacheMenu(menu);
+        new SerializationManager(this).SerializeMenu(menu);
         return this.RedirectToAction("Index");
       }
 

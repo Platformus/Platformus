@@ -46,7 +46,7 @@ namespace Platformus.Menus.Data.EntityFramework.PostgreSql
     {
       this.storageContext.Database.ExecuteSqlCommand(
         @"
-          DELETE FROM ""CachedMenus"" WHERE ""MenuId"" = {0};
+          DELETE FROM ""SerializedMenus"" WHERE ""MenuId"" = {0};
           CREATE TEMP TABLE ""TempMenuItems"" (""Id"" INT PRIMARY KEY);
           WITH RECURSIVE ""X"" AS (
             SELECT ""Id"" FROM ""MenuItems"" WHERE ""MenuId"" = {0}

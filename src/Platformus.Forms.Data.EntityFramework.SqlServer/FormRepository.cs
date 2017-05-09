@@ -46,7 +46,7 @@ namespace Platformus.Forms.Data.EntityFramework.SqlServer
     {
       this.storageContext.Database.ExecuteSqlCommand(
         @"
-          DELETE FROM CachedForms WHERE FormId = {0};
+          DELETE FROM SerializedForms WHERE FormId = {0};
           CREATE TABLE #Dictionaries (Id INT PRIMARY KEY);
           INSERT INTO #Dictionaries SELECT ValueId FROM FieldOptions WHERE FieldId IN (SELECT Id FROM Fields WHERE FormId = {0});
           INSERT INTO #Dictionaries SELECT NameId FROM Fields WHERE FormId = {0};

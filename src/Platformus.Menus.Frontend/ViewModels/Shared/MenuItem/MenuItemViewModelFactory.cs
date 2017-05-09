@@ -31,12 +31,12 @@ namespace Platformus.Menus.Frontend.ViewModels.Shared
       };
     }
 
-    public MenuItemViewModel Create(CachedMenuItem cachedMenuItem)
+    public MenuItemViewModel Create(SerializedMenuItem cachedMenuItem)
     {
-      IEnumerable<CachedMenuItem> cachedMenuItems = new CachedMenuItem[] { };
+      IEnumerable<SerializedMenuItem> cachedMenuItems = new SerializedMenuItem[] { };
 
-      if (!string.IsNullOrEmpty(cachedMenuItem.CachedMenuItems))
-        cachedMenuItems = JsonConvert.DeserializeObject<IEnumerable<CachedMenuItem>>(cachedMenuItem.CachedMenuItems);
+      if (!string.IsNullOrEmpty(cachedMenuItem.SerializedMenuItems))
+        cachedMenuItems = JsonConvert.DeserializeObject<IEnumerable<SerializedMenuItem>>(cachedMenuItem.SerializedMenuItems);
 
       return new MenuItemViewModel()
       {

@@ -54,13 +54,13 @@ namespace Platformus.Menus.Backend
 
       this.Storage.GetRepository<IMenuItemRepository>().Delete(menuItem);
       this.Storage.Save();
-      new CacheManager(this).CacheMenu(menu);
+      new SerializationManager(this).SerializeMenu(menu);
       return this.RedirectToAction("Index", "Menus");
     }
 
     private void CacheMenu(MenuItem menuItem)
     {
-      new CacheManager(this).CacheMenu(this.GetMenu(menuItem));
+      new SerializationManager(this).SerializeMenu(this.GetMenu(menuItem));
     }
 
     private Menu GetMenu(MenuItem menuItem)
