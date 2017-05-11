@@ -17,7 +17,7 @@ namespace Platformus.Domain.Frontend
 {
   public class DefaultMicrocontroller : IMicrocontroller
   {
-    public IActionResult Invoke(IRequestHandler requestHandler, Microcontroller microcontroller)
+    public IActionResult Invoke(IRequestHandler requestHandler, Microcontroller microcontroller, IEnumerable<KeyValuePair<string, string>> parameters)
     {
       string url = string.Format("/{0}", requestHandler.HttpContext.GetRouteValue("url"));
       dynamic viewModel = null;

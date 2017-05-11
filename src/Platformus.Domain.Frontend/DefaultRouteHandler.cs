@@ -15,7 +15,8 @@ namespace Platformus.Domain.Frontend
   {
     public IActionResult TryHandle(IRequestHandler requestHandler, string url)
     {
-      Microcontroller microcontroller = this.GetMicrocontroller(requestHandler, url);
+      IMicrocontrollerResolver microcontrollerResolver = new DefaultMicrocontrollerResolver();
+      Microcontroller microcontroller = microcontrollerResolver.GetMicrocontroller(requestHandler, url);
 
       if (microcontroller == null)
         return null;
@@ -25,20 +26,7 @@ namespace Platformus.Domain.Frontend
       if (microcontrollerInstance == null)
         return null;
 
-      return microcontrollerInstance.Invoke(requestHandler, microcontroller/*, params*/);
-    }
-
-    private Microcontroller GetMicrocontroller(IRequestHandler requestHandler, string url)
-    {
-      // We must use cache here
-      IEnumerable<Microcontroller> microcontrollers = requestHandler.Storage.GetRepository<IMicrocontrollerRepository>().All();
-      Microcontroller microcontroller = microcontrollers.FirstOrDefault(m => m.UrlTemplate == url);
-
-      if (microcontroller != null)
-        return microcontroller;
-
-      // We must implement real microcontroller selection logic here
-      return microcontrollers.FirstOrDefault(m => m.UrlTemplate == "{*url}");
+      return microcontrollerInstance.Invoke(requestHandler, microcontroller, microcontrollerResolver.GetParameters(microcontroller.UrlTemplate, url));
     }
 
     private IMicrocontroller GetMicrocontrollerInstance(Microcontroller microcontroller)
