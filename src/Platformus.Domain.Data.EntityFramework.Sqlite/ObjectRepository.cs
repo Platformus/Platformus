@@ -37,7 +37,16 @@ namespace Platformus.Domain.Data.EntityFramework.Sqlite
 
     public IEnumerable<Object> FilteredByClassId(int classId)
     {
-      return this.dbSet.Where(o => o.ClassId == classId);
+      return this.dbSet.Where(o => o.ClassId == classId).OrderBy(o => o.Id);
+    }
+
+    // TODO: must be changed!
+    public IEnumerable<Object> FilteredByClassId(int classId, string storageDataType, int orderByMemberId, string direction, int cultureId)
+    {
+      return this.dbSet.FromSql(
+        this.GetOrderedBySelectQuerySql("Objects.ClassId = {0}", storageDataType, orderByMemberId, direction, cultureId),
+        classId
+      );
     }
 
     public IEnumerable<Object> FilteredByClassIdRange(int classId, string orderBy, string direction, int skip, int take)
@@ -50,9 +59,27 @@ namespace Platformus.Domain.Data.EntityFramework.Sqlite
       return this.dbSet.FromSql("SELECT * FROM Objects WHERE Id IN (SELECT PrimaryId FROM Relations WHERE ForeignId = {0})", objectId);
     }
 
+    // TODO: must be changed!
+    public IEnumerable<Object> Primary(int objectId, string storageDataType, int orderByMemberId, string direction, int cultureId)
+    {
+      return this.dbSet.FromSql(
+        this.GetOrderedBySelectQuerySql("Objects.Id IN (SELECT PrimaryId FROM Relations WHERE ForeignId = {0})", storageDataType, orderByMemberId, direction, cultureId),
+        objectId
+      );
+    }
+
     public IEnumerable<Object> Primary(int memberId, int objectId)
     {
       return this.dbSet.FromSql("SELECT * FROM Objects WHERE Id IN (SELECT PrimaryId FROM Relations WHERE MemberId = {0} AND ForeignId = {1})", memberId, objectId);
+    }
+
+    // TODO: must be changed!
+    public IEnumerable<Object> Primary(int memberId, int objectId, string storageDataType, int orderByMemberId, string direction, int cultureId)
+    {
+      return this.dbSet.FromSql(
+        this.GetOrderedBySelectQuerySql("Objects.Id IN (SELECT PrimaryId FROM Relations WHERE MemberId = {0} AND ForeignId = {1})", storageDataType, orderByMemberId, direction, cultureId),
+        memberId, objectId
+      );
     }
 
     public IEnumerable<Object> Foreign(int objectId)
@@ -60,9 +87,27 @@ namespace Platformus.Domain.Data.EntityFramework.Sqlite
       return this.dbSet.FromSql("SELECT * FROM Objects WHERE Id IN (SELECT ForeignId FROM Relations WHERE PrimaryId = {0})", objectId);
     }
 
+    // TODO: must be changed!
+    public IEnumerable<Object> Foreign(int objectId, string storageDataType, int orderByMemberId, string direction, int cultureId)
+    {
+      return this.dbSet.FromSql(
+        this.GetOrderedBySelectQuerySql("Objects.Id IN (SELECT ForeignId FROM Relations WHERE PrimaryId = {0})", storageDataType, orderByMemberId, direction, cultureId),
+        objectId
+      );
+    }
+
     public IEnumerable<Object> Foreign(int memberId, int objectId)
     {
       return this.dbSet.FromSql("SELECT * FROM Objects WHERE Id IN (SELECT ForeignId FROM Relations WHERE MemberId = {0} AND PrimaryId = {1})", memberId, objectId);
+    }
+
+    // TODO: must be changed!
+    public IEnumerable<Object> Foreign(int memberId, int objectId, string storageDataType, int orderByMemberId, string direction, int cultureId)
+    {
+      return this.dbSet.FromSql(
+        this.GetOrderedBySelectQuerySql("Objects.Id IN (SELECT ForeignId FROM Relations WHERE MemberId = {0} AND PrimaryId = {1})", storageDataType, orderByMemberId, direction, cultureId),
+        memberId, objectId
+      );
     }
 
     public void Create(Object @object)
@@ -101,6 +146,67 @@ namespace Platformus.Domain.Data.EntityFramework.Sqlite
     public int CountByClassId(int classId)
     {
       return this.dbSet.Count(o => o.ClassId == classId);
+    }
+    private string GetOrderedBySelectQuerySql(string additionalWhereClause, string storageDataType, int orderByMemberId, string direction, int cultureId)
+    {
+      if (storageDataType == StorageDataType.Integer)
+        return this.GetOrderedByIntegerValueSelectQuerySql(additionalWhereClause, orderByMemberId, direction);
+
+      if (storageDataType == StorageDataType.Decimal)
+        return this.GetOrderedByDecimalValueSelectQuerySql(additionalWhereClause, orderByMemberId, direction);
+
+      if (storageDataType == StorageDataType.String)
+        return this.GetOrderedByStringValueSelectQuerySql(additionalWhereClause, orderByMemberId, direction, cultureId);
+
+      if (storageDataType == StorageDataType.DateTime)
+        return this.GetOrderedByDateTimeValueSelectQuerySql(additionalWhereClause, orderByMemberId, direction);
+
+      return null;
+    }
+
+    private string GetOrderedByIntegerValueSelectQuerySql(string additionalWhereClause, int orderByMemberId, string direction)
+    {
+      return
+        "SELECT Objects.Id, Objects.ClassId FROM Objects " +
+        "INNER JOIN Classes ON Classes.Id = Objects.ClassId " +
+        "INNER JOIN Members ON Members.ClassId = Objects.ClassId OR Members.ClassId = Classes.ClassId " +
+        "INNER JOIN Properties ON Properties.ObjectId = Objects.Id AND Properties.MemberId = Members.Id " +
+        "WHERE " + additionalWhereClause + " AND Members.Id = '" + orderByMemberId + "' " +
+        "ORDER BY Properties.IntegerValue " + direction;
+    }
+
+    private string GetOrderedByDecimalValueSelectQuerySql(string additionalWhereClause, int orderByMemberId, string direction)
+    {
+      return
+        "SELECT Objects.Id, Objects.ClassId FROM Objects " +
+        "INNER JOIN Classes ON Classes.Id = Objects.ClassId " +
+        "INNER JOIN Members ON Members.ClassId = Objects.ClassId OR Members.ClassId = Classes.ClassId " +
+        "INNER JOIN Properties ON Properties.ObjectId = Objects.Id AND Properties.MemberId = Members.Id " +
+        "WHERE " + additionalWhereClause + " AND Members.Id = '" + orderByMemberId + "' " +
+        "ORDER BY Properties.DecimalValue " + direction;
+    }
+
+    private string GetOrderedByStringValueSelectQuerySql(string additionalWhereClause, int orderByMemberId, string direction, int cultureId)
+    {
+      return
+        "SELECT Objects.Id, Objects.ClassId FROM Objects " +
+        "INNER JOIN Classes ON Classes.Id = Objects.ClassId " +
+        "INNER JOIN Members ON Members.ClassId = Objects.ClassId OR Members.ClassId = Classes.ClassId " +
+        "INNER JOIN Properties ON Properties.ObjectId = Objects.Id AND Properties.MemberId = Members.Id " +
+        "INNER JOIN Localizations ON Localizations.DictionaryId = Properties.StringValueId " +
+        "WHERE " + additionalWhereClause + " AND Members.Id = '" + orderByMemberId + "' AND Localizations.CultureId = " + cultureId + " " +
+        "ORDER BY Localizations.Value " + direction;
+    }
+
+    private string GetOrderedByDateTimeValueSelectQuerySql(string additionalWhereClause, int orderByMemberId, string direction)
+    {
+      return
+        "SELECT Objects.Id, Objects.ClassId FROM Objects " +
+        "INNER JOIN Classes ON Classes.Id = Objects.ClassId " +
+        "INNER JOIN Members ON Members.ClassId = Objects.ClassId OR Members.ClassId = Classes.ClassId " +
+        "INNER JOIN Properties ON Properties.ObjectId = Objects.Id AND Properties.MemberId = Members.Id " +
+        "WHERE " + additionalWhereClause + " AND Members.Id = '" + orderByMemberId + "' " +
+        "ORDER BY datetime(Properties.DateTimeValue) " + direction;
     }
   }
 }
