@@ -4,7 +4,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using ExtCore.Data.Abstractions;
+using ExtCore.Events;
 using Microsoft.AspNetCore.Mvc;
+using Platformus.Barebone;
 using Platformus.Domain.Backend.ViewModels.Objects;
 using Platformus.Domain.Data.Abstractions;
 using Platformus.Domain.Data.Models;
@@ -48,8 +50,18 @@ namespace Platformus.Domain.Backend.Controllers
 
         this.Storage.Save();
         this.CreateOrEditProperties(@object);
-        this.CreateOrEditRelations(@object);      
-        new SerializationManager(this).SerializeObject(@object);
+        this.CreateOrEditRelations(@object);
+
+        if (createOrEdit.Id == null)
+          Event<IObjectCreatedEventHandler, IRequestHandler, Object>.Broadcast(this, @object);
+
+        else
+        {
+          Event<IObjectEditedEventHandler, IRequestHandler, Object, Object>.Broadcast(
+            this, this.Storage.GetRepository<IObjectRepository>().WithKey((int)createOrEdit.Id), @object
+          );
+        }
+
         return this.Redirect(this.Request.CombineUrl("/backend/objects"));
       }
 
@@ -62,6 +74,7 @@ namespace Platformus.Domain.Backend.Controllers
 
       this.Storage.GetRepository<IObjectRepository>().Delete(@object);
       this.Storage.Save();
+      Event<IObjectDeletedEventHandler, IRequestHandler, Object>.Broadcast(this, @object);
       return this.Redirect(string.Format("/backend/objects?classid={0}", @object.ClassId));
     }
 

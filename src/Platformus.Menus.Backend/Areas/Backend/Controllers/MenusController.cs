@@ -2,7 +2,9 @@
 // Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information.
 
 using ExtCore.Data.Abstractions;
+using ExtCore.Events;
 using Microsoft.AspNetCore.Mvc;
+using Platformus.Barebone;
 using Platformus.Menus.Backend.ViewModels.Menus;
 using Platformus.Menus.Data.Abstractions;
 using Platformus.Menus.Data.Models;
@@ -45,7 +47,17 @@ namespace Platformus.Menus.Backend.Controllers
         else this.Storage.GetRepository<IMenuRepository>().Edit(menu);
 
         this.Storage.Save();
-        new SerializationManager(this).SerializeMenu(menu);
+
+        if (createOrEdit.Id == null)
+          Event<IMenuCreatedEventHandler, IRequestHandler, Menu>.Broadcast(this, menu);
+
+        else
+        {
+          Event<IMenuEditedEventHandler, IRequestHandler, Menu, Menu>.Broadcast(
+            this, this.Storage.GetRepository<IMenuRepository>().WithKey((int)createOrEdit.Id), menu
+          );
+        }
+
         return this.RedirectToAction("Index");
       }
 
@@ -54,8 +66,11 @@ namespace Platformus.Menus.Backend.Controllers
 
     public ActionResult Delete(int id)
     {
-      this.Storage.GetRepository<IMenuRepository>().Delete(id);
+      Menu menu = this.Storage.GetRepository<IMenuRepository>().WithKey(id);
+
+      this.Storage.GetRepository<IMenuRepository>().Delete(menu);
       this.Storage.Save();
+      Event<IMenuDeletedEventHandler, IRequestHandler, Menu>.Broadcast(this, menu);
       return this.RedirectToAction("Index");
     }
   }

@@ -36,15 +36,15 @@
                 @:propertyDataType: { javaScriptEditorClassName: "@member.PropertyDataType.JavaScriptEditorClassName" },
                 @:isPropertyLocalizable: @member.IsPropertyLocalizable.ToString().ToLower(),
                 @:property: {
-                  @if (member.PropertyDataType.StorageDataType == Platformus.Domain.StorageDataType.Integer)
+                  @if (member.PropertyDataType.StorageDataType == Platformus.Domain.Data.Models.StorageDataType.Integer)
                   {
                     @:integerValue: @member.Property.IntegerValue
                   }
-                  else if (member.PropertyDataType.StorageDataType == Platformus.Domain.StorageDataType.Decimal)
+                  else if (member.PropertyDataType.StorageDataType == Platformus.Domain.Data.Models.StorageDataType.Decimal)
                   {
                     @:decimalValue: @member.Property.DecimalValue
                   }
-                  else if (member.PropertyDataType.StorageDataType == Platformus.Domain.StorageDataType.String)
+                  else if (member.PropertyDataType.StorageDataType == Platformus.Domain.Data.Models.StorageDataType.String)
                   {
                     @:stringValue: {
                       @:localizations: [
@@ -55,7 +55,7 @@
                       @:]
                     @:}
                   }
-                  else if (member.PropertyDataType.StorageDataType == Platformus.Domain.StorageDataType.DateTime)
+                  else if (member.PropertyDataType.StorageDataType == Platformus.Domain.Data.Models.StorageDataType.DateTime)
                   {
                     @:dateTimeValue: "@member.Property.DateTimeValue"
                   }

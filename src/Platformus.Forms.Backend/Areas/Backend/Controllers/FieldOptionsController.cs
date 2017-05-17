@@ -2,7 +2,9 @@
 // Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information.
 
 using ExtCore.Data.Abstractions;
+using ExtCore.Events;
 using Microsoft.AspNetCore.Mvc;
+using Platformus.Barebone;
 using Platformus.Forms.Backend.ViewModels.FieldOptions;
 using Platformus.Forms.Data.Abstractions;
 using Platformus.Forms.Data.Models;
@@ -40,7 +42,7 @@ namespace Platformus.Forms.Backend.Controllers
         else this.Storage.GetRepository<IFieldOptionRepository>().Edit(fieldOption);
 
         this.Storage.Save();
-        this.CacheForm(fieldOption);
+        Event<IFormEditedEventHandler, IRequestHandler, Form, Form>.Broadcast(this, null, this.GetForm(fieldOption));
         return this.RedirectToAction("Index", "Forms");
       }
 
@@ -56,11 +58,6 @@ namespace Platformus.Forms.Backend.Controllers
       this.Storage.Save();
       new SerializationManager(this).SerializeForm(form);
       return this.RedirectToAction("Index", "Forms");
-    }
-
-    private void CacheForm(FieldOption fieldOption)
-    {
-      new SerializationManager(this).SerializeForm(this.GetForm(fieldOption));
     }
 
     private Form GetForm(FieldOption fieldOption)

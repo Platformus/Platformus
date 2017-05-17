@@ -2,7 +2,9 @@
 // Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information.
 
 using ExtCore.Data.Abstractions;
+using ExtCore.Events;
 using Microsoft.AspNetCore.Mvc;
+using Platformus.Barebone;
 using Platformus.Menus.Backend.ViewModels.MenuItems;
 using Platformus.Menus.Data.Abstractions;
 using Platformus.Menus.Data.Models;
@@ -40,7 +42,7 @@ namespace Platformus.Menus.Backend
         else this.Storage.GetRepository<IMenuItemRepository>().Edit(menuItem);
 
         this.Storage.Save();
-        this.CacheMenu(menuItem);
+        Event<IMenuEditedEventHandler, IRequestHandler, Menu, Menu>.Broadcast(this, null, this.GetMenu(menuItem));
         return this.RedirectToAction("Index", "Menus");
       }
 
@@ -56,11 +58,6 @@ namespace Platformus.Menus.Backend
       this.Storage.Save();
       new SerializationManager(this).SerializeMenu(menu);
       return this.RedirectToAction("Index", "Menus");
-    }
-
-    private void CacheMenu(MenuItem menuItem)
-    {
-      new SerializationManager(this).SerializeMenu(this.GetMenu(menuItem));
     }
 
     private Menu GetMenu(MenuItem menuItem)

@@ -2,7 +2,9 @@
 // Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information.
 
 using ExtCore.Data.Abstractions;
+using ExtCore.Events;
 using Microsoft.AspNetCore.Mvc;
+using Platformus.Barebone;
 using Platformus.Forms.Backend.ViewModels.Forms;
 using Platformus.Forms.Data.Abstractions;
 using Platformus.Forms.Data.Models;
@@ -45,7 +47,17 @@ namespace Platformus.Forms.Backend.Controllers
         else this.Storage.GetRepository<IFormRepository>().Edit(form);
 
         this.Storage.Save();
-        new SerializationManager(this).SerializeForm(form);
+
+        if (createOrEdit.Id == null)
+          Event<IFormCreatedEventHandler, IRequestHandler, Form>.Broadcast(this, form);
+
+        else
+        {
+          Event<IFormEditedEventHandler, IRequestHandler, Form, Form>.Broadcast(
+            this, this.Storage.GetRepository<IFormRepository>().WithKey((int)createOrEdit.Id), form
+          );
+        }
+
         return this.RedirectToAction("Index");
       }
 
@@ -54,8 +66,11 @@ namespace Platformus.Forms.Backend.Controllers
 
     public ActionResult Delete(int id)
     {
-      this.Storage.GetRepository<IFormRepository>().Delete(id);
+      Form form = this.Storage.GetRepository<IFormRepository>().WithKey(id);
+
+      this.Storage.GetRepository<IFormRepository>().Delete(form);
       this.Storage.Save();
+      Event<IFormDeletedEventHandler, IRequestHandler, Form>.Broadcast(this, form);
       return this.RedirectToAction("Index");
     }
   }
