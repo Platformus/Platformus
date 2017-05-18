@@ -6,6 +6,7 @@ using System.Linq;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.AspNetCore.Mvc.ViewFeatures;
+using Microsoft.AspNetCore.Razor.TagHelpers;
 
 namespace Platformus.Barebone.Backend
 {
@@ -71,6 +72,12 @@ namespace Platformus.Barebone.Backend
       tb.MergeAttribute("data-val", true.ToString().ToLower());
       tb.MergeAttribute("data-val-maxlength-max", stringLengthAttribute.MaximumLength.ToString());
       tb.MergeAttribute("maxlength", stringLengthAttribute.MaximumLength.ToString());
+    }
+
+    protected void MergeOtherAttribute(TagBuilder tb, TagHelperAttributeList attributes)
+    {
+      foreach (TagHelperAttribute attribute in attributes)
+        tb.MergeAttribute(attribute.Name, attribute.Value?.ToString());
     }
 
     protected RequiredAttribute GetRequiredAttribute(ModelExpression modelExpression)

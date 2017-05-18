@@ -5,12 +5,13 @@ using System.Collections.Generic;
 using System.Linq;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.AspNetCore.Mvc.ViewFeatures;
+using Microsoft.AspNetCore.Razor.TagHelpers;
 
 namespace Platformus.Barebone.Backend
 {
   public class DropDownListGenerator : GeneratorBase
   {
-    public TagBuilder GenerateDropDownList(ViewContext viewContext, ModelExpression modelExpression, IEnumerable<Option> options, string additionalCssClass = null)
+    public TagBuilder GenerateDropDownList(ViewContext viewContext, ModelExpression modelExpression, IEnumerable<Option> options, TagHelperAttributeList attributes, string additionalCssClass = null)
     {
       TagBuilder tb = new TagBuilder("div");
 
@@ -24,6 +25,7 @@ namespace Platformus.Barebone.Backend
 
       tb.MergeAttribute("id", this.GetIdentity(modelExpression));
       this.MergeRequiredAttribute(tb, modelExpression, "drop-down-list--required");
+      this.MergeOtherAttribute(tb, attributes);
       tb.InnerHtml.Clear();
       tb.InnerHtml.AppendHtml(this.GenerateSelectedDropDownListItem(viewContext, modelExpression, options));
       tb.InnerHtml.AppendHtml(this.GenerateDropDownListItems(options));

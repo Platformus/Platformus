@@ -26,7 +26,7 @@ namespace Platformus.Barebone.Backend
 
       output.SuppressOutput();
       output.Content.Clear();
-      output.Content.AppendHtml(new TextAreaGenerator().GenerateTextArea(this.ViewContext, this.For));
+      output.Content.AppendHtml(new TextAreaGenerator().GenerateTextArea(this.ViewContext, this.For, output.Attributes));
     }
   }
 }

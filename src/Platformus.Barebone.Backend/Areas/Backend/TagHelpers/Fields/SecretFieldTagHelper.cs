@@ -26,17 +26,17 @@ namespace Platformus.Barebone.Backend
 
       output.SuppressOutput();
       output.Content.Clear();
-      output.Content.AppendHtml(this.GenerateField());
+      output.Content.AppendHtml(this.GenerateField(output.Attributes));
     }
 
-    private TagBuilder GenerateField()
+    private TagBuilder GenerateField(TagHelperAttributeList attributes)
     {
       TagBuilder tb = new TagBuilder("div");
 
       tb.AddCssClass("form__field field");
       tb.InnerHtml.Clear();
       tb.InnerHtml.AppendHtml(new FieldGenerator().GenerateLabel(this.For));
-      tb.InnerHtml.AppendHtml(new TextBoxGenerator().GenerateTextBox(this.ViewContext, this.For, null, "password", "field__text-box"));
+      tb.InnerHtml.AppendHtml(new TextBoxGenerator().GenerateTextBox(this.ViewContext, this.For, attributes, null, "password", "field__text-box"));
       return tb;
     }
   }

@@ -3,12 +3,13 @@
 
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.AspNetCore.Mvc.ViewFeatures;
+using Microsoft.AspNetCore.Razor.TagHelpers;
 
 namespace Platformus.Barebone.Backend
 {
   public class TextBoxGenerator : GeneratorBase
   {
-    public TagBuilder GenerateTextBox(ViewContext viewContext, ModelExpression modelExpression, Localization localization = null, string type = "text", string additionalCssClass = null)
+    public TagBuilder GenerateTextBox(ViewContext viewContext, ModelExpression modelExpression, TagHelperAttributeList attributes, Localization localization = null, string type = "text", string additionalCssClass = null)
     {
       TagBuilder tb = new TagBuilder("input");
 
@@ -36,6 +37,7 @@ namespace Platformus.Barebone.Backend
 
       this.MergeRequiredAttribute(tb, modelExpression, "text-box--required");
       this.MergeStringLengthAttribute(tb, modelExpression);
+      this.MergeOtherAttribute(tb, attributes);
       return tb;
     }
   }

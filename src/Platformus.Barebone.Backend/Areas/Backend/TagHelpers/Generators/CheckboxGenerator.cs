@@ -48,6 +48,7 @@ namespace Platformus.Barebone.Backend
     {
       TagBuilder tb = new TagBuilder("input");
 
+      tb.TagRenderMode = TagRenderMode.SelfClosing;
       tb.MergeAttribute("name", this.GetIdentity(modelExpression));
       tb.MergeAttribute("type", "hidden");
       tb.MergeAttribute("value", this.GetValue(viewContext, modelExpression));

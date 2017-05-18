@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Platformus.Barebone;
 using Platformus.Barebone.Backend;
+using Platformus.Domain.Backend.ViewModels.Shared;
 using Platformus.Domain.Data.Abstractions;
 using Platformus.Domain.Data.Models;
 using Platformus.Globalization.Backend.ViewModels;
@@ -25,7 +26,8 @@ namespace Platformus.Domain.Backend.ViewModels.Members
         {
           TabOptions = this.GetTabOptions((int)classId),
           PropertyDataTypeOptions = this.GetPropertyDataTypeOptions(),
-          RelationClassOptions = this.GetRelationClassOptions()
+          RelationClassOptions = this.GetRelationClassOptions(),
+          DataTypes = this.GetDataTypes()
         };
 
       Member member = this.RequestHandler.Storage.GetRepository<IMemberRepository>().WithKey((int)id);
@@ -44,7 +46,8 @@ namespace Platformus.Domain.Backend.ViewModels.Members
         IsPropertyVisibleInList = member.IsPropertyVisibleInList == true,
         RelationClassId = member.RelationClassId,
         RelationClassOptions = this.GetRelationClassOptions(),
-        IsRelationSingleParent = member.IsRelationSingleParent == true
+        IsRelationSingleParent = member.IsRelationSingleParent == true,
+        DataTypes = this.GetDataTypes()
       };
     }
 
@@ -88,6 +91,13 @@ namespace Platformus.Domain.Backend.ViewModels.Members
       );
 
       return options;
+    }
+
+    private IEnumerable<DataTypeViewModel> GetDataTypes()
+    {
+      return this.RequestHandler.Storage.GetRepository<IDataTypeRepository>().All().Select(
+        dt => new DataTypeViewModelFactory(this.RequestHandler).Create(dt)
+      );
     }
   }
 }

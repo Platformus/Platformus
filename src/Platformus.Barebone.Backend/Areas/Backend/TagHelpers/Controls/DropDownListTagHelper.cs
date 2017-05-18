@@ -31,7 +31,7 @@ namespace Platformus.Barebone.Backend
 
       output.SuppressOutput();
       output.Content.Clear();
-      output.Content.AppendHtml(new DropDownListGenerator().GenerateDropDownList(this.ViewContext, this.For, this.Options));
+      output.Content.AppendHtml(new DropDownListGenerator().GenerateDropDownList(this.ViewContext, this.For, this.Options, output.Attributes));
     }
   }
 }

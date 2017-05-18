@@ -20,12 +20,12 @@
       <single-line-text-field asp-for="Position" />
     </div>
     <div id="tabPageProperty" class="tab-pages__tab-page">
-      <drop-down-list-field asp-for="PropertyDataTypeId" asp-options="@Model.PropertyDataTypeOptions" />
+      <drop-down-list-field asp-for="PropertyDataTypeId" asp-options="@Model.PropertyDataTypeOptions" onchange="platformus.ui.propertyDataTypeIdChanged();" />
       <checkbox-field asp-for="IsPropertyLocalizable" />
       <checkbox-field asp-for="IsPropertyVisibleInList" />
     </div>
     <div id="tabPageRelation" class="tab-pages__tab-page">
-      <drop-down-list-field asp-for="RelationClassId" asp-options="@Model.RelationClassOptions" />
+      <drop-down-list-field asp-for="RelationClassId" asp-options="@Model.RelationClassOptions" onchange="platformus.ui.relationClassIdChanged();" />
       <checkbox-field asp-for="IsRelationSingleParent" />
     </div>
   </div>
@@ -34,3 +34,16 @@
     <a class="buttons__button button button--neutral" href="@this.Context.Request.CombineUrl("/backend/members")">Cancel</a>
   </div>
 </form>
+<script type="text/javascript">
+  var dataTypes = [
+    @foreach (var dataType in this.Model.DataTypes)
+    {
+      @:{ id: @dataType.Id, storageDataType: "@dataType.StorageDataType" }@(dataType.Id != this.Model.DataTypes.Last().Id ? "," : null)
+    }
+  ];
+</script>
+
+@section startUpScript {
+  platformus.ui.propertyDataTypeIdChanged();
+  platformus.ui.relationClassIdChanged();
+}

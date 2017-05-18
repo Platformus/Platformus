@@ -32,10 +32,10 @@ namespace Platformus.Barebone.Backend
 
       output.SuppressOutput();
       output.Content.Clear();
-      output.Content.AppendHtml(this.GenerateField());
+      output.Content.AppendHtml(this.GenerateField(output.Attributes));
     }
 
-    private TagBuilder GenerateField()
+    private TagBuilder GenerateField(TagHelperAttributeList attributes)
     {
       TagBuilder tb = new TagBuilder("div");
 
@@ -51,7 +51,7 @@ namespace Platformus.Barebone.Backend
         if (localization.Culture.Code != "__")
         {
           tb.InnerHtml.AppendHtml(fieldGenerator.GenerateCulture(localization));
-          tb.InnerHtml.AppendHtml(new TextAreaGenerator().GenerateTextArea(this.ViewContext, this.For, localization, "field__text-area field__text-area--multilingual"));
+          tb.InnerHtml.AppendHtml(new TextAreaGenerator().GenerateTextArea(this.ViewContext, this.For, attributes, localization, "field__text-area field__text-area--multilingual"));
 
           if (localization != this.Localizations.Last())
             tb.InnerHtml.AppendHtml(fieldGenerator.GenerateMultilingualSeparator());

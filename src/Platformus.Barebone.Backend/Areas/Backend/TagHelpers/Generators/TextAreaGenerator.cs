@@ -3,12 +3,13 @@
 
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.AspNetCore.Mvc.ViewFeatures;
+using Microsoft.AspNetCore.Razor.TagHelpers;
 
 namespace Platformus.Barebone.Backend
 {
   public class TextAreaGenerator : GeneratorBase
   {
-    public TagBuilder GenerateTextArea(ViewContext viewContext, ModelExpression modelExpression, Localization localization = null, string additionalCssClass = null)
+    public TagBuilder GenerateTextArea(ViewContext viewContext, ModelExpression modelExpression, TagHelperAttributeList attributes, Localization localization = null, string additionalCssClass = null)
     {
       TagBuilder tb = new TagBuilder("textarea");
 
@@ -28,6 +29,7 @@ namespace Platformus.Barebone.Backend
 
       this.MergeRequiredAttribute(tb, modelExpression, "text-area--required");
       this.MergeStringLengthAttribute(tb, modelExpression);
+      this.MergeOtherAttribute(tb, attributes);
 
       string value = this.GetValue(viewContext, modelExpression, localization);
 

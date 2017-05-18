@@ -12,6 +12,7 @@
   {
     "outputFileName": "wwwroot/areas/backend/js/platformus.domain.min.js",
     "inputFiles": [
+      "Areas/Backend/Scripts/ui.js",
       "Areas/Backend/Scripts/image_uploader_behavior.js",
       "Areas/Backend/Scripts/image_uploader_form.js",
       "Areas/Backend/Scripts/object_selector_form.js",
