@@ -31,7 +31,7 @@ namespace Platformus.Security.Backend.ViewModels.Credentials
             new GridColumnViewModelFactory(this.RequestHandler).Create("Identifier", "Identifier"),
             new GridColumnViewModelFactory(this.RequestHandler).CreateEmpty()
           },
-          credentialRepository.FilteredByUserIdRange(userId, orderBy, direction, skip, take, filter).Select(c => new CredentialViewModelFactory(this.RequestHandler).Create(c)),
+          credentialRepository.FilteredByUserIdRange(userId, orderBy, direction, skip, take, filter).ToList().Select(c => new CredentialViewModelFactory(this.RequestHandler).Create(c)),
           "_Credential"
         )
       };

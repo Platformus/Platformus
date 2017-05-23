@@ -33,7 +33,7 @@ namespace Platformus.Globalization.Backend.ViewModels
     {
       List<Platformus.Barebone.Backend.Localization> localizations = new List<Platformus.Barebone.Backend.Localization>();
 
-      foreach (Platformus.Globalization.Data.Models.Culture culture in this.RequestHandler.Storage.GetRepository<ICultureRepository>().All())
+      foreach (Platformus.Globalization.Data.Models.Culture culture in this.RequestHandler.Storage.GetRepository<ICultureRepository>().All().ToList())
       {
         Platformus.Globalization.Data.Models.Localization localization = null;
 

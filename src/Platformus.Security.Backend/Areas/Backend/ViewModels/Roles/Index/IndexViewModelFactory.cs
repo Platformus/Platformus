@@ -30,7 +30,7 @@ namespace Platformus.Security.Backend.ViewModels.Roles
             new GridColumnViewModelFactory(this.RequestHandler).Create("Position", "Position"),
             new GridColumnViewModelFactory(this.RequestHandler).CreateEmpty()
           },
-          roleRepository.Range(orderBy, direction, skip, take, filter).Select(r => new RoleViewModelFactory(this.RequestHandler).Create(r)),
+          roleRepository.Range(orderBy, direction, skip, take, filter).ToList().Select(r => new RoleViewModelFactory(this.RequestHandler).Create(r)),
           "_Role"
         )
       };

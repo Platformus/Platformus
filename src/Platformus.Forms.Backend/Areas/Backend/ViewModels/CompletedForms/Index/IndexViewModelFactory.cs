@@ -30,7 +30,7 @@ namespace Platformus.Forms.Backend.ViewModels.CompletedForms
             new GridColumnViewModelFactory(this.RequestHandler).Create("Created", "created"),
             new GridColumnViewModelFactory(this.RequestHandler).CreateEmpty()
           },
-          completedFormRepository.Range(formId, orderBy, direction, skip, take).Select(cf => new CompletedFormViewModelFactory(this.RequestHandler).Create(cf)),
+          completedFormRepository.Range(formId, orderBy, direction, skip, take).ToList().Select(cf => new CompletedFormViewModelFactory(this.RequestHandler).Create(cf)),
           "_CompletedForm"
         )
       };

@@ -3,6 +3,8 @@
 @model Platformus.Domain.Backend.ViewModels.Shared.MicrocontrollerViewModel
 <tr class="table__row">
   <td class="table__cell">@Model.Name</td>
+  <td class="table__cell">@Model.UrlTemplate</td>
+  <td class="table__cell">@Model.ViewName</td>
   <td class="table__cell"><a href="/backend/datasources?microcontrollerid=@Model.Id">Data sources</a></td>
   <td class="table__cell">@(this.Model.Position == null ? "—" : this.Model.Position.ToString())</td>
   <td class="table__cell table__buttons buttons">

@@ -25,7 +25,7 @@ namespace Platformus.Domain.Backend.ViewModels.Shared
         Parent = parent == null ? null : new ClassViewModelFactory(this.RequestHandler).Create(parent),
         Name = @class.Name,
         PluralizedName = @class.PluralizedName,
-        IsAbstract = @class.IsAbstract == true
+        IsAbstract = @class.IsAbstract
       };
     }
   }

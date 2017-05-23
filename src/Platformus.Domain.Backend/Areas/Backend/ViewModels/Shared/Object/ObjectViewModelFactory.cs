@@ -21,7 +21,7 @@ namespace Platformus.Domain.Backend.ViewModels.Shared
     {
       List<Class> relatedClasses = new List<Class>();
 
-      foreach (Member member in this.RequestHandler.Storage.GetRepository<IMemberRepository>().FilteredByRelationClassIdRelationSingleParent(@object.ClassId))
+      foreach (Member member in this.RequestHandler.Storage.GetRepository<IMemberRepository>().FilteredByRelationClassIdRelationSingleParent(@object.ClassId).ToList())
       {
         Class @class = this.RequestHandler.Storage.GetRepository<IClassRepository>().WithKey((int)member.ClassId);
 

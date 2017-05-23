@@ -36,7 +36,7 @@ namespace Platformus.Domain.Backend.ViewModels.Classes
         Code = @class.Code,
         Name = @class.Name,
         PluralizedName = @class.PluralizedName,
-        IsAbstract = @class.IsAbstract == true
+        IsAbstract = @class.IsAbstract
       };
     }
 

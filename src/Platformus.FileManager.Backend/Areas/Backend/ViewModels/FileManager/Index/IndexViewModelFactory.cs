@@ -30,7 +30,7 @@ namespace Platformus.FileManager.Backend.ViewModels.FileManager
             new GridColumnViewModelFactory(this.RequestHandler).Create("Size", "Size"),
             new GridColumnViewModelFactory(this.RequestHandler).CreateEmpty()
           },
-          fileRepository.Range(orderBy, direction, skip, take, filter).Select(f => new FileViewModelFactory(this.RequestHandler).Create(f)),
+          fileRepository.Range(orderBy, direction, skip, take, filter).ToList().Select(f => new FileViewModelFactory(this.RequestHandler).Create(f)),
           "_File"
         )
       };

@@ -2,6 +2,7 @@
 // Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information.
 
 using System.Collections.Generic;
+using System.Linq;
 using Newtonsoft.Json;
 using Platformus.Barebone;
 using Platformus.Globalization.Data.Abstractions;
@@ -22,7 +23,7 @@ namespace Platformus.Menus
 
     public void SerializeMenu(Menu menu)
     {
-      foreach (Culture culture in this.requestHandler.Storage.GetRepository<ICultureRepository>().NotNeutral())
+      foreach (Culture culture in this.requestHandler.Storage.GetRepository<ICultureRepository>().NotNeutral().ToList())
       {
         SerializedMenu serializedMenu = this.requestHandler.Storage.GetRepository<ISerializedMenuRepository>().WithKey(culture.Id, menu.Id);
 
@@ -46,7 +47,7 @@ namespace Platformus.Menus
     {
       List<SerializedMenuItem> serializedMenuItems = new List<SerializedMenuItem>();
 
-      foreach (MenuItem menuItem in this.requestHandler.Storage.GetRepository<IMenuItemRepository>().FilteredByMenuId(menu.Id))
+      foreach (MenuItem menuItem in this.requestHandler.Storage.GetRepository<IMenuItemRepository>().FilteredByMenuId(menu.Id).ToList())
         serializedMenuItems.Add(this.SerializeMenuItem(culture, menuItem));
 
       SerializedMenu serializedForm = new SerializedMenu();
@@ -65,7 +66,7 @@ namespace Platformus.Menus
     {
       List<SerializedMenuItem> serializedChildMenuItems = new List<SerializedMenuItem>();
 
-      foreach (MenuItem childMenuItem in this.requestHandler.Storage.GetRepository<IMenuItemRepository>().FilteredByMenuItemId(menuItem.Id))
+      foreach (MenuItem childMenuItem in this.requestHandler.Storage.GetRepository<IMenuItemRepository>().FilteredByMenuItemId(menuItem.Id).ToList())
         serializedChildMenuItems.Add(this.SerializeMenuItem(culture, childMenuItem));
 
       SerializedMenuItem serializedMenuItem = new SerializedMenuItem();

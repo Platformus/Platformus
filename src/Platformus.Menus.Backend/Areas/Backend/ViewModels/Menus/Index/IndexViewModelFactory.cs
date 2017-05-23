@@ -20,7 +20,7 @@ namespace Platformus.Menus.Backend.ViewModels.Menus
     {
       return new IndexViewModel()
       {
-        Menus = this.RequestHandler.Storage.GetRepository<IMenuRepository>().All().Select(
+        Menus = this.RequestHandler.Storage.GetRepository<IMenuRepository>().All().ToList().Select(
           m => new MenuViewModelFactory(this.RequestHandler).Create(m)
         )
       };

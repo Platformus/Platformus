@@ -36,9 +36,9 @@ namespace Platformus.Domain.Data.EntityFramework.SqlServer
     public IEnumerable<Class> FilteredByClassId(int? classId)
     {
       if (classId == null)
-        return this.dbSet.FromSql("SELECT * FROM Classes WHERE Id NOT IN (SELECT ClassId FROM Members WHERE IsRelationSingleParent IS NOT NULL) AND ClassId IS NULL AND IsAbstract IS NULL ORDER BY Name");
+        return this.dbSet.FromSql("SELECT * FROM Classes WHERE Id NOT IN (SELECT ClassId FROM Members WHERE IsRelationSingleParent IS NOT NULL) AND ClassId IS NULL AND IsAbstract = {0} ORDER BY Name", false);
 
-      return this.dbSet.FromSql("SELECT * FROM Classes WHERE Id NOT IN (SELECT ClassId FROM Members WHERE IsRelationSingleParent IS NOT NULL) AND ClassId = {0} AND IsAbstract IS NULL ORDER BY Name", classId);
+      return this.dbSet.FromSql("SELECT * FROM Classes WHERE Id NOT IN (SELECT ClassId FROM Members WHERE IsRelationSingleParent IS NOT NULL) AND ClassId = {0} AND IsAbstract = {1} ORDER BY Name", classId, false);
     }
 
     public IEnumerable<Class> Abstract()

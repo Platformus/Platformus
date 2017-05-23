@@ -20,7 +20,7 @@ namespace Platformus.Configurations.Backend.ViewModels.Configurations
     {
       return new IndexViewModel()
       {
-        Configurations = this.RequestHandler.Storage.GetRepository<IConfigurationRepository>().All().Select(
+        Configurations = this.RequestHandler.Storage.GetRepository<IConfigurationRepository>().All().ToList().Select(
           c => new ConfigurationViewModelFactory(this.RequestHandler).Create(c)
         )
       };

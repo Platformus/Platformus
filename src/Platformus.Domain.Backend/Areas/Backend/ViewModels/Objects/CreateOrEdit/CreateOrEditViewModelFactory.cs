@@ -47,10 +47,10 @@ namespace Platformus.Domain.Backend.ViewModels.Objects
 
       membersByTabs.Add(new TabViewModel() { Name = "General" }, new List<MemberViewModel>());
 
-      foreach (Tab tab in this.RequestHandler.Storage.GetRepository<ITabRepository>().FilteredByClassIdInlcudingParent(@object != null ? @object.ClassId : (int)classId))
+      foreach (Tab tab in this.RequestHandler.Storage.GetRepository<ITabRepository>().FilteredByClassIdInlcudingParent(@object != null ? @object.ClassId : (int)classId).ToList())
         membersByTabs.Add(new TabViewModelFactory(this.RequestHandler).Create(tab), new List<MemberViewModel>());
 
-      foreach (Member member in this.RequestHandler.Storage.GetRepository<IMemberRepository>().FilteredByClassIdInlcudingParent(@object != null ? @object.ClassId : (int)classId))
+      foreach (Member member in this.RequestHandler.Storage.GetRepository<IMemberRepository>().FilteredByClassIdInlcudingParent(@object != null ? @object.ClassId : (int)classId).ToList())
       {
         TabViewModel tab = null;
 

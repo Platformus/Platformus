@@ -30,7 +30,7 @@ namespace Platformus.Security.Backend.ViewModels.Permissions
             new GridColumnViewModelFactory(this.RequestHandler).Create("Position", "Position"),
             new GridColumnViewModelFactory(this.RequestHandler).CreateEmpty()
           },
-          permissionRepository.Range(orderBy, direction, skip, take, filter).Select(p => new PermissionViewModelFactory(this.RequestHandler).Create(p)),
+          permissionRepository.Range(orderBy, direction, skip, take, filter).ToList().Select(p => new PermissionViewModelFactory(this.RequestHandler).Create(p)),
           "_Permission"
         )
       };

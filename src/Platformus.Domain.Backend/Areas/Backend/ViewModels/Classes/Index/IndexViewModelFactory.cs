@@ -33,7 +33,7 @@ namespace Platformus.Domain.Backend.ViewModels.Classes
             new GridColumnViewModelFactory(this.RequestHandler).Create("Members"),
             new GridColumnViewModelFactory(this.RequestHandler).CreateEmpty()
           },
-          @classRepository.Range(orderBy, direction, skip, take, filter).Select(c => new ClassViewModelFactory(this.RequestHandler).Create(c)),
+          @classRepository.Range(orderBy, direction, skip, take, filter).ToList().Select(c => new ClassViewModelFactory(this.RequestHandler).Create(c)),
           "_Class"
         )
       };

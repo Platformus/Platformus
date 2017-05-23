@@ -30,7 +30,7 @@ namespace Platformus.Domain.Backend.ViewModels.DataTypes
             new GridColumnViewModelFactory(this.RequestHandler).Create("Position", "Position"),
             new GridColumnViewModelFactory(this.RequestHandler).CreateEmpty()
           },
-          dataTypeRepository.Range(orderBy, direction, skip, take, filter).Select(dt => new DataTypeViewModelFactory(this.RequestHandler).Create(dt)),
+          dataTypeRepository.Range(orderBy, direction, skip, take, filter).ToList().Select(dt => new DataTypeViewModelFactory(this.RequestHandler).Create(dt)),
           "_DataType"
         )
       };

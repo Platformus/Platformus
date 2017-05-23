@@ -20,8 +20,14 @@ namespace Platformus.Domain.Data.EntityFramework.PostgreSql
 
     public Object WithUrl(string url)
     {
-      return null;
-      //return this.dbSet.FirstOrDefault(o => string.Equals(o.Url, url, System.StringComparison.OrdinalIgnoreCase));
+      return this.dbSet.FromSql(
+        @"
+          SELECT * FROM ""Objects"" WHERE ""Id"" IN
+            (SELECT ""ObjectId"" FROM ""Properties"" WHERE ""MemberId"" IN
+              (SELECT ""Id"" FROM ""Members"" WHERE ""Code"" = {0}) AND ""StringValueId"" IN (SELECT ""DictionaryId"" FROM ""Localizations"" WHERE ""Value"" = {1}))
+        ",
+        "Url", url
+      ).FirstOrDefault();
     }
 
     public IEnumerable<Object> All()
@@ -128,7 +134,7 @@ namespace Platformus.Domain.Data.EntityFramework.PostgreSql
           INSERT INTO ""TempDictionaries"" SELECT ""StringValueId"" FROM ""Properties"" WHERE ""ObjectId"" = {0};
           DELETE FROM ""Properties"" WHERE ""ObjectId"" = {0};
           DELETE FROM ""Localizations"" WHERE ""DictionaryId"" IN (SELECT ""Id"" FROM ""TempDictionaries"");
-          DELETE FROM ""Dictionaries"" WHERE ""Id"" IN (SELECT ""Id"" FROM TempDictionaries"");
+          DELETE FROM ""Dictionaries"" WHERE ""Id"" IN (SELECT ""Id"" FROM ""TempDictionaries"");
           DELETE FROM ""Relations"" WHERE ""PrimaryId"" = {0} OR ""ForeignId"" = {0};
         ",
         @object.Id

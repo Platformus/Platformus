@@ -33,7 +33,7 @@ namespace Platformus.Domain.Backend.ViewModels.Objects
         Grid = classId == null ? null : new GridViewModelFactory(this.RequestHandler).Create(
           orderBy, direction, skip, take, objectRepository.CountByClassId((int)classId),
           this.GetGridColumns((int)classId),
-          objectRepository.FilteredByClassIdRange((int)classId, orderBy, direction, skip, take).Select(o => new ObjectViewModelFactory(this.RequestHandler).Create(o)),
+          objectRepository.FilteredByClassIdRange((int)classId, orderBy, direction, skip, take).ToList().Select(o => new ObjectViewModelFactory(this.RequestHandler).Create(o)),
           "_Object"
         )
       };
@@ -43,7 +43,7 @@ namespace Platformus.Domain.Backend.ViewModels.Objects
     {
       Dictionary<ClassViewModel, IEnumerable<ClassViewModel>> classesByAbstractClasses = new Dictionary<ClassViewModel, IEnumerable<ClassViewModel>>();
 
-      foreach (Class abstractClass in this.RequestHandler.Storage.GetRepository<IClassRepository>().Abstract())
+      foreach (Class abstractClass in this.RequestHandler.Storage.GetRepository<IClassRepository>().Abstract().ToList())
         classesByAbstractClasses.Add(
           new ClassViewModelFactory(this.RequestHandler).Create(abstractClass),
           this.RequestHandler.Storage.GetRepository<IClassRepository>().FilteredByClassId(abstractClass.Id).Select(
@@ -53,7 +53,7 @@ namespace Platformus.Domain.Backend.ViewModels.Objects
 
       classesByAbstractClasses.Add(
         new ClassViewModel() { PluralizedName = "Others" },
-        this.RequestHandler.Storage.GetRepository<IClassRepository>().FilteredByClassId(null).Select(
+        this.RequestHandler.Storage.GetRepository<IClassRepository>().FilteredByClassId(null).ToList().Select(
           c => new ClassViewModelFactory(this.RequestHandler).Create(c)
         )
       );
@@ -70,7 +70,7 @@ namespace Platformus.Domain.Backend.ViewModels.Objects
         memberRepository.FilteredByClassIdInlcudingParentPropertyVisibleInList(classId).Select(m => new GridColumnViewModelFactory(this.RequestHandler).Create(m.Name))
       );
 
-      foreach (Member member in memberRepository.FilteredByRelationClassIdRelationSingleParent(classId))
+      foreach (Member member in memberRepository.FilteredByRelationClassIdRelationSingleParent(classId).ToList())
       {
         Class @class = this.RequestHandler.Storage.GetRepository<IClassRepository>().WithKey(member.ClassId);
 

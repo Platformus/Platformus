@@ -20,6 +20,8 @@ namespace Platformus.Domain.Backend.ViewModels.Shared
       {
         Id = microcontroller.Id,
         Name = microcontroller.Name,
+        UrlTemplate = microcontroller.UrlTemplate,
+        ViewName = microcontroller.ViewName,
         Position = microcontroller.Position
       };
     }

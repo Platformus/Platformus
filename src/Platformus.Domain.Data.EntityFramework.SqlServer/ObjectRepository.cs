@@ -20,8 +20,14 @@ namespace Platformus.Domain.Data.EntityFramework.SqlServer
 
     public Object WithUrl(string url)
     {
-      return null;
-      //return this.dbSet.FirstOrDefault(o => string.Equals(o.Url, url, System.StringComparison.OrdinalIgnoreCase));
+      return this.dbSet.FromSql(
+        @"
+          SELECT * FROM Objects WHERE Id IN
+            (SELECT ObjectId FROM Properties WHERE MemberId IN
+              (SELECT Id FROM Members WHERE Code = {0}) AND StringValueId IN (SELECT DictionaryId FROM Localizations WHERE Value = {1}))
+        ",
+        "Url", url
+      ).FirstOrDefault();
     }
 
     public IEnumerable<Object> All()

@@ -13,7 +13,7 @@ namespace Platformus.Domain.Data.Models
     public string Code { get; set; }
     public string Name { get; set; }
     public string PluralizedName { get; set; }
-    public bool? IsAbstract { get; set; }
+    public bool IsAbstract { get; set; }
 
     public virtual Class Parent { get; set; }
     public virtual ICollection<Tab> Tabs { get; set; }

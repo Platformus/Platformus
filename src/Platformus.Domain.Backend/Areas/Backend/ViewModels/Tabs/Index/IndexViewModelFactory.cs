@@ -31,7 +31,7 @@ namespace Platformus.Domain.Backend.ViewModels.Tabs
             new GridColumnViewModelFactory(this.RequestHandler).Create("Position", "Position"),
             new GridColumnViewModelFactory(this.RequestHandler).CreateEmpty()
           },
-          tabRepository.FilteredByClassIdRange(classId, orderBy, direction, skip, take, filter).Select(t => new TabViewModelFactory(this.RequestHandler).Create(t)),
+          tabRepository.FilteredByClassIdRange(classId, orderBy, direction, skip, take, filter).ToList().Select(t => new TabViewModelFactory(this.RequestHandler).Create(t)),
           "_Tab"
         )
       };

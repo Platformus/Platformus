@@ -2,6 +2,7 @@
 // Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information.
 
 using System.Collections.Generic;
+using System.Linq;
 using Newtonsoft.Json;
 using Platformus.Barebone;
 using Platformus.Forms.Data.Abstractions;
@@ -22,7 +23,7 @@ namespace Platformus.Forms
 
     public void SerializeForm(Form form)
     {
-      foreach (Culture culture in this.requestHandler.Storage.GetRepository<ICultureRepository>().NotNeutral())
+      foreach (Culture culture in this.requestHandler.Storage.GetRepository<ICultureRepository>().NotNeutral().ToList())
       {
         SerializedForm serializedForm = this.requestHandler.Storage.GetRepository<ISerializedFormRepository>().WithKey(culture.Id, form.Id);
 
@@ -47,7 +48,7 @@ namespace Platformus.Forms
     {
       List<SerializedField> serializedFields = new List<SerializedField>();
 
-      foreach (Field field in this.requestHandler.Storage.GetRepository<IFieldRepository>().FilteredByFormId(form.Id))
+      foreach (Field field in this.requestHandler.Storage.GetRepository<IFieldRepository>().FilteredByFormId(form.Id).ToList())
         serializedFields.Add(this.SerializeField(culture, field));
 
       SerializedForm serializedForm = new SerializedForm();
@@ -67,7 +68,7 @@ namespace Platformus.Forms
     {
       List<SerializedFieldOption> serializedFieldOptions = new List<SerializedFieldOption>();
 
-      foreach (FieldOption fieldOption in this.requestHandler.Storage.GetRepository<IFieldOptionRepository>().FilteredByFieldId(field.Id))
+      foreach (FieldOption fieldOption in this.requestHandler.Storage.GetRepository<IFieldOptionRepository>().FilteredByFieldId(field.Id).ToList())
         serializedFieldOptions.Add(this.SerializeFieldOption(culture, fieldOption));
 
       SerializedField serializedField = new SerializedField();

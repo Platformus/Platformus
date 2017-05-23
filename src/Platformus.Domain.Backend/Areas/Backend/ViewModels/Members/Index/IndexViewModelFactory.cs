@@ -33,7 +33,7 @@ namespace Platformus.Domain.Backend.ViewModels.Members
             new GridColumnViewModelFactory(this.RequestHandler).Create("Position", "Position"),
             new GridColumnViewModelFactory(this.RequestHandler).CreateEmpty()
           },
-          memberRepository.FilteredByClassIdRange(classId, orderBy, direction, skip, take, filter).Select(m => new MemberViewModelFactory(this.RequestHandler).Create(m, null)),
+          memberRepository.FilteredByClassIdRange(classId, orderBy, direction, skip, take, filter).ToList().Select(m => new MemberViewModelFactory(this.RequestHandler).Create(m, null)),
           "_Member"
         )
       };

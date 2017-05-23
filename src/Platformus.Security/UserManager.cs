@@ -108,7 +108,7 @@ namespace Platformus.Security
     private IEnumerable<Claim> GetUserRoleClaims(User user)
     {
       List<Claim> claims = new List<Claim>();
-      IEnumerable<int> roleIds = this.userRoleRepository.FilteredByUserId(user.Id)?.Select(ur => ur.RoleId);
+      IEnumerable<int> roleIds = this.userRoleRepository.FilteredByUserId(user.Id)?.Select(ur => ur.RoleId).ToList();
 
       if (roleIds != null)
       {
@@ -127,7 +127,7 @@ namespace Platformus.Security
     private IEnumerable<Claim> GetUserPermissionClaims(Role role)
     {
       List<Claim> claims = new List<Claim>();
-      IEnumerable<int> permissionIds = this.rolePermissionRepository.FilteredByRoleId(role.Id)?.Select(rp => rp.PermissionId);
+      IEnumerable<int> permissionIds = this.rolePermissionRepository.FilteredByRoleId(role.Id)?.Select(rp => rp.PermissionId).ToList();
 
       if (permissionIds != null)
       {

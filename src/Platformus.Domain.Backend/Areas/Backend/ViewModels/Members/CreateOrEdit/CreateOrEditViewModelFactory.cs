@@ -57,7 +57,7 @@ namespace Platformus.Domain.Backend.ViewModels.Members
 
       options.Add(new Option("Tab not specified", string.Empty));
       options.AddRange(
-        this.RequestHandler.Storage.GetRepository<ITabRepository>().FilteredByClassId(classId).Select(
+        this.RequestHandler.Storage.GetRepository<ITabRepository>().FilteredByClassId(classId).ToList().Select(
           t => new Option(t.Name, t.Id.ToString())
         )
       );
@@ -71,7 +71,7 @@ namespace Platformus.Domain.Backend.ViewModels.Members
 
       options.Add(new Option("Property data type not specified", string.Empty));
       options.AddRange(
-        this.RequestHandler.Storage.GetRepository<IDataTypeRepository>().All().Select(
+        this.RequestHandler.Storage.GetRepository<IDataTypeRepository>().All().ToList().Select(
           dt => new Option(dt.Name, dt.Id.ToString())
         )
       );
@@ -85,7 +85,7 @@ namespace Platformus.Domain.Backend.ViewModels.Members
 
       options.Add(new Option("Relation class not specified", string.Empty));
       options.AddRange(
-        this.RequestHandler.Storage.GetRepository<IClassRepository>().All().Select(
+        this.RequestHandler.Storage.GetRepository<IClassRepository>().All().ToList().Select(
           c => new Option(c.Name, c.Id.ToString())
         )
       );
@@ -95,7 +95,7 @@ namespace Platformus.Domain.Backend.ViewModels.Members
 
     private IEnumerable<DataTypeViewModel> GetDataTypes()
     {
-      return this.RequestHandler.Storage.GetRepository<IDataTypeRepository>().All().Select(
+      return this.RequestHandler.Storage.GetRepository<IDataTypeRepository>().All().ToList().Select(
         dt => new DataTypeViewModelFactory(this.RequestHandler).Create(dt)
       );
     }

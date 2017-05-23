@@ -30,7 +30,7 @@ namespace Platformus.Domain.Backend.ViewModels.DataSources
             new GridColumnViewModelFactory(this.RequestHandler).Create("C# class name", "CSharpClassName"),
             new GridColumnViewModelFactory(this.RequestHandler).CreateEmpty()
           },
-          dataSourceRepository.FilteredByMicrocontrollerIdRange(microcontrollerId, orderBy, direction, skip, take, filter).Select(ds => new DataSourceViewModelFactory(this.RequestHandler).Create(ds)),
+          dataSourceRepository.FilteredByMicrocontrollerIdRange(microcontrollerId, orderBy, direction, skip, take, filter).ToList().Select(ds => new DataSourceViewModelFactory(this.RequestHandler).Create(ds)),
           "_DataSource"
         )
       };

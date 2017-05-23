@@ -31,7 +31,7 @@ namespace Platformus.Security.Backend.ViewModels.Users
             new GridColumnViewModelFactory(this.RequestHandler).Create("Created", "Created"),
             new GridColumnViewModelFactory(this.RequestHandler).CreateEmpty()
           },
-          userRepository.Range(orderBy, direction, skip, take, filter).Select(u => new UserViewModelFactory(this.RequestHandler).Create(u)),
+          userRepository.Range(orderBy, direction, skip, take, filter).ToList().Select(u => new UserViewModelFactory(this.RequestHandler).Create(u)),
           "_User"
         )
       };

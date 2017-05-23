@@ -23,7 +23,7 @@ namespace Platformus.Domain
 
     public void SerializeObject(Object @object)
     {
-      foreach (Culture culture in CultureManager.GetNotNeutralCultures(this.requestHandler.Storage))
+      foreach (Culture culture in CultureManager.GetNotNeutralCultures(this.requestHandler.Storage).ToList())
       {
         SerializedObject serializedObject = this.requestHandler.Storage.GetRepository<ISerializedObjectRepository>().WithKey(culture.Id, @object.Id);
 
@@ -49,7 +49,7 @@ namespace Platformus.Domain
       Culture neutralCulture = CultureManager.GetNeutralCulture(this.requestHandler.Storage);
       List<SerializedProperty> serializedProperties = new List<SerializedProperty>();
 
-      foreach (Member member in this.requestHandler.Storage.GetRepository<IMemberRepository>().FilteredByClassIdInlcudingParent(@class.Id))
+      foreach (Member member in this.requestHandler.Storage.GetRepository<IMemberRepository>().FilteredByClassIdInlcudingParent(@class.Id).ToList())
       {
         if (member.PropertyDataTypeId != null)
         {

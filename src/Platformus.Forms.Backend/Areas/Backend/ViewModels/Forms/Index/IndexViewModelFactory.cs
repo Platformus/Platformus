@@ -20,7 +20,7 @@ namespace Platformus.Forms.Backend.ViewModels.Forms
     {
       return new IndexViewModel()
       {
-        Forms = this.RequestHandler.Storage.GetRepository<IFormRepository>().All().Select(
+        Forms = this.RequestHandler.Storage.GetRepository<IFormRepository>().All().ToList().Select(
           f => new FormViewModelFactory(this.RequestHandler).Create(f)
         )
       };
