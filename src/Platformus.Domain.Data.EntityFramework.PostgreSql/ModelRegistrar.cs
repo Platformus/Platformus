@@ -11,14 +11,6 @@ namespace Platformus.Domain.Data.EntityFramework.PostgreSql
   {
     public void RegisterModels(ModelBuilder modelBuilder)
     {
-      modelBuilder.Entity<SerializedObject>(etb =>
-        {
-          etb.HasKey(e => new { e.CultureId, e.ObjectId });
-          etb.Property(e => e.UrlPropertyStringValue).HasMaxLength(128);
-          etb.ForNpgsqlToTable("SerializedObjects");
-        }
-      );
-
       modelBuilder.Entity<Class>(etb =>
         {
           etb.HasKey(e => e.Id);
@@ -39,16 +31,6 @@ namespace Platformus.Domain.Data.EntityFramework.PostgreSql
         }
       );
 
-      modelBuilder.Entity<Member>(etb =>
-        {
-          etb.HasKey(e => e.Id);
-          etb.Property(e => e.Id).ValueGeneratedOnAdd();
-          etb.Property(e => e.Code).IsRequired().HasMaxLength(32);
-          etb.Property(e => e.Name).IsRequired().HasMaxLength(64);
-          etb.ForNpgsqlToTable("Members");
-        }
-      );
-
       modelBuilder.Entity<DataType>(etb =>
         {
           etb.HasKey(e => e.Id);
@@ -60,14 +42,13 @@ namespace Platformus.Domain.Data.EntityFramework.PostgreSql
         }
       );
 
-      modelBuilder.Entity<DataSource>(etb =>
+      modelBuilder.Entity<Member>(etb =>
         {
           etb.HasKey(e => e.Id);
           etb.Property(e => e.Id).ValueGeneratedOnAdd();
           etb.Property(e => e.Code).IsRequired().HasMaxLength(32);
-          etb.Property(e => e.CSharpClassName).IsRequired().HasMaxLength(128);
-          etb.Property(e => e.Parameters).HasMaxLength(1024);
-          etb.ForNpgsqlToTable("DataSources");
+          etb.Property(e => e.Name).IsRequired().HasMaxLength(64);
+          etb.ForNpgsqlToTable("Members");
         }
       );
 
@@ -79,7 +60,7 @@ namespace Platformus.Domain.Data.EntityFramework.PostgreSql
         }
       );
 
-       modelBuilder.Entity<Property>(etb =>
+      modelBuilder.Entity<Property>(etb =>
         {
           etb.HasKey(e => e.Id);
           etb.Property(e => e.Id).ValueGeneratedOnAdd();
@@ -104,6 +85,25 @@ namespace Platformus.Domain.Data.EntityFramework.PostgreSql
           etb.Property(e => e.ViewName).IsRequired().HasMaxLength(64);
           etb.Property(e => e.CSharpClassName).IsRequired().HasMaxLength(128);
           etb.ForNpgsqlToTable("Microcontrollers");
+        }
+      );
+
+      modelBuilder.Entity<DataSource>(etb =>
+        {
+          etb.HasKey(e => e.Id);
+          etb.Property(e => e.Id).ValueGeneratedOnAdd();
+          etb.Property(e => e.Code).IsRequired().HasMaxLength(32);
+          etb.Property(e => e.CSharpClassName).IsRequired().HasMaxLength(128);
+          etb.Property(e => e.Parameters).HasMaxLength(1024);
+          etb.ForNpgsqlToTable("DataSources");
+        }
+      );
+
+      modelBuilder.Entity<SerializedObject>(etb =>
+        {
+          etb.HasKey(e => new { e.CultureId, e.ObjectId });
+          etb.Property(e => e.UrlPropertyStringValue).HasMaxLength(128);
+          etb.ForNpgsqlToTable("SerializedObjects");
         }
       );
     }

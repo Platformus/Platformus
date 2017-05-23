@@ -11,33 +11,6 @@ namespace Platformus.Security.Data.EntityFramework.Sqlite
   {
     public void RegisterModels(ModelBuilder modelBuilder)
     {
-      modelBuilder.Entity<Permission>(etb =>
-        {
-          etb.HasKey(e => e.Id);
-          etb.Property(e => e.Id).ValueGeneratedOnAdd();
-          etb.Property(e => e.Code).IsRequired().HasMaxLength(32);
-          etb.Property(e => e.Name).IsRequired().HasMaxLength(64);
-          etb.ForSqliteToTable("Permissions");
-        }
-      );
-
-      modelBuilder.Entity<Role>(etb =>
-        {
-          etb.HasKey(e => e.Id);
-          etb.Property(e => e.Id).ValueGeneratedOnAdd();
-          etb.Property(e => e.Code).IsRequired().HasMaxLength(32);
-          etb.Property(e => e.Name).IsRequired().HasMaxLength(64);
-          etb.ForSqliteToTable("Roles");
-        }
-      );
-
-      modelBuilder.Entity<RolePermission>(etb =>
-        {
-          etb.HasKey(e => new { e.RoleId, e.PermissionId });
-          etb.ForSqliteToTable("RolePermissions");
-        }
-      );
-
       modelBuilder.Entity<User>(etb =>
         {
           etb.HasKey(e => e.Id);
@@ -47,14 +20,7 @@ namespace Platformus.Security.Data.EntityFramework.Sqlite
         }
       );
 
-      modelBuilder.Entity<UserRole>(etb =>
-        {
-          etb.HasKey(e => new { e.UserId, e.RoleId });
-          etb.ForSqliteToTable("UserRoles");
-        }
-      );
-
-      modelBuilder.Entity<CredentialType>(etb =>
+	  modelBuilder.Entity<CredentialType>(etb =>
         {
           etb.HasKey(e => e.Id);
           etb.Property(e => e.Id).ValueGeneratedOnAdd();
@@ -71,6 +37,40 @@ namespace Platformus.Security.Data.EntityFramework.Sqlite
           etb.Property(e => e.Identifier).IsRequired().HasMaxLength(64);
           etb.Property(e => e.Secret).HasMaxLength(1024);
           etb.ForSqliteToTable("Credentials");
+        }
+      );
+
+	  modelBuilder.Entity<Role>(etb =>
+        {
+          etb.HasKey(e => e.Id);
+          etb.Property(e => e.Id).ValueGeneratedOnAdd();
+          etb.Property(e => e.Code).IsRequired().HasMaxLength(32);
+          etb.Property(e => e.Name).IsRequired().HasMaxLength(64);
+          etb.ForSqliteToTable("Roles");
+        }
+      );
+
+	  modelBuilder.Entity<UserRole>(etb =>
+        {
+          etb.HasKey(e => new { e.UserId, e.RoleId });
+          etb.ForSqliteToTable("UserRoles");
+        }
+      );
+
+      modelBuilder.Entity<Permission>(etb =>
+        {
+          etb.HasKey(e => e.Id);
+          etb.Property(e => e.Id).ValueGeneratedOnAdd();
+          etb.Property(e => e.Code).IsRequired().HasMaxLength(32);
+          etb.Property(e => e.Name).IsRequired().HasMaxLength(64);
+          etb.ForSqliteToTable("Permissions");
+        }
+      );
+
+      modelBuilder.Entity<RolePermission>(etb =>
+        {
+          etb.HasKey(e => new { e.RoleId, e.PermissionId });
+          etb.ForSqliteToTable("RolePermissions");
         }
       );
     }

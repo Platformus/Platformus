@@ -11,14 +11,6 @@ namespace Platformus.Menus.Data.EntityFramework.SqlServer
   {
     public void RegisterModels(ModelBuilder modelBuilder)
     {
-      modelBuilder.Entity<SerializedMenu>(etb =>
-        {
-          etb.HasKey(e => new { e.CultureId, e.MenuId });
-          etb.Property(e => e.Code).IsRequired().HasMaxLength(32);
-          etb.ForSqlServerToTable("SerializedMenus");
-        }
-      );
-
       modelBuilder.Entity<Menu>(etb =>
         {
           etb.HasKey(e => e.Id);
@@ -34,6 +26,14 @@ namespace Platformus.Menus.Data.EntityFramework.SqlServer
           etb.Property(e => e.Id).UseSqlServerIdentityColumn();
           etb.Property(e => e.Url).HasMaxLength(128);
           etb.ForSqlServerToTable("MenuItems");
+        }
+      );
+
+      modelBuilder.Entity<SerializedMenu>(etb =>
+        {
+          etb.HasKey(e => new { e.CultureId, e.MenuId });
+          etb.Property(e => e.Code).IsRequired().HasMaxLength(32);
+          etb.ForSqlServerToTable("SerializedMenus");
         }
       );
     }

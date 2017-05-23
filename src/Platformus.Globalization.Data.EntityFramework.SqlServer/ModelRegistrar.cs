@@ -11,14 +11,6 @@ namespace Platformus.Globalization.Data.EntityFramework.SqlServer
   {
     public void RegisterModels(ModelBuilder modelBuilder)
     {
-      modelBuilder.Entity<Dictionary>(etb =>
-        {
-          etb.HasKey(e => e.Id);
-          etb.Property(e => e.Id).UseSqlServerIdentityColumn();
-          etb.ForSqlServerToTable("Dictionaries");
-        }
-      );
-
       modelBuilder.Entity<Culture>(etb =>
         {
           etb.HasKey(e => e.Id);
@@ -26,6 +18,14 @@ namespace Platformus.Globalization.Data.EntityFramework.SqlServer
           etb.Property(e => e.Code).IsRequired().HasMaxLength(32);
           etb.Property(e => e.Name).IsRequired().HasMaxLength(64);
           etb.ForSqlServerToTable("Cultures");
+        }
+      );
+
+      modelBuilder.Entity<Dictionary>(etb =>
+        {
+          etb.HasKey(e => e.Id);
+          etb.Property(e => e.Id).UseSqlServerIdentityColumn();
+          etb.ForSqlServerToTable("Dictionaries");
         }
       );
 

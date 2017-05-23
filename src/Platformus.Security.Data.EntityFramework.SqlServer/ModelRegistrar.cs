@@ -11,33 +11,6 @@ namespace Platformus.Security.Data.EntityFramework.SqlServer
   {
     public void RegisterModels(ModelBuilder modelBuilder)
     {
-      modelBuilder.Entity<Permission>(etb =>
-        {
-          etb.HasKey(e => e.Id);
-          etb.Property(e => e.Id).UseSqlServerIdentityColumn();
-          etb.Property(e => e.Code).IsRequired().HasMaxLength(32);
-          etb.Property(e => e.Name).IsRequired().HasMaxLength(64);
-          etb.ForSqlServerToTable("Permissions");
-        }
-      );
-
-      modelBuilder.Entity<Role>(etb =>
-        {
-          etb.HasKey(e => e.Id);
-          etb.Property(e => e.Id).UseSqlServerIdentityColumn();
-          etb.Property(e => e.Code).IsRequired().HasMaxLength(32);
-          etb.Property(e => e.Name).IsRequired().HasMaxLength(64);
-          etb.ForSqlServerToTable("Roles");
-        }
-      );
-
-      modelBuilder.Entity<RolePermission>(etb =>
-        {
-          etb.HasKey(e => new { e.RoleId, e.PermissionId });
-          etb.ForSqlServerToTable("RolePermissions");
-        }
-      );
-
       modelBuilder.Entity<User>(etb =>
         {
           etb.HasKey(e => e.Id);
@@ -47,14 +20,7 @@ namespace Platformus.Security.Data.EntityFramework.SqlServer
         }
       );
 
-      modelBuilder.Entity<UserRole>(etb =>
-        {
-          etb.HasKey(e => new { e.UserId, e.RoleId });
-          etb.ForSqlServerToTable("UserRoles");
-        }
-      );
-
-      modelBuilder.Entity<CredentialType>(etb =>
+	  modelBuilder.Entity<CredentialType>(etb =>
         {
           etb.HasKey(e => e.Id);
           etb.Property(e => e.Id).UseSqlServerIdentityColumn();
@@ -71,6 +37,40 @@ namespace Platformus.Security.Data.EntityFramework.SqlServer
           etb.Property(e => e.Identifier).IsRequired().HasMaxLength(64);
           etb.Property(e => e.Secret).HasMaxLength(1024);
           etb.ForSqlServerToTable("Credentials");
+        }
+      );
+
+	  modelBuilder.Entity<Role>(etb =>
+        {
+          etb.HasKey(e => e.Id);
+          etb.Property(e => e.Id).UseSqlServerIdentityColumn();
+          etb.Property(e => e.Code).IsRequired().HasMaxLength(32);
+          etb.Property(e => e.Name).IsRequired().HasMaxLength(64);
+          etb.ForSqlServerToTable("Roles");
+        }
+      );
+
+	  modelBuilder.Entity<UserRole>(etb =>
+        {
+          etb.HasKey(e => new { e.UserId, e.RoleId });
+          etb.ForSqlServerToTable("UserRoles");
+        }
+      );
+
+      modelBuilder.Entity<Permission>(etb =>
+        {
+          etb.HasKey(e => e.Id);
+          etb.Property(e => e.Id).UseSqlServerIdentityColumn();
+          etb.Property(e => e.Code).IsRequired().HasMaxLength(32);
+          etb.Property(e => e.Name).IsRequired().HasMaxLength(64);
+          etb.ForSqlServerToTable("Permissions");
+        }
+      );
+
+      modelBuilder.Entity<RolePermission>(etb =>
+        {
+          etb.HasKey(e => new { e.RoleId, e.PermissionId });
+          etb.ForSqlServerToTable("RolePermissions");
         }
       );
     }

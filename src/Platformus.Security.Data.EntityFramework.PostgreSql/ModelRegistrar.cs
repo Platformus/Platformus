@@ -11,33 +11,6 @@ namespace Platformus.Security.Data.EntityFramework.PostgreSql
   {
     public void RegisterModels(ModelBuilder modelBuilder)
     {
-      modelBuilder.Entity<Permission>(etb =>
-        {
-          etb.HasKey(e => e.Id);
-          etb.Property(e => e.Id).ValueGeneratedOnAdd();
-          etb.Property(e => e.Code).IsRequired().HasMaxLength(32);
-          etb.Property(e => e.Name).IsRequired().HasMaxLength(64);
-          etb.ForNpgsqlToTable("Permissions");
-        }
-      );
-
-      modelBuilder.Entity<Role>(etb =>
-        {
-          etb.HasKey(e => e.Id);
-          etb.Property(e => e.Id).ValueGeneratedOnAdd();
-          etb.Property(e => e.Code).IsRequired().HasMaxLength(32);
-          etb.Property(e => e.Name).IsRequired().HasMaxLength(64);
-          etb.ForNpgsqlToTable("Roles");
-        }
-      );
-
-      modelBuilder.Entity<RolePermission>(etb =>
-        {
-          etb.HasKey(e => new { e.RoleId, e.PermissionId });
-          etb.ForNpgsqlToTable("RolePermissions");
-        }
-      );
-
       modelBuilder.Entity<User>(etb =>
         {
           etb.HasKey(e => e.Id);
@@ -47,14 +20,7 @@ namespace Platformus.Security.Data.EntityFramework.PostgreSql
         }
       );
 
-      modelBuilder.Entity<UserRole>(etb =>
-        {
-          etb.HasKey(e => new { e.UserId, e.RoleId });
-          etb.ForNpgsqlToTable("UserRoles");
-        }
-      );
-
-      modelBuilder.Entity<CredentialType>(etb =>
+	  modelBuilder.Entity<CredentialType>(etb =>
         {
           etb.HasKey(e => e.Id);
           etb.Property(e => e.Id).ValueGeneratedOnAdd();
@@ -71,6 +37,40 @@ namespace Platformus.Security.Data.EntityFramework.PostgreSql
           etb.Property(e => e.Identifier).IsRequired().HasMaxLength(64);
           etb.Property(e => e.Secret).HasMaxLength(1024);
           etb.ForNpgsqlToTable("Credentials");
+        }
+      );
+
+	  modelBuilder.Entity<Role>(etb =>
+        {
+          etb.HasKey(e => e.Id);
+          etb.Property(e => e.Id).ValueGeneratedOnAdd();
+          etb.Property(e => e.Code).IsRequired().HasMaxLength(32);
+          etb.Property(e => e.Name).IsRequired().HasMaxLength(64);
+          etb.ForNpgsqlToTable("Roles");
+        }
+      );
+
+	  modelBuilder.Entity<UserRole>(etb =>
+        {
+          etb.HasKey(e => new { e.UserId, e.RoleId });
+          etb.ForNpgsqlToTable("UserRoles");
+        }
+      );
+
+      modelBuilder.Entity<Permission>(etb =>
+        {
+          etb.HasKey(e => e.Id);
+          etb.Property(e => e.Id).ValueGeneratedOnAdd();
+          etb.Property(e => e.Code).IsRequired().HasMaxLength(32);
+          etb.Property(e => e.Name).IsRequired().HasMaxLength(64);
+          etb.ForNpgsqlToTable("Permissions");
+        }
+      );
+
+      modelBuilder.Entity<RolePermission>(etb =>
+        {
+          etb.HasKey(e => new { e.RoleId, e.PermissionId });
+          etb.ForNpgsqlToTable("RolePermissions");
         }
       );
     }

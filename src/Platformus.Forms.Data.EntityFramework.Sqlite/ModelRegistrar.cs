@@ -11,15 +11,6 @@ namespace Platformus.Forms.Data.EntityFramework.Sqlite
   {
     public void RegisterModels(ModelBuilder modelBuilder)
     {
-      modelBuilder.Entity<SerializedForm>(etb =>
-        {
-          etb.HasKey(e => new { e.CultureId, e.FormId });
-          etb.Property(e => e.Code).IsRequired().HasMaxLength(32);
-          etb.Property(e => e.Name).IsRequired().HasMaxLength(64);
-          etb.ForSqliteToTable("SerializedForms");
-        }
-      );
-
       modelBuilder.Entity<Form>(etb =>
         {
           etb.HasKey(e => e.Id);
@@ -69,6 +60,15 @@ namespace Platformus.Forms.Data.EntityFramework.Sqlite
           etb.HasKey(e => e.Id);
           etb.Property(e => e.Id).ValueGeneratedOnAdd();
           etb.ForSqliteToTable("CompletedFields");
+        }
+      );
+
+      modelBuilder.Entity<SerializedForm>(etb =>
+        {
+          etb.HasKey(e => new { e.CultureId, e.FormId });
+          etb.Property(e => e.Code).IsRequired().HasMaxLength(32);
+          etb.Property(e => e.Name).IsRequired().HasMaxLength(64);
+          etb.ForSqliteToTable("SerializedForms");
         }
       );
     }

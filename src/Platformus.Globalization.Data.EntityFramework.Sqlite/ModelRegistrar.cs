@@ -11,14 +11,6 @@ namespace Platformus.Globalization.Data.EntityFramework.Sqlite
   {
     public void RegisterModels(ModelBuilder modelBuilder)
     {
-      modelBuilder.Entity<Dictionary>(etb =>
-        {
-          etb.HasKey(e => e.Id);
-          etb.Property(e => e.Id).ValueGeneratedOnAdd();
-          etb.ForSqliteToTable("Dictionaries");
-        }
-      );
-
       modelBuilder.Entity<Culture>(etb =>
         {
           etb.HasKey(e => e.Id);
@@ -26,6 +18,14 @@ namespace Platformus.Globalization.Data.EntityFramework.Sqlite
           etb.Property(e => e.Code).IsRequired().HasMaxLength(32);
           etb.Property(e => e.Name).IsRequired().HasMaxLength(64);
           etb.ForSqliteToTable("Cultures");
+        }
+      );
+
+      modelBuilder.Entity<Dictionary>(etb =>
+        {
+          etb.HasKey(e => e.Id);
+          etb.Property(e => e.Id).ValueGeneratedOnAdd();
+          etb.ForSqliteToTable("Dictionaries");
         }
       );
 
