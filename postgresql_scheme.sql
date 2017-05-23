@@ -3,7 +3,7 @@
 -- Version: alpha-18
 --
 CREATE TABLE "Configurations" (
-    "Id" integer NOT NULL,
+    "Id" serial NOT NULL,
     "Code" text NOT NULL,
     "Name" text NOT NULL,
 	CONSTRAINT "PK_Configurations" PRIMARY KEY ("Id")
@@ -12,7 +12,7 @@ CREATE TABLE "Configurations" (
 ALTER TABLE "Configurations" OWNER TO postgres;
 
 CREATE TABLE "Variables" (
-    "Id" integer NOT NULL,
+    "Id" serial NOT NULL,
     "ConfigurationId" integer NOT NULL,
     "Code" text NOT NULL,
     "Name" text NOT NULL,
@@ -32,7 +32,7 @@ ALTER TABLE "Variables" OWNER TO postgres;
 -- Version: alpha-18
 --
 CREATE TABLE "Users" (
-    "Id" integer NOT NULL,
+    "Id" serial NOT NULL,
     "Name" text NOT NULL,
     "Created" bigint NOT NULL,
     CONSTRAINT "PK_Users" PRIMARY KEY ("Id")
@@ -41,7 +41,7 @@ CREATE TABLE "Users" (
 ALTER TABLE "Users" OWNER TO postgres;
 
 CREATE TABLE "CredentialTypes" (
-    "Id" integer NOT NULL,
+    "Id" serial NOT NULL,
     "Code" text NOT NULL,
     "Name" text NOT NULL,
     "Position" integer,
@@ -51,7 +51,7 @@ CREATE TABLE "CredentialTypes" (
 ALTER TABLE "CredentialTypes" OWNER TO postgres;
 
 CREATE TABLE "Credentials" (
-    "Id" integer NOT NULL,
+    "Id" serial NOT NULL,
     "UserId" integer NOT NULL,
     "CredentialTypeId" integer NOT NULL,
     "Identifier" text NOT NULL,
@@ -70,7 +70,7 @@ CREATE TABLE "Credentials" (
 ALTER TABLE "Credentials" OWNER TO postgres;
 
 CREATE TABLE "Roles" (
-    "Id" integer NOT NULL,
+    "Id" serial NOT NULL,
     "Code" text NOT NULL,
     "Name" text NOT NULL,
     "Position" integer,
@@ -96,7 +96,7 @@ CREATE TABLE "UserRoles" (
 ALTER TABLE "UserRoles" OWNER TO postgres;
 
 CREATE TABLE "Permissions" (
-    "Id" integer NOT NULL,
+    "Id" serial NOT NULL,
     "Code" text NOT NULL,
     "Name" text NOT NULL,
     "Position" integer,
@@ -126,7 +126,7 @@ ALTER TABLE "RolePermissions" OWNER TO postgres;
 -- Version: alpha-18
 --
 CREATE TABLE "Files" (
-    "Id" integer NOT NULL,
+    "Id" serial NOT NULL,
     "Name" text NOT NULL,
     "Size" bigint NOT NULL,
     CONSTRAINT "PK_Files" PRIMARY KEY ("Id")
@@ -139,7 +139,7 @@ ALTER TABLE "Files" OWNER TO postgres;
 -- Version: alpha-18
 --
 CREATE TABLE "Cultures" (
-    "Id" integer NOT NULL,
+    "Id" serial NOT NULL,
     "Code" text NOT NULL,
     "Name" text NOT NULL,
     "IsNeutral" boolean NOT NULL,
@@ -150,14 +150,14 @@ CREATE TABLE "Cultures" (
 ALTER TABLE "Cultures" OWNER TO postgres;
 
 CREATE TABLE "Dictionaries" (
-    "Id" integer NOT NULL,
+    "Id" serial NOT NULL,
     CONSTRAINT "PK_Dictionaries" PRIMARY KEY ("Id")
 );
 
 ALTER TABLE "Dictionaries" OWNER TO postgres;
 
 CREATE TABLE "Localizations" (
-    "Id" integer NOT NULL,
+    "Id" serial NOT NULL,
     "DictionaryId" integer NOT NULL,
     "CultureId" integer NOT NULL,
     "Value" text,
@@ -179,7 +179,7 @@ ALTER TABLE "Localizations" OWNER TO postgres;
 -- Version: alpha-18
 --
 CREATE TABLE "Classes" (
-    "Id" integer NOT NULL,
+    "Id" serial NOT NULL,
     "ClassId" integer,
     "Code" text NOT NULL,
     "Name" text NOT NULL,
@@ -195,7 +195,7 @@ CREATE TABLE "Classes" (
 ALTER TABLE "Classes" OWNER TO postgres;
 
 CREATE TABLE "Tabs" (
-    "Id" integer NOT NULL,
+    "Id" serial NOT NULL,
     "ClassId" integer NOT NULL,
     "Name" text NOT NULL,
     "Position" integer,
@@ -209,7 +209,7 @@ CREATE TABLE "Tabs" (
 ALTER TABLE "Tabs" OWNER TO postgres;
 
 CREATE TABLE "DataTypes" (
-    "Id" integer NOT NULL,
+    "Id" serial NOT NULL,
 	"StorageDataType" text NOT NULL,
     "JavaScriptEditorClassName" text NOT NULL,
     "Name" text NOT NULL,
@@ -220,7 +220,7 @@ CREATE TABLE "DataTypes" (
 ALTER TABLE "DataTypes" OWNER TO postgres;
 
 CREATE TABLE "Members" (
-    "Id" integer NOT NULL,
+    "Id" serial NOT NULL,
     "ClassId" integer NOT NULL,
     "TabId" integer,
     "Code" text NOT NULL,
@@ -253,7 +253,7 @@ CREATE TABLE "Members" (
 ALTER TABLE "Members" OWNER TO postgres;
 
 CREATE TABLE "Objects" (
-    "Id" integer NOT NULL,
+    "Id" serial NOT NULL,
     "ClassId" integer NOT NULL,
     CONSTRAINT "PK_Objects" PRIMARY KEY ("Id"),
     CONSTRAINT "FK_Objects_Classes" FOREIGN KEY ("ClassId")
@@ -265,7 +265,7 @@ CREATE TABLE "Objects" (
 ALTER TABLE "Objects" OWNER TO postgres;
 
 CREATE TABLE "Properties" (
-    "Id" integer NOT NULL,
+    "Id" serial NOT NULL,
     "ObjectId" integer,
     "MemberId" integer NOT NULL,
     "IntegerValue" integer,
@@ -290,7 +290,7 @@ CREATE TABLE "Properties" (
 ALTER TABLE "Properties" OWNER TO postgres;
 
 CREATE TABLE "Relations" (
-    "Id" integer NOT NULL,
+    "Id" serial NOT NULL,
     "MemberId" integer NOT NULL,
     "PrimaryId" integer NOT NULL,
     "ForeignId" integer NOT NULL,
@@ -312,7 +312,7 @@ CREATE TABLE "Relations" (
 ALTER TABLE "Relations" OWNER TO postgres;
 
 CREATE TABLE "Microcontrollers" (
-    "Id" integer NOT NULL,
+    "Id" serial NOT NULL,
     "Name" text NOT NULL,
     "UrlTemplate" text,
     "ViewName" text NOT NULL,
@@ -324,7 +324,7 @@ CREATE TABLE "Microcontrollers" (
 ALTER TABLE "Microcontrollers" OWNER TO postgres;
 
 CREATE TABLE "DataSources" (
-    "Id" integer NOT NULL,
+    "Id" serial NOT NULL,
     "MicrocontrollerId" integer NOT NULL,
     "Code" text NOT NULL,
     "CSharpClassName" text NOT NULL,
@@ -353,7 +353,7 @@ ALTER TABLE "SerializedObjects" OWNER TO postgres;
 -- Version: alpha-18
 --
 CREATE TABLE "Menus" (
-    "Id" integer NOT NULL,
+    "Id" serial NOT NULL,
     "Code" text NOT NULL,
     "NameId" integer NOT NULL,
     CONSTRAINT "PK_Menus" PRIMARY KEY ("Id")
@@ -362,7 +362,7 @@ CREATE TABLE "Menus" (
 ALTER TABLE "Menus" OWNER TO postgres;
 
 CREATE TABLE "MenuItems" (
-    "Id" integer NOT NULL,
+    "Id" serial NOT NULL,
     "MenuId" integer,
     "MenuItemId" integer,
     "NameId" integer NOT NULL,
@@ -408,7 +408,7 @@ ALTER TABLE "SerializedMenus" OWNER TO postgres;
 -- Version: alpha-18
 --
 CREATE TABLE "Forms" (
-    "Id" integer NOT NULL,
+    "Id" serial NOT NULL,
     "Code" text NOT NULL,
     "NameId" integer NOT NULL,
     "Email" text NOT NULL,
@@ -422,7 +422,7 @@ CREATE TABLE "Forms" (
 ALTER TABLE "Forms" OWNER TO postgres;
 
 CREATE TABLE "FieldTypes" (
-    "Id" integer NOT NULL,
+    "Id" serial NOT NULL,
     "Code" text NOT NULL,
     "Name" text NOT NULL,
     "Position" integer,
@@ -432,7 +432,7 @@ CREATE TABLE "FieldTypes" (
 ALTER TABLE "FieldTypes" OWNER TO postgres;
 
 CREATE TABLE "Fields" (
-    "Id" integer NOT NULL,
+    "Id" serial NOT NULL,
     "FormId" integer NOT NULL,
     "FieldTypeId" integer NOT NULL,
     "NameId" integer NOT NULL,
@@ -455,7 +455,7 @@ CREATE TABLE "Fields" (
 ALTER TABLE "Fields" OWNER TO postgres;
 
 CREATE TABLE "FieldOptions" (
-    "Id" integer NOT NULL,
+    "Id" serial NOT NULL,
     "FieldId" integer NOT NULL,
     "ValueId" integer NOT NULL,
     "Position" integer,
@@ -473,7 +473,7 @@ CREATE TABLE "FieldOptions" (
 ALTER TABLE "FieldOptions" OWNER TO postgres;
 
 CREATE TABLE "CompletedForms" (
-    "Id" integer NOT NULL,
+    "Id" serial NOT NULL,
     "FormId" integer NOT NULL,
     "Created" bigint NOT NULL,
     CONSTRAINT "PK_CompletedForms" PRIMARY KEY ("Id"),
@@ -486,7 +486,7 @@ CREATE TABLE "CompletedForms" (
 ALTER TABLE "CompletedForms" OWNER TO postgres;
 
 CREATE TABLE "CompletedFields" (
-    "Id" integer NOT NULL,
+    "Id" serial NOT NULL,
     "CompletedFormId" integer NOT NULL,
     "FieldId" integer NOT NULL,
     "Value" text,
