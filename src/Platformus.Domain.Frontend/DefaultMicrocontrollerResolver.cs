@@ -15,11 +15,12 @@ namespace Platformus.Domain.Frontend
     public Microcontroller GetMicrocontroller(IRequestHandler requestHandler, string url)
     {
       IEnumerable<Microcontroller> microcontrollers = requestHandler.Storage.GetRepository<IMicrocontrollerRepository>().All();
-      
-      if (string.IsNullOrEmpty(url))
-        return microcontrollers.FirstOrDefault(m => m.UrlTemplate == "{*url}");
 
-      return microcontrollers.FirstOrDefault(m => this.IsMatch(m.UrlTemplate, url));
+      foreach (Microcontroller microcontroller in microcontrollers)
+        if (this.IsMatch(microcontroller.UrlTemplate, url))
+          return microcontroller;
+
+      return null;
     }
 
     public IEnumerable<KeyValuePair<string, string>> GetParameters(string urlTemplate, string url)
@@ -32,6 +33,12 @@ namespace Platformus.Domain.Frontend
 
     private bool IsMatch(string urlTemplate, string url)
     {
+      if (urlTemplate == "{*url}" || urlTemplate == url)
+        return true;
+
+      if (string.IsNullOrEmpty(urlTemplate) || string.IsNullOrEmpty(url))
+        return false;
+
       return urlTemplate.Count(ch => ch == '/') == url.Count(ch => ch == '/') && Regex.IsMatch(url, this.GetRegexFromUrlTemplate(urlTemplate));
     }
 
