@@ -32,6 +32,9 @@ namespace Platformus.Domain.Backend.ViewModels.Microcontrollers
     public string CSharpClassName { get; set; }
     public IEnumerable<Option> CSharpClassNameOptions { get; set; }
 
+    [Display(Name = "Use caching")]
+    public bool UseCaching { get; set; }
+
     [Display(Name = "Position")]
     public int? Position { get; set; }
   }

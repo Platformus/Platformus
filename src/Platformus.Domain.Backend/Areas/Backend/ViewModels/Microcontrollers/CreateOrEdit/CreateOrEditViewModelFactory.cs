@@ -37,6 +37,7 @@ namespace Platformus.Domain.Backend.ViewModels.Microcontrollers
         ViewName = microcontroller.ViewName,
         CSharpClassName = microcontroller.CSharpClassName,
         CSharpClassNameOptions = this.GetCSharpClassNameOptions(),
+        UseCaching = microcontroller.UseCaching,
         Position = microcontroller.Position
       };
     }

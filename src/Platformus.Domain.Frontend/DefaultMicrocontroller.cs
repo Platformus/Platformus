@@ -2,9 +2,11 @@
 // Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information.
 
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Routing;
+using Microsoft.Extensions.DependencyInjection;
 using Newtonsoft.Json;
 using Platformus.Barebone;
 using Platformus.Domain.Data.Abstractions;
@@ -20,6 +22,17 @@ namespace Platformus.Domain.Frontend
     public IActionResult Invoke(IRequestHandler requestHandler, Microcontroller microcontroller, IEnumerable<KeyValuePair<string, string>> parameters)
     {
       string url = string.Format("/{0}", requestHandler.HttpContext.GetRouteValue("url"));
+
+      if (microcontroller.UseCaching)
+        return requestHandler.HttpContext.RequestServices.GetService<ICache>().GetWithDefaultValue<IActionResult>(
+          CultureInfo.CurrentCulture.TwoLetterISOLanguageName + url, () => this.GetActionResult(requestHandler, microcontroller, parameters, url)
+        );
+
+      return this.GetActionResult(requestHandler, microcontroller, parameters, url);
+    }
+
+    private IActionResult GetActionResult(IRequestHandler requestHandler, Microcontroller microcontroller, IEnumerable<KeyValuePair<string, string>> parameters, string url)
+    {
       dynamic viewModel = null;
 
       SerializedObject serializedPage = requestHandler.Storage.GetRepository<ISerializedObjectRepository>().WithCultureIdAndUrlPropertyStringValue(

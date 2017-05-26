@@ -26,6 +26,7 @@ namespace Platformus.Domain.Backend.ViewModels.Microcontrollers
       microcontroller.UrlTemplate = createOrEdit.UrlTemplate;
       microcontroller.ViewName = createOrEdit.ViewName;
       microcontroller.CSharpClassName = createOrEdit.CSharpClassName;
+      microcontroller.UseCaching = createOrEdit.UseCaching;
       microcontroller.Position = createOrEdit.Position;
       return microcontroller;
     }
