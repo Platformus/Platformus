@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using Platformus.Barebone;
 using Platformus.Domain.Data.Models;
 
-namespace Platformus.Domain.Frontend
+namespace Platformus.Domain
 {
   public interface IMicrocontrollerResolver
   {

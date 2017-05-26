@@ -2,6 +2,7 @@
 // Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information.
 
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.DependencyInjection;
 using Platformus.Barebone;
 using Platformus.Domain.Data.Models;
 using Platformus.Globalization;
@@ -12,7 +13,7 @@ namespace Platformus.Domain.Frontend
   {
     public IActionResult TryHandle(IRequestHandler requestHandler, string url)
     {
-      IMicrocontrollerResolver microcontrollerResolver = new DefaultMicrocontrollerResolver();
+      IMicrocontrollerResolver microcontrollerResolver = requestHandler.HttpContext.RequestServices.GetService<IMicrocontrollerResolver>();
       Microcontroller microcontroller = microcontrollerResolver.GetMicrocontroller(requestHandler, url);
 
       if (microcontroller == null)

@@ -9,7 +9,7 @@ using Platformus.Barebone;
 using Platformus.Domain.Data.Abstractions;
 using Platformus.Domain.Data.Models;
 
-namespace Platformus.Domain.Frontend
+namespace Platformus.Domain
 {
   public class DefaultMicrocontrollerResolver : IMicrocontrollerResolver
   {
