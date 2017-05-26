@@ -4,6 +4,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
+using Microsoft.Extensions.DependencyInjection;
 using Platformus.Barebone;
 using Platformus.Domain.Data.Abstractions;
 using Platformus.Domain.Data.Models;
@@ -14,7 +15,7 @@ namespace Platformus.Domain.Frontend
   {
     public Microcontroller GetMicrocontroller(IRequestHandler requestHandler, string url)
     {
-      IEnumerable<Microcontroller> microcontrollers = requestHandler.Storage.GetRepository<IMicrocontrollerRepository>().All();
+      IEnumerable<Microcontroller> microcontrollers = this.GetMicrocontrollers(requestHandler);
 
       foreach (Microcontroller microcontroller in microcontrollers)
         if (this.IsMatch(microcontroller.UrlTemplate, url))
@@ -29,6 +30,13 @@ namespace Platformus.Domain.Frontend
         return new KeyValuePair<string, string>[] { };
 
       return this.GetNames(urlTemplate).Zip(this.GetValues(url, urlTemplate), (n, v) => new KeyValuePair<string, string>(n, v));
+    }
+
+    private IEnumerable<Microcontroller> GetMicrocontrollers(IRequestHandler requestHandler)
+    {
+      return requestHandler.HttpContext.RequestServices.GetService<ICache>().GetWithDefaultValue(
+        "microcontrollers", requestHandler.Storage.GetRepository<IMicrocontrollerRepository>().All()
+      );
     }
 
     private bool IsMatch(string urlTemplate, string url)
