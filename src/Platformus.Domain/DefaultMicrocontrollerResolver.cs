@@ -35,7 +35,7 @@ namespace Platformus.Domain
     private IEnumerable<Microcontroller> GetMicrocontrollers(IRequestHandler requestHandler)
     {
       return requestHandler.HttpContext.RequestServices.GetService<ICache>().GetWithDefaultValue(
-        "microcontrollers", () => requestHandler.Storage.GetRepository<IMicrocontrollerRepository>().All()
+        "microcontrollers", () => requestHandler.Storage.GetRepository<IMicrocontrollerRepository>().All().ToList()
       );
     }
 

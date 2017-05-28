@@ -2,6 +2,7 @@
 // Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information.
 
 using System.Collections.Generic;
+using System.Linq;
 using Platformus.Barebone;
 using Platformus.Domain.Data.Abstractions;
 using Platformus.Domain.Data.Models;
@@ -16,9 +17,9 @@ namespace Platformus.Domain.DataSources
       if (!this.HasArgument(args, "OrderBy") || !this.HasArgument(args, "Direction"))
       {
         if (this.HasArgument(args, "MemberId"))
-          return requestHandler.Storage.GetRepository<ISerializedObjectRepository>().Primary(CultureManager.GetCurrentCulture(requestHandler.Storage).Id, this.GetIntArgument(args, "MemberId"), serializedPage.ObjectId);
+          return requestHandler.Storage.GetRepository<ISerializedObjectRepository>().Primary(CultureManager.GetCurrentCulture(requestHandler.Storage).Id, this.GetIntArgument(args, "MemberId"), serializedPage.ObjectId).ToList();
 
-        return requestHandler.Storage.GetRepository<ISerializedObjectRepository>().Primary(CultureManager.GetCurrentCulture(requestHandler.Storage).Id, serializedPage.ObjectId);
+        return requestHandler.Storage.GetRepository<ISerializedObjectRepository>().Primary(CultureManager.GetCurrentCulture(requestHandler.Storage).Id, serializedPage.ObjectId).ToList();
       }
 
       int orderBy = this.GetIntArgument(args, "OrderBy");
@@ -27,9 +28,9 @@ namespace Platformus.Domain.DataSources
       DataType dataType = requestHandler.Storage.GetRepository<IDataTypeRepository>().WithKey((int)member.PropertyDataTypeId);
 
       if (this.HasArgument(args, "MemberId"))
-        return requestHandler.Storage.GetRepository<ISerializedObjectRepository>().Primary(CultureManager.GetCurrentCulture(requestHandler.Storage).Id, this.GetIntArgument(args, "MemberId"), serializedPage.ObjectId, dataType.StorageDataType, orderBy, direction);
+        return requestHandler.Storage.GetRepository<ISerializedObjectRepository>().Primary(CultureManager.GetCurrentCulture(requestHandler.Storage).Id, this.GetIntArgument(args, "MemberId"), serializedPage.ObjectId, dataType.StorageDataType, orderBy, direction).ToList();
 
-      return requestHandler.Storage.GetRepository<ISerializedObjectRepository>().Primary(CultureManager.GetCurrentCulture(requestHandler.Storage).Id, serializedPage.ObjectId, dataType.StorageDataType, orderBy, direction);
+      return requestHandler.Storage.GetRepository<ISerializedObjectRepository>().Primary(CultureManager.GetCurrentCulture(requestHandler.Storage).Id, serializedPage.ObjectId, dataType.StorageDataType, orderBy, direction).ToList();
     }
 
     public override IEnumerable<Object> GetObjects(IRequestHandler requestHandler, Object page, params KeyValuePair<string, string>[] args)
@@ -37,9 +38,9 @@ namespace Platformus.Domain.DataSources
       if (!this.HasArgument(args, "OrderBy") || !this.HasArgument(args, "Direction"))
       {
         if (this.HasArgument(args, "MemberId"))
-          return requestHandler.Storage.GetRepository<IObjectRepository>().Primary(this.GetIntArgument(args, "MemberId"), page.Id);
+          return requestHandler.Storage.GetRepository<IObjectRepository>().Primary(this.GetIntArgument(args, "MemberId"), page.Id).ToList();
 
-        return requestHandler.Storage.GetRepository<IObjectRepository>().Primary(page.Id);
+        return requestHandler.Storage.GetRepository<IObjectRepository>().Primary(page.Id).ToList();
       }
 
       int orderBy = this.GetIntArgument(args, "OrderBy");
@@ -48,9 +49,9 @@ namespace Platformus.Domain.DataSources
       DataType dataType = requestHandler.Storage.GetRepository<IDataTypeRepository>().WithKey((int)member.PropertyDataTypeId);
 
       if (this.HasArgument(args, "MemberId"))
-        return requestHandler.Storage.GetRepository<IObjectRepository>().Primary(this.GetIntArgument(args, "MemberId"), page.Id, dataType.StorageDataType, orderBy, direction, CultureManager.GetCurrentCulture(requestHandler.Storage).Id);
+        return requestHandler.Storage.GetRepository<IObjectRepository>().Primary(this.GetIntArgument(args, "MemberId"), page.Id, dataType.StorageDataType, orderBy, direction, CultureManager.GetCurrentCulture(requestHandler.Storage).Id).ToList();
 
-      return requestHandler.Storage.GetRepository<IObjectRepository>().Primary(page.Id, dataType.StorageDataType, orderBy, direction, CultureManager.GetCurrentCulture(requestHandler.Storage).Id);
+      return requestHandler.Storage.GetRepository<IObjectRepository>().Primary(page.Id, dataType.StorageDataType, orderBy, direction, CultureManager.GetCurrentCulture(requestHandler.Storage).Id).ToList();
     }
   }
 }

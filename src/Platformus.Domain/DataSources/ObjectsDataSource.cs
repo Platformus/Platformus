@@ -2,6 +2,7 @@
 // Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information.
 
 using System.Collections.Generic;
+using System.Linq;
 using Platformus.Barebone;
 using Platformus.Domain.Data.Abstractions;
 using Platformus.Domain.Data.Models;
@@ -17,14 +18,14 @@ namespace Platformus.Domain.DataSources
         return new SerializedObject[] { };
 
       if (!this.HasArgument(args, "OrderBy") || !this.HasArgument(args, "Direction"))
-        return requestHandler.Storage.GetRepository<ISerializedObjectRepository>().FilteredByClassId(CultureManager.GetCurrentCulture(requestHandler.Storage).Id, this.GetIntArgument(args, "ClassId"));
+        return requestHandler.Storage.GetRepository<ISerializedObjectRepository>().FilteredByClassId(CultureManager.GetCurrentCulture(requestHandler.Storage).Id, this.GetIntArgument(args, "ClassId")).ToList();
 
       int orderBy = this.GetIntArgument(args, "OrderBy");
       string direction = this.GetStringArgument(args, "Direction");
       Member member = requestHandler.Storage.GetRepository<IMemberRepository>().WithKey(orderBy);
       DataType dataType = requestHandler.Storage.GetRepository<IDataTypeRepository>().WithKey((int)member.PropertyDataTypeId);
 
-      return requestHandler.Storage.GetRepository<ISerializedObjectRepository>().FilteredByClassId(CultureManager.GetCurrentCulture(requestHandler.Storage).Id, this.GetIntArgument(args, "ClassId"), dataType.StorageDataType, orderBy, direction);
+      return requestHandler.Storage.GetRepository<ISerializedObjectRepository>().FilteredByClassId(CultureManager.GetCurrentCulture(requestHandler.Storage).Id, this.GetIntArgument(args, "ClassId"), dataType.StorageDataType, orderBy, direction).ToList();
     }
 
     public override IEnumerable<Object> GetObjects(IRequestHandler requestHandler, Object page, params KeyValuePair<string, string>[] args)
@@ -33,14 +34,14 @@ namespace Platformus.Domain.DataSources
         return new Object[] { };
 
       if (!this.HasArgument(args, "OrderBy") || !this.HasArgument(args, "Direction"))
-        return requestHandler.Storage.GetRepository<IObjectRepository>().FilteredByClassId(this.GetIntArgument(args, "ClassId"));
+        return requestHandler.Storage.GetRepository<IObjectRepository>().FilteredByClassId(this.GetIntArgument(args, "ClassId")).ToList();
 
       int orderBy = this.GetIntArgument(args, "OrderBy");
       string direction = this.GetStringArgument(args, "Direction");
       Member member = requestHandler.Storage.GetRepository<IMemberRepository>().WithKey(orderBy);
       DataType dataType = requestHandler.Storage.GetRepository<IDataTypeRepository>().WithKey((int)member.PropertyDataTypeId);
 
-      return requestHandler.Storage.GetRepository<IObjectRepository>().FilteredByClassId(this.GetIntArgument(args, "ClassId"), dataType.StorageDataType, orderBy, direction, CultureManager.GetCurrentCulture(requestHandler.Storage).Id);
+      return requestHandler.Storage.GetRepository<IObjectRepository>().FilteredByClassId(this.GetIntArgument(args, "ClassId"), dataType.StorageDataType, orderBy, direction, CultureManager.GetCurrentCulture(requestHandler.Storage).Id).ToList();
     }
   }
 }

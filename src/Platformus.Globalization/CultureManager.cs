@@ -59,7 +59,7 @@ namespace Platformus.Globalization
     private static void CacheCultures(IStorage storage)
     {
       if (CultureManager.cultures == null)
-        CultureManager.cultures = storage.GetRepository<ICultureRepository>().All();
+        CultureManager.cultures = storage.GetRepository<ICultureRepository>().All().ToList();
     }
   }
 }
