@@ -23,7 +23,7 @@ namespace Platformus.Security.Backend.ViewModels.Users
       if (createOrEdit.Id != null)
         user = this.RequestHandler.Storage.GetRepository<IUserRepository>().WithKey((int)createOrEdit.Id);
 
-      else user.Created = DateTime.Now.ToUnixTimestamp();
+      else user.Created = DateTime.Now;
 
       user.Name = createOrEdit.Name;
       return user;

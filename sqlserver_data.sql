@@ -23,7 +23,7 @@ SET IDENTITY_INSERT [dbo].[Variables] OFF;
 -- Version: alpha-18
 --
 SET IDENTITY_INSERT [dbo].[Users] ON;
-INSERT INTO [dbo].[Users] ([Id], [Name], [Created]) VALUES (1, N'Administrator', 1441274400);
+INSERT INTO [dbo].[Users] ([Id], [Name], [Created]) VALUES (1, N'Administrator', N'2017-01-01 00:00:00.000');
 SET IDENTITY_INSERT [dbo].[Users] OFF;
 
 SET IDENTITY_INSERT [dbo].[CredentialTypes] ON;

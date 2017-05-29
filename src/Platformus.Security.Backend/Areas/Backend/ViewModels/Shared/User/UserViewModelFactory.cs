@@ -20,7 +20,7 @@ namespace Platformus.Security.Backend.ViewModels.Shared
       {
         Id = user.Id,
         Name = user.Name,
-        Created = user.Created.ToDateTime()
+        Created = user.Created
       };
     }
   }

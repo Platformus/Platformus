@@ -17,7 +17,7 @@ INSERT INTO "Variables" VALUES (7,2,'SpecifyCultureInUrl','Specify culture in UR
 -- Extension: Platformus.Security
 -- Version: alpha-18
 --
-INSERT INTO "Users" VALUES (1,'Administrator',1441274400);
+INSERT INTO "Users" VALUES (1,'Administrator','2017-01-01 00:00:00.0000000');
 INSERT INTO "CredentialTypes" VALUES (1,'Email','Email',1);
 INSERT INTO "Credentials" VALUES (1,1,1,'admin@platformus.net','21-23-2F-29-7A-57-A5-A7-43-89-4A-0E-4A-80-1F-C3');
 INSERT INTO "Roles" VALUES (1,'Administrator','Administrator',1);

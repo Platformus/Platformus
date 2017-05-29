@@ -23,7 +23,7 @@ namespace Platformus.Forms.Backend.ViewModels.Shared
         Form = new FormViewModelFactory(this.RequestHandler).Create(
           this.RequestHandler.Storage.GetRepository<IFormRepository>().WithKey(completedForm.FormId)
         ),
-        Created = completedForm.Created.ToDateTime()
+        Created = completedForm.Created
       };
     }
   }

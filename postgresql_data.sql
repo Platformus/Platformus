@@ -17,7 +17,7 @@ INSERT INTO public."Variables" ("Id","ConfigurationId","Code","Name","Value","Po
 -- Extension: Platformus.Security
 -- Version: alpha-18
 --
-INSERT INTO public."Users" ("Id","Name","Created") VALUES (1,'Administrator',1441274400);
+INSERT INTO public."Users" ("Id","Name","Created") VALUES (1,'Administrator','2017-01-01 00:00:00.000000');
 INSERT INTO public."CredentialTypes" ("Id","Code","Name","Position") VALUES (1,'Email','Email',1);
 INSERT INTO public."Credentials" ("Id","CredentialTypeId","Identifier","Secret","UserId") VALUES (1,1,'admin@platformus.net','21-23-2F-29-7A-57-A5-A7-43-89-4A-0E-4A-80-1F-C3',1);
 INSERT INTO public."Roles" ("Id","Code","Name","Position") VALUES (1,'Administrator','Administrator',1);

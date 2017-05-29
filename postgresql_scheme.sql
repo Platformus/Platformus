@@ -34,7 +34,7 @@ ALTER TABLE "Variables" OWNER TO postgres;
 CREATE TABLE "Users" (
     "Id" serial NOT NULL,
     "Name" text NOT NULL,
-    "Created" bigint NOT NULL,
+    "Created" timestamp NOT NULL,
     CONSTRAINT "PK_Users" PRIMARY KEY ("Id")
 );
 
@@ -317,6 +317,7 @@ CREATE TABLE "Microcontrollers" (
     "UrlTemplate" text,
     "ViewName" text NOT NULL,
     "CSharpClassName" text NOT NULL,
+    "UseCaching" boolean NOT NULL,
     "Position" integer,
     CONSTRAINT "PK_Microcontrollers" PRIMARY KEY ("Id")
 );
@@ -475,7 +476,7 @@ ALTER TABLE "FieldOptions" OWNER TO postgres;
 CREATE TABLE "CompletedForms" (
     "Id" serial NOT NULL,
     "FormId" integer NOT NULL,
-    "Created" bigint NOT NULL,
+    "Created" timestamp NOT NULL,
     CONSTRAINT "PK_CompletedForms" PRIMARY KEY ("Id"),
     CONSTRAINT "FK_CompletedForms_Forms" FOREIGN KEY ("FormId")
         REFERENCES public."Forms" ("Id") MATCH SIMPLE

@@ -25,7 +25,7 @@ CREATE TABLE "Variables" (
 CREATE TABLE "Users" (
 	"Id" INTEGER NOT NULL CONSTRAINT "PK_User" PRIMARY KEY AUTOINCREMENT,
 	"Name" TEXT NOT NULL,
-	"Created" INTEGER NOT NULL
+	"Created" TEXT NOT NULL
 );
 CREATE TABLE "CredentialTypes" (
 	"Id" INTEGER NOT NULL CONSTRAINT "PK_CredentialType" PRIMARY KEY AUTOINCREMENT,
@@ -178,6 +178,7 @@ CREATE TABLE "Microcontrollers" (
 	"UrlTemplate" TEXT,
 	"ViewName" TEXT NOT NULL,
 	"CSharpClassName" TEXT NOT NULL,
+	"UseCaching" INTEGER NOT NULL,
 	"Position" INTEGER
 );
 CREATE TABLE "DataSources" (
@@ -267,7 +268,7 @@ CREATE TABLE "FieldOptions" (
 CREATE TABLE "CompletedForms" (
 	"Id" INTEGER NOT NULL CONSTRAINT "PK_CompletedForm" PRIMARY KEY AUTOINCREMENT,
 	"FormId" INTEGER NOT NULL,
-	"Created" INTEGER NOT NULL,
+	"Created" TEXT NOT NULL,
 	CONSTRAINT "FK_CompletedForm_Form_FormId" FOREIGN KEY ("FormId") REFERENCES "Forms" ("Id")
 );
 CREATE TABLE "CompletedFields" (

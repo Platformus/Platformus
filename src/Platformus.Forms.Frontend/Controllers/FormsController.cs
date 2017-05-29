@@ -38,7 +38,7 @@ namespace Platformus.Forms.Frontend.Controllers
       CompletedForm completedForm = new CompletedForm();
 
       completedForm.FormId = form.Id;
-      completedForm.Created = DateTime.Now.ToUnixTimestamp();
+      completedForm.Created = DateTime.Now;
       this.Storage.GetRepository<ICompletedFormRepository>().Create(completedForm);
       this.Storage.Save();
 
