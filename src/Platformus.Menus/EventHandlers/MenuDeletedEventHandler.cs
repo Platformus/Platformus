@@ -7,14 +7,13 @@ using Platformus.Menus.Data.Models;
 
 namespace Platformus.Menus
 {
-  public class MenuEditedEventHandler : IMenuEditedEventHandler
+  public class MenuDeletedEventHandler : IMenuDeletedEventHandler
   {
     public int Priority => 1000;
 
-    public void HandleEvent(IRequestHandler requestHandler, Menu oldMenu, Menu newMenu)
+    public void HandleEvent(IRequestHandler requestHandler, Menu menu)
     {
-      new SerializationManager(requestHandler).SerializeMenu(newMenu);
-      requestHandler.HttpContext.RequestServices.GetService<ICache>().RemoveMenuViewComponentResult(newMenu.Code);
+      requestHandler.HttpContext.RequestServices.GetService<ICache>().RemoveMenuViewComponentResult(menu.Code);
     }
   }
 }

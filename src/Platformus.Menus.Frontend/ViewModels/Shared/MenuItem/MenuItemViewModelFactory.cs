@@ -25,7 +25,7 @@ namespace Platformus.Menus.Frontend.ViewModels.Shared
       {
         Name = this.RequestHandler.GetLocalizationValue(menuItem.NameId),
         Url = GlobalizedUrlFormatter.Format(this.RequestHandler.Storage, menuItem.Url),
-        MenuItems = this.RequestHandler.Storage.GetRepository<IMenuItemRepository>().FilteredByMenuItemId(menuItem.Id).Select(
+        MenuItems = this.RequestHandler.Storage.GetRepository<IMenuItemRepository>().FilteredByMenuItemId(menuItem.Id).ToList().Select(
           mi => new MenuItemViewModelFactory(this.RequestHandler).Create(mi)
         )
       };

@@ -4,6 +4,7 @@
 using System.Threading.Tasks;
 using ExtCore.Data.Abstractions;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.DependencyInjection;
 using Platformus.Barebone.Frontend.ViewComponents;
 using Platformus.Forms.Data.Abstractions;
 using Platformus.Forms.Data.Models;
@@ -20,6 +21,13 @@ namespace Platformus.Forms.Frontend.ViewComponents
     }
 
     public async Task<IViewComponentResult> InvokeAsync(string code)
+    {
+      return this.HttpContext.RequestServices.GetService<ICache>().GetFormViewComponentResultWithDefaultValue(
+        code, () => this.GetViewComponentResult(code)
+      );
+    }
+
+    private IViewComponentResult GetViewComponentResult(string code)
     {
       SerializedForm cachedForm = this.Storage.GetRepository<ISerializedFormRepository>().WithCultureIdAndCode(
         CultureManager.GetCurrentCulture(this.Storage).Id, code

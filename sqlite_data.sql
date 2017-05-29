@@ -4,12 +4,14 @@ BEGIN TRANSACTION;
 -- Version: alpha-18
 --
 INSERT INTO "Configurations" VALUES (1,'Email','Email');
+INSERT INTO "Configurations" VALUES (2,'Globalization','Globalization');
 INSERT INTO "Variables" VALUES (1,1,'SmtpServer','SMTP server','test',1);
 INSERT INTO "Variables" VALUES (2,1,'SmtpPort','SMTP port','25',2);
 INSERT INTO "Variables" VALUES (3,1,'SmtpLogin','SMTP login','test',3);
 INSERT INTO "Variables" VALUES (4,1,'SmtpPassword','SMTP password','test',4);
 INSERT INTO "Variables" VALUES (5,1,'SmtpSenderEmail','SMTP sender email','test',5);
 INSERT INTO "Variables" VALUES (6,1,'SmtpSenderName','SMTP sender name','test',6);
+INSERT INTO "Variables" VALUES (7,2,'SpecifyCultureInUrl','Specify culture in URL','yes',1);
 
 --
 -- Extension: Platformus.Security

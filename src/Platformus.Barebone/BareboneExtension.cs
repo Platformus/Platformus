@@ -21,7 +21,7 @@ namespace Platformus.Barebone
           [1000] = services =>
           {
             services.AddMemoryCache();
-            services.AddScoped(typeof(ICache), typeof(DefaultCache));
+            services.AddSingleton(typeof(ICache), typeof(DefaultCache));
             services.AddSession();
           }
         };

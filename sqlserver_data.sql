@@ -5,6 +5,7 @@ BEGIN TRANSACTION;
 --
 SET IDENTITY_INSERT [dbo].[Configurations] ON;
 INSERT [dbo].[Configurations] ([Id], [Code], [Name]) VALUES (1, N'Email', N'Email');
+INSERT [dbo].[Configurations] ([Id], [Code], [Name]) VALUES (2, N'Globalization', N'Globalization');
 SET IDENTITY_INSERT [dbo].[Configurations] OFF;
 
 SET IDENTITY_INSERT [dbo].[Variables] ON;
@@ -14,6 +15,7 @@ INSERT [dbo].[Variables] ([Id], [ConfigurationId], [Code], [Name], [Value], [Pos
 INSERT [dbo].[Variables] ([Id], [ConfigurationId], [Code], [Name], [Value], [Position]) VALUES (4, 1, N'SmtpPassword', N'SMTP password', N'test', 4);
 INSERT [dbo].[Variables] ([Id], [ConfigurationId], [Code], [Name], [Value], [Position]) VALUES (5, 1, N'SmtpSenderEmail', N'SMTP sender email', N'test', 5);
 INSERT [dbo].[Variables] ([Id], [ConfigurationId], [Code], [Name], [Value], [Position]) VALUES (6, 1, N'SmtpSenderName', N'SMTP sender name', N'test', 6);
+INSERT [dbo].[Variables] ([Id], [ConfigurationId], [Code], [Name], [Value], [Position]) VALUES (7, 2, N'SpecifyCultureInUrl', N'Specify culture in URL', N'yes', 6);
 SET IDENTITY_INSERT [dbo].[Variables] OFF;
 
 --

@@ -21,6 +21,30 @@ namespace Platformus.Domain
       this.requestHandler = requestHandler;
     }
 
+    public string GetUrlPropertyStringValue(Object @object)
+    {
+      foreach (Member member in this.requestHandler.Storage.GetRepository<IMemberRepository>().FilteredByClassIdInlcudingParent(@object.ClassId).ToList())
+      {
+        if (member.Code == "Url")
+        {
+          Property property = this.requestHandler.Storage.GetRepository<IPropertyRepository>().WithObjectIdAndMemberId(@object.Id, member.Id);
+
+          if (property == null)
+            return null;
+
+          Culture neutralCulture = CultureManager.GetNeutralCulture(this.requestHandler.Storage);
+          Localization localization = null;
+
+          if (neutralCulture != null)
+            localization = this.requestHandler.Storage.GetRepository<ILocalizationRepository>().WithDictionaryIdAndCultureId((int)property.StringValueId, neutralCulture.Id);
+
+          return localization?.Value;
+        }
+      }
+
+      return null;
+    }
+
     public IEnumerable<string> GetDisplayProperties(Object @object)
     {
       List<string> properties = new List<string>();

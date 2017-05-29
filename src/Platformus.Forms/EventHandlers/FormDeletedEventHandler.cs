@@ -7,14 +7,13 @@ using Platformus.Forms.Data.Models;
 
 namespace Platformus.Forms
 {
-  public class FormEditedEventHandler : IFormEditedEventHandler
+  public class FormDeletedEventHandler : IFormDeletedEventHandler
   {
     public int Priority => 1000;
 
-    public void HandleEvent(IRequestHandler requestHandler, Form oldForm, Form newForm)
+    public void HandleEvent(IRequestHandler requestHandler, Form form)
     {
-      new SerializationManager(requestHandler).SerializeForm(newForm);
-      requestHandler.HttpContext.RequestServices.GetService<ICache>().RemoveFormViewComponentResult(newForm.Code);
+      requestHandler.HttpContext.RequestServices.GetService<ICache>().RemoveFormViewComponentResult(form.Code);
     }
   }
 }
