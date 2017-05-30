@@ -2,16 +2,16 @@
 // Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information.
 
 (function (platformus) {
-  platformus.editors = platformus.editors || [];
-  platformus.editors.singleLinePlainText = {};
-  platformus.editors.singleLinePlainText.create = function (container, member) {
+  platformus.memberEditors = platformus.memberEditors || [];
+  platformus.memberEditors.singleLinePlainText = {};
+  platformus.memberEditors.singleLinePlainText.create = function (container, member) {
     createField(member).appendTo(container);
   };
 
   function createField(member) {
     var field = $("<div>").addClass("form__field").addClass("field");
 
-    platformus.editors.base.createLabel(member).appendTo(field);
+    platformus.memberEditors.base.createLabel(member).appendTo(field);
 
     if (member.isPropertyLocalizable) {
       field.addClass("field--multilingual")
@@ -20,11 +20,11 @@
         var localization = member.property.stringValue.localizations[i];
 
         if (localization.culture.code != "__") {
-          platformus.editors.base.createCulture(localization).appendTo(field);
+          platformus.memberEditors.base.createCulture(localization).appendTo(field);
           createTextBox(member, localization).appendTo(field);
 
           if (i != member.property.stringValue.localizations.length - 1) {
-            platformus.editors.base.createMultilingualSeparator().appendTo(field);
+            platformus.memberEditors.base.createMultilingualSeparator().appendTo(field);
           }
         }
       }
@@ -44,7 +44,7 @@
   }
 
   function createTextBox(member, localization) {
-    var identity = platformus.editors.base.getIdentity(member, localization);
+    var identity = platformus.memberEditors.base.getIdentity(member, localization);
     var textBox = $("<input>").addClass("field__text-box");
 
     if (localization.culture.code != "__") {

@@ -39,7 +39,7 @@ namespace Platformus.Domain.Backend.Controllers
           Object @object = this.Storage.GetRepository<IObjectRepository>().WithKey(int.Parse(objectId));
 
           objectDisplayValues.AppendFormat(
-            "<div class=\"relation-editor__display-value\">{0}</div>",
+            "<div class=\"relation-member-editor__display-value\">{0}</div>",
             string.Join(" ", new ObjectManager(this).GetDisplayProperties(@object))
           );
         }

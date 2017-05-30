@@ -2,8 +2,8 @@
 // Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information.
 
 (function (platformus) {
-  platformus.editors = platformus.editors || [];
-  platformus.editors.create = function (membersByTabs) {
+  platformus.memberEditors = platformus.memberEditors || [];
+  platformus.memberEditors.create = function (membersByTabs) {
     var tabs = $("#tabs");
     var tabPages = $("#tabPages");
 
@@ -18,11 +18,11 @@
         var member = tab.members[j];
 
         if (member.relationClass != null) {
-          platformus.editors.relation.create(tabPage, member);
+          platformus.memberEditors.relation.create(tabPage, member);
         }
 
         else if (member.propertyDataType != null) {
-          var f = platformus.editors[member.propertyDataType.javaScriptEditorClassName]["create"];
+          var f = platformus.memberEditors[member.propertyDataType.javaScriptEditorClassName]["create"];
 
           f.call(this, tabPage, member);
         }

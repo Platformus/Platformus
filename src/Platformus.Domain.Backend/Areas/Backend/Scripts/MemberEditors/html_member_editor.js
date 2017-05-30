@@ -2,16 +2,16 @@
 // Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information.
 
 (function (platformus) {
-  platformus.editors = platformus.editors || [];
-  platformus.editors.html = {};
-  platformus.editors.html.create = function (container, member) {
+  platformus.memberEditors = platformus.memberEditors || [];
+  platformus.memberEditors.html = {};
+  platformus.memberEditors.html.create = function (container, member) {
     createField(member).appendTo(container);
   };
 
   function createField(member) {
     var field = $("<div>").addClass("form__field").addClass("field");
 
-    platformus.editors.base.createLabel(member).appendTo(field);
+    platformus.memberEditors.base.createLabel(member).appendTo(field);
 
     if (member.isPropertyLocalizable) {
       field.addClass("field--multilingual")
@@ -20,12 +20,12 @@
         var localization = member.property.stringValue.localizations[i];
 
         if (localization.culture.code != "__") {
-          platformus.editors.base.createCulture(localization).appendTo(field);
+          platformus.memberEditors.base.createCulture(localization).appendTo(field);
           createTextArea(member, localization).appendTo(field);
-          platformus.ui.initializeTinyMce(platformus.editors.base.getIdentity(member, localization));
+          platformus.ui.initializeTinyMce(platformus.memberEditors.base.getIdentity(member, localization));
 
           if (i != member.property.stringValue.localizations.length - 1) {
-            platformus.editors.base.createMultilingualSeparator().appendTo(field);
+            platformus.memberEditors.base.createMultilingualSeparator().appendTo(field);
           }
         }
       }
@@ -37,7 +37,7 @@
 
         if (localization.culture.code == "__") {
           createTextArea(member, localization).appendTo(field);
-          platformus.ui.initializeTinyMce(platformus.editors.base.getIdentity(member, localization));
+          platformus.ui.initializeTinyMce(platformus.memberEditors.base.getIdentity(member, localization));
         }
       }
     }
@@ -46,7 +46,7 @@
   }
 
   function createTextArea(member, localization) {
-    var identity = platformus.editors.base.getIdentity(member, localization);
+    var identity = platformus.memberEditors.base.getIdentity(member, localization);
     var textArea = $("<textarea>").addClass("field__text-area");
 
     if (localization.culture.code != "__") {

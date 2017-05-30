@@ -2,21 +2,21 @@
 // Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information.
 
 (function (platformus) {
-  platformus.editors = platformus.editors || [];
-  platformus.editors.relation = {};
-  platformus.editors.relation.create = function (container, member) {
+  platformus.memberEditors = platformus.memberEditors || [];
+  platformus.memberEditors.relation = {};
+  platformus.memberEditors.relation.create = function (container, member) {
     createField(member).appendTo(container);
     syncObjectDisplayValues(member);
   };
 
   function createField(member) {
-    var field = $("<div>").addClass("relation-editor").addClass("form__field").addClass("field");
+    var field = $("<div>").addClass("relation-member-editor").addClass("form__field").addClass("field");
 
     if (member.isRelationSingleParent) {
       field.hide();
     }
 
-    platformus.editors.base.createLabel(member).appendTo(field);
+    platformus.memberEditors.base.createLabel(member).appendTo(field);
     createInput(member).appendTo(field);
     createDisplayValues(member).appendTo(field);
     createButtons(member).appendTo(field);
@@ -38,7 +38,7 @@
   function createDisplayValues(member) {
     var identity = "relationMember" + member.id;
 
-    return $("<div>").addClass("relation-editor__display-values").attr("id", identity + "DisplayValues");
+    return $("<div>").addClass("relation-member-editor__display-values").attr("id", identity + "DisplayValues");
   }
 
   function createButtons(member) {
