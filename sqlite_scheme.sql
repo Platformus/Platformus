@@ -153,7 +153,7 @@ CREATE TABLE "Objects" (
 );
 CREATE TABLE "Properties" (
 	"Id" INTEGER NOT NULL CONSTRAINT "PK_Property" PRIMARY KEY AUTOINCREMENT,
-	"ObjectId" INTEGER,
+	"ObjectId" INTEGER NOT NULL,
 	"MemberId" INTEGER NOT NULL,
 	"IntegerValue" INTEGER,
 	"DecimalValue" REAL,

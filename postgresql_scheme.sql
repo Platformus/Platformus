@@ -210,7 +210,7 @@ ALTER TABLE "Tabs" OWNER TO postgres;
 
 CREATE TABLE "DataTypes" (
     "Id" serial NOT NULL,
-	"StorageDataType" text NOT NULL,
+    "StorageDataType" text NOT NULL,
     "JavaScriptEditorClassName" text NOT NULL,
     "Name" text NOT NULL,
     "Position" integer,
@@ -266,12 +266,12 @@ ALTER TABLE "Objects" OWNER TO postgres;
 
 CREATE TABLE "Properties" (
     "Id" serial NOT NULL,
-    "ObjectId" integer,
+    "ObjectId" integer NOT NULL,
     "MemberId" integer NOT NULL,
     "IntegerValue" integer,
-	"DecimalValue" real,
-	"StringValueId" integer,
-	"DateTimeValue" timestamp,
+    "DecimalValue" real,
+    "StringValueId" integer,
+    "DateTimeValue" timestamp,
     CONSTRAINT "PK_Properties" PRIMARY KEY ("Id"),
     CONSTRAINT "FK_Properties_Objects" FOREIGN KEY ("ObjectId")
         REFERENCES public."Objects" ("Id") MATCH SIMPLE

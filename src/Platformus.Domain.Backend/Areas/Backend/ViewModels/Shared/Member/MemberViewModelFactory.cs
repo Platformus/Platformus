@@ -26,7 +26,7 @@ namespace Platformus.Domain.Backend.ViewModels.Shared
       {
         if (@object == null)
           property = new PropertyViewModelFactory(this.RequestHandler).Create(
-            new Property() { ObjectId = @object == null ? (int?)null : @object.Id  }
+            new Property() { ObjectId = @object == null ? 0 : @object.Id  }
           );
 
         else
@@ -34,7 +34,7 @@ namespace Platformus.Domain.Backend.ViewModels.Shared
           Property p = this.RequestHandler.Storage.GetRepository<IPropertyRepository>().WithObjectIdAndMemberId(@object.Id, member.Id);
 
           property = new PropertyViewModelFactory(this.RequestHandler).Create(
-            p == null ? new Property() { ObjectId = @object == null ? (int?)null : @object.Id } : p
+            p == null ? new Property() { ObjectId = @object == null ? 0 : @object.Id } : p
           );
         }
       }

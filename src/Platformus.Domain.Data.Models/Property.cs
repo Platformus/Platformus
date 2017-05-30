@@ -10,7 +10,7 @@ namespace Platformus.Domain.Data.Models
   public class Property : IEntity
   {
     public int Id { get; set; }
-    public int? ObjectId { get; set; }
+    public int ObjectId { get; set; }
     public int MemberId { get; set; }
     public int? IntegerValue { get; set; }
     public decimal? DecimalValue { get; set; }
