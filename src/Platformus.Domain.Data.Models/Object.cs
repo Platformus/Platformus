@@ -12,5 +12,8 @@ namespace Platformus.Domain.Data.Models
     public int ClassId { get; set; }
 
     public virtual Class Class { get; set; }
+    public virtual ICollection<Property> Properties { get; set; }
+    public virtual ICollection<Relation> PrimaryRelations { get; set; }
+    public virtual ICollection<Relation> ForeignRelations { get; set; }
   }
 }

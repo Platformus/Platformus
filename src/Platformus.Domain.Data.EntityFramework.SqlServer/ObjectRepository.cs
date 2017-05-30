@@ -54,6 +54,11 @@ namespace Platformus.Domain.Data.EntityFramework.SqlServer
       return this.dbSet.Where(o => o.ClassId == classId).OrderBy(orderBy, direction).Skip(skip).Take(take);
     }
 
+    public IEnumerable<Object> FilteredByClassIdAndObjectIdRange(int classId, int objectId, string orderBy, string direction, int skip, int take)
+    {
+      return this.dbSet.Where(o => o.ClassId == classId && o.ForeignRelations.Any(r => r.PrimaryId == objectId)).OrderBy(orderBy, direction).Skip(skip).Take(take);
+    }
+
     public IEnumerable<Object> Primary(int objectId)
     {
       return this.dbSet.FromSql("SELECT * FROM Objects WHERE Id IN (SELECT PrimaryId FROM Relations WHERE ForeignId = {0})", objectId);

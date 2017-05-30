@@ -109,11 +109,10 @@
   platformus.forms.imageUploaderForm.isFinished = function () {
     var value = document.getElementById("imageUploader").contentWindow.document.body.innerHTML;
 
+    value = value.replace(/<(?:.|\n)*?>/gm, "");
+
     if (value.indexOf("filename=") != -1) {
-      var filename = value
-        .replace("filename=", platformus.string.empty)
-        .replace("<pre>", platformus.string.empty)
-        .replace("</pre>", platformus.string.empty);
+      var filename = value.replace("filename=", platformus.string.empty);
 
       platformus.forms.imageUploaderForm.uploadingFinished(filename);
     }

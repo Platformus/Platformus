@@ -72,6 +72,8 @@ namespace Platformus.Domain.Data.EntityFramework.Sqlite
         {
           etb.HasKey(e => e.Id);
           etb.Property(e => e.Id).ValueGeneratedOnAdd();
+          etb.HasOne(e => e.Primary).WithMany(e => e.PrimaryRelations).HasForeignKey(e => e.PrimaryId);
+          etb.HasOne(e => e.Foreign).WithMany(e => e.ForeignRelations).HasForeignKey(e => e.ForeignId);
           etb.ForSqliteToTable("Relations");
         }
       );

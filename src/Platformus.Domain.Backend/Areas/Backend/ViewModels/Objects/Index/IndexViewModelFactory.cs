@@ -19,7 +19,7 @@ namespace Platformus.Domain.Backend.ViewModels.Objects
     {
     }
 
-    public IndexViewModel Create(int? classId, string orderBy, string direction, int skip, int take)
+    public IndexViewModel Create(int? classId, int? objectId, string orderBy, string direction, int skip, int take)
     {
       IClassRepository classRepository = this.RequestHandler.Storage.GetRepository<IClassRepository>();
       IObjectRepository objectRepository = this.RequestHandler.Storage.GetRepository<IObjectRepository>();
@@ -33,7 +33,9 @@ namespace Platformus.Domain.Backend.ViewModels.Objects
         Grid = classId == null ? null : new GridViewModelFactory(this.RequestHandler).Create(
           orderBy, direction, skip, take, objectRepository.CountByClassId((int)classId),
           this.GetGridColumns((int)classId),
-          objectRepository.FilteredByClassIdRange((int)classId, orderBy, direction, skip, take).ToList().Select(o => new ObjectViewModelFactory(this.RequestHandler).Create(o)),
+          objectId == null ?
+            objectRepository.FilteredByClassIdRange((int)classId, orderBy, direction, skip, take).ToList().Select(o => new ObjectViewModelFactory(this.RequestHandler).Create(o)) :
+            objectRepository.FilteredByClassIdAndObjectIdRange((int)classId, (int)objectId, orderBy, direction, skip, take).ToList().Select(o => new ObjectViewModelFactory(this.RequestHandler).Create(o)),
           "_Object"
         )
       };

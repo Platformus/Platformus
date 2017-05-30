@@ -17,6 +17,7 @@ namespace Platformus.Domain.Data.Abstractions
     // TODO: must be changed!
     IEnumerable<Object> FilteredByClassId(int classId, string storageDataType, int orderByMemberId, string direction, int cultureId);
     IEnumerable<Object> FilteredByClassIdRange(int classId, string orderBy, string direction, int skip, int take);
+    IEnumerable<Object> FilteredByClassIdAndObjectIdRange(int classId, int objectId, string orderBy, string direction, int skip, int take);
     IEnumerable<Object> Primary(int objectId);
 
     // TODO: must be changed!
