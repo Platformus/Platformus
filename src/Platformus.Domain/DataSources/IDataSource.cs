@@ -9,6 +9,7 @@ namespace Platformus.Domain.DataSources
 {
   public interface IDataSource
   {
+    IEnumerable<DataSourceParameter> DataSourceParameters { get; }
     IEnumerable<SerializedObject> GetSerializedObjects(IRequestHandler requestHandler, SerializedObject serializedPage, params KeyValuePair<string, string>[] args);
     IEnumerable<Object> GetObjects(IRequestHandler requestHandler, Object page, params KeyValuePair<string, string>[] args);
   }

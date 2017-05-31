@@ -24,8 +24,7 @@ namespace Platformus.Domain.Backend.ViewModels.DataSources
     public string CSharpClassName { get; set; }
     public IEnumerable<Option> CSharpClassNameOptions { get; set; }
 
-    [Display(Name = "Parameters")]
-    [StringLength(1024)]
     public string Parameters { get; set; }
+    public IEnumerable<dynamic> DataSources { get; set; }
   }
 }

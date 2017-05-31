@@ -3,6 +3,12 @@
 
 (function (platformus) {
   platformus.ui = platformus.ui || {};
+  platformus.ui.dataSourceCSharpClassNameChanged = function () {
+    var cSharpClassName = getSelectedDataSourceCSharpClassName();
+
+    platformus.dataSourceParameterEditors.sync(dataSources, cSharpClassName);
+  };
+
   platformus.ui.propertyDataTypeIdChanged = function () {
     var propertyDataTypeId = getSelectedPropertyDataTypeId();
 
@@ -35,6 +41,10 @@
       $("#isRelationSingleParent").show();
     }
   };
+
+  function getSelectedDataSourceCSharpClassName() {
+    return $("#cSharpClassName").val();
+  }
 
   function getSelectedPropertyDataTypeId() {
     return $("#propertyDataTypeId").val();

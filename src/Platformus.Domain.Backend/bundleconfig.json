@@ -23,7 +23,10 @@
       "Areas/Backend/Scripts/MemberEditors/html_member_editor.js",
       "Areas/Backend/Scripts/MemberEditors/date_member_editor.js",
       "Areas/Backend/Scripts/MemberEditors/image_member_editor.js",
-      "Areas/Backend/Scripts/MemberEditors/relation_member_editor.js"
+      "Areas/Backend/Scripts/MemberEditors/relation_member_editor.js",
+      "Areas/Backend/Scripts/DataSourceParameterEditors/data_source_parameter_editors.js",
+      "Areas/Backend/Scripts/DataSourceParameterEditors/base_data_source_parameter_editor.js",
+      "Areas/Backend/Scripts/DataSourceParameterEditors/temp_data_source_parameter_editor.js"
     ],
     "minify": {
       "enabled": true,

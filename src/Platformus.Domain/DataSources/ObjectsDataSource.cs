@@ -12,6 +12,17 @@ namespace Platformus.Domain.DataSources
 {
   public class ObjectsDataSource : DataSourceBase
   {
+    public override IEnumerable<DataSourceParameter> DataSourceParameters
+    {
+      get
+      {
+        return new DataSourceParameter[]
+        {
+          new DataSourceParameter("ClassId", "Class ID", "temp")
+        };
+      }
+    }
+
     public override IEnumerable<SerializedObject> GetSerializedObjects(IRequestHandler requestHandler, SerializedObject serializedPage, params KeyValuePair<string, string>[] args)
     {
       if (!this.HasArgument(args, "ClassId"))

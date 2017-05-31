@@ -12,6 +12,14 @@ namespace Platformus.Domain.DataSources
   {
     private Dictionary<string, string> args;
 
+    public virtual IEnumerable<DataSourceParameter> DataSourceParameters
+    {
+      get
+      {
+        return new DataSourceParameter[] { };
+      }
+    }
+
     public abstract IEnumerable<SerializedObject> GetSerializedObjects(IRequestHandler requestHandler, SerializedObject serializedPage, params KeyValuePair<string, string>[] args);
     public abstract IEnumerable<Object> GetObjects(IRequestHandler requestHandler, Object page, params KeyValuePair<string, string>[] args);
 

@@ -25,7 +25,8 @@ namespace Platformus.Domain.Backend.ViewModels.DataSources
       if (id == null)
         return new CreateOrEditViewModel()
         {
-          CSharpClassNameOptions = this.GetCSharpClassNameOptions()
+          CSharpClassNameOptions = this.GetCSharpClassNameOptions(),
+          DataSources = this.GetDataSources()
         };
 
       DataSource dataSource = this.RequestHandler.Storage.GetRepository<IDataSourceRepository>().WithKey((int)id);
@@ -36,7 +37,8 @@ namespace Platformus.Domain.Backend.ViewModels.DataSources
         Code = dataSource.Code,
         CSharpClassName = dataSource.CSharpClassName,
         CSharpClassNameOptions = this.GetCSharpClassNameOptions(),
-        Parameters = dataSource.Parameters
+        Parameters = dataSource.Parameters,
+        DataSources = this.GetDataSources()
       };
     }
 
@@ -44,6 +46,22 @@ namespace Platformus.Domain.Backend.ViewModels.DataSources
     {
       return ExtensionManager.GetImplementations<IDataSource>().Where(t => t != typeof(DataSourceBase)).Select(
         t => new Option(t.FullName)
+      );
+    }
+
+    private IEnumerable<dynamic> GetDataSources()
+    {
+      return ExtensionManager.GetInstances<IDataSource>().Where(ds => ds.GetType() != typeof(DataSourceBase)).Select(
+        ds => new {
+          cSharpClassName = ds.GetType().FullName,
+          dataSourceParameters = ds.DataSourceParameters.Select(
+            dsp => new {
+              code = dsp.Code,
+              name = dsp.Name,
+              javaScriptEditorClassName = dsp.JavaScriptEditorClassName
+            }
+          )
+        }
       );
     }
   }
