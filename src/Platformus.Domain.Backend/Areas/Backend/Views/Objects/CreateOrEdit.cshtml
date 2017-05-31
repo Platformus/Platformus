@@ -19,65 +19,7 @@
   </div>
 </form>
 <script type="text/javascript">
-  var membersByTabs = [
-    @foreach (var tab in this.Model.MembersByTabs.Keys)
-    {
-      @:{
-        @:id: @tab.Id,
-        @:name: "@tab.Name",
-        @:members: [
-          @foreach (var member in this.Model.MembersByTabs[tab])
-          {
-            @:{
-              @:id: @member.Id,
-              @:name: "@Html.Raw(member.Name)",
-              @if (member.PropertyDataType != null)
-              {
-                @:propertyDataType: { javaScriptEditorClassName: "@member.PropertyDataType.JavaScriptEditorClassName" },
-                @:isPropertyLocalizable: @member.IsPropertyLocalizable.ToString().ToLower(),
-                @:property: {
-                  @if (member.PropertyDataType.StorageDataType == Platformus.Domain.Data.Models.StorageDataType.Integer)
-                  {
-                    @:integerValue: @member.Property.IntegerValue
-                  }
-                  else if (member.PropertyDataType.StorageDataType == Platformus.Domain.Data.Models.StorageDataType.Decimal)
-                  {
-                    @:decimalValue: @member.Property.DecimalValue
-                  }
-                  else if (member.PropertyDataType.StorageDataType == Platformus.Domain.Data.Models.StorageDataType.String)
-                  {
-                    @:stringValue: {
-                      @:localizations: [
-                        foreach (var localization in member.Property.StringValueLocalizations)
-                        {
-                          @: { culture: { code: "@localization.Culture.Code" }, value: "@Html.Raw(string.IsNullOrEmpty(localization.Value) ? null : localization.Value.Replace("\r\n", "\\r\\n").Replace("\n", "\\n").Replace("\"", "\\\""))" }@(localization != member.Property.StringValueLocalizations.Last() ? "," : null)
-                        }
-                      @:]
-                    @:}
-                  }
-                  else if (member.PropertyDataType.StorageDataType == Platformus.Domain.Data.Models.StorageDataType.DateTime)
-                  {
-                    @:dateTimeValue: "@member.Property.DateTimeValue"
-                  }
-                @:}
-              }
-              else if (member.RelationClass != null)
-              {
-                @:relationClass: { id: @member.RelationClass.Id },
-                @:isRelationSingleParent: @member.IsRelationSingleParent.ToString().ToLower(),
-                @:relations: [
-                  @foreach (var relation in member.Relations)
-                  {
-                    @:{ primaryId: @relation.PrimaryId }@(relation != member.Relations.Last() ? "," : null)
-                  }
-                @:]
-              }
-            @:}@(member.Id != this.Model.MembersByTabs[tab].Last().Id ? "," : null)
-          }
-        @:]
-      @:}@(tab != this.Model.MembersByTabs.Keys.Last() ? "," : null)
-    }
-  ];
+  var membersByTabs = @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(this.Model.MembersByTabs));
 
   platformus.memberEditors.create(membersByTabs);
 </script>

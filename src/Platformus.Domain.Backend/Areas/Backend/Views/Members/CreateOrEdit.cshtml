@@ -35,12 +35,7 @@
   </div>
 </form>
 <script type="text/javascript">
-  var dataTypes = [
-    @foreach (var dataType in this.Model.DataTypes)
-    {
-      @:{ id: @dataType.Id, storageDataType: "@dataType.StorageDataType" }@(dataType.Id != this.Model.DataTypes.Last().Id ? "," : null)
-    }
-  ];
+  var dataTypes = @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(this.Model.DataTypes));
 </script>
 
 @section startUpScript {

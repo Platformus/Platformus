@@ -8,7 +8,6 @@ using Platformus.Barebone.Backend;
 using Platformus.Forms.Data.Abstractions;
 using Platformus.Forms.Data.Models;
 using Platformus.Globalization.Backend.ViewModels;
-using Platformus.Globalization.Data.Abstractions;
 
 namespace Platformus.Forms.Backend.ViewModels.Fields
 {
@@ -33,7 +32,7 @@ namespace Platformus.Forms.Backend.ViewModels.Fields
       return new CreateOrEditViewModel()
       {
         Id = field.Id,
-        NameLocalizations = this.GetLocalizations(this.RequestHandler.Storage.GetRepository<IDictionaryRepository>().WithKey(field.NameId)),
+        NameLocalizations = this.GetLocalizations(field.NameId),
         FieldTypeId = field.FieldTypeId,
         FieldTypeOptions = this.GetFieldTypeOptions(),
         Position = field.Position

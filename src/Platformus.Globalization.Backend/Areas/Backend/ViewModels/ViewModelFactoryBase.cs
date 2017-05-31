@@ -29,7 +29,7 @@ namespace Platformus.Globalization.Backend.ViewModels
       return localization.Value;
     }
 
-    protected IEnumerable<Platformus.Barebone.Backend.Localization> GetLocalizations(Dictionary dictionary = null)
+    protected IEnumerable<Platformus.Barebone.Backend.Localization> GetLocalizations(int? dictionaryId = null)
     {
       List<Platformus.Barebone.Backend.Localization> localizations = new List<Platformus.Barebone.Backend.Localization>();
 
@@ -37,8 +37,8 @@ namespace Platformus.Globalization.Backend.ViewModels
       {
         Platformus.Globalization.Data.Models.Localization localization = null;
 
-        if (dictionary != null)
-          localization = this.RequestHandler.Storage.GetRepository<ILocalizationRepository>().FilteredByDictionaryId(dictionary.Id).FirstOrDefault(l => l.CultureId == culture.Id);
+        if (dictionaryId != null)
+          localization = this.RequestHandler.Storage.GetRepository<ILocalizationRepository>().FilteredByDictionaryId((int)dictionaryId).FirstOrDefault(l => l.CultureId == culture.Id);
 
         localizations.Add(
           new Platformus.Barebone.Backend.Localization(

@@ -93,10 +93,10 @@ namespace Platformus.Domain.Backend.ViewModels.Members
       return options;
     }
 
-    private IEnumerable<DataTypeViewModel> GetDataTypes()
+    private IEnumerable<dynamic> GetDataTypes()
     {
       return this.RequestHandler.Storage.GetRepository<IDataTypeRepository>().All().ToList().Select(
-        dt => new DataTypeViewModelFactory(this.RequestHandler).Create(dt)
+        dt => new { id = dt.Id, storageDataType = dt.StorageDataType }
       );
     }
   }

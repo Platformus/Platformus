@@ -12,6 +12,6 @@ namespace Platformus.Domain.Backend.ViewModels.Objects
     public int? Id { get; set; }
     public int? ClassId { get; set; }
     public ClassViewModel Class { get; set; }
-    public IDictionary<TabViewModel, IEnumerable<MemberViewModel>> MembersByTabs { get; set; }
+    public IEnumerable<dynamic> MembersByTabs { get; set; }
   }
 }

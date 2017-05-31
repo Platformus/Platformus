@@ -31,9 +31,6 @@ namespace Platformus.Domain.Backend.ViewModels.Shared
       return new ObjectViewModel()
       {
         Id = @object.Id,
-        Class = new ClassViewModelFactory(this.RequestHandler).Create(
-          this.RequestHandler.Storage.GetRepository<IClassRepository>().WithKey(@object.ClassId)
-        ),
         Properties = new ObjectManager(this.RequestHandler).GetDisplayProperties(@object),
         RelatedClasses = relatedClasses.Select(
           c => new ClassViewModelFactory(this.RequestHandler).Create(c)

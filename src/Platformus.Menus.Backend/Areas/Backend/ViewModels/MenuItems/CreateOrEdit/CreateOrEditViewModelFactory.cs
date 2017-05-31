@@ -3,7 +3,6 @@
 
 using Platformus.Barebone;
 using Platformus.Globalization.Backend.ViewModels;
-using Platformus.Globalization.Data.Abstractions;
 using Platformus.Menus.Data.Abstractions;
 using Platformus.Menus.Data.Models;
 
@@ -29,7 +28,7 @@ namespace Platformus.Menus.Backend.ViewModels.MenuItems
       return new CreateOrEditViewModel()
       {
         Id = menuItem.Id,
-        NameLocalizations = this.GetLocalizations(this.RequestHandler.Storage.GetRepository<IDictionaryRepository>().WithKey(menuItem.NameId)),
+        NameLocalizations = this.GetLocalizations(menuItem.NameId),
         Url = menuItem.Url,
         Position = menuItem.Position
       };

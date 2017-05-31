@@ -3,7 +3,6 @@
 
 using Platformus.Barebone;
 using Platformus.Globalization.Backend.ViewModels;
-using Platformus.Globalization.Data.Abstractions;
 using Platformus.Menus.Data.Abstractions;
 using Platformus.Menus.Data.Models;
 
@@ -30,7 +29,7 @@ namespace Platformus.Menus.Backend.ViewModels.Menus
       {
         Id = menu.Id,
         Code = menu.Code,
-        NameLocalizations = this.GetLocalizations(this.RequestHandler.Storage.GetRepository<IDictionaryRepository>().WithKey(menu.NameId))
+        NameLocalizations = this.GetLocalizations(menu.NameId)
       };
     }
   }

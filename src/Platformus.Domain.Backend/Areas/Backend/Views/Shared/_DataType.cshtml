@@ -2,6 +2,7 @@
 @* Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information. *@
 @model Platformus.Domain.Backend.ViewModels.Shared.DataTypeViewModel
 <tr class="table__row">
+  <td class="table__cell">@Model.StorageDataType</td>
   <td class="table__cell">@Model.Name</td>
   <td class="table__cell">@(this.Model.Position == null ? "—" : this.Model.Position.ToString())</td>
   <td class="table__cell table__buttons buttons">

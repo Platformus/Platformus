@@ -10,7 +10,6 @@ namespace Platformus.Domain.Backend.ViewModels.Shared
   {
     public int Id { get; set; }
     public string Url { get; set; }
-    public ClassViewModel Class { get; set; }
     public IEnumerable<string> Properties { get; set; }
     public IEnumerable<ClassViewModel> RelatedClasses { get; set; }
   }

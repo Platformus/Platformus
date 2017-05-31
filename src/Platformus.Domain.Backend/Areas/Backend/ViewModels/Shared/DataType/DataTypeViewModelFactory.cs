@@ -20,7 +20,6 @@ namespace Platformus.Domain.Backend.ViewModels.Shared
       {
         Id = dataType.Id,
         StorageDataType = dataType.StorageDataType,
-        JavaScriptEditorClassName = dataType.JavaScriptEditorClassName,
         Name = dataType.Name,
         Position = dataType.Position
       };

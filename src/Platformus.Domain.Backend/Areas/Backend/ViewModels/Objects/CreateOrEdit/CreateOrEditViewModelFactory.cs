@@ -13,6 +13,8 @@ namespace Platformus.Domain.Backend.ViewModels.Objects
 {
   public class CreateOrEditViewModelFactory : ViewModelFactoryBase
   {
+    private IEnumerable<Member> members;
+
     public CreateOrEditViewModelFactory(IRequestHandler requestHandler)
       : base(requestHandler)
     {
@@ -41,28 +43,101 @@ namespace Platformus.Domain.Backend.ViewModels.Objects
       };
     }
 
-    private IDictionary<TabViewModel, IEnumerable<MemberViewModel>> GetMembersByTabs(Object @object, int? classId = null, int? objectId = null)
+    private IEnumerable<dynamic> GetMembersByTabs(Object @object, int? classId = null, int? objectId = null)
     {
-      Dictionary<TabViewModel, IEnumerable<MemberViewModel>> membersByTabs = new Dictionary<TabViewModel, IEnumerable<MemberViewModel>>();
+      List<dynamic> membersByTabs = new List<dynamic>();
 
-      membersByTabs.Add(new TabViewModel() { Name = "General" }, new List<MemberViewModel>());
+      membersByTabs.Add(new { id = 0, name = "General", members = this.GetMembersByTab(null, @object, classId, objectId) });
 
       foreach (Tab tab in this.RequestHandler.Storage.GetRepository<ITabRepository>().FilteredByClassIdInlcudingParent(@object != null ? @object.ClassId : (int)classId).ToList())
-        membersByTabs.Add(new TabViewModelFactory(this.RequestHandler).Create(tab), new List<MemberViewModel>());
-
-      foreach (Member member in this.RequestHandler.Storage.GetRepository<IMemberRepository>().FilteredByClassIdInlcudingParent(@object != null ? @object.ClassId : (int)classId).ToList())
-      {
-        TabViewModel tab = null;
-
-        if (member.TabId == null)
-          tab = membersByTabs.Keys.FirstOrDefault(t => t.Id == 0);
-
-        else tab = membersByTabs.Keys.FirstOrDefault(t => t.Id == (int)member.TabId);
-
-        (membersByTabs[tab] as List<MemberViewModel>).Add(new MemberViewModelFactory(this.RequestHandler).Create(member, @object, objectId));
-      }
+        membersByTabs.Add(new { id = tab.Id, name = tab.Name, members = this.GetMembersByTab(tab, @object, classId, objectId) });
 
       return membersByTabs;
+    }
+
+    private IEnumerable<dynamic> GetMembersByTab(Tab tab, Object @object, int? classId = null, int? objectId = null)
+    {
+      if (this.members == null)
+        this.members = this.RequestHandler.Storage.GetRepository<IMemberRepository>().FilteredByClassIdInlcudingParent(@object != null ? @object.ClassId : (int)classId).ToList();
+
+      List<dynamic> membersByTab = new List<dynamic>();
+
+      foreach (Member member in this.members)
+        if ((tab == null && member.TabId == null) || (tab != null && tab.Id == member.TabId))
+          membersByTab.Add(
+            new
+            {
+              id = member.Id,
+              name = member.Name,
+              propertyDataType = member.PropertyDataTypeId == null ? null : new
+              {
+                javaScriptEditorClassName = this.RequestHandler.Storage.GetRepository<IDataTypeRepository>().WithKey((int)member.PropertyDataTypeId).JavaScriptEditorClassName
+              },
+              isPropertyLocalizable = member.PropertyDataTypeId == null ? null : member.IsPropertyLocalizable,
+              property = member.PropertyDataTypeId == null ? null : this.GetProperty(member, @object, objectId),
+              relationClass = member.RelationClassId == null ? null : new
+              {
+                id = member.RelationClassId
+              },
+              isRelationSingleParent = member.RelationClassId == null ? null : member.IsRelationSingleParent,
+              relations = member.RelationClassId == null ? null : this.GetRelations(member, @object, objectId)
+            }
+          );
+
+      return membersByTab;
+    }
+
+    private dynamic GetProperty(Member member, Object @object, int? objectId)
+    {
+      Property property = null;
+
+      if (@object != null)
+        property = this.RequestHandler.Storage.GetRepository<IPropertyRepository>().WithObjectIdAndMemberId(@object.Id, member.Id);
+
+      if (property == null)
+        return new
+        {
+          stringValue = new
+          {
+            localizations = this.GetLocalizations(null).Select(
+              l => new
+              {
+                culture = new { code = l.Culture.Code },
+                value = string.IsNullOrEmpty(l.Value) ? null : l.Value
+              }
+            )
+          },
+        };
+
+      return new
+      {
+        integerValue = property.IntegerValue,
+        decimalValue = property.DecimalValue,
+        stringValue = new
+        {
+          localizations = this.GetLocalizations(property == null ? null : property.StringValueId).Select(
+            l => new
+            {
+              culture = new { code = l.Culture.Code },
+              value = string.IsNullOrEmpty(l.Value) ? null : l.Value
+            }
+          )
+        },
+        dateTimeValue = property.DateTimeValue
+      };
+    }
+
+    private IEnumerable<dynamic> GetRelations(Member member, Object @object, int? objectId)
+    {
+      if (@object == null && objectId == null)
+        return new dynamic[] { };
+
+      if (@object == null && objectId != null)
+        return new dynamic[] { new { primaryId = objectId } };
+
+      return this.RequestHandler.Storage.GetRepository<IRelationRepository>().FilteredByMemberIdAndForeignId(member.Id, @object.Id).Select(
+        r => new { primaryId = r.PrimaryId }
+      );
     }
   }
 }

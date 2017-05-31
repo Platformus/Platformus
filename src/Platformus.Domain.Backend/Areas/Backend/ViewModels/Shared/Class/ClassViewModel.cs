@@ -12,6 +12,5 @@ namespace Platformus.Domain.Backend.ViewModels.Shared
     public string Name { get; set; }
     public string PluralizedName { get; set; }
     public bool IsAbstract { get; set; }
-    public bool IsStandalone { get; set; }
   }
 }

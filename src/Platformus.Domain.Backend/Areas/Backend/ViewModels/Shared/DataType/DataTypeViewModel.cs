@@ -9,7 +9,6 @@ namespace Platformus.Domain.Backend.ViewModels.Shared
   {
     public int Id { get; set; }
     public string StorageDataType { get; set; }
-    public string JavaScriptEditorClassName { get; set; }
     public string Name { get; set; }
     public int? Position { get; set; }
   }

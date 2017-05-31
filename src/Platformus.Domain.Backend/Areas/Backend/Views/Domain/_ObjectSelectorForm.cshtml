@@ -8,10 +8,6 @@
   <div class="object-selector-pop-up-form__objects">
     <table class="table">
       <tr class="table__row">
-        @if (this.Model.Class.IsStandalone)
-        {
-          <th class="table__cell table__cell--header">URL</th>
-        }
         @foreach (var gridColumn in this.Model.GridColumns)
         {
           <th class="table__cell table__cell--header">@gridColumn.Name</th>
@@ -20,10 +16,6 @@
       @foreach (var _object in this.Model.Objects)
       {
         <tr class="table__row @(this.Model.ObjectIds.Contains(_object.Id) ? "table__row--selected" : null)" data-object-id="@_object.Id">
-          @if (_object.Class.IsStandalone)
-          {
-            <td class="object-selector-pop-up-form__cell table__cell">@_object.Url</td>
-          }
           @foreach (var property in _object.Properties)
           {
             <td class="object-selector-pop-up-form__cell table__cell">@property</td>

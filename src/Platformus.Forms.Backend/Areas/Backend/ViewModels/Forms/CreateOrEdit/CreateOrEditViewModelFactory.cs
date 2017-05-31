@@ -5,7 +5,6 @@ using Platformus.Barebone;
 using Platformus.Forms.Data.Abstractions;
 using Platformus.Forms.Data.Models;
 using Platformus.Globalization.Backend.ViewModels;
-using Platformus.Globalization.Data.Abstractions;
 
 namespace Platformus.Forms.Backend.ViewModels.Forms
 {
@@ -31,7 +30,7 @@ namespace Platformus.Forms.Backend.ViewModels.Forms
         Id = form.Id,
         Code = form.Code,
         Email = form.Email,
-        NameLocalizations = this.GetLocalizations(this.RequestHandler.Storage.GetRepository<IDictionaryRepository>().WithKey(form.NameId))
+        NameLocalizations = this.GetLocalizations(form.NameId)
       };
     }
   }

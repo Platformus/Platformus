@@ -48,6 +48,6 @@ namespace Platformus.Domain.Backend.ViewModels.Members
     [Display(Name = "Is relation single parent")]
     public bool IsRelationSingleParent { get; set; }
 
-    public IEnumerable<DataTypeViewModel> DataTypes { get; set; }
+    public IEnumerable<dynamic> DataTypes { get; set; }
   }
 }

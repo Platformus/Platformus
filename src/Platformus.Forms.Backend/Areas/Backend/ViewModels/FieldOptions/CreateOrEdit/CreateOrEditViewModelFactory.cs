@@ -5,7 +5,6 @@ using Platformus.Barebone;
 using Platformus.Forms.Data.Abstractions;
 using Platformus.Forms.Data.Models;
 using Platformus.Globalization.Backend.ViewModels;
-using Platformus.Globalization.Data.Abstractions;
 
 namespace Platformus.Forms.Backend.ViewModels.FieldOptions
 {
@@ -29,7 +28,7 @@ namespace Platformus.Forms.Backend.ViewModels.FieldOptions
       return new CreateOrEditViewModel()
       {
         Id = fieldOption.Id,
-        ValueLocalizations = this.GetLocalizations(this.RequestHandler.Storage.GetRepository<IDictionaryRepository>().WithKey(fieldOption.ValueId)),
+        ValueLocalizations = this.GetLocalizations(fieldOption.ValueId),
         Position = fieldOption.Position
       };
     }
