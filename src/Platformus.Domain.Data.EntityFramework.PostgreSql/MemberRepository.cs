@@ -18,6 +18,11 @@ namespace Platformus.Domain.Data.EntityFramework.PostgreSql
       return this.dbSet.FirstOrDefault(m => m.Id == id);
     }
 
+    public Member WithClassIdAndCode(int classId, string code)
+    {
+      return this.dbSet.FirstOrDefault(m => m.ClassId == classId && string.Equals(m.Code, code, System.StringComparison.OrdinalIgnoreCase));
+    }
+
     public IEnumerable<Member> FilteredByClassIdInlcudingParent(int classId)
     {
       return this.dbSet.FromSql(

@@ -73,9 +73,7 @@ namespace Platformus.Globalization.Backend.Controllers
 
     private void CreateLocalizations(PropertyInfo propertyInfo, Dictionary dictionary)
     {
-      IEnumerable<Culture> cultures = this.Storage.GetRepository<ICultureRepository>().NotNeutral();
-
-      foreach (Culture culture in cultures)
+      foreach (Culture culture in CultureManager.GetNotNeutralCultures(this.Storage))
       {
         Localization localization = new Localization();
 
@@ -101,15 +99,13 @@ namespace Platformus.Globalization.Backend.Controllers
 
       try
       {
-        IEnumerable<Culture> cultures = this.Storage.GetRepository<ICultureRepository>().NotNeutral();
-
         foreach (PropertyInfo propertyInfo in this.GetMultilingualPropertiesFromViewModel(viewModel))
         {
           this.ModelState.Remove(propertyInfo.Name);
 
           bool hasRequiredAttribute = propertyInfo.CustomAttributes.Any(ca => ca.AttributeType == typeof(RequiredAttribute));
 
-          foreach (Culture culture in cultures)
+          foreach (Culture culture in CultureManager.GetNotNeutralCultures(this.Storage))
           {
             string identity = propertyInfo.Name + culture.Code;
             string value = this.Request.Form[identity];

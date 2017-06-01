@@ -3,6 +3,7 @@
 
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using Platformus.Barebone;
 using Platformus.Domain.Data.Abstractions;
 using Platformus.Domain.Data.Models;
@@ -50,14 +51,41 @@ namespace Platformus.Domain
 
     public void Create<T>(T @object)
     {
+      ObjectManipulator objectManipulator = new ObjectManipulator(this.requestHandler);
+
+      objectManipulator.BeginCreateTransaction<T>();
+
+      foreach (PropertyInfo propertyInfo in typeof(T).GetProperties())
+        objectManipulator.SetPropertyValue(propertyInfo.Name, propertyInfo.GetValue(@object));
+
+      objectManipulator.CommitTransaction();
     }
 
     public void Edit<T>(T @object)
     {
+      ObjectManipulator objectManipulator = new ObjectManipulator(this.requestHandler);
+
+      objectManipulator.BeginEditTransaction<T>(0);
+
+      foreach (PropertyInfo propertyInfo in typeof(T).GetProperties())
+        objectManipulator.SetPropertyValue(propertyInfo.Name, propertyInfo.GetValue(@object));
+
+      objectManipulator.CommitTransaction();
     }
 
     public void Delete<T>(T @object)
     {
+      int id = 0;
+      PropertyInfo idPropertyInfo = typeof(T).GetProperty("Id");
+
+      if (idPropertyInfo != null)
+        id = (int)idPropertyInfo.GetValue(@object);
+
+      if (id != 0)
+      {
+        this.requestHandler.Storage.GetRepository<IObjectRepository>().Delete(id);
+        this.requestHandler.Storage.Save();
+      }
     }
   }
 }
