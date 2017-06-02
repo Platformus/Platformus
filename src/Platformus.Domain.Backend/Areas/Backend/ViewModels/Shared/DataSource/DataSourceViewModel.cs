@@ -8,6 +8,7 @@ namespace Platformus.Domain.Backend.ViewModels.Shared
   public class DataSourceViewModel : ViewModelBase
   {
     public int Id { get; set; }
+    public string Code { get; set; }
     public string CShartClassName { get; set; }
   }
 }

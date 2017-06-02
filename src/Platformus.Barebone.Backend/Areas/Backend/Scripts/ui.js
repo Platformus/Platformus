@@ -2,6 +2,87 @@
 // Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information.
 
 (function (platformus) {
+  platformus.initializers = platformus.initializers || [];
+  platformus.initializers.push(
+    {
+      action: function() {
+        $(".menu__group-header").click(
+          function () {
+            var menuGroup = $(this).parent();
+            var menuGroupContent = menuGroup.find(".menu__group-content");
+
+            if (menuGroupContent.is(":visible")) {
+              removeFromExpandedMenuGroups(menuGroup.data("code"));
+              menuGroupContent.slideUp("fast");
+              
+            }
+
+            else {
+              addToExpandedMenuGroups(menuGroup.data("code"));
+              menuGroupContent.slideDown("fast");
+            }
+          }
+        );
+
+        syncExpandedMenuGroups();
+      },
+      priority: 0
+    }
+  );
+
+  function syncExpandedMenuGroups() {
+    if ($.cookie("expanded-menu-groups") == null) {
+      $(".menu").each(
+        function () {
+          var menuGroup = $(this).find(".menu__group").first();
+          var menuGroupContent = menuGroup.find(".menu__group-content");
+
+          addToExpandedMenuGroups(menuGroup.data("code"));
+          menuGroupContent.show();
+        }
+      );
+    }
+
+    else {
+      var expandedMenuGroups = getExpandedMenuGroups();
+
+      for (var i = 0; i < expandedMenuGroups.length; i++) {
+        $(".menu__group[data-code='" + expandedMenuGroups[i] + "']").find(".menu__group-content").show();
+      }
+    }
+  }
+
+  function addToExpandedMenuGroups(code) {
+    var expandedMenuGroups = getExpandedMenuGroups();
+
+    if (expandedMenuGroups.indexOf(code) == -1) {
+      expandedMenuGroups.push(code);
+    }
+
+    setExpandedMenuGroups(expandedMenuGroups);
+  }
+
+  function removeFromExpandedMenuGroups(code) {
+    var expandedMenuGroups = getExpandedMenuGroups();
+    var index = expandedMenuGroups.indexOf(code);
+
+    if (index != -1) {
+      expandedMenuGroups.splice(index, 1);
+    }
+
+    setExpandedMenuGroups(expandedMenuGroups);
+  }
+
+  function getExpandedMenuGroups() {
+    return $.cookie("expanded-menu-groups") == null ? [] : $.cookie("expanded-menu-groups").split(",");
+  }
+
+  function setExpandedMenuGroups(expandedMenuGroups) {
+    $.cookie("expanded-menu-groups", expandedMenuGroups.join(), { path: "/backend/" });
+  }
+})(window.platformus = window.platformus || {});
+
+(function (platformus) {
   platformus.ui = platformus.ui || {};
   platformus.ui.initializeTinyMce = function (identity) {
     tinymce.init(

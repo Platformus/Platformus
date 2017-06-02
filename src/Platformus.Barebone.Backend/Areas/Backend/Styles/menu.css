@@ -8,12 +8,14 @@
 }
 
 .menu__group-header {
+  cursor: pointer;
   font-size: 20px;
   line-height: 40px;
   padding: 0 20px;
 }
 
 .menu__group-content {
+  display: none;
 }
 
 .menu__item {

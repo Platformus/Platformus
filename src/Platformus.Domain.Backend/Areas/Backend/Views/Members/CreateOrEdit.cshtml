@@ -34,11 +34,9 @@
     <a class="buttons__button button button--neutral" href="@this.Context.Request.CombineUrl("/backend/members")">Cancel</a>
   </div>
 </form>
-<script type="text/javascript">
-  var dataTypes = @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(this.Model.DataTypes));
-</script>
-
 @section startUpScript {
+  var dataTypes = @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(this.Model.DataTypes));
+
   platformus.ui.propertyDataTypeIdChanged();
   platformus.ui.relationClassIdChanged();
 }

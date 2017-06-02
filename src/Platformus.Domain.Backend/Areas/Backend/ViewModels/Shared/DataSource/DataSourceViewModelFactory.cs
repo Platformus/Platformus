@@ -19,6 +19,7 @@ namespace Platformus.Domain.Backend.ViewModels.Shared
       return new DataSourceViewModel()
       {
         Id = dataSource.Id,
+        Code = dataSource.Code,
         CShartClassName = dataSource.CSharpClassName
       };
     }

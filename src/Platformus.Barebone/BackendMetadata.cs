@@ -29,8 +29,9 @@ namespace Platformus.Barebone
           new BackendScript("//ajax.aspnetcdn.com/ajax/jquery/jquery-1.11.3.min.js", 100),
           new BackendScript("//ajax.aspnetcdn.com/ajax/jquery.validate/1.14.0/jquery.validate.min.js", 200),
           new BackendScript("//ajax.aspnetcdn.com/ajax/jquery.validation.unobtrusive/3.2.6/jquery.validate.unobtrusive.min.js", 300),
-          new BackendScript("//cdn.tinymce.com/4/tinymce.min.js", 400),
-          new BackendScript("//cdnjs.cloudflare.com/ajax/libs/moment.js/2.17.1/moment-with-locales.min.js", 500),
+          new BackendScript("//cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js", 400),
+          new BackendScript("//cdn.tinymce.com/4/tinymce.min.js", 500),
+          new BackendScript("//cdnjs.cloudflare.com/ajax/libs/moment.js/2.17.1/moment-with-locales.min.js", 600),
           new BackendScript("/wwwroot.areas.backend.js.platformus.barebone.min.js", 1000)
         };
       }

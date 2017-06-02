@@ -18,8 +18,8 @@
     <a class="buttons__button button button--neutral" href="@this.Context.Request.CombineUrl("/backend/objects")">Cancel</a>
   </div>
 </form>
-<script type="text/javascript">
+@section startUpScript {
   var membersByTabs = @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(this.Model.MembersByTabs));
 
   platformus.memberEditors.create(membersByTabs);
-</script>
+}

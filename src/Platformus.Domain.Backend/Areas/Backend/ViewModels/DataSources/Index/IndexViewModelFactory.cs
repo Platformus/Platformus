@@ -27,6 +27,7 @@ namespace Platformus.Domain.Backend.ViewModels.DataSources
         Grid = new GridViewModelFactory(this.RequestHandler).Create(
           orderBy, direction, skip, take, dataSourceRepository.CountByMicrocontrollerId(microcontrollerId, filter),
           new[] {
+            new GridColumnViewModelFactory(this.RequestHandler).Create("Code", "Code"),
             new GridColumnViewModelFactory(this.RequestHandler).Create("C# class name", "CSharpClassName"),
             new GridColumnViewModelFactory(this.RequestHandler).CreateEmpty()
           },

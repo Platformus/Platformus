@@ -33,7 +33,7 @@
       <div class="menu">
         @foreach (var abstractClass in this.Model.ClassesByAbstractClasses.Keys)
         {
-          <div class="menu__group">
+          <div class="menu__group" data-code="class-@(abstractClass.Id)">
             <div class="menu__group-header">
               @abstractClass.PluralizedName
             </div>

@@ -17,7 +17,7 @@ namespace Platformus.Domain.Backend.Controllers
     {
     }
 
-    public IActionResult Index(int microcontrollerId, string orderBy = "csharpclassname", string direction = "asc", int skip = 0, int take = 10, string filter = null)
+    public IActionResult Index(int microcontrollerId, string orderBy = "code", string direction = "asc", int skip = 0, int take = 10, string filter = null)
     {
       return this.View(new IndexViewModelFactory(this).Create(microcontrollerId, orderBy, direction, skip, take, filter));
     }

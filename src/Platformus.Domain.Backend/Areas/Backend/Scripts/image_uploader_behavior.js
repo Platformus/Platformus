@@ -8,7 +8,8 @@
     document["form"].submit();
   };
 
-  platformus.registerBehavior(
+  platformus.behaviors = platformus.behaviors || [];
+  platformus.behaviors.push(
     function () {
       defineHandlers();
     }

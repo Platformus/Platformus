@@ -7,6 +7,7 @@
 }
 
 .master-detail__master {
+  padding-bottom: 100px;
   flex: 0 0 250px;
   position: relative;
   width: 250px;

@@ -2,7 +2,8 @@
 // Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information.
 
 (function (platformus) {
-  platformus.registerBehavior(
+  platformus.behaviors = platformus.behaviors || [];
+  platformus.behaviors.push(
     function () {
       defineHandlers();
       performInitialActions();
