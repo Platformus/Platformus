@@ -1,4 +1,4 @@
-﻿// Copyright © 2015 Dmitry Sikorsky. All rights reserved.
+﻿// Copyright © 2017 Dmitry Yegorov. All rights reserved.
 // Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information.
 
 using System.Linq;
@@ -8,7 +8,7 @@ using Platformus.Domain.Backend.ViewModels.Shared;
 using Platformus.Domain.Data.Abstractions;
 using Platformus.Globalization.Backend.ViewModels;
 
-namespace Platformus.Domain.Backend.ViewModels.DataTypes
+namespace Platformus.Domain.Backend.ViewModels.DataTypeParameters
 {
   public class IndexViewModelFactory : ViewModelFactoryBase
   {
@@ -17,22 +17,21 @@ namespace Platformus.Domain.Backend.ViewModels.DataTypes
     {
     }
 
-    public IndexViewModel Create(string orderBy, string direction, int skip, int take, string filter)
+    public IndexViewModel Create(int dataTypeId, string orderBy, string direction, int skip, int take, string filter)
     {
-      IDataTypeRepository dataTypeRepository = this.RequestHandler.Storage.GetRepository<IDataTypeRepository>();
+      IDataTypeParameterRepository dataTypeParameterRepository = this.RequestHandler.Storage.GetRepository<IDataTypeParameterRepository>();
 
       return new IndexViewModel()
       {
+        DataTypeId = dataTypeId,
         Grid = new GridViewModelFactory(this.RequestHandler).Create(
-          orderBy, direction, skip, take, dataTypeRepository.Count(filter),
+          orderBy, direction, skip, take, dataTypeParameterRepository.CountByDataTypeId(dataTypeId, filter),
           new[] {
             new GridColumnViewModelFactory(this.RequestHandler).Create("Name", "Name"),
-            new GridColumnViewModelFactory(this.RequestHandler).Create("Data type parameters"),
-            new GridColumnViewModelFactory(this.RequestHandler).Create("Position", "Position"),
             new GridColumnViewModelFactory(this.RequestHandler).CreateEmpty()
           },
-          dataTypeRepository.Range(orderBy, direction, skip, take, filter).ToList().Select(dt => new DataTypeViewModelFactory(this.RequestHandler).Create(dt)),
-          "_DataType"
+          dataTypeParameterRepository.FilteredByDataTypeIdRange(dataTypeId, orderBy, direction, skip, take, filter).Select(dtp => new DataTypeParameterViewModelFactory(this.RequestHandler).Create(dtp)),
+          "_DataTypeParameter"
         )
       };
     }

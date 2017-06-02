@@ -42,6 +42,26 @@ namespace Platformus.Domain.Data.EntityFramework.SqlServer
         }
       );
 
+      modelBuilder.Entity<DataTypeParameter>(etb =>
+        {
+          etb.HasKey(e => e.Id);
+          etb.Property(e => e.Id).ValueGeneratedOnAdd();
+          etb.Property(e => e.JavaScriptEditorClassName).IsRequired().HasMaxLength(128);
+          etb.Property(e => e.Code).IsRequired().HasMaxLength(32);
+          etb.Property(e => e.Name).IsRequired().HasMaxLength(64);
+          etb.ForSqlServerToTable("DataTypeParameters");
+        }
+      );
+
+      modelBuilder.Entity<DataTypeParameterValue>(etb =>
+        {
+          etb.HasKey(e => e.Id);
+          etb.Property(e => e.Id).ValueGeneratedOnAdd();
+          etb.Property(e => e.Value).IsRequired().HasMaxLength(64);
+          etb.ForSqlServerToTable("DataTypeParameterValues");
+        }
+      );
+
       modelBuilder.Entity<Member>(etb =>
         {
           etb.HasKey(e => e.Id);
