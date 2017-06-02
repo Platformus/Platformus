@@ -28,8 +28,8 @@ namespace Platformus.Domain.Backend.ViewModels.DataTypeParameters
       {
         Id = dataTypeParameter.Id,
         JavaScriptEditorClassName = dataTypeParameter.JavaScriptEditorClassName,
-        Name = dataTypeParameter.Name,
-        Code = dataTypeParameter.Code
+        Code = dataTypeParameter.Code,
+        Name = dataTypeParameter.Name
       };
     }
   }

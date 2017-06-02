@@ -15,7 +15,7 @@ CREATE TABLE "Variables" (
 	"Name" TEXT NOT NULL,
 	"Value" TEXT NOT NULL,
 	"Position" INTEGER,
-	CONSTRAINT "FK_Variable_Configuration_ConfigurationId" FOREIGN KEY("ConfigurationId") REFERENCES "Configurations" ( "Id" )
+	CONSTRAINT "FK_Variable_Configuration_ConfigurationId" FOREIGN KEY("ConfigurationId") REFERENCES "Configurations" ("Id")
 );
 
 --
@@ -113,14 +113,14 @@ CREATE TABLE "Classes" (
 	"Name" TEXT NOT NULL,
 	"PluralizedName" TEXT NOT NULL,
 	"IsAbstract" INTEGER NOT NULL,
-	CONSTRAINT "FK_Class_Class_ClassId" FOREIGN KEY("ClassId") REFERENCES "Classes"("Id")
+	CONSTRAINT "FK_Class_Class_ClassId" FOREIGN KEY("ClassId") REFERENCES "Classes" ("Id")
 );
 CREATE TABLE "Tabs" (
 	"Id" INTEGER NOT NULL CONSTRAINT "PK_Tab" PRIMARY KEY AUTOINCREMENT,
 	"ClassId" INTEGER NOT NULL,
 	"Name" TEXT NOT NULL,
 	"Position" INTEGER,
-	CONSTRAINT "FK_Tab_Class_ClassId" FOREIGN KEY("ClassId") REFERENCES "Classes" ( "Id" )
+	CONSTRAINT "FK_Tab_Class_ClassId" FOREIGN KEY("ClassId") REFERENCES "Classes" ("Id")
 );
 CREATE TABLE "DataTypes" (
 	"Id" INTEGER NOT NULL CONSTRAINT "PK_DataType" PRIMARY KEY AUTOINCREMENT,
@@ -128,6 +128,22 @@ CREATE TABLE "DataTypes" (
 	"JavaScriptEditorClassName" TEXT NOT NULL,
 	"Name" TEXT NOT NULL,
 	"Position" INTEGER
+);
+CREATE TABLE "DataTypeParameters" (
+	"Id" INTEGER NOT NULL CONSTRAINT "PK_DataTypeParameter" PRIMARY KEY AUTOINCREMENT,
+	"DataTypeId" INT NOT NULL,
+	"JavaScriptEditorClassName" TEXT NOT NULL,
+	"Code" TEXT NOT NULL,
+	"Name" TEXT NOT NULL,
+	CONSTRAINT "FK_DataTypeParameter_DataType_DataTypeId" FOREIGN KEY("DataTypeId") REFERENCES "DataTypes" ("Id")
+);
+CREATE TABLE "DataTypeParameterValues" (
+	"Id" INTEGER NOT NULL CONSTRAINT "PK_DataTypeParameterValue" PRIMARY KEY AUTOINCREMENT,
+	"DataTypeParameterId" INT NOT NULL,
+	"MemberId" INT NOT NULL,
+	"Value" TEXT NOT NULL,
+	CONSTRAINT "FK_DataTypeParameterValue_DataTypeParameter_DataTypeParameterId" FOREIGN KEY("DataTypeParameterId") REFERENCES "DataTypeParameters" ("Id"),
+	CONSTRAINT "FK_DataTypeParameterValue_Member_MemberId" FOREIGN KEY("MemberId") REFERENCES "Members" ("Id")
 );
 CREATE TABLE "Members" (
 	"Id" INTEGER NOT NULL CONSTRAINT "PK_Member" PRIMARY KEY AUTOINCREMENT,
@@ -141,15 +157,15 @@ CREATE TABLE "Members" (
 	"IsPropertyVisibleInList" INTEGER,
 	"RelationClassId" INTEGER,
 	"IsRelationSingleParent" INTEGER,
-	CONSTRAINT "FK_Member_Class_ClassId" FOREIGN KEY("ClassId") REFERENCES "Classes" ( "Id" ),
-	CONSTRAINT "FK_Member_Tab_TabId" FOREIGN KEY("TabId") REFERENCES "Tabs" ( "Id" ),
-	CONSTRAINT "FK_Member_DataType_PropertyDataTypeId" FOREIGN KEY("PropertyDataTypeId") REFERENCES "DataTypes" ( "Id" ),
-	CONSTRAINT "FK_Member_Class_RelationClassId" FOREIGN KEY("RelationClassId") REFERENCES "Classes" ( "Id" )
+	CONSTRAINT "FK_Member_Class_ClassId" FOREIGN KEY("ClassId") REFERENCES "Classes" ("Id"),
+	CONSTRAINT "FK_Member_Tab_TabId" FOREIGN KEY("TabId") REFERENCES "Tabs" ("Id"),
+	CONSTRAINT "FK_Member_DataType_PropertyDataTypeId" FOREIGN KEY("PropertyDataTypeId") REFERENCES "DataTypes" ("Id"),
+	CONSTRAINT "FK_Member_Class_RelationClassId" FOREIGN KEY("RelationClassId") REFERENCES "Classes" ("Id")
 );
 CREATE TABLE "Objects" (
 	"Id" INTEGER NOT NULL CONSTRAINT "PK_Object" PRIMARY KEY AUTOINCREMENT,
 	"ClassId" INTEGER NOT NULL,
-	CONSTRAINT "FK_Object_Class_ClassId" FOREIGN KEY("ClassId") REFERENCES "Classes" ( "Id" )
+	CONSTRAINT "FK_Object_Class_ClassId" FOREIGN KEY("ClassId") REFERENCES "Classes" ("Id")
 );
 CREATE TABLE "Properties" (
 	"Id" INTEGER NOT NULL CONSTRAINT "PK_Property" PRIMARY KEY AUTOINCREMENT,
@@ -216,9 +232,9 @@ CREATE TABLE "MenuItems" (
 	"NameId" INTEGER NOT NULL,
 	"Url" TEXT,
 	"Position" INTEGER,
-	CONSTRAINT "FK_MenuItem_Menu_MenuId" FOREIGN KEY("MenuId") REFERENCES "Menus" ( "Id" ),
-	CONSTRAINT "FK_MenuItem_MenuItem_MenuItemId" FOREIGN KEY("MenuItemId") REFERENCES "MenuItems" ( "Id" ),
-	CONSTRAINT "FK_MenuItem_Dictionary_NameId" FOREIGN KEY("NameId") REFERENCES "Dictionaries" ( "Id" )
+	CONSTRAINT "FK_MenuItem_Menu_MenuId" FOREIGN KEY("MenuId") REFERENCES "Menus" ("Id"),
+	CONSTRAINT "FK_MenuItem_MenuItem_MenuItemId" FOREIGN KEY("MenuItemId") REFERENCES "MenuItems" ("Id"),
+	CONSTRAINT "FK_MenuItem_Dictionary_NameId" FOREIGN KEY("NameId") REFERENCES "Dictionaries" ("Id")
 );
 CREATE TABLE "SerializedMenus" (
 	"CultureId" INTEGER NOT NULL,

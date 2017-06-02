@@ -26,6 +26,7 @@ namespace Platformus.Domain.Backend.ViewModels.DataTypes
         Grid = new GridViewModelFactory(this.RequestHandler).Create(
           orderBy, direction, skip, take, dataTypeRepository.Count(filter),
           new[] {
+            new GridColumnViewModelFactory(this.RequestHandler).Create("Storage data type", "StorageDataType"),
             new GridColumnViewModelFactory(this.RequestHandler).Create("Name", "Name"),
             new GridColumnViewModelFactory(this.RequestHandler).Create("Data type parameters"),
             new GridColumnViewModelFactory(this.RequestHandler).Create("Position", "Position"),

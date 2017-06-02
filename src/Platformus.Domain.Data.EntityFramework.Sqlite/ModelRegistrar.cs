@@ -57,7 +57,7 @@ namespace Platformus.Domain.Data.EntityFramework.Sqlite
         {
           etb.HasKey(e => e.Id);
           etb.Property(e => e.Id).ValueGeneratedOnAdd();
-          etb.Property(e => e.Value).IsRequired().HasMaxLength(64);
+          etb.Property(e => e.Value).IsRequired().HasMaxLength(1024);
           etb.ForSqliteToTable("DataTypeParameterValues");
         }
       );
