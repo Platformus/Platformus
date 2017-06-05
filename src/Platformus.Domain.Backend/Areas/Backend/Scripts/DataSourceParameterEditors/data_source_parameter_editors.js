@@ -3,19 +3,21 @@
 
 (function (platformus) {
   platformus.dataSourceParameterEditors = platformus.dataSourceParameterEditors || [];
-  platformus.dataSourceParameterEditors.sync = function (dataSources, cSharpClassName) {
+  platformus.dataSourceParameterEditors.sync = function (cSharpClassName) {
     var dataSourceParameterEditors = $("#dataSourceParameterEditors").html(platformus.string.empty);
 
     dataSourceParameterEditors.html(platformus.string.empty);
 
-    var dataSource = getDataSource(dataSources, cSharpClassName);
+    var dataSource = getDataSource(cSharpClassName);
 
     for (var i = 0; i < dataSource.dataSourceParameters.length; i++) {
-      platformus.dataSourceParameterEditors.temp.create(dataSourceParameterEditors, dataSource.dataSourceParameters[i]);
+      var f = platformus.dataSourceParameterEditors[dataSource.dataSourceParameters[i].javaScriptEditorClassName]["create"];
+
+      f.call(this, dataSourceParameterEditors, dataSource.dataSourceParameters[i]);
     }
   };
 
-  function getDataSource(dataSources, cSharpClassName) {
+  function getDataSource(cSharpClassName) {
     for (var i = 0; i < dataSources.length; i++) {
       if (dataSources[i].cSharpClassName == cSharpClassName) {
         return dataSources[i];

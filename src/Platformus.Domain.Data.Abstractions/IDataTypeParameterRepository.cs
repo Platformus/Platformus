@@ -11,6 +11,7 @@ namespace Platformus.Domain.Data.Abstractions
   {
     DataTypeParameter WithKey(int id);
     IEnumerable<DataTypeParameter> All();
+    IEnumerable<DataTypeParameter> FilteredByDataTypeId(int dataTypeId);
     IEnumerable<DataTypeParameter> FilteredByDataTypeIdRange(int dataTypeId, string orderBy, string direction, int skip, int take, string filter);
     void Create(DataTypeParameter dataTypeParameter);
     void Edit(DataTypeParameter dataTypeParameter);

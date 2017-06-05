@@ -23,6 +23,8 @@
       <drop-down-list-field asp-for="PropertyDataTypeId" asp-options="@Model.PropertyDataTypeOptions" onchange="platformus.ui.propertyDataTypeIdChanged();" />
       <checkbox-field asp-for="IsPropertyLocalizable" />
       <checkbox-field asp-for="IsPropertyVisibleInList" />
+      <div id="dataTypeParameterEditors"></div>
+      <input id="parameters" name="parameters" type="hidden" value="" />
     </div>
     <div id="tabPageRelation" class="tab-pages__tab-page">
       <drop-down-list-field asp-for="RelationClassId" asp-options="@Model.RelationClassOptions" onchange="platformus.ui.relationClassIdChanged();" />
@@ -34,9 +36,10 @@
     <a class="buttons__button button button--neutral" href="@this.Context.Request.CombineUrl("/backend/members")">Cancel</a>
   </div>
 </form>
-@section startUpScript {
+<script>
   var dataTypes = @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(this.Model.DataTypes));
-
+</script>
+@section startUpScript {
   platformus.ui.propertyDataTypeIdChanged();
   platformus.ui.relationClassIdChanged();
 }

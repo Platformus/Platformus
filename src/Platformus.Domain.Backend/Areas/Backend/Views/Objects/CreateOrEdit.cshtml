@@ -18,8 +18,22 @@
     <a class="buttons__button button button--neutral" href="@this.Context.Request.CombineUrl("/backend/objects")">Cancel</a>
   </div>
 </form>
-@section startUpScript {
+<script>
   var membersByTabs = @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(this.Model.MembersByTabs));
-
-  platformus.memberEditors.create(membersByTabs);
-}
+</script>
+@*@section startUpScript {
+  platformus.memberEditors.create();
+}*@
+<script>
+  (function (platformus) {
+    platformus.initializers = platformus.initializers || [];
+    platformus.initializers.push(
+      {
+        action: function () {
+          platformus.memberEditors.create();
+        },
+        priority: -1000
+      }
+    );
+  })(window.platformus = window.platformus || {});
+</script>

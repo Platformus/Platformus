@@ -23,6 +23,11 @@ namespace Platformus.Domain.Data.EntityFramework.PostgreSql
       return this.dbSet.OrderBy(dtp => dtp.Name);
     }
 
+    public IEnumerable<DataTypeParameter> FilteredByDataTypeId(int dataTypeId)
+    {
+      return this.dbSet.Where(dtp => dtp.DataTypeId == dataTypeId).OrderBy(dtp => dtp.Name);
+    }
+
     public IEnumerable<DataTypeParameter> FilteredByDataTypeIdRange(int dataTypeId, string orderBy, string direction, int skip, int take, string filter)
     {
       return this.GetFilteredDataTypeParameters(dbSet, dataTypeId, filter).OrderBy(orderBy, direction).Skip(skip).Take(take);

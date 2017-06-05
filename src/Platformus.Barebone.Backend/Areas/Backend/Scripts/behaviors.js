@@ -10,7 +10,7 @@
           platformus.behaviors[i]();
         }
       },
-      priority: 10000
+      priority: 0
     }
   );
 })(window.platformus = window.platformus || {});

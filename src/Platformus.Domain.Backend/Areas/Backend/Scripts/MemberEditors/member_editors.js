@@ -3,7 +3,7 @@
 
 (function (platformus) {
   platformus.memberEditors = platformus.memberEditors || [];
-  platformus.memberEditors.create = function (membersByTabs) {
+  platformus.memberEditors.create = function () {
     var tabs = $("#tabs");
     var tabPages = $("#tabPages");
 

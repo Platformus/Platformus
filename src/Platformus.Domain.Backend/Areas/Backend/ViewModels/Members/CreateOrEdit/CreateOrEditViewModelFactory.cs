@@ -5,7 +5,6 @@ using System.Collections.Generic;
 using System.Linq;
 using Platformus.Barebone;
 using Platformus.Barebone.Backend;
-using Platformus.Domain.Backend.ViewModels.Shared;
 using Platformus.Domain.Data.Abstractions;
 using Platformus.Domain.Data.Models;
 using Platformus.Globalization.Backend.ViewModels;
@@ -96,7 +95,19 @@ namespace Platformus.Domain.Backend.ViewModels.Members
     private IEnumerable<dynamic> GetDataTypes()
     {
       return this.RequestHandler.Storage.GetRepository<IDataTypeRepository>().All().ToList().Select(
-        dt => new { id = dt.Id, storageDataType = dt.StorageDataType }
+        dt => new
+        {
+          id = dt.Id,
+          storageDataType = dt.StorageDataType,
+          dataTypeParameters = this.RequestHandler.Storage.GetRepository<IDataTypeParameterRepository>().FilteredByDataTypeId(dt.Id).Select(
+            dtp => new
+            {
+              javaScriptEditorClassName = dtp.JavaScriptEditorClassName,
+              code = dtp.Code,
+              name = dtp.Name
+            }
+          )
+        }
       );
     }
   }

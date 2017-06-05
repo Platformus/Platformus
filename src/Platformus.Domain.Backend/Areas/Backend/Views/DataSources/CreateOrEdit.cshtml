@@ -18,8 +18,9 @@
     <a class="buttons__button button button--neutral" href="@this.Context.Request.CombineUrl("/backend/datasources")">Cancel</a>
   </div>
 </form>
-@section startUpScript {
+<script>
   var dataSources = @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(this.Model.DataSources));
-
+</script>
+@section startUpScript {
   platformus.ui.dataSourceCSharpClassNameChanged();
 }

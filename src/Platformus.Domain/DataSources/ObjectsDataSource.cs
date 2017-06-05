@@ -18,7 +18,9 @@ namespace Platformus.Domain.DataSources
       {
         return new DataSourceParameter[]
         {
-          new DataSourceParameter("ClassId", "Class ID", "temp")
+          new DataSourceParameter("ClassId", "Class ID", "temp"),
+          new DataSourceParameter("SortingMemberId", "Sorting member ID", "temp"),
+          new DataSourceParameter("SortingDirection", "Sorting direction", "temp")
         };
       }
     }
@@ -28,11 +30,11 @@ namespace Platformus.Domain.DataSources
       if (!this.HasArgument(args, "ClassId"))
         return new SerializedObject[] { };
 
-      if (!this.HasArgument(args, "OrderBy") || !this.HasArgument(args, "Direction"))
+      if (!this.HasArgument(args, "SortingMemberId") || !this.HasArgument(args, "SortingDirection"))
         return requestHandler.Storage.GetRepository<ISerializedObjectRepository>().FilteredByClassId(CultureManager.GetCurrentCulture(requestHandler.Storage).Id, this.GetIntArgument(args, "ClassId")).ToList();
 
-      int orderBy = this.GetIntArgument(args, "OrderBy");
-      string direction = this.GetStringArgument(args, "Direction");
+      int orderBy = this.GetIntArgument(args, "SortingMemberId");
+      string direction = this.GetStringArgument(args, "SortingDirection");
       Member member = requestHandler.Storage.GetRepository<IMemberRepository>().WithKey(orderBy);
       DataType dataType = requestHandler.Storage.GetRepository<IDataTypeRepository>().WithKey((int)member.PropertyDataTypeId);
 
@@ -44,11 +46,11 @@ namespace Platformus.Domain.DataSources
       if (!this.HasArgument(args, "ClassId"))
         return new Object[] { };
 
-      if (!this.HasArgument(args, "OrderBy") || !this.HasArgument(args, "Direction"))
+      if (!this.HasArgument(args, "SortingMemberId") || !this.HasArgument(args, "SortingDirection"))
         return requestHandler.Storage.GetRepository<IObjectRepository>().FilteredByClassId(this.GetIntArgument(args, "ClassId")).ToList();
 
-      int orderBy = this.GetIntArgument(args, "OrderBy");
-      string direction = this.GetStringArgument(args, "Direction");
+      int orderBy = this.GetIntArgument(args, "SortingMemberId");
+      string direction = this.GetStringArgument(args, "SortingDirection");
       Member member = requestHandler.Storage.GetRepository<IMemberRepository>().WithKey(orderBy);
       DataType dataType = requestHandler.Storage.GetRepository<IDataTypeRepository>().WithKey((int)member.PropertyDataTypeId);
 

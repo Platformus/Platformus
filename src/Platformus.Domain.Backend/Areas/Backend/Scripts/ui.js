@@ -6,7 +6,7 @@
   platformus.ui.dataSourceCSharpClassNameChanged = function () {
     var cSharpClassName = getSelectedDataSourceCSharpClassName();
 
-    platformus.dataSourceParameterEditors.sync(dataSources, cSharpClassName);
+    platformus.dataSourceParameterEditors.sync(cSharpClassName);
   };
 
   platformus.ui.propertyDataTypeIdChanged = function () {
@@ -28,6 +28,8 @@
 
       $("#isPropertyVisibleInList").show();
     }
+
+    platformus.dataTypeParameterEditors.sync(propertyDataTypeId);
   };
 
   platformus.ui.relationClassIdChanged = function () {
