@@ -8,6 +8,8 @@ namespace Platformus.Domain.Data.Abstractions
 {
   public interface IDataTypeParameterValueRepository : IRepository
   {
+    DataTypeParameterValue WithDataTypeParameterIdAndMemberId(int dataTypeParameterId, int memberId);
     void Create(DataTypeParameterValue dataTypeParameterValue);
+    void Edit(DataTypeParameterValue dataTypeParameterValue);
   }
 }

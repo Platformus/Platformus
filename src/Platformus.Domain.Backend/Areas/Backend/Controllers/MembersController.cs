@@ -43,6 +43,7 @@ namespace Platformus.Domain.Backend.Controllers
         else this.Storage.GetRepository<IMemberRepository>().Edit(member);
 
         this.Storage.Save();
+        this.CreateOrEditDataTypeParameterValues(member);
         return this.Redirect(this.Request.CombineUrl("/backend/members"));
       }
 
@@ -56,6 +57,37 @@ namespace Platformus.Domain.Backend.Controllers
       this.Storage.GetRepository<IMemberRepository>().Delete(member);
       this.Storage.Save();
       return this.Redirect(string.Format("/backend/members?classid={0}", member.ClassId));
+    }
+
+    private void CreateOrEditDataTypeParameterValues(Member member)
+    {
+      IDataTypeParameterValueRepository dataTypeParameterValueRepository = this.Storage.GetRepository<IDataTypeParameterValueRepository>();
+
+      foreach (string key in this.Request.Form.Keys)
+      {
+        if (key.StartsWith("dataTypeParameter"))
+        {
+          int dataTypeParameterId = int.Parse(key.Replace("dataTypeParameter", string.Empty));
+          DataTypeParameterValue dataTypeParameterValue = dataTypeParameterValueRepository.WithDataTypeParameterIdAndMemberId(dataTypeParameterId, member.Id);
+
+          if (dataTypeParameterValue == null)
+          {
+            dataTypeParameterValue = new DataTypeParameterValue();
+            dataTypeParameterValue.DataTypeParameterId = dataTypeParameterId;
+            dataTypeParameterValue.MemberId = member.Id;
+            dataTypeParameterValue.Value = this.Request.Form[key];
+            dataTypeParameterValueRepository.Create(dataTypeParameterValue);
+          }
+
+          else
+          {
+            dataTypeParameterValue.Value = this.Request.Form[key];
+            dataTypeParameterValueRepository.Edit(dataTypeParameterValue);
+          }
+        }
+      }
+
+      this.Storage.Save();
     }
   }
 }

@@ -3,8 +3,8 @@
 
 (function (platformus) {
   var _destinationImageBaseUrl = "/images/";
-  var _destinationWidth = -1;
-  var _destinationHeight = -1;
+  var _destinationWidth = null;
+  var _destinationHeight = null;
   var _callback = null;
   var _isCropping = false;
   var _isMoving = false;
@@ -62,8 +62,8 @@
               );
 
               var frame = $("<div>").addClass("image-uploader-pop-up-form__image-cropper-frame").attr("id", "imageCropperFrame").appendTo(imageCropper);
-              var width = 100;
-              var height = 100;
+              var width = _destinationWidth == null ? 100 : _destinationWidth;
+              var height = _destinationHeight == null ? 100 : _destinationHeight;
 
               if (width > image.width()) {
                 var factor = image.width() / width;
@@ -150,8 +150,8 @@
         sourceWidth: width,
         sourceHeight: height,
         destinationImageBaseUrl: _destinationImageBaseUrl,
-        destinationWidth: _destinationWidth == -1 ? width : _destinationWidth,
-        destinationHeight: _destinationHeight == -1 ? height : _destinationHeight
+        destinationWidth: _destinationWidth == null ? width : _destinationWidth,
+        destinationHeight: _destinationHeight == null ? height : _destinationHeight
       },
       function (result) {
         if (_callback != null) {
@@ -277,7 +277,7 @@
           var xOffset = e.pageX - _x;
           var yOffset = e.pageY - _y;
 
-          if (_width == null && _height == null) {
+          if (_destinationWidth == null && _destinationHeight == null) {
             var width = _frameWidth + xOffset;
 
             if (frame.position().left + width > image.width() - 1) {

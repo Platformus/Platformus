@@ -71,7 +71,10 @@ namespace Platformus.Domain.Backend.ViewModels.Objects
               name = member.Name,
               propertyDataType = member.PropertyDataTypeId == null ? null : new
               {
-                javaScriptEditorClassName = this.RequestHandler.Storage.GetRepository<IDataTypeRepository>().WithKey((int)member.PropertyDataTypeId).JavaScriptEditorClassName
+                javaScriptEditorClassName = this.RequestHandler.Storage.GetRepository<IDataTypeRepository>().WithKey((int)member.PropertyDataTypeId).JavaScriptEditorClassName,
+                dataTypeParameters = this.RequestHandler.Storage.GetRepository<IDataTypeParameterRepository>().FilteredByDataTypeId((int)member.PropertyDataTypeId).Select(
+                  dtp => new { code = dtp.Code, value = this.RequestHandler.Storage.GetRepository<IDataTypeParameterValueRepository>().WithDataTypeParameterIdAndMemberId(dtp.Id, member.Id)?.Value }
+                )
               },
               isPropertyLocalizable = member.PropertyDataTypeId == null ? null : member.IsPropertyLocalizable,
               property = member.PropertyDataTypeId == null ? null : this.GetProperty(member, @object, objectId),

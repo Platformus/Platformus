@@ -4,7 +4,6 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using Platformus.Barebone.Backend;
-using Platformus.Domain.Backend.ViewModels.Shared;
 using Platformus.Globalization.Backend.ViewModels;
 
 namespace Platformus.Domain.Backend.ViewModels.Members

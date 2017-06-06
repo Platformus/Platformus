@@ -46,7 +46,7 @@ namespace Platformus.Domain.Backend.ViewModels.Members
         RelationClassId = member.RelationClassId,
         RelationClassOptions = this.GetRelationClassOptions(),
         IsRelationSingleParent = member.IsRelationSingleParent == true,
-        DataTypes = this.GetDataTypes()
+        DataTypes = this.GetDataTypes(member.Id)
       };
     }
 
@@ -92,7 +92,7 @@ namespace Platformus.Domain.Backend.ViewModels.Members
       return options;
     }
 
-    private IEnumerable<dynamic> GetDataTypes()
+    private IEnumerable<dynamic> GetDataTypes(int? memberId = null)
     {
       return this.RequestHandler.Storage.GetRepository<IDataTypeRepository>().All().ToList().Select(
         dt => new
@@ -102,9 +102,11 @@ namespace Platformus.Domain.Backend.ViewModels.Members
           dataTypeParameters = this.RequestHandler.Storage.GetRepository<IDataTypeParameterRepository>().FilteredByDataTypeId(dt.Id).Select(
             dtp => new
             {
+              id = dtp.Id,
               javaScriptEditorClassName = dtp.JavaScriptEditorClassName,
               code = dtp.Code,
-              name = dtp.Name
+              name = dtp.Name,
+              value = this.RequestHandler.Storage.GetRepository<IDataTypeParameterValueRepository>().WithDataTypeParameterIdAndMemberId(dtp.Id, (int)memberId)?.Value
             }
           )
         }

@@ -63,8 +63,8 @@
       function () {
         new platformus.forms.imageUploaderForm.show(
           "/images/objects/",
-          -1,
-          -1,
+          platformus.memberEditors.base.getDataTypeParameterValue(member, "Width", null),
+          platformus.memberEditors.base.getDataTypeParameterValue(member, "Height", null),
           function (imageUrl) {
             $("#" + identity).val(imageUrl);
             $("#" + identity + "Image").attr("src", imageUrl).show();

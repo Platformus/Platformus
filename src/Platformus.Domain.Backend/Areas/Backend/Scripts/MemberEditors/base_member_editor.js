@@ -4,6 +4,21 @@
 (function (platformus) {
   platformus.memberEditors = platformus.memberEditors || [];
   platformus.memberEditors.base = {};
+  platformus.memberEditors.base.getDataTypeParameterValue = function (member, code, defaultValue) {
+    for (var i = 0; i < member.propertyDataType.dataTypeParameters.length; i++) {
+      if (member.propertyDataType.dataTypeParameters[i].code == code) {
+        var value = member.propertyDataType.dataTypeParameters[i].value;
+
+        if (platformus.string.isNullOrEmpty(value))
+          return defaultValue;
+
+        return value;
+      }
+    }
+
+    return defaultValue;
+  };
+
   platformus.memberEditors.base.createLabel = function (member) {
     return $("<label>").addClass("field__label").addClass("label").html(member.name);
   };

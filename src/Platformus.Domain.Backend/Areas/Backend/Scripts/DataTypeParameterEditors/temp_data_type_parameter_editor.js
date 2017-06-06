@@ -17,14 +17,14 @@
   }
 
   function createTextBox(dataTypeParameter) {
-    var identity = dataTypeParameter.code;
+    var identity = "dataTypeParameter" + dataTypeParameter.id;
     var textBox = $("<input>").addClass("field__text-box");
 
     return textBox
       .addClass("text-box")
+      .attr("id", identity)
+      .attr("name", identity)
       .attr("type", "text")
-      .attr("value", platformus.dataTypeParameterEditors.base.dataTypeParameterValue(dataTypeParameter.code))
-      .attr("data-datatype-parameter-code", dataTypeParameter.code)
-      .change(platformus.dataTypeParameterEditors.base.dataTypeParameterChanged);
+      .attr("value", dataTypeParameter.value);
   }
 })(window.platformus = window.platformus || {});
