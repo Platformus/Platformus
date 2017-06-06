@@ -8,7 +8,7 @@
       <a class="buttons__button buttons__button--minor button button--positive button--minor" href="/backend/forms/edit/@Model.Id">Edit</a>
       <a class="buttons__button buttons__button--minor button button--negative button--minor button--delete" href="#" onclick="return platformus.forms.deleteForm.show('/backend/forms/delete/@Model.Id');"></a>
     </div>
-    @Model.Name
+    @Model.Name <span class="marker marker--neutral">@Model.Email</span>
   </div>
   <div class="tree__node-content">
     @foreach (var field in this.Model.Fields)

@@ -29,8 +29,9 @@ namespace Platformus.Forms.Backend.ViewModels.Forms
       {
         Id = form.Id,
         Code = form.Code,
+        NameLocalizations = this.GetLocalizations(form.NameId),
         Email = form.Email,
-        NameLocalizations = this.GetLocalizations(form.NameId)
+        RedirectUrl = form.RedirectUrl
       };
     }
   }

@@ -255,6 +255,7 @@ CREATE TABLE "Forms" (
 	"Code" TEXT NOT NULL,
 	"NameId" INTEGER NOT NULL,
 	"Email" TEXT NOT NULL,
+	"RedirectUrl" TEXT NOT NULL,
 	CONSTRAINT "FK_Form_Dictionary_NameId" FOREIGN KEY ("NameId") REFERENCES "Dictionaries" ("Id")
 );
 CREATE TABLE "FieldTypes" (

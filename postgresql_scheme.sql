@@ -446,6 +446,7 @@ CREATE TABLE "Forms" (
     "Code" text NOT NULL,
     "NameId" integer NOT NULL,
     "Email" text NOT NULL,
+	"RedirectUrl" text NOT NULL,
     CONSTRAINT "PK_Forms" PRIMARY KEY ("Id"),
     CONSTRAINT "FK_Forms_Dictionaries" FOREIGN KEY ("NameId")
         REFERENCES public."Dictionaries" ("Id") MATCH SIMPLE

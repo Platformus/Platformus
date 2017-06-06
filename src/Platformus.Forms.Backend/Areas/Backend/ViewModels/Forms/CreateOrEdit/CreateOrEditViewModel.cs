@@ -18,16 +18,21 @@ namespace Platformus.Forms.Backend.ViewModels.Forms
     [StringLength(32)]
     public string Code { get; set; }
 
-    [Display(Name = "Email")]
-    [Required]
-    [StringLength(64)]
-    public string Email { get; set; }
-
     [Multilingual]
     [Display(Name = "Name")]
     [Required]
     [StringLength(64)]
     public string Name { get; set; }
     public IEnumerable<Localization> NameLocalizations { get; set; }
+
+    [Display(Name = "Email")]
+    [Required]
+    [StringLength(64)]
+    public string Email { get; set; }
+
+    [Display(Name = "Sent URL")]
+    [Required]
+    [StringLength(128)]
+    public string RedirectUrl { get; set; }
   }
 }

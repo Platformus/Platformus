@@ -2,7 +2,7 @@
 // Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information.
 
 using System;
-using System.Linq;
+using System.Globalization;
 using System.Text;
 using ExtCore.Data.Abstractions;
 using MailKit.Net.Smtp;
@@ -13,7 +13,6 @@ using MimeKit;
 using Platformus.Configurations;
 using Platformus.Forms.Data.Abstractions;
 using Platformus.Forms.Data.Models;
-using Platformus.Globalization.Data.Abstractions;
 
 namespace Platformus.Forms.Frontend.Controllers
 {
@@ -46,12 +45,7 @@ namespace Platformus.Forms.Frontend.Controllers
       {
         string value = this.Request.Form[string.Format("field{0}", field.Id)];
 
-        // TODO: change the way the localized value is retrieved
-        body.AppendFormat(
-          "<p>{0}: {1}</p>",
-          this.Storage.GetRepository<ILocalizationRepository>().FilteredByDictionaryId(field.NameId).First().Value,
-          value
-        );
+        body.AppendFormat("<p>{0}: {1}</p>", this.GetLocalizationValue(field.NameId), value);
 
         CompletedField completedField = new CompletedField();
 
@@ -64,13 +58,12 @@ namespace Platformus.Forms.Frontend.Controllers
       this.Storage.Save();
       this.SendEmail(form, body.ToString());
 
-      // TODO: add RedirectUrl property to the Form class
-      string referer = this.Request.Headers["Referer"];
+      string redirectUrl = form.RedirectUrl;
 
-      if (string.IsNullOrEmpty(referer))
-        referer = "/";
+      if (this.configurationRoot["Globalization:SpecifyCultureInUrl"] == "yes")
+        redirectUrl = "/" + CultureInfo.CurrentCulture.TwoLetterISOLanguageName + redirectUrl;
 
-      return this.Redirect(referer);
+      return this.Redirect(redirectUrl);
     }
 
     // TODO: we shouldn't use MailKit directly, need to replace with the service instead
@@ -90,9 +83,7 @@ namespace Platformus.Forms.Frontend.Controllers
 
       message.From.Add(new MailboxAddress(smtpSenderName, smtpSenderEmail));
       message.To.Add(new MailboxAddress(form.Email, form.Email));
-
-      // TODO: change the way the localized name is retrieved
-      message.Subject = string.Format("{0} form data", this.Storage.GetRepository<ILocalizationRepository>().FilteredByDictionaryId(form.NameId).First().Value);
+      message.Subject = string.Format("{0} form data", this.GetLocalizationValue(form.NameId));
 
       BodyBuilder bodyBuilder = new BodyBuilder();
 

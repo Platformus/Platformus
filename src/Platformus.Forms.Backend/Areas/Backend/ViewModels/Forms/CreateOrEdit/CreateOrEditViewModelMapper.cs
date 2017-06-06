@@ -24,6 +24,7 @@ namespace Platformus.Forms.Backend.ViewModels.Forms
 
       form.Code = createOrEdit.Code;
       form.Email = createOrEdit.Email;
+      form.RedirectUrl = createOrEdit.RedirectUrl;
       return form;
     }
   }
