@@ -2,6 +2,7 @@
 // Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information.
 
 using System.Collections.Generic;
+using Newtonsoft.Json.Linq;
 using Platformus.Barebone;
 using Platformus.Domain.Data.Abstractions;
 using Platformus.Domain.Data.Models;
@@ -13,7 +14,7 @@ namespace Platformus.Domain
 {
   public class ObjectManipulator
   {
-    private System.Type type;
+    private string typeName;
     private int objectId;
     private Class @class;
     private IRequestHandler requestHandler;
@@ -39,13 +40,25 @@ namespace Platformus.Domain
 
     public void BeginCreateTransaction<T>()
     {
-      this.type = typeof(T);
+      this.typeName = typeof(T).Name;
+      this.objectId = this.CreateObject().Id;
+    }
+
+    public void BeginCreateTransaction(string typeName)
+    {
+      this.typeName = typeName;
       this.objectId = this.CreateObject().Id;
     }
 
     public void BeginEditTransaction<T>(int objectId)
     {
-      this.type = typeof(T);
+      this.typeName = typeof(T).Name;
+      this.objectId = objectId;
+    }
+
+    public void BeginEditTransaction(string typeName, int objectId)
+    {
+      this.typeName = typeName;
       this.objectId = objectId;
     }
 
@@ -101,10 +114,10 @@ namespace Platformus.Domain
       DataType dataType = this.dataTypeRepository.WithKey((int)member.PropertyDataTypeId);
 
       if (dataType.StorageDataType == StorageDataType.Integer)
-        property.IntegerValue = (int)value;
+        property.IntegerValue = value is JValue ? (value as JValue).Value<int>() : (int)value;
 
       else if (dataType.StorageDataType == StorageDataType.Decimal)
-        property.DecimalValue = (decimal)value;
+        property.DecimalValue = value is JValue ? (value as JValue).Value<decimal>() : (decimal)value;
 
       else if (dataType.StorageDataType == StorageDataType.String)
       {
@@ -114,11 +127,11 @@ namespace Platformus.Domain
         if (property.StringValueId == null)
           property.StringValueId = this.CreateDictionary().Id;
 
-        this.CreateLocalizations((int)property.StringValueId, value as IDictionary<string, string>);
+        this.CreateLocalizations((int)property.StringValueId, value is JArray ? this.GetValuesByCultureCodes(value as JArray) : value as IDictionary<string, string>);
       }
 
       else if (dataType.StorageDataType == StorageDataType.DateTime)
-        property.DateTimeValue = (System.DateTime)value;
+        property.DateTimeValue = value is JValue ? (value as JValue).Value<System.DateTime>() : (System.DateTime)value;
     }
 
     private void DeleteLocalizations(int dictionaryId)
@@ -156,7 +169,7 @@ namespace Platformus.Domain
     private Class GetClass()
     {
       if (this.@class == null)
-        this.@class = this.classRepository.WithCode(this.type.Name);
+        this.@class = this.classRepository.WithCode(this.typeName);
 
       return this.@class;
     }
@@ -174,6 +187,16 @@ namespace Platformus.Domain
     private Property GetProperty(int memberId)
     {
       return this.propertyRepository.WithObjectIdAndMemberId(this.objectId, memberId);
+    }
+
+    private IDictionary<string, string> GetValuesByCultureCodes(JArray array)
+    {
+      IDictionary<string, string> valuesByCultureCodes = new Dictionary<string, string>();
+
+      foreach (JObject item in array)
+        valuesByCultureCodes.Add(item.Property("cultureCode").Value.Value<string>(), item.Property("value").Value.Value<string>());
+
+      return valuesByCultureCodes;
     }
   }
 }

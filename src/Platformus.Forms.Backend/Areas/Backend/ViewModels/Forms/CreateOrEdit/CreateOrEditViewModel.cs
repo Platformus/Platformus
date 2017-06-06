@@ -30,7 +30,7 @@ namespace Platformus.Forms.Backend.ViewModels.Forms
     [StringLength(64)]
     public string Email { get; set; }
 
-    [Display(Name = "Sent URL")]
+    [Display(Name = "Redirect URL")]
     [Required]
     [StringLength(128)]
     public string RedirectUrl { get; set; }

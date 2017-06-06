@@ -7,6 +7,7 @@ using ExtCore.Data.Abstractions;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
+using Newtonsoft.Json.Linq;
 using Platformus.Domain.Data.Abstractions;
 using Platformus.Domain.Data.Models;
 
@@ -52,18 +53,36 @@ namespace Platformus.Domain.Api.Controllers
     }
 
     [HttpPost]
-    public void Post(string classCode, [FromBody]string value)
+    public void Post(string classCode, [FromBody]JObject @object)
     {
+      ObjectManipulator objectManipulator = new ObjectManipulator(this);
+
+      objectManipulator.BeginCreateTransaction(classCode);
+
+      foreach (JProperty property in @object.Properties())
+        objectManipulator.SetPropertyValue(property.Name, property.Value);
+
+      objectManipulator.CommitTransaction();
     }
 
     [HttpPut("{id}")]
-    public void Put(string classCode, int id, [FromBody]string value)
+    public void Put(string classCode, int id, [FromBody]JObject @object)
     {
+      ObjectManipulator objectManipulator = new ObjectManipulator(this);
+
+      objectManipulator.BeginEditTransaction(classCode, id);
+
+      foreach (JProperty property in @object.Properties())
+        objectManipulator.SetPropertyValue(property.Name, property.Value);
+
+      objectManipulator.CommitTransaction();
     }
 
     [HttpDelete("{id}")]
     public void Delete(string classCode, int id)
     {
+      this.Storage.GetRepository<IObjectRepository>().Delete(id);
+      this.Storage.Save();
     }
   }
 }
