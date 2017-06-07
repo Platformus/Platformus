@@ -49,5 +49,13 @@ INSERT INTO public."DataTypes" ("Id","StorageDataType","JavaScriptEditorClassNam
 INSERT INTO public."FieldTypes" ("Id","Code","Name","Position") VALUES (1,'TextBox','Text box',1);
 INSERT INTO public."FieldTypes" ("Id","Code","Name","Position") VALUES (2,'TextArea','Text area',2);
 INSERT INTO public."FieldTypes" ("Id","Code","Name","Position") VALUES (3,'DropDownList','Drop down list',3);
+INSERT INTO public."FieldTypes" ("Id","Code","Name","Position") VALUES (4,'FileUpload','File upload',4);
+INSERT INTO public."DataTypeParameters" ("Id","DataTypeId","JavaScriptEditorClassName","Code","Name") VALUES (1,1,'temp','IsRequired','Is required');
+INSERT INTO public."DataTypeParameters" ("Id","DataTypeId","JavaScriptEditorClassName","Code","Name") VALUES (2,1,'temp','MaxLength','Max length');
+INSERT INTO public."DataTypeParameters" ("Id","DataTypeId","JavaScriptEditorClassName","Code","Name") VALUES (3,2,'temp','IsRequired','Is required');
+INSERT INTO public."DataTypeParameters" ("Id","DataTypeId","JavaScriptEditorClassName","Code","Name") VALUES (4,2,'temp','MaxLength','Max length');
+INSERT INTO public."DataTypeParameters" ("Id","DataTypeId","JavaScriptEditorClassName","Code","Name") VALUES (5,4,'temp','Width','Width');
+INSERT INTO public."DataTypeParameters" ("Id","DataTypeId","JavaScriptEditorClassName","Code","Name") VALUES (6,4,'temp','Height','Height');
+INSERT INTO public."DataTypeParameters" ("Id","DataTypeId","JavaScriptEditorClassName","Code","Name") VALUES (7,5,'temp','IsRequired','Is required');
 
 COMMIT;

@@ -49,5 +49,13 @@ INSERT INTO "DataTypes" VALUES (5,'datetime','date','Date',5);
 INSERT INTO "FieldTypes" VALUES (1,'TextBox','Text box',1);
 INSERT INTO "FieldTypes" VALUES (2,'TextArea','Text area',2);
 INSERT INTO "FieldTypes" VALUES (3,'DropDownList','Drop down list',3);
+INSERT INTO "FieldTypes" VALUES (4,'FileUpload','File upload',4);
+INSERT INTO "DataTypeParameters" VALUES (1,1,'temp','IsRequired','Is required');
+INSERT INTO "DataTypeParameters" VALUES (2,1,'temp','MaxLength','Max length');
+INSERT INTO "DataTypeParameters" VALUES (3,2,'temp','IsRequired','Is required');
+INSERT INTO "DataTypeParameters" VALUES (4,2,'temp','MaxLength','Max length');
+INSERT INTO "DataTypeParameters" VALUES (5,4,'temp','Width','Width');
+INSERT INTO "DataTypeParameters" VALUES (6,4,'temp','Height','Height');
+INSERT INTO "DataTypeParameters" VALUES (7,5,'temp','IsRequired','Is required');
 
 COMMIT;

@@ -20,4 +20,8 @@
       }
     </select>
   }
+  else if (this.Model.FieldType.Code == "FileUpload")
+  {
+    <input id="field@(Model.Id)" name="field@(Model.Id)" type="file" />
+  }
 </div>

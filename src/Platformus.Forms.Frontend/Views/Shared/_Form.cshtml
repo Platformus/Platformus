@@ -2,7 +2,7 @@
 @* Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information. *@
 @model Platformus.Forms.Frontend.ViewModels.Shared.FormViewModel
 <div class="form">
-  <form asp-controller="Forms" asp-action="Send" method="post">
+  <form asp-controller="Forms" asp-action="Send" method="post" enctype="multipart/form-data">
     <input id="formId" name="formId" type="hidden" value="@Model.Id" />
     @foreach (var field in this.Model.Fields)
     {

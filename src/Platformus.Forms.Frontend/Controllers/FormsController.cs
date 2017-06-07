@@ -2,11 +2,14 @@
 // Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information.
 
 using System;
+using System.Collections.Generic;
 using System.Globalization;
+using System.IO;
 using System.Text;
 using ExtCore.Data.Abstractions;
 using MailKit.Net.Smtp;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using MimeKit;
@@ -33,6 +36,7 @@ namespace Platformus.Forms.Frontend.Controllers
     public IActionResult Send()
     {
       StringBuilder body = new StringBuilder();
+      Dictionary<string, byte[]> attachments = new Dictionary<string, byte[]>();
       Form form = this.Storage.GetRepository<IFormRepository>().WithKey(int.Parse(this.Request.Form["formId"]));
       CompletedForm completedForm = new CompletedForm();
 
@@ -43,20 +47,36 @@ namespace Platformus.Forms.Frontend.Controllers
 
       foreach (Field field in this.Storage.GetRepository<IFieldRepository>().FilteredByFormId(form.Id))
       {
-        string value = this.Request.Form[string.Format("field{0}", field.Id)];
+        FieldType fieldType = this.Storage.GetRepository<IFieldTypeRepository>().WithKey(field.FieldTypeId);
 
-        body.AppendFormat("<p>{0}: {1}</p>", this.GetLocalizationValue(field.NameId), value);
+        if (fieldType.Code == "FileUpload")
+        {
+          IFormFile file = this.Request.Form.Files[string.Format("field{0}", field.Id)];
+          string filename = file.FileName;
 
-        CompletedField completedField = new CompletedField();
+          if (!string.IsNullOrEmpty(filename) && filename.Contains("\\"))
+            filename = filename.Substring(filename.LastIndexOf("\\") + 1);
 
-        completedField.CompletedFormId = completedForm.Id;
-        completedField.FieldId = field.Id;
-        completedField.Value = value;
-        this.Storage.GetRepository<ICompletedFieldRepository>().Create(completedField);
+          attachments.Add(filename, this.GetBytesFromStream(file.OpenReadStream()));
+        }
+
+        else
+        {
+          string value = this.Request.Form[string.Format("field{0}", field.Id)];
+
+          body.AppendFormat("<p>{0}: {1}</p>", this.GetLocalizationValue(field.NameId), value);
+
+          CompletedField completedField = new CompletedField();
+
+          completedField.CompletedFormId = completedForm.Id;
+          completedField.FieldId = field.Id;
+          completedField.Value = value;
+          this.Storage.GetRepository<ICompletedFieldRepository>().Create(completedField);
+        }
       }
 
       this.Storage.Save();
-      this.SendEmail(form, body.ToString());
+      this.SendEmail(form, body.ToString(), attachments);
 
       string redirectUrl = form.RedirectUrl;
 
@@ -67,7 +87,7 @@ namespace Platformus.Forms.Frontend.Controllers
     }
 
     // TODO: we shouldn't use MailKit directly, need to replace with the service instead
-    private void SendEmail(Form form, string body)
+    private void SendEmail(Form form, string body, Dictionary<string, byte[]> attachments)
     {
       string smtpServer = this.configurationRoot["Email:SmtpServer"];
       string smtpPort = this.configurationRoot["Email:SmtpPort"];
@@ -88,6 +108,10 @@ namespace Platformus.Forms.Frontend.Controllers
       BodyBuilder bodyBuilder = new BodyBuilder();
 
       bodyBuilder.HtmlBody = body;
+
+      foreach (KeyValuePair<string, byte[]> attachment in attachments)
+        bodyBuilder.Attachments.Add(attachment.Key, attachment.Value);
+
       message.Body = bodyBuilder.ToMessageBody();
 
       try
@@ -103,6 +127,15 @@ namespace Platformus.Forms.Frontend.Controllers
       }
 
       catch { }
+    }
+
+    private byte[] GetBytesFromStream(Stream input)
+    {
+      using (MemoryStream output = new MemoryStream())
+      {
+        input.CopyTo(output);
+        return output.ToArray();
+      }
     }
   }
 }
