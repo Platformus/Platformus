@@ -3,6 +3,7 @@
 
 using ExtCore.Data.Abstractions;
 using ExtCore.Events;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Platformus.Barebone;
 using Platformus.Menus.Backend.ViewModels.Menus;
@@ -12,6 +13,7 @@ using Platformus.Menus.Data.Models;
 namespace Platformus.Menus.Backend.Controllers
 {
   [Area("Backend")]
+  [Authorize(Policy = Policies.HasBrowseMenusPermission)]
   public class MenusController : Platformus.Globalization.Backend.Controllers.ControllerBase
   {
     public MenusController(IStorage storage)

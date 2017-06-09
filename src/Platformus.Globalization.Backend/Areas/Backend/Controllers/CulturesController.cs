@@ -2,6 +2,7 @@
 // Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information.
 
 using ExtCore.Data.Abstractions;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Platformus.Globalization.Backend.ViewModels.Cultures;
 using Platformus.Globalization.Data.Abstractions;
@@ -10,6 +11,7 @@ using Platformus.Globalization.Data.Models;
 namespace Platformus.Globalization.Backend.Controllers
 {
   [Area("Backend")]
+  [Authorize(Policy = Policies.HasBrowseCulturesPermission)]
   public class CulturesController : ControllerBase
   {
     public CulturesController(IStorage storage)

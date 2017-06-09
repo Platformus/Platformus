@@ -15,6 +15,7 @@
   <ItemGroup>
     <ProjectReference Include="..\Platformus.Barebone\Platformus.Barebone.csproj" />
     <ProjectReference Include="..\Platformus.Configurations.Data.Abstractions\Platformus.Configurations.Data.Abstractions.csproj" />
+    <ProjectReference Include="..\Platformus.Security\Platformus.Security.csproj" />
   </ItemGroup>
 
   <ItemGroup>

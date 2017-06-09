@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using ExtCore.Data.Abstractions;
 using ExtCore.Events;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Platformus.Barebone;
 using Platformus.Domain.Backend.ViewModels.Objects;
@@ -16,6 +17,7 @@ using Platformus.Globalization.Data.Models;
 namespace Platformus.Domain.Backend.Controllers
 {
   [Area("Backend")]
+  [Authorize(Policy = Policies.HasBrowseObjectsPermission)]
   public class ObjectsController : Platformus.Globalization.Backend.Controllers.ControllerBase
   {
     public ObjectsController(IStorage storage)

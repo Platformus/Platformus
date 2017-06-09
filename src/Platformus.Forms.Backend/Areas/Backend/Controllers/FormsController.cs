@@ -3,6 +3,7 @@
 
 using ExtCore.Data.Abstractions;
 using ExtCore.Events;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Platformus.Barebone;
 using Platformus.Forms.Backend.ViewModels.Forms;
@@ -12,6 +13,7 @@ using Platformus.Forms.Data.Models;
 namespace Platformus.Forms.Backend.Controllers
 {
   [Area("Backend")]
+  [Authorize(Policy = Policies.HasBrowseFormsPermission)]
   public class FormsController : Platformus.Globalization.Backend.Controllers.ControllerBase
   {
     public FormsController(IStorage storage)

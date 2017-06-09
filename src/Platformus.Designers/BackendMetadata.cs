@@ -41,10 +41,10 @@ namespace Platformus.Designers
             4000,
             new BackendMenuItem[]
             {
-              new BackendMenuItem("/backend/views", "Views", 10000),
-              new BackendMenuItem("/backend/styles", "Styles", 11000),
-              new BackendMenuItem("/backend/scripts", "Scripts", 12000),
-              new BackendMenuItem("/backend/bundles", "Bundles", 13000)
+              new BackendMenuItem("/backend/views", "Views", 10000, new string[] { Permissions.BrowseViews }),
+              new BackendMenuItem("/backend/styles", "Styles", 11000, new string[] { Permissions.BrowseStyles }),
+              new BackendMenuItem("/backend/scripts", "Scripts", 12000, new string[] { Permissions.BrowseScripts }),
+              new BackendMenuItem("/backend/bundles", "Bundles", 13000, new string[] { Permissions.BrowseBundles })
             }
           )
         };

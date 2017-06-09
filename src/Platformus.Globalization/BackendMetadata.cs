@@ -19,7 +19,7 @@ namespace Platformus.Globalization
             3000,
             new BackendMenuItem[]
             {
-              new BackendMenuItem("/backend/cultures", "Cultures", 1000)
+              new BackendMenuItem("/backend/cultures", "Cultures", 1000, new string[] { Permissions.BrowseCultures })
             }
           )
         };

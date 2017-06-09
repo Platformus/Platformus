@@ -19,9 +19,9 @@ namespace Platformus.Security
             2000,
             new BackendMenuItem[]
             {
-              new BackendMenuItem("/backend/permissions", "Permissions", 1000),
-              new BackendMenuItem("/backend/roles", "Roles", 2000),
-              new BackendMenuItem("/backend/users", "Users", 3000)
+              new BackendMenuItem("/backend/permissions", "Permissions", 1000, new string[] { Permissions.BrowsePermissions }),
+              new BackendMenuItem("/backend/roles", "Roles", 2000, new string[] { Permissions.BrowseRoles }),
+              new BackendMenuItem("/backend/users", "Users", 3000, new string[] { Permissions.BrowseUsers })
             }
           )
         };

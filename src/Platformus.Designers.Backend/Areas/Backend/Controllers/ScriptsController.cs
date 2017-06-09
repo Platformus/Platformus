@@ -2,12 +2,14 @@
 // Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information.
 
 using ExtCore.Data.Abstractions;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Platformus.Designers.Backend.ViewModels.Scripts;
 
 namespace Platformus.Designers.Backend.Controllers
 {
   [Area("Backend")]
+  [Authorize(Policy = Policies.HasBrowseScriptsPermission)]
   public class ScriptsController : Platformus.Barebone.Backend.Controllers.ControllerBase
   {
     public ScriptsController(IStorage storage)

@@ -2,13 +2,14 @@
 // Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information.
 
 using ExtCore.Data.Abstractions;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Platformus.Designers.Backend;
 using Platformus.Designers.Backend.ViewModels.Bundles;
 
 namespace Platformus.Designers.Backend.Controllers
 {
   [Area("Backend")]
+  [Authorize(Policy = Policies.HasBrowseBundlesPermission)]
   public class BundlesController : Platformus.Barebone.Backend.Controllers.ControllerBase
   {
     public BundlesController(IStorage storage)

@@ -19,7 +19,7 @@ namespace Platformus.Configurations
             3000,
             new BackendMenuItem[]
             {
-              new BackendMenuItem("/backend/configurations", "Configurations", 4000)
+              new BackendMenuItem("/backend/configurations", "Configurations", 4000, new string[] { Permissions.BrowseConfigurations })
             }
           )
         };

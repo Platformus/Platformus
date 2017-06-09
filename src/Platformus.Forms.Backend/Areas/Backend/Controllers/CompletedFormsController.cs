@@ -2,6 +2,7 @@
 // Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information.
 
 using ExtCore.Data.Abstractions;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Platformus.Forms.Backend.ViewModels.CompletedForms;
 using Platformus.Forms.Data.Abstractions;
@@ -9,6 +10,7 @@ using Platformus.Forms.Data.Abstractions;
 namespace Platformus.Forms.Backend.Controllers
 {
   [Area("Backend")]
+  [Authorize(Policy = Policies.HasBrowseFormsPermission)]
   public class CompletedFormsController : Platformus.Globalization.Backend.Controllers.ControllerBase
   {
     public CompletedFormsController(IStorage storage)

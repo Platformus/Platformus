@@ -2,6 +2,7 @@
 // Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information.
 
 using ExtCore.Data.Abstractions;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Platformus.Security.Backend.ViewModels.Credentials;
 using Platformus.Security.Data.Abstractions;
@@ -10,6 +11,7 @@ using Platformus.Security.Data.Models;
 namespace Platformus.Security.Backend.Controllers
 {
   [Area("Backend")]
+  [Authorize(Policy = Policies.HasBrowseUsersPermission)]
   public class CredentialsController : Barebone.Backend.Controllers.ControllerBase
   {
     public CredentialsController(IStorage storage)

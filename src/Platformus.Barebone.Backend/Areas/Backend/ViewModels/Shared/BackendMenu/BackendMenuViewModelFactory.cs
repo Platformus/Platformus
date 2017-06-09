@@ -1,6 +1,7 @@
 ﻿// Copyright © 2015 Dmitry Sikorsky. All rights reserved.
 // Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information.
 
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using ExtCore.Infrastructure;
@@ -29,7 +30,8 @@ namespace Platformus.Barebone.Backend.ViewModels.Shared
               List<BackendMenuItemViewModel> backendMenuItemViewModels = new List<BackendMenuItemViewModel>();
 
               foreach (Platformus.Infrastructure.BackendMenuItem backendMenuItem in backendMenuGroup.BackendMenuItems)
-                backendMenuItemViewModels.Add(new BackendMenuItemViewModelFactory(this.RequestHandler).Create(backendMenuItem));
+                if (this.RequestHandler.HttpContext.User.Claims.Any(c => backendMenuItem.PermissionCodes.Any(pc => string.Equals(c.Value, pc, StringComparison.OrdinalIgnoreCase)) || string.Equals(c.Value, "DoEverything", StringComparison.OrdinalIgnoreCase)))
+                  backendMenuItemViewModels.Add(new BackendMenuItemViewModelFactory(this.RequestHandler).Create(backendMenuItem));
 
               BackendMenuGroupViewModel backendMenuGroupViewModel = this.GetBackendMenuGroup(backendMenuGroupViewModels, backendMenuGroup);
 
@@ -44,7 +46,7 @@ namespace Platformus.Barebone.Backend.ViewModels.Shared
 
       return new BackendMenuViewModel()
       {
-        BackendMenuGroups = backendMenuGroupViewModels.OrderBy(bmg => bmg.Position)
+        BackendMenuGroups = backendMenuGroupViewModels.Where(bmg => bmg.BackendMenuItems.Count() != 0).OrderBy(bmg => bmg.Position)
       };
     }
 

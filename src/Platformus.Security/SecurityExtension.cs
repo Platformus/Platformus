@@ -4,7 +4,6 @@
 using System;
 using System.Collections.Generic;
 using Microsoft.AspNetCore.Authentication.Cookies;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -24,14 +23,17 @@ namespace Platformus.Security
         {
           [2000] = services =>
           {
-            AuthorizationPolicyBuilder authorizationPolicyBuilder = new AuthorizationPolicyBuilder();
-
-            foreach (IAuthorizationPolicyRegistrar authorizationPolicyRegistrar in ExtCore.Infrastructure.ExtensionManager.GetInstances<IAuthorizationPolicyRegistrar>())
-              authorizationPolicyRegistrar.RegisterAuthorizationPolicy(authorizationPolicyBuilder);
-
             services.Configure<MvcOptions>(options =>
               {
-                options.Filters.Add(new AuthorizeFilter(authorizationPolicyBuilder.Build()));
+                foreach (IGlobalAuthorizationPolicyProvider globalAuthorizationPolicyProvider in ExtCore.Infrastructure.ExtensionManager.GetInstances<IGlobalAuthorizationPolicyProvider>())
+                  options.Filters.Add(new AuthorizeFilter(globalAuthorizationPolicyProvider.GetGlobalAuthorizationPolicy()));
+              }
+            );
+
+            services.AddAuthorization(options =>
+              {
+                foreach (IAuthorizationPolicyProvider authorizationPolicyProvider in ExtCore.Infrastructure.ExtensionManager.GetInstances<IAuthorizationPolicyProvider>())
+                  options.AddPolicy(authorizationPolicyProvider.Name, authorizationPolicyProvider.GetAuthorizationPolicy());
               }
             );
           }
@@ -54,6 +56,7 @@ namespace Platformus.Security
                 backendApplicationBuilder.UseCookieAuthentication(
                   new CookieAuthenticationOptions()
                   {
+                    AccessDeniedPath = new PathString("/backend/account/accessdenied"),
                     AuthenticationScheme = CookieAuthenticationDefaults.AuthenticationScheme,
                     AutomaticAuthenticate = true,
                     AutomaticChallenge = true,

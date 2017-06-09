@@ -4,7 +4,7 @@
 using System.Collections.Generic;
 using Platformus.Infrastructure;
 
-namespace Platformus.Security
+namespace Platformus.Forms
 {
   public class BackendMetadata : BackendMetadataBase
   {
@@ -19,7 +19,7 @@ namespace Platformus.Security
             1000,
             new BackendMenuItem[]
             {
-              new BackendMenuItem("/backend/forms", "Forms", 3000)
+              new BackendMenuItem("/backend/forms", "Forms", 3000, new string[] { Permissions.BrowseForms })
             }
           )
         };

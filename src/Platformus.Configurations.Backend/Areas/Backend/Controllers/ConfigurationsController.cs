@@ -2,6 +2,7 @@
 // Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information.
 
 using ExtCore.Data.Abstractions;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Platformus.Configurations.Backend.ViewModels.Configurations;
 using Platformus.Configurations.Data.Abstractions;
@@ -10,6 +11,7 @@ using Platformus.Configurations.Data.Models;
 namespace Platformus.Configurations.Backend.Controllers
 {
   [Area("Backend")]
+  [Authorize(Policy = Policies.HasBrowseConfigurationsPermission)]
   public class ConfigurationsController : Platformus.Barebone.Backend.Controllers.ControllerBase
   {
     public ConfigurationsController(IStorage storage)

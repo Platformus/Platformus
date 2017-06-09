@@ -41,7 +41,7 @@ namespace Platformus.FileManager
             1000,
             new BackendMenuItem[]
             {
-              new BackendMenuItem("/backend/filemanager", "File manager", 4000)
+              new BackendMenuItem("/backend/filemanager", "File manager", 4000, new string[] { Permissions.BrowseFileManager })
             }
           )
         };

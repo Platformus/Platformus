@@ -17,7 +17,7 @@ namespace Platformus.Barebone.Backend.ViewComponents
 
     public async Task<IViewComponentResult> InvokeAsync()
     {
-      return this.View(new BackendStyleSheetsViewModelFactory(null).Create());
+      return this.View(new BackendStyleSheetsViewModelFactory(this).Create());
     }
   }
 }

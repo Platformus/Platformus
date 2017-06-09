@@ -41,7 +41,7 @@ namespace Platformus.Domain
             1000,
             new BackendMenuItem[]
             {
-              new BackendMenuItem("/backend/objects", "Objects", 1000)
+              new BackendMenuItem("/backend/objects", "Objects", 1000, new string[] { Permissions.BrowseObjects })
             }
           ),
           new BackendMenuGroup(
@@ -49,8 +49,8 @@ namespace Platformus.Domain
             3000,
             new BackendMenuItem[]
             {
-              new BackendMenuItem("/backend/datatypes", "Data types", 2000),
-              new BackendMenuItem("/backend/classes", "Classes", 3000)
+              new BackendMenuItem("/backend/datatypes", "Data types", 2000, new string[] { Permissions.BrowseDataTypes }),
+              new BackendMenuItem("/backend/classes", "Classes", 3000, new string[] { Permissions.BrowseClasses })
             }
           ),
           new BackendMenuGroup(
@@ -58,7 +58,7 @@ namespace Platformus.Domain
             4000,
             new BackendMenuItem[]
             {
-              new BackendMenuItem("/backend/microcontrollers", "Microcontrollers", 1000)
+              new BackendMenuItem("/backend/microcontrollers", "Microcontrollers", 1000, new string[] { Permissions.BrowseMicrocontrollers })
             }
           )
         };

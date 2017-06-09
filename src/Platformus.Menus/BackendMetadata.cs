@@ -19,7 +19,7 @@ namespace Platformus.Menus
             1000,
             new BackendMenuItem[]
             {
-              new BackendMenuItem("/backend/menus", "Menus", 2000)
+              new BackendMenuItem("/backend/menus", "Menus", 2000, new string[] { Permissions.BrowseMenus })
             }
           )
         };

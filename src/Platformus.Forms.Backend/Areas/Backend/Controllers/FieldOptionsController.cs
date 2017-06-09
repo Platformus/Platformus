@@ -3,6 +3,7 @@
 
 using ExtCore.Data.Abstractions;
 using ExtCore.Events;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Platformus.Barebone;
 using Platformus.Forms.Backend.ViewModels.FieldOptions;
@@ -12,6 +13,7 @@ using Platformus.Forms.Data.Models;
 namespace Platformus.Forms.Backend.Controllers
 {
   [Area("Backend")]
+  [Authorize(Policy = Policies.HasBrowseFormsPermission)]
   public class FieldOptionsController : Platformus.Globalization.Backend.Controllers.ControllerBase
   {
     public FieldOptionsController(IStorage storage)

@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Threading.Tasks;
 using ExtCore.Data.Abstractions;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -15,6 +16,7 @@ using Platformus.FileManager.Data.Abstractions;
 namespace Platformus.FileManager.Backend.Controllers
 {
   [Area("Backend")]
+  [Authorize(Policy = Policies.HasBrowseFileManagerPermission)]
   public class FileManagerController : Barebone.Backend.Controllers.ControllerBase
   {
     public IHostingEnvironment HostingEnvironment { get; private set; }

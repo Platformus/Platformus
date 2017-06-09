@@ -2,6 +2,7 @@
 // Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information.
 
 using ExtCore.Data.Abstractions;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Platformus.Domain.Backend.ViewModels.Microcontrollers;
 using Platformus.Domain.Data.Abstractions;
@@ -10,6 +11,7 @@ using Platformus.Domain.Data.Models;
 namespace Platformus.Domain.Backend.Controllers
 {
   [Area("Backend")]
+  [Authorize(Policy = Policies.HasBrowseMicrocontrollersPermission)]
   public class MicrocontrollersController : Platformus.Globalization.Backend.Controllers.ControllerBase
   {
     public MicrocontrollersController(IStorage storage)

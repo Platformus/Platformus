@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Routing;
 using Platformus.Infrastructure;
 
-namespace Platformus.Security
+namespace Platformus.Forms
 {
   public class FormsExtension : ExtensionBase
   {
