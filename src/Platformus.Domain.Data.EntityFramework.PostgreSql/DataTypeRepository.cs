@@ -47,6 +47,8 @@ namespace Platformus.Domain.Data.EntityFramework.PostgreSql
     {
       this.storageContext.Database.ExecuteSqlCommand(
         @"
+          DELETE FROM ""DataTypeParameterValues"" WHERE ""DataTypeParameterId"" IN (SELECT ""Id"" FROM ""DataTypeParameters"" WHERE ""DataTypeId"" = {0});
+          DELETE FROM ""DataTypeParameters"" WHERE ""DataTypeId"" = {0};
           DELETE FROM ""SerializedObjects"" WHERE ""ObjectId"" IN (SELECT ""Id"" FROM ""Objects"" WHERE ""ClassId"" IN (SELECT ""ClassId"" FROM ""Members"" WHERE ""PropertyDataTypeId"" = {0}));
           CREATE TEMP TABLE ""TempDictionaries"" (""Id"" INT PRIMARY KEY);
           INSERT INTO ""TempDictionaries"" SELECT ""StringValueId"" FROM ""Properties"" WHERE ""MemberId"" IN (SELECT Id FROM ""Members"" WHERE ""PropertyDataTypeId"" = {0});

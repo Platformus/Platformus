@@ -52,12 +52,16 @@ namespace Platformus.Forms.Frontend.Controllers
         if (fieldType.Code == "FileUpload")
         {
           IFormFile file = this.Request.Form.Files[string.Format("field{0}", field.Id)];
-          string filename = file.FileName;
 
-          if (!string.IsNullOrEmpty(filename) && filename.Contains("\\"))
-            filename = filename.Substring(filename.LastIndexOf("\\") + 1);
+          if (file != null && !string.IsNullOrEmpty(file.FileName))
+          {
+            string filename = file.FileName;
 
-          attachments.Add(filename, this.GetBytesFromStream(file.OpenReadStream()));
+            if (!string.IsNullOrEmpty(filename) && filename.Contains("\\"))
+              filename = filename.Substring(filename.LastIndexOf("\\") + 1);
+
+            attachments.Add(filename, this.GetBytesFromStream(file.OpenReadStream()));
+          }
         }
 
         else
