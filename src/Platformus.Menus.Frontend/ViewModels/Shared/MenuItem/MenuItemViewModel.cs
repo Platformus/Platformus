@@ -11,5 +11,6 @@ namespace Platformus.Menus.Frontend.ViewModels.Shared
     public string Name { get; set; }
     public string Url { get; set; }
     public IEnumerable<MenuItemViewModel> MenuItems { get; set; }
+    public int Level { get; set; }
   }
 }

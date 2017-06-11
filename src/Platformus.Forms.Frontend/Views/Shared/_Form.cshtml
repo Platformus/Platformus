@@ -1,15 +1,13 @@
 ﻿@* Copyright © 2015 Dmitry Sikorsky. All rights reserved. *@
 @* Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information. *@
 @model Platformus.Forms.Frontend.ViewModels.Shared.FormViewModel
-<div class="form">
-  <form asp-controller="Forms" asp-action="Send" method="post" enctype="multipart/form-data">
-    <input id="formId" name="formId" type="hidden" value="@Model.Id" />
-    @foreach (var field in this.Model.Fields)
-    {
-      @Html.Partial("_Field", field)
-    }
-    <div class="buttons">
-      <button type="submit">Send</button>
-    </div>
-  </form>
-</div>
+<form class="form" asp-controller="Forms" asp-action="Send" method="post" enctype="multipart/form-data">
+  <input id="formId" name="formId" type="hidden" value="@Model.Id" />
+  @foreach (var field in this.Model.Fields)
+  {
+    @Html.Partial("_Field", field)
+  }
+  <div class="form__buttons buttons">
+    <button class="buttons__button button" type="submit">Send</button>
+  </div>
+</form>

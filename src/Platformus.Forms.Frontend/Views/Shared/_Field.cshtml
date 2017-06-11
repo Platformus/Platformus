@@ -1,19 +1,19 @@
 ﻿@* Copyright © 2015 Dmitry Sikorsky. All rights reserved. *@
 @* Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information. *@
 @model Platformus.Forms.Frontend.ViewModels.Shared.FieldViewModel
-<div class="field">
-  <label for="field@(this.Model.Id)">@Model.Name</label>
+<div class="form__field field">
+  <label class="field__label label" for="field@(this.Model.Id)">@Model.Name</label>
   @if (this.Model.FieldType.Code == "TextBox")
   {
-    <input id="field@(this.Model.Id)" name="field@(this.Model.Id)" type="text" />
+    <input class="field__text-box text-box" id="field@(this.Model.Id)" name="field@(this.Model.Id)" type="text" />
   }
   else if (this.Model.FieldType.Code == "TextArea")
   {
-    <textarea id="field@(this.Model.Id)" name="field@(this.Model.Id)"></textarea>
+    <textarea class="field__text-area text-area" id="field@(this.Model.Id)" name="field@(this.Model.Id)"></textarea>
   }
   else if (this.Model.FieldType.Code == "DropDownList")
   {
-    <select id="field@(this.Model.Id)" name="field@(this.Model.Id)">
+    <select class="field__drop-down-list drop-down-list" id="field@(this.Model.Id)" name="field@(this.Model.Id)">
       @foreach (var fieldOption in this.Model.FieldOptions)
       {
         @Html.Partial("_FieldOption", fieldOption)
@@ -22,6 +22,6 @@
   }
   else if (this.Model.FieldType.Code == "FileUpload")
   {
-    <input id="field@(Model.Id)" name="field@(Model.Id)" type="file" />
+    <input class="field__file-upload file-upload" id="field@(Model.Id)" name="field@(Model.Id)" type="file" />
   }
 </div>
