@@ -1,11 +1,14 @@
 ﻿@* Copyright © 2015 Dmitry Sikorsky. All rights reserved. *@
 @* Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information. *@
 @model Platformus.Menus.Frontend.ViewModels.Shared.MenuItemViewModel
-@{ 
+@using Microsoft.AspNetCore.Routing
+@{
+  string url = "/" + System.Globalization.CultureInfo.CurrentCulture.TwoLetterISOLanguageName + "/" + this.Context.GetRouteValue("url") as string;
+  bool isActive = string.Equals(this.Model.Url, url, StringComparison.OrdinalIgnoreCase);
   string levelSuffix = this.Model.Level == 1 ? null : "-level-" + this.Model.Level;
 }
-<div class="menu__item@(levelSuffix)">
-  <a class="menu__item-name@(levelSuffix)" href="@Model.Url">@Model.Name</a>
+<div class="menu__item@(levelSuffix) @(isActive ? "menu__item--active" + levelSuffix : null)">
+  <a class="menu__item-name@(levelSuffix) @(isActive ? "menu__item-name--active" + levelSuffix : null)" href="@Model.Url">@Model.Name</a>
   @if (this.Model.MenuItems.Count() != 0)
   {
     <div class="menu__items-level-@(this.Model.Level + 1)">

@@ -1,6 +1,9 @@
 ﻿@* Copyright © 2015 Dmitry Sikorsky. All rights reserved. *@
 @* Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information. *@
 @model Platformus.Globalization.Frontend.ViewModels.Shared.CultureViewModel
-<div class="cultures__culture">
-  <a class="cultures__culture-name" href="/@Model.Code/">@Model.Name</a>
+@{
+  bool isActive = string.Equals(this.Model.Code, System.Globalization.CultureInfo.CurrentCulture.TwoLetterISOLanguageName, StringComparison.OrdinalIgnoreCase);
+}
+<div class="cultures__culture @(isActive ? "cultures__culture--active" : null)">
+  <a class="cultures__culture-name @(isActive ? "cultures__culture-name--active" : null)" href="/@Model.Code/">@Model.Name</a>
 </div>
