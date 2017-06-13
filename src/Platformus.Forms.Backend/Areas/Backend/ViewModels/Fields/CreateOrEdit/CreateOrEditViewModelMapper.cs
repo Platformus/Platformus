@@ -25,6 +25,8 @@ namespace Platformus.Forms.Backend.ViewModels.Fields
       else field.FormId = createOrEdit.FormId;
 
       field.FieldTypeId = createOrEdit.FieldTypeId;
+      field.IsRequired = createOrEdit.IsRequired;
+      field.MaxLength = createOrEdit.MaxLength;
       field.Position = createOrEdit.Position;
       return field;
     }

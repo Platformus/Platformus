@@ -29,11 +29,11 @@ namespace Platformus.Forms.Frontend.ViewComponents
 
     private IViewComponentResult GetViewComponentResult(string code)
     {
-      SerializedForm cachedForm = this.Storage.GetRepository<ISerializedFormRepository>().WithCultureIdAndCode(
+      SerializedForm serializedForm = this.Storage.GetRepository<ISerializedFormRepository>().WithCultureIdAndCode(
         CultureManager.GetCurrentCulture(this.Storage).Id, code
       );
 
-      if (cachedForm == null)
+      if (serializedForm == null)
       {
         Form form = this.Storage.GetRepository<IFormRepository>().WithCode(code);
 
@@ -43,7 +43,7 @@ namespace Platformus.Forms.Frontend.ViewComponents
         return this.View(new FormViewModelFactory(this).Create(form));
       }
 
-      return this.View(new FormViewModelFactory(this).Create(cachedForm));
+      return this.View(new FormViewModelFactory(this).Create(serializedForm));
     }
   }
 }

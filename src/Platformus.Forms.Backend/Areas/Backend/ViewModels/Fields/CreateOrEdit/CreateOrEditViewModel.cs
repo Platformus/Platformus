@@ -26,6 +26,13 @@ namespace Platformus.Forms.Backend.ViewModels.Fields
     public string Name { get; set; }
     public IEnumerable<Localization> NameLocalizations { get; set; }
 
+    [Display(Name = "Is required")]
+    [Required]
+    public bool IsRequired { get; set; }
+
+    [Display(Name = "Max length")]
+    public int? MaxLength { get; set; }
+
     [Display(Name = "Position")]
     public int? Position { get; set; }
   }

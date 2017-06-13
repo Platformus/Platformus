@@ -10,6 +10,8 @@ namespace Platformus.Forms.Data.Models
     public int FieldId { get; set; }
     public string FieldTypeCode { get; set; }
     public string Name { get; set; }
+    public bool IsRequired { get; set; }
+    public int? MaxLength { get; set; }
     public int? Position { get; set; }
     public string SerializedFieldOptions { get; set; }
   }

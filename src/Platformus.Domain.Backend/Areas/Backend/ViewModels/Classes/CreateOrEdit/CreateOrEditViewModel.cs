@@ -32,6 +32,7 @@ namespace Platformus.Domain.Backend.ViewModels.Classes
     public string PluralizedName { get; set; }
 
     [Display(Name = "Is abstract")]
+    [Required]
     public bool IsAbstract { get; set; }
   }
 }

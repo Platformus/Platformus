@@ -25,24 +25,28 @@ namespace Platformus.Forms.Frontend.ViewModels.Shared
         Id = field.Id,
         FieldType = new FieldTypeViewModelFactory(this.RequestHandler).Create(this.RequestHandler.Storage.GetRepository<IFieldTypeRepository>().WithKey(field.FieldTypeId)),
         Name = this.RequestHandler.GetLocalizationValue(field.NameId),
+        IsRequired = field.IsRequired,
+        MaxLength = field.MaxLength,
         FieldOptions = this.RequestHandler.Storage.GetRepository<IFieldOptionRepository>().FilteredByFieldId(field.Id).Select(
           fi => new FieldOptionViewModelFactory(this.RequestHandler).Create(fi)
         )
       };
     }
 
-    public FieldViewModel Create(SerializedField cachedField)
+    public FieldViewModel Create(SerializedField serializedField)
     {
       IEnumerable<SerializedFieldOption> cachedFieldOptions = new SerializedFieldOption[] { };
 
-      if (!string.IsNullOrEmpty(cachedField.SerializedFieldOptions))
-        cachedFieldOptions = JsonConvert.DeserializeObject<IEnumerable<SerializedFieldOption>>(cachedField.SerializedFieldOptions);
+      if (!string.IsNullOrEmpty(serializedField.SerializedFieldOptions))
+        cachedFieldOptions = JsonConvert.DeserializeObject<IEnumerable<SerializedFieldOption>>(serializedField.SerializedFieldOptions);
 
       return new FieldViewModel()
       {
-        Id = cachedField.FieldId,
-        FieldType = new FieldTypeViewModel() { Code = cachedField.FieldTypeCode },
-        Name = cachedField.Name,
+        Id = serializedField.FieldId,
+        FieldType = new FieldTypeViewModel() { Code = serializedField.FieldTypeCode },
+        Name = serializedField.Name,
+        IsRequired = serializedField.IsRequired,
+        MaxLength = serializedField.MaxLength,
         FieldOptions = cachedFieldOptions.Select(
           fo => new FieldOptionViewModelFactory(this.RequestHandler).Create(fo)
         )

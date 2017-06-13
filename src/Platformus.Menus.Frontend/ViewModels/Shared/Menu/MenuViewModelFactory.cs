@@ -28,17 +28,17 @@ namespace Platformus.Menus.Frontend.ViewModels.Shared
       };
     }
 
-    public MenuViewModel Create(SerializedMenu cachedMenu)
+    public MenuViewModel Create(SerializedMenu serializedMenu)
     {
-      IEnumerable<SerializedMenuItem> cachedMenuItems = new SerializedMenuItem[] { };
+      IEnumerable<SerializedMenuItem> serializedMenuItems = new SerializedMenuItem[] { };
 
-      if (!string.IsNullOrEmpty(cachedMenu.SerializedMenuItems))
-        cachedMenuItems = JsonConvert.DeserializeObject<IEnumerable<SerializedMenuItem>>(cachedMenu.SerializedMenuItems);
+      if (!string.IsNullOrEmpty(serializedMenu.SerializedMenuItems))
+        serializedMenuItems = JsonConvert.DeserializeObject<IEnumerable<SerializedMenuItem>>(serializedMenu.SerializedMenuItems);
 
       return new MenuViewModel()
       {
-        MenuItems = cachedMenuItems.OrderBy(cmi => cmi.Position).Select(
-          cmi => new MenuItemViewModelFactory(this.RequestHandler).Create(cmi)
+        MenuItems = serializedMenuItems.OrderBy(cmi => cmi.Position).Select(
+          smi => new MenuItemViewModelFactory(this.RequestHandler).Create(smi)
         )
       };
     }

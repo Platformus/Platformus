@@ -13,6 +13,8 @@ namespace Platformus.Forms.Data.Models
     public int FormId { get; set; }
     public int FieldTypeId { get; set; }
     public int NameId { get; set; }
+    public bool IsRequired { get; set; }
+    public int? MaxLength { get; set; }
     public int? Position { get; set; }
 
     public virtual Form Form { get; set; }

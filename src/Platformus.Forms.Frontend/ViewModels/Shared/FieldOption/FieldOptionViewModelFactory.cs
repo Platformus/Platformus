@@ -22,11 +22,11 @@ namespace Platformus.Forms.Frontend.ViewModels.Shared
       };
     }
 
-    public FieldOptionViewModel Create(SerializedFieldOption cachedFieldOption)
+    public FieldOptionViewModel Create(SerializedFieldOption serializedFieldOption)
     {
       return new FieldOptionViewModel()
       {
-        Value = cachedFieldOption.Value
+        Value = serializedFieldOption.Value
       };
     }
   }

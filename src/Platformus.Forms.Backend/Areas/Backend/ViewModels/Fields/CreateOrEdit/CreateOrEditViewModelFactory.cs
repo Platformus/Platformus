@@ -35,6 +35,8 @@ namespace Platformus.Forms.Backend.ViewModels.Fields
         NameLocalizations = this.GetLocalizations(field.NameId),
         FieldTypeId = field.FieldTypeId,
         FieldTypeOptions = this.GetFieldTypeOptions(),
+        IsRequired = field.IsRequired,
+        MaxLength = field.MaxLength,
         Position = field.Position
       };
     }

@@ -11,6 +11,8 @@
 <form class="form" method="post">
   <drop-down-list-field asp-for="FieldTypeId" asp-options="@Model.FieldTypeOptions" />
   <multilingual-single-line-text-field asp-for="Name" asp-localizations="@Model.NameLocalizations" />
+  <checkbox-field asp-for="IsRequired" />
+  <single-line-text-field asp-for="MaxLength" />
   <single-line-text-field asp-for="Position" />
   <div class="form__buttons buttons">
     <button class="buttons__button button button--positive" type="submit">Save</button>

@@ -269,6 +269,8 @@ CREATE TABLE "Fields" (
 	"FormId" INTEGER NOT NULL,
 	"FieldTypeId" INTEGER NOT NULL,
 	"NameId" INTEGER NOT NULL,
+	"IsRequired" INTEGER NOT NULL,
+	"MaxLength" INTEGER,
 	"Position" INTEGER,
 	CONSTRAINT "FK_Field_Form_FormId" FOREIGN KEY ("FormId") REFERENCES "Forms" ("Id"),
 	CONSTRAINT "FK_Field_FieldType_FieldTypeId" FOREIGN KEY ("FieldTypeId") REFERENCES "FieldTypes" ("Id"),

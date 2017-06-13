@@ -30,19 +30,19 @@ namespace Platformus.Forms.Frontend.ViewModels.Shared
       };
     }
 
-    public FormViewModel Create(SerializedForm cachedForm)
+    public FormViewModel Create(SerializedForm serializedForm)
     {
-      IEnumerable<SerializedField> cachedFields = new SerializedField[] { };
+      IEnumerable<SerializedField> serializedFields = new SerializedField[] { };
 
-      if (!string.IsNullOrEmpty(cachedForm.SerializedFields))
-        cachedFields = JsonConvert.DeserializeObject<IEnumerable<SerializedField>>(cachedForm.SerializedFields);
+      if (!string.IsNullOrEmpty(serializedForm.SerializedFields))
+        serializedFields = JsonConvert.DeserializeObject<IEnumerable<SerializedField>>(serializedForm.SerializedFields);
 
       return new FormViewModel()
       {
-        Id = cachedForm.FormId,
-        Name = cachedForm.Name,
-        Fields = cachedFields.Select(
-          cf => new FieldViewModelFactory(this.RequestHandler).Create(cf)
+        Id = serializedForm.FormId,
+        Name = serializedForm.Name,
+        Fields = serializedFields.Select(
+          sf => new FieldViewModelFactory(this.RequestHandler).Create(sf)
         )
       };
     }
