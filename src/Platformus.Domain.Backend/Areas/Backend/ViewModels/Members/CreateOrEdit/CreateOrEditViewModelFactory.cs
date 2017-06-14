@@ -106,7 +106,7 @@ namespace Platformus.Domain.Backend.ViewModels.Members
               javaScriptEditorClassName = dtp.JavaScriptEditorClassName,
               code = dtp.Code,
               name = dtp.Name,
-              value = this.RequestHandler.Storage.GetRepository<IDataTypeParameterValueRepository>().WithDataTypeParameterIdAndMemberId(dtp.Id, (int)memberId)?.Value
+              value = memberId == null ? null : this.RequestHandler.Storage.GetRepository<IDataTypeParameterValueRepository>().WithDataTypeParameterIdAndMemberId(dtp.Id, (int)memberId)?.Value
             }
           )
         }

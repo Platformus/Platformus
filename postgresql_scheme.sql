@@ -234,24 +234,6 @@ CREATE TABLE "DataTypeParameters" (
 
 ALTER TABLE "DataTypeParameters" OWNER TO postgres;
 
-CREATE TABLE "DataTypeParameterValues" (
-    "Id" serial NOT NULL,
-    "DataTypeParameterId" integer NOT NULL,
-    "MemberId" integer NOT NULL,
-    "Value" text NOT NULL,
-    CONSTRAINT "PK_DataTypeParameterValues" PRIMARY KEY ("Id"),
-	CONSTRAINT "FK_DataTypeParameterValues_DataTypeParameters_DataTypeParameterId" FOREIGN KEY ("DataTypeParameterId")
-        REFERENCES public."DataTypeParameters" ("Id") MATCH SIMPLE
-        ON UPDATE NO ACTION
-        ON DELETE NO ACTION,
-    CONSTRAINT "FK_DataTypeParameterValues_Members_MemberId" FOREIGN KEY ("MemberId")
-        REFERENCES public."Members" ("Id") MATCH SIMPLE
-        ON UPDATE NO ACTION
-        ON DELETE NO ACTION
-);
-
-ALTER TABLE "DataTypeParameterValues" OWNER TO postgres;
-
 CREATE TABLE "Members" (
     "Id" serial NOT NULL,
     "ClassId" integer NOT NULL,
@@ -284,6 +266,24 @@ CREATE TABLE "Members" (
 );
 
 ALTER TABLE "Members" OWNER TO postgres;
+
+CREATE TABLE "DataTypeParameterValues" (
+    "Id" serial NOT NULL,
+    "DataTypeParameterId" integer NOT NULL,
+    "MemberId" integer NOT NULL,
+    "Value" text NOT NULL,
+    CONSTRAINT "PK_DataTypeParameterValues" PRIMARY KEY ("Id"),
+	CONSTRAINT "FK_DataTypeParameterValues_DataTypeParameters_DataTypeParameterId" FOREIGN KEY ("DataTypeParameterId")
+        REFERENCES public."DataTypeParameters" ("Id") MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION,
+    CONSTRAINT "FK_DataTypeParameterValues_Members_MemberId" FOREIGN KEY ("MemberId")
+        REFERENCES public."Members" ("Id") MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION
+);
+
+ALTER TABLE "DataTypeParameterValues" OWNER TO postgres;
 
 CREATE TABLE "Objects" (
     "Id" serial NOT NULL,

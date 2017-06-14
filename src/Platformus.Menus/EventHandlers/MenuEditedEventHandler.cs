@@ -17,8 +17,9 @@ namespace Platformus.Menus
     {
       new SerializationManager(requestHandler).SerializeMenu(newMenu);
 
-      foreach (Culture culture in CultureManager.GetNotNeutralCultures(requestHandler.Storage))
-        requestHandler.HttpContext.RequestServices.GetService<ICache>().RemoveMenuViewComponentResult(oldMenu.Code, culture.Code);
+      if (oldMenu != null)
+        foreach (Culture culture in CultureManager.GetNotNeutralCultures(requestHandler.Storage))
+          requestHandler.HttpContext.RequestServices.GetService<ICache>().RemoveMenuViewComponentResult(oldMenu.Code, culture.Code);
 
       foreach (Culture culture in CultureManager.GetNotNeutralCultures(requestHandler.Storage))
         requestHandler.HttpContext.RequestServices.GetService<ICache>().RemoveMenuViewComponentResult(newMenu.Code, culture.Code);

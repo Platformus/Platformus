@@ -17,6 +17,7 @@ namespace Platformus.Domain
     {
       new SerializationManager(requestHandler).SerializeObject(newObject);
 
+      if (oldObject != null)
       {
         string urlPropertyStringValue = new ObjectManager(requestHandler).GetUrlPropertyStringValue(oldObject);
 

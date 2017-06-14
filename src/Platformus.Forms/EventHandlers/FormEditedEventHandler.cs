@@ -17,8 +17,9 @@ namespace Platformus.Forms
     {
       new SerializationManager(requestHandler).SerializeForm(newForm);
 
-      foreach (Culture culture in CultureManager.GetNotNeutralCultures(requestHandler.Storage))
-        requestHandler.HttpContext.RequestServices.GetService<ICache>().RemoveFormViewComponentResult(oldForm.Code, culture.Code);
+      if (oldForm != null)
+        foreach (Culture culture in CultureManager.GetNotNeutralCultures(requestHandler.Storage))
+          requestHandler.HttpContext.RequestServices.GetService<ICache>().RemoveFormViewComponentResult(oldForm.Code, culture.Code);
 
       foreach (Culture culture in CultureManager.GetNotNeutralCultures(requestHandler.Storage))
         requestHandler.HttpContext.RequestServices.GetService<ICache>().RemoveFormViewComponentResult(newForm.Code, culture.Code);
