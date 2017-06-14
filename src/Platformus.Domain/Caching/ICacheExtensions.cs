@@ -16,14 +16,14 @@ namespace Platformus.Domain
       );
     }
 
-    public static void RemovePageActionResult(this ICache cache, string url)
+    public static void RemovePageActionResult(this ICache cache, string url, string cultureCode)
     {
-      cache.Remove(ICacheExtensions.GetPageActionResultKey(url));
+      cache.Remove(ICacheExtensions.GetPageActionResultKey(url, cultureCode));
     }
 
-    private static string GetPageActionResultKey(string url)
+    private static string GetPageActionResultKey(string url, string cultureCode = null)
     {
-      return "par:" + url + ":" + CultureInfo.CurrentCulture.TwoLetterISOLanguageName;
+      return "par:" + url + ":" + (string.IsNullOrEmpty(cultureCode) ? CultureInfo.CurrentCulture.TwoLetterISOLanguageName : cultureCode);
     }
   }
 }

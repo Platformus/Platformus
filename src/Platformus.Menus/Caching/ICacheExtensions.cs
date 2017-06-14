@@ -16,14 +16,14 @@ namespace Platformus.Menus
       );
     }
 
-    public static void RemoveMenuViewComponentResult(this ICache cache, string code)
+    public static void RemoveMenuViewComponentResult(this ICache cache, string code, string cultureCode)
     {
-      cache.Remove(ICacheExtensions.GetMenuViewComponentResultKey(code));
+      cache.Remove(ICacheExtensions.GetMenuViewComponentResultKey(code, cultureCode));
     }
 
-    private static string GetMenuViewComponentResultKey(string code)
+    private static string GetMenuViewComponentResultKey(string code, string cultureCode = null)
     {
-      return "mvcr:" + code + ":" + CultureInfo.CurrentCulture.TwoLetterISOLanguageName;
+      return "mvcr:" + code + ":" + (string.IsNullOrEmpty(cultureCode) ? CultureInfo.CurrentCulture.TwoLetterISOLanguageName : cultureCode);
     }
   }
 }

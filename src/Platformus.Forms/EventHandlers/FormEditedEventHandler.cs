@@ -4,6 +4,8 @@
 using Microsoft.Extensions.DependencyInjection;
 using Platformus.Barebone;
 using Platformus.Forms.Data.Models;
+using Platformus.Globalization;
+using Platformus.Globalization.Data.Models;
 
 namespace Platformus.Forms
 {
@@ -14,7 +16,12 @@ namespace Platformus.Forms
     public void HandleEvent(IRequestHandler requestHandler, Form oldForm, Form newForm)
     {
       new SerializationManager(requestHandler).SerializeForm(newForm);
-      requestHandler.HttpContext.RequestServices.GetService<ICache>().RemoveFormViewComponentResult(newForm.Code);
+
+      foreach (Culture culture in CultureManager.GetNotNeutralCultures(requestHandler.Storage))
+        requestHandler.HttpContext.RequestServices.GetService<ICache>().RemoveFormViewComponentResult(oldForm.Code, culture.Code);
+
+      foreach (Culture culture in CultureManager.GetNotNeutralCultures(requestHandler.Storage))
+        requestHandler.HttpContext.RequestServices.GetService<ICache>().RemoveFormViewComponentResult(newForm.Code, culture.Code);
     }
   }
 }

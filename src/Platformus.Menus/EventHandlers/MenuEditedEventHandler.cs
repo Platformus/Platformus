@@ -3,6 +3,8 @@
 
 using Microsoft.Extensions.DependencyInjection;
 using Platformus.Barebone;
+using Platformus.Globalization;
+using Platformus.Globalization.Data.Models;
 using Platformus.Menus.Data.Models;
 
 namespace Platformus.Menus
@@ -14,7 +16,12 @@ namespace Platformus.Menus
     public void HandleEvent(IRequestHandler requestHandler, Menu oldMenu, Menu newMenu)
     {
       new SerializationManager(requestHandler).SerializeMenu(newMenu);
-      requestHandler.HttpContext.RequestServices.GetService<ICache>().RemoveMenuViewComponentResult(newMenu.Code);
+
+      foreach (Culture culture in CultureManager.GetNotNeutralCultures(requestHandler.Storage))
+        requestHandler.HttpContext.RequestServices.GetService<ICache>().RemoveMenuViewComponentResult(oldMenu.Code, culture.Code);
+
+      foreach (Culture culture in CultureManager.GetNotNeutralCultures(requestHandler.Storage))
+        requestHandler.HttpContext.RequestServices.GetService<ICache>().RemoveMenuViewComponentResult(newMenu.Code, culture.Code);
     }
   }
 }

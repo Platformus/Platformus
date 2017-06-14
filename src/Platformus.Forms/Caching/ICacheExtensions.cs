@@ -16,14 +16,14 @@ namespace Platformus.Forms
       );
     }
 
-    public static void RemoveFormViewComponentResult(this ICache cache, string code)
+    public static void RemoveFormViewComponentResult(this ICache cache, string code, string cultureCode)
     {
-      cache.Remove(ICacheExtensions.GetFormViewComponentResultKey(code));
+      cache.Remove(ICacheExtensions.GetFormViewComponentResultKey(code, cultureCode));
     }
 
-    private static string GetFormViewComponentResultKey(string code)
+    private static string GetFormViewComponentResultKey(string code, string cultureCode = null)
     {
-      return "fvcr:" + code + ":" + CultureInfo.CurrentCulture.TwoLetterISOLanguageName;
+      return "fvcr:" + code + ":" + (string.IsNullOrEmpty(cultureCode) ? CultureInfo.CurrentCulture.TwoLetterISOLanguageName : cultureCode);
     }
   }
 }
