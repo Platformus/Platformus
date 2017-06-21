@@ -67,9 +67,9 @@ namespace Platformus.Globalization
 
             if (storage == null)
             {
-              requestLocalizationOptions.DefaultRequestCulture = new RequestCulture("en");
+              requestLocalizationOptions.DefaultRequestCulture = new RequestCulture(DefaultCulture.Code);
               requestLocalizationOptions.SupportedCultures = requestLocalizationOptions.SupportedUICultures =
-                new CultureInfo[] { new CultureInfo("en") }.ToList();
+                new CultureInfo[] { new CultureInfo(DefaultCulture.Code) }.ToList();
             }
 
             else
@@ -77,14 +77,14 @@ namespace Platformus.Globalization
               Culture defaultCulture = CultureManager.GetDefaultCulture(storage);
 
               if (defaultCulture == null)
-                requestLocalizationOptions.DefaultRequestCulture = new RequestCulture("en");
+                requestLocalizationOptions.DefaultRequestCulture = new RequestCulture(DefaultCulture.Code);
 
               else requestLocalizationOptions.DefaultRequestCulture = new RequestCulture(defaultCulture.Code);
 
-              if (CultureManager.GetCultures(storage).Count() == 0)
+              if (CultureManager.GetNotNeutralCultures(storage).Count() == 0)
               {
                 requestLocalizationOptions.SupportedCultures = requestLocalizationOptions.SupportedUICultures =
-                  new CultureInfo[] { new CultureInfo("en") }.ToList();
+                  new CultureInfo[] { new CultureInfo(DefaultCulture.Code) }.ToList();
               }
 
               else
@@ -92,9 +92,11 @@ namespace Platformus.Globalization
                 requestLocalizationOptions.SupportedCultures = requestLocalizationOptions.SupportedUICultures =
                   CultureManager.GetNotNeutralCultures(storage).Select(c => new CultureInfo(c.Code)).ToList();
               }
+
+              if (this.MustSpecifyCultureInUrl(storage))
+                requestLocalizationOptions.RequestCultureProviders.Insert(0, new RouteValueRequestCultureProvider(this.serviceProvider));
             }
 
-            requestLocalizationOptions.RequestCultureProviders.Insert(0, new RouteValueRequestCultureProvider(this.serviceProvider));
             applicationBuilder.UseRequestLocalization(requestLocalizationOptions);
           }
         };
@@ -109,8 +111,6 @@ namespace Platformus.Globalization
         {
           [10000] = routeBuilder =>
           {
-            string defaultCultureCode = "en";
-            bool specifyCultureInUrl = true;
             IStorage storage = this.serviceProvider.GetService<IStorage>();
 
             if (storage == null)
@@ -119,17 +119,10 @@ namespace Platformus.Globalization
               return;
             }
 
-            Culture defaultCulture = CultureManager.GetDefaultCulture(storage);
-
-            if (defaultCulture != null)
-              defaultCultureCode = defaultCulture.Code;
-
-            specifyCultureInUrl = new ConfigurationManager(storage)["Globalization", "SpecifyCultureInUrl"] != "no";
-
             string template = string.Empty;
 
-            if (specifyCultureInUrl)
-              template = "{culture=" + defaultCultureCode + "}/{*url}";
+            if (this.MustSpecifyCultureInUrl(storage))
+              template = "{culture=" + this.GetDefaultCultureCode(storage) + "}/{*url}";
 
             else template = "{*url}";
 
@@ -145,6 +138,21 @@ namespace Platformus.Globalization
       {
         return new BackendMetadata();
       }
+    }
+
+    private bool MustSpecifyCultureInUrl(IStorage storage)
+    {
+      return new ConfigurationManager(storage)["Globalization", "SpecifyCultureInUrl"] != "no";
+    }
+
+    private string GetDefaultCultureCode(IStorage storage)
+    {
+      Culture defaultCulture = CultureManager.GetDefaultCulture(storage);
+
+      if (defaultCulture == null)
+        return DefaultCulture.Code;
+
+      return defaultCulture.Code;
     }
   }
 }

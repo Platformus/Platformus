@@ -2,11 +2,14 @@
 // Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information.
 
 using System;
+using System.Linq;
+using System.Net;
 using System.Threading.Tasks;
 using ExtCore.Data.Abstractions;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Localization;
 using Microsoft.Extensions.DependencyInjection;
+using Platformus.Barebone;
 using Platformus.Globalization.Data.Models;
 
 namespace Platformus.Globalization
@@ -24,30 +27,43 @@ namespace Platformus.Globalization
     {
       string cultureCode = null;
 
-      if (httpContext.Request.Path.HasValue && httpContext.Request.Path.Value.Length >= 4 && httpContext.Request.Path.Value[0] == '/' && httpContext.Request.Path.Value[3] == '/')
+      if (httpContext.Request.Path.HasValue && (httpContext.Request.Path.Value == "/" || httpContext.Request.Path.Value.Contains("/backend/")))
+        cultureCode = this.GetDefaultCultureCode();
+
+      else if (httpContext.Request.Path.HasValue && httpContext.Request.Path.Value.Length >= 4 && httpContext.Request.Path.Value[0] == '/' && httpContext.Request.Path.Value[3] == '/')
+      {
         cultureCode = httpContext.Request.Path.Value.Substring(1, 2);
 
-      else
-      {
-        IStorage storage = this.serviceProvider.GetService<IStorage>();
-
-        if (storage == null)
-          cultureCode = "en";
-
-        else
-        {
-          Culture defaultCulture = CultureManager.GetDefaultCulture(storage);
-
-          if (defaultCulture == null)
-            cultureCode = "en";
-
-          else cultureCode = defaultCulture.Code;
-        }
+        if (!this.CheckCulture(cultureCode))
+          throw new HttpException(HttpStatusCode.NotFound);
       }
+
+      else throw new HttpException(HttpStatusCode.NotFound);
 
       ProviderCultureResult requestCulture = new ProviderCultureResult(cultureCode);
 
       return Task.FromResult(requestCulture);
+    }
+
+    private string GetDefaultCultureCode()
+    {
+      IStorage storage = this.serviceProvider.GetService<IStorage>();
+      Culture defaultCulture = CultureManager.GetDefaultCulture(storage);
+
+      if (defaultCulture == null)
+        return DefaultCulture.Code;
+
+      return defaultCulture.Code;
+    }
+
+    private bool CheckCulture(string cultureCode)
+    {
+      IStorage storage = this.serviceProvider.GetService<IStorage>();
+
+      if (CultureManager.GetNotNeutralCultures(storage).Count() == 0)
+        return cultureCode == DefaultCulture.Code;
+
+      return CultureManager.GetNotNeutralCultures(storage).Any(c => c.Code == cultureCode);
     }
   }
 }

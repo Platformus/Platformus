@@ -36,6 +36,7 @@ namespace Platformus.Barebone
         {
           [1000] = applicationBuilder =>
           {
+            applicationBuilder.UseHttpException();
             applicationBuilder.UseSession();
           }
         };
