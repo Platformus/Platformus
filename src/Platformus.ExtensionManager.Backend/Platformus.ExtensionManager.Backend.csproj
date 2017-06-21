@@ -1,13 +1,13 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <Description>Part of the Platformus.FileManager Platformus extension.</Description>
-    <Copyright>Copyright © 2015 Dmitry Sikorsky</Copyright>
+    <Description>Part of the Platformus.ExtensionManager Platformus extension.</Description>
+    <Copyright>Copyright © 2017 Dmitry Sikorsky</Copyright>
     <VersionPrefix>1.0.0-alpha19</VersionPrefix>
     <Authors>Dmitry Sikorsky</Authors>
     <TargetFramework>netstandard1.6</TargetFramework>
-    <AssemblyName>Platformus.FileManager.Backend</AssemblyName>
-    <PackageId>Platformus.FileManager.Backend</PackageId>
+    <AssemblyName>Platformus.ExtensionManager.Backend</AssemblyName>
+    <PackageId>Platformus.ExtensionManager.Backend</PackageId>
     <PackageIconUrl>http://platformus.net/platformus_nuget_icon.png</PackageIconUrl>
     <PackageProjectUrl>http://platformus.net/</PackageProjectUrl>
   </PropertyGroup>
@@ -18,7 +18,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Platformus.Barebone.Backend\Platformus.Barebone.Backend.csproj" />
-    <ProjectReference Include="..\Platformus.FileManager\Platformus.FileManager.csproj" />
+    <ProjectReference Include="..\Platformus.ExtensionManager\Platformus.ExtensionManager.csproj" />
   </ItemGroup>
 
   <Target Name="PrecompileScript" BeforeTargets="BeforeBuild">

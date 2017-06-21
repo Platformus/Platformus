@@ -6,6 +6,10 @@
   padding: 0 3px;
 }
 
+.marker--highlighted {
+  background-color: #ffff96;
+}
+
 .marker--positive {
   background-color: rgba(135, 185, 25, 0.15);
 }

@@ -1,0 +1,12 @@
+﻿@* Copyright © 2017 Dmitry Sikorsky. All rights reserved. *@
+@* Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information. *@
+@model Platformus.ExtensionManager.Backend.ViewModels.Shared.ExtensionViewModel
+<tr class="table__row">
+  <td class="table__cell">@Model.Id</td>
+  <td class="table__cell">@Model.Name</td>
+  <td class="table__cell">@Model.Version</td>
+  <td class="table__cell table__buttons buttons">
+    <a class="table__button buttons__button buttons__button--minor button button--positive button--minor" href="@(this.Context.Request.CombineUrl("/backend/extensionmanager/view/" + this.Model.Id))">View</a>
+    <a class="table__button buttons__button buttons__button--minor button button--negative button--minor button--delete" href="/backend/extensionmanager/delete/@Model.Id"></a>
+  </td>
+</tr>
