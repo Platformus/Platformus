@@ -8,7 +8,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Platformus.Barebone.Frontend.ViewComponents;
 using Platformus.Globalization;
 using Platformus.Menus.Data.Abstractions;
-using Platformus.Menus.Data.Models;
+using Platformus.Menus.Data.Entities;
 using Platformus.Menus.Frontend.ViewModels.Shared;
 
 namespace Platformus.Menus.Frontend.ViewComponents

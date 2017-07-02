@@ -15,7 +15,7 @@ using Microsoft.Extensions.Configuration;
 using MimeKit;
 using Platformus.Configurations;
 using Platformus.Forms.Data.Abstractions;
-using Platformus.Forms.Data.Models;
+using Platformus.Forms.Data.Entities;
 
 namespace Platformus.Forms.Frontend.Controllers
 {

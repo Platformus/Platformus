@@ -3,9 +3,9 @@
 
 using System.Collections.Generic;
 using System.Linq;
-using ExtCore.Data.EntityFramework.Sqlite;
+using ExtCore.Data.EntityFramework;
 using Platformus.Forms.Data.Abstractions;
-using Platformus.Forms.Data.Models;
+using Platformus.Forms.Data.Entities;
 
 namespace Platformus.Forms.Data.EntityFramework.Sqlite
 {

@@ -47,6 +47,12 @@ namespace Platformus.Domain.Backend.ViewModels.Members
     [Display(Name = "Is relation single parent")]
     public bool IsRelationSingleParent { get; set; }
 
+    [Display(Name = "Min related objects number")]
+    public int? MinRelatedObjectsNumber { get; set; }
+
+    [Display(Name = "Max related objects number")]
+    public int? MaxRelatedObjectsNumber { get; set; }
+
     public IEnumerable<dynamic> DataTypes { get; set; }
   }
 }

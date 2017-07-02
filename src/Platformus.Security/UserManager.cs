@@ -7,7 +7,7 @@ using System.Collections.Generic;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Platformus.Barebone;
 using Platformus.Security.Data.Abstractions;
-using Platformus.Security.Data.Models;
+using Platformus.Security.Data.Entities;
 using Microsoft.AspNetCore.Http.Authentication;
 
 namespace Platformus.Security

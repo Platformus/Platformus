@@ -2,7 +2,7 @@
 // Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information.
 
 using Platformus.Barebone;
-using Platformus.Menus.Data.Models;
+using Platformus.Menus.Data.Entities;
 
 namespace Platformus.Menus
 {

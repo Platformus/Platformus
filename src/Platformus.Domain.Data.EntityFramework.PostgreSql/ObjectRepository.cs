@@ -3,11 +3,11 @@
 
 using System.Collections.Generic;
 using System.Linq;
-using ExtCore.Data.EntityFramework.PostgreSql;
+using ExtCore.Data.EntityFramework;
 using Microsoft.EntityFrameworkCore;
 using Platformus.Barebone.Data.Extensions;
 using Platformus.Domain.Data.Abstractions;
-using Platformus.Domain.Data.Models;
+using Platformus.Domain.Data.Entities;
 
 namespace Platformus.Domain.Data.EntityFramework.PostgreSql
 {

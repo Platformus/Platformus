@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using ExtCore.Infrastructure;
+using Platformus.Infrastructure;
 
 namespace Platformus.Barebone.Backend.ViewModels.Shared
 {
@@ -19,27 +20,24 @@ namespace Platformus.Barebone.Backend.ViewModels.Shared
     {
       List<BackendMenuGroupViewModel> backendMenuGroupViewModels = new List<BackendMenuGroupViewModel>();
 
-      foreach (IExtension extension in ExtensionManager.Extensions)
+      foreach (IBackendMetadata backendMetadata in ExtensionManager.GetInstances<IBackendMetadata>())
       {
-        if (extension is Platformus.Infrastructure.IExtension)
+        if (backendMetadata.BackendMenuGroups != null)
         {
-          if ((extension as Platformus.Infrastructure.IExtension).BackendMetadata != null && (extension as Platformus.Infrastructure.IExtension).BackendMetadata.BackendMenuGroups != null)
+          foreach (BackendMenuGroup backendMenuGroup in backendMetadata.BackendMenuGroups)
           {
-            foreach (Platformus.Infrastructure.BackendMenuGroup backendMenuGroup in (extension as Platformus.Infrastructure.IExtension).BackendMetadata.BackendMenuGroups)
-            {
-              List<BackendMenuItemViewModel> backendMenuItemViewModels = new List<BackendMenuItemViewModel>();
+            List<BackendMenuItemViewModel> backendMenuItemViewModels = new List<BackendMenuItemViewModel>();
 
-              foreach (Platformus.Infrastructure.BackendMenuItem backendMenuItem in backendMenuGroup.BackendMenuItems)
-                if (this.RequestHandler.HttpContext.User.Claims.Any(c => backendMenuItem.PermissionCodes.Any(pc => string.Equals(c.Value, pc, StringComparison.OrdinalIgnoreCase)) || string.Equals(c.Value, "DoEverything", StringComparison.OrdinalIgnoreCase)))
-                  backendMenuItemViewModels.Add(new BackendMenuItemViewModelFactory(this.RequestHandler).Create(backendMenuItem));
+            foreach (BackendMenuItem backendMenuItem in backendMenuGroup.BackendMenuItems)
+              if (this.RequestHandler.HttpContext.User.Claims.Any(c => backendMenuItem.PermissionCodes.Any(pc => string.Equals(c.Value, pc, StringComparison.OrdinalIgnoreCase)) || string.Equals(c.Value, "DoEverything", StringComparison.OrdinalIgnoreCase)))
+                backendMenuItemViewModels.Add(new BackendMenuItemViewModelFactory(this.RequestHandler).Create(backendMenuItem));
 
-              BackendMenuGroupViewModel backendMenuGroupViewModel = this.GetBackendMenuGroup(backendMenuGroupViewModels, backendMenuGroup);
+            BackendMenuGroupViewModel backendMenuGroupViewModel = this.GetBackendMenuGroup(backendMenuGroupViewModels, backendMenuGroup);
 
-              if (backendMenuGroupViewModel.BackendMenuItems != null)
-                backendMenuItemViewModels.AddRange(backendMenuGroupViewModel.BackendMenuItems);
+            if (backendMenuGroupViewModel.BackendMenuItems != null)
+              backendMenuItemViewModels.AddRange(backendMenuGroupViewModel.BackendMenuItems);
 
-              backendMenuGroupViewModel.BackendMenuItems = backendMenuItemViewModels.OrderBy(bmi => bmi.Position);
-            }
+            backendMenuGroupViewModel.BackendMenuItems = backendMenuItemViewModels.OrderBy(bmi => bmi.Position);
           }
         }
       }

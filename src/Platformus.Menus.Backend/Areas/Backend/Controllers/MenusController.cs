@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 using Platformus.Barebone;
 using Platformus.Menus.Backend.ViewModels.Menus;
 using Platformus.Menus.Data.Abstractions;
-using Platformus.Menus.Data.Models;
+using Platformus.Menus.Data.Entities;
 
 namespace Platformus.Menus.Backend.Controllers
 {

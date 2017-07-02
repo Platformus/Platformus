@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Platformus.Configurations.Backend.ViewModels.Variables;
 using Platformus.Configurations.Data.Abstractions;
-using Platformus.Configurations.Data.Models;
+using Platformus.Configurations.Data.Entities;
 
 namespace Platformus.Configurations.Backend.Controllers
 {

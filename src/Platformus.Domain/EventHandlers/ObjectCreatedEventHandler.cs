@@ -2,7 +2,7 @@
 // Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information.
 
 using Platformus.Barebone;
-using Platformus.Domain.Data.Models;
+using Platformus.Domain.Data.Entities;
 
 namespace Platformus.Domain
 {

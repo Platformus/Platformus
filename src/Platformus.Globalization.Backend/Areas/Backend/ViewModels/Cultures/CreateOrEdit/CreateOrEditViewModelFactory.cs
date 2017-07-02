@@ -3,7 +3,7 @@
 
 using Platformus.Barebone;
 using Platformus.Globalization.Data.Abstractions;
-using Platformus.Globalization.Data.Models;
+using Platformus.Globalization.Data.Entities;
 
 namespace Platformus.Globalization.Backend.ViewModels.Cultures
 {

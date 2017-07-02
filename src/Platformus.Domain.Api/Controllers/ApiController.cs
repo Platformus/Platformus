@@ -9,7 +9,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Newtonsoft.Json.Linq;
 using Platformus.Domain.Data.Abstractions;
-using Platformus.Domain.Data.Models;
+using Platformus.Domain.Data.Entities;
 
 namespace Platformus.Domain.Api.Controllers
 {

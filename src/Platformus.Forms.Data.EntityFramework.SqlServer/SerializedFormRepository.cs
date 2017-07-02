@@ -2,10 +2,10 @@
 // Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information.
 
 using System.Linq;
-using ExtCore.Data.EntityFramework.SqlServer;
+using ExtCore.Data.EntityFramework;
 using Microsoft.EntityFrameworkCore;
 using Platformus.Forms.Data.Abstractions;
-using Platformus.Forms.Data.Models;
+using Platformus.Forms.Data.Entities;
 
 namespace Platformus.Forms.Data.EntityFramework.SqlServer
 {

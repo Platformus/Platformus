@@ -4,10 +4,10 @@
 using System.Collections.Generic;
 using Platformus.Barebone;
 using Platformus.Domain.Data.Abstractions;
-using Platformus.Domain.Data.Models;
+using Platformus.Domain.Data.Entities;
 using Platformus.Globalization;
 using Platformus.Globalization.Data.Abstractions;
-using Platformus.Globalization.Data.Models;
+using Platformus.Globalization.Data.Entities;
 
 namespace Platformus.Domain
 {

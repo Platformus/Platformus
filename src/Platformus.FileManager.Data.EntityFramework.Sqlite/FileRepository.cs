@@ -3,11 +3,11 @@
 
 using System.Collections.Generic;
 using System.Linq;
-using ExtCore.Data.EntityFramework.Sqlite;
+using ExtCore.Data.EntityFramework;
 using Microsoft.EntityFrameworkCore;
 using Platformus.Barebone.Data.Extensions;
 using Platformus.FileManager.Data.Abstractions;
-using Platformus.FileManager.Data.Models;
+using Platformus.FileManager.Data.Entities;
 
 namespace Platformus.FileManager.Data.EntityFramework.Sqlite
 {

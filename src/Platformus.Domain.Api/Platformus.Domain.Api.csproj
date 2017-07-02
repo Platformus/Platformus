@@ -17,8 +17,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="ExtCore.Data.Abstractions" Version="1.2.0" />
-    <PackageReference Include="ExtCore.Infrastructure" Version="1.2.0" />
+    <PackageReference Include="ExtCore.Data.Abstractions" Version="2.0.0-alpha1" />
+    <PackageReference Include="ExtCore.Infrastructure" Version="2.0.0-alpha1" />
   </ItemGroup>
 
 </Project>

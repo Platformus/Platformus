@@ -3,7 +3,7 @@
 
 using ExtCore.Events;
 using Platformus.Barebone;
-using Platformus.Forms.Data.Models;
+using Platformus.Forms.Data.Entities;
 
 namespace Platformus.Forms
 {

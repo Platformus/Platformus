@@ -3,7 +3,7 @@
 
 using Platformus.Barebone;
 using Platformus.Domain.Data.Abstractions;
-using Platformus.Domain.Data.Models;
+using Platformus.Domain.Data.Entities;
 using Platformus.Globalization.Backend.ViewModels;
 
 namespace Platformus.Domain.Backend.ViewModels.Members
@@ -33,6 +33,8 @@ namespace Platformus.Domain.Backend.ViewModels.Members
       member.IsPropertyVisibleInList = createOrEdit.IsPropertyVisibleInList ? true : (bool?)null;
       member.RelationClassId = createOrEdit.RelationClassId;
       member.IsRelationSingleParent = createOrEdit.IsRelationSingleParent ? true : (bool?)null;
+      member.MinRelatedObjectsNumber = createOrEdit.MinRelatedObjectsNumber;
+      member.MaxRelatedObjectsNumber = createOrEdit.MaxRelatedObjectsNumber;
       return member;
     }
   }

@@ -6,9 +6,9 @@ using System.Linq;
 using Newtonsoft.Json;
 using Platformus.Barebone;
 using Platformus.Globalization.Data.Abstractions;
-using Platformus.Globalization.Data.Models;
+using Platformus.Globalization.Data.Entities;
 using Platformus.Menus.Data.Abstractions;
-using Platformus.Menus.Data.Models;
+using Platformus.Menus.Data.Entities;
 
 namespace Platformus.Menus
 {

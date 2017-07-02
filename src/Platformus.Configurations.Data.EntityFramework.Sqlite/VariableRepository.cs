@@ -3,10 +3,10 @@
 
 using System.Collections.Generic;
 using System.Linq;
-using ExtCore.Data.EntityFramework.Sqlite;
+using ExtCore.Data.EntityFramework;
 using Microsoft.EntityFrameworkCore;
 using Platformus.Configurations.Data.Abstractions;
-using Platformus.Configurations.Data.Models;
+using Platformus.Configurations.Data.Entities;
 
 namespace Platformus.Configurations.Data.EntityFramework.Sqlite
 {

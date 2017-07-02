@@ -4,7 +4,7 @@
 using ExtCore.Data.Abstractions;
 using Microsoft.Extensions.Configuration;
 using Platformus.Configurations.Data.Abstractions;
-using Platformus.Configurations.Data.Models;
+using Platformus.Configurations.Data.Entities;
 
 namespace Platformus.Configurations
 {

@@ -3,9 +3,9 @@
 
 using Microsoft.Extensions.DependencyInjection;
 using Platformus.Barebone;
-using Platformus.Forms.Data.Models;
+using Platformus.Forms.Data.Entities;
 using Platformus.Globalization;
-using Platformus.Globalization.Data.Models;
+using Platformus.Globalization.Data.Entities;
 
 namespace Platformus.Forms
 {

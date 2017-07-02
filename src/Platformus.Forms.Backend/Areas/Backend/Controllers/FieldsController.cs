@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 using Platformus.Barebone;
 using Platformus.Forms.Backend.ViewModels.Fields;
 using Platformus.Forms.Data.Abstractions;
-using Platformus.Forms.Data.Models;
+using Platformus.Forms.Data.Entities;
 
 namespace Platformus.Forms.Backend.Controllers
 {

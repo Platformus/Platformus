@@ -44,7 +44,7 @@ namespace Platformus.FileManager.Backend.Controllers
         using (FileStream output = System.IO.File.Create(this.GetPathAndFilename(filename)))
           await source.CopyToAsync(output);
 
-        Platformus.FileManager.Data.Models.File file = new Platformus.FileManager.Data.Models.File();
+        Platformus.FileManager.Data.Entities.File file = new Platformus.FileManager.Data.Entities.File();
 
         file.Name = filename;
         file.Size = source.Length;
@@ -57,7 +57,7 @@ namespace Platformus.FileManager.Backend.Controllers
 
     public ActionResult Delete(int id)
     {
-      Platformus.FileManager.Data.Models.File file = this.Storage.GetRepository<IFileRepository>().WithKey(id);
+      Platformus.FileManager.Data.Entities.File file = this.Storage.GetRepository<IFileRepository>().WithKey(id);
 
       try
       {

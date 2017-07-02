@@ -23,7 +23,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Menus", "Menus", "{6AAB030E
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Platformus.Domain", "src\Platformus.Domain\Platformus.Domain.csproj", "{D76E2FF2-FDEF-44D5-8774-2EB942476ABE}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Platformus.Domain.Data.Models", "src\Platformus.Domain.Data.Models\Platformus.Domain.Data.Models.csproj", "{790B72DA-CAB7-44FB-A3BA-411D4CA82220}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Platformus.Domain.Data.Entities", "src\Platformus.Domain.Data.Entities\Platformus.Domain.Data.Entities.csproj", "{790B72DA-CAB7-44FB-A3BA-411D4CA82220}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Platformus.Domain.Data.Abstractions", "src\Platformus.Domain.Data.Abstractions\Platformus.Domain.Data.Abstractions.csproj", "{7E99AD76-CF1C-44ED-B4F7-D271D445D04D}"
 EndProject
@@ -33,7 +33,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Platformus.Domain.Data.Enti
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Platformus.Domain.Backend", "src\Platformus.Domain.Backend\Platformus.Domain.Backend.csproj", "{E5DF71BB-986E-44FA-8E85-364C50F322FC}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Platformus.Security.Data.Models", "src\Platformus.Security.Data.Models\Platformus.Security.Data.Models.csproj", "{4447DB0A-96EC-4D95-B80C-A2D6CA4DC2B1}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Platformus.Security.Data.Entities", "src\Platformus.Security.Data.Entities\Platformus.Security.Data.Entities.csproj", "{4447DB0A-96EC-4D95-B80C-A2D6CA4DC2B1}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Platformus.Security.Data.Abstractions", "src\Platformus.Security.Data.Abstractions\Platformus.Security.Data.Abstractions.csproj", "{9DA42087-B86E-47ED-9FCC-218DE0381451}"
 EndProject
@@ -61,13 +61,13 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Platformus.Globalization.Da
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Platformus.Globalization.Data.EntityFramework.SqlServer", "src\Platformus.Globalization.Data.EntityFramework.SqlServer\Platformus.Globalization.Data.EntityFramework.SqlServer.csproj", "{C1364FA5-CCE5-45A3-BA97-0833EB1BBC8E}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Platformus.Globalization.Data.Models", "src\Platformus.Globalization.Data.Models\Platformus.Globalization.Data.Models.csproj", "{2E4B77D0-8D86-4E50-8C01-966405170180}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Platformus.Globalization.Data.Entities", "src\Platformus.Globalization.Data.Entities\Platformus.Globalization.Data.Entities.csproj", "{2E4B77D0-8D86-4E50-8C01-966405170180}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Platformus.Globalization.Backend", "src\Platformus.Globalization.Backend\Platformus.Globalization.Backend.csproj", "{ED49FFFF-C66D-4A7D-88D6-DB8EB1E20F11}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Platformus.Configurations", "src\Platformus.Configurations\Platformus.Configurations.csproj", "{1AE32C04-99DA-4581-A624-00DCB3061F21}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Platformus.Configurations.Data.Models", "src\Platformus.Configurations.Data.Models\Platformus.Configurations.Data.Models.csproj", "{B07E4296-9C59-4A5F-BC42-91DA8222BD89}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Platformus.Configurations.Data.Entities", "src\Platformus.Configurations.Data.Entities\Platformus.Configurations.Data.Entities.csproj", "{B07E4296-9C59-4A5F-BC42-91DA8222BD89}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Platformus.Configurations.Data.Abstractions", "src\Platformus.Configurations.Data.Abstractions\Platformus.Configurations.Data.Abstractions.csproj", "{E2DEC5AE-748E-47B6-A24F-D8322F90A1F1}"
 EndProject
@@ -79,7 +79,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Platformus.Configurations.D
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Platformus.Forms", "src\Platformus.Forms\Platformus.Forms.csproj", "{5975B30E-EA5F-4D59-9995-540E6C242409}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Platformus.Forms.Data.Models", "src\Platformus.Forms.Data.Models\Platformus.Forms.Data.Models.csproj", "{F60A7B58-72AA-41EF-A42D-478977AD36C9}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Platformus.Forms.Data.Entities", "src\Platformus.Forms.Data.Entities\Platformus.Forms.Data.Entities.csproj", "{F60A7B58-72AA-41EF-A42D-478977AD36C9}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Platformus.Forms.Backend", "src\Platformus.Forms.Backend\Platformus.Forms.Backend.csproj", "{274C0139-A1EB-41DB-9B0E-1CB023F36BC6}"
 EndProject
@@ -91,7 +91,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Platformus.Forms.Data.Entit
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Platformus.FileManager", "src\Platformus.FileManager\Platformus.FileManager.csproj", "{C935E2F4-A9C6-4D6F-8CA6-191792B0820C}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Platformus.FileManager.Data.Models", "src\Platformus.FileManager.Data.Models\Platformus.FileManager.Data.Models.csproj", "{01D2DE1A-0ECE-4231-A1EB-F41C87314136}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Platformus.FileManager.Data.Entities", "src\Platformus.FileManager.Data.Entities\Platformus.FileManager.Data.Entities.csproj", "{01D2DE1A-0ECE-4231-A1EB-F41C87314136}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Platformus.FileManager.Backend", "src\Platformus.FileManager.Backend\Platformus.FileManager.Backend.csproj", "{1F6C0B37-0F5D-4514-A301-B0D8CC04B0C6}"
 EndProject
@@ -103,7 +103,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Platformus.FileManager.Data
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Platformus.Menus", "src\Platformus.Menus\Platformus.Menus.csproj", "{21285B6B-31D6-4214-8A97-93AC77F158D4}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Platformus.Menus.Data.Models", "src\Platformus.Menus.Data.Models\Platformus.Menus.Data.Models.csproj", "{BD448EAD-3F90-4363-BF0D-A2307BE115E1}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Platformus.Menus.Data.Entities", "src\Platformus.Menus.Data.Entities\Platformus.Menus.Data.Entities.csproj", "{BD448EAD-3F90-4363-BF0D-A2307BE115E1}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Platformus.Menus.Backend", "src\Platformus.Menus.Backend\Platformus.Menus.Backend.csproj", "{67374D31-113B-480C-9866-F7A596A532A4}"
 EndProject
@@ -163,7 +163,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Platformus.ECommerce.Data.E
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Platformus.ECommerce.Data.EntityFramework.SqlServer", "src\Platformus.ECommerce.Data.EntityFramework.SqlServer\Platformus.ECommerce.Data.EntityFramework.SqlServer.csproj", "{26645ABC-9EBA-4DC1-990E-1DE3038175BA}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Platformus.ECommerce.Data.Models", "src\Platformus.ECommerce.Data.Models\Platformus.ECommerce.Data.Models.csproj", "{34B1565A-3ABC-49BC-A0A0-92789A9D9B91}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Platformus.ECommerce.Data.Entities", "src\Platformus.ECommerce.Data.Entities\Platformus.ECommerce.Data.Entities.csproj", "{34B1565A-3ABC-49BC-A0A0-92789A9D9B91}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Platformus.ECommerce.Frontend", "src\Platformus.ECommerce.Frontend\Platformus.ECommerce.Frontend.csproj", "{82BA6246-94B4-499A-BF4C-239D24DA905E}"
 EndProject

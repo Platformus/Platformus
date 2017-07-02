@@ -4,6 +4,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using ExtCore.Infrastructure;
+using Platformus.Infrastructure;
 
 namespace Platformus.Barebone.Backend.ViewModels.Shared
 {
@@ -18,11 +19,10 @@ namespace Platformus.Barebone.Backend.ViewModels.Shared
     {
       List<BackendStyleSheetViewModel> backendStyleSheetViewModels = new List<BackendStyleSheetViewModel>();
 
-      foreach (IExtension extension in ExtensionManager.Extensions)
-        if (extension is Platformus.Infrastructure.IExtension)
-          if ((extension as Platformus.Infrastructure.IExtension).BackendMetadata != null && (extension as Platformus.Infrastructure.IExtension).BackendMetadata.BackendStyleSheets != null)
-            foreach (Platformus.Infrastructure.BackendStyleSheet backendStyleSheet in (extension as Platformus.Infrastructure.IExtension).BackendMetadata.BackendStyleSheets)
-              backendStyleSheetViewModels.Add(new BackendStyleSheetViewModelFactory(this.RequestHandler).Create(backendStyleSheet));
+      foreach (IBackendMetadata backendMetadata in ExtensionManager.GetInstances<IBackendMetadata>())
+        if (backendMetadata.BackendStyleSheets != null)
+          foreach (BackendStyleSheet backendStyleSheet in backendMetadata.BackendStyleSheets)
+            backendStyleSheetViewModels.Add(new BackendStyleSheetViewModelFactory(this.RequestHandler).Create(backendStyleSheet));
 
       return new BackendStyleSheetsViewModel()
       {

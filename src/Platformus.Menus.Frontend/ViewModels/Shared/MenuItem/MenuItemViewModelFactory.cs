@@ -8,7 +8,7 @@ using Platformus.Barebone;
 using Platformus.Globalization;
 using Platformus.Globalization.Frontend.ViewModels;
 using Platformus.Menus.Data.Abstractions;
-using Platformus.Menus.Data.Models;
+using Platformus.Menus.Data.Entities;
 
 namespace Platformus.Menus.Frontend.ViewModels.Shared
 {

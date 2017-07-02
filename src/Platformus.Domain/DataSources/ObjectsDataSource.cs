@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Platformus.Barebone;
 using Platformus.Domain.Data.Abstractions;
-using Platformus.Domain.Data.Models;
+using Platformus.Domain.Data.Entities;
 using Platformus.Globalization;
 
 namespace Platformus.Domain.DataSources

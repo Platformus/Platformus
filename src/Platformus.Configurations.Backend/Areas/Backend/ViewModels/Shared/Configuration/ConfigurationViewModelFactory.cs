@@ -5,7 +5,7 @@ using System.Linq;
 using Platformus.Barebone;
 using Platformus.Barebone.Backend.ViewModels;
 using Platformus.Configurations.Data.Abstractions;
-using Platformus.Configurations.Data.Models;
+using Platformus.Configurations.Data.Entities;
 
 namespace Platformus.Configurations.Backend.ViewModels.Shared
 {

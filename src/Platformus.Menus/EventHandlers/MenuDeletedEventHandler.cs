@@ -4,8 +4,8 @@
 using Microsoft.Extensions.DependencyInjection;
 using Platformus.Barebone;
 using Platformus.Globalization;
-using Platformus.Globalization.Data.Models;
-using Platformus.Menus.Data.Models;
+using Platformus.Globalization.Data.Entities;
+using Platformus.Menus.Data.Entities;
 
 namespace Platformus.Menus
 {

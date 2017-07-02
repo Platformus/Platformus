@@ -4,7 +4,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.DependencyInjection;
 using Platformus.Barebone;
-using Platformus.Domain.Data.Models;
+using Platformus.Domain.Data.Entities;
 using Platformus.Globalization;
 
 namespace Platformus.Domain.Frontend

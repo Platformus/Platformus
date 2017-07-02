@@ -18,7 +18,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="ExtCore.Data.EntityFramework.PostgreSql" Version="1.2.0" />
+    <PackageReference Include="ExtCore.Data.EntityFramework.PostgreSql" Version="2.0.0-alpha1" />
   </ItemGroup>
 
 </Project>

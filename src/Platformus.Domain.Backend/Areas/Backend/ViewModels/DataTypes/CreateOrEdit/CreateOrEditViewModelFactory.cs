@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using Platformus.Barebone;
 using Platformus.Barebone.Backend;
 using Platformus.Domain.Data.Abstractions;
-using Platformus.Domain.Data.Models;
+using Platformus.Domain.Data.Entities;
 using Platformus.Globalization.Backend.ViewModels;
 
 namespace Platformus.Domain.Backend.ViewModels.DataTypes

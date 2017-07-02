@@ -13,11 +13,11 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Platformus.FileManager.Data.Models\Platformus.FileManager.Data.Models.csproj" />
+    <ProjectReference Include="..\Platformus.FileManager.Data.Entities\Platformus.FileManager.Data.Entities.csproj" />
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="ExtCore.Data.Abstractions" Version="1.2.0" />
+    <PackageReference Include="ExtCore.Data.Abstractions" Version="2.0.0-alpha1" />
   </ItemGroup>
 
 </Project>

@@ -7,7 +7,7 @@ using ExtCore.Infrastructure;
 using Platformus.Barebone;
 using Platformus.Barebone.Backend;
 using Platformus.Domain.Data.Abstractions;
-using Platformus.Domain.Data.Models;
+using Platformus.Domain.Data.Entities;
 using Platformus.Domain.DataSources;
 using Platformus.Globalization.Backend.ViewModels;
 

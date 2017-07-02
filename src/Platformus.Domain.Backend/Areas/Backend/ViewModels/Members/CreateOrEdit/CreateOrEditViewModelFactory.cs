@@ -6,7 +6,7 @@ using System.Linq;
 using Platformus.Barebone;
 using Platformus.Barebone.Backend;
 using Platformus.Domain.Data.Abstractions;
-using Platformus.Domain.Data.Models;
+using Platformus.Domain.Data.Entities;
 using Platformus.Globalization.Backend.ViewModels;
 
 namespace Platformus.Domain.Backend.ViewModels.Members
@@ -46,6 +46,8 @@ namespace Platformus.Domain.Backend.ViewModels.Members
         RelationClassId = member.RelationClassId,
         RelationClassOptions = this.GetRelationClassOptions(),
         IsRelationSingleParent = member.IsRelationSingleParent == true,
+        MinRelatedObjectsNumber = member.MinRelatedObjectsNumber,
+        MaxRelatedObjectsNumber = member.MaxRelatedObjectsNumber,
         DataTypes = this.GetDataTypes(member.Id)
       };
     }

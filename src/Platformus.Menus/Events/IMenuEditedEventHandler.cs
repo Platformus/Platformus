@@ -3,7 +3,7 @@
 
 using ExtCore.Events;
 using Platformus.Barebone;
-using Platformus.Menus.Data.Models;
+using Platformus.Menus.Data.Entities;
 
 namespace Platformus.Menus
 {

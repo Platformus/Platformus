@@ -4,6 +4,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using ExtCore.Infrastructure;
+using Platformus.Infrastructure;
 
 namespace Platformus.Barebone.Backend.ViewModels.Shared
 {
@@ -18,11 +19,10 @@ namespace Platformus.Barebone.Backend.ViewModels.Shared
     {
       List<BackendScriptViewModel> backendScriptViewModels = new List<BackendScriptViewModel>();
 
-      foreach (IExtension extension in ExtensionManager.Extensions)
-        if (extension is Platformus.Infrastructure.IExtension)
-          if ((extension as Platformus.Infrastructure.IExtension).BackendMetadata != null && (extension as Platformus.Infrastructure.IExtension).BackendMetadata.BackendScripts != null)
-            foreach (Platformus.Infrastructure.BackendScript backendScript in (extension as Platformus.Infrastructure.IExtension).BackendMetadata.BackendScripts)
-              backendScriptViewModels.Add(new BackendScriptViewModelFactory(this.RequestHandler).Create(backendScript));
+      foreach (IBackendMetadata backendMetadata in ExtensionManager.GetInstances<IBackendMetadata>())
+        if (backendMetadata.BackendScripts != null)
+          foreach (BackendScript backendScript in backendMetadata.BackendScripts)
+            backendScriptViewModels.Add(new BackendScriptViewModelFactory(this.RequestHandler).Create(backendScript));
 
       return new BackendScriptsViewModel()
       {

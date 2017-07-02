@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Platformus.Barebone;
 using Platformus.Globalization.Data.Abstractions;
-using Platformus.Globalization.Data.Models;
+using Platformus.Globalization.Data.Entities;
 
 namespace Platformus.Globalization.Backend.ViewModels
 {
@@ -33,9 +33,9 @@ namespace Platformus.Globalization.Backend.ViewModels
     {
       List<Platformus.Barebone.Backend.Localization> localizations = new List<Platformus.Barebone.Backend.Localization>();
 
-      foreach (Platformus.Globalization.Data.Models.Culture culture in this.RequestHandler.Storage.GetRepository<ICultureRepository>().All().ToList())
+      foreach (Platformus.Globalization.Data.Entities.Culture culture in this.RequestHandler.Storage.GetRepository<ICultureRepository>().All().ToList())
       {
-        Platformus.Globalization.Data.Models.Localization localization = null;
+        Platformus.Globalization.Data.Entities.Localization localization = null;
 
         if (dictionaryId != null)
           localization = this.RequestHandler.Storage.GetRepository<ILocalizationRepository>().FilteredByDictionaryId((int)dictionaryId).FirstOrDefault(l => l.CultureId == culture.Id);

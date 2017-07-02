@@ -6,7 +6,7 @@ using System.Linq;
 using Newtonsoft.Json;
 using Platformus.Barebone;
 using Platformus.Forms.Data.Abstractions;
-using Platformus.Forms.Data.Models;
+using Platformus.Forms.Data.Entities;
 using Platformus.Globalization.Frontend.ViewModels;
 
 namespace Platformus.Forms.Frontend.ViewModels.Shared

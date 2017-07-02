@@ -3,7 +3,7 @@
 
 using Platformus.Barebone;
 using Platformus.Barebone.Backend.ViewModels;
-using Platformus.FileManager.Data.Models;
+using Platformus.FileManager.Data.Entities;
 
 namespace Platformus.FileManager.Backend.ViewModels.Shared
 {

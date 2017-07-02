@@ -6,7 +6,7 @@ using System.Globalization;
 using System.Linq;
 using ExtCore.Data.Abstractions;
 using Platformus.Globalization.Data.Abstractions;
-using Platformus.Globalization.Data.Models;
+using Platformus.Globalization.Data.Entities;
 
 namespace Platformus.Globalization
 {

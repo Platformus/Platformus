@@ -3,7 +3,7 @@
 
 using System.Collections.Generic;
 using ExtCore.Data.Abstractions;
-using Platformus.Configurations.Data.Models;
+using Platformus.Configurations.Data.Entities;
 
 namespace Platformus.Configurations.Data.Abstractions
 {

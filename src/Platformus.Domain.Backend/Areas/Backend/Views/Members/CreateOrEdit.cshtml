@@ -28,6 +28,8 @@
     <div id="tabPageRelation" class="tab-pages__tab-page">
       <drop-down-list-field asp-for="RelationClassId" asp-options="@Model.RelationClassOptions" onchange="platformus.ui.relationClassIdChanged();" />
       <checkbox-field asp-for="IsRelationSingleParent" />
+      <single-line-text-field asp-for="MinRelatedObjectsNumber" />
+      <single-line-text-field asp-for="MaxRelatedObjectsNumber" />
     </div>
   </div>
   <div class="form__buttons buttons">
