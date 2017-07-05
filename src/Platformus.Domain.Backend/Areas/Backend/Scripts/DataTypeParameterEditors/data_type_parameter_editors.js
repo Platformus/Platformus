@@ -10,6 +10,10 @@
 
     var dataType = getDataType(dataTypeId);
 
+    if (dataType == null) {
+      return;
+    }
+
     for (var i = 0; i < dataType.dataTypeParameters.length; i++) {
       var f = platformus.dataTypeParameterEditors[dataType.dataTypeParameters[i].javaScriptEditorClassName]["create"];
 

@@ -149,6 +149,8 @@ CREATE TABLE "Members" (
 	"IsPropertyVisibleInList" INTEGER,
 	"RelationClassId" INTEGER,
 	"IsRelationSingleParent" INTEGER,
+  "MinRelatedObjectsNumber" INTEGER,
+  "MaxRelatedObjectsNumber" INTEGER,
 	CONSTRAINT "FK_Member_Class_ClassId" FOREIGN KEY("ClassId") REFERENCES "Classes" ("Id"),
 	CONSTRAINT "FK_Member_Tab_TabId" FOREIGN KEY("TabId") REFERENCES "Tabs" ("Id"),
 	CONSTRAINT "FK_Member_DataType_PropertyDataTypeId" FOREIGN KEY("PropertyDataTypeId") REFERENCES "DataTypes" ("Id"),

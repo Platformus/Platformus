@@ -3,6 +3,7 @@
 
 using System.Collections.Generic;
 using System.Linq;
+using Microsoft.AspNetCore.Routing;
 using Platformus.Barebone;
 using Platformus.Domain.Data.Abstractions;
 using Platformus.Domain.Data.Entities;
@@ -10,7 +11,7 @@ using Platformus.Globalization;
 
 namespace Platformus.Domain.DataSources
 {
-  public class PrimaryObjectsDataSource : DataSourceBase
+  public class PrimaryObjectsDataSource : DataSourceBase, IMultipleObjectsDataSource
   {
     public override IEnumerable<DataSourceParameter> DataSourceParameters
     {
@@ -25,46 +26,71 @@ namespace Platformus.Domain.DataSources
       }
     }
 
-    public override IEnumerable<SerializedObject> GetSerializedObjects(IRequestHandler requestHandler, SerializedObject serializedPage, params KeyValuePair<string, string>[] args)
+    public IEnumerable<dynamic> GetSerializedObjects(IRequestHandler requestHandler, params KeyValuePair<string, string>[] args)
     {
       if (!this.HasArgument(args, "SortingMemberId") || !this.HasArgument(args, "SortingDirection"))
-      {
-        if (this.HasArgument(args, "RelationMemberId"))
-          return requestHandler.Storage.GetRepository<ISerializedObjectRepository>().Primary(CultureManager.GetCurrentCulture(requestHandler.Storage).Id, this.GetIntArgument(args, "RelationMemberId"), serializedPage.ObjectId).ToList();
+        return this.GetUnsortedSerializedObjects(requestHandler, args);
 
-        return requestHandler.Storage.GetRepository<ISerializedObjectRepository>().Primary(CultureManager.GetCurrentCulture(requestHandler.Storage).Id, serializedPage.ObjectId).ToList();
-      }
-
-      int orderBy = this.GetIntArgument(args, "SortingMemberId");
-      string direction = this.GetStringArgument(args, "SortingDirection");
-      Member member = requestHandler.Storage.GetRepository<IMemberRepository>().WithKey(orderBy);
-      DataType dataType = requestHandler.Storage.GetRepository<IDataTypeRepository>().WithKey((int)member.PropertyDataTypeId);
-
-      if (this.HasArgument(args, "RelationMemberId"))
-        return requestHandler.Storage.GetRepository<ISerializedObjectRepository>().Primary(CultureManager.GetCurrentCulture(requestHandler.Storage).Id, this.GetIntArgument(args, "RelationMemberId"), serializedPage.ObjectId, dataType.StorageDataType, orderBy, direction).ToList();
-
-      return requestHandler.Storage.GetRepository<ISerializedObjectRepository>().Primary(CultureManager.GetCurrentCulture(requestHandler.Storage).Id, serializedPage.ObjectId, dataType.StorageDataType, orderBy, direction).ToList();
+      return this.GetSortedSerializedObjects(requestHandler, args);
     }
 
-    public override IEnumerable<Object> GetObjects(IRequestHandler requestHandler, Object page, params KeyValuePair<string, string>[] args)
+    private IEnumerable<dynamic> GetUnsortedSerializedObjects(IRequestHandler requestHandler, params KeyValuePair<string, string>[] args)
     {
-      if (!this.HasArgument(args, "SortingMemberId") || !this.HasArgument(args, "SortingDirection"))
-      {
-        if (this.HasArgument(args, "RelationMemberId"))
-          return requestHandler.Storage.GetRepository<IObjectRepository>().Primary(this.GetIntArgument(args, "RelationMemberId"), page.Id).ToList();
+      SerializedObject serializedPage = this.GetPageSerializedObject(requestHandler);
+      IEnumerable<SerializedObject> serializedObjects = null;
 
-        return requestHandler.Storage.GetRepository<IObjectRepository>().Primary(page.Id).ToList();
-      }
+      if (this.HasArgument(args, "RelationMemberId"))
+        serializedObjects = requestHandler.Storage.GetRepository<ISerializedObjectRepository>().Primary(
+          CultureManager.GetCurrentCulture(requestHandler.Storage).Id,
+          this.GetIntArgument(args, "RelationMemberId"),
+          serializedPage.ObjectId
+        ).ToList();
 
-      int orderBy = this.GetIntArgument(args, "SortingMemberId");
+      serializedObjects = requestHandler.Storage.GetRepository<ISerializedObjectRepository>().Primary(
+        CultureManager.GetCurrentCulture(requestHandler.Storage).Id,
+        serializedPage.ObjectId
+      ).ToList();
+
+      return serializedObjects.Select(so => this.CreateSerializedObjectViewModel(so));
+    }
+
+    private IEnumerable<dynamic> GetSortedSerializedObjects(IRequestHandler requestHandler, params KeyValuePair<string, string>[] args)
+    {
+      SerializedObject serializedPage = this.GetPageSerializedObject(requestHandler);
+      IEnumerable<SerializedObject> serializedObjects = null;
+      int sortingMemberId = this.GetIntArgument(args, "SortingMemberId");
       string direction = this.GetStringArgument(args, "SortingDirection");
-      Member member = requestHandler.Storage.GetRepository<IMemberRepository>().WithKey(orderBy);
+      Member member = requestHandler.Storage.GetRepository<IMemberRepository>().WithKey(sortingMemberId);
       DataType dataType = requestHandler.Storage.GetRepository<IDataTypeRepository>().WithKey((int)member.PropertyDataTypeId);
 
       if (this.HasArgument(args, "RelationMemberId"))
-        return requestHandler.Storage.GetRepository<IObjectRepository>().Primary(this.GetIntArgument(args, "RelationMemberId"), page.Id, dataType.StorageDataType, orderBy, direction, CultureManager.GetCurrentCulture(requestHandler.Storage).Id).ToList();
+        serializedObjects = requestHandler.Storage.GetRepository<ISerializedObjectRepository>().Primary(
+          CultureManager.GetCurrentCulture(requestHandler.Storage).Id,
+          this.GetIntArgument(args, "RelationMemberId"),
+          serializedPage.ObjectId,
+          dataType.StorageDataType,
+          sortingMemberId,
+          direction
+        ).ToList();
 
-      return requestHandler.Storage.GetRepository<IObjectRepository>().Primary(page.Id, dataType.StorageDataType, orderBy, direction, CultureManager.GetCurrentCulture(requestHandler.Storage).Id).ToList();
+      serializedObjects = requestHandler.Storage.GetRepository<ISerializedObjectRepository>().Primary(
+        CultureManager.GetCurrentCulture(requestHandler.Storage).Id,
+        serializedPage.ObjectId,
+        dataType.StorageDataType,
+        sortingMemberId,
+        direction
+      ).ToList();
+
+      return serializedObjects.Select(so => this.CreateSerializedObjectViewModel(so));
+    }
+
+    private SerializedObject GetPageSerializedObject(IRequestHandler requestHandler)
+    {
+      string url = string.Format("/{0}", requestHandler.HttpContext.GetRouteValue("url"));
+
+      return requestHandler.Storage.GetRepository<ISerializedObjectRepository>().WithCultureIdAndUrlPropertyStringValue(
+        CultureManager.GetCurrentCulture(requestHandler.Storage).Id, url
+      );
     }
   }
 }

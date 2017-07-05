@@ -83,6 +83,8 @@ namespace Platformus.Domain.Backend.ViewModels.Objects
                 id = member.RelationClassId
               },
               isRelationSingleParent = member.RelationClassId == null ? null : member.IsRelationSingleParent,
+              minRelatedObjectsNumber = member.MinRelatedObjectsNumber,
+              maxRelatedObjectsNumber = member.MaxRelatedObjectsNumber,
               relations = member.RelationClassId == null ? null : this.GetRelations(member, @object, objectId)
             }
           );

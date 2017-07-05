@@ -15,6 +15,17 @@ namespace Platformus.Domain
       this.viewModel = new ExpandoObject();
     }
 
+    public ViewModelBuilder(dynamic viewModel)
+    {
+      this.viewModel = (ExpandoObject)viewModel;
+    }
+
+    public ViewModelBuilder BuildId(int id)
+    {
+      (this.viewModel as IDictionary<string, dynamic>).Add("Id", id);
+      return this;
+    }
+
     public ViewModelBuilder BuildProperty(string key, dynamic value)
     {
       (this.viewModel as IDictionary<string, dynamic>).Add(key, value);

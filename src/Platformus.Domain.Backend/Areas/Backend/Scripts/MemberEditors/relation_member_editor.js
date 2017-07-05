@@ -56,6 +56,8 @@
         platformus.forms.objectSelectorForm.show(
           member.relationClass.id,
           $("#" + identity).val(),
+          member.minRelatedObjectsNumber,
+          member.maxRelatedObjectsNumber,
           function (objectIds) {
             $("#" + identity).val(objectIds);
             $("#" + identity).trigger("change");

@@ -3,7 +3,7 @@
 
 using System.Collections.Generic;
 using System.Linq;
-using Platformus.Barebone;
+using Newtonsoft.Json;
 using Platformus.Domain.Data.Entities;
 
 namespace Platformus.Domain.DataSources
@@ -19,9 +19,6 @@ namespace Platformus.Domain.DataSources
         return new DataSourceParameter[] { };
       }
     }
-
-    public abstract IEnumerable<SerializedObject> GetSerializedObjects(IRequestHandler requestHandler, SerializedObject serializedPage, params KeyValuePair<string, string>[] args);
-    public abstract IEnumerable<Object> GetObjects(IRequestHandler requestHandler, Object page, params KeyValuePair<string, string>[] args);
 
     protected bool HasArgument(KeyValuePair<string, string>[] args, string key)
     {
@@ -43,6 +40,30 @@ namespace Platformus.Domain.DataSources
     {
       this.CacheArguments(args);
       return this.args[key];
+    }
+
+    protected dynamic CreateSerializedObjectViewModel(SerializedObject serializedObject)
+    {
+      ViewModelBuilder viewModelBuilder = new ViewModelBuilder();
+
+      viewModelBuilder.BuildId(serializedObject.ObjectId);
+
+      foreach (SerializedProperty serializedProperty in JsonConvert.DeserializeObject<IEnumerable<SerializedProperty>>(serializedObject.SerializedProperties))
+      {
+        if (serializedProperty.Member.PropertyDataTypeStorageDataType == StorageDataType.Integer)
+          viewModelBuilder.BuildProperty(serializedProperty.Member.Code, serializedProperty.IntegerValue);
+
+        else if (serializedProperty.Member.PropertyDataTypeStorageDataType == StorageDataType.Decimal)
+          viewModelBuilder.BuildProperty(serializedProperty.Member.Code, serializedProperty.DecimalValue);
+
+        else if (serializedProperty.Member.PropertyDataTypeStorageDataType == StorageDataType.String)
+          viewModelBuilder.BuildProperty(serializedProperty.Member.Code, serializedProperty.StringValue);
+
+        else if (serializedProperty.Member.PropertyDataTypeStorageDataType == StorageDataType.DateTime)
+          viewModelBuilder.BuildProperty(serializedProperty.Member.Code, serializedProperty.DateTimeValue);
+      }
+
+      return viewModelBuilder.Build();
     }
 
     private void CacheArguments(KeyValuePair<string, string>[] args)

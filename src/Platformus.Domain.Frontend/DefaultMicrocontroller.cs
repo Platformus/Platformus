@@ -6,13 +6,10 @@ using System.Linq;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Routing;
 using Microsoft.Extensions.DependencyInjection;
-using Newtonsoft.Json;
 using Platformus.Barebone;
 using Platformus.Domain.Data.Abstractions;
 using Platformus.Domain.Data.Entities;
 using Platformus.Domain.DataSources;
-using Platformus.Globalization;
-using Platformus.Globalization.Data.Entities;
 
 namespace Platformus.Domain.Frontend
 {
@@ -32,122 +29,36 @@ namespace Platformus.Domain.Frontend
 
     private IActionResult GetActionResult(IRequestHandler requestHandler, Microcontroller microcontroller, IEnumerable<KeyValuePair<string, string>> parameters, string url)
     {
-      dynamic viewModel = null;
+      dynamic viewModel = this.CreateViewModel(requestHandler, microcontroller);
 
-      SerializedObject serializedPage = requestHandler.Storage.GetRepository<ISerializedObjectRepository>().WithCultureIdAndUrlPropertyStringValue(
-        CultureManager.GetCurrentCulture(requestHandler.Storage).Id, url
-      );
+      return (requestHandler as Platformus.Barebone.Frontend.Controllers.ControllerBase).View(microcontroller.ViewName, viewModel);
+    }
 
-      if (serializedPage != null)
-        viewModel = this.CreateViewModel(requestHandler, microcontroller, serializedPage);
+    private dynamic CreateViewModel(IRequestHandler requestHandler, Microcontroller microcontroller)
+    {
+      ViewModelBuilder viewModelBuilder = new ViewModelBuilder();
 
-      else
-      {
-        Object page = requestHandler.Storage.GetRepository<IObjectRepository>().WithUrl(url);
+      foreach (DataSource dataSource in requestHandler.Storage.GetRepository<IDataSourceRepository>().FilteredByMicrocontrollerId(microcontroller.Id))
+      viewModelBuilder.BuildProperty(dataSource.Code, this.CreateDataSourceViewModel(requestHandler, dataSource));
 
-        if (page != null)
-          viewModel = this.CreateViewModel(requestHandler, microcontroller, page);
-      }
+      return viewModelBuilder.Build();
+    }
 
-      if (viewModel != null)
-        return (requestHandler as Platformus.Barebone.Frontend.Controllers.ControllerBase).View(microcontroller.ViewName, viewModel);
+    private dynamic CreateDataSourceViewModel(IRequestHandler requestHandler, DataSource dataSource)
+    {
+      IDataSource dataSourceInstance = StringActivator.CreateInstance<IDataSource>(dataSource.CSharpClassName);
+
+      if (dataSourceInstance is ISingleObjectDataSource)
+        return (dataSourceInstance as ISingleObjectDataSource).GetSerializedObject(
+          requestHandler, this.GetParameters(dataSource.Parameters)
+        );
+
+      if (dataSourceInstance is IMultipleObjectsDataSource)
+        return (dataSourceInstance as IMultipleObjectsDataSource).GetSerializedObjects(
+          requestHandler, this.GetParameters(dataSource.Parameters)
+        );
 
       return null;
-    }
-
-    private dynamic CreateViewModel(IRequestHandler requestHandler, Microcontroller microcontroller, SerializedObject page)
-    {
-      ViewModelBuilder viewModelBuilder = new ViewModelBuilder();
-
-      viewModelBuilder.BuildProperty("Page", this.CreateObjectViewModel(requestHandler, page));
-
-      foreach (DataSource dataSource in requestHandler.Storage.GetRepository<IDataSourceRepository>().FilteredByMicrocontrollerId(microcontroller.Id))
-        viewModelBuilder.BuildProperty(dataSource.Code, this.CreateDataSourceViewModel(requestHandler, page, dataSource));
-
-      return viewModelBuilder.Build();
-    }
-
-    private dynamic CreateObjectViewModel(IRequestHandler requestHandler, SerializedObject serializedObject)
-    {
-      ViewModelBuilder viewModelBuilder = new ViewModelBuilder();
-
-      foreach (SerializedProperty serializedProperty in JsonConvert.DeserializeObject<IEnumerable<SerializedProperty>>(serializedObject.SerializedProperties))
-      {
-        if (serializedProperty.Member.PropertyDataTypeStorageDataType == StorageDataType.Integer)
-          viewModelBuilder.BuildProperty(serializedProperty.Member.Code, serializedProperty.IntegerValue);
-
-        else if (serializedProperty.Member.PropertyDataTypeStorageDataType == StorageDataType.Decimal)
-          viewModelBuilder.BuildProperty(serializedProperty.Member.Code, serializedProperty.DecimalValue);
-
-        else if (serializedProperty.Member.PropertyDataTypeStorageDataType == StorageDataType.String)
-          viewModelBuilder.BuildProperty(serializedProperty.Member.Code, serializedProperty.StringValue);
-
-        else if (serializedProperty.Member.PropertyDataTypeStorageDataType == StorageDataType.DateTime)
-          viewModelBuilder.BuildProperty(serializedProperty.Member.Code, serializedProperty.DateTimeValue);
-      }
-
-      return viewModelBuilder.Build();
-    }
-
-    private IEnumerable<dynamic> CreateDataSourceViewModel(IRequestHandler requestHandler, SerializedObject serializedPage, DataSource dataSource)
-    {
-      IDataSource dataSourceInstance = StringActivator.CreateInstance<IDataSource>(dataSource.CSharpClassName);
-
-      return dataSourceInstance.GetSerializedObjects(requestHandler, serializedPage, this.GetParameters(dataSource.Parameters)).Select(
-        so => this.CreateObjectViewModel(requestHandler, so)
-      );
-    }
-
-    private dynamic CreateViewModel(IRequestHandler requestHandler, Microcontroller microcontroller, Object page)
-    {
-      ViewModelBuilder viewModelBuilder = new ViewModelBuilder();
-
-      viewModelBuilder.BuildProperty("Page", this.CreateObjectViewModel(requestHandler, page));
-
-      foreach (DataSource dataSource in requestHandler.Storage.GetRepository<IDataSourceRepository>().FilteredByMicrocontrollerId(microcontroller.Id))
-        viewModelBuilder.BuildProperty(dataSource.Code, this.CreateDataSourceViewModel(requestHandler, page, dataSource));
-
-      return viewModelBuilder.Build();
-    }
-
-    private dynamic CreateObjectViewModel(IRequestHandler requestHandler, Object @object)
-    {
-      ViewModelBuilder viewModelBuilder = new ViewModelBuilder();
-
-      foreach (var property in requestHandler.Storage.GetRepository<IPropertyRepository>().FilteredByObjectId(@object.Id))
-      {
-        Member member = requestHandler.Storage.GetRepository<IMemberRepository>().WithKey(property.MemberId);
-        DataType dataType = requestHandler.Storage.GetRepository<IDataTypeRepository>().WithKey((int)member.PropertyDataTypeId);
-
-        if (dataType.StorageDataType == StorageDataType.Integer)
-          viewModelBuilder.BuildProperty(member.Code, property.IntegerValue);
-
-        else if (dataType.StorageDataType == StorageDataType.Decimal)
-          viewModelBuilder.BuildProperty(member.Code, property.DecimalValue);
-
-        else if (dataType.StorageDataType == StorageDataType.String)
-        {
-          Culture neutralCulture = CultureManager.GetNeutralCulture(requestHandler.Storage);
-          string stringValue = member.IsPropertyLocalizable == true ?
-            requestHandler.GetLocalizationValue((int)property.StringValueId) : requestHandler.GetLocalizationValue((int)property.StringValueId, neutralCulture.Id);
-
-          viewModelBuilder.BuildProperty(member.Code, stringValue);
-        }
-
-        else if (dataType.StorageDataType == StorageDataType.DateTime)
-          viewModelBuilder.BuildProperty(member.Code, property.DateTimeValue);
-      }
-
-      return viewModelBuilder.Build();
-    }
-
-    private IEnumerable<dynamic> CreateDataSourceViewModel(IRequestHandler requestHandler, Object page, DataSource dataSource)
-    {
-      IDataSource dataSourceInstance = StringActivator.CreateInstance<IDataSource>(dataSource.CSharpClassName);
-
-      return dataSourceInstance.GetObjects(requestHandler, page, this.GetParameters(dataSource.Parameters)).Select(
-        o => this.CreateObjectViewModel(requestHandler, o)
-      );
     }
 
     private KeyValuePair<string, string>[] GetParameters(string parameters)

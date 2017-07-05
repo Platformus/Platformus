@@ -37,10 +37,14 @@
 
     if (platformus.string.isNullOrEmpty(relationClassId)) {
       $("#isRelationSingleParent").hide();
+      $("#minRelatedObjectsNumber").parent().hide();
+      $("#maxRelatedObjectsNumber").parent().hide();
     }
 
     else {
       $("#isRelationSingleParent").show();
+      $("#minRelatedObjectsNumber").parent().show();
+      $("#maxRelatedObjectsNumber").parent().show();
     }
   };
 

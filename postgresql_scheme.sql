@@ -246,6 +246,8 @@ CREATE TABLE "Members" (
     "IsPropertyVisibleInList" boolean,
     "RelationClassId" integer,
     "IsRelationSingleParent" boolean,
+    "MinRelatedObjectsNumber" integer,
+    "MaxRelatedObjectsNumber" integer,
     CONSTRAINT "PK_Members" PRIMARY KEY ("Id"),
     CONSTRAINT "FK_Members_Classes_ClassId" FOREIGN KEY ("ClassId")
         REFERENCES public."Classes" ("Id") MATCH SIMPLE
