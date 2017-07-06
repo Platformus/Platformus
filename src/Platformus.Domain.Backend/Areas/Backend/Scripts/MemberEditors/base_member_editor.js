@@ -19,6 +19,24 @@
     return defaultValue;
   };
 
+  platformus.memberEditors.base.getIsRequiredDataTypeParameterValue = function (member) {
+    var value = platformus.memberEditors.base.getDataTypeParameterValue(member, "IsRequired", null);
+
+    if (value == null)
+      return null;
+
+    return value == "true";
+  };
+
+  platformus.memberEditors.base.getMaxLengthDataTypeParameterValue = function (member) {
+    var value = platformus.memberEditors.base.getDataTypeParameterValue(member, "MaxLength", null);
+
+    if (value == null)
+      return null;
+
+    return parseInt(value);
+  };
+
   platformus.memberEditors.base.createLabel = function (member) {
     return $("<label>").addClass("field__label").addClass("label").html(member.name);
   };

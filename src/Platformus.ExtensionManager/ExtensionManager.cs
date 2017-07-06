@@ -25,7 +25,7 @@ namespace Platformus.ExtensionManager
           IHostingEnvironment hostingEnvironment = this.requestHandler.HttpContext.RequestServices.GetService<IHostingEnvironment>();
           IConfigurationRoot configurationRoot = new ConfigurationBuilder()
             .SetBasePath(hostingEnvironment.ContentRootPath)
-            .AddJsonFile("config.json", optional: true, reloadOnChange: true)
+            .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true)
             .Build();
 
           string extensionsPath = configurationRoot?["Extensions:Path"];

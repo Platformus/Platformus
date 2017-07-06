@@ -51,11 +51,28 @@
       textArea.addClass("field__text-area--multilingual");
     }
 
-    return textArea
+    textArea
       .addClass("text-area")
       .attr("id", identity)
       .attr("name", identity)
       .attr("data-culture", localization.culture.code)
       .html(localization.value);
+
+    var isRequired = platformus.memberEditors.base.getIsRequiredDataTypeParameterValue(member);
+    var maxLength = platformus.memberEditors.base.getMaxLengthDataTypeParameterValue(member);
+
+    if (isRequired != null || maxLength != null) {
+      textArea.attr("data-val", true);
+    }
+
+    if (isRequired != null) {
+      textArea.addClass("text-box--required").attr("data-val-required", isRequired);
+    }
+
+    if (maxLength != null) {
+      textArea.attr("maxlength", maxLength).attr("data-val-maxlength-max", maxLength);
+    }
+
+    return textArea;
   }
 })(window.platformus = window.platformus || {});

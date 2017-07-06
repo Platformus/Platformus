@@ -20,7 +20,7 @@
     var identity = platformus.memberEditors.base.getIdentity(member);
     var textBox = $("<input>").addClass("field__text-box");
 
-    return textBox
+    textBox
       .addClass("text-box")
       .attr("id", identity)
       .attr("name", identity)
@@ -29,5 +29,13 @@
       .attr("placeholder", moment().locale(platformus.culture.server()).localeData().longDateFormat("L"))
       .attr("value", member.property.dateTimeValue)
       .attr("data-type", "date");
+
+    var isRequired = platformus.memberEditors.base.getIsRequiredDataTypeParameterValue(member);
+
+    if (isRequired != null) {
+      textBox.addClass("text-box--required").attr("data-val", true).attr("data-val-required", isRequired);
+    }
+
+    return textBox;
   }
 })(window.platformus = window.platformus || {});
