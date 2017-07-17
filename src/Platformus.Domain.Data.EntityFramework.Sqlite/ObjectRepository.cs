@@ -18,18 +18,6 @@ namespace Platformus.Domain.Data.EntityFramework.Sqlite
       return this.dbSet.FirstOrDefault(o => o.Id == id);
     }
 
-    public Object WithUrl(string url)
-    {
-      return this.dbSet.FromSql(
-        @"
-          SELECT * FROM Objects WHERE Id IN
-            (SELECT ObjectId FROM Properties WHERE MemberId IN
-              (SELECT Id FROM Members WHERE Code = {0}) AND StringValueId IN (SELECT DictionaryId FROM Localizations WHERE Value = {1}))
-        ",
-        "Url", url
-      ).FirstOrDefault();
-    }
-
     public IEnumerable<Object> All()
     {
       return this.dbSet.OrderBy(o => o.Id);
@@ -38,16 +26,6 @@ namespace Platformus.Domain.Data.EntityFramework.Sqlite
     public IEnumerable<Object> FilteredByClassId(int classId)
     {
       return this.dbSet.Where(o => o.ClassId == classId).OrderBy(o => o.Id);
-    }
-
-    public IEnumerable<Object> FilteredByClassIdRange(int classId, string orderBy, string direction, int skip, int take)
-    {
-      return this.dbSet.Where(o => o.ClassId == classId).OrderBy(orderBy, direction).Skip(skip).Take(take);
-    }
-
-    public IEnumerable<Object> FilteredByClassIdAndObjectIdRange(int classId, int objectId, string orderBy, string direction, int skip, int take)
-    {
-      return this.dbSet.Where(o => o.ClassId == classId && o.ForeignRelations.Any(r => r.PrimaryId == objectId)).OrderBy(orderBy, direction).Skip(skip).Take(take);
     }
 
     public void Create(Object @object)

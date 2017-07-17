@@ -27,7 +27,7 @@ namespace Platformus.Domain.Backend.ViewModels.Domain
         ),
         GridColumns = this.GetGridColumns(classId),
         Objects = this.RequestHandler.Storage.GetRepository<IObjectRepository>().FilteredByClassId(classId).Select(
-          o => new ObjectViewModelFactory(this.RequestHandler).Create(o)
+          o => new ObjectViewModelFactory(this.RequestHandler).Create(o.Id)
         ),
         ObjectIds = string.IsNullOrEmpty(objectIds) ? new int[] { } : objectIds.Split(',').Select(objectId => int.Parse(objectId))
       };

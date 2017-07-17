@@ -38,7 +38,7 @@ namespace Platformus.Domain.DataSources
 
     private IEnumerable<dynamic> GetUnsortedSerializedObjects(IRequestHandler requestHandler, params KeyValuePair<string, string>[] args)
     {
-      IEnumerable<SerializedObject> serializedObjects = requestHandler.Storage.GetRepository<ISerializedObjectRepository>().FilteredByClassId(
+      IEnumerable<SerializedObject> serializedObjects = requestHandler.Storage.GetRepository<ISerializedObjectRepository>().FilteredByCultureIdAndClassId(
         CultureManager.GetCurrentCulture(requestHandler.Storage).Id,
         this.GetIntArgument(args, "ClassId")
       ).ToList();
@@ -48,16 +48,10 @@ namespace Platformus.Domain.DataSources
 
     private IEnumerable<dynamic> GetSortedSerializedObjects(IRequestHandler requestHandler, params KeyValuePair<string, string>[] args)
     {
-      int sortingMemberId = this.GetIntArgument(args, "SortingMemberId");
-      string direction = this.GetStringArgument(args, "SortingDirection");
-      Member member = requestHandler.Storage.GetRepository<IMemberRepository>().WithKey(sortingMemberId);
-      DataType dataType = requestHandler.Storage.GetRepository<IDataTypeRepository>().WithKey((int)member.PropertyDataTypeId);
-      IEnumerable<SerializedObject> serializedObjects = requestHandler.Storage.GetRepository<ISerializedObjectRepository>().FilteredByClassId(
+      IEnumerable<SerializedObject> serializedObjects = requestHandler.Storage.GetRepository<ISerializedObjectRepository>().FilteredByCultureIdAndClassId(
         CultureManager.GetCurrentCulture(requestHandler.Storage).Id,
         this.GetIntArgument(args, "ClassId"),
-        dataType.StorageDataType,
-        sortingMemberId,
-        direction
+        this.GetParams(requestHandler, args)
       ).ToList();
 
       return serializedObjects.Select(so => this.CreateSerializedObjectViewModel(so));

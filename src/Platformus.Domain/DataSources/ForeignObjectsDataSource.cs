@@ -58,27 +58,20 @@ namespace Platformus.Domain.DataSources
     {
       SerializedObject serializedPage = this.GetPageSerializedObject(requestHandler);
       IEnumerable<SerializedObject> serializedObjects = null;
-      int sortingMemberId = this.GetIntArgument(args, "SortingMemberId");
-      string direction = this.GetStringArgument(args, "SortingDirection");
-      Member member = requestHandler.Storage.GetRepository<IMemberRepository>().WithKey(sortingMemberId);
-      DataType dataType = requestHandler.Storage.GetRepository<IDataTypeRepository>().WithKey((int)member.PropertyDataTypeId);
+      Params @params = this.GetParams(requestHandler, args);
 
       if (this.HasArgument(args, "RelationMemberId"))
         serializedObjects = requestHandler.Storage.GetRepository<ISerializedObjectRepository>().Foreign(
           CultureManager.GetCurrentCulture(requestHandler.Storage).Id,
           this.GetIntArgument(args, "RelationMemberId"),
           serializedPage.ObjectId,
-          dataType.StorageDataType,
-          sortingMemberId,
-          direction
+          @params
         ).ToList();
 
       serializedObjects = requestHandler.Storage.GetRepository<ISerializedObjectRepository>().Foreign(
         CultureManager.GetCurrentCulture(requestHandler.Storage).Id,
         serializedPage.ObjectId,
-        dataType.StorageDataType,
-        sortingMemberId,
-        direction
+        @params
       ).ToList();
 
       return serializedObjects.Select(so => this.CreateSerializedObjectViewModel(so));

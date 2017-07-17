@@ -63,6 +63,7 @@ namespace Platformus.Domain
 
       serializedObject.ObjectId = @object.Id;
       serializedObject.CultureId = culture.Id;
+      serializedObject.ClassId = @object.ClassId;
       serializedObject.UrlPropertyStringValue = serializedProperties.FirstOrDefault(sp => sp.Member.Code == "Url")?.StringValue;
 
       if (serializedProperties.Count != 0)

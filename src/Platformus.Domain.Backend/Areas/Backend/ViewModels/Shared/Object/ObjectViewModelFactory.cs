@@ -17,8 +17,9 @@ namespace Platformus.Domain.Backend.ViewModels.Shared
     {
     }
 
-    public ObjectViewModel Create(Object @object)
+    public ObjectViewModel Create(int id)
     {
+      Object @object = this.RequestHandler.Storage.GetRepository<IObjectRepository>().WithKey(id);
       List<Class> relatedClasses = new List<Class>();
 
       foreach (Member member in this.RequestHandler.Storage.GetRepository<IMemberRepository>().FilteredByRelationClassIdRelationSingleParent(@object.ClassId).ToList())

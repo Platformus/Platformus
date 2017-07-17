@@ -210,11 +210,13 @@ CREATE TABLE "DataSources" (
 CREATE TABLE "SerializedObjects" (
 	"CultureId" INTEGER NOT NULL,
 	"ObjectId" INTEGER NOT NULL,
+	"ClassId" INTEGER NOT NULL,
 	"UrlPropertyStringValue" TEXT,
 	"SerializedProperties" TEXT,
 	CONSTRAINT "PK_SerializedObject" PRIMARY KEY("CultureId","ObjectId"),
 	CONSTRAINT "FK_SerializedObject_Culture_CultureId" FOREIGN KEY("CultureId") REFERENCES "Cultures"("Id"),
-	CONSTRAINT "FK_SerializedObject_Object_ObjectId" FOREIGN KEY("ObjectId") REFERENCES "Objects"("Id")
+	CONSTRAINT "FK_SerializedObject_Object_ObjectId" FOREIGN KEY("ObjectId") REFERENCES "Objects"("Id"),
+	CONSTRAINT "FK_SerializedObject_Class_ClassId" FOREIGN KEY("ClassId") REFERENCES "Classes"("Id")
 );
 
 --

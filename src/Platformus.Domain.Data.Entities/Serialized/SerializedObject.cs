@@ -10,10 +10,12 @@ namespace Platformus.Domain.Data.Entities
   {
     public int CultureId { get; set; }
     public int ObjectId { get; set; }
+    public int ClassId { get; set; }
     public string UrlPropertyStringValue { get; set; }
     public string SerializedProperties { get; set; }
 
     public virtual Culture Culture { get; set; }
     public virtual Object Object { get; set; }
+    public virtual Class Class { get; set; }
   }
 }

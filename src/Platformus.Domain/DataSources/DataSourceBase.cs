@@ -4,6 +4,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using Newtonsoft.Json;
+using Platformus.Barebone;
+using Platformus.Domain.Data.Abstractions;
 using Platformus.Domain.Data.Entities;
 
 namespace Platformus.Domain.DataSources
@@ -40,6 +42,16 @@ namespace Platformus.Domain.DataSources
     {
       this.CacheArguments(args);
       return this.args[key];
+    }
+
+    protected Params GetParams(IRequestHandler requestHandler, KeyValuePair<string, string>[] args)
+    {
+      int sortingMemberId = this.GetIntArgument(args, "SortingMemberId");
+      string sortingDirection = this.GetStringArgument(args, "SortingDirection");
+      Member member = requestHandler.Storage.GetRepository<IMemberRepository>().WithKey(sortingMemberId);
+      DataType dataType = requestHandler.Storage.GetRepository<IDataTypeRepository>().WithKey((int)member.PropertyDataTypeId);
+
+      return new Params(sorting: new Sorting(dataType.StorageDataType, sortingMemberId, sortingDirection));
     }
 
     protected dynamic CreateSerializedObjectViewModel(SerializedObject serializedObject)

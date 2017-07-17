@@ -377,9 +377,22 @@ ALTER TABLE "DataSources" OWNER TO postgres;
 CREATE TABLE "SerializedObjects" (
     "CultureId" integer NOT NULL,
     "ObjectId" integer NOT NULL,
+    "ClassId" integer NOT NULL,
     "UrlPropertyStringValue" text,
     "SerializedProperties" text,
-    CONSTRAINT "PK_SerializedObjects" PRIMARY KEY ("CultureId", "ObjectId")
+    CONSTRAINT "PK_SerializedObjects" PRIMARY KEY ("CultureId", "ObjectId"),
+    CONSTRAINT "FK_SerializedObjects_Cultures" FOREIGN KEY ("CultureId")
+        REFERENCES public."Cultures" ("Id") MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION,
+    CONSTRAINT "FK_SerializedObjects_Objects" FOREIGN KEY ("ObjectId")
+        REFERENCES public."Objects" ("Id") MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION,
+    CONSTRAINT "FK_SerializedObjects_Classes" FOREIGN KEY ("ClassId")
+        REFERENCES public."Classes" ("Id") MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION
 );
 
 ALTER TABLE "SerializedObjects" OWNER TO postgres;

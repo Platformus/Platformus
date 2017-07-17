@@ -23,6 +23,14 @@ namespace Platformus.Domain.Data.EntityFramework.SqlServer
       return this.dbSet.FirstOrDefault(m => m.ClassId == classId && string.Equals(m.Code, code, System.StringComparison.OrdinalIgnoreCase));
     }
 
+    public Member WithClassIdAndCodeInlcudingParent(int classId, string code)
+    {
+      return this.dbSet.FromSql(
+        "SELECT * FROM Members WHERE ClassId = {0} OR ClassId IN (SELECT ClassId FROM Classes WHERE Id = {0})",
+        classId
+      ).FirstOrDefault(m => string.Equals(m.Code, code, System.StringComparison.OrdinalIgnoreCase));
+    }
+
     public IEnumerable<Member> FilteredByClassIdInlcudingParent(int classId)
     {
       return this.dbSet.FromSql(

@@ -7,7 +7,7 @@
 }
 else
 {
-  if (this.Model.OrderBy == this.Model.Owner.OrderBy)
+  if (string.Equals(this.Model.OrderBy, this.Model.Owner.OrderBy, StringComparison.OrdinalIgnoreCase))
   {
     <th class="table__cell table__cell--header table__cell--header-ordered-by @(this.Model.Owner.Direction == "asc" ? "table__cell--header-ordered-by-asc" : "table__cell--header-ordered-by-desc") @(this.Model.IsLast ? "table__cell--last" : string.Empty)">
       <a class="table__order-by table__order-by--ordered-by" href="@this.Context.Request.CombineUrl(
