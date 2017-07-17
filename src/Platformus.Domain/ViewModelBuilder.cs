@@ -26,6 +26,12 @@ namespace Platformus.Domain
       return this;
     }
 
+    public ViewModelBuilder BuildClassId(int classId)
+    {
+      (this.viewModel as IDictionary<string, dynamic>).Add("ClassId", classId);
+      return this;
+    }
+
     public ViewModelBuilder BuildProperty(string key, dynamic value)
     {
       (this.viewModel as IDictionary<string, dynamic>).Add(key, value);

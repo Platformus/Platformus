@@ -1,6 +1,7 @@
 ﻿// Copyright © 2015 Dmitry Sikorsky. All rights reserved.
 // Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information.
 
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using Platformus.Barebone;
@@ -20,7 +21,8 @@ namespace Platformus.Domain.DataSources
         {
           new DataSourceParameter("ClassId", "Class ID", "temp"),
           new DataSourceParameter("SortingMemberId", "Sorting member ID", "temp"),
-          new DataSourceParameter("SortingDirection", "Sorting direction", "temp")
+          new DataSourceParameter("SortingDirection", "Sorting direction", "temp"),
+          new DataSourceParameter("NestedXPaths", "Nested XPaths", "temp")
         };
       }
     }
@@ -30,10 +32,15 @@ namespace Platformus.Domain.DataSources
       if (!this.HasArgument(args, "ClassId"))
         return new SerializedObject[] { };
 
-      if (!this.HasArgument(args, "SortingMemberId") || !this.HasArgument(args, "SortingDirection"))
-        return this.GetUnsortedSerializedObjects(requestHandler, args);
+      IEnumerable<dynamic> results = null;
 
-      return this.GetSortedSerializedObjects(requestHandler, args);
+      if (!this.HasArgument(args, "SortingMemberId") || !this.HasArgument(args, "SortingDirection"))
+        results = this.GetUnsortedSerializedObjects(requestHandler, args);
+
+      else results = this.GetSortedSerializedObjects(requestHandler, args);
+
+      results = this.LoadNestedObjects(requestHandler, results, args);
+      return results;
     }
 
     private IEnumerable<dynamic> GetUnsortedSerializedObjects(IRequestHandler requestHandler, params KeyValuePair<string, string>[] args)

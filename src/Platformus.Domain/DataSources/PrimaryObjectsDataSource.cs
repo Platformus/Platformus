@@ -21,17 +21,23 @@ namespace Platformus.Domain.DataSources
         {
           new DataSourceParameter("RelationMemberId", "Relation member ID", "temp"),
           new DataSourceParameter("SortingMemberId", "Sorting member ID", "temp"),
-          new DataSourceParameter("SortingDirection", "Sorting direction", "temp")
+          new DataSourceParameter("SortingDirection", "Sorting direction", "temp"),
+          new DataSourceParameter("NestedXPaths", "Nested XPaths", "temp")
         };
       }
     }
 
     public IEnumerable<dynamic> GetSerializedObjects(IRequestHandler requestHandler, params KeyValuePair<string, string>[] args)
     {
-      if (!this.HasArgument(args, "SortingMemberId") || !this.HasArgument(args, "SortingDirection"))
-        return this.GetUnsortedSerializedObjects(requestHandler, args);
+      IEnumerable<dynamic> results = null;
 
-      return this.GetSortedSerializedObjects(requestHandler, args);
+      if (!this.HasArgument(args, "SortingMemberId") || !this.HasArgument(args, "SortingDirection"))
+        results = this.GetUnsortedSerializedObjects(requestHandler, args);
+
+      else results = this.GetSortedSerializedObjects(requestHandler, args);
+
+      results = this.LoadNestedObjects(requestHandler, results, args);
+      return results;
     }
 
     private IEnumerable<dynamic> GetUnsortedSerializedObjects(IRequestHandler requestHandler, params KeyValuePair<string, string>[] args)

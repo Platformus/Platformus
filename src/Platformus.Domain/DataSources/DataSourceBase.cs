@@ -1,12 +1,14 @@
 ﻿// Copyright © 2015 Dmitry Sikorsky. All rights reserved.
 // Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information.
 
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using Newtonsoft.Json;
 using Platformus.Barebone;
 using Platformus.Domain.Data.Abstractions;
 using Platformus.Domain.Data.Entities;
+using Platformus.Globalization;
 
 namespace Platformus.Domain.DataSources
 {
@@ -59,6 +61,7 @@ namespace Platformus.Domain.DataSources
       ViewModelBuilder viewModelBuilder = new ViewModelBuilder();
 
       viewModelBuilder.BuildId(serializedObject.ObjectId);
+      viewModelBuilder.BuildClassId(serializedObject.ClassId);
 
       foreach (SerializedProperty serializedProperty in JsonConvert.DeserializeObject<IEnumerable<SerializedProperty>>(serializedObject.SerializedProperties))
       {
@@ -78,10 +81,60 @@ namespace Platformus.Domain.DataSources
       return viewModelBuilder.Build();
     }
 
+    protected IEnumerable<dynamic> LoadNestedObjects(IRequestHandler requestHandler, IEnumerable<dynamic> objects, KeyValuePair<string, string>[] args)
+    {
+      if (!this.HasArgument(args, "NestedXPaths"))
+        return objects;
+
+      string nestedXPaths = this.GetStringArgument(args, "NestedXPaths");
+
+      if (string.IsNullOrEmpty(nestedXPaths))
+        return objects;
+
+      foreach (string nestedXPath in nestedXPaths.Split(new string[] { "\r\n" }, StringSplitOptions.RemoveEmptyEntries))
+        objects = this.LoadNestedObjects(requestHandler, objects, nestedXPath.Split('/').ToList(), 0);
+
+      return objects;
+    }
+
     private void CacheArguments(KeyValuePair<string, string>[] args)
     {
       if (this.args == null)
         this.args = args.ToDictionary(a => a.Key, a => a.Value);
+    }
+
+    private IEnumerable<dynamic> LoadNestedObjects(IRequestHandler requestHandler, IEnumerable<dynamic> objects, List<string> xPathSegments, int xPathSegmentIndex)
+    {
+      if (objects.Count() == 0)
+        return objects;
+
+      int classId = objects.First().ClassId;
+      string xPathSegment = xPathSegments[xPathSegmentIndex];
+
+      foreach (Member member in requestHandler.Storage.GetRepository<IMemberRepository>().FilteredByClassIdInlcudingParent(classId))
+      {
+        if (member.RelationClassId != null && string.Equals(member.Code, xPathSegment, StringComparison.OrdinalIgnoreCase))
+        {
+          List<dynamic> temp = new List<dynamic>();
+
+          foreach (dynamic @object in objects)
+          {
+            IEnumerable<dynamic> nestedObjects = requestHandler.Storage.GetRepository<ISerializedObjectRepository>().Primary(
+              CultureManager.GetCurrentCulture(requestHandler.Storage).Id, (int)@object.Id
+            ).ToList().Select(so => this.CreateSerializedObjectViewModel(so));
+
+            if (xPathSegments.Count() > xPathSegmentIndex + 1)
+              nestedObjects = this.LoadNestedObjects(requestHandler, nestedObjects, xPathSegments, xPathSegmentIndex + 1);
+
+            new ViewModelBuilder(@object).BuildProperty(member.Code, nestedObjects);
+            temp.Add(@object);
+          }
+
+          @objects = temp;
+        }
+      }
+
+      return objects;
     }
   }
 }
