@@ -1,7 +1,6 @@
 ﻿// Copyright © 2015 Dmitry Sikorsky. All rights reserved.
 // Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information.
 
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using Platformus.Barebone;
@@ -22,6 +21,12 @@ namespace Platformus.Domain.DataSources
           new DataSourceParameter("ClassId", "Class ID", "temp"),
           new DataSourceParameter("SortingMemberId", "Sorting member ID", "temp"),
           new DataSourceParameter("SortingDirection", "Sorting direction", "temp"),
+          new DataSourceParameter("EnablePaging", "Enable paging", "temp"),
+          new DataSourceParameter("SkipUrlParameterName", "Skip URL parameter name", "temp"),
+          new DataSourceParameter("TakeUrlParameterName", "Take URL parameter name", "temp"),
+          new DataSourceParameter("DefaultTake", "Default take", "temp"),
+          new DataSourceParameter("EnableFiltering", "Enable filtering", "temp"),
+          new DataSourceParameter("QueryUrlParameterName", "Query URL parameter name", "temp"),
           new DataSourceParameter("NestedXPaths", "Nested XPaths", "temp")
         };
       }
@@ -47,7 +52,8 @@ namespace Platformus.Domain.DataSources
     {
       IEnumerable<SerializedObject> serializedObjects = requestHandler.Storage.GetRepository<ISerializedObjectRepository>().FilteredByCultureIdAndClassId(
         CultureManager.GetCurrentCulture(requestHandler.Storage).Id,
-        this.GetIntArgument(args, "ClassId")
+        this.GetIntArgument(args, "ClassId"),
+        this.GetParams(requestHandler, args, false)
       ).ToList();
 
       return serializedObjects.Select(so => this.CreateSerializedObjectViewModel(so));
@@ -58,7 +64,7 @@ namespace Platformus.Domain.DataSources
       IEnumerable<SerializedObject> serializedObjects = requestHandler.Storage.GetRepository<ISerializedObjectRepository>().FilteredByCultureIdAndClassId(
         CultureManager.GetCurrentCulture(requestHandler.Storage).Id,
         this.GetIntArgument(args, "ClassId"),
-        this.GetParams(requestHandler, args)
+        this.GetParams(requestHandler, args, true)
       ).ToList();
 
       return serializedObjects.Select(so => this.CreateSerializedObjectViewModel(so));

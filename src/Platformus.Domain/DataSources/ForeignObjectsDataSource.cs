@@ -22,6 +22,12 @@ namespace Platformus.Domain.DataSources
           new DataSourceParameter("RelationMemberId", "Relation member ID", "temp"),
           new DataSourceParameter("SortingMemberId", "Sorting member ID", "temp"),
           new DataSourceParameter("SortingDirection", "Sorting direction", "temp"),
+          new DataSourceParameter("EnablePaging", "Enable paging", "temp"),
+          new DataSourceParameter("SkipUrlParameterName", "Skip URL parameter name", "temp"),
+          new DataSourceParameter("TakeUrlParameterName", "Take URL parameter name", "temp"),
+          new DataSourceParameter("DefaultTake", "Default take", "temp"),
+          new DataSourceParameter("EnableFiltering", "Enable filtering", "temp"),
+          new DataSourceParameter("QueryUrlParameterName", "Query URL parameter name", "temp"),
           new DataSourceParameter("NestedXPaths", "Nested XPaths", "temp")
         };
       }
@@ -44,27 +50,7 @@ namespace Platformus.Domain.DataSources
     {
       SerializedObject serializedPage = this.GetPageSerializedObject(requestHandler);
       IEnumerable <SerializedObject> serializedObjects = null;
-
-      if (this.HasArgument(args, "RelationMemberId"))
-        serializedObjects = requestHandler.Storage.GetRepository<ISerializedObjectRepository>().Foreign(
-          CultureManager.GetCurrentCulture(requestHandler.Storage).Id,
-          this.GetIntArgument(args, "RelationMemberId"),
-          serializedPage.ObjectId
-        ).ToList();
-
-      serializedObjects = requestHandler.Storage.GetRepository<ISerializedObjectRepository>().Foreign(
-        CultureManager.GetCurrentCulture(requestHandler.Storage).Id,
-        serializedPage.ObjectId
-      ).ToList();
-
-      return serializedObjects.Select(so => this.CreateSerializedObjectViewModel(so));
-    }
-
-    private IEnumerable<dynamic> GetSortedSerializedObjects(IRequestHandler requestHandler, params KeyValuePair<string, string>[] args)
-    {
-      SerializedObject serializedPage = this.GetPageSerializedObject(requestHandler);
-      IEnumerable<SerializedObject> serializedObjects = null;
-      Params @params = this.GetParams(requestHandler, args);
+      Params @params = this.GetParams(requestHandler, args, false);
 
       if (this.HasArgument(args, "RelationMemberId"))
         serializedObjects = requestHandler.Storage.GetRepository<ISerializedObjectRepository>().Foreign(
@@ -74,7 +60,30 @@ namespace Platformus.Domain.DataSources
           @params
         ).ToList();
 
-      serializedObjects = requestHandler.Storage.GetRepository<ISerializedObjectRepository>().Foreign(
+      else serializedObjects = requestHandler.Storage.GetRepository<ISerializedObjectRepository>().Foreign(
+        CultureManager.GetCurrentCulture(requestHandler.Storage).Id,
+        serializedPage.ObjectId,
+        @params
+      ).ToList();
+
+      return serializedObjects.Select(so => this.CreateSerializedObjectViewModel(so));
+    }
+
+    private IEnumerable<dynamic> GetSortedSerializedObjects(IRequestHandler requestHandler, params KeyValuePair<string, string>[] args)
+    {
+      SerializedObject serializedPage = this.GetPageSerializedObject(requestHandler);
+      IEnumerable<SerializedObject> serializedObjects = null;
+      Params @params = this.GetParams(requestHandler, args, true);
+
+      if (this.HasArgument(args, "RelationMemberId"))
+        serializedObjects = requestHandler.Storage.GetRepository<ISerializedObjectRepository>().Foreign(
+          CultureManager.GetCurrentCulture(requestHandler.Storage).Id,
+          this.GetIntArgument(args, "RelationMemberId"),
+          serializedPage.ObjectId,
+          @params
+        ).ToList();
+
+      else serializedObjects = requestHandler.Storage.GetRepository<ISerializedObjectRepository>().Foreign(
         CultureManager.GetCurrentCulture(requestHandler.Storage).Id,
         serializedPage.ObjectId,
         @params

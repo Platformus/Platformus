@@ -21,7 +21,7 @@ namespace Platformus.Domain.Frontend
 
       if (microcontroller.UseCaching)
         return requestHandler.HttpContext.RequestServices.GetService<ICache>().GetPageActionResultWithDefaultValue(
-          url, () => this.GetActionResult(requestHandler, microcontroller, parameters, url)
+          url + requestHandler.HttpContext.Request.QueryString, () => this.GetActionResult(requestHandler, microcontroller, parameters, url)
         );
 
       return this.GetActionResult(requestHandler, microcontroller, parameters, url);

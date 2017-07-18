@@ -40,20 +40,57 @@ namespace Platformus.Domain.DataSources
       return 0;
     }
 
+    protected bool GetBoolArgument(KeyValuePair<string, string>[] args, string key)
+    {
+      this.CacheArguments(args);
+
+      if (bool.TryParse(this.args[key], out bool result))
+        return result;
+
+      return false;
+    }
+
     protected string GetStringArgument(KeyValuePair<string, string>[] args, string key)
     {
       this.CacheArguments(args);
       return this.args[key];
     }
 
-    protected Params GetParams(IRequestHandler requestHandler, KeyValuePair<string, string>[] args)
+    protected Params GetParams(IRequestHandler requestHandler, KeyValuePair<string, string>[] args, bool enableSorting)
     {
-      int sortingMemberId = this.GetIntArgument(args, "SortingMemberId");
-      string sortingDirection = this.GetStringArgument(args, "SortingDirection");
-      Member member = requestHandler.Storage.GetRepository<IMemberRepository>().WithKey(sortingMemberId);
-      DataType dataType = requestHandler.Storage.GetRepository<IDataTypeRepository>().WithKey((int)member.PropertyDataTypeId);
+      Sorting sorting = null;
 
-      return new Params(sorting: new Sorting(dataType.StorageDataType, sortingMemberId, sortingDirection));
+      if (enableSorting)
+      {
+        int sortingMemberId = this.GetIntArgument(args, "SortingMemberId");
+        string sortingDirection = this.GetStringArgument(args, "SortingDirection");
+        Member member = requestHandler.Storage.GetRepository<IMemberRepository>().WithKey(sortingMemberId);
+        DataType dataType = requestHandler.Storage.GetRepository<IDataTypeRepository>().WithKey((int)member.PropertyDataTypeId);
+
+        sorting = new Sorting(dataType.StorageDataType, sortingMemberId, sortingDirection);
+      }
+
+      Paging paging = null;
+
+      if (this.HasArgument(args, "EnablePaging") && this.GetBoolArgument(args, "EnablePaging"))
+      {
+        int.TryParse(requestHandler.HttpContext.Request.Query[this.GetStringArgument(args, "SkipUrlParameterName")], out int skip);
+        int.TryParse(requestHandler.HttpContext.Request.Query[this.GetStringArgument(args, "TakeUrlParameterName")], out int take);
+
+        if (take == 0)
+          take = this.GetIntArgument(args, "DefaultTake");
+
+        paging = new Paging(skip, take);
+      }
+
+      Filtering filtering = null;
+
+      if (this.HasArgument(args, "EnableFiltering") && this.GetBoolArgument(args, "EnableFiltering"))
+      {
+        filtering = new Filtering(requestHandler.HttpContext.Request.Query[this.GetStringArgument(args, "QueryUrlParameterName")]);
+      }
+
+      return new Params(filtering, sorting, paging);
     }
 
     protected dynamic CreateSerializedObjectViewModel(SerializedObject serializedObject)
@@ -92,7 +129,7 @@ namespace Platformus.Domain.DataSources
         return objects;
 
       foreach (string nestedXPath in nestedXPaths.Split(new string[] { "\r\n" }, StringSplitOptions.RemoveEmptyEntries))
-        objects = this.LoadNestedObjects(requestHandler, objects, nestedXPath.Split('/').ToList(), 0);
+        objects = this.LoadNestedObjects(requestHandler, objects, nestedXPath.Split(new char[] { '/' }, StringSplitOptions.RemoveEmptyEntries).ToList(), 0);
 
       return objects;
     }
