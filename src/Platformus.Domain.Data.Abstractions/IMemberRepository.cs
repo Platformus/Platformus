@@ -12,6 +12,7 @@ namespace Platformus.Domain.Data.Abstractions
     Member WithKey(int id);
     Member WithClassIdAndCode(int classId, string code);
     Member WithClassIdAndCodeInlcudingParent(int classId, string code);
+    IEnumerable<Member> FilteredByClassId(int classId);
     IEnumerable<Member> FilteredByClassIdInlcudingParent(int classId);
     IEnumerable<Member> FilteredByClassIdPropertyVisibleInList(int classId);
     IEnumerable<Member> FilteredByClassIdInlcudingParentPropertyVisibleInList(int classId);

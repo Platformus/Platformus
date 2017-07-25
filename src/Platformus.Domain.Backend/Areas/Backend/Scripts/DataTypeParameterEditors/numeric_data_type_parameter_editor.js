@@ -3,8 +3,8 @@
 
 (function (platformus) {
   platformus.dataTypeParameterEditors = platformus.dataTypeParameterEditors || [];
-  platformus.dataTypeParameterEditors.temp = {};
-  platformus.dataTypeParameterEditors.temp.create = function (container, dataTypeParameter) {
+  platformus.dataTypeParameterEditors.numeric = {};
+  platformus.dataTypeParameterEditors.numeric.create = function (container, dataTypeParameter) {
     createField(dataTypeParameter).appendTo(container);
   };
 
@@ -13,18 +13,36 @@
 
     platformus.dataTypeParameterEditors.base.createLabel(dataTypeParameter).appendTo(field);
     createTextBox(dataTypeParameter).appendTo(field);
+    createNumericButtons().appendTo(field);
     return field;
   }
 
   function createTextBox(dataTypeParameter) {
     var identity = "dataTypeParameter" + dataTypeParameter.id;
-    var textBox = $("<input>").addClass("field__text-box");
 
-    return textBox
+    return $("<input>")
+      .addClass("field__text-box")
+      .addClass("field__text-box--numeric")
       .addClass("text-box")
       .attr("id", identity)
       .attr("name", identity)
       .attr("type", "text")
       .attr("value", dataTypeParameter.value);
+  }
+
+  function createNumericButtons() {
+    var buttons = $("<div>").addClass("field__numeric-buttons");
+
+    createNumericUpButton().appendTo(buttons);
+    createNumericDownButton().appendTo(buttons);
+    return buttons;
+  }
+
+  function createNumericUpButton() {
+    return $("<a>").addClass("field__numeric-button").addClass("field__numeric-button--up").attr("href", "#");
+  }
+
+  function createNumericDownButton() {
+    return $("<a>").addClass("field__numeric-button").addClass("field__numeric-button--down").attr("href", "#");
   }
 })(window.platformus = window.platformus || {});

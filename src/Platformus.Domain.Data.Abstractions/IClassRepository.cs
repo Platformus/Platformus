@@ -15,6 +15,7 @@ namespace Platformus.Domain.Data.Abstractions
     IEnumerable<Class> Range(string orderBy, string direction, int skip, int take, string filter);
     IEnumerable<Class> FilteredByClassId(int? classId);
     IEnumerable<Class> Abstract();
+    IEnumerable<Class> NotAbstract();
     void Create(Class @class);
     void Edit(Class @class);
     void Delete(int id);

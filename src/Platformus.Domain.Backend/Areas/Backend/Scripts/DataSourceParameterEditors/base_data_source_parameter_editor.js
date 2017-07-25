@@ -25,6 +25,7 @@
 
   platformus.dataSourceParameterEditors.base.dataSourceParameterChanged = function () {
     var parameters = platformus.string.empty;
+
     $("[data-datasource-parameter-code]").each(
       function (index, element) {
         element = $(element);

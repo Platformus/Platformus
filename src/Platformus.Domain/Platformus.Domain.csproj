@@ -13,6 +13,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Platformus.Barebone.Backend\Platformus.Barebone.Backend.csproj" />
     <ProjectReference Include="..\Platformus.Barebone\Platformus.Barebone.csproj" />
     <ProjectReference Include="..\Platformus.Domain.Data.Abstractions\Platformus.Domain.Data.Abstractions.csproj" />
     <ProjectReference Include="..\Platformus.Globalization\Platformus.Globalization.csproj" />

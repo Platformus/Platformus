@@ -4,8 +4,12 @@
     "inputFiles": [
       "Areas/Backend/Styles/MemberEditors/image_member_editor.css",
       "Areas/Backend/Styles/MemberEditors/relation_member_editor.css",
+      "Areas/Backend/Styles/DataSourceParameterEditors/class_data_source_parameter_editor.css",
+      "Areas/Backend/Styles/DataSourceParameterEditors/member_data_source_parameter_editor.css",
       "Areas/Backend/Styles/image_drag_and_drop_area.css",
       "Areas/Backend/Styles/image_uploader_pop_up_form.css",
+      "Areas/Backend/Styles/class_selector_pop_up_form.css",
+      "Areas/Backend/Styles/member_selector_pop_up_form.css",
       "Areas/Backend/Styles/object_selector_pop_up_form.css"
     ]
   },
@@ -15,6 +19,8 @@
       "Areas/Backend/Scripts/ui.js",
       "Areas/Backend/Scripts/image_uploader_behavior.js",
       "Areas/Backend/Scripts/image_uploader_form.js",
+      "Areas/Backend/Scripts/class_selector_form.js",
+      "Areas/Backend/Scripts/member_selector_form.js",
       "Areas/Backend/Scripts/object_selector_form.js",
       "Areas/Backend/Scripts/MemberEditors/member_editors.js",
       "Areas/Backend/Scripts/MemberEditors/base_member_editor.js",
@@ -26,10 +32,17 @@
       "Areas/Backend/Scripts/MemberEditors/relation_member_editor.js",
       "Areas/Backend/Scripts/DataTypeParameterEditors/data_type_parameter_editors.js",
       "Areas/Backend/Scripts/DataTypeParameterEditors/base_data_type_parameter_editor.js",
-      "Areas/Backend/Scripts/DataTypeParameterEditors/temp_data_type_parameter_editor.js",
+      "Areas/Backend/Scripts/DataTypeParameterEditors/text_data_type_parameter_editor.js",
+      "Areas/Backend/Scripts/DataTypeParameterEditors/numeric_data_type_parameter_editor.js",
+      "Areas/Backend/Scripts/DataTypeParameterEditors/checkbox_data_type_parameter_editor.js",
       "Areas/Backend/Scripts/DataSourceParameterEditors/data_source_parameter_editors.js",
       "Areas/Backend/Scripts/DataSourceParameterEditors/base_data_source_parameter_editor.js",
-      "Areas/Backend/Scripts/DataSourceParameterEditors/temp_data_source_parameter_editor.js"
+      "Areas/Backend/Scripts/DataSourceParameterEditors/text_data_source_parameter_editor.js",
+      "Areas/Backend/Scripts/DataSourceParameterEditors/numeric_data_source_parameter_editor.js",
+      "Areas/Backend/Scripts/DataSourceParameterEditors/checkbox_data_source_parameter_editor.js",
+      "Areas/Backend/Scripts/DataSourceParameterEditors/radio_data_source_parameter_editor.js",
+      "Areas/Backend/Scripts/DataSourceParameterEditors/class_data_source_parameter_editor.js",
+      "Areas/Backend/Scripts/DataSourceParameterEditors/member_data_source_parameter_editor.js"
     ],
     "minify": {
       "enabled": true,

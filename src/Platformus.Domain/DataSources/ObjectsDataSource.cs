@@ -4,6 +4,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using Platformus.Barebone;
+using Platformus.Barebone.Backend;
 using Platformus.Domain.Data.Abstractions;
 using Platformus.Domain.Data.Entities;
 using Platformus.Globalization;
@@ -12,26 +13,48 @@ namespace Platformus.Domain.DataSources
 {
   public class ObjectsDataSource : DataSourceBase, IMultipleObjectsDataSource
   {
-    public override IEnumerable<DataSourceParameter> DataSourceParameters
+    public override IEnumerable<DataSourceParameterGroup> DataSourceParameterGroups
     {
       get
       {
-        return new DataSourceParameter[]
+        return new DataSourceParameterGroup[]
         {
-          new DataSourceParameter("ClassId", "Class ID", "temp"),
-          new DataSourceParameter("SortingMemberId", "Sorting member ID", "temp"),
-          new DataSourceParameter("SortingDirection", "Sorting direction", "temp"),
-          new DataSourceParameter("EnablePaging", "Enable paging", "temp"),
-          new DataSourceParameter("SkipUrlParameterName", "Skip URL parameter name", "temp"),
-          new DataSourceParameter("TakeUrlParameterName", "Take URL parameter name", "temp"),
-          new DataSourceParameter("DefaultTake", "Default take", "temp"),
-          new DataSourceParameter("EnableFiltering", "Enable filtering", "temp"),
-          new DataSourceParameter("QueryUrlParameterName", "Query URL parameter name", "temp"),
-          new DataSourceParameter("NestedXPaths", "Nested XPaths", "temp")
+          new DataSourceParameterGroup(
+            "General",
+            new DataSourceParameter("ClassId", "Class of the objects to load", "class", true),
+            new DataSourceParameter("NestedXPaths", "Nested XPaths", "text")
+          ),
+          new DataSourceParameterGroup(
+            "Filtering",
+            new DataSourceParameter("EnableFiltering", "Enable filtering", "checkbox"),
+            new DataSourceParameter("QueryUrlParameterName", "“Query” URL parameter name", "text")
+          ),
+          new DataSourceParameterGroup(
+            "Sorting",
+            new DataSourceParameter("SortingMemberId", "Sorting member", "member"),
+            new DataSourceParameter(
+              "SortingDirection",
+              "Sorting direction",
+              new Option[]
+              {
+                new Option("Ascending", "ASC"),
+                new Option("Descending", "DESC")
+              },
+              "radio",
+              true
+            )
+          ),
+          new DataSourceParameterGroup(
+            "Paging",
+            new DataSourceParameter("EnablePaging", "Enable paging", "checkbox"),
+            new DataSourceParameter("SkipUrlParameterName", "“Skip” URL parameter name", "text"),
+            new DataSourceParameter("TakeUrlParameterName", "“Take” URL parameter name", "text"),
+            new DataSourceParameter("DefaultTake", "Default “Take” URL parameter value", "numeric")
+          )
         };
       }
     }
-
+    
     public IEnumerable<dynamic> GetSerializedObjects(IRequestHandler requestHandler, params KeyValuePair<string, string>[] args)
     {
       if (!this.HasArgument(args, "ClassId"))

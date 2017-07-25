@@ -7,6 +7,6 @@ namespace Platformus.Domain.DataSources
 {
   public interface IDataSource
   {
-    IEnumerable<DataSourceParameter> DataSourceParameters { get; }
+    IEnumerable<DataSourceParameterGroup> DataSourceParameterGroups { get; }
   }
 }

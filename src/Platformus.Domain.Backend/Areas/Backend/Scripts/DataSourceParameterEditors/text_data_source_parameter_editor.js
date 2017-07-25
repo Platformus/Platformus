@@ -3,8 +3,8 @@
 
 (function (platformus) {
   platformus.dataSourceParameterEditors = platformus.dataSourceParameterEditors || [];
-  platformus.dataSourceParameterEditors.temp = {};
-  platformus.dataSourceParameterEditors.temp.create = function (container, dataSourceParameter) {
+  platformus.dataSourceParameterEditors.text = {};
+  platformus.dataSourceParameterEditors.text.create = function (container, dataSourceParameter) {
     createField(dataSourceParameter).appendTo(container);
   };
 
@@ -17,10 +17,8 @@
   }
 
   function createTextBox(dataSourceParameter) {
-    var identity = dataSourceParameter.code;
-    var textBox = $("<input>").addClass("field__text-box");
-
-    return textBox
+    return $("<input>")
+      .addClass("field__text-box")
       .addClass("text-box")
       .attr("type", "text")
       .attr("value", platformus.dataSourceParameterEditors.base.dataSourceParameterValue(dataSourceParameter.code))

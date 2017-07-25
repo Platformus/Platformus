@@ -54,11 +54,22 @@ namespace Platformus.Domain.Backend.ViewModels.DataSources
       return ExtensionManager.GetInstances<IDataSource>().Where(ds => ds.GetType() != typeof(DataSourceBase)).Select(
         ds => new {
           cSharpClassName = ds.GetType().FullName,
-          dataSourceParameters = ds.DataSourceParameters.Select(
-            dsp => new {
-              code = dsp.Code,
-              name = dsp.Name,
-              javaScriptEditorClassName = dsp.JavaScriptEditorClassName
+          dataSourceParameterGroups = ds.DataSourceParameterGroups.Select(
+            dspg => new
+            {
+              name = dspg.Name,
+              dataSourceParameters = dspg.DataSourceParameters.Select(
+                dsp => new
+                {
+                  code = dsp.Code,
+                  name = dsp.Name,
+                  options = dsp.Options == null ? null : dsp.Options.Select(
+                    o => new { text = o.Text, value = o.Value }
+                  ),
+                  javaScriptEditorClassName = dsp.JavaScriptEditorClassName,
+                  isRequired = dsp.IsRequired
+                }
+              )
             }
           )
         }

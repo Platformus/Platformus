@@ -15,7 +15,7 @@ namespace Platformus.Domain.Backend.ViewModels.Shared
     {
     }
 
-    public MemberViewModel Create(Member member, Object @object, int? objectId = null)
+    public MemberViewModel Create(Member member)
     {
       return new MemberViewModel()
       {

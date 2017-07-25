@@ -16,11 +16,11 @@ namespace Platformus.Domain.DataSources
   {
     private Dictionary<string, string> args;
 
-    public virtual IEnumerable<DataSourceParameter> DataSourceParameters
+    public virtual IEnumerable<DataSourceParameterGroup> DataSourceParameterGroups
     {
       get
       {
-        return new DataSourceParameter[] { };
+        return new DataSourceParameterGroup[] { };
       }
     }
 

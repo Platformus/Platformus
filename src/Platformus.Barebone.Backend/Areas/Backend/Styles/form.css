@@ -4,6 +4,10 @@
 .form {
 }
 
+.form_title {
+  margin-top: 20px;
+}
+
 .form__field {
   margin-top: 10px;
 }

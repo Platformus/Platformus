@@ -21,6 +21,11 @@
   width: 410px;
 }
 
+.field__text-box--numeric {
+  padding-right: 40px;
+  width: 400px;
+}
+
 .field__text-area {
   width: 430px;
   height: 290px;
@@ -57,4 +62,51 @@
 
 .field__multilingual-separator {
   height: 1px;
+}
+
+.field__numeric-buttons {
+  position: relative;
+  left: 420px;
+  top: -30px;
+  width: 0;
+  z-index: 10;
+}
+
+.field__numeric-button {
+  position: absolute;
+  left: 0;
+  width: 30px;
+  height: 15px;
+}
+
+.field__numeric-button:hover {
+  background-color: #f5f5f5;
+}
+
+.field__numeric-button--up {
+  background: #f0f0f0 url(/wwwroot.areas.backend.images.up.png) center 6px no-repeat;
+  top: 0;
+}
+
+.field__numeric-button--down {
+  background: #f0f0f0 url(/wwwroot.areas.backend.images.down.png) center 4px no-repeat;
+  top: 15px;
+}
+
+@media
+only screen and (-webkit-min-device-pixel-ratio: 2),
+only screen and (   min--moz-device-pixel-ratio: 2),
+only screen and (     -o-min-device-pixel-ratio: 2/1),
+only screen and (        min-device-pixel-ratio: 2),
+only screen and (                min-resolution: 192dpi),
+only screen and (                min-resolution: 2dppx) {
+  .field__numeric-button--up {
+    background: url(/wwwroot.areas.backend.images.up@2x.png) center 6px no-repeat;
+    background-size: 10px 5px;
+  }
+
+  .field__numeric-button--down {
+    background: url(/wwwroot.areas.backend.images.down@2x.png) center 4px no-repeat;
+    background-size: 10px 5px;
+  }
 }

@@ -23,9 +23,34 @@ namespace Platformus.Domain.Backend.Controllers
       return this.PartialView("_ImageUploaderForm", new ImageUploaderFormViewModelFactory(this).Create());
     }
 
+    public ActionResult ClassSelectorForm(int? classId)
+    {
+      return this.PartialView("_ClassSelectorForm", new ClassSelectorFormViewModelFactory(this).Create(classId));
+    }
+
+    public ActionResult MemberSelectorForm(int? memberId)
+    {
+      return this.PartialView("_MemberSelectorForm", new MemberSelectorFormViewModelFactory(this).Create(memberId));
+    }
+
     public ActionResult ObjectSelectorForm(int classId, string objectIds)
     {
       return this.PartialView("_ObjectSelectorForm", new ObjectSelectorFormViewModelFactory(this).Create(classId, objectIds));
+    }
+
+    public ActionResult GetClassName(int classId)
+    {
+      Class @class = this.Storage.GetRepository<IClassRepository>().WithKey(classId);
+
+      return this.Content(string.Format("<div class=\"class-data-source-parameter-editor__name\">{0}</div>", @class.Name));
+    }
+
+    public ActionResult GetMemberName(int memberId)
+    {
+      Member member = this.Storage.GetRepository<IMemberRepository>().WithKey(memberId);
+      Class @class = this.Storage.GetRepository<IClassRepository>().WithKey(member.ClassId);
+
+      return this.Content(string.Format("<div class=\"member-data-source-parameter-editor__name\">{0} > {1}</div>", @class.Name, member.Name));
     }
 
     public ActionResult GetObjectDisplayValues(string objectIds)

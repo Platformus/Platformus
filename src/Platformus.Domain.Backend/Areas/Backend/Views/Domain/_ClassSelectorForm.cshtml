@@ -1,0 +1,29 @@
+﻿@* Copyright © 2017 Dmitry Sikorsky. All rights reserved. *@
+@* Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information. *@
+@model Platformus.Domain.Backend.ViewModels.Domain.ClassSelectorFormViewModel
+<div class="pop-up-form__header">
+  Class Selector
+</div>
+<div class="pop-up-form__content">
+  <div class="class-selector-pop-up-form__classes">
+    <table class="table">
+      <tr class="table__row">
+        @foreach (var gridColumn in this.Model.GridColumns)
+        {
+          <th class="table__cell table__cell--header">@gridColumn.Name</th>
+        }
+      </tr>
+      @foreach (var _class in this.Model.Classes)
+      {
+        <tr class="table__row @(_class.Id == this.Model.ClassId ? "table__row--selected" : null)" data-class-id="@_class.Id">
+          <td class="class-selector-pop-up-form__cell table__cell">@(_class.Parent == null ? "—" : _class.Parent.Name)</td>
+          <td class="class-selector-pop-up-form__cell table__cell">@_class.Name</td>
+        </tr>
+      }
+    </table>
+  </div>
+  <div class="pop-up-form__buttons buttons">
+    <button class="buttons__button button button--positive" onclick="return platformus.forms.classSelectorForm.select();">Select</button>
+    <button class="buttons__button button button--neutral" onclick="return platformus.forms.classSelectorForm.hideAndRemove();">Cancel</button>
+  </div>
+</div>

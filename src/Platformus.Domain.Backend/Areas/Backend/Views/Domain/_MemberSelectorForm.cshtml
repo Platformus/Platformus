@@ -1,0 +1,32 @@
+﻿@* Copyright © 2017 Dmitry Sikorsky. All rights reserved. *@
+@* Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information. *@
+@model Platformus.Domain.Backend.ViewModels.Domain.MemberSelectorFormViewModel
+<div class="pop-up-form__header">
+  Member Selector
+</div>
+<div class="pop-up-form__content">
+  <div class="member-selector-pop-up-form__members">
+    <table class="table">
+      <tr class="table__row">
+        @foreach (var gridColumn in this.Model.GridColumns)
+        {
+          <th class="table__cell table__cell--header">@gridColumn.Name</th>
+        }
+      </tr>
+      @foreach (var _class in this.Model.MembersByClasses.Keys)
+      {
+        foreach (var member in this.Model.MembersByClasses[_class])
+        {
+          <tr class="table__row @(member.Id == this.Model.MemberId ? "table__row--selected" : null)" data-member-id="@member.Id">
+            <td class="member-selector-pop-up-form__cell table__cell">@_class.Name</td>
+            <td class="member-selector-pop-up-form__cell table__cell">@member.Name</td>
+          </tr>
+        }
+      }
+    </table>
+  </div>
+  <div class="pop-up-form__buttons buttons">
+    <button class="buttons__button button button--positive" onclick="return platformus.forms.memberSelectorForm.select();">Select</button>
+    <button class="buttons__button button button--neutral" onclick="return platformus.forms.memberSelectorForm.hideAndRemove();">Cancel</button>
+  </div>
+</div>

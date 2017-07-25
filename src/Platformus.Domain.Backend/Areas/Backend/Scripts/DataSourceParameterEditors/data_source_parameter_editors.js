@@ -10,10 +10,14 @@
 
     var dataSource = getDataSource(cSharpClassName);
 
-    for (var i = 0; i < dataSource.dataSourceParameters.length; i++) {
-      var f = platformus.dataSourceParameterEditors[dataSource.dataSourceParameters[i].javaScriptEditorClassName]["create"];
+    for (var i = 0; i < dataSource.dataSourceParameterGroups.length; i++) {
+      var group = $("<h2>").addClass("form_title").html(dataSource.dataSourceParameterGroups[i].name).appendTo(dataSourceParameterEditors);
 
-      f.call(this, dataSourceParameterEditors, dataSource.dataSourceParameters[i]);
+      for (var j = 0; j < dataSource.dataSourceParameterGroups[i].dataSourceParameters.length; j++) {
+        var f = platformus.dataSourceParameterEditors[dataSource.dataSourceParameterGroups[i].dataSourceParameters[j].javaScriptEditorClassName]["create"];
+
+        f.call(this, dataSourceParameterEditors, dataSource.dataSourceParameterGroups[i].dataSourceParameters[j]);
+      }
     }
   };
 

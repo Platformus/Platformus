@@ -43,7 +43,12 @@ namespace Platformus.Domain.Data.EntityFramework.SqlServer
 
     public IEnumerable<Class> Abstract()
     {
-      return this.dbSet.Where(c => c.IsAbstract == true).OrderBy(c => c.Name);
+      return this.dbSet.Where(c => c.IsAbstract).OrderBy(c => c.Name);
+    }
+
+    public IEnumerable<Class> NotAbstract()
+    {
+      return this.dbSet.Where(c => !c.IsAbstract).OrderBy(c => c.Name);
     }
 
     public void Create(Class @class)

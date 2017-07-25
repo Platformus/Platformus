@@ -45,6 +45,7 @@
       "Areas/Backend/Scripts/checkbox_behavior.js",
       "Areas/Backend/Scripts/radio_button_list_behavior.js",
       "Areas/Backend/Scripts/drop_down_list_behavior.js",
+      "Areas/Backend/Scripts/text_box_numeric_behavior.js",
       "Areas/Backend/Scripts/text_box_date_behavior.js",
       "Areas/Backend/Scripts/tabs_behavior.js",
       "Areas/Backend/Scripts/grid_behavior.js",
