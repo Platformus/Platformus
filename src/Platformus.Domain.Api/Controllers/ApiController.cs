@@ -6,8 +6,8 @@ using System.Linq;
 using ExtCore.Data.Abstractions;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Configuration;
 using Newtonsoft.Json.Linq;
+using Platformus.Barebone;
 using Platformus.Domain.Data.Abstractions;
 using Platformus.Domain.Data.Entities;
 
@@ -17,8 +17,6 @@ namespace Platformus.Domain.Api.Controllers
   [Route("api/v1/{classCode}/objects")]
   public class ApiController : Platformus.Barebone.Controllers.ControllerBase
   {
-    private IConfigurationRoot configurationRoot;
-
     public ApiController(IStorage storage)
       : base(storage)
     {
@@ -27,7 +25,7 @@ namespace Platformus.Domain.Api.Controllers
     [HttpGet]
     public IEnumerable<dynamic> Get(string classCode)
     {
-      Class @class = this.Storage.GetRepository<IClassRepository>().WithCode(classCode);
+      Class @class = this.GetValidatedClass(classCode);
       IEnumerable<Object> objects = this.Storage.GetRepository<IObjectRepository>().FilteredByClassId(@class.Id);
       ObjectDirector objectDirector = new ObjectDirector(this);
 
@@ -45,7 +43,8 @@ namespace Platformus.Domain.Api.Controllers
     [HttpGet("{id}")]
     public dynamic Get(string classCode, int id)
     {
-      Object @object = this.Storage.GetRepository<IObjectRepository>().WithKey(id);
+      Class @class = this.GetValidatedClass(classCode);
+      Object @object = this.GetValidatedObject(@class, id);
       DynamicObjectBuilder objectBuilder = new DynamicObjectBuilder();
 
       new ObjectDirector(this).ConstructObject(objectBuilder, @object);
@@ -53,27 +52,50 @@ namespace Platformus.Domain.Api.Controllers
     }
 
     [HttpPost]
-    public void Post(string classCode, [FromBody]JObject @object)
+    public void Post(string classCode, [FromBody]JObject obj)
     {
+      Class @class = this.GetValidatedClass(classCode);
       ObjectManipulator objectManipulator = new ObjectManipulator(this);
 
       objectManipulator.BeginCreateTransaction(classCode);
 
-      foreach (JProperty property in @object.Properties())
-        objectManipulator.SetPropertyValue(property.Name, property.Value);
+      foreach (JProperty property in obj.Properties())
+      {
+        try
+        {
+          objectManipulator.SetPropertyValue(property.Name, property.Value);
+        }
+
+        catch (System.ArgumentException e)
+        {
+          throw new HttpException(400, e.Message);
+        }
+      }
 
       objectManipulator.CommitTransaction();
     }
 
     [HttpPut("{id}")]
-    public void Put(string classCode, int id, [FromBody]JObject @object)
+    public void Put(string classCode, int id, [FromBody]JObject obj)
     {
+      Class @class = this.GetValidatedClass(classCode);
+      Object @object = this.GetValidatedObject(@class, id);
       ObjectManipulator objectManipulator = new ObjectManipulator(this);
 
       objectManipulator.BeginEditTransaction(classCode, id);
 
-      foreach (JProperty property in @object.Properties())
-        objectManipulator.SetPropertyValue(property.Name, property.Value);
+      foreach (JProperty property in obj.Properties())
+      {
+        try
+        {
+          objectManipulator.SetPropertyValue(property.Name, property.Value);
+        }
+
+        catch (System.ArgumentException e)
+        {
+          throw new HttpException(400, e.Message);
+        }
+      }
 
       objectManipulator.CommitTransaction();
     }
@@ -81,8 +103,34 @@ namespace Platformus.Domain.Api.Controllers
     [HttpDelete("{id}")]
     public void Delete(string classCode, int id)
     {
-      this.Storage.GetRepository<IObjectRepository>().Delete(id);
+      Class @class = this.GetValidatedClass(classCode);
+      Object @object = this.GetValidatedObject(@class, id);
+
+      this.Storage.GetRepository<IObjectRepository>().Delete(@object);
       this.Storage.Save();
+    }
+
+    private Class GetValidatedClass(string classCode)
+    {
+      Class @class = this.Storage.GetRepository<IClassRepository>().WithCode(classCode);
+
+      if (@class == null)
+        throw new HttpException(400, "Class code is not valid.");
+
+      return @class;
+    }
+
+    private Object GetValidatedObject(Class @class, int id)
+    {
+      Object @object = this.Storage.GetRepository<IObjectRepository>().WithKey(id);
+
+      if (@object == null)
+        throw new HttpException(400, "Object identifier is not valid.");
+
+      if (@object.ClassId != @class.Id)
+        throw new HttpException(400, "Object identifier doesn't match given class code.");
+
+      return @object;
     }
   }
 }

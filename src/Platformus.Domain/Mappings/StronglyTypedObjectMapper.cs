@@ -25,7 +25,8 @@ namespace Platformus.Domain
 
     public T WithKey<T>(int id)
     {
-      Object @object = this.objectRepository.WithKey(id);
+      Class @class = this.GetValidatedClass<T>();
+      Object @object = this.GetValidatedObject(@class, id);
       StronglyTypedObjectBuilder<T> stronglyTypedObjectBuilder = new StronglyTypedObjectBuilder<T>();
 
       new ObjectDirector(this.requestHandler).ConstructObject(stronglyTypedObjectBuilder, @object);
@@ -34,7 +35,7 @@ namespace Platformus.Domain
 
     public IEnumerable<T> All<T>()
     {
-      Class @class = this.classRepository.WithCode(typeof(T).Name);
+      Class @class = this.GetValidatedClass<T>();
       IEnumerable<Object> objects = this.objectRepository.FilteredByClassId(@class.Id);
       ObjectDirector objectDirector = new ObjectDirector(this.requestHandler);
 
@@ -49,28 +50,26 @@ namespace Platformus.Domain
       );
     }
 
-    public void Create<T>(T @object)
+    public void Create<T>(T obj)
     {
+      Class @class = this.GetValidatedClass<T>();
       ObjectManipulator objectManipulator = new ObjectManipulator(this.requestHandler);
 
       objectManipulator.BeginCreateTransaction<T>();
 
       foreach (PropertyInfo propertyInfo in typeof(T).GetProperties())
-        objectManipulator.SetPropertyValue(propertyInfo.Name, propertyInfo.GetValue(@object));
+        objectManipulator.SetPropertyValue(propertyInfo.Name, propertyInfo.GetValue(obj));
 
       objectManipulator.CommitTransaction();
     }
 
-    public void Edit<T>(T @object)
+    public void Edit<T>(T obj)
     {
-      int id = this.GetId<T>(@object);
-
-      if (id == 0)
-        return;
-
+      Class @class = this.GetValidatedClass<T>();
+      Object @object = this.GetValidatedObject(@class, this.GetId<T>(obj));
       ObjectManipulator objectManipulator = new ObjectManipulator(this.requestHandler);
 
-      objectManipulator.BeginEditTransaction<T>(id);
+      objectManipulator.BeginEditTransaction<T>(@object.Id);
 
       foreach (PropertyInfo propertyInfo in typeof(T).GetProperties())
         objectManipulator.SetPropertyValue(propertyInfo.Name, propertyInfo.GetValue(@object));
@@ -78,15 +77,13 @@ namespace Platformus.Domain
       objectManipulator.CommitTransaction();
     }
 
-    public void Delete<T>(T @object)
+    public void Delete<T>(T obj)
     {
-      int id = this.GetId<T>(@object);
+      Class @class = this.GetValidatedClass<T>();
+      Object @object = this.GetValidatedObject(@class, this.GetId<T>(obj));
 
-      if (id != 0)
-      {
-        this.requestHandler.Storage.GetRepository<IObjectRepository>().Delete(id);
-        this.requestHandler.Storage.Save();
-      }
+      this.requestHandler.Storage.GetRepository<IObjectRepository>().Delete(@object);
+      this.requestHandler.Storage.Save();
     }
 
     private int GetId<T>(T @object)
@@ -95,9 +92,39 @@ namespace Platformus.Domain
       PropertyInfo idPropertyInfo = typeof(T).GetProperty("Id");
 
       if (idPropertyInfo != null)
-        id = (int)idPropertyInfo.GetValue(@object);
+      {
+        try
+        {
+          id = (int)idPropertyInfo.GetValue(@object);
+        }
+
+        catch { }
+      }
 
       return id;
+    }
+
+    private Class GetValidatedClass<T>()
+    {
+      Class @class = this.classRepository.WithCode(typeof(T).Name);
+
+      if (@class == null)
+        throw new System.ArgumentException("Class code is not valid.");
+
+      return @class;
+    }
+
+    private Object GetValidatedObject(Class @class, int id)
+    {
+      Object @object = this.objectRepository.WithKey(id);
+
+      if (@object == null)
+        throw new System.ArgumentException("Object identifier is not valid.");
+
+      if (@object.ClassId != @class.Id)
+        throw new System.ArgumentException("Object identifier doesn't match given class code.");
+
+      return @object;
     }
   }
 }

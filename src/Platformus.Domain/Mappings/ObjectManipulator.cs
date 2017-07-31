@@ -38,22 +38,15 @@ namespace Platformus.Domain
       this.localizationRepository = this.requestHandler.Storage.GetRepository<ILocalizationRepository>();
     }
 
-    public void BeginCreateTransaction<T>()
-    {
-      this.typeName = typeof(T).Name;
-      this.objectId = this.CreateObject().Id;
-    }
-
     public void BeginCreateTransaction(string typeName)
     {
       this.typeName = typeName;
       this.objectId = this.CreateObject().Id;
     }
 
-    public void BeginEditTransaction<T>(int objectId)
+    public void BeginCreateTransaction<T>()
     {
-      this.typeName = typeof(T).Name;
-      this.objectId = objectId;
+      this.BeginCreateTransaction(typeof(T).Name);
     }
 
     public void BeginEditTransaction(string typeName, int objectId)
@@ -62,12 +55,17 @@ namespace Platformus.Domain
       this.objectId = objectId;
     }
 
+    public void BeginEditTransaction<T>(int objectId)
+    {
+      this.BeginEditTransaction(typeof(T).Name, objectId);
+    }
+
     public void SetPropertyValue(string code, object value)
     {
       Member member = this.GetMember(code);
 
       if (member == null)
-        return;
+        throw new System.ArgumentException("Member code is not valid.");
 
       Property property = this.GetProperty(member.Id);
 
@@ -111,27 +109,35 @@ namespace Platformus.Domain
 
     private void AssignValueToProperty(Member member, Property property, object value)
     {
-      DataType dataType = this.dataTypeRepository.WithKey((int)member.PropertyDataTypeId);
-
-      if (dataType.StorageDataType == StorageDataType.Integer)
-        property.IntegerValue = value is JValue ? (value as JValue).Value<int>() : (int)value;
-
-      else if (dataType.StorageDataType == StorageDataType.Decimal)
-        property.DecimalValue = value is JValue ? (value as JValue).Value<decimal>() : (decimal)value;
-
-      else if (dataType.StorageDataType == StorageDataType.String)
+      try
       {
-        if (property.StringValueId != null)
-          this.DeleteLocalizations((int)property.StringValueId);
+        DataType dataType = this.dataTypeRepository.WithKey((int)member.PropertyDataTypeId);
 
-        if (property.StringValueId == null)
-          property.StringValueId = this.CreateDictionary().Id;
+        if (dataType.StorageDataType == StorageDataType.Integer)
+          property.IntegerValue = value is JValue ? (value as JValue).Value<int>() : (int)value;
 
-        this.CreateLocalizations((int)property.StringValueId, value is JArray ? this.GetValuesByCultureCodes(value as JArray) : value as IDictionary<string, string>);
+        else if (dataType.StorageDataType == StorageDataType.Decimal)
+          property.DecimalValue = value is JValue ? (value as JValue).Value<decimal>() : (decimal)value;
+
+        else if (dataType.StorageDataType == StorageDataType.String)
+        {
+          if (property.StringValueId != null)
+            this.DeleteLocalizations((int)property.StringValueId);
+
+          if (property.StringValueId == null)
+            property.StringValueId = this.CreateDictionary().Id;
+
+          this.CreateLocalizations((int)property.StringValueId, value is JArray ? this.GetValuesByCultureCodes(value as JArray) : value as IDictionary<string, string>);
+        }
+
+        else if (dataType.StorageDataType == StorageDataType.DateTime)
+          property.DateTimeValue = value is JValue ? (value as JValue).Value<System.DateTime>() : (System.DateTime)value;
       }
 
-      else if (dataType.StorageDataType == StorageDataType.DateTime)
-        property.DateTimeValue = value is JValue ? (value as JValue).Value<System.DateTime>() : (System.DateTime)value;
+      catch (System.Exception e)
+      {
+        throw new System.ArgumentException(string.Format("Can't assign value {0} to the property with member code {1}", value?.ToString(), member.Code));
+      }
     }
 
     private void DeleteLocalizations(int dictionaryId)
@@ -176,12 +182,7 @@ namespace Platformus.Domain
 
     private Member GetMember(string code)
     {
-      Member member = this.memberRepository.WithClassIdAndCode(this.GetClass().Id, code);
-
-      if (member == null && this.GetClass().ClassId != null)
-        member = this.memberRepository.WithClassIdAndCode((int)this.GetClass().ClassId, code);
-
-      return member;
+      return this.memberRepository.WithClassIdAndCodeInlcudingParent(this.GetClass().Id, code);
     }
 
     private Property GetProperty(int memberId)

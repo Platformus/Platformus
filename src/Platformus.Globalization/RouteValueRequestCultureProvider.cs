@@ -27,7 +27,7 @@ namespace Platformus.Globalization
     {
       string cultureCode = null;
 
-      if (httpContext.Request.Path.HasValue && (httpContext.Request.Path.Value == "/" || httpContext.Request.Path.Value.Contains("/backend/")))
+      if (httpContext.Request.Path.HasValue && (httpContext.Request.Path.Value == "/" || httpContext.Request.Path.Value.Contains("/backend/") || httpContext.Request.Path.Value.Contains("/api/v1/")))
         cultureCode = this.GetDefaultCultureCode();
 
       else if (httpContext.Request.Path.HasValue && httpContext.Request.Path.Value.Length >= 4 && httpContext.Request.Path.Value[0] == '/' && httpContext.Request.Path.Value[3] == '/')
