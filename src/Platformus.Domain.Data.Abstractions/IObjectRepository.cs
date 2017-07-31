@@ -16,6 +16,5 @@ namespace Platformus.Domain.Data.Abstractions
     void Edit(Object @object);
     void Delete(int id);
     void Delete(Object @object);
-    int CountByClassId(int classId);
   }
 }

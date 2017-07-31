@@ -10,6 +10,7 @@ using Platformus.Domain.Data.Abstractions;
 using Platformus.Domain.Data.Entities;
 using Platformus.Globalization;
 using Platformus.Globalization.Backend.ViewModels;
+using Platformus.Globalization.Data.Entities;
 
 namespace Platformus.Domain.Backend.ViewModels.Objects
 {
@@ -31,6 +32,15 @@ namespace Platformus.Domain.Backend.ViewModels.Objects
       if (classId != null && string.IsNullOrEmpty(orderBy))
         orderBy = this.GetDefaultMember((int)classId)?.Code;
 
+      Culture currentCulture = null;
+      Params @params = null;
+
+      if (classId != null)
+      {
+        currentCulture = CultureManager.GetCurrentCulture(this.RequestHandler.Storage);
+        @params = this.GetParams((int)classId, orderBy, direction, skip, take, filter);
+      }
+
       return new IndexViewModel()
       {
         Class = classId == null ? null : new ClassViewModelFactory(this.RequestHandler).Create(
@@ -38,19 +48,25 @@ namespace Platformus.Domain.Backend.ViewModels.Objects
         ),
         ClassesByAbstractClasses = this.GetClassesByAbstractClasses(),
         Grid = classId == null ? null : new GridViewModelFactory(this.RequestHandler).Create(
-          orderBy, direction, skip, take, objectRepository.CountByClassId((int)classId),
+          orderBy,
+          direction,
+          skip,
+          take,
+          objectId == null ?
+            serializedObjectRepository.CountByCultureIdAndClassId(currentCulture.Id, (int)classId, @params) :
+            serializedObjectRepository.CountByCultureIdAndClassIdAndObjectId(currentCulture.Id, (int)classId, (int)objectId, @params),
           this.GetGridColumns((int)classId),
           objectId == null ?
             serializedObjectRepository.FilteredByCultureIdAndClassId(
-              CultureManager.GetCurrentCulture(this.RequestHandler.Storage).Id,
+              currentCulture.Id,
               (int)classId,
-              this.GetParams((int)classId, orderBy, direction, skip, take, filter)
+              @params
             ).ToList().Select(so => new ObjectViewModelFactory(this.RequestHandler).Create(so.ObjectId)) :
             serializedObjectRepository.FilteredByCultureIdAndClassIdAndObjectId(
-              CultureManager.GetCurrentCulture(this.RequestHandler.Storage).Id,
+              currentCulture.Id,
               (int)classId,
               (int)objectId,
-              this.GetParams((int)classId, orderBy, direction, skip, take, filter)
+              @params
             ).ToList().Select(so => new ObjectViewModelFactory(this.RequestHandler).Create(so.ObjectId)),
           "_Object"
         )

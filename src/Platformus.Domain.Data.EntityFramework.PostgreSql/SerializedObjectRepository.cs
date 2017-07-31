@@ -2,10 +2,12 @@
 // Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information.
 
 using System.Collections.Generic;
+using System.Data.Common;
 using System.Linq;
 using System.Text;
 using ExtCore.Data.EntityFramework;
 using Microsoft.EntityFrameworkCore;
+using Npgsql;
 using Platformus.Domain.Data.Abstractions;
 using Platformus.Domain.Data.Entities;
 
@@ -140,6 +142,69 @@ namespace Platformus.Domain.Data.EntityFramework.PostgreSql
       this.dbSet.Remove(serializedObject);
     }
 
+    public int CountByCultureIdAndClassId(int cultureId, int classId, Params @params)
+    {
+      if (@params == null || @params.Filtering == null || string.IsNullOrEmpty(@params.Filtering.Query))
+        return this.dbSet.Count(so => so.CultureId == cultureId && so.ClassId == classId);
+
+      int result = 0;
+      NpgsqlConnection connection = (this.storageContext as DbContext).Database.GetDbConnection() as NpgsqlConnection;
+
+      try
+      {
+        connection.Open();
+
+        using (NpgsqlCommand command = connection.CreateCommand())
+        {
+          command.CommandText = "SELECT COUNT(*) FROM \"SerializedObjects\" WHERE \"CultureId\" = @CultureId AND \"ClassId\" = @ClassId AND \"ObjectId\" IN (SELECT \"ObjectId\" FROM \"Properties\" WHERE \"StringValueId\" IN (SELECT \"DictionaryId\" FROM \"Localizations\" WHERE \"Value\" LIKE @Query))";
+          command.Parameters.AddWithValue("@CultureId", cultureId);
+          command.Parameters.AddWithValue("@ClassId", classId);
+          command.Parameters.AddWithValue("@Query", "%" + @params.Filtering.Query + "%");
+
+          using (DbDataReader dataReader = command.ExecuteReader())
+            if (dataReader.HasRows)
+              while (dataReader.Read())
+                result = dataReader.GetInt32(0);
+        }
+      }
+
+      catch (System.Exception e) { connection.Close(); }
+
+      return result;
+    }
+
+    public int CountByCultureIdAndClassIdAndObjectId(int cultureId, int classId, int objectId, Params @params)
+    {
+      if (@params == null || @params.Filtering == null || string.IsNullOrEmpty(@params.Filtering.Query))
+        return this.dbSet.Count(so => so.CultureId == cultureId && so.ClassId == classId);
+
+      int result = 0;
+      NpgsqlConnection connection = (this.storageContext as DbContext).Database.GetDbConnection() as NpgsqlConnection;
+
+      try
+      {
+        connection.Open();
+
+        using (NpgsqlCommand command = connection.CreateCommand())
+        {
+          command.CommandText = "SELECT COUNT(*) FROM \"SerializedObjects\" WHERE \"CultureId\" = {0} AND \"ClassId\" = {1} AND \"ObjectId\" IN (SELECT \"ForeignId\" FROM \"Relations\" WHERE \"PrimaryId\" = {2}) AND \"ObjectId\" IN (SELECT \"ObjectId\" FROM \"Properties\" WHERE \"StringValueId\" IN (SELECT \"DictionaryId\" FROM \"Localizations\" WHERE \"Value\" LIKE @Query))";
+          command.Parameters.AddWithValue("@CultureId", cultureId);
+          command.Parameters.AddWithValue("@ClassId", classId);
+          command.Parameters.AddWithValue("@ObjectId", objectId);
+          command.Parameters.AddWithValue("@Query", "%" + @params.Filtering.Query + "%");
+
+          using (DbDataReader dataReader = command.ExecuteReader())
+            if (dataReader.HasRows)
+              while (dataReader.Read())
+                result = dataReader.GetInt32(0);
+        }
+      }
+
+      catch { connection.Close(); }
+
+      return result;
+    }
+
     private string GetUnsortedSelectQuerySql(string additionalWhereClause)
     {
       StringBuilder sql = new StringBuilder("SELECT * FROM \"SerializedObjects\" WHERE \"CultureId\" = {0} AND ");
@@ -198,7 +263,7 @@ namespace Platformus.Domain.Data.EntityFramework.PostgreSql
       string filteringSql = null;
 
       if (@params.Filtering != null)
-        filteringSql = " AND \"Localizations\".\"Value\" LIKE '%" + @params.Filtering.Query + "%'";
+        filteringSql = " AND \"SerializedObjects\".\"ObjectId\" IN (SELECT \"ObjectId\" FROM \"Properties\" WHERE \"StringValueId\" IN (SELECT \"DictionaryId\" FROM \"Localizations\" WHERE \"Value\" LIKE '%" + @params.Filtering.Query + "%'))";
 
       return "\"Members\".\"Id\" = " + @params.Sorting.MemberId + " AND (\"Localizations\".\"CultureId\" = 1 OR \"Localizations\".\"CultureId\" = {0})" + filteringSql + " ORDER BY \"Localizations\".\"Value\" " + @params.Sorting.Direction;
     }

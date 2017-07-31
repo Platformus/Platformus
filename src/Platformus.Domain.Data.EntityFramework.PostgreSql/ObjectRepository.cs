@@ -60,10 +60,5 @@ namespace Platformus.Domain.Data.EntityFramework.PostgreSql
 
       this.dbSet.Remove(@object);
     }
-
-    public int CountByClassId(int classId)
-    {
-      return this.dbSet.Count(o => o.ClassId == classId);
-    }
   }
 }

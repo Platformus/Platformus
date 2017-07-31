@@ -26,5 +26,7 @@ namespace Platformus.Domain.Data.Abstractions
     void Edit(SerializedObject serializedObject);
     void Delete(int cultureId, int objectId);
     void Delete(SerializedObject serializedObject);
+    int CountByCultureIdAndClassId(int cultureId, int classId, Params @params);
+    int CountByCultureIdAndClassIdAndObjectId(int cultureId, int classId, int objectId, Params @params);
   }
 }
