@@ -11,5 +11,6 @@ namespace Platformus
     T GetWithDefaultValue<T>(string key, Func<T> defaultValueFunc);
     void Set<T>(string key, T value);
     void Remove(string key);
+    void RemoveAll();
   }
 }

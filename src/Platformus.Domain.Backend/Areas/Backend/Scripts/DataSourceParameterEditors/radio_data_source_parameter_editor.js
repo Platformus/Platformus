@@ -6,7 +6,6 @@
   platformus.dataSourceParameterEditors.radio = {};
   platformus.dataSourceParameterEditors.radio.create = function (container, dataSourceParameter) {
     createField(dataSourceParameter).appendTo(container);
-    createInput(dataSourceParameter).appendTo(container);
   };
 
   function createField(dataSourceParameter) {

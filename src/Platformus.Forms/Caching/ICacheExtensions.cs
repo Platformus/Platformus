@@ -23,7 +23,7 @@ namespace Platformus.Forms
 
     private static string GetFormViewComponentResultKey(string code, string cultureCode = null)
     {
-      return "fvcr:" + code + ":" + (string.IsNullOrEmpty(cultureCode) ? CultureInfo.CurrentCulture.TwoLetterISOLanguageName : cultureCode);
+      return "form:" + code + ":" + (string.IsNullOrEmpty(cultureCode) ? CultureInfo.CurrentCulture.TwoLetterISOLanguageName : cultureCode);
     }
   }
 }

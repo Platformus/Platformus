@@ -7,13 +7,12 @@ using Platformus.Domain.Data.Entities;
 
 namespace Platformus.Domain
 {
-  public class ObjectEditedEventHandler : IObjectEditedEventHandler
+  public class DataSourceCreatedEventHandler : IDataSourceCreatedEventHandler
   {
     public int Priority => 1000;
 
-    public void HandleEvent(IRequestHandler requestHandler, Object oldObject, Object newObject)
+    public void HandleEvent(IRequestHandler requestHandler, DataSource dataSource)
     {
-      new SerializationManager(requestHandler).SerializeObject(newObject);
       requestHandler.HttpContext.RequestServices.GetService<ICache>().RemoveAll();
     }
   }

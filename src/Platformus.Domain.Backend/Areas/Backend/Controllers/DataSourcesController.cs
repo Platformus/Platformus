@@ -2,8 +2,10 @@
 // Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information.
 
 using ExtCore.Data.Abstractions;
+using ExtCore.Events;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Platformus.Barebone;
 using Platformus.Domain.Backend.ViewModels.DataSources;
 using Platformus.Domain.Data.Abstractions;
 using Platformus.Domain.Data.Entities;
@@ -45,6 +47,17 @@ namespace Platformus.Domain.Backend.Controllers
         else this.Storage.GetRepository<IDataSourceRepository>().Edit(dataSource);
 
         this.Storage.Save();
+
+        if (createOrEdit.Id == null)
+          Event<IDataSourceCreatedEventHandler, IRequestHandler, DataSource>.Broadcast(this, dataSource);
+
+        else
+        {
+          Event<IDataSourceEditedEventHandler, IRequestHandler, DataSource, DataSource>.Broadcast(
+            this, this.Storage.GetRepository<IDataSourceRepository>().WithKey((int)createOrEdit.Id), dataSource
+          );
+        }
+
         return this.Redirect(this.Request.CombineUrl("/backend/datasources"));
       }
 
@@ -55,8 +68,9 @@ namespace Platformus.Domain.Backend.Controllers
     {
       DataSource dataSource = this.Storage.GetRepository<IDataSourceRepository>().WithKey(id);
 
-      this.Storage.GetRepository<IDataSourceRepository>().Delete(id);
+      this.Storage.GetRepository<IDataSourceRepository>().Delete(dataSource);
       this.Storage.Save();
+      Event<IDataSourceDeletedEventHandler, IRequestHandler, DataSource>.Broadcast(this, dataSource);
       return this.Redirect(string.Format("/backend/datasources?microcontrollerid={0}", dataSource.MicrocontrollerId));
     }
   }

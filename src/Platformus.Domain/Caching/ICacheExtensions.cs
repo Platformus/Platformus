@@ -23,7 +23,7 @@ namespace Platformus.Domain
 
     private static string GetPageActionResultKey(string url, string cultureCode = null)
     {
-      return "par:" + url + ":" + (string.IsNullOrEmpty(cultureCode) ? CultureInfo.CurrentCulture.TwoLetterISOLanguageName : cultureCode);
+      return "page:" + url + ":" + (string.IsNullOrEmpty(cultureCode) ? CultureInfo.CurrentCulture.TwoLetterISOLanguageName : cultureCode);
     }
   }
 }

@@ -4,8 +4,6 @@
 using Microsoft.Extensions.DependencyInjection;
 using Platformus.Barebone;
 using Platformus.Domain.Data.Entities;
-using Platformus.Globalization;
-using Platformus.Globalization.Data.Entities;
 
 namespace Platformus.Domain
 {
@@ -15,10 +13,7 @@ namespace Platformus.Domain
 
     public void HandleEvent(IRequestHandler requestHandler, Object @object)
     {
-      string urlPropertyStringValue = string.Format("/{0}", new ObjectManager(requestHandler).GetUrlPropertyStringValue(@object));
-
-      foreach (Culture culture in CultureManager.GetNotNeutralCultures(requestHandler.Storage))
-        requestHandler.HttpContext.RequestServices.GetService<ICache>().RemovePageActionResult(urlPropertyStringValue, culture.Code);
+      requestHandler.HttpContext.RequestServices.GetService<ICache>().RemoveAll();
     }
   }
 }
