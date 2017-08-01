@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.26228.9
+VisualStudioVersion = 15.0.26430.16
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{0D7AEFA3-ABB0-4AF1-A4C1-F8E05C241753}"
 EndProject
@@ -168,6 +168,12 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Platformus.ECommerce.Frontend", "src\Platformus.ECommerce.Frontend\Platformus.ECommerce.Frontend.csproj", "{82BA6246-94B4-499A-BF4C-239D24DA905E}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ECommerce", "ECommerce", "{161BDC88-CACD-4FDF-87A7-A559FBF1CCDC}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ExtensionManager", "ExtensionManager", "{62E82CC5-A821-4132-92B2-55008D73302F}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Platformus.ExtensionManager", "src\Platformus.ExtensionManager\Platformus.ExtensionManager.csproj", "{A247E34A-FF02-4CFE-8AE9-C043D9AEB989}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Platformus.ExtensionManager.Backend", "src\Platformus.ExtensionManager.Backend\Platformus.ExtensionManager.Backend.csproj", "{2B00F1C0-6912-4CB5-969D-48549EDA12EB}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -459,6 +465,14 @@ Global
 		{82BA6246-94B4-499A-BF4C-239D24DA905E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{82BA6246-94B4-499A-BF4C-239D24DA905E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{82BA6246-94B4-499A-BF4C-239D24DA905E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A247E34A-FF02-4CFE-8AE9-C043D9AEB989}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A247E34A-FF02-4CFE-8AE9-C043D9AEB989}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A247E34A-FF02-4CFE-8AE9-C043D9AEB989}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A247E34A-FF02-4CFE-8AE9-C043D9AEB989}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2B00F1C0-6912-4CB5-969D-48549EDA12EB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2B00F1C0-6912-4CB5-969D-48549EDA12EB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2B00F1C0-6912-4CB5-969D-48549EDA12EB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2B00F1C0-6912-4CB5-969D-48549EDA12EB}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -546,6 +560,9 @@ Global
 		{34B1565A-3ABC-49BC-A0A0-92789A9D9B91} = {161BDC88-CACD-4FDF-87A7-A559FBF1CCDC}
 		{82BA6246-94B4-499A-BF4C-239D24DA905E} = {161BDC88-CACD-4FDF-87A7-A559FBF1CCDC}
 		{161BDC88-CACD-4FDF-87A7-A559FBF1CCDC} = {0D7AEFA3-ABB0-4AF1-A4C1-F8E05C241753}
+		{62E82CC5-A821-4132-92B2-55008D73302F} = {0D7AEFA3-ABB0-4AF1-A4C1-F8E05C241753}
+		{A247E34A-FF02-4CFE-8AE9-C043D9AEB989} = {62E82CC5-A821-4132-92B2-55008D73302F}
+		{2B00F1C0-6912-4CB5-969D-48549EDA12EB} = {62E82CC5-A821-4132-92B2-55008D73302F}
 	EndGlobalSection
 	GlobalSection(SolutionConfigurationsPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
