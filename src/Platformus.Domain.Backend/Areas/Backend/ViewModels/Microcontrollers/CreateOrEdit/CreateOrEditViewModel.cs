@@ -21,10 +21,8 @@ namespace Platformus.Domain.Backend.ViewModels.Microcontrollers
     [StringLength(128)]
     public string UrlTemplate { get; set; }
 
-    [Display(Name = "View name")]
-    [Required]
-    [StringLength(64)]
-    public string ViewName { get; set; }
+    [Display(Name = "Position")]
+    public int? Position { get; set; }
 
     [Display(Name = "C# class name")]
     [Required]
@@ -32,10 +30,7 @@ namespace Platformus.Domain.Backend.ViewModels.Microcontrollers
     public string CSharpClassName { get; set; }
     public IEnumerable<Option> CSharpClassNameOptions { get; set; }
 
-    [Display(Name = "Use caching")]
-    public bool UseCaching { get; set; }
-
-    [Display(Name = "Position")]
-    public int? Position { get; set; }
+    public string Parameters { get; set; }
+    public IEnumerable<dynamic> Microcontrollers { get; set; }
   }
 }

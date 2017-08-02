@@ -24,7 +24,8 @@ namespace Platformus.Domain.Backend.ViewModels.Microcontrollers
       if (id == null)
         return new CreateOrEditViewModel()
         {
-          CSharpClassNameOptions = this.GetCSharpClassNameOptions()
+          CSharpClassNameOptions = this.GetCSharpClassNameOptions(),
+          Microcontrollers = this.GetMicrocontrollers()
         };
 
       Microcontroller microcontroller = this.RequestHandler.Storage.GetRepository<IMicrocontrollerRepository>().WithKey((int)id);
@@ -34,11 +35,11 @@ namespace Platformus.Domain.Backend.ViewModels.Microcontrollers
         Id = microcontroller.Id,
         Name = microcontroller.Name,
         UrlTemplate = microcontroller.UrlTemplate,
-        ViewName = microcontroller.ViewName,
+        Position = microcontroller.Position,
         CSharpClassName = microcontroller.CSharpClassName,
         CSharpClassNameOptions = this.GetCSharpClassNameOptions(),
-        UseCaching = microcontroller.UseCaching,
-        Position = microcontroller.Position
+        Parameters = microcontroller.Parameters,
+        Microcontrollers = this.GetMicrocontrollers()
       };
     }
 
@@ -46,6 +47,33 @@ namespace Platformus.Domain.Backend.ViewModels.Microcontrollers
     {
       return ExtensionManager.GetImplementations<IMicrocontroller>().Select(
         t => new Option(t.FullName)
+      );
+    }
+
+    private IEnumerable<dynamic> GetMicrocontrollers()
+    {
+      return ExtensionManager.GetInstances<IMicrocontroller>().Where(m => m.GetType() != typeof(MicrocontrollerBase)).Select(
+        m => new {
+          cSharpClassName = m.GetType().FullName,
+          microcontrollerParameterGroups = m.MicrocontrollerParameterGroups.Select(
+            mpg => new
+            {
+              name = mpg.Name,
+              microcontrollerParameters = mpg.MicrocontrollerParameters.Select(
+                mp => new
+                {
+                  code = mp.Code,
+                  name = mp.Name,
+                  options = mp.Options == null ? null : mp.Options.Select(
+                    o => new { text = o.Text, value = o.Value }
+                  ),
+                  javaScriptEditorClassName = mp.JavaScriptEditorClassName,
+                  isRequired = mp.IsRequired
+                }
+              )
+            }
+          )
+        }
       );
     }
   }

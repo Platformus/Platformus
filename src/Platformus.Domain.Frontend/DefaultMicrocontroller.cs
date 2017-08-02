@@ -13,13 +13,28 @@ using Platformus.Domain.DataSources;
 
 namespace Platformus.Domain.Frontend
 {
-  public class DefaultMicrocontroller : IMicrocontroller
+  public class DefaultMicrocontroller : MicrocontrollerBase
   {
-    public IActionResult Invoke(IRequestHandler requestHandler, Microcontroller microcontroller, IEnumerable<KeyValuePair<string, string>> parameters)
+    public override IEnumerable<MicrocontrollerParameterGroup> MicrocontrollerParameterGroups
+    {
+      get
+      {
+        return new MicrocontrollerParameterGroup[]
+        {
+          new MicrocontrollerParameterGroup(
+            "General",
+            new MicrocontrollerParameter("ViewName", "View name", "text"),
+            new MicrocontrollerParameter("UseCaching", "Use caching", "checkbox")
+          )
+        };
+      }
+    }
+
+    public override IActionResult Invoke(IRequestHandler requestHandler, Microcontroller microcontroller, IEnumerable<KeyValuePair<string, string>> parameters)
     {
       string url = string.Format("/{0}", requestHandler.HttpContext.GetRouteValue("url"));
 
-      if (microcontroller.UseCaching)
+      if (this.GetBoolArgument(this.GetParameters(microcontroller.Parameters), "UseCaching"))
         return requestHandler.HttpContext.RequestServices.GetService<ICache>().GetPageActionResultWithDefaultValue(
           url + requestHandler.HttpContext.Request.QueryString, () => this.GetActionResult(requestHandler, microcontroller, parameters, url)
         );
@@ -31,7 +46,7 @@ namespace Platformus.Domain.Frontend
     {
       dynamic viewModel = this.CreateViewModel(requestHandler, microcontroller);
 
-      return (requestHandler as Platformus.Barebone.Frontend.Controllers.ControllerBase).View(microcontroller.ViewName, viewModel);
+      return (requestHandler as Platformus.Barebone.Frontend.Controllers.ControllerBase).View(this.GetStringArgument(this.GetParameters(microcontroller.Parameters), "ViewName"), viewModel);
     }
 
     private dynamic CreateViewModel(IRequestHandler requestHandler, Microcontroller microcontroller)

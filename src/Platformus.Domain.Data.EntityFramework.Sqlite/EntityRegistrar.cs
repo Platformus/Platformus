@@ -104,8 +104,8 @@ namespace Platformus.Domain.Data.EntityFramework.Sqlite
           etb.Property(e => e.Id).ValueGeneratedOnAdd();
           etb.Property(e => e.Name).IsRequired().HasMaxLength(64);
           etb.Property(e => e.UrlTemplate).HasMaxLength(128);
-          etb.Property(e => e.ViewName).IsRequired().HasMaxLength(64);
           etb.Property(e => e.CSharpClassName).IsRequired().HasMaxLength(128);
+          etb.Property(e => e.Parameters).HasMaxLength(1024);
           etb.ForSqliteToTable("Microcontrollers");
         }
       );

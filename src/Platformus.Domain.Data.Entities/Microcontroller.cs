@@ -11,10 +11,9 @@ namespace Platformus.Domain.Data.Entities
     public int Id { get; set; }
     public string Name { get; set; }
     public string UrlTemplate { get; set; }
-    public string ViewName { get; set; }
-    public string CSharpClassName { get; set; }
-    public bool UseCaching { get; set; }
     public int? Position { get; set; }
+    public string CSharpClassName { get; set; }
+    public string Parameters { get; set; }
 
     public virtual ICollection<DataSource> DataSources { get; set; }
   }

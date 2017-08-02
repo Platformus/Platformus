@@ -194,10 +194,9 @@ CREATE TABLE "Microcontrollers" (
 	"Id" INTEGER NOT NULL CONSTRAINT "PK_Microcontroller" PRIMARY KEY AUTOINCREMENT,
 	"Name" TEXT NOT NULL,
 	"UrlTemplate" TEXT,
-	"ViewName" TEXT NOT NULL,
+	"Position" INTEGER,
 	"CSharpClassName" TEXT NOT NULL,
-	"UseCaching" INTEGER NOT NULL,
-	"Position" INTEGER
+	"Parameters" TEXT
 );
 CREATE TABLE "DataSources" (
 	"Id" INTEGER NOT NULL CONSTRAINT "PK_DataSource" PRIMARY KEY AUTOINCREMENT,

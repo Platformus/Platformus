@@ -3,6 +3,12 @@
 
 (function (platformus) {
   platformus.ui = platformus.ui || {};
+  platformus.ui.microcontrollerCSharpClassNameChanged = function () {
+    var cSharpClassName = getSelectedMicrocontrollerCSharpClassName();
+
+    platformus.microcontrollerParameterEditors.sync(cSharpClassName);
+  };
+
   platformus.ui.dataSourceCSharpClassNameChanged = function () {
     var cSharpClassName = getSelectedDataSourceCSharpClassName();
 
@@ -47,6 +53,10 @@
       $("#maxRelatedObjectsNumber").parent().show();
     }
   };
+
+  function getSelectedMicrocontrollerCSharpClassName() {
+    return $("#cSharpClassName").val();
+  }
 
   function getSelectedDataSourceCSharpClassName() {
     return $("#cSharpClassName").val();

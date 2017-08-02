@@ -350,10 +350,9 @@ CREATE TABLE "Microcontrollers" (
     "Id" serial NOT NULL,
     "Name" text NOT NULL,
     "UrlTemplate" text,
-    "ViewName" text NOT NULL,
+	"Position" integer,
     "CSharpClassName" text NOT NULL,
-    "UseCaching" boolean NOT NULL,
-    "Position" integer,
+    "Parameters" text,
     CONSTRAINT "PK_Microcontrollers" PRIMARY KEY ("Id")
 );
 
