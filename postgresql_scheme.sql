@@ -351,12 +351,30 @@ CREATE TABLE "Microcontrollers" (
     "Name" text NOT NULL,
     "UrlTemplate" text,
 	"Position" integer,
+	"DisallowAnonymous" boolean NOT NULL,
+	"SignInUrl" text,
     "CSharpClassName" text NOT NULL,
     "Parameters" text,
     CONSTRAINT "PK_Microcontrollers" PRIMARY KEY ("Id")
 );
 
 ALTER TABLE "Microcontrollers" OWNER TO postgres;
+
+CREATE TABLE "MicrocontrollerPermissions" (
+    "MicrocontrollerId" integer NOT NULL,
+    "PermissionId" integer NOT NULL,
+    CONSTRAINT "PK_MicrocontrollerPermissions" PRIMARY KEY ("MicrocontrollerId", "PermissionId"),
+    CONSTRAINT "FK_MicrocontrollerPermissions_Roles" FOREIGN KEY ("MicrocontrollerId")
+        REFERENCES public."Microcontrollers" ("Id") MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION,
+    CONSTRAINT "FK_RolePermissions_Permissions" FOREIGN KEY ("PermissionId")
+        REFERENCES public."Permissions" ("Id") MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION
+);
+
+ALTER TABLE "MicrocontrollerPermissions" OWNER TO postgres;
 
 CREATE TABLE "DataSources" (
     "Id" serial NOT NULL,

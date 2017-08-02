@@ -195,8 +195,17 @@ CREATE TABLE "Microcontrollers" (
 	"Name" TEXT NOT NULL,
 	"UrlTemplate" TEXT,
 	"Position" INTEGER,
+	"DisallowAnonymous" INTEGER NOT NULL,
+	"SignInUrl" TEXT,
 	"CSharpClassName" TEXT NOT NULL,
 	"Parameters" TEXT
+);
+CREATE TABLE "MicrocontrollerPermissions" (
+	"MicrocontrollerId" INTEGER NOT NULL,
+	"PermissionId" INTEGER NOT NULL,
+	CONSTRAINT "PK_MicrocontrollerPermission" PRIMARY KEY ("MicrocontrollerId", "PermissionId"),
+	CONSTRAINT "FK_MicrocontrollerPermission_Microcontroller_MicrocontrollerId" FOREIGN KEY ("MicrocontrollerId") REFERENCES "Microcontrollers" ("Id"),
+	CONSTRAINT "FK_MicrocontrollerPermission_Permission_PermissionId" FOREIGN KEY ("PermissionId") REFERENCES "Permissions" ("Id")
 );
 CREATE TABLE "DataSources" (
 	"Id" INTEGER NOT NULL CONSTRAINT "PK_DataSource" PRIMARY KEY AUTOINCREMENT,

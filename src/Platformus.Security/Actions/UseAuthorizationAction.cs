@@ -6,6 +6,8 @@ using ExtCore.Infrastructure.Actions;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Options;
 
 namespace Platformus.Security.Actions
 {
@@ -34,6 +36,32 @@ namespace Platformus.Security.Actions
           );
         }
       );
+
+      SecurityOptions securityOptions = serviceProvider.GetService<IOptions<SecurityOptions>>()?.Value;
+
+      if (securityOptions != null && securityOptions.EnableAuthentication)
+      {
+        applicationBuilder.UseWhen(
+        context => !context.Request.Path.StartsWithSegments(new PathString("/backend")),
+        frontendApplicationBuilder =>
+        {
+          frontendApplicationBuilder.UseCookieAuthentication(
+            new CookieAuthenticationOptions()
+            {
+              AccessDeniedPath = securityOptions.AccessDeniedPath,
+              AuthenticationScheme = CookieAuthenticationDefaults.AuthenticationScheme,
+              AutomaticAuthenticate = true,
+              AutomaticChallenge = true,
+              CookieName = "PLATFORMUS",
+              ExpireTimeSpan = TimeSpan.FromDays(7),
+              LoginPath = securityOptions.LoginPath,
+              LogoutPath = securityOptions.LogoutPath,
+              ReturnUrlParameter = securityOptions.ReturnUrlParameter
+            }
+          );
+        }
+      );
+      }
     }
   }
 }

@@ -4,6 +4,7 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using Platformus.Barebone.Backend;
+using Platformus.Domain.Backend.ViewModels.Shared;
 using Platformus.Globalization.Backend.ViewModels;
 
 namespace Platformus.Domain.Backend.ViewModels.Microcontrollers
@@ -24,6 +25,14 @@ namespace Platformus.Domain.Backend.ViewModels.Microcontrollers
     [Display(Name = "Position")]
     public int? Position { get; set; }
 
+    [Display(Name = "Disallow anonymous")]
+    [Required]
+    public bool DisallowAnonymous { get; set; }
+
+    [Display(Name = "Sign in URL")]
+    [StringLength(128)]
+    public string SignInUrl { get; set; }
+
     [Display(Name = "C# class name")]
     [Required]
     [StringLength(128)]
@@ -32,5 +41,7 @@ namespace Platformus.Domain.Backend.ViewModels.Microcontrollers
 
     public string Parameters { get; set; }
     public IEnumerable<dynamic> Microcontrollers { get; set; }
+
+    public IEnumerable<MicrocontrollerPermissionViewModel> MicrocontrollerPermissions { get; set; }
   }
 }

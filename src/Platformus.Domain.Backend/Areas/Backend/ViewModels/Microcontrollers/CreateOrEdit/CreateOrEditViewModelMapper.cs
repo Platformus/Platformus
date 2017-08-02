@@ -25,6 +25,8 @@ namespace Platformus.Domain.Backend.ViewModels.Microcontrollers
       microcontroller.Name = createOrEdit.Name;
       microcontroller.UrlTemplate = createOrEdit.UrlTemplate;
       microcontroller.Position = createOrEdit.Position;
+      microcontroller.DisallowAnonymous = createOrEdit.DisallowAnonymous;
+      microcontroller.SignInUrl = createOrEdit.SignInUrl;
       microcontroller.CSharpClassName = createOrEdit.CSharpClassName;
       microcontroller.Parameters = createOrEdit.Parameters;
       return microcontroller;

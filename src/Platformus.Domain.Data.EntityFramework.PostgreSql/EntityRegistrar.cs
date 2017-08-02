@@ -104,9 +104,17 @@ namespace Platformus.Domain.Data.EntityFramework.PostgreSql
           etb.Property(e => e.Id).ValueGeneratedOnAdd();
           etb.Property(e => e.Name).IsRequired().HasMaxLength(64);
           etb.Property(e => e.UrlTemplate).HasMaxLength(128);
+          etb.Property(e => e.SignInUrl).HasMaxLength(128);
           etb.Property(e => e.CSharpClassName).IsRequired().HasMaxLength(128);
           etb.Property(e => e.Parameters).HasMaxLength(1024);
           etb.ForNpgsqlToTable("Microcontrollers");
+        }
+      );
+
+      modelBuilder.Entity<MicrocontrollerPermission>(etb =>
+        {
+          etb.HasKey(e => new { e.MicrocontrollerId, e.PermissionId });
+          etb.ForNpgsqlToTable("MicrocontrollerPermissions");
         }
       );
 

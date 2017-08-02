@@ -20,6 +20,7 @@
     <ProjectReference Include="..\Platformus.Barebone.Backend\Platformus.Barebone.Backend.csproj" />
     <ProjectReference Include="..\Platformus.Domain\Platformus.Domain.csproj" />
     <ProjectReference Include="..\Platformus.Globalization.Backend\Platformus.Globalization.Backend.csproj" />
+    <ProjectReference Include="..\Platformus.Security.Backend\Platformus.Security.Backend.csproj" />
   </ItemGroup>
 
   <ItemGroup>

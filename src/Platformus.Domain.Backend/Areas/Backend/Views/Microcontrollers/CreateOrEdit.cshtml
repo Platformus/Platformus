@@ -9,12 +9,30 @@
   @ViewBag.Title
 }
 <form class="form" method="post">
-  <single-line-text-field asp-for="Name" />
-  <single-line-text-field asp-for="UrlTemplate" />
-  <numeric-field asp-for="Position" />
-  <drop-down-list-field asp-for="CSharpClassName" asp-options="@Model.CSharpClassNameOptions" />
-  <div id="microcontrollerParameterEditors"></div>
-  <input id="parameters" name="parameters" type="hidden" value="@Model.Parameters" />
+  <div class="tabs">
+    <div class="tabs__tab" data-tab-page-id="General">General</div>
+    <div class="tabs__tab" data-tab-page-id="Permissions">Permissions</div>
+  </div>
+  <div class="tab-pages">
+    <div id="tabPageGeneral" class="tab-pages__tab-page">
+      <single-line-text-field asp-for="Name" />
+      <single-line-text-field asp-for="UrlTemplate" />
+      <numeric-field asp-for="Position" />
+      <checkbox-field asp-for="DisallowAnonymous" />
+      <single-line-text-field asp-for="SignInUrl" />
+      <drop-down-list-field asp-for="CSharpClassName" asp-options="@Model.CSharpClassNameOptions" />
+      <div id="microcontrollerParameterEditors"></div>
+      <input id="parameters" name="parameters" type="hidden" value="@Model.Parameters" />
+    </div>
+    <div id="tabPagePermissions" class="tab-pages__tab-page">
+      @foreach (var microcontrollerPermission in this.Model.MicrocontrollerPermissions)
+      {
+        <div class="form__field form__field--separated field">
+          <unbound-check-box asp-identity="permission@(microcontrollerPermission.Permission.Id)" asp-text="@microcontrollerPermission.Permission.Name" asp-checked="@microcontrollerPermission.IsAssigned" />
+        </div>
+      }
+    </div>
+  </div>
   <div class="form__buttons buttons">
     <button class="buttons__button button button--positive" type="submit">Save</button>
     <a class="buttons__button button button--neutral" href="@this.Context.Request.CombineUrl("/backend/microcontrollers")">Cancel</a>

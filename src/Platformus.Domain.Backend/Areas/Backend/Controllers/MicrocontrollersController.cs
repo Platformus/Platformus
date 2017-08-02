@@ -47,6 +47,7 @@ namespace Platformus.Domain.Backend.Controllers
         else this.Storage.GetRepository<IMicrocontrollerRepository>().Edit(microcontroller);
 
         this.Storage.Save();
+        this.CreateOrEditMicrocontrollerPermissions(microcontroller);
 
         if (createOrEdit.Id == null)
           Event<IMicrocontrollerCreatedEventHandler, IRequestHandler, Microcontroller>.Broadcast(this, microcontroller);
@@ -72,6 +73,44 @@ namespace Platformus.Domain.Backend.Controllers
       this.Storage.Save();
       Event<IMicrocontrollerDeletedEventHandler, IRequestHandler, Microcontroller>.Broadcast(this, microcontroller);
       return this.RedirectToAction("Index");
+    }
+
+    private void CreateOrEditMicrocontrollerPermissions(Microcontroller microcontroller)
+    {
+      this.DeleteMicrocontrollerPermissions(microcontroller);
+      this.CreateMicrocontrollerPermissions(microcontroller);
+    }
+
+    private void DeleteMicrocontrollerPermissions(Microcontroller microcontroller)
+    {
+      foreach (MicrocontrollerPermission microcontrollerPermission in this.Storage.GetRepository<IMicrocontrollerPermissionRepository>().FilteredByMicrocontrollerId(microcontroller.Id))
+        this.Storage.GetRepository<IMicrocontrollerPermissionRepository>().Delete(microcontrollerPermission);
+
+      this.Storage.Save();
+    }
+
+    private void CreateMicrocontrollerPermissions(Microcontroller microcontroller)
+    {
+      foreach (string key in this.Request.Form.Keys)
+      {
+        if (key.StartsWith("permission") && this.Request.Form[key] == true.ToString().ToLower())
+        {
+          string permissionId = key.Replace("permission", string.Empty);
+
+          this.CreateMicrocontrollerPermission(microcontroller, int.Parse(permissionId));
+        }
+      }
+
+      this.Storage.Save();
+    }
+
+    private void CreateMicrocontrollerPermission(Microcontroller microcontroller, int permissionId)
+    {
+      MicrocontrollerPermission microcontrollerPermission = new MicrocontrollerPermission();
+
+      microcontrollerPermission.MicrocontrollerId = microcontroller.Id;
+      microcontrollerPermission.PermissionId = permissionId;
+      this.Storage.GetRepository<IMicrocontrollerPermissionRepository>().Create(microcontrollerPermission);
     }
   }
 }

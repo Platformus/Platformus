@@ -6,9 +6,11 @@ using System.Linq;
 using ExtCore.Infrastructure;
 using Platformus.Barebone;
 using Platformus.Barebone.Backend;
+using Platformus.Domain.Backend.ViewModels.Shared;
 using Platformus.Domain.Data.Abstractions;
 using Platformus.Domain.Data.Entities;
 using Platformus.Globalization.Backend.ViewModels;
+using Platformus.Security.Data.Abstractions;
 
 namespace Platformus.Domain.Backend.ViewModels.Microcontrollers
 {
@@ -25,7 +27,8 @@ namespace Platformus.Domain.Backend.ViewModels.Microcontrollers
         return new CreateOrEditViewModel()
         {
           CSharpClassNameOptions = this.GetCSharpClassNameOptions(),
-          Microcontrollers = this.GetMicrocontrollers()
+          Microcontrollers = this.GetMicrocontrollers(),
+          MicrocontrollerPermissions = this.GetMicrocontrollerPermissions()
         };
 
       Microcontroller microcontroller = this.RequestHandler.Storage.GetRepository<IMicrocontrollerRepository>().WithKey((int)id);
@@ -36,10 +39,13 @@ namespace Platformus.Domain.Backend.ViewModels.Microcontrollers
         Name = microcontroller.Name,
         UrlTemplate = microcontroller.UrlTemplate,
         Position = microcontroller.Position,
+        DisallowAnonymous = microcontroller.DisallowAnonymous,
+        SignInUrl = microcontroller.SignInUrl,
         CSharpClassName = microcontroller.CSharpClassName,
         CSharpClassNameOptions = this.GetCSharpClassNameOptions(),
         Parameters = microcontroller.Parameters,
-        Microcontrollers = this.GetMicrocontrollers()
+        Microcontrollers = this.GetMicrocontrollers(),
+        MicrocontrollerPermissions = this.GetMicrocontrollerPermissions(microcontroller)
       };
     }
 
@@ -74,6 +80,13 @@ namespace Platformus.Domain.Backend.ViewModels.Microcontrollers
             }
           )
         }
+      );
+    }
+
+    public IEnumerable<MicrocontrollerPermissionViewModel> GetMicrocontrollerPermissions(Microcontroller microcontroller = null)
+    {
+      return this.RequestHandler.Storage.GetRepository<IPermissionRepository>().All().Select(
+        p => new MicrocontrollerPermissionViewModelFactory(this.RequestHandler).Create(microcontroller, p)
       );
     }
   }

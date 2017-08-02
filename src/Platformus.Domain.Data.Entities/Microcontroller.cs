@@ -12,6 +12,8 @@ namespace Platformus.Domain.Data.Entities
     public string Name { get; set; }
     public string UrlTemplate { get; set; }
     public int? Position { get; set; }
+    public bool DisallowAnonymous { get; set; }
+    public string SignInUrl { get; set; }
     public string CSharpClassName { get; set; }
     public string Parameters { get; set; }
 
