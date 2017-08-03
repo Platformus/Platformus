@@ -16,13 +16,8 @@ namespace Platformus.Domain.DataSources
   {
     private Dictionary<string, string> args;
 
-    public virtual IEnumerable<DataSourceParameterGroup> DataSourceParameterGroups
-    {
-      get
-      {
-        return new DataSourceParameterGroup[] { };
-      }
-    }
+    public virtual IEnumerable<DataSourceParameterGroup> DataSourceParameterGroups => new DataSourceParameterGroup[] { };
+    public virtual string Description => null;
 
     protected bool HasArgument(KeyValuePair<string, string>[] args, string key)
     {

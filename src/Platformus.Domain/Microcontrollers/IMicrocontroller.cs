@@ -11,6 +11,7 @@ namespace Platformus.Domain
   public interface IMicrocontroller
   {
     IEnumerable<MicrocontrollerParameterGroup> MicrocontrollerParameterGroups { get; }
+    string Description { get; }
     IActionResult Invoke(IRequestHandler requestHandler, Microcontroller microcontroller, IEnumerable<KeyValuePair<string, string>> parameters);
   }
 }

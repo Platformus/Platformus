@@ -71,7 +71,8 @@ namespace Platformus.Domain.Backend.ViewModels.DataSources
                 }
               )
             }
-          )
+          ),
+          description = ds.Description
         }
       );
     }

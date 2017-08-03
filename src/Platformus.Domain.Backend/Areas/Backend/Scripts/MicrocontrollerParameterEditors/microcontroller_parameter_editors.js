@@ -10,6 +10,8 @@
 
     var microcontroller = getMicrocontroller(cSharpClassName);
 
+    $("<div>").addClass("form__description").html(microcontroller.description).appendTo(microcontrollerParameterEditors);
+
     for (var i = 0; i < microcontroller.microcontrollerParameterGroups.length; i++) {
       var group = $("<h2>").addClass("form_title").html(microcontroller.microcontrollerParameterGroups[i].name).appendTo(microcontrollerParameterEditors);
 

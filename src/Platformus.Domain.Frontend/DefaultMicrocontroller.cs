@@ -15,20 +15,17 @@ namespace Platformus.Domain.Frontend
 {
   public class DefaultMicrocontroller : MicrocontrollerBase
   {
-    public override IEnumerable<MicrocontrollerParameterGroup> MicrocontrollerParameterGroups
-    {
-      get
+    public override IEnumerable<MicrocontrollerParameterGroup> MicrocontrollerParameterGroups =>
+      new MicrocontrollerParameterGroup[]
       {
-        return new MicrocontrollerParameterGroup[]
-        {
-          new MicrocontrollerParameterGroup(
-            "General",
-            new MicrocontrollerParameter("ViewName", "View name", "text"),
-            new MicrocontrollerParameter("UseCaching", "Use caching", "checkbox")
-          )
-        };
-      }
-    }
+        new MicrocontrollerParameterGroup(
+          "General",
+          new MicrocontrollerParameter("ViewName", "View name", "text"),
+          new MicrocontrollerParameter("UseCaching", "Use caching", "checkbox")
+        )
+      };
+
+    public override string Description => "Returns specified view with the view model populated using the data sources.";
 
     public override IActionResult Invoke(IRequestHandler requestHandler, Microcontroller microcontroller, IEnumerable<KeyValuePair<string, string>> parameters)
     {

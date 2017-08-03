@@ -23,3 +23,9 @@
 .form__buttons--minor {
   margin-top: 5px;
 }
+
+.form__description {
+  color: #ccc;
+  font-style: italic;
+  margin-top: 10px;
+}

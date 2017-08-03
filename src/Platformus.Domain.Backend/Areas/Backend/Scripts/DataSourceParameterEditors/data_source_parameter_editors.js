@@ -10,6 +10,8 @@
 
     var dataSource = getDataSource(cSharpClassName);
 
+    $("<div>").addClass("form__description").html(dataSource.description).appendTo(dataSourceParameterEditors);
+
     for (var i = 0; i < dataSource.dataSourceParameterGroups.length; i++) {
       var group = $("<h2>").addClass("form_title").html(dataSource.dataSourceParameterGroups[i].name).appendTo(dataSourceParameterEditors);
 

@@ -13,13 +13,8 @@ namespace Platformus.Domain
   {
     private Dictionary<string, string> args;
 
-    public virtual IEnumerable<MicrocontrollerParameterGroup> MicrocontrollerParameterGroups
-    {
-      get
-      {
-        return new MicrocontrollerParameterGroup[] { };
-      }
-    }
+    public virtual IEnumerable<MicrocontrollerParameterGroup> MicrocontrollerParameterGroups => new MicrocontrollerParameterGroup[] { };
+    public virtual string Description => null;
 
     public abstract IActionResult Invoke(IRequestHandler requestHandler, Microcontroller microcontroller, IEnumerable<KeyValuePair<string, string>> parameters);
 

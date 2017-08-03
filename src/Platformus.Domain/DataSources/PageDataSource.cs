@@ -12,6 +12,8 @@ namespace Platformus.Domain.DataSources
 {
   public class PageDataSource : DataSourceBase, ISingleObjectDataSource
   {
+    public override string Description => "Loads current page’s object by URL.";
+
     public dynamic GetSerializedObject(IRequestHandler requestHandler, params KeyValuePair<string, string>[] args)
     {
       string url = string.Format("/{0}", requestHandler.HttpContext.GetRouteValue("url"));

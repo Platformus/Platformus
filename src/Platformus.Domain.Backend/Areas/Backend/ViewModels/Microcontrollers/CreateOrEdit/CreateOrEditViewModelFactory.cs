@@ -51,7 +51,7 @@ namespace Platformus.Domain.Backend.ViewModels.Microcontrollers
 
     private IEnumerable<Option> GetCSharpClassNameOptions()
     {
-      return ExtensionManager.GetImplementations<IMicrocontroller>().Select(
+      return ExtensionManager.GetImplementations<IMicrocontroller>().Where(m => m.GetType() != typeof(MicrocontrollerBase)).Select(
         t => new Option(t.FullName)
       );
     }
@@ -78,7 +78,8 @@ namespace Platformus.Domain.Backend.ViewModels.Microcontrollers
                 }
               )
             }
-          )
+          ),
+          description = m.Description
         }
       );
     }

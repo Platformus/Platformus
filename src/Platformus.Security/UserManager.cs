@@ -42,14 +42,14 @@ namespace Platformus.Security
       if (credentialType == null)
         return null;
 
-      Credential login = this.credentialRepository.WithCredentialTypeIdAndIdentifierAndSecret(
+      Credential credential = this.credentialRepository.WithCredentialTypeIdAndIdentifierAndSecret(
         credentialType.Id, identifier, MD5Hasher.ComputeHash(secret)
       );
 
-      if (login == null)
+      if (credential == null)
         return null;
 
-      return this.userRepository.WithKey(login.UserId);
+      return this.userRepository.WithKey(credential.UserId);
     }
 
     public async void SignIn(User user, bool isPersistent = false)

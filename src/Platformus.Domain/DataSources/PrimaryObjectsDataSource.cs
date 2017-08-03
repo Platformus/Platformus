@@ -14,47 +14,44 @@ namespace Platformus.Domain.DataSources
 {
   public class PrimaryObjectsDataSource : DataSourceBase, IMultipleObjectsDataSource
   {
-    public override IEnumerable<DataSourceParameterGroup> DataSourceParameterGroups
-    {
-      get
+    public override IEnumerable<DataSourceParameterGroup> DataSourceParameterGroups =>
+      new DataSourceParameterGroup[]
       {
-        return new DataSourceParameterGroup[]
-        {
-          new DataSourceParameterGroup(
-            "General",
-            new DataSourceParameter("RelationMemberId", "Relation member", "member"),
-            new DataSourceParameter("NestedXPaths", "Nested XPaths", "text")
-          ),
-          new DataSourceParameterGroup(
-            "Filtering",
-            new DataSourceParameter("EnableFiltering", "Enable filtering", "checkbox"),
-            new DataSourceParameter("QueryUrlParameterName", "“Query” URL parameter name", "text")
-          ),
-          new DataSourceParameterGroup(
-            "Sorting",
-            new DataSourceParameter("SortingMemberId", "Sorting member", "member"),
-            new DataSourceParameter(
-              "SortingDirection",
-              "Sorting direction",
-              new Option[]
-              {
-                new Option("Ascending", "ASC"),
-                new Option("Descending", "DESC")
-              },
-              "radio",
-              true
-            )
-          ),
-          new DataSourceParameterGroup(
-            "Paging",
-            new DataSourceParameter("EnablePaging", "Enable paging", "checkbox"),
-            new DataSourceParameter("SkipUrlParameterName", "“Skip” URL parameter name", "text"),
-            new DataSourceParameter("TakeUrlParameterName", "“Take” URL parameter name", "text"),
-            new DataSourceParameter("DefaultTake", "Default “Take” URL parameter value", "numeric")
+        new DataSourceParameterGroup(
+          "General",
+          new DataSourceParameter("RelationMemberId", "Relation member", "member"),
+          new DataSourceParameter("NestedXPaths", "Nested XPaths", "text")
+        ),
+        new DataSourceParameterGroup(
+          "Filtering",
+          new DataSourceParameter("EnableFiltering", "Enable filtering", "checkbox"),
+          new DataSourceParameter("QueryUrlParameterName", "“Query” URL parameter name", "text")
+        ),
+        new DataSourceParameterGroup(
+          "Sorting",
+          new DataSourceParameter("SortingMemberId", "Sorting member", "member"),
+          new DataSourceParameter(
+            "SortingDirection",
+            "Sorting direction",
+            new Option[]
+            {
+              new Option("Ascending", "ASC"),
+              new Option("Descending", "DESC")
+            },
+            "radio",
+            true
           )
-        };
-      }
-    }
+        ),
+        new DataSourceParameterGroup(
+          "Paging",
+          new DataSourceParameter("EnablePaging", "Enable paging", "checkbox"),
+          new DataSourceParameter("SkipUrlParameterName", "“Skip” URL parameter name", "text"),
+          new DataSourceParameter("TakeUrlParameterName", "“Take” URL parameter name", "text"),
+          new DataSourceParameter("DefaultTake", "Default “Take” URL parameter value", "numeric")
+        )
+      };
+
+    public override string Description => "Loads primary objects (related to the current page’s one). Supports filtering, sorting, and paging.";
 
     public IEnumerable<dynamic> GetSerializedObjects(IRequestHandler requestHandler, params KeyValuePair<string, string>[] args)
     {
