@@ -18,7 +18,7 @@
   }
 
   function createTextBox(dataSourceParameter) {
-    return $("<input>")
+    var textBox = $("<input>")
       .addClass("field__text-box")
       .addClass("field__text-box--numeric")
       .addClass("text-box")
@@ -26,6 +26,12 @@
       .attr("value", platformus.dataSourceParameterEditors.base.dataSourceParameterValue(dataSourceParameter))
       .attr("data-datasource-parameter-code", dataSourceParameter.code)
       .change(platformus.dataSourceParameterEditors.base.dataSourceParameterChanged);
+
+    if (dataSourceParameter.isRequired) {
+      textBox.addClass("text-box--required").attr("data-val", true).attr("data-val-required", true);
+    }
+
+    return textBox;
   }
 
   function createNumericButtons() {

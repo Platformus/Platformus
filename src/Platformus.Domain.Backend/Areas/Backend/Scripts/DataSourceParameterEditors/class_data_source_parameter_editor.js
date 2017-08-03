@@ -21,8 +21,7 @@
 
   function createInput(dataSourceParameter) {
     var identity = "dataSourceParameter" + dataSourceParameter.code;
-
-    return $("<input>")
+    var input = $("<input>")
       .attr("id", identity)
       .attr("type", "hidden")
       .attr("value", platformus.dataSourceParameterEditors.base.dataSourceParameterValue(dataSourceParameter))
@@ -33,6 +32,12 @@
           platformus.dataSourceParameterEditors.base.dataSourceParameterChanged();
         }
       );
+
+    if (dataSourceParameter.isRequired) {
+      input.attr("data-val", true).attr("data-val-required", true);
+    }
+
+    return input;
   }
 
   function createNames(dataSourceParameter) {

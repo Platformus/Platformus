@@ -27,9 +27,9 @@
           f.call(this, tabPage, member);
         }
       }
-
-      initializeJQueryValidation();
     }
+
+    initializeJQueryValidation();
   };
 
   function createTab(tab) {

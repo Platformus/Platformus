@@ -21,6 +21,8 @@
         f.call(this, microcontrollerParameterEditors, microcontroller.microcontrollerParameterGroups[i].microcontrollerParameters[j]);
       }
     }
+
+    initializeJQueryValidation();
   };
 
   function getMicrocontroller(cSharpClassName) {
@@ -31,5 +33,13 @@
     }
 
     return null;
+  }
+
+  function initializeJQueryValidation() {
+    var form = $("form")
+      .removeData("validator")
+      .removeData("unobtrusiveValidation");
+
+    $.validator.unobtrusive.parse(form);
   }
 })(window.platformus = window.platformus || {});
