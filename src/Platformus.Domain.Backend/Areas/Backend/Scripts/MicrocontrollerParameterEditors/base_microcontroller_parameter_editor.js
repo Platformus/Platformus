@@ -8,14 +8,18 @@
     return $("<label>").addClass("field__label").addClass("label").html(microcontrollerParameter.name);
   };
 
-  platformus.microcontrollerParameterEditors.base.microcontrollerParameterValue = function (microcontrollerParameterCode) {
+  platformus.microcontrollerParameterEditors.base.microcontrollerParameterValue = function (microcontrollerParameter) {
+    if (platformus.string.isNullOrEmpty($("#parameters").val())) {
+      return microcontrollerParameter.defaultValue;
+    }
+
     var parameters = $("#parameters").val().split(';');
 
     for (var i = 0; i < parameters.length; i++) {
       var code = parameters[i].split("=")[0];
       var value = parameters[i].split("=")[1];
 
-      if (code == microcontrollerParameterCode) {
+      if (code == microcontrollerParameter.code) {
         return value;
       }
     }

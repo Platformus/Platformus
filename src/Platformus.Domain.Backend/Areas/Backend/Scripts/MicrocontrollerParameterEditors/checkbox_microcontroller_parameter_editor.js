@@ -31,7 +31,7 @@
   function createIndicator(microcontrollerParameter) {
     var indicator = $("<div>").addClass("checkbox__indicator");
 
-    if (platformus.microcontrollerParameterEditors.base.microcontrollerParameterValue(microcontrollerParameter.code) == "true")
+    if (platformus.microcontrollerParameterEditors.base.microcontrollerParameterValue(microcontrollerParameter) == "true")
       indicator.addClass("checkbox__indicator--checked");
 
     return indicator;
@@ -42,7 +42,7 @@
   };
 
   function createInput(microcontrollerParameter) {
-    var value = platformus.microcontrollerParameterEditors.base.microcontrollerParameterValue(microcontrollerParameter.code);
+    var value = platformus.microcontrollerParameterEditors.base.microcontrollerParameterValue(microcontrollerParameter);
 
     if (platformus.string.isNullOrEmpty(value))
       value = "false";

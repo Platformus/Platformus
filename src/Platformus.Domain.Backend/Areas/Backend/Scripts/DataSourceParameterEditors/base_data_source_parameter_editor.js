@@ -8,14 +8,18 @@
     return $("<label>").addClass("field__label").addClass("label").html(dataSourceParameter.name);
   };
 
-  platformus.dataSourceParameterEditors.base.dataSourceParameterValue = function (dataSourceParameterCode) {
+  platformus.dataSourceParameterEditors.base.dataSourceParameterValue = function (dataSourceParameter) {
+    if (platformus.string.isNullOrEmpty($("#parameters").val())) {
+      return dataSourceParameter.defaultValue;
+    }
+
     var parameters = $("#parameters").val().split(';');
 
     for (var i = 0; i < parameters.length; i++) {
       var code = parameters[i].split("=")[0];
       var value = parameters[i].split("=")[1];
-
-      if (code == dataSourceParameterCode) {
+     
+      if (code == dataSourceParameter.code) {
         return value;
       }
     }

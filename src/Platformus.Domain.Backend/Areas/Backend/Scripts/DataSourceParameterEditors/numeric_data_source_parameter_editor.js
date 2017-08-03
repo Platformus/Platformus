@@ -23,7 +23,7 @@
       .addClass("field__text-box--numeric")
       .addClass("text-box")
       .attr("type", "text")
-      .attr("value", platformus.dataSourceParameterEditors.base.dataSourceParameterValue(dataSourceParameter.code))
+      .attr("value", platformus.dataSourceParameterEditors.base.dataSourceParameterValue(dataSourceParameter))
       .attr("data-datasource-parameter-code", dataSourceParameter.code)
       .change(platformus.dataSourceParameterEditors.base.dataSourceParameterChanged);
   }

@@ -63,10 +63,11 @@ namespace Platformus.Domain.Backend.ViewModels.DataSources
                 {
                   code = dsp.Code,
                   name = dsp.Name,
+                  javaScriptEditorClassName = dsp.JavaScriptEditorClassName,
                   options = dsp.Options == null ? null : dsp.Options.Select(
                     o => new { text = o.Text, value = o.Value }
                   ),
-                  javaScriptEditorClassName = dsp.JavaScriptEditorClassName,
+                  defaultValue = dsp.DefaultValue,
                   isRequired = dsp.IsRequired
                 }
               )

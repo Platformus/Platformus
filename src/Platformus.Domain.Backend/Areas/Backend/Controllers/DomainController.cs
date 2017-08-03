@@ -38,16 +38,22 @@ namespace Platformus.Domain.Backend.Controllers
       return this.PartialView("_ObjectSelectorForm", new ObjectSelectorFormViewModelFactory(this).Create(classId, objectIds));
     }
 
-    public ActionResult GetClassName(int classId)
+    public ActionResult GetClassName(int? classId)
     {
-      Class @class = this.Storage.GetRepository<IClassRepository>().WithKey(classId);
+      if (classId == null)
+        return this.Content("<div class=\"class-data-source-parameter-editor__name\">Not selected</div>");
+
+      Class @class = this.Storage.GetRepository<IClassRepository>().WithKey((int)classId);
 
       return this.Content(string.Format("<div class=\"class-data-source-parameter-editor__name\">{0}</div>", @class.Name));
     }
 
-    public ActionResult GetMemberName(int memberId)
+    public ActionResult GetMemberName(int? memberId)
     {
-      Member member = this.Storage.GetRepository<IMemberRepository>().WithKey(memberId);
+      if (memberId == null)
+        return this.Content("<div class=\"class-data-source-parameter-editor__name\">Not selected</div>");
+
+      Member member = this.Storage.GetRepository<IMemberRepository>().WithKey((int)memberId);
       Class @class = this.Storage.GetRepository<IClassRepository>().WithKey(member.ClassId);
 
       return this.Content(string.Format("<div class=\"member-data-source-parameter-editor__name\">{0} > {1}</div>", @class.Name, member.Name));

@@ -31,7 +31,7 @@
   function createIndicator(dataSourceParameter) {
     var indicator = $("<div>").addClass("checkbox__indicator");
 
-    if (platformus.dataSourceParameterEditors.base.dataSourceParameterValue(dataSourceParameter.code) == "true")
+    if (platformus.dataSourceParameterEditors.base.dataSourceParameterValue(dataSourceParameter) == "true")
       indicator.addClass("checkbox__indicator--checked");
 
     return indicator;
@@ -42,7 +42,7 @@
   };
 
   function createInput(dataSourceParameter) {
-    var value = platformus.dataSourceParameterEditors.base.dataSourceParameterValue(dataSourceParameter.code);
+    var value = platformus.dataSourceParameterEditors.base.dataSourceParameterValue(dataSourceParameter);
 
     if (platformus.string.isNullOrEmpty(value))
       value = "false";

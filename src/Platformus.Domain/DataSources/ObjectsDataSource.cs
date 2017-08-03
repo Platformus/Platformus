@@ -18,13 +18,13 @@ namespace Platformus.Domain.DataSources
       {
         new DataSourceParameterGroup(
           "General",
-          new DataSourceParameter("ClassId", "Class of the objects to load", "class", true),
+          new DataSourceParameter("ClassId", "Class of the objects to load", "class", null, true),
           new DataSourceParameter("NestedXPaths", "Nested XPaths", "text")
         ),
         new DataSourceParameterGroup(
           "Filtering",
           new DataSourceParameter("EnableFiltering", "Enable filtering", "checkbox"),
-          new DataSourceParameter("QueryUrlParameterName", "“Query” URL parameter name", "text")
+          new DataSourceParameter("QueryUrlParameterName", "“Query” URL parameter name", "text", "q")
         ),
         new DataSourceParameterGroup(
           "Sorting",
@@ -38,15 +38,16 @@ namespace Platformus.Domain.DataSources
               new Option("Descending", "DESC")
             },
             "radio",
+            "ASC",
             true
           )
         ),
         new DataSourceParameterGroup(
           "Paging",
           new DataSourceParameter("EnablePaging", "Enable paging", "checkbox"),
-          new DataSourceParameter("SkipUrlParameterName", "“Skip” URL parameter name", "text"),
-          new DataSourceParameter("TakeUrlParameterName", "“Take” URL parameter name", "text"),
-          new DataSourceParameter("DefaultTake", "Default “Take” URL parameter value", "numeric")
+          new DataSourceParameter("SkipUrlParameterName", "“Skip” URL parameter name", "text", "skip"),
+          new DataSourceParameter("TakeUrlParameterName", "“Take” URL parameter name", "text", "take"),
+          new DataSourceParameter("DefaultTake", "Default “Take” URL parameter value", "numeric", "10")
         )
       };
 

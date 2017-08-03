@@ -11,19 +11,21 @@ namespace Platformus.Domain
     public string Code { get; set; }
     public string Name { get; set; }
     public string JavaScriptEditorClassName { get; set; }
-    public bool IsRequired { get; set; }
     public IEnumerable<Option> Options { get; set; }
+    public string DefaultValue { get; set; }
+    public bool IsRequired { get; set; }
 
-    public MicrocontrollerParameter(string code, string name, string javaScriptEditorClassName, bool isRequired = false)
+    public MicrocontrollerParameter(string code, string name, string javaScriptEditorClassName, string defaultValue = null, bool isRequired = false)
     {
       this.Code = code;
       this.Name = name;
       this.JavaScriptEditorClassName = javaScriptEditorClassName;
+      this.DefaultValue = defaultValue;
       this.IsRequired = isRequired;
     }
 
-    public MicrocontrollerParameter(string code, string name, IEnumerable<Option> options, string javaScriptEditorClassName, bool isRequired = false)
-      : this(code, name, javaScriptEditorClassName, isRequired)
+    public MicrocontrollerParameter(string code, string name, IEnumerable<Option> options, string javaScriptEditorClassName, string defaultValue = null, bool isRequired = false)
+      : this(code, name, javaScriptEditorClassName, defaultValue, isRequired)
     {
       this.Options = options;
     }

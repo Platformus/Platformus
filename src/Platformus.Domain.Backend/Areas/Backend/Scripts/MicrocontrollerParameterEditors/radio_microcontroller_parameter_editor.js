@@ -39,7 +39,7 @@
   function createRadioButtonIndicator(microcontrollerParameter, option) {
     var radioButtonIndicator = $("<div>").addClass("radio-button__indicator");
 
-    if (option.value == platformus.microcontrollerParameterEditors.base.microcontrollerParameterValue(microcontrollerParameter.code)) {
+    if (option.value == platformus.microcontrollerParameterEditors.base.microcontrollerParameterValue(microcontrollerParameter)) {
       radioButtonIndicator.addClass("radio-button__indicator--checked");
     }
 
@@ -53,7 +53,7 @@
   function createInput(microcontrollerParameter) {
     return $("<input>")
       .attr("type", "hidden")
-      .attr("value", platformus.microcontrollerParameterEditors.base.microcontrollerParameterValue(microcontrollerParameter.code))
+      .attr("value", platformus.microcontrollerParameterEditors.base.microcontrollerParameterValue(microcontrollerParameter))
       .attr("data-microcontroller-parameter-code", microcontrollerParameter.code)
   }
 })(window.platformus = window.platformus || {});

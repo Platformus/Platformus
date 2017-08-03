@@ -23,7 +23,7 @@
       .addClass("field__text-box--numeric")
       .addClass("text-box")
       .attr("type", "text")
-      .attr("value", platformus.microcontrollerParameterEditors.base.microcontrollerParameterValue(microcontrollerParameter.code))
+      .attr("value", platformus.microcontrollerParameterEditors.base.microcontrollerParameterValue(microcontrollerParameter))
       .attr("data-microcontroller-parameter-code", microcontrollerParameter.code)
       .change(platformus.microcontrollerParameterEditors.base.microcontrollerParameterChanged);
   }

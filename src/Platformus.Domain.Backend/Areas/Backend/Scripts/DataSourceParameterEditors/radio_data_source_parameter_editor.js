@@ -39,7 +39,7 @@
   function createRadioButtonIndicator(dataSourceParameter, option) {
     var radioButtonIndicator = $("<div>").addClass("radio-button__indicator");
 
-    if (option.value == platformus.dataSourceParameterEditors.base.dataSourceParameterValue(dataSourceParameter.code)) {
+    if (option.value == platformus.dataSourceParameterEditors.base.dataSourceParameterValue(dataSourceParameter)) {
       radioButtonIndicator.addClass("radio-button__indicator--checked");
     }
 
@@ -53,7 +53,7 @@
   function createInput(dataSourceParameter) {
     return $("<input>")
       .attr("type", "hidden")
-      .attr("value", platformus.dataSourceParameterEditors.base.dataSourceParameterValue(dataSourceParameter.code))
+      .attr("value", platformus.dataSourceParameterEditors.base.dataSourceParameterValue(dataSourceParameter))
       .attr("data-datasource-parameter-code", dataSourceParameter.code)
   }
 })(window.platformus = window.platformus || {});

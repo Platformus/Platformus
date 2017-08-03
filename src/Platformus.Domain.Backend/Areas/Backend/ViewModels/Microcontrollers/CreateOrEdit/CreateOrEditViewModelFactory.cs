@@ -70,10 +70,11 @@ namespace Platformus.Domain.Backend.ViewModels.Microcontrollers
                 {
                   code = mp.Code,
                   name = mp.Name,
+                  javaScriptEditorClassName = mp.JavaScriptEditorClassName,
                   options = mp.Options == null ? null : mp.Options.Select(
                     o => new { text = o.Text, value = o.Value }
                   ),
-                  javaScriptEditorClassName = mp.JavaScriptEditorClassName,
+                  defaultValue = mp.DefaultValue,
                   isRequired = mp.IsRequired
                 }
               )

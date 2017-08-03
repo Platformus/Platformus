@@ -25,7 +25,7 @@
     return $("<input>")
       .attr("id", identity)
       .attr("type", "hidden")
-      .attr("value", platformus.dataSourceParameterEditors.base.dataSourceParameterValue(dataSourceParameter.code))
+      .attr("value", platformus.dataSourceParameterEditors.base.dataSourceParameterValue(dataSourceParameter))
       .attr("data-datasource-parameter-code", dataSourceParameter.code)
       .change(
         function () {
