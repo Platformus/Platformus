@@ -3,8 +3,8 @@
 
 (function (platformus) {
   platformus.dataSourceParameterEditors = platformus.dataSourceParameterEditors || [];
-  platformus.dataSourceParameterEditors.radio = {};
-  platformus.dataSourceParameterEditors.radio.create = function (container, dataSourceParameter) {
+  platformus.dataSourceParameterEditors.radioButtonList = {};
+  platformus.dataSourceParameterEditors.radioButtonList.create = function (container, dataSourceParameter) {
     createField(dataSourceParameter).appendTo(container);
   };
 

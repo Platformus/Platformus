@@ -3,8 +3,8 @@
 
 (function (platformus) {
   platformus.microcontrollerParameterEditors = platformus.microcontrollerParameterEditors || [];
-  platformus.microcontrollerParameterEditors.radio = {};
-  platformus.microcontrollerParameterEditors.radio.create = function (container, microcontrollerParameter) {
+  platformus.microcontrollerParameterEditors.radioButtonList = {};
+  platformus.microcontrollerParameterEditors.radioButtonList.create = function (container, microcontrollerParameter) {
     createField(microcontrollerParameter).appendTo(container);
   };
 

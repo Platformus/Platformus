@@ -37,7 +37,7 @@ namespace Platformus.Domain.DataSources
               new Option("Ascending", "ASC"),
               new Option("Descending", "DESC")
             },
-            "radio",
+            "radioButtonList",
             "ASC",
             true
           )
