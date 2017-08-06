@@ -10,7 +10,6 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Localization;
 using Microsoft.Extensions.DependencyInjection;
 using Platformus.Barebone;
-using Platformus.Globalization.Data.Entities;
 
 namespace Platformus.Globalization
 {
@@ -48,7 +47,7 @@ namespace Platformus.Globalization
     private string GetDefaultCultureCode()
     {
       IStorage storage = this.serviceProvider.GetService<IStorage>();
-      Culture defaultCulture = CultureManager.GetDefaultCulture(storage);
+      Data.Entities.Culture defaultCulture = CultureManager.GetDefaultCulture(storage);
 
       if (defaultCulture == null)
         return DefaultCulture.Code;

@@ -3,8 +3,9 @@
 
 using Platformus.Barebone;
 using Platformus.Forms.Data.Entities;
+using Platformus.Forms.Events;
 
-namespace Platformus.Forms
+namespace Platformus.Forms.EventHandlers
 {
   public class FormCreatedEventHandler : IFormCreatedEventHandler
   {

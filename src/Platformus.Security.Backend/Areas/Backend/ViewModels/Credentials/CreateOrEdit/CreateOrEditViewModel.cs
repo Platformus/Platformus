@@ -3,8 +3,8 @@
 
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using Platformus.Barebone.Backend;
 using Platformus.Barebone.Backend.ViewModels;
+using Platformus.Barebone.Primitives;
 
 namespace Platformus.Security.Backend.ViewModels.Credentials
 {

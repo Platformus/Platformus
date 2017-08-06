@@ -5,7 +5,7 @@ using ExtCore.Events;
 using Platformus.Barebone;
 using Platformus.Menus.Data.Entities;
 
-namespace Platformus.Menus
+namespace Platformus.Menus.Events
 {
   public interface IMenuEditedEventHandler : IEventHandler<IRequestHandler, Menu, Menu>
   {

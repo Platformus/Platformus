@@ -4,8 +4,6 @@
     "inputFiles": [
       "Areas/Backend/Styles/MemberEditors/image_member_editor.css",
       "Areas/Backend/Styles/MemberEditors/relation_member_editor.css",
-      "Areas/Backend/Styles/DataSourceParameterEditors/class_data_source_parameter_editor.css",
-      "Areas/Backend/Styles/DataSourceParameterEditors/member_data_source_parameter_editor.css",
       "Areas/Backend/Styles/image_drag_and_drop_area.css",
       "Areas/Backend/Styles/image_uploader_pop_up_form.css",
       "Areas/Backend/Styles/class_selector_pop_up_form.css",
@@ -34,23 +32,7 @@
       "Areas/Backend/Scripts/DataTypeParameterEditors/base_data_type_parameter_editor.js",
       "Areas/Backend/Scripts/DataTypeParameterEditors/text_data_type_parameter_editor.js",
       "Areas/Backend/Scripts/DataTypeParameterEditors/numeric_data_type_parameter_editor.js",
-      "Areas/Backend/Scripts/DataTypeParameterEditors/checkbox_data_type_parameter_editor.js",
-      "Areas/Backend/Scripts/MicrocontrollerParameterEditors/microcontroller_parameter_editors.js",
-      "Areas/Backend/Scripts/MicrocontrollerParameterEditors/base_microcontroller_parameter_editor.js",
-      "Areas/Backend/Scripts/MicrocontrollerParameterEditors/text_microcontroller_parameter_editor.js",
-      "Areas/Backend/Scripts/MicrocontrollerParameterEditors/numeric_microcontroller_parameter_editor.js",
-      "Areas/Backend/Scripts/MicrocontrollerParameterEditors/checkbox_microcontroller_parameter_editor.js",
-      "Areas/Backend/Scripts/MicrocontrollerParameterEditors/radio_button_list_microcontroller_parameter_editor.js",
-      "Areas/Backend/Scripts/MicrocontrollerParameterEditors/drop_down_list_microcontroller_parameter_editor.js",
-      "Areas/Backend/Scripts/DataSourceParameterEditors/data_source_parameter_editors.js",
-      "Areas/Backend/Scripts/DataSourceParameterEditors/base_data_source_parameter_editor.js",
-      "Areas/Backend/Scripts/DataSourceParameterEditors/text_data_source_parameter_editor.js",
-      "Areas/Backend/Scripts/DataSourceParameterEditors/numeric_data_source_parameter_editor.js",
-      "Areas/Backend/Scripts/DataSourceParameterEditors/checkbox_data_source_parameter_editor.js",
-      "Areas/Backend/Scripts/DataSourceParameterEditors/radio_button_list_data_source_parameter_editor.js",
-      "Areas/Backend/Scripts/DataSourceParameterEditors/drop_down_list_data_source_parameter_editor.js",
-      "Areas/Backend/Scripts/DataSourceParameterEditors/class_data_source_parameter_editor.js",
-      "Areas/Backend/Scripts/DataSourceParameterEditors/member_data_source_parameter_editor.js"
+      "Areas/Backend/Scripts/DataTypeParameterEditors/checkbox_data_type_parameter_editor.js"
     ],
     "minify": {
       "enabled": true,

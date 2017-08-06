@@ -6,8 +6,9 @@ using Platformus.Barebone;
 using Platformus.Globalization;
 using Platformus.Globalization.Data.Entities;
 using Platformus.Menus.Data.Entities;
+using Platformus.Menus.Events;
 
-namespace Platformus.Menus
+namespace Platformus.Menus.EventHandlers
 {
   public class MenuDeletedEventHandler : IMenuDeletedEventHandler
   {

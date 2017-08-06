@@ -98,37 +98,6 @@ namespace Platformus.Domain.Data.EntityFramework.PostgreSql
         }
       );
 
-      modelBuilder.Entity<Microcontroller>(etb =>
-        {
-          etb.HasKey(e => e.Id);
-          etb.Property(e => e.Id).ValueGeneratedOnAdd();
-          etb.Property(e => e.Name).IsRequired().HasMaxLength(64);
-          etb.Property(e => e.UrlTemplate).HasMaxLength(128);
-          etb.Property(e => e.SignInUrl).HasMaxLength(128);
-          etb.Property(e => e.CSharpClassName).IsRequired().HasMaxLength(128);
-          etb.Property(e => e.Parameters).HasMaxLength(1024);
-          etb.ForNpgsqlToTable("Microcontrollers");
-        }
-      );
-
-      modelBuilder.Entity<MicrocontrollerPermission>(etb =>
-        {
-          etb.HasKey(e => new { e.MicrocontrollerId, e.PermissionId });
-          etb.ForNpgsqlToTable("MicrocontrollerPermissions");
-        }
-      );
-
-      modelBuilder.Entity<DataSource>(etb =>
-        {
-          etb.HasKey(e => e.Id);
-          etb.Property(e => e.Id).ValueGeneratedOnAdd();
-          etb.Property(e => e.Code).IsRequired().HasMaxLength(32);
-          etb.Property(e => e.CSharpClassName).IsRequired().HasMaxLength(128);
-          etb.Property(e => e.Parameters).HasMaxLength(1024);
-          etb.ForNpgsqlToTable("DataSources");
-        }
-      );
-
       modelBuilder.Entity<SerializedObject>(etb =>
         {
           etb.HasKey(e => new { e.CultureId, e.ObjectId });

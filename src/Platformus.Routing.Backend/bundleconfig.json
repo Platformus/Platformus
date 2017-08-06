@@ -1,0 +1,36 @@
+﻿[
+  {
+    "outputFileName": "wwwroot/areas/backend/css/platformus.routing.min.css",
+    "inputFiles": [
+      "Areas/Backend/Styles/DataSourceParameterEditors/class_data_source_parameter_editor.css",
+      "Areas/Backend/Styles/DataSourceParameterEditors/member_data_source_parameter_editor.css"
+    ]
+  },
+  {
+    "outputFileName": "wwwroot/areas/backend/js/platformus.routing.min.js",
+    "inputFiles": [
+      "Areas/Backend/Scripts/ui.js",
+      "Areas/Backend/Scripts/MicrocontrollerParameterEditors/microcontroller_parameter_editors.js",
+      "Areas/Backend/Scripts/MicrocontrollerParameterEditors/base_microcontroller_parameter_editor.js",
+      "Areas/Backend/Scripts/MicrocontrollerParameterEditors/text_microcontroller_parameter_editor.js",
+      "Areas/Backend/Scripts/MicrocontrollerParameterEditors/numeric_microcontroller_parameter_editor.js",
+      "Areas/Backend/Scripts/MicrocontrollerParameterEditors/checkbox_microcontroller_parameter_editor.js",
+      "Areas/Backend/Scripts/MicrocontrollerParameterEditors/radio_button_list_microcontroller_parameter_editor.js",
+      "Areas/Backend/Scripts/MicrocontrollerParameterEditors/drop_down_list_microcontroller_parameter_editor.js",
+      "Areas/Backend/Scripts/DataSourceParameterEditors/data_source_parameter_editors.js",
+      "Areas/Backend/Scripts/DataSourceParameterEditors/base_data_source_parameter_editor.js",
+      "Areas/Backend/Scripts/DataSourceParameterEditors/text_data_source_parameter_editor.js",
+      "Areas/Backend/Scripts/DataSourceParameterEditors/numeric_data_source_parameter_editor.js",
+      "Areas/Backend/Scripts/DataSourceParameterEditors/checkbox_data_source_parameter_editor.js",
+      "Areas/Backend/Scripts/DataSourceParameterEditors/radio_button_list_data_source_parameter_editor.js",
+      "Areas/Backend/Scripts/DataSourceParameterEditors/drop_down_list_data_source_parameter_editor.js",
+      "Areas/Backend/Scripts/DataSourceParameterEditors/class_data_source_parameter_editor.js",
+      "Areas/Backend/Scripts/DataSourceParameterEditors/member_data_source_parameter_editor.js"
+    ],
+    "minify": {
+      "enabled": true,
+      "renameLocals": true
+    },
+    "sourceMap": false
+  }
+]

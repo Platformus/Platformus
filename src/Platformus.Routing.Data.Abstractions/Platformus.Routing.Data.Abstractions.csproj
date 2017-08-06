@@ -1,0 +1,23 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <Description>Part of the Platformus.Routing Platformus extension.</Description>
+    <Copyright>Copyright © 2017 Dmitry Sikorsky</Copyright>
+    <VersionPrefix>1.0.0-alpha20</VersionPrefix>
+    <Authors>Dmitry Sikorsky</Authors>
+    <TargetFramework>netstandard1.6</TargetFramework>
+    <AssemblyName>Platformus.Routing.Data.Abstractions</AssemblyName>
+    <PackageId>Platformus.Routing.Data.Abstractions</PackageId>
+    <PackageIconUrl>http://platformus.net/platformus_nuget_icon.png</PackageIconUrl>
+    <PackageProjectUrl>http://platformus.net/</PackageProjectUrl>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Platformus.Routing.Data.Entities\Platformus.Routing.Data.Entities.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="ExtCore.Data.Abstractions" Version="2.0.0" />
+  </ItemGroup>
+
+</Project>

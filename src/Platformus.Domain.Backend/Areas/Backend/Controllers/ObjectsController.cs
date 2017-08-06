@@ -11,6 +11,7 @@ using Platformus.Barebone;
 using Platformus.Domain.Backend.ViewModels.Objects;
 using Platformus.Domain.Data.Abstractions;
 using Platformus.Domain.Data.Entities;
+using Platformus.Domain.Events;
 using Platformus.Globalization.Data.Abstractions;
 using Platformus.Globalization.Data.Entities;
 

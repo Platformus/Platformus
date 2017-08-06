@@ -5,7 +5,7 @@ using ExtCore.Events;
 using Platformus.Barebone;
 using Platformus.Domain.Data.Entities;
 
-namespace Platformus.Domain
+namespace Platformus.Domain.Events
 {
   public interface IObjectDeletedEventHandler : IEventHandler<IRequestHandler, Object>
   {

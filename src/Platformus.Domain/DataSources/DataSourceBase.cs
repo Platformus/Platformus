@@ -12,45 +12,8 @@ using Platformus.Globalization;
 
 namespace Platformus.Domain.DataSources
 {
-  public abstract class DataSourceBase : IDataSource
+  public abstract class DataSourceBase : Platformus.Routing.DataSources.DataSourceBase
   {
-    private Dictionary<string, string> args;
-
-    public virtual IEnumerable<DataSourceParameterGroup> DataSourceParameterGroups => new DataSourceParameterGroup[] { };
-    public virtual string Description => null;
-
-    protected bool HasArgument(KeyValuePair<string, string>[] args, string key)
-    {
-      this.CacheArguments(args);
-      return this.args.ContainsKey(key);
-    }
-
-    protected int GetIntArgument(KeyValuePair<string, string>[] args, string key)
-    {
-      this.CacheArguments(args);
-
-      if (int.TryParse(this.args[key], out int result))
-        return result;
-
-      return 0;
-    }
-
-    protected bool GetBoolArgument(KeyValuePair<string, string>[] args, string key)
-    {
-      this.CacheArguments(args);
-
-      if (bool.TryParse(this.args[key], out bool result))
-        return result;
-
-      return false;
-    }
-
-    protected string GetStringArgument(KeyValuePair<string, string>[] args, string key)
-    {
-      this.CacheArguments(args);
-      return this.args[key];
-    }
-
     protected Params GetParams(IRequestHandler requestHandler, KeyValuePair<string, string>[] args, bool enableSorting)
     {
       Sorting sorting = null;
@@ -127,12 +90,6 @@ namespace Platformus.Domain.DataSources
         objects = this.LoadNestedObjects(requestHandler, objects, nestedXPath.Split(new char[] { '/' }, StringSplitOptions.RemoveEmptyEntries).ToList(), 0);
 
       return objects;
-    }
-
-    private void CacheArguments(KeyValuePair<string, string>[] args)
-    {
-      if (this.args == null)
-        this.args = args.ToDictionary(a => a.Key, a => a.Value);
     }
 
     private IEnumerable<dynamic> LoadNestedObjects(IRequestHandler requestHandler, IEnumerable<dynamic> objects, List<string> xPathSegments, int xPathSegmentIndex)

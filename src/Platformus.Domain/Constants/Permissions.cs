@@ -8,6 +8,5 @@ namespace Platformus.Domain
     public const string BrowseObjects = "BrowseObjects";
     public const string BrowseDataTypes = "BrowseDataTypes";
     public const string BrowseClasses = "BrowseClasses";
-    public const string BrowseMicrocontrollers = "BrowseMicrocontrollers";
   }
 }

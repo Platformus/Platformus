@@ -8,6 +8,5 @@ namespace Platformus.Domain
     public const string HasBrowseObjectsPermission = "HasBrowseObjectsPermission";
     public const string HasBrowseDataTypesPermission = "HasBrowseDataTypesPermission";
     public const string HasBrowseClassesPermission = "HasBrowseClassesPermission";
-    public const string HasBrowseMicrocontrollersPermission = "HasBrowseMicrocontrollersPermission";
   }
 }

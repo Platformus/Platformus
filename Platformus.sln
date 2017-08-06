@@ -175,6 +175,22 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Platformus.ExtensionManager
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Platformus.ExtensionManager.Backend", "src\Platformus.ExtensionManager.Backend\Platformus.ExtensionManager.Backend.csproj", "{2B00F1C0-6912-4CB5-969D-48549EDA12EB}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Routing", "Routing", "{E64DD19B-0DF8-4F70-A7CA-481E74BF4419}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Platformus.Routing", "src\Platformus.Routing\Platformus.Routing.csproj", "{46EBD38D-F109-4E24-9FB8-B455D77CE0B9}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Platformus.Routing.Backend", "src\Platformus.Routing.Backend\Platformus.Routing.Backend.csproj", "{35D9157E-74A8-4EDD-A0C0-340E500B1A41}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Platformus.Routing.Data.Abstractions", "src\Platformus.Routing.Data.Abstractions\Platformus.Routing.Data.Abstractions.csproj", "{575A5F27-4EBA-4F46-8626-10EBA9A6F8B1}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Platformus.Routing.Data.Entities", "src\Platformus.Routing.Data.Entities\Platformus.Routing.Data.Entities.csproj", "{F83CE60E-29A4-47CC-A3D6-5705ABBA5C1E}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Platformus.Routing.Data.EntityFramework.PostgreSql", "src\Platformus.Routing.Data.EntityFramework.PostgreSql\Platformus.Routing.Data.EntityFramework.PostgreSql.csproj", "{C652A2B8-8625-40A5-B3FF-18E3E67B49F2}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Platformus.Routing.Data.EntityFramework.Sqlite", "src\Platformus.Routing.Data.EntityFramework.Sqlite\Platformus.Routing.Data.EntityFramework.Sqlite.csproj", "{B918287E-7FF2-45BE-9D9F-58C63D8B74FD}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Platformus.Routing.Data.EntityFramework.SqlServer", "src\Platformus.Routing.Data.EntityFramework.SqlServer\Platformus.Routing.Data.EntityFramework.SqlServer.csproj", "{10F42544-5454-41A7-9D42-BE2FBA3F8F21}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -473,6 +489,34 @@ Global
 		{2B00F1C0-6912-4CB5-969D-48549EDA12EB}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2B00F1C0-6912-4CB5-969D-48549EDA12EB}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2B00F1C0-6912-4CB5-969D-48549EDA12EB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{46EBD38D-F109-4E24-9FB8-B455D77CE0B9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{46EBD38D-F109-4E24-9FB8-B455D77CE0B9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{46EBD38D-F109-4E24-9FB8-B455D77CE0B9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{46EBD38D-F109-4E24-9FB8-B455D77CE0B9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{35D9157E-74A8-4EDD-A0C0-340E500B1A41}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{35D9157E-74A8-4EDD-A0C0-340E500B1A41}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{35D9157E-74A8-4EDD-A0C0-340E500B1A41}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{35D9157E-74A8-4EDD-A0C0-340E500B1A41}.Release|Any CPU.Build.0 = Release|Any CPU
+		{575A5F27-4EBA-4F46-8626-10EBA9A6F8B1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{575A5F27-4EBA-4F46-8626-10EBA9A6F8B1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{575A5F27-4EBA-4F46-8626-10EBA9A6F8B1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{575A5F27-4EBA-4F46-8626-10EBA9A6F8B1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F83CE60E-29A4-47CC-A3D6-5705ABBA5C1E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F83CE60E-29A4-47CC-A3D6-5705ABBA5C1E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F83CE60E-29A4-47CC-A3D6-5705ABBA5C1E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F83CE60E-29A4-47CC-A3D6-5705ABBA5C1E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C652A2B8-8625-40A5-B3FF-18E3E67B49F2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C652A2B8-8625-40A5-B3FF-18E3E67B49F2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C652A2B8-8625-40A5-B3FF-18E3E67B49F2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C652A2B8-8625-40A5-B3FF-18E3E67B49F2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B918287E-7FF2-45BE-9D9F-58C63D8B74FD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B918287E-7FF2-45BE-9D9F-58C63D8B74FD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B918287E-7FF2-45BE-9D9F-58C63D8B74FD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B918287E-7FF2-45BE-9D9F-58C63D8B74FD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{10F42544-5454-41A7-9D42-BE2FBA3F8F21}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{10F42544-5454-41A7-9D42-BE2FBA3F8F21}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{10F42544-5454-41A7-9D42-BE2FBA3F8F21}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{10F42544-5454-41A7-9D42-BE2FBA3F8F21}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -563,6 +607,14 @@ Global
 		{62E82CC5-A821-4132-92B2-55008D73302F} = {0D7AEFA3-ABB0-4AF1-A4C1-F8E05C241753}
 		{A247E34A-FF02-4CFE-8AE9-C043D9AEB989} = {62E82CC5-A821-4132-92B2-55008D73302F}
 		{2B00F1C0-6912-4CB5-969D-48549EDA12EB} = {62E82CC5-A821-4132-92B2-55008D73302F}
+		{E64DD19B-0DF8-4F70-A7CA-481E74BF4419} = {0D7AEFA3-ABB0-4AF1-A4C1-F8E05C241753}
+		{46EBD38D-F109-4E24-9FB8-B455D77CE0B9} = {E64DD19B-0DF8-4F70-A7CA-481E74BF4419}
+		{35D9157E-74A8-4EDD-A0C0-340E500B1A41} = {E64DD19B-0DF8-4F70-A7CA-481E74BF4419}
+		{575A5F27-4EBA-4F46-8626-10EBA9A6F8B1} = {E64DD19B-0DF8-4F70-A7CA-481E74BF4419}
+		{F83CE60E-29A4-47CC-A3D6-5705ABBA5C1E} = {E64DD19B-0DF8-4F70-A7CA-481E74BF4419}
+		{C652A2B8-8625-40A5-B3FF-18E3E67B49F2} = {E64DD19B-0DF8-4F70-A7CA-481E74BF4419}
+		{B918287E-7FF2-45BE-9D9F-58C63D8B74FD} = {E64DD19B-0DF8-4F70-A7CA-481E74BF4419}
+		{10F42544-5454-41A7-9D42-BE2FBA3F8F21} = {E64DD19B-0DF8-4F70-A7CA-481E74BF4419}
 	EndGlobalSection
 	GlobalSection(SolutionConfigurationsPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU

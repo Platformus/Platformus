@@ -29,9 +29,9 @@ namespace Platformus.Globalization.Backend.ViewModels
       return localization.Value;
     }
 
-    protected IEnumerable<Platformus.Barebone.Backend.Localization> GetLocalizations(int? dictionaryId = null)
+    protected IEnumerable<Platformus.Barebone.Primitives.Localization> GetLocalizations(int? dictionaryId = null)
     {
-      List<Platformus.Barebone.Backend.Localization> localizations = new List<Platformus.Barebone.Backend.Localization>();
+      List<Platformus.Barebone.Primitives.Localization> localizations = new List<Platformus.Barebone.Primitives.Localization>();
 
       foreach (Platformus.Globalization.Data.Entities.Culture culture in this.RequestHandler.Storage.GetRepository<ICultureRepository>().All().ToList())
       {
@@ -41,8 +41,8 @@ namespace Platformus.Globalization.Backend.ViewModels
           localization = this.RequestHandler.Storage.GetRepository<ILocalizationRepository>().FilteredByDictionaryId((int)dictionaryId).FirstOrDefault(l => l.CultureId == culture.Id);
 
         localizations.Add(
-          new Platformus.Barebone.Backend.Localization(
-            new Platformus.Barebone.Backend.Culture(culture.Code),
+          new Platformus.Barebone.Primitives.Localization(
+            new Platformus.Barebone.Primitives.Culture(culture.Code),
             localization == null ? null : localization.Value
           )
         );

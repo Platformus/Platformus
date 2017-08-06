@@ -52,14 +52,6 @@ namespace Platformus.Domain
               new BackendMenuItem("/backend/datatypes", "Data types", 2000, new string[] { Permissions.BrowseDataTypes }),
               new BackendMenuItem("/backend/classes", "Classes", 3000, new string[] { Permissions.BrowseClasses })
             }
-          ),
-          new BackendMenuGroup(
-            "Development",
-            4000,
-            new BackendMenuItem[]
-            {
-              new BackendMenuItem("/backend/microcontrollers", "Microcontrollers", 1000, new string[] { Permissions.BrowseMicrocontrollers })
-            }
           )
         };
       }

@@ -9,6 +9,7 @@ using Platformus.Barebone;
 using Platformus.Menus.Backend.ViewModels.Menus;
 using Platformus.Menus.Data.Abstractions;
 using Platformus.Menus.Data.Entities;
+using Platformus.Menus.Events;
 
 namespace Platformus.Menus.Backend.Controllers
 {

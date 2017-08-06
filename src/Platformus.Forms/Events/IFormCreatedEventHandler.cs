@@ -5,7 +5,7 @@ using ExtCore.Events;
 using Platformus.Barebone;
 using Platformus.Forms.Data.Entities;
 
-namespace Platformus.Forms
+namespace Platformus.Forms.Events
 {
   public interface IFormCreatedEventHandler : IEventHandler<IRequestHandler, Form>
   {

@@ -13,14 +13,14 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Platformus.Barebone.Backend\Platformus.Barebone.Backend.csproj" />
     <ProjectReference Include="..\Platformus.Barebone\Platformus.Barebone.csproj" />
     <ProjectReference Include="..\Platformus.Domain.Data.Abstractions\Platformus.Domain.Data.Abstractions.csproj" />
     <ProjectReference Include="..\Platformus.Globalization\Platformus.Globalization.csproj" />
+    <ProjectReference Include="..\Platformus.Routing\Platformus.Routing.csproj" />
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="ExtCore.Events" Version="2.0.0-alpha1" />
+    <PackageReference Include="ExtCore.Events" Version="2.0.0" />
   </ItemGroup>
 
 </Project>

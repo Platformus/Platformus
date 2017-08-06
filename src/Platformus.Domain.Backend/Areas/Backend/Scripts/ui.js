@@ -3,18 +3,6 @@
 
 (function (platformus) {
   platformus.ui = platformus.ui || {};
-  platformus.ui.microcontrollerCSharpClassNameChanged = function () {
-    var cSharpClassName = getSelectedMicrocontrollerCSharpClassName();
-
-    platformus.microcontrollerParameterEditors.sync(cSharpClassName);
-  };
-
-  platformus.ui.dataSourceCSharpClassNameChanged = function () {
-    var cSharpClassName = getSelectedDataSourceCSharpClassName();
-
-    platformus.dataSourceParameterEditors.sync(cSharpClassName);
-  };
-
   platformus.ui.propertyDataTypeIdChanged = function () {
     var propertyDataTypeId = getSelectedPropertyDataTypeId();
 
@@ -53,14 +41,6 @@
       $("#maxRelatedObjectsNumber").parent().show();
     }
   };
-
-  function getSelectedMicrocontrollerCSharpClassName() {
-    return $("#cSharpClassName").val();
-  }
-
-  function getSelectedDataSourceCSharpClassName() {
-    return $("#cSharpClassName").val();
-  }
 
   function getSelectedPropertyDataTypeId() {
     return $("#propertyDataTypeId").val();

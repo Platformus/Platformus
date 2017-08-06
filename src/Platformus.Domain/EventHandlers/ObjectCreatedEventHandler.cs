@@ -3,8 +3,9 @@
 
 using Platformus.Barebone;
 using Platformus.Domain.Data.Entities;
+using Platformus.Domain.Events;
 
-namespace Platformus.Domain
+namespace Platformus.Domain.EventHandlers
 {
   public class ObjectCreatedEventHandler : IObjectCreatedEventHandler
   {

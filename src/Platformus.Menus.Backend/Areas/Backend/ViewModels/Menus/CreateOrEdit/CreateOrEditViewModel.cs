@@ -3,7 +3,7 @@
 
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using Platformus.Barebone.Backend;
+using Platformus.Barebone.Primitives;
 using Platformus.Globalization.Backend;
 using Platformus.Globalization.Backend.ViewModels;
 

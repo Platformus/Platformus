@@ -1,0 +1,26 @@
+﻿@* Copyright © 2017 Dmitry Sikorsky. All rights reserved. *@
+@* Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information. *@
+@model Platformus.Routing.Backend.ViewModels.DataSources.CreateOrEditViewModel
+@{
+  this.ViewBag.Title = (this.Model.Id == null ? "Create" : "Edit") + " Data Source";
+  this.ViewBag.ActiveMenuItem = "microcontrollers";
+}
+@section title {
+  @ViewBag.Title
+}
+<form class="form" method="post">
+  <single-line-text-field asp-for="Code" />
+  <drop-down-list-field asp-for="CSharpClassName" asp-options="@Model.CSharpClassNameOptions" onchange="platformus.ui.dataSourceCSharpClassNameChanged();" />
+  <div id="dataSourceParameterEditors"></div>
+  <input id="parameters" name="parameters" type="hidden" value="@Model.Parameters" />
+  <div class="form__buttons buttons">
+    <button class="buttons__button button button--positive" type="submit">Save</button>
+    <a class="buttons__button button button--neutral" href="@this.Context.Request.CombineUrl("/backend/datasources")">Cancel</a>
+  </div>
+</form>
+<script>
+  var dataSources = @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(this.Model.DataSources));
+</script>
+@section startUpScript {
+  platformus.ui.dataSourceCSharpClassNameChanged();
+}
