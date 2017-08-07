@@ -14,7 +14,7 @@ using Platformus.Routing.Events;
 namespace Platformus.Routing.Backend.Controllers
 {
   [Area("Backend")]
-  [Authorize(Policy = Policies.HasBrowseMicrocontrollersPermission)]
+  [Authorize(Policy = Policies.HasBrowseEndpointsPermission)]
   public class DataSourcesController : Platformus.Barebone.Backend.Controllers.ControllerBase
   {
     public DataSourcesController(IStorage storage)
@@ -22,9 +22,9 @@ namespace Platformus.Routing.Backend.Controllers
     {
     }
 
-    public IActionResult Index(int microcontrollerId, string orderBy = "code", string direction = "asc", int skip = 0, int take = 10, string filter = null)
+    public IActionResult Index(int endpointId, string orderBy = "code", string direction = "asc", int skip = 0, int take = 10, string filter = null)
     {
-      return this.View(new IndexViewModelFactory(this).Create(microcontrollerId, orderBy, direction, skip, take, filter));
+      return this.View(new IndexViewModelFactory(this).Create(endpointId, orderBy, direction, skip, take, filter));
     }
 
     [HttpGet]
@@ -72,7 +72,7 @@ namespace Platformus.Routing.Backend.Controllers
       this.Storage.GetRepository<IDataSourceRepository>().Delete(dataSource);
       this.Storage.Save();
       Event<IDataSourceDeletedEventHandler, IRequestHandler, DataSource>.Broadcast(this, dataSource);
-      return this.Redirect(string.Format("/backend/datasources?microcontrollerid={0}", dataSource.MicrocontrollerId));
+      return this.Redirect(string.Format("/backend/datasources?endpointid={0}", dataSource.EndpointId));
     }
   }
 }

@@ -190,8 +190,8 @@ CREATE TABLE "Relations" (
 	CONSTRAINT "FK_Relation_Object_PrimaryId" FOREIGN KEY ("PrimaryId") REFERENCES "Objects" ("Id"),
 	CONSTRAINT "FK_Relation_Object_ForeignId" FOREIGN KEY ("ForeignId") REFERENCES "Objects" ("Id")
 );
-CREATE TABLE "Microcontrollers" (
-	"Id" INTEGER NOT NULL CONSTRAINT "PK_Microcontroller" PRIMARY KEY AUTOINCREMENT,
+CREATE TABLE "Endpoints" (
+	"Id" INTEGER NOT NULL CONSTRAINT "PK_Endpoint" PRIMARY KEY AUTOINCREMENT,
 	"Name" TEXT NOT NULL,
 	"UrlTemplate" TEXT,
 	"Position" INTEGER,
@@ -200,20 +200,20 @@ CREATE TABLE "Microcontrollers" (
 	"CSharpClassName" TEXT NOT NULL,
 	"Parameters" TEXT
 );
-CREATE TABLE "MicrocontrollerPermissions" (
-	"MicrocontrollerId" INTEGER NOT NULL,
+CREATE TABLE "EndpointPermissions" (
+	"EndpointId" INTEGER NOT NULL,
 	"PermissionId" INTEGER NOT NULL,
-	CONSTRAINT "PK_MicrocontrollerPermission" PRIMARY KEY ("MicrocontrollerId", "PermissionId"),
-	CONSTRAINT "FK_MicrocontrollerPermission_Microcontroller_MicrocontrollerId" FOREIGN KEY ("MicrocontrollerId") REFERENCES "Microcontrollers" ("Id"),
-	CONSTRAINT "FK_MicrocontrollerPermission_Permission_PermissionId" FOREIGN KEY ("PermissionId") REFERENCES "Permissions" ("Id")
+	CONSTRAINT "PK_EndpointPermission" PRIMARY KEY ("EndpointId", "PermissionId"),
+	CONSTRAINT "FK_EndpointPermission_Endpoint_EndpointId" FOREIGN KEY ("EndpointId") REFERENCES "Endpoints" ("Id"),
+	CONSTRAINT "FK_EndpointPermission_Permission_PermissionId" FOREIGN KEY ("PermissionId") REFERENCES "Permissions" ("Id")
 );
 CREATE TABLE "DataSources" (
 	"Id" INTEGER NOT NULL CONSTRAINT "PK_DataSource" PRIMARY KEY AUTOINCREMENT,
-	"MicrocontrollerId" INTEGER NOT NULL,
+	"EndpointId" INTEGER NOT NULL,
 	"Code" TEXT NOT NULL,
 	"CSharpClassName" TEXT NOT NULL,
 	"Parameters" TEXT,
-	CONSTRAINT "FK_DataSource_Microcontroller_MicrocontrollerId" FOREIGN KEY("MicrocontrollerId") REFERENCES "Microcontrollers"("Id")
+	CONSTRAINT "FK_DataSource_Endpoint_EndpointId" FOREIGN KEY("EndpointId") REFERENCES "Endpoints"("Id")
 );
 CREATE TABLE "SerializedObjects" (
 	"CultureId" INTEGER NOT NULL,

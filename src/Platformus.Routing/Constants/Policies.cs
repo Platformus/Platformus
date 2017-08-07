@@ -5,6 +5,6 @@ namespace Platformus.Routing
 {
   public static class Policies
   {
-    public const string HasBrowseMicrocontrollersPermission = "HasBrowseMicrocontrollersPermission";
+    public const string HasBrowseEndpointsPermission = "HasBrowseEndpointsPermission";
   }
 }

@@ -18,14 +18,14 @@ namespace Platformus.Routing.Data.EntityFramework.Sqlite
       return this.dbSet.FirstOrDefault(ds => ds.Id == id);
     }
 
-    public IEnumerable<DataSource> FilteredByMicrocontrollerId(int microcontrollerId)
+    public IEnumerable<DataSource> FilteredByEndpointId(int endpointId)
     {
-      return this.dbSet.Where(ds => ds.MicrocontrollerId == microcontrollerId).OrderBy(ds => ds.CSharpClassName);
+      return this.dbSet.Where(ds => ds.EndpointId == endpointId).OrderBy(ds => ds.CSharpClassName);
     }
 
-    public IEnumerable<DataSource> FilteredByMicrocontrollerIdRange(int microcontrollerId, string orderBy, string direction, int skip, int take, string filter)
+    public IEnumerable<DataSource> FilteredByEndpointIdRange(int endpointId, string orderBy, string direction, int skip, int take, string filter)
     {
-      return this.GetFilteredDataSources(dbSet, microcontrollerId, filter).OrderBy(orderBy, direction).Skip(skip).Take(take);
+      return this.GetFilteredDataSources(dbSet, endpointId, filter).OrderBy(orderBy, direction).Skip(skip).Take(take);
     }
 
     public void Create(DataSource dataSource)
@@ -48,14 +48,14 @@ namespace Platformus.Routing.Data.EntityFramework.Sqlite
       this.dbSet.Remove(dataSource);
     }
 
-    public int CountByMicrocontrollerId(int microcontrollerId, string filter)
+    public int CountByEndpointId(int endpointId, string filter)
     {
-      return this.GetFilteredDataSources(dbSet, microcontrollerId, filter).Count();
+      return this.GetFilteredDataSources(dbSet, endpointId, filter).Count();
     }
 
-    private IQueryable<DataSource> GetFilteredDataSources(IQueryable<DataSource> dataSources, int microcontrollerId, string filter)
+    private IQueryable<DataSource> GetFilteredDataSources(IQueryable<DataSource> dataSources, int endpointId, string filter)
     {
-      dataSources = dataSources.Where(ds => ds.MicrocontrollerId == microcontrollerId);
+      dataSources = dataSources.Where(ds => ds.EndpointId == endpointId);
 
       if (string.IsNullOrEmpty(filter))
         return dataSources;

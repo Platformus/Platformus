@@ -10,12 +10,12 @@ namespace Platformus.Routing.Data.Abstractions
   public interface IDataSourceRepository : IRepository
   {
     DataSource WithKey(int id);
-    IEnumerable<DataSource> FilteredByMicrocontrollerId(int microcontrollerId);
-    IEnumerable<DataSource> FilteredByMicrocontrollerIdRange(int microcontrollerId, string orderBy, string direction, int skip, int take, string filter);
+    IEnumerable<DataSource> FilteredByEndpointId(int endpointId);
+    IEnumerable<DataSource> FilteredByEndpointIdRange(int endpointId, string orderBy, string direction, int skip, int take, string filter);
     void Create(DataSource dataSource);
     void Edit(DataSource dataSource);
     void Delete(int id);
     void Delete(DataSource dataSource);
-    int CountByMicrocontrollerId(int microcontrollerId, string filter);
+    int CountByEndpointId(int endpointId, string filter);
   }
 }

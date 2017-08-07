@@ -3,10 +3,10 @@
 
 (function (platformus) {
   platformus.ui = platformus.ui || {};
-  platformus.ui.microcontrollerCSharpClassNameChanged = function () {
-    var cSharpClassName = getSelectedMicrocontrollerCSharpClassName();
+  platformus.ui.endpointCSharpClassNameChanged = function () {
+    var cSharpClassName = getSelectedEndpointCSharpClassName();
 
-    platformus.microcontrollerParameterEditors.sync(cSharpClassName);
+    platformus.endpointParameterEditors.sync(cSharpClassName);
   };
 
   platformus.ui.dataSourceCSharpClassNameChanged = function () {
@@ -15,7 +15,7 @@
     platformus.dataSourceParameterEditors.sync(cSharpClassName);
   };
 
-  function getSelectedMicrocontrollerCSharpClassName() {
+  function getSelectedEndpointCSharpClassName() {
     return $("#cSharpClassName").val();
   }
 

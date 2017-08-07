@@ -41,7 +41,7 @@ namespace Platformus.Routing
             4000,
             new BackendMenuItem[]
             {
-              new BackendMenuItem("/backend/microcontrollers", "Microcontrollers", 1000, new string[] { Permissions.BrowseMicrocontrollers })
+              new BackendMenuItem("/backend/endpoints", "Endpoints", 1000, new string[] { Permissions.BrowseEndpoints })
             }
           )
         };

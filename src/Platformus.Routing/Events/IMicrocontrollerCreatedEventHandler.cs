@@ -7,7 +7,7 @@ using Platformus.Routing.Data.Entities;
 
 namespace Platformus.Routing.Events
 {
-  public interface IMicrocontrollerCreatedEventHandler : IEventHandler<IRequestHandler, Microcontroller>
+  public interface IEndpointCreatedEventHandler : IEventHandler<IRequestHandler, Endpoint>
   {
   }
 }

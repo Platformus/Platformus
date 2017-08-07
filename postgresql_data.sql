@@ -36,7 +36,7 @@ INSERT INTO public."Permissions" ("Id","Code","Name","Position") VALUES (8,'Brow
 INSERT INTO public."Permissions" ("Id","Code","Name","Position") VALUES (9,'BrowseObjects','Browse objects',600);
 INSERT INTO public."Permissions" ("Id","Code","Name","Position") VALUES (10,'BrowseDataTypes','Browse data types',610);
 INSERT INTO public."Permissions" ("Id","Code","Name","Position") VALUES (11,'BrowseClasses','Browse classes',620);
-INSERT INTO public."Permissions" ("Id","Code","Name","Position") VALUES (12,'BrowseMicrocontrollers','Browse microcontrollers',630);
+INSERT INTO public."Permissions" ("Id","Code","Name","Position") VALUES (12,'BrowseEndpoints','Browse microcontrollers',630);
 INSERT INTO public."Permissions" ("Id","Code","Name","Position") VALUES (13,'BrowseMenus','Browse menus',700);
 INSERT INTO public."Permissions" ("Id","Code","Name","Position") VALUES (14,'BrowseForms','Browse forms',800);
 INSERT INTO public."Permissions" ("Id","Code","Name","Position") VALUES (15,'BrowseViews','Browse views',900);

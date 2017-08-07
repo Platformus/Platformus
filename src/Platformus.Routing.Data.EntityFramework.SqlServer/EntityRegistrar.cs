@@ -11,7 +11,7 @@ namespace Platformus.Routing.Data.EntityFramework.SqlServer
   {
     public void RegisterEntities(ModelBuilder modelBuilder)
     {
-	    modelBuilder.Entity<Microcontroller>(etb =>
+	    modelBuilder.Entity<Endpoint>(etb =>
         {
           etb.HasKey(e => e.Id);
           etb.Property(e => e.Id).UseSqlServerIdentityColumn();
@@ -20,14 +20,14 @@ namespace Platformus.Routing.Data.EntityFramework.SqlServer
           etb.Property(e => e.SignInUrl).HasMaxLength(128);
           etb.Property(e => e.CSharpClassName).IsRequired().HasMaxLength(128);
           etb.Property(e => e.Parameters).HasMaxLength(1024);
-          etb.ForSqlServerToTable("Microcontrollers");
+          etb.ForSqlServerToTable("Endpoints");
         }
       );
 
-      modelBuilder.Entity<MicrocontrollerPermission>(etb =>
+      modelBuilder.Entity<EndpointPermission>(etb =>
         {
-          etb.HasKey(e => new { e.MicrocontrollerId, e.PermissionId });
-          etb.ForSqlServerToTable("MicrocontrollerPermissions");
+          etb.HasKey(e => new { e.EndpointId, e.PermissionId });
+          etb.ForSqlServerToTable("EndpointPermissions");
         }
       );
 

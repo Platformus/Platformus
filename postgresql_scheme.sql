@@ -346,7 +346,7 @@ CREATE TABLE "Relations" (
 
 ALTER TABLE "Relations" OWNER TO postgres;
 
-CREATE TABLE "Microcontrollers" (
+CREATE TABLE "Endpoints" (
     "Id" serial NOT NULL,
     "Name" text NOT NULL,
     "UrlTemplate" text,
@@ -355,17 +355,17 @@ CREATE TABLE "Microcontrollers" (
 	"SignInUrl" text,
     "CSharpClassName" text NOT NULL,
     "Parameters" text,
-    CONSTRAINT "PK_Microcontrollers" PRIMARY KEY ("Id")
+    CONSTRAINT "PK_Endpoints" PRIMARY KEY ("Id")
 );
 
-ALTER TABLE "Microcontrollers" OWNER TO postgres;
+ALTER TABLE "Endpoints" OWNER TO postgres;
 
-CREATE TABLE "MicrocontrollerPermissions" (
-    "MicrocontrollerId" integer NOT NULL,
+CREATE TABLE "EndpointPermissions" (
+    "EndpointId" integer NOT NULL,
     "PermissionId" integer NOT NULL,
-    CONSTRAINT "PK_MicrocontrollerPermissions" PRIMARY KEY ("MicrocontrollerId", "PermissionId"),
-    CONSTRAINT "FK_MicrocontrollerPermissions_Roles" FOREIGN KEY ("MicrocontrollerId")
-        REFERENCES public."Microcontrollers" ("Id") MATCH SIMPLE
+    CONSTRAINT "PK_EndpointPermissions" PRIMARY KEY ("EndpointId", "PermissionId"),
+    CONSTRAINT "FK_EndpointPermissions_Roles" FOREIGN KEY ("EndpointId")
+        REFERENCES public."Endpoints" ("Id") MATCH SIMPLE
         ON UPDATE NO ACTION
         ON DELETE NO ACTION,
     CONSTRAINT "FK_RolePermissions_Permissions" FOREIGN KEY ("PermissionId")
@@ -374,17 +374,17 @@ CREATE TABLE "MicrocontrollerPermissions" (
         ON DELETE NO ACTION
 );
 
-ALTER TABLE "MicrocontrollerPermissions" OWNER TO postgres;
+ALTER TABLE "EndpointPermissions" OWNER TO postgres;
 
 CREATE TABLE "DataSources" (
     "Id" serial NOT NULL,
-    "MicrocontrollerId" integer NOT NULL,
+    "EndpointId" integer NOT NULL,
     "Code" text NOT NULL,
     "CSharpClassName" text NOT NULL,
     "Parameters" text,
     CONSTRAINT "PK_DataSources" PRIMARY KEY ("Id"),
-    CONSTRAINT "FK_DataSources_Microcontrollers" FOREIGN KEY ("MicrocontrollerId")
-        REFERENCES public."Microcontrollers" ("Id") MATCH SIMPLE
+    CONSTRAINT "FK_DataSources_Endpoints" FOREIGN KEY ("EndpointId")
+        REFERENCES public."Endpoints" ("Id") MATCH SIMPLE
         ON UPDATE NO ACTION
         ON DELETE NO ACTION
 );

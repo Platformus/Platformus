@@ -7,13 +7,13 @@ using Platformus.Routing.Data.Entities;
 
 namespace Platformus.Routing.Data.Abstractions
 {
-  public interface IMicrocontrollerPermissionRepository : IRepository
+  public interface IEndpointPermissionRepository : IRepository
   {
-    MicrocontrollerPermission WithKey(int microcontrollerId, int permissionId);
-    IEnumerable<MicrocontrollerPermission> FilteredByMicrocontrollerId(int microcontrollerId);
-    void Create(MicrocontrollerPermission microcontrollerPermission);
-    void Edit(MicrocontrollerPermission microcontrollerPermission);
-    void Delete(int microcontrollerId, int permissionId);
-    void Delete(MicrocontrollerPermission microcontrollerPermission);
+    EndpointPermission WithKey(int endpointId, int permissionId);
+    IEnumerable<EndpointPermission> FilteredByEndpointId(int endpointId);
+    void Create(EndpointPermission endpointPermission);
+    void Edit(EndpointPermission endpointPermission);
+    void Delete(int endpointId, int permissionId);
+    void Delete(EndpointPermission endpointPermission);
   }
 }

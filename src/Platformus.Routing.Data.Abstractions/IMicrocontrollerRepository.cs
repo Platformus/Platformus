@@ -7,15 +7,15 @@ using Platformus.Routing.Data.Entities;
 
 namespace Platformus.Routing.Data.Abstractions
 {
-  public interface IMicrocontrollerRepository : IRepository
+  public interface IEndpointRepository : IRepository
   {
-    Microcontroller WithKey(int id);
-    IEnumerable<Microcontroller> All();
-    IEnumerable<Microcontroller> Range(string orderBy, string direction, int skip, int take, string filter);
-    void Create(Microcontroller microcontroller);
-    void Edit(Microcontroller microcontroller);
+    Endpoint WithKey(int id);
+    IEnumerable<Endpoint> All();
+    IEnumerable<Endpoint> Range(string orderBy, string direction, int skip, int take, string filter);
+    void Create(Endpoint endpoint);
+    void Edit(Endpoint endpoint);
     void Delete(int id);
-    void Delete(Microcontroller microcontroller);
+    void Delete(Endpoint endpoint);
     int Count(string filter);
   }
 }

@@ -10,7 +10,7 @@ using Platformus.Globalization;
 using Platformus.Routing;
 using Platformus.Routing.Data.Abstractions;
 using Platformus.Routing.Data.Entities;
-using Platformus.Routing.Microcontrollers;
+using Platformus.Routing.Endpoints;
 using Platformus.Security;
 using Platformus.Security.Data.Abstractions;
 using Platformus.Security.Data.Entities;
@@ -21,46 +21,46 @@ namespace Platformus.Domain.Frontend
   {
     public IActionResult TryHandle(IRequestHandler requestHandler, string url)
     {
-      IMicrocontrollerResolver microcontrollerResolver = requestHandler.HttpContext.RequestServices.GetService<IMicrocontrollerResolver>();
-      Microcontroller microcontroller = microcontrollerResolver.GetMicrocontroller(requestHandler, url);
+      IEndpointResolver endpointResolver = requestHandler.HttpContext.RequestServices.GetService<IEndpointResolver>();
+      Endpoint endpoint = endpointResolver.GetEndpoint(requestHandler, url);
 
-      if (microcontroller == null)
+      if (endpoint == null)
         return null;
 
-      if (microcontroller.DisallowAnonymous)
+      if (endpoint.DisallowAnonymous)
       {
-        if (!requestHandler.HttpContext.User.Identity.IsAuthenticated || !this.HasRequiredClaims(requestHandler, microcontroller))
+        if (!requestHandler.HttpContext.User.Identity.IsAuthenticated || !this.HasRequiredClaims(requestHandler, endpoint))
         {
-          if (string.IsNullOrEmpty(microcontroller.SignInUrl))
+          if (string.IsNullOrEmpty(endpoint.SignInUrl))
             throw new HttpException(403, "Access denied.");
 
-          return (requestHandler as Platformus.Barebone.Frontend.Controllers.ControllerBase).Redirect(microcontroller.SignInUrl);
+          return (requestHandler as Platformus.Barebone.Frontend.Controllers.ControllerBase).Redirect(endpoint.SignInUrl);
         }
       }
 
-      IMicrocontroller microcontrollerInstance = this.GetMicrocontrollerInstance(microcontroller);
+      IEndpoint endpointInstance = this.GetEndpointInstance(endpoint);
 
-      if (microcontrollerInstance == null)
+      if (endpointInstance == null)
         return null;
 
-      return microcontrollerInstance.Invoke(requestHandler, microcontroller, microcontrollerResolver.GetParameters(microcontroller.UrlTemplate, url));
+      return endpointInstance.Invoke(requestHandler, endpoint, endpointResolver.GetParameters(endpoint.UrlTemplate, url));
     }
 
-    private IMicrocontroller GetMicrocontrollerInstance(Microcontroller microcontroller)
+    private IEndpoint GetEndpointInstance(Endpoint endpoint)
     {
-      return StringActivator.CreateInstance<IMicrocontroller>(microcontroller.CSharpClassName);
+      return StringActivator.CreateInstance<IEndpoint>(endpoint.CSharpClassName);
     }
 
-    private bool HasRequiredClaims(IRequestHandler requestHandler, Microcontroller microcontroller)
+    private bool HasRequiredClaims(IRequestHandler requestHandler, Endpoint endpoint)
     {
-      IEnumerable<MicrocontrollerPermission> microcontrollerPermissions = requestHandler.Storage.GetRepository<IMicrocontrollerPermissionRepository>().FilteredByMicrocontrollerId(microcontroller.Id);
+      IEnumerable<EndpointPermission> endpointPermissions = requestHandler.Storage.GetRepository<IEndpointPermissionRepository>().FilteredByEndpointId(endpoint.Id);
 
-      if (microcontrollerPermissions.Count() == 0 || requestHandler.HttpContext.User.HasClaim(PlatformusClaimTypes.Permission, Platformus.Security.Permissions.DoEverything))
+      if (endpointPermissions.Count() == 0 || requestHandler.HttpContext.User.HasClaim(PlatformusClaimTypes.Permission, Platformus.Security.Permissions.DoEverything))
         return true;
 
-      foreach (MicrocontrollerPermission microcontrollerPermission in microcontrollerPermissions)
+      foreach (EndpointPermission endpointPermission in endpointPermissions)
       {
-        Permission permission = requestHandler.Storage.GetRepository<IPermissionRepository>().WithKey(microcontrollerPermission.PermissionId);
+        Permission permission = requestHandler.Storage.GetRepository<IPermissionRepository>().WithKey(endpointPermission.PermissionId);
 
         if (!requestHandler.HttpContext.User.HasClaim(PlatformusClaimTypes.Permission, permission.Code))
           return false;

@@ -3,6 +3,7 @@
 
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using ExtCore.Infrastructure;
 using Platformus.Barebone;
 using Platformus.Barebone.Backend.ViewModels;
@@ -44,14 +45,14 @@ namespace Platformus.Routing.Backend.ViewModels.DataSources
 
     private IEnumerable<Option> GetCSharpClassNameOptions()
     {
-      return ExtensionManager.GetImplementations<IDataSource>().Where(t => t != typeof(DataSourceBase)).Select(
+      return ExtensionManager.GetImplementations<IDataSource>().Where(t => !t.GetTypeInfo().IsAbstract).Select(
         t => new Option(t.FullName)
       );
     }
 
     private IEnumerable<dynamic> GetDataSources()
     {
-      return ExtensionManager.GetInstances<IDataSource>().Where(ds => ds.GetType() != typeof(DataSourceBase)).Select(
+      return ExtensionManager.GetInstances<IDataSource>().Where(ds => !ds.GetType().GetTypeInfo().IsAbstract).Select(
         ds => new {
           cSharpClassName = ds.GetType().FullName,
           dataSourceParameterGroups = ds.DataSourceParameterGroups.Select(
