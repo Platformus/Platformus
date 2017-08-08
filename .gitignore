@@ -3,3 +3,5 @@ bin/
 obj/
 *.min.css
 *.min.js
+pack.bat
+push.bat
