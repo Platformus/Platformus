@@ -1,7 +1,7 @@
 BEGIN TRANSACTION;
 --
 -- Extension: Platformus.Configurations
--- Version: alpha-20
+-- Version: alpha-21
 --
 INSERT INTO public."Configurations" ("Id","Code","Name") VALUES (1,'Email','Email');
 INSERT INTO public."Configurations" ("Id","Code","Name") VALUES (2,'Globalization','Globalization');
@@ -15,7 +15,7 @@ INSERT INTO public."Variables" ("Id","ConfigurationId","Code","Name","Value","Po
 
 --
 -- Extension: Platformus.Security
--- Version: alpha-20
+-- Version: alpha-21
 --
 INSERT INTO public."Users" ("Id","Name","Created") VALUES (1,'Administrator','2017-01-01 00:00:00.000000');
 INSERT INTO public."CredentialTypes" ("Id","Code","Name","Position") VALUES (1,'Email','Email',1);
@@ -36,7 +36,7 @@ INSERT INTO public."Permissions" ("Id","Code","Name","Position") VALUES (8,'Brow
 INSERT INTO public."Permissions" ("Id","Code","Name","Position") VALUES (9,'BrowseObjects','Browse objects',600);
 INSERT INTO public."Permissions" ("Id","Code","Name","Position") VALUES (10,'BrowseDataTypes','Browse data types',610);
 INSERT INTO public."Permissions" ("Id","Code","Name","Position") VALUES (11,'BrowseClasses','Browse classes',620);
-INSERT INTO public."Permissions" ("Id","Code","Name","Position") VALUES (12,'BrowseEndpoints','Browse microcontrollers',630);
+INSERT INTO public."Permissions" ("Id","Code","Name","Position") VALUES (12,'BrowseEndpoints','Browse endpoints',630);
 INSERT INTO public."Permissions" ("Id","Code","Name","Position") VALUES (13,'BrowseMenus','Browse menus',700);
 INSERT INTO public."Permissions" ("Id","Code","Name","Position") VALUES (14,'BrowseForms','Browse forms',800);
 INSERT INTO public."Permissions" ("Id","Code","Name","Position") VALUES (15,'BrowseViews','Browse views',900);
@@ -52,14 +52,14 @@ INSERT INTO public."RolePermissions" ("RoleId","PermissionId") VALUES (3,14);
 
 --
 -- Extension: Platformus.Globalization
--- Version: alpha-20
+-- Version: alpha-21
 --
 INSERT INTO public."Cultures" ("Id","Code","Name","IsNeutral","IsDefault") VALUES (1,'__','Neutral',TRUE,FALSE);
 INSERT INTO public."Cultures" ("Id","Code","Name","IsNeutral","IsDefault") VALUES (2,'en','English',FALSE,TRUE);
 
 --
 -- Extension: Platformus.Domain
--- Version: alpha-20
+-- Version: alpha-21
 --
 INSERT INTO public."DataTypes" ("Id","StorageDataType","JavaScriptEditorClassName","Name","Position") VALUES (1,'string','singleLinePlainText','Single line plain text',1);
 INSERT INTO public."DataTypes" ("Id","StorageDataType","JavaScriptEditorClassName","Name","Position") VALUES (2,'string','multilinePlainText','Multiline plain text',2);
@@ -69,7 +69,7 @@ INSERT INTO public."DataTypes" ("Id","StorageDataType","JavaScriptEditorClassNam
 
 --
 -- Extension: Platformus.Forms
--- Version: alpha-20
+-- Version: alpha-21
 --
 INSERT INTO public."FieldTypes" ("Id","Code","Name","Position") VALUES (1,'TextBox','Text box',1);
 INSERT INTO public."FieldTypes" ("Id","Code","Name","Position") VALUES (2,'TextArea','Text area',2);

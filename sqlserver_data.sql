@@ -1,7 +1,7 @@
 BEGIN TRANSACTION;
 --
 -- Extension: Platformus.Configurations
--- Version: alpha-20
+-- Version: alpha-21
 --
 SET IDENTITY_INSERT [dbo].[Configurations] ON;
 INSERT INTO [dbo].[Configurations] ([Id], [Code], [Name]) VALUES (1, N'Email', N'Email');
@@ -20,7 +20,7 @@ SET IDENTITY_INSERT [dbo].[Variables] OFF;
 
 --
 -- Extension: Platformus.Security
--- Version: alpha-20
+-- Version: alpha-21
 --
 SET IDENTITY_INSERT [dbo].[Users] ON;
 INSERT INTO [dbo].[Users] ([Id], [Name], [Created]) VALUES (1, N'Administrator', N'2017-01-01 00:00:00.000');
@@ -55,7 +55,7 @@ INSERT INTO [dbo].[Permissions] ([Id], [Code], [Name], [Position]) VALUES (8, N'
 INSERT INTO [dbo].[Permissions] ([Id], [Code], [Name], [Position]) VALUES (9, N'BrowseObjects', N'Browse objects',600);
 INSERT INTO [dbo].[Permissions] ([Id], [Code], [Name], [Position]) VALUES (10, N'BrowseDataTypes', N'Browse data types',610);
 INSERT INTO [dbo].[Permissions] ([Id], [Code], [Name], [Position]) VALUES (11, N'BrowseClasses', N'Browse classes',620);
-INSERT INTO [dbo].[Permissions] ([Id], [Code], [Name], [Position]) VALUES (12, N'BrowseEndpoints', N'Browse microcontrollers',630);
+INSERT INTO [dbo].[Permissions] ([Id], [Code], [Name], [Position]) VALUES (12, N'BrowseEndpoints', N'Browse endpoints',630);
 INSERT INTO [dbo].[Permissions] ([Id], [Code], [Name], [Position]) VALUES (13, N'BrowseMenus', N'Browse menus',700);
 INSERT INTO [dbo].[Permissions] ([Id], [Code], [Name], [Position]) VALUES (14, N'BrowseForms', N'Browse forms',800);
 INSERT INTO [dbo].[Permissions] ([Id], [Code], [Name], [Position]) VALUES (15, N'BrowseViews', N'Browse views',900);
@@ -73,7 +73,7 @@ INSERT INTO [dbo].[RolePermissions] ([RoleId], [PermissionId]) VALUES (3, 14);
 
 --
 -- Extension: Platformus.Globalization
--- Version: alpha-20
+-- Version: alpha-21
 --
 SET IDENTITY_INSERT [dbo].[Cultures] ON;
 INSERT INTO [dbo].[Cultures] ([Id], [Code], [Name], [IsNeutral], [IsDefault]) VALUES (1, N'__', N'Neutral', 1, 0);
@@ -82,7 +82,7 @@ SET IDENTITY_INSERT [dbo].[Cultures] OFF;
 
 --
 -- Extension: Platformus.Domain
--- Version: alpha-20
+-- Version: alpha-21
 --
 SET IDENTITY_INSERT [dbo].[DataTypes] ON;
 INSERT INTO [dbo].[DataTypes] ([Id], [StorageDataType], [JavaScriptEditorClassName], [Name], [Position]) VALUES (1, N'string', N'singleLinePlainText', N'Single line plain text', 1);
@@ -94,7 +94,7 @@ SET IDENTITY_INSERT [dbo].[DataTypes] OFF;
 
 --
 -- Extension: Platformus.Forms
--- Version: alpha-20
+-- Version: alpha-21
 --
 SET IDENTITY_INSERT [dbo].[FieldTypes] ON;
 INSERT INTO [dbo].[FieldTypes] ([Id], [Code], [Name], [Position]) VALUES (1, N'TextBox', N'Text box', 1);

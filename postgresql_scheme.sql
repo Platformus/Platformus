@@ -1,6 +1,6 @@
 --
 -- Extension: Platformus.Configurations
--- Version: alpha-20
+-- Version: alpha-21
 --
 CREATE TABLE "Configurations" (
     "Id" serial NOT NULL,
@@ -29,7 +29,7 @@ ALTER TABLE "Variables" OWNER TO postgres;
 
 --
 -- Extension: Platformus.Security
--- Version: alpha-20
+-- Version: alpha-21
 --
 CREATE TABLE "Users" (
     "Id" serial NOT NULL,
@@ -123,7 +123,7 @@ ALTER TABLE "RolePermissions" OWNER TO postgres;
 
 --
 -- Extension: Platformus.FileManager
--- Version: alpha-20
+-- Version: alpha-21
 --
 CREATE TABLE "Files" (
     "Id" serial NOT NULL,
@@ -136,7 +136,7 @@ ALTER TABLE "Files" OWNER TO postgres;
 
 --
 -- Extension: Platformus.Globalization
--- Version: alpha-20
+-- Version: alpha-21
 --
 CREATE TABLE "Cultures" (
     "Id" serial NOT NULL,
@@ -176,7 +176,7 @@ ALTER TABLE "Localizations" OWNER TO postgres;
 
 --
 -- Extension: Platformus.Routing
--- Version: alpha-20
+-- Version: alpha-21
 --
 CREATE TABLE "Endpoints" (
     "Id" serial NOT NULL,
@@ -225,7 +225,7 @@ ALTER TABLE "DataSources" OWNER TO postgres;
 
 --
 -- Extension: Platformus.Domain
--- Version: alpha-20
+-- Version: alpha-21
 --
 CREATE TABLE "Classes" (
     "Id" serial NOT NULL,
@@ -420,7 +420,7 @@ ALTER TABLE "SerializedObjects" OWNER TO postgres;
 
 --
 -- Extension: Platformus.Menus
--- Version: alpha-20
+-- Version: alpha-21
 --
 CREATE TABLE "Menus" (
     "Id" serial NOT NULL,
@@ -475,7 +475,7 @@ ALTER TABLE "SerializedMenus" OWNER TO postgres;
 
 --
 -- Extension: Platformus.Forms
--- Version: alpha-20
+-- Version: alpha-21
 --
 CREATE TABLE "Forms" (
     "Id" serial NOT NULL,

@@ -1,9 +1,5 @@
 .vs/
 bin/
 obj/
-src/Platformus.Barebone.Backend/wwwroot/areas/backend/css
-src/Platformus.Barebone.Backend/wwwroot/areas/backend/js
-src/Platformus.Domain.Backend/wwwroot/areas/backend/css
-src/Platformus.Domain.Backend/wwwroot/areas/backend/js
-src/Platformus.FileManager.Backend/wwwroot/areas/backend/css
-src/Platformus.FileManager.Backend/wwwroot/areas/backend/js
+*.min.css
+*.min.js

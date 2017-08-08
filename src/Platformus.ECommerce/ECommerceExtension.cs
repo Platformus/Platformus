@@ -23,7 +23,7 @@ namespace Platformus.ECommerce
     /// <summary>
     /// Gets the version of the extension.
     /// </summary>
-    public override string Version => "1.0.0-alpha19";
+    public override string Version => "1.0.0-alpha21";
 
     /// <summary>
     /// Gets the authors of the extension (separated by commas).
