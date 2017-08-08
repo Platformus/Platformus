@@ -1,0 +1,20 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <Description>Part of the Platformus.Routing Platformus extension.</Description>
+    <Copyright>Copyright © 2017 Dmitry Sikorsky</Copyright>
+    <VersionPrefix>1.0.0-alpha20</VersionPrefix>
+    <Authors>Dmitry Sikorsky</Authors>
+    <TargetFramework>netstandard1.6</TargetFramework>
+    <AssemblyName>Platformus.Routing.Frontend</AssemblyName>
+    <PackageId>Platformus.Routing.Frontend</PackageId>
+    <PackageIconUrl>http://platformus.net/platformus_nuget_icon.png</PackageIconUrl>
+    <PackageProjectUrl>http://platformus.net/</PackageProjectUrl>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Platformus.Routing\Platformus.Routing.csproj" />
+    <ProjectReference Include="..\Platformus.Globalization.Frontend\Platformus.Globalization.Frontend.csproj" />
+  </ItemGroup>
+
+</Project>

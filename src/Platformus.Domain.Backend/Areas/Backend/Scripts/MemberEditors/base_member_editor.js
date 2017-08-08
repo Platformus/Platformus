@@ -37,10 +37,6 @@
     return parseInt(value);
   };
 
-  platformus.memberEditors.base.createLabel = function (member) {
-    return $("<label>").addClass("field__label").addClass("label").html(member.name);
-  };
-
   platformus.memberEditors.base.createCulture = function (localization) {
     var culture = $("<div>").addClass("field__culture");
 

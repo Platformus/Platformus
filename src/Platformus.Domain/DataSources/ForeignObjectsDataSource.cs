@@ -21,12 +21,12 @@ namespace Platformus.Domain.DataSources
         new DataSourceParameterGroup(
           "General",
           new DataSourceParameter("RelationMemberId", "Relation member", "member"),
-          new DataSourceParameter("NestedXPaths", "Nested XPaths", "text")
+          new DataSourceParameter("NestedXPaths", "Nested XPaths", "textBox")
         ),
         new DataSourceParameterGroup(
           "Filtering",
           new DataSourceParameter("EnableFiltering", "Enable filtering", "checkbox"),
-          new DataSourceParameter("QueryUrlParameterName", "“Query” URL parameter name", "text", "q")
+          new DataSourceParameter("QueryUrlParameterName", "“Query” URL parameter name", "textBox", "q")
         ),
         new DataSourceParameterGroup(
           "Sorting",
@@ -47,9 +47,9 @@ namespace Platformus.Domain.DataSources
         new DataSourceParameterGroup(
           "Paging",
           new DataSourceParameter("EnablePaging", "Enable paging", "checkbox"),
-          new DataSourceParameter("SkipUrlParameterName", "“Skip” URL parameter name", "text", "skip"),
-          new DataSourceParameter("TakeUrlParameterName", "“Take” URL parameter name", "text", "take"),
-          new DataSourceParameter("DefaultTake", "Default “Take” URL parameter value", "numeric", "10")
+          new DataSourceParameter("SkipUrlParameterName", "“Skip” URL parameter name", "textBox", "skip"),
+          new DataSourceParameter("TakeUrlParameterName", "“Take” URL parameter name", "textBox", "take"),
+          new DataSourceParameter("DefaultTake", "Default “Take” URL parameter value", "numericTextBox", "10")
         )
       };
 

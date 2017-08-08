@@ -10,7 +10,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Platformus.Configurations;
 using Platformus.Globalization.Data.Entities;
 
-namespace Platformus.Globalization.Actions
+namespace Platformus.Globalization.Frontend.Actions
 {
   public class UseMvcAction : IUseMvcAction
   {

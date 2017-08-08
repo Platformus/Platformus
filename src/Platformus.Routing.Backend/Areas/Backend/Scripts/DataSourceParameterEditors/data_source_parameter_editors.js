@@ -22,7 +22,7 @@
       }
     }
 
-    initializeJQueryValidation();
+    platformus.ui.initializeJQueryValidation();
   };
 
   function getDataSource(cSharpClassName) {
@@ -33,13 +33,5 @@
     }
 
     return null;
-  }
-
-  function initializeJQueryValidation() {
-    var form = $("form")
-      .removeData("validator")
-      .removeData("unobtrusiveValidation");
-
-    $.validator.unobtrusive.parse(form);
   }
 })(window.platformus = window.platformus || {});

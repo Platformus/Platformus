@@ -6,7 +6,7 @@ using ExtCore.Mvc.Infrastructure.Actions;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Routing;
 
-namespace Platformus.Barebone.Actions
+namespace Platformus.Forms.Frontend.Actions
 {
   public class UseMvcAction : IUseMvcAction
   {
@@ -14,9 +14,7 @@ namespace Platformus.Barebone.Actions
 
     public void Execute(IRouteBuilder routeBuilder, IServiceProvider serviceProvider)
     {
-      routeBuilder.MapRoute(name: "Backend Create", template: "{area:exists}/{controller=Default}/create", defaults: new { action = "CreateOrEdit" });
-      routeBuilder.MapRoute(name: "Backend Edit", template: "{area:exists}/{controller=Default}/edit/{id}", defaults: new { action = "CreateOrEdit" });
-      routeBuilder.MapRoute(name: "Backend Default", template: "{area:exists}/{controller=Default}/{action=Index}/{id?}");
+      routeBuilder.MapRoute(name: "Forms", template: "{culture=en}/forms/send", defaults: new { controller = "Forms", action = "Send" });
     }
   }
 }

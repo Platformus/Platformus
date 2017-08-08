@@ -11,7 +11,7 @@
   function createField(member) {
     var field = $("<div>").addClass("image-member-editor").addClass("form__field").addClass("field");
 
-    platformus.memberEditors.base.createLabel(member).appendTo(field);
+    platformus.controls.label.create({ text: member.name }).appendTo(field);
 
     if (member.isPropertyLocalizable) {
     }

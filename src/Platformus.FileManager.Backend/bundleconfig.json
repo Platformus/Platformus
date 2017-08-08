@@ -10,8 +10,8 @@
     "outputFileName": "wwwroot/areas/backend/js/platformus.file_manager.min.js",
     "inputFiles": [
       "Areas/Backend/Scripts/ui.js",
-      "Areas/Backend/Scripts/file_uploader_behavior.js",
-      "Areas/Backend/Scripts/file_selector_form.js"
+      "Areas/Backend/Scripts/Behaviors/file_uploader_behavior.js",
+      "Areas/Backend/Scripts/Forms/file_selector_form.js"
     ],
     "minify": {
       "enabled": true,

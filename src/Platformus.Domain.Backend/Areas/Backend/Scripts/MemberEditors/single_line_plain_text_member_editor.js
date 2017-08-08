@@ -11,7 +11,7 @@
   function createField(member) {
     var field = $("<div>").addClass("form__field").addClass("field");
 
-    platformus.memberEditors.base.createLabel(member).appendTo(field);
+    platformus.controls.label.create({ text: member.name }).appendTo(field);
 
     if (member.isPropertyLocalizable) {
       field.addClass("field--multilingual")
@@ -44,36 +44,16 @@
   }
 
   function createTextBox(member, localization) {
-    var identity = platformus.memberEditors.base.getIdentity(member, localization);
-    var textBox = $("<input>").addClass("field__text-box");
-
-    if (localization.culture.code != "__") {
-      textBox.addClass("field__text-box--multilingual");
-    }
-
-    textBox
-      .addClass("text-box")
-      .attr("id", identity)
-      .attr("name", identity)
-      .attr("type", "text")
-      .attr("value", localization.value)
-      .attr("data-culture", localization.culture.code);
-
-    var isRequired = platformus.memberEditors.base.getIsRequiredDataTypeParameterValue(member);
-    var maxLength = platformus.memberEditors.base.getMaxLengthDataTypeParameterValue(member);
-
-    if (isRequired != null || maxLength != null) {
-      textBox.attr("data-val", true);
-    }
-
-    if (isRequired != null) {
-      textBox.addClass("text-box--required").attr("data-val-required", isRequired);
-    }
-
-    if (maxLength != null) {
-      textBox.attr("maxlength", maxLength).attr("data-val-maxlength-max", maxLength);
-    }
-
-    return textBox;
+    return platformus.controls.textBox.create(
+      {
+        identity: platformus.memberEditors.base.getIdentity(member, localization),
+        value: localization.value,
+        isMultilingual: localization.culture.code != "__",
+        validation: {
+          isRequired: platformus.memberEditors.base.getIsRequiredDataTypeParameterValue(member),
+          maxLength: platformus.memberEditors.base.getMaxLengthDataTypeParameterValue(member)
+        }
+      }
+    ).attr("data-culture", localization.culture.code);
   }
 })(window.platformus = window.platformus || {});

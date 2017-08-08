@@ -4,11 +4,11 @@
 (function (platformus) {
   platformus.endpointParameterEditors = platformus.endpointParameterEditors || [];
   platformus.endpointParameterEditors.base = {};
-  platformus.endpointParameterEditors.base.createLabel = function (endpointParameter) {
-    return $("<label>").addClass("field__label").addClass("label").html(endpointParameter.name);
+  platformus.endpointParameterEditors.base.getIdentity = function (endpointParameter) {
+    return "endpointParameter" + endpointParameter.code;
   };
 
-  platformus.endpointParameterEditors.base.endpointParameterValue = function (endpointParameter) {
+  platformus.endpointParameterEditors.base.getValue = function (endpointParameter) {
     if (platformus.string.isNullOrEmpty($("#parameters").val())) {
       return endpointParameter.defaultValue;
     }
@@ -27,7 +27,7 @@
     return null;
   };
 
-  platformus.endpointParameterEditors.base.endpointParameterChanged = function () {
+  platformus.endpointParameterEditors.base.changed = function () {
     var parameters = platformus.string.empty;
 
     $("[data-endpoint-parameter-code]").each(

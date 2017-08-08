@@ -9,7 +9,7 @@ using Platformus.Barebone;
 using Platformus.Routing.Data.Abstractions;
 using Platformus.Routing.Data.Entities;
 
-namespace Platformus.Routing
+namespace Platformus.Routing.EndpointResolvers
 {
   public class DefaultEndpointResolver : IEndpointResolver
   {

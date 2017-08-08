@@ -1,6 +1,6 @@
 --
 -- Extension: Platformus.Configurations
--- Version: alpha-18
+-- Version: alpha-20
 --
 CREATE TABLE "Configurations" (
     "Id" serial NOT NULL,
@@ -29,7 +29,7 @@ ALTER TABLE "Variables" OWNER TO postgres;
 
 --
 -- Extension: Platformus.Security
--- Version: alpha-18
+-- Version: alpha-20
 --
 CREATE TABLE "Users" (
     "Id" serial NOT NULL,
@@ -123,7 +123,7 @@ ALTER TABLE "RolePermissions" OWNER TO postgres;
 
 --
 -- Extension: Platformus.FileManager
--- Version: alpha-18
+-- Version: alpha-20
 --
 CREATE TABLE "Files" (
     "Id" serial NOT NULL,
@@ -136,7 +136,7 @@ ALTER TABLE "Files" OWNER TO postgres;
 
 --
 -- Extension: Platformus.Globalization
--- Version: alpha-18
+-- Version: alpha-20
 --
 CREATE TABLE "Cultures" (
     "Id" serial NOT NULL,
@@ -175,8 +175,57 @@ CREATE TABLE "Localizations" (
 ALTER TABLE "Localizations" OWNER TO postgres;
 
 --
+-- Extension: Platformus.Routing
+-- Version: alpha-20
+--
+CREATE TABLE "Endpoints" (
+    "Id" serial NOT NULL,
+    "Name" text NOT NULL,
+    "UrlTemplate" text,
+	"Position" integer,
+	"DisallowAnonymous" boolean NOT NULL,
+	"SignInUrl" text,
+    "CSharpClassName" text NOT NULL,
+    "Parameters" text,
+    CONSTRAINT "PK_Endpoints" PRIMARY KEY ("Id")
+);
+
+ALTER TABLE "Endpoints" OWNER TO postgres;
+
+CREATE TABLE "EndpointPermissions" (
+    "EndpointId" integer NOT NULL,
+    "PermissionId" integer NOT NULL,
+    CONSTRAINT "PK_EndpointPermissions" PRIMARY KEY ("EndpointId", "PermissionId"),
+    CONSTRAINT "FK_EndpointPermissions_Roles" FOREIGN KEY ("EndpointId")
+        REFERENCES public."Endpoints" ("Id") MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION,
+    CONSTRAINT "FK_RolePermissions_Permissions" FOREIGN KEY ("PermissionId")
+        REFERENCES public."Permissions" ("Id") MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION
+);
+
+ALTER TABLE "EndpointPermissions" OWNER TO postgres;
+
+CREATE TABLE "DataSources" (
+    "Id" serial NOT NULL,
+    "EndpointId" integer NOT NULL,
+    "Code" text NOT NULL,
+    "CSharpClassName" text NOT NULL,
+    "Parameters" text,
+    CONSTRAINT "PK_DataSources" PRIMARY KEY ("Id"),
+    CONSTRAINT "FK_DataSources_Endpoints" FOREIGN KEY ("EndpointId")
+        REFERENCES public."Endpoints" ("Id") MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION
+);
+
+ALTER TABLE "DataSources" OWNER TO postgres;
+
+--
 -- Extension: Platformus.Domain
--- Version: alpha-18
+-- Version: alpha-20
 --
 CREATE TABLE "Classes" (
     "Id" serial NOT NULL,
@@ -346,51 +395,6 @@ CREATE TABLE "Relations" (
 
 ALTER TABLE "Relations" OWNER TO postgres;
 
-CREATE TABLE "Endpoints" (
-    "Id" serial NOT NULL,
-    "Name" text NOT NULL,
-    "UrlTemplate" text,
-	"Position" integer,
-	"DisallowAnonymous" boolean NOT NULL,
-	"SignInUrl" text,
-    "CSharpClassName" text NOT NULL,
-    "Parameters" text,
-    CONSTRAINT "PK_Endpoints" PRIMARY KEY ("Id")
-);
-
-ALTER TABLE "Endpoints" OWNER TO postgres;
-
-CREATE TABLE "EndpointPermissions" (
-    "EndpointId" integer NOT NULL,
-    "PermissionId" integer NOT NULL,
-    CONSTRAINT "PK_EndpointPermissions" PRIMARY KEY ("EndpointId", "PermissionId"),
-    CONSTRAINT "FK_EndpointPermissions_Roles" FOREIGN KEY ("EndpointId")
-        REFERENCES public."Endpoints" ("Id") MATCH SIMPLE
-        ON UPDATE NO ACTION
-        ON DELETE NO ACTION,
-    CONSTRAINT "FK_RolePermissions_Permissions" FOREIGN KEY ("PermissionId")
-        REFERENCES public."Permissions" ("Id") MATCH SIMPLE
-        ON UPDATE NO ACTION
-        ON DELETE NO ACTION
-);
-
-ALTER TABLE "EndpointPermissions" OWNER TO postgres;
-
-CREATE TABLE "DataSources" (
-    "Id" serial NOT NULL,
-    "EndpointId" integer NOT NULL,
-    "Code" text NOT NULL,
-    "CSharpClassName" text NOT NULL,
-    "Parameters" text,
-    CONSTRAINT "PK_DataSources" PRIMARY KEY ("Id"),
-    CONSTRAINT "FK_DataSources_Endpoints" FOREIGN KEY ("EndpointId")
-        REFERENCES public."Endpoints" ("Id") MATCH SIMPLE
-        ON UPDATE NO ACTION
-        ON DELETE NO ACTION
-);
-
-ALTER TABLE "DataSources" OWNER TO postgres;
-
 CREATE TABLE "SerializedObjects" (
     "CultureId" integer NOT NULL,
     "ObjectId" integer NOT NULL,
@@ -416,7 +420,7 @@ ALTER TABLE "SerializedObjects" OWNER TO postgres;
 
 --
 -- Extension: Platformus.Menus
--- Version: alpha-18
+-- Version: alpha-20
 --
 CREATE TABLE "Menus" (
     "Id" serial NOT NULL,
@@ -471,7 +475,7 @@ ALTER TABLE "SerializedMenus" OWNER TO postgres;
 
 --
 -- Extension: Platformus.Forms
--- Version: alpha-18
+-- Version: alpha-20
 --
 CREATE TABLE "Forms" (
     "Id" serial NOT NULL,

@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Newtonsoft.Json;
 using Platformus.Barebone;
-using Platformus.Globalization;
+using Platformus.Globalization.Frontend;
 using Platformus.Globalization.Frontend.ViewModels;
 using Platformus.Menus.Data.Abstractions;
 using Platformus.Menus.Data.Entities;

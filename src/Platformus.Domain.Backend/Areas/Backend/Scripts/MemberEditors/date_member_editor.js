@@ -11,31 +11,23 @@
   function createField(member) {
     var field = $("<div>").addClass("date-editor").addClass("form__field").addClass("field");
 
-    platformus.memberEditors.base.createLabel(member).appendTo(field);
+    platformus.controls.label.create({ text: member.name }).appendTo(field);
     createTextBox(member).appendTo(field);
     return field;
   }
 
   function createTextBox(member) {
-    var identity = platformus.memberEditors.base.getIdentity(member);
-    var textBox = $("<input>").addClass("field__text-box");
-
-    textBox
-      .addClass("text-box")
-      .attr("id", identity)
-      .attr("name", identity)
-      .attr("type", "text")
-      .attr("autocomplete", "off")
+    return platformus.controls.textBox.create(
+      {
+        identity: platformus.memberEditors.base.getIdentity(member),
+        value: member.property.dateTimeValue,
+        validation: {
+          isRequired: platformus.memberEditors.base.getIsRequiredDataTypeParameterValue(member),
+          maxLength: platformus.memberEditors.base.getMaxLengthDataTypeParameterValue(member)
+        }
+      }
+    ).attr("autocomplete", "off")
       .attr("placeholder", moment().locale(platformus.culture.server()).localeData().longDateFormat("L"))
-      .attr("value", member.property.dateTimeValue)
       .attr("data-type", "date");
-
-    var isRequired = platformus.memberEditors.base.getIsRequiredDataTypeParameterValue(member);
-
-    if (isRequired != null) {
-      textBox.addClass("text-box--required").attr("data-val", true).attr("data-val-required", isRequired);
-    }
-
-    return textBox;
   }
 })(window.platformus = window.platformus || {});

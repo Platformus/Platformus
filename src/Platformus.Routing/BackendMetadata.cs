@@ -41,7 +41,7 @@ namespace Platformus.Routing
             4000,
             new BackendMenuItem[]
             {
-              new BackendMenuItem("/backend/endpoints", "Endpoints", 1000, new string[] { Permissions.BrowseEndpoints })
+              new BackendMenuItem("/backend/endpoints", "Endpoints", 2000, new string[] { Permissions.BrowseEndpoints })
             }
           )
         };

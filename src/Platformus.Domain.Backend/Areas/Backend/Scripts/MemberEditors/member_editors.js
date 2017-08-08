@@ -29,7 +29,7 @@
       }
     }
 
-    initializeJQueryValidation();
+    platformus.ui.initializeJQueryValidation();
   };
 
   function createTab(tab) {
@@ -44,13 +44,5 @@
     }
 
     return $("<div>").addClass("tab-pages__tab-page").attr("id", "tabPage" + tab.id);
-  }
-
-  function initializeJQueryValidation() {
-    var form = $("form")
-      .removeData("validator")
-      .removeData("unobtrusiveValidation");
-
-    $.validator.unobtrusive.parse(form);
   }
 })(window.platformus = window.platformus || {});

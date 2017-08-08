@@ -12,7 +12,7 @@
   function createField(dataSourceParameter) {
     var field = $("<div>").addClass("member-data-source-parameter-editor").addClass("form__field").addClass("field");
 
-    platformus.dataSourceParameterEditors.base.createLabel(dataSourceParameter).appendTo(field);
+    platformus.controls.label.create({ text: dataSourceParameter.name }).appendTo(field);
     createInput(dataSourceParameter).appendTo(field);
     createNames(dataSourceParameter).appendTo(field);
     createButtons(dataSourceParameter).appendTo(field);
@@ -24,12 +24,12 @@
     var input = $("<input>")
       .attr("id", identity)
       .attr("type", "hidden")
-      .attr("value", platformus.dataSourceParameterEditors.base.dataSourceParameterValue(dataSourceParameter))
-      .attr("data-datasource-parameter-code", dataSourceParameter.code)
+      .attr("value", platformus.dataSourceParameterEditors.base.getValue(dataSourceParameter))
+      .attr("data-data-source-parameter-code", dataSourceParameter.code)
       .change(
         function () {
           syncMemberNames(dataSourceParameter);
-          platformus.dataSourceParameterEditors.base.dataSourceParameterChanged();
+          platformus.dataSourceParameterEditors.base.changed();
         }
       );
 

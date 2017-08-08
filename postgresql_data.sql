@@ -1,7 +1,7 @@
 BEGIN TRANSACTION;
 --
 -- Extension: Platformus.Configurations
--- Version: alpha-18
+-- Version: alpha-20
 --
 INSERT INTO public."Configurations" ("Id","Code","Name") VALUES (1,'Email','Email');
 INSERT INTO public."Configurations" ("Id","Code","Name") VALUES (2,'Globalization','Globalization');
@@ -15,7 +15,7 @@ INSERT INTO public."Variables" ("Id","ConfigurationId","Code","Name","Value","Po
 
 --
 -- Extension: Platformus.Security
--- Version: alpha-18
+-- Version: alpha-20
 --
 INSERT INTO public."Users" ("Id","Name","Created") VALUES (1,'Administrator','2017-01-01 00:00:00.000000');
 INSERT INTO public."CredentialTypes" ("Id","Code","Name","Position") VALUES (1,'Email','Email',1);
@@ -52,14 +52,14 @@ INSERT INTO public."RolePermissions" ("RoleId","PermissionId") VALUES (3,14);
 
 --
 -- Extension: Platformus.Globalization
--- Version: alpha-18
+-- Version: alpha-20
 --
 INSERT INTO public."Cultures" ("Id","Code","Name","IsNeutral","IsDefault") VALUES (1,'__','Neutral',TRUE,FALSE);
 INSERT INTO public."Cultures" ("Id","Code","Name","IsNeutral","IsDefault") VALUES (2,'en','English',FALSE,TRUE);
 
 --
 -- Extension: Platformus.Domain
--- Version: alpha-18
+-- Version: alpha-20
 --
 INSERT INTO public."DataTypes" ("Id","StorageDataType","JavaScriptEditorClassName","Name","Position") VALUES (1,'string','singleLinePlainText','Single line plain text',1);
 INSERT INTO public."DataTypes" ("Id","StorageDataType","JavaScriptEditorClassName","Name","Position") VALUES (2,'string','multilinePlainText','Multiline plain text',2);
@@ -69,18 +69,18 @@ INSERT INTO public."DataTypes" ("Id","StorageDataType","JavaScriptEditorClassNam
 
 --
 -- Extension: Platformus.Forms
--- Version: alpha-18
+-- Version: alpha-20
 --
 INSERT INTO public."FieldTypes" ("Id","Code","Name","Position") VALUES (1,'TextBox','Text box',1);
 INSERT INTO public."FieldTypes" ("Id","Code","Name","Position") VALUES (2,'TextArea','Text area',2);
 INSERT INTO public."FieldTypes" ("Id","Code","Name","Position") VALUES (3,'DropDownList','Drop down list',3);
 INSERT INTO public."FieldTypes" ("Id","Code","Name","Position") VALUES (4,'FileUpload','File upload',4);
-INSERT INTO public."DataTypeParameters" ("Id","DataTypeId","JavaScriptEditorClassName","Code","Name") VALUES (1,1,'temp','IsRequired','Is required');
-INSERT INTO public."DataTypeParameters" ("Id","DataTypeId","JavaScriptEditorClassName","Code","Name") VALUES (2,1,'temp','MaxLength','Max length');
-INSERT INTO public."DataTypeParameters" ("Id","DataTypeId","JavaScriptEditorClassName","Code","Name") VALUES (3,2,'temp','IsRequired','Is required');
-INSERT INTO public."DataTypeParameters" ("Id","DataTypeId","JavaScriptEditorClassName","Code","Name") VALUES (4,2,'temp','MaxLength','Max length');
-INSERT INTO public."DataTypeParameters" ("Id","DataTypeId","JavaScriptEditorClassName","Code","Name") VALUES (5,4,'temp','Width','Width');
-INSERT INTO public."DataTypeParameters" ("Id","DataTypeId","JavaScriptEditorClassName","Code","Name") VALUES (6,4,'temp','Height','Height');
-INSERT INTO public."DataTypeParameters" ("Id","DataTypeId","JavaScriptEditorClassName","Code","Name") VALUES (7,5,'temp','IsRequired','Is required');
+INSERT INTO public."DataTypeParameters" ("Id","DataTypeId","JavaScriptEditorClassName","Code","Name") VALUES (1,1,'checkbox','IsRequired','Is required');
+INSERT INTO public."DataTypeParameters" ("Id","DataTypeId","JavaScriptEditorClassName","Code","Name") VALUES (2,1,'numericTextBox','MaxLength','Max length');
+INSERT INTO public."DataTypeParameters" ("Id","DataTypeId","JavaScriptEditorClassName","Code","Name") VALUES (3,2,'checkbox','IsRequired','Is required');
+INSERT INTO public."DataTypeParameters" ("Id","DataTypeId","JavaScriptEditorClassName","Code","Name") VALUES (4,2,'numericTextBox','MaxLength','Max length');
+INSERT INTO public."DataTypeParameters" ("Id","DataTypeId","JavaScriptEditorClassName","Code","Name") VALUES (5,4,'numericTextBox','Width','Width');
+INSERT INTO public."DataTypeParameters" ("Id","DataTypeId","JavaScriptEditorClassName","Code","Name") VALUES (6,4,'numericTextBox','Height','Height');
+INSERT INTO public."DataTypeParameters" ("Id","DataTypeId","JavaScriptEditorClassName","Code","Name") VALUES (7,5,'checkbox','IsRequired','Is required');
 
 COMMIT;

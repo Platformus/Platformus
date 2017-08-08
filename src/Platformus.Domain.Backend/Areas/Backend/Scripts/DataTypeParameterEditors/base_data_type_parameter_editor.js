@@ -4,7 +4,7 @@
 (function (platformus) {
   platformus.dataTypeParameterEditors = platformus.dataTypeParameterEditors || [];
   platformus.dataTypeParameterEditors.base = {};
-  platformus.dataTypeParameterEditors.base.createLabel = function (dataTypeParameter) {
-    return $("<label>").addClass("field__label").addClass("label").html(dataTypeParameter.name);
+  platformus.dataTypeParameterEditors.base.getIdentity = function (dataTypeParameter) {
+    return "dataTypeParameter" + dataTypeParameter.id;
   };
 })(window.platformus = window.platformus || {});

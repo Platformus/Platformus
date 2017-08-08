@@ -7,12 +7,13 @@ using System.Linq;
 using ExtCore.Data.Abstractions;
 using ExtCore.Infrastructure.Actions;
 using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Localization;
 using Microsoft.Extensions.DependencyInjection;
 using Platformus.Configurations;
 using Platformus.Globalization.Data.Entities;
 
-namespace Platformus.Globalization.Actions
+namespace Platformus.Globalization.Frontend.Actions
 {
   public class UseLocalizationAction : IConfigureAction
   {
@@ -55,7 +56,13 @@ namespace Platformus.Globalization.Actions
           requestLocalizationOptions.RequestCultureProviders.Insert(0, new RouteValueRequestCultureProvider(serviceProvider));
       }
 
-      applicationBuilder.UseRequestLocalization(requestLocalizationOptions);
+      applicationBuilder.UseWhen(
+        context => !context.Request.Path.StartsWithSegments(new PathString("/backend")),
+        frontendApplicationBuilder =>
+        {
+          frontendApplicationBuilder.UseRequestLocalization(requestLocalizationOptions);
+        }
+      );
     }
 
     private bool MustSpecifyCultureInUrl(IStorage storage)

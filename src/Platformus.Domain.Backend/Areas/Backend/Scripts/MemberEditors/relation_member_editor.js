@@ -16,7 +16,7 @@
       field.hide();
     }
 
-    platformus.memberEditors.base.createLabel(member).appendTo(field);
+    platformus.controls.label.create({ text: member.name }).appendTo(field);
     createInput(member).appendTo(field);
     createDisplayValues(member).appendTo(field);
     createButtons(member).appendTo(field);

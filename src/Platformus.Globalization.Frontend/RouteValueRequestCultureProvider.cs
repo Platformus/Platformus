@@ -1,4 +1,4 @@
-﻿// Copyright © 2015 Dmitry Sikorsky. All rights reserved.
+﻿// Copyright © 2017 Dmitry Sikorsky. All rights reserved.
 // Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information.
 
 using System;
@@ -11,7 +11,7 @@ using Microsoft.AspNetCore.Localization;
 using Microsoft.Extensions.DependencyInjection;
 using Platformus.Barebone;
 
-namespace Platformus.Globalization
+namespace Platformus.Globalization.Frontend
 {
   public class RouteValueRequestCultureProvider : RequestCultureProvider
   {
@@ -26,7 +26,8 @@ namespace Platformus.Globalization
     {
       string cultureCode = null;
 
-      if (httpContext.Request.Path.HasValue && (httpContext.Request.Path.Value == "/" || httpContext.Request.Path.Value.Contains("/backend/") || httpContext.Request.Path.Value.Contains("/api/v1/")))
+      // TODO: get rid of these hardcoded strings
+      if (httpContext.Request.Path.HasValue && (httpContext.Request.Path.Value == "/" || httpContext.Request.Path.Value.Contains("/api/v1/")))
         cultureCode = this.GetDefaultCultureCode();
 
       else if (httpContext.Request.Path.HasValue && httpContext.Request.Path.Value.Length >= 4 && httpContext.Request.Path.Value[0] == '/' && httpContext.Request.Path.Value[3] == '/')

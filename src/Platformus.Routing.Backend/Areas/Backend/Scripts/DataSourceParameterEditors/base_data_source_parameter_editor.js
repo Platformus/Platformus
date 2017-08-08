@@ -4,11 +4,11 @@
 (function (platformus) {
   platformus.dataSourceParameterEditors = platformus.dataSourceParameterEditors || [];
   platformus.dataSourceParameterEditors.base = {};
-  platformus.dataSourceParameterEditors.base.createLabel = function (dataSourceParameter) {
-    return $("<label>").addClass("field__label").addClass("label").html(dataSourceParameter.name);
+  platformus.dataSourceParameterEditors.base.getIdentity = function (dataSourceParameter) {
+    return "dataSourceParameter" + dataSourceParameter.code;
   };
 
-  platformus.dataSourceParameterEditors.base.dataSourceParameterValue = function (dataSourceParameter) {
+  platformus.dataSourceParameterEditors.base.getValue = function (dataSourceParameter) {
     if (platformus.string.isNullOrEmpty($("#parameters").val())) {
       return dataSourceParameter.defaultValue;
     }
@@ -27,10 +27,10 @@
     return null;
   };
 
-  platformus.dataSourceParameterEditors.base.dataSourceParameterChanged = function () {
+  platformus.dataSourceParameterEditors.base.changed = function () {
     var parameters = platformus.string.empty;
 
-    $("[data-datasource-parameter-code]").each(
+    $("[data-data-source-parameter-code]").each(
       function (index, element) {
         element = $(element);
 
@@ -40,7 +40,7 @@
           if (!platformus.string.isNullOrEmpty(parameters))
             parameters += ";";
 
-          parameters += element.attr("data-datasource-parameter-code") + "=" + value;
+          parameters += element.attr("data-data-source-parameter-code") + "=" + value;
         }
       }
     );

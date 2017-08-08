@@ -1,7 +1,7 @@
 BEGIN TRANSACTION;
 --
 -- Extension: Platformus.Configurations
--- Version: alpha-18
+-- Version: alpha-20
 --
 SET IDENTITY_INSERT [dbo].[Configurations] ON;
 INSERT INTO [dbo].[Configurations] ([Id], [Code], [Name]) VALUES (1, N'Email', N'Email');
@@ -20,7 +20,7 @@ SET IDENTITY_INSERT [dbo].[Variables] OFF;
 
 --
 -- Extension: Platformus.Security
--- Version: alpha-18
+-- Version: alpha-20
 --
 SET IDENTITY_INSERT [dbo].[Users] ON;
 INSERT INTO [dbo].[Users] ([Id], [Name], [Created]) VALUES (1, N'Administrator', N'2017-01-01 00:00:00.000');
@@ -73,7 +73,7 @@ INSERT INTO [dbo].[RolePermissions] ([RoleId], [PermissionId]) VALUES (3, 14);
 
 --
 -- Extension: Platformus.Globalization
--- Version: alpha-18
+-- Version: alpha-20
 --
 SET IDENTITY_INSERT [dbo].[Cultures] ON;
 INSERT INTO [dbo].[Cultures] ([Id], [Code], [Name], [IsNeutral], [IsDefault]) VALUES (1, N'__', N'Neutral', 1, 0);
@@ -82,7 +82,7 @@ SET IDENTITY_INSERT [dbo].[Cultures] OFF;
 
 --
 -- Extension: Platformus.Domain
--- Version: alpha-18
+-- Version: alpha-20
 --
 SET IDENTITY_INSERT [dbo].[DataTypes] ON;
 INSERT INTO [dbo].[DataTypes] ([Id], [StorageDataType], [JavaScriptEditorClassName], [Name], [Position]) VALUES (1, N'string', N'singleLinePlainText', N'Single line plain text', 1);
@@ -94,7 +94,7 @@ SET IDENTITY_INSERT [dbo].[DataTypes] OFF;
 
 --
 -- Extension: Platformus.Forms
--- Version: alpha-18
+-- Version: alpha-20
 --
 SET IDENTITY_INSERT [dbo].[FieldTypes] ON;
 INSERT INTO [dbo].[FieldTypes] ([Id], [Code], [Name], [Position]) VALUES (1, N'TextBox', N'Text box', 1);
@@ -104,13 +104,13 @@ INSERT INTO [dbo].[FieldTypes] ([Id], [Code], [Name], [Position]) VALUES (4, N'F
 SET IDENTITY_INSERT [dbo].[FieldTypes] OFF;
 
 SET IDENTITY_INSERT [dbo].[DataTypeParameters] ON;
-INSERT INTO [dbo].[DataTypeParameters] ([Id], [DataTypeId], [JavaScriptEditorClassName], [Code], [Name]) VALUES (1, 1, N'temp', N'IsRequired', N'Is required');
-INSERT INTO [dbo].[DataTypeParameters] ([Id], [DataTypeId], [JavaScriptEditorClassName], [Code], [Name]) VALUES (2, 1, N'temp', N'MaxLength', N'Max length');
-INSERT INTO [dbo].[DataTypeParameters] ([Id], [DataTypeId], [JavaScriptEditorClassName], [Code], [Name]) VALUES (3, 2, N'temp', N'IsRequired', N'Is required');
-INSERT INTO [dbo].[DataTypeParameters] ([Id], [DataTypeId], [JavaScriptEditorClassName], [Code], [Name]) VALUES (4, 2, N'temp', N'MaxLength', N'Max length');
-INSERT INTO [dbo].[DataTypeParameters] ([Id], [DataTypeId], [JavaScriptEditorClassName], [Code], [Name]) VALUES (5, 4, N'temp', N'Width', N'Width');
-INSERT INTO [dbo].[DataTypeParameters] ([Id], [DataTypeId], [JavaScriptEditorClassName], [Code], [Name]) VALUES (6, 4, N'temp', N'Height', N'Height');
-INSERT INTO [dbo].[DataTypeParameters] ([Id], [DataTypeId], [JavaScriptEditorClassName], [Code], [Name]) VALUES (7, 5, N'temp', N'IsRequired', N'Is required');
+INSERT INTO [dbo].[DataTypeParameters] ([Id], [DataTypeId], [JavaScriptEditorClassName], [Code], [Name]) VALUES (1, 1, N'checkbox', N'IsRequired', N'Is required');
+INSERT INTO [dbo].[DataTypeParameters] ([Id], [DataTypeId], [JavaScriptEditorClassName], [Code], [Name]) VALUES (2, 1, N'numericTextBox', N'MaxLength', N'Max length');
+INSERT INTO [dbo].[DataTypeParameters] ([Id], [DataTypeId], [JavaScriptEditorClassName], [Code], [Name]) VALUES (3, 2, N'checkbox', N'IsRequired', N'Is required');
+INSERT INTO [dbo].[DataTypeParameters] ([Id], [DataTypeId], [JavaScriptEditorClassName], [Code], [Name]) VALUES (4, 2, N'numericTextBox', N'MaxLength', N'Max length');
+INSERT INTO [dbo].[DataTypeParameters] ([Id], [DataTypeId], [JavaScriptEditorClassName], [Code], [Name]) VALUES (5, 4, N'numericTextBox', N'Width', N'Width');
+INSERT INTO [dbo].[DataTypeParameters] ([Id], [DataTypeId], [JavaScriptEditorClassName], [Code], [Name]) VALUES (6, 4, N'numericTextBox', N'Height', N'Height');
+INSERT INTO [dbo].[DataTypeParameters] ([Id], [DataTypeId], [JavaScriptEditorClassName], [Code], [Name]) VALUES (7, 5, N'checkbox', N'IsRequired', N'Is required');
 SET IDENTITY_INSERT [dbo].[DataTypeParameters] OFF;
 
 COMMIT;

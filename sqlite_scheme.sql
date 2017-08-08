@@ -1,7 +1,7 @@
 BEGIN TRANSACTION;
 --
 -- Extension: Platformus.Configurations
--- Version: alpha-18
+-- Version: alpha-20
 --
 CREATE TABLE "Configurations" (
 	"Id" INTEGER NOT NULL CONSTRAINT "PK_Configuration" PRIMARY KEY AUTOINCREMENT,
@@ -20,7 +20,7 @@ CREATE TABLE "Variables" (
 
 --
 -- Extension: Platformus.Security
--- Version: alpha-18
+-- Version: alpha-20
 --
 CREATE TABLE "Users" (
 	"Id" INTEGER NOT NULL CONSTRAINT "PK_User" PRIMARY KEY AUTOINCREMENT,
@@ -71,7 +71,7 @@ CREATE TABLE "RolePermissions" (
 
 --
 -- Extension: Platformus.FileManager
--- Version: alpha-18
+-- Version: alpha-20
 --
 CREATE TABLE "Files" (
 	"Id" INTEGER NOT NULL CONSTRAINT "PK_File" PRIMARY KEY AUTOINCREMENT,
@@ -81,7 +81,7 @@ CREATE TABLE "Files" (
 
 --
 -- Extension: Platformus.Globalization
--- Version: alpha-18
+-- Version: alpha-20
 --
 CREATE TABLE "Cultures" (
 	"Id" INTEGER NOT NULL CONSTRAINT "PK_Culture" PRIMARY KEY AUTOINCREMENT,
@@ -103,8 +103,38 @@ CREATE TABLE "Localizations" (
 );
 
 --
+-- Extension: Platformus.Routing
+-- Version: alpha-20
+--
+CREATE TABLE "Endpoints" (
+	"Id" INTEGER NOT NULL CONSTRAINT "PK_Endpoint" PRIMARY KEY AUTOINCREMENT,
+	"Name" TEXT NOT NULL,
+	"UrlTemplate" TEXT,
+	"Position" INTEGER,
+	"DisallowAnonymous" INTEGER NOT NULL,
+	"SignInUrl" TEXT,
+	"CSharpClassName" TEXT NOT NULL,
+	"Parameters" TEXT
+);
+CREATE TABLE "EndpointPermissions" (
+	"EndpointId" INTEGER NOT NULL,
+	"PermissionId" INTEGER NOT NULL,
+	CONSTRAINT "PK_EndpointPermission" PRIMARY KEY ("EndpointId", "PermissionId"),
+	CONSTRAINT "FK_EndpointPermission_Endpoint_EndpointId" FOREIGN KEY ("EndpointId") REFERENCES "Endpoints" ("Id"),
+	CONSTRAINT "FK_EndpointPermission_Permission_PermissionId" FOREIGN KEY ("PermissionId") REFERENCES "Permissions" ("Id")
+);
+CREATE TABLE "DataSources" (
+	"Id" INTEGER NOT NULL CONSTRAINT "PK_DataSource" PRIMARY KEY AUTOINCREMENT,
+	"EndpointId" INTEGER NOT NULL,
+	"Code" TEXT NOT NULL,
+	"CSharpClassName" TEXT NOT NULL,
+	"Parameters" TEXT,
+	CONSTRAINT "FK_DataSource_Endpoint_EndpointId" FOREIGN KEY("EndpointId") REFERENCES "Endpoints"("Id")
+);
+
+--
 -- Extension: Platformus.Domain
--- Version: alpha-18
+-- Version: alpha-20
 --
 CREATE TABLE "Classes" (
 	"Id" INTEGER NOT NULL CONSTRAINT "PK_Class" PRIMARY KEY AUTOINCREMENT,
@@ -190,31 +220,6 @@ CREATE TABLE "Relations" (
 	CONSTRAINT "FK_Relation_Object_PrimaryId" FOREIGN KEY ("PrimaryId") REFERENCES "Objects" ("Id"),
 	CONSTRAINT "FK_Relation_Object_ForeignId" FOREIGN KEY ("ForeignId") REFERENCES "Objects" ("Id")
 );
-CREATE TABLE "Endpoints" (
-	"Id" INTEGER NOT NULL CONSTRAINT "PK_Endpoint" PRIMARY KEY AUTOINCREMENT,
-	"Name" TEXT NOT NULL,
-	"UrlTemplate" TEXT,
-	"Position" INTEGER,
-	"DisallowAnonymous" INTEGER NOT NULL,
-	"SignInUrl" TEXT,
-	"CSharpClassName" TEXT NOT NULL,
-	"Parameters" TEXT
-);
-CREATE TABLE "EndpointPermissions" (
-	"EndpointId" INTEGER NOT NULL,
-	"PermissionId" INTEGER NOT NULL,
-	CONSTRAINT "PK_EndpointPermission" PRIMARY KEY ("EndpointId", "PermissionId"),
-	CONSTRAINT "FK_EndpointPermission_Endpoint_EndpointId" FOREIGN KEY ("EndpointId") REFERENCES "Endpoints" ("Id"),
-	CONSTRAINT "FK_EndpointPermission_Permission_PermissionId" FOREIGN KEY ("PermissionId") REFERENCES "Permissions" ("Id")
-);
-CREATE TABLE "DataSources" (
-	"Id" INTEGER NOT NULL CONSTRAINT "PK_DataSource" PRIMARY KEY AUTOINCREMENT,
-	"EndpointId" INTEGER NOT NULL,
-	"Code" TEXT NOT NULL,
-	"CSharpClassName" TEXT NOT NULL,
-	"Parameters" TEXT,
-	CONSTRAINT "FK_DataSource_Endpoint_EndpointId" FOREIGN KEY("EndpointId") REFERENCES "Endpoints"("Id")
-);
 CREATE TABLE "SerializedObjects" (
 	"CultureId" INTEGER NOT NULL,
 	"ObjectId" INTEGER NOT NULL,
@@ -229,7 +234,7 @@ CREATE TABLE "SerializedObjects" (
 
 --
 -- Extension: Platformus.Menus
--- Version: alpha-18
+-- Version: alpha-20
 --
 CREATE TABLE "Menus" (
 	"Id" INTEGER NOT NULL CONSTRAINT "PK_Menu" PRIMARY KEY AUTOINCREMENT,
@@ -260,7 +265,7 @@ CREATE TABLE "SerializedMenus" (
 
 --
 -- Extension: Platformus.Forms
--- Version: alpha-18
+-- Version: alpha-20
 --
 CREATE TABLE "Forms" (
 	"Id" INTEGER NOT NULL CONSTRAINT "PK_Form" PRIMARY KEY AUTOINCREMENT,

@@ -6,16 +6,16 @@ using System.Linq;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.DependencyInjection;
 using Platformus.Barebone;
-using Platformus.Globalization;
-using Platformus.Routing;
+using Platformus.Globalization.Frontend;
 using Platformus.Routing.Data.Abstractions;
 using Platformus.Routing.Data.Entities;
+using Platformus.Routing.EndpointResolvers;
 using Platformus.Routing.Endpoints;
 using Platformus.Security;
 using Platformus.Security.Data.Abstractions;
 using Platformus.Security.Data.Entities;
 
-namespace Platformus.Domain.Frontend
+namespace Platformus.Routing.Frontend
 {
   public class DefaultRouteHandler : IDefaultRouteHandler
   {
@@ -34,7 +34,7 @@ namespace Platformus.Domain.Frontend
           if (string.IsNullOrEmpty(endpoint.SignInUrl))
             throw new HttpException(403, "Access denied.");
 
-          return (requestHandler as Platformus.Barebone.Frontend.Controllers.ControllerBase).Redirect(endpoint.SignInUrl);
+          return (requestHandler as Controller).Redirect(endpoint.SignInUrl);
         }
       }
 

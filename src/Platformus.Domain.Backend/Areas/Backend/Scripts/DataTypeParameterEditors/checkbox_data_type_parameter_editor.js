@@ -11,47 +11,18 @@
   function createField(dataTypeParameter) {
     var field = $("<div>").addClass("form__field form__field--separated field");
 
-    createCheckbox(dataTypeParameter).appendTo(field);
+    platformus.controls.checkbox.create(
+      {
+        identity: getIdentity(dataTypeParameter),
+        text: dataTypeParameter.name,
+        value: dataTypeParameter.value
+      }
+    ).change(platformus.dataTypeParameterEditors.base.dataTypeParameterChanged).appendTo(field);
+
     return field;
   }
 
-  function createCheckbox(dataTypeParameter) {
-    var identity = "dataTypeParameter" + dataTypeParameter.id;
-    var checkbox = $("<a>")
-      .addClass("checkbox")
-      .attr("id", identity)
-      .attr("href", "#")
-      .change(platformus.dataTypeParameterEditors.base.dataTypeParameterChanged);
-
-    createIndicator(dataTypeParameter).appendTo(checkbox);
-    createLabel(dataTypeParameter).appendTo(checkbox);
-    createInput(dataTypeParameter).appendTo(checkbox);
-    return checkbox;
-  }
-
-  function createIndicator(dataTypeParameter) {
-    var indicator = $("<div>").addClass("checkbox__indicator");
-
-    if (dataTypeParameter.value == "true")
-      indicator.addClass("checkbox__indicator--checked");
-
-    return indicator;
-  }
-
-  function createLabel(dataTypeParameter) {
-    return $("<div>").addClass("checkbox__label").html(dataTypeParameter.name);
-  };
-
-  function createInput(dataTypeParameter) {
-    var identity = "dataTypeParameter" + dataTypeParameter.id;
-    var value = dataTypeParameter.value;
-
-    if (platformus.string.isNullOrEmpty(value))
-      value = "false";
-
-    return $("<input>")
-      .attr("name", identity)
-      .attr("type", "hidden")
-      .attr("value", value);
+  function getIdentity(dataTypeParameter) {
+    return "dataTypeParameter" + dataTypeParameter.id;
   }
 })(window.platformus = window.platformus || {});

@@ -100,3 +100,14 @@
     );
   };
 })(window.platformus = window.platformus || {});
+
+(function (platformus) {
+  platformus.ui = platformus.ui || {};
+  platformus.ui.initializeJQueryValidation = function () {
+    var form = $("form")
+      .removeData("validator")
+      .removeData("unobtrusiveValidation");
+
+    $.validator.unobtrusive.parse(form);
+  };
+})(window.platformus = window.platformus || {});

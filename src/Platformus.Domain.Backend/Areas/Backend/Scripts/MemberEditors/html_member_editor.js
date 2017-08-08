@@ -11,7 +11,7 @@
   function createField(member) {
     var field = $("<div>").addClass("form__field").addClass("field");
 
-    platformus.memberEditors.base.createLabel(member).appendTo(field);
+    platformus.controls.label.create({ text: member.name }).appendTo(field);
 
     if (member.isPropertyLocalizable) {
       field.addClass("field--multilingual")
@@ -46,18 +46,16 @@
   }
 
   function createTextArea(member, localization) {
-    var identity = platformus.memberEditors.base.getIdentity(member, localization);
-    var textArea = $("<textarea>").addClass("field__text-area");
-
-    if (localization.culture.code != "__") {
-      textArea.addClass("field__text-area--multilingual");
-    }
-
-    return textArea
-      .addClass("text-area")
-      .attr("id", identity)
-      .attr("name", identity)
-      .attr("data-culture", localization.culture.code)
-      .html(localization.value);
+    return platformus.controls.textArea.create(
+      {
+        identity: platformus.memberEditors.base.getIdentity(member, localization),
+        value: localization.value,
+        isMultilingual: localization.culture.code != "__",
+        validation: {
+          isRequired: platformus.memberEditors.base.getIsRequiredDataTypeParameterValue(member),
+          maxLength: platformus.memberEditors.base.getMaxLengthDataTypeParameterValue(member)
+        }
+      }
+    ).attr("data-culture", localization.culture.code);
   }
 })(window.platformus = window.platformus || {});
