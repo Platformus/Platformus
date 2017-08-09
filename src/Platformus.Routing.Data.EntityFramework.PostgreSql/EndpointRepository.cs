@@ -47,6 +47,7 @@ namespace Platformus.Routing.Data.EntityFramework.PostgreSql
     {
       this.storageContext.Database.ExecuteSqlCommand(
         @"
+          DELETE FROM ""EndpointPermissions"" WHERE ""EndpointId"" = {0};
           DELETE FROM ""DataSources"" WHERE ""EndpointId"" = {0};
         ",
         endpoint.Id

@@ -32,22 +32,18 @@ namespace Platformus.Domain.Data.EntityFramework.SqlServer
 
     public IEnumerable<SerializedObject> FilteredByCultureIdAndClassId(int cultureId, int classId, Params @params)
     {
-      IQueryable<SerializedObject> results = this.dbSet.FromSql(
+      return this.dbSet.FromSql(
         this.GetSortedSelectQuerySql("SerializedObjects.ClassId = {1}", @params),
         cultureId, classId
       );
-
-      return this.ApplyPaging(results, @params);
     }
 
     public IEnumerable<SerializedObject> FilteredByCultureIdAndClassIdAndObjectId(int cultureId, int classId, int objectId, Params @params)
     {
-      IQueryable<SerializedObject> results = this.dbSet.FromSql(
+      return this.dbSet.FromSql(
         this.GetSortedSelectQuerySql("SerializedObjects.ClassId = {1} AND SerializedObjects.ObjectId IN (SELECT ForeignId FROM Relations WHERE PrimaryId = {2})", @params),
         cultureId, classId, objectId
       );
-
-      return this.ApplyPaging(results, @params);
     }
 
     public IEnumerable<SerializedObject> Primary(int cultureId, int objectId)
@@ -60,12 +56,10 @@ namespace Platformus.Domain.Data.EntityFramework.SqlServer
 
     public IEnumerable<SerializedObject> Primary(int cultureId, int objectId, Params @params)
     {
-      IQueryable<SerializedObject> results = this.dbSet.FromSql(
+      return this.dbSet.FromSql(
         this.GetSortedSelectQuerySql("SerializedObjects.ObjectId IN (SELECT PrimaryId FROM Relations WHERE ForeignId = {1})", @params),
         cultureId, objectId
       );
-
-      return this.ApplyPaging(results, @params);
     }
 
     public IEnumerable<SerializedObject> Primary(int cultureId, int memberId, int objectId)
@@ -78,12 +72,10 @@ namespace Platformus.Domain.Data.EntityFramework.SqlServer
 
     public IEnumerable<SerializedObject> Primary(int cultureId, int memberId, int objectId, Params @params)
     {
-      IQueryable<SerializedObject> results = this.dbSet.FromSql(
+      return this.dbSet.FromSql(
         this.GetSortedSelectQuerySql("SerializedObjects.ObjectId IN (SELECT PrimaryId FROM Relations WHERE MemberId = {1} AND ForeignId = {2})", @params),
         cultureId, memberId, objectId
       );
-
-      return this.ApplyPaging(results, @params);
     }
 
     public IEnumerable<SerializedObject> Foreign(int cultureId, int objectId)
@@ -96,12 +88,10 @@ namespace Platformus.Domain.Data.EntityFramework.SqlServer
 
     public IEnumerable<SerializedObject> Foreign(int cultureId, int objectId, Params @params)
     {
-      IQueryable<SerializedObject> results = this.dbSet.FromSql(
+      return this.dbSet.FromSql(
         this.GetSortedSelectQuerySql("SerializedObjects.ObjectId IN (SELECT ForeignId FROM Relations WHERE PrimaryId = {1})", @params),
         cultureId, objectId
       );
-
-      return this.ApplyPaging(results, @params);
     }
 
     public IEnumerable<SerializedObject> Foreign(int cultureId, int memberId, int objectId)
@@ -114,12 +104,10 @@ namespace Platformus.Domain.Data.EntityFramework.SqlServer
 
     public IEnumerable<SerializedObject> Foreign(int cultureId, int memberId, int objectId, Params @params)
     {
-      IQueryable<SerializedObject> results = this.dbSet.FromSql(
+      return this.dbSet.FromSql(
         this.GetSortedSelectQuerySql("SerializedObjects.ObjectId IN (SELECT ForeignId FROM Relations WHERE MemberId = {1} AND PrimaryId = {2})", @params),
         cultureId, memberId, objectId
       );
-
-      return this.ApplyPaging(results, @params);
     }
 
     public void Create(SerializedObject serializedObject)
@@ -234,6 +222,9 @@ namespace Platformus.Domain.Data.EntityFramework.SqlServer
       if (@params.Sorting.StorageDataType == StorageDataType.DateTime)
         sql.Append(this.GetSortedByDateTimeValueSelectQuerySql(@params));
 
+      if (@params.Paging != null)
+        sql.Append($" OFFSET {@params.Paging.Skip} ROWS FETCH NEXT {@params.Paging.Take} ROWS ONLY");
+
       return sql.ToString();
     }
 
@@ -271,20 +262,6 @@ namespace Platformus.Domain.Data.EntityFramework.SqlServer
     private string GetSortedByDateTimeValueSelectQuerySql(Params @params)
     {
       return "Members.Id = " + @params.Sorting.MemberId + " ORDER BY Properties.DateTimeValue " + @params.Sorting.Direction;
-    }
-
-    private IEnumerable<SerializedObject> ApplyPaging(IQueryable<SerializedObject> results, Params @params)
-    {
-      if (@params.Paging == null)
-        return results;
-
-      if (@params.Paging.Skip != null)
-        results = results.Skip((int)@params.Paging.Skip);
-
-      if (@params.Paging.Take != null)
-        results = results.Take((int)@params.Paging.Take);
-
-      return results;
     }
   }
 }

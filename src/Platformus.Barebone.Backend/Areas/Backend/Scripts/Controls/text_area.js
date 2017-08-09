@@ -25,7 +25,7 @@
     }
 
     if (descriptor.validation != null && descriptor.validation.maxLength != null) {
-      textArea.attr("maxlength", maxLength).attr("data-val-maxlength-max", descriptor.validation.maxLength);
+      textArea.attr("maxlength", descriptor.validation.maxLength).attr("data-val-maxlength-max", descriptor.validation.maxLength);
     }
 
     return textArea;

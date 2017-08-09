@@ -32,9 +32,16 @@ namespace Platformus.Globalization
     {
       CultureManager.CacheCultures(storage);
 
-      return CultureManager.cultures.FirstOrDefault(
+      Culture currentCulture = CultureManager.cultures.FirstOrDefault(
         c => c.Code == CultureInfo.CurrentCulture.TwoLetterISOLanguageName
       );
+
+      if (currentCulture == null)
+        currentCulture = CultureManager.cultures.FirstOrDefault(
+          c => c.Code == DefaultCulture.Code
+        );
+
+      return currentCulture;
     }
 
     public static IEnumerable<Culture> GetCultures(IStorage storage)

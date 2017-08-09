@@ -26,7 +26,7 @@
     }
 
     if (descriptor.validation != null && descriptor.validation.maxLength != null) {
-      textBox.attr("maxlength", maxLength).attr("data-val-maxlength-max", descriptor.validation.maxLength);
+      textBox.attr("maxlength", descriptor.validation.maxLength).attr("data-val-maxlength-max", descriptor.validation.maxLength);
     }
 
     return textBox;
