@@ -127,9 +127,9 @@ namespace Platformus.Domain.Backend.ViewModels.Objects
         this.GetClassMembers(classId).Select(m => new GridColumnViewModelFactory(this.RequestHandler).Create(m.Name, m.Code))
       );
 
-      foreach (Member member in this.RequestHandler.Storage.GetRepository<IMemberRepository>().FilteredByRelationClassIdRelationSingleParent(classId).ToList())
+      foreach (Member member in this.RequestHandler.Storage.GetRepository<IMemberRepository>().FilteredByClassIdRelationSingleParent(classId).ToList())
       {
-        Class @class = this.RequestHandler.Storage.GetRepository<IClassRepository>().WithKey(member.ClassId);
+        Class @class = this.RequestHandler.Storage.GetRepository<IClassRepository>().WithKey((int)member.RelationClassId);
 
         gridColumns.Add(new GridColumnViewModelFactory(this.RequestHandler).Create(@class.PluralizedName));
       }

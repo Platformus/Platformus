@@ -34,14 +34,7 @@ namespace Platformus.Menus.Frontend.ViewComponents
       );
 
       if (serializedMenu == null)
-      {
-        Menu menu = this.Storage.GetRepository<IMenuRepository>().WithCode(code);
-
-        if (menu == null)
-          return null;
-
-        return this.View(new MenuViewModelFactory(this).Create(menu));
-      }
+        return this.Content($"There is no menu with code “{code}” defined.");
 
       return this.View(new MenuViewModelFactory(this).Create(serializedMenu));
     }

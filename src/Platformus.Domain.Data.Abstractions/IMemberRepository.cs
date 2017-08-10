@@ -16,7 +16,7 @@ namespace Platformus.Domain.Data.Abstractions
     IEnumerable<Member> FilteredByClassIdInlcudingParent(int classId);
     IEnumerable<Member> FilteredByClassIdPropertyVisibleInList(int classId);
     IEnumerable<Member> FilteredByClassIdInlcudingParentPropertyVisibleInList(int classId);
-    IEnumerable<Member> FilteredByRelationClassIdRelationSingleParent(int relationClassId);
+    IEnumerable<Member> FilteredByClassIdRelationSingleParent(int classId);
     IEnumerable<Member> FilteredByClassIdRange(int classId, string orderBy, string direction, int skip, int take, string filter);
     void Create(Member member);
     void Edit(Member member);

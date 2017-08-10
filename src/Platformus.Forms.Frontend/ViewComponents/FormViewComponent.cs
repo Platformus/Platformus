@@ -34,14 +34,7 @@ namespace Platformus.Forms.Frontend.ViewComponents
       );
 
       if (serializedForm == null)
-      {
-        Form form = this.Storage.GetRepository<IFormRepository>().WithCode(code);
-
-        if (form == null)
-          return null;
-
-        return this.View(new FormViewModelFactory(this).Create(form));
-      }
+        return this.Content($"There is no form with code “{code}” defined.");
 
       return this.View(new FormViewModelFactory(this).Create(serializedForm));
     }

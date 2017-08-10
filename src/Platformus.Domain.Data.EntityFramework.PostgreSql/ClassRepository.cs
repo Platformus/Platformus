@@ -36,9 +36,9 @@ namespace Platformus.Domain.Data.EntityFramework.PostgreSql
     public IEnumerable<Class> FilteredByClassId(int? classId)
     {
       if (classId == null)
-        return this.dbSet.FromSql("SELECT * FROM \"Classes\" WHERE \"Id\" NOT IN (SELECT \"ClassId\" FROM \"Members\" WHERE \"IsRelationSingleParent\" IS NOT NULL) AND \"ClassId\" IS NULL AND \"IsAbstract\" = {0} ORDER BY \"Name\"", false);
+        return this.dbSet.FromSql("SELECT * FROM \"Classes\" WHERE \"Id\" NOT IN (SELECT \"RelationClassId\" FROM \"Members\" WHERE \"IsRelationSingleParent\" IS NOT NULL) AND \"ClassId\" IS NULL AND \"IsAbstract\" = {0} ORDER BY \"Name\"", false);
 
-      return this.dbSet.FromSql("SELECT * FROM \"Classes\" WHERE \"Id\" NOT IN (SELECT \"ClassId\" FROM \"Members\" WHERE \"IsRelationSingleParent\" IS NOT NULL) AND \"ClassId\" = {0} AND \"IsAbstract\" = {0} ORDER BY \"Name\"", classId, false);
+      return this.dbSet.FromSql("SELECT * FROM \"Classes\" WHERE \"Id\" NOT IN (SELECT \"RelationClassId\" FROM \"Members\" WHERE \"IsRelationSingleParent\" IS NOT NULL) AND \"ClassId\" = {0} AND \"IsAbstract\" = {0} ORDER BY \"Name\"", classId, false);
     }
 
     public IEnumerable<Class> Abstract()
@@ -72,11 +72,11 @@ namespace Platformus.Domain.Data.EntityFramework.PostgreSql
         @"
           DELETE FROM ""SerializedObjects"" WHERE ""ObjectId"" IN (SELECT ""Id"" FROM ""Objects"" WHERE ""ClassId"" = {0});
           CREATE TEMP TABLE ""TempDictionaries"" (""Id"" INT PRIMARY KEY);
-          INSERT INTO ""TempDictionaries"" SELECT ""StringValueId"" FROM ""Properties"" WHERE ""ObjectId"" IN (SELECT ""Id"" FROM ""Objects"" WHERE ""ClassId"" = {0});
+          INSERT INTO ""TempDictionaries"" SELECT ""StringValueId"" FROM ""Properties"" WHERE ""ObjectId"" IN (SELECT ""Id"" FROM ""Objects"" WHERE ""ClassId"" = {0}) AND ""StringValueId"" IS NOT NULL;
           DELETE FROM ""Properties"" WHERE ""ObjectId"" IN (SELECT ""Id"" FROM ""Objects"" WHERE ""ClassId"" = {0});
           DELETE FROM ""Localizations"" WHERE ""DictionaryId"" IN (SELECT ""Id"" FROM ""TempDictionaries"");
           DELETE FROM ""Dictionaries"" WHERE ""Id"" IN (SELECT ""Id"" FROM ""TempDictionaries"");
-          DELETE FROM ""Relations"" WHERE ""PrimaryId"" IN (SELECT ""Id"" FROM ""Objects"" WHERE ""ClassId"" = {0}) OR ""ForeignId"" IN (SELECT ""Id"" FROM ""Objects"" WHERE ""ClassId"" = {0});
+          DELETE FROM ""Relations"" WHERE ""MemberId"" IN (SELECT ""Id"" FROM ""Members"" WHERE ""ClassId"" = {0} OR ""RelationClassId"" = {0}) OR ""PrimaryId"" IN (SELECT ""Id"" FROM ""Objects"" WHERE ""ClassId"" = {0}) OR ""ForeignId"" IN (SELECT ""Id"" FROM ""Objects"" WHERE ""ClassId"" = {0});
           DELETE FROM ""Objects"" WHERE ""ClassId"" = {0};
           DELETE FROM ""DataTypeParameterValues"" WHERE ""MemberId"" IN (SELECT ""Id"" FROM ""Members"" WHERE ""ClassId"" = {0});
           DELETE FROM ""Members"" WHERE ""ClassId"" = {0} OR ""RelationClassId"" = {0};

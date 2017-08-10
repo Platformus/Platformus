@@ -41,7 +41,7 @@ namespace Platformus.Domain.Data.EntityFramework.SqlServer
     public IEnumerable<SerializedObject> FilteredByCultureIdAndClassIdAndObjectId(int cultureId, int classId, int objectId, Params @params)
     {
       return this.dbSet.FromSql(
-        this.GetSortedSelectQuerySql("SerializedObjects.ClassId = {1} AND SerializedObjects.ObjectId IN (SELECT ForeignId FROM Relations WHERE PrimaryId = {2})", @params),
+        this.GetSortedSelectQuerySql("SerializedObjects.ClassId = {1} AND SerializedObjects.ObjectId IN (SELECT PrimaryId FROM Relations WHERE ForeignId = {2})", @params),
         cultureId, classId, objectId
       );
     }
@@ -81,7 +81,7 @@ namespace Platformus.Domain.Data.EntityFramework.SqlServer
     public IEnumerable<SerializedObject> Foreign(int cultureId, int objectId)
     {
       return this.dbSet.FromSql(
-        this.GetUnsortedSelectQuerySql("ObjectId IN (SELECT ForeignId FROM Relations WHERE PrimaryId = {1})"),
+        this.GetUnsortedSelectQuerySql("ObjectId IN (SELECT PrimaryId FROM Relations WHERE ForeignId = {1})"),
         cultureId, objectId
       );
     }
@@ -89,7 +89,7 @@ namespace Platformus.Domain.Data.EntityFramework.SqlServer
     public IEnumerable<SerializedObject> Foreign(int cultureId, int objectId, Params @params)
     {
       return this.dbSet.FromSql(
-        this.GetSortedSelectQuerySql("SerializedObjects.ObjectId IN (SELECT ForeignId FROM Relations WHERE PrimaryId = {1})", @params),
+        this.GetSortedSelectQuerySql("SerializedObjects.ObjectId IN (SELECT PrimaryId FROM Relations WHERE ForeignId = {1})", @params),
         cultureId, objectId
       );
     }
@@ -163,9 +163,6 @@ namespace Platformus.Domain.Data.EntityFramework.SqlServer
 
     public int CountByCultureIdAndClassIdAndObjectId(int cultureId, int classId, int objectId, Params @params)
     {
-      if (@params == null || @params.Filtering == null || string.IsNullOrEmpty(@params.Filtering.Query))
-        return this.dbSet.Count(so => so.CultureId == cultureId && so.ClassId == classId);
-
       int result = 0;
       SqlConnection connection = (this.storageContext as DbContext).Database.GetDbConnection() as SqlConnection;
 
@@ -175,11 +172,22 @@ namespace Platformus.Domain.Data.EntityFramework.SqlServer
 
         using (SqlCommand command = connection.CreateCommand())
         {
-          command.CommandText = "SELECT COUNT(*) FROM SerializedObjects WHERE CultureId = {0} AND ClassId = {1} AND ObjectId IN (SELECT ForeignId FROM Relations WHERE PrimaryId = {2}) AND ObjectId IN (SELECT ObjectId FROM Properties WHERE StringValueId IN (SELECT DictionaryId FROM Localizations WHERE Value LIKE @Query))";
-          command.Parameters.AddWithValue("@CultureId", cultureId);
-          command.Parameters.AddWithValue("@ClassId", classId);
-          command.Parameters.AddWithValue("@ObjectId", objectId);
-          command.Parameters.AddWithValue("@Query", "%" + @params.Filtering.Query + "%");
+          if (@params == null || @params.Filtering == null || string.IsNullOrEmpty(@params.Filtering.Query))
+          {
+            command.CommandText = "SELECT COUNT(*) FROM SerializedObjects WHERE CultureId = @CultureId AND ClassId = @ClassId AND ObjectId IN (SELECT PrimaryId FROM Relations WHERE ForeignId = @ObjectId)";
+            command.Parameters.AddWithValue("@CultureId", cultureId);
+            command.Parameters.AddWithValue("@ClassId", classId);
+            command.Parameters.AddWithValue("@ObjectId", objectId);
+          }
+
+          else
+          {
+            command.CommandText = "SELECT COUNT(*) FROM SerializedObjects WHERE CultureId = @CultureId AND ClassId = @ClassId AND ObjectId IN (SELECT PrimaryId FROM Relations WHERE ForeignId = @ObjectId) AND ObjectId IN (SELECT ObjectId FROM Properties WHERE StringValueId IN (SELECT DictionaryId FROM Localizations WHERE Value LIKE @Query))";
+            command.Parameters.AddWithValue("@CultureId", cultureId);
+            command.Parameters.AddWithValue("@ClassId", classId);
+            command.Parameters.AddWithValue("@ObjectId", objectId);
+            command.Parameters.AddWithValue("@Query", "%" + @params.Filtering.Query + "%");
+          }
 
           using (DbDataReader dataReader = command.ExecuteReader())
             if (dataReader.HasRows)

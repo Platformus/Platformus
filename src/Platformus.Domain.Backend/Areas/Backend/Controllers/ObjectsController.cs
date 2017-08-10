@@ -186,14 +186,31 @@ namespace Platformus.Domain.Backend.Controllers
 
     private void DeleteRelations(Object @object)
     {
-      foreach (Relation relation in this.Storage.GetRepository<IRelationRepository>().FilteredByForeignId(@object.Id))
-        this.Storage.GetRepository<IRelationRepository>().Delete(relation);
+      foreach (Relation relation in this.Storage.GetRepository<IRelationRepository>().FilteredByForeignId(@object.Id).ToList())
+      {
+        Member member = this.Storage.GetRepository<IMemberRepository>().WithKey(relation.MemberId);
+
+        if (member.IsRelationSingleParent != true)
+          this.Storage.GetRepository<IRelationRepository>().Delete(relation);
+      }
 
       this.Storage.Save();
     }
 
     private void CreateRelations(Object @object)
     {
+      if (!string.IsNullOrEmpty(this.Request.Query["objectId"]))
+      {
+        int foreignId = int.Parse(this.Request.Query["objectId"]);
+        int primaryId = @object.Id;
+        int? memberId = this.GetRelationSingleParentMemberId(
+          this.Storage.GetRepository<IObjectRepository>().WithKey(foreignId).ClassId, @object.ClassId
+        );
+
+        if (memberId != null)
+          this.CreateRelation((int)memberId, primaryId, foreignId);
+      }
+
       foreach (string key in this.Request.Form.Keys)
       {
         if (key.StartsWith("relationMember") && !string.IsNullOrEmpty(this.Request.Form[key]))
@@ -205,6 +222,15 @@ namespace Platformus.Domain.Backend.Controllers
             this.CreateRelation(int.Parse(memberId), primaryId, @object.Id);
         }
       }
+    }
+
+    private int? GetRelationSingleParentMemberId(int classId, int relationClassId)
+    {
+      foreach (Member member in this.Storage.GetRepository<IMemberRepository>().FilteredByClassIdRelationSingleParent(classId).ToList())
+        if (member.RelationClassId == relationClassId)
+          return member.Id;
+
+      return null;
     }
 
     private void CreateRelation(int memberId, int primaryId, int foreignId)

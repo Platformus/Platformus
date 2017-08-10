@@ -21,6 +21,9 @@ namespace Platformus.Domain.DataSources
         CultureManager.GetCurrentCulture(requestHandler.Storage).Id, url
       );
 
+      if (serializedObject == null)
+        throw new HttpException(404, "Not found.");
+
       return this.CreateSerializedObjectViewModel(serializedObject);
     }
   }

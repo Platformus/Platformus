@@ -22,9 +22,9 @@ namespace Platformus.Domain.Backend.ViewModels.Shared
       Object @object = this.RequestHandler.Storage.GetRepository<IObjectRepository>().WithKey(id);
       List<Class> relatedClasses = new List<Class>();
 
-      foreach (Member member in this.RequestHandler.Storage.GetRepository<IMemberRepository>().FilteredByRelationClassIdRelationSingleParent(@object.ClassId).ToList())
+      foreach (Member member in this.RequestHandler.Storage.GetRepository<IMemberRepository>().FilteredByClassIdRelationSingleParent(@object.ClassId).ToList())
       {
-        Class @class = this.RequestHandler.Storage.GetRepository<IClassRepository>().WithKey((int)member.ClassId);
+        Class @class = this.RequestHandler.Storage.GetRepository<IClassRepository>().WithKey((int)member.RelationClassId);
 
         relatedClasses.Add(@class);
       }

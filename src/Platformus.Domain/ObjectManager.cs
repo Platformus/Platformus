@@ -62,18 +62,32 @@ namespace Platformus.Domain
 
           else
           {
-            Localization localization = null;
+            DataType dataType = this.requestHandler.Storage.GetRepository<IDataTypeRepository>().WithKey((int)member.PropertyDataTypeId);
 
-            if (member.IsPropertyLocalizable == true && defaultCulture != null)
-              localization = this.requestHandler.Storage.GetRepository<ILocalizationRepository>().WithDictionaryIdAndCultureId((int)property.StringValueId, defaultCulture.Id);
+            if (dataType.StorageDataType == StorageDataType.Integer)
+              properties.Add(property.IntegerValue == null ? string.Empty : property.IntegerValue.ToString());
 
-            else if (neutralCulture != null)
-              localization = this.requestHandler.Storage.GetRepository<ILocalizationRepository>().WithDictionaryIdAndCultureId((int)property.StringValueId, neutralCulture.Id);
+            else if (dataType.StorageDataType == StorageDataType.Decimal)
+              properties.Add(property.DecimalValue == null ? string.Empty : property.DecimalValue.ToString());
 
-            if (localization == null)
-              properties.Add(string.Empty);
+            else if (dataType.StorageDataType == StorageDataType.String)
+            {
+              Localization localization = null;
 
-            else properties.Add(localization.Value);
+              if (member.IsPropertyLocalizable == true && defaultCulture != null)
+                localization = this.requestHandler.Storage.GetRepository<ILocalizationRepository>().WithDictionaryIdAndCultureId((int)property.StringValueId, defaultCulture.Id);
+
+              else if (neutralCulture != null)
+                localization = this.requestHandler.Storage.GetRepository<ILocalizationRepository>().WithDictionaryIdAndCultureId((int)property.StringValueId, neutralCulture.Id);
+
+              if (localization == null)
+                properties.Add(string.Empty);
+
+              else properties.Add(localization.Value);
+            }
+
+            else if (dataType.StorageDataType == StorageDataType.DateTime)
+              properties.Add(property.DateTimeValue == null ? string.Empty : property.DateTimeValue.ToString());
           }
         }
       }

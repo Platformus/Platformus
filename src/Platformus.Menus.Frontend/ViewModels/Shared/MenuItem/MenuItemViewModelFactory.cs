@@ -7,7 +7,6 @@ using Newtonsoft.Json;
 using Platformus.Barebone;
 using Platformus.Globalization.Frontend;
 using Platformus.Globalization.Frontend.ViewModels;
-using Platformus.Menus.Data.Abstractions;
 using Platformus.Menus.Data.Entities;
 
 namespace Platformus.Menus.Frontend.ViewModels.Shared
@@ -17,18 +16,6 @@ namespace Platformus.Menus.Frontend.ViewModels.Shared
     public MenuItemViewModelFactory(IRequestHandler requestHandler)
       : base(requestHandler)
     {
-    }
-
-    public MenuItemViewModel Create(MenuItem menuItem)
-    {
-      return new MenuItemViewModel()
-      {
-        Name = this.RequestHandler.GetLocalizationValue(menuItem.NameId),
-        Url = GlobalizedUrlFormatter.Format(this.RequestHandler.Storage, menuItem.Url),
-        MenuItems = this.RequestHandler.Storage.GetRepository<IMenuItemRepository>().FilteredByMenuItemId(menuItem.Id).ToList().Select(
-          mi => new MenuItemViewModelFactory(this.RequestHandler).Create(mi)
-        )
-      };
     }
 
     public MenuItemViewModel Create(SerializedMenuItem serializedMenuItem)

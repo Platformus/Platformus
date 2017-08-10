@@ -109,7 +109,7 @@ namespace Platformus.Domain.DataSources
           foreach (dynamic @object in objects)
           {
             IEnumerable<dynamic> nestedObjects = requestHandler.Storage.GetRepository<ISerializedObjectRepository>().Primary(
-              CultureManager.GetCurrentCulture(requestHandler.Storage).Id, (int)@object.Id
+              CultureManager.GetCurrentCulture(requestHandler.Storage).Id, member.Id, (int)@object.Id
             ).ToList().Select(so => this.CreateSerializedObjectViewModel(so));
 
             if (xPathSegments.Count() > xPathSegmentIndex + 1)

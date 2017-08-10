@@ -5,7 +5,6 @@ using System.Collections.Generic;
 using System.Linq;
 using Newtonsoft.Json;
 using Platformus.Barebone;
-using Platformus.Forms.Data.Abstractions;
 using Platformus.Forms.Data.Entities;
 using Platformus.Globalization.Frontend.ViewModels;
 
@@ -16,21 +15,6 @@ namespace Platformus.Forms.Frontend.ViewModels.Shared
     public FieldViewModelFactory(IRequestHandler requestHandler)
       : base(requestHandler)
     {
-    }
-
-    public FieldViewModel Create(Field field)
-    {
-      return new FieldViewModel()
-      {
-        Id = field.Id,
-        FieldType = new FieldTypeViewModelFactory(this.RequestHandler).Create(this.RequestHandler.Storage.GetRepository<IFieldTypeRepository>().WithKey(field.FieldTypeId)),
-        Name = this.RequestHandler.GetLocalizationValue(field.NameId),
-        IsRequired = field.IsRequired,
-        MaxLength = field.MaxLength,
-        FieldOptions = this.RequestHandler.Storage.GetRepository<IFieldOptionRepository>().FilteredByFieldId(field.Id).Select(
-          fi => new FieldOptionViewModelFactory(this.RequestHandler).Create(fi)
-        )
-      };
     }
 
     public FieldViewModel Create(SerializedField serializedField)

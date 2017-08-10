@@ -5,7 +5,6 @@ using System.Collections.Generic;
 using System.Linq;
 using Newtonsoft.Json;
 using Platformus.Barebone;
-using Platformus.Forms.Data.Abstractions;
 using Platformus.Forms.Data.Entities;
 using Platformus.Globalization.Frontend.ViewModels;
 
@@ -16,18 +15,6 @@ namespace Platformus.Forms.Frontend.ViewModels.Shared
     public FormViewModelFactory(IRequestHandler requestHandler)
       : base(requestHandler)
     {
-    }
-
-    public FormViewModel Create(Form form)
-    {
-      return new FormViewModel()
-      {
-        Id = form.Id,
-        Name = this.RequestHandler.GetLocalizationValue(form.NameId),
-        Fields = this.RequestHandler.Storage.GetRepository<IFieldRepository>().FilteredByFormId(form.Id).ToList().Select(
-          f => new FieldViewModelFactory(this.RequestHandler).Create(f)
-        )
-      };
     }
 
     public FormViewModel Create(SerializedForm serializedForm)

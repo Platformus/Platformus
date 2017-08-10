@@ -14,14 +14,6 @@ namespace Platformus.Forms.Frontend.ViewModels.Shared
     {
     }
 
-    public FieldOptionViewModel Create(FieldOption fieldOption)
-    {
-      return new FieldOptionViewModel()
-      {
-        Value = this.RequestHandler.GetLocalizationValue(fieldOption.ValueId)
-      };
-    }
-
     public FieldOptionViewModel Create(SerializedFieldOption serializedFieldOption)
     {
       return new FieldOptionViewModel()

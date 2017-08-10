@@ -6,7 +6,6 @@ using System.Linq;
 using Newtonsoft.Json;
 using Platformus.Barebone;
 using Platformus.Globalization.Frontend.ViewModels;
-using Platformus.Menus.Data.Abstractions;
 using Platformus.Menus.Data.Entities;
 
 namespace Platformus.Menus.Frontend.ViewModels.Shared
@@ -16,16 +15,6 @@ namespace Platformus.Menus.Frontend.ViewModels.Shared
     public MenuViewModelFactory(IRequestHandler requestHandler)
       : base(requestHandler)
     {
-    }
-
-    public MenuViewModel Create(Menu menu)
-    {
-      return new MenuViewModel()
-      {
-        MenuItems = this.RequestHandler.Storage.GetRepository<IMenuItemRepository>().FilteredByMenuId(menu.Id).ToList().Select(
-          mi => new MenuItemViewModelFactory(this.RequestHandler).Create(mi)
-        )
-      };
     }
 
     public MenuViewModel Create(SerializedMenu serializedMenu)

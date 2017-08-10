@@ -5,16 +5,16 @@
   platformus.memberEditors = platformus.memberEditors || [];
   platformus.memberEditors.relation = {};
   platformus.memberEditors.relation.create = function (container, member) {
+    if (member.isRelationSingleParent) {
+      return;
+    }
+
     createField(member).appendTo(container);
     syncObjectDisplayValues(member);
   };
 
   function createField(member) {
     var field = $("<div>").addClass("relation-member-editor").addClass("form__field").addClass("field");
-
-    if (member.isRelationSingleParent) {
-      field.hide();
-    }
 
     platformus.controls.label.create({ text: member.name }).appendTo(field);
     createInput(member).appendTo(field);
