@@ -42,6 +42,20 @@
     }
   };
 
+  platformus.ui.isRelationSingleParentChanged = function () {
+    var isRelationSingleParent = $("#isRelationSingleParent").val();
+
+    if (isRelationSingleParent) {
+      $("#minRelatedObjectsNumber").parent().hide();
+      $("#maxRelatedObjectsNumber").parent().hide();
+    }
+
+    else {
+      $("#minRelatedObjectsNumber").parent().show();
+      $("#maxRelatedObjectsNumber").parent().show();
+    }
+  };
+
   function getSelectedPropertyDataTypeId() {
     return $("#propertyDataTypeId").val();
   }

@@ -26,16 +26,16 @@ namespace Platformus.Barebone.Backend
 
       output.SuppressOutput();
       output.Content.Clear();
-      output.Content.AppendHtml(this.GenerateField());
+      output.Content.AppendHtml(this.GenerateField(output.Attributes));
     }
 
-    private TagBuilder GenerateField()
+    private TagBuilder GenerateField(TagHelperAttributeList attributes)
     {
       TagBuilder tb = new TagBuilder("div");
 
       tb.AddCssClass("form__field form__field--separated field");
       tb.InnerHtml.Clear();
-      tb.InnerHtml.AppendHtml(new CheckboxGenerator().GenerateCheckbox(this.ViewContext, this.For));
+      tb.InnerHtml.AppendHtml(new CheckboxGenerator().GenerateCheckbox(this.ViewContext, this.For, attributes));
       return tb;
     }
   }

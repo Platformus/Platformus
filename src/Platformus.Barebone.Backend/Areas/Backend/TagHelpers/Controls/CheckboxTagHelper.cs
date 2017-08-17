@@ -26,7 +26,7 @@ namespace Platformus.Barebone.Backend
 
       output.SuppressOutput();
       output.Content.Clear();
-      output.Content.AppendHtml(new CheckboxGenerator().GenerateCheckbox(this.ViewContext, this.For));
+      output.Content.AppendHtml(new CheckboxGenerator().GenerateCheckbox(this.ViewContext, this.For, output.Attributes));
     }
   }
 }

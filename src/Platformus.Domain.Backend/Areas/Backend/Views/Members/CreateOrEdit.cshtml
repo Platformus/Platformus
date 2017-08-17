@@ -27,7 +27,7 @@
     </div>
     <div id="tabPageRelation" class="tab-pages__tab-page">
       <drop-down-list-field asp-for="RelationClassId" asp-options="@Model.RelationClassOptions" onchange="platformus.ui.relationClassIdChanged();" />
-      <checkbox-field asp-for="IsRelationSingleParent" />
+      <checkbox-field asp-for="IsRelationSingleParent" onchange="platformus.ui.isRelationSingleParentChanged();" />
       <single-line-text-field asp-for="MinRelatedObjectsNumber" />
       <single-line-text-field asp-for="MaxRelatedObjectsNumber" />
     </div>
@@ -43,4 +43,5 @@
 @section startUpScript {
   platformus.ui.propertyDataTypeIdChanged();
   platformus.ui.relationClassIdChanged();
+  platformus.ui.isRelationSingleParentChanged();
 }

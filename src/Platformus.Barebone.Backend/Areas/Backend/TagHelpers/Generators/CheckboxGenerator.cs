@@ -3,18 +3,23 @@
 
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.AspNetCore.Mvc.ViewFeatures;
+using Microsoft.AspNetCore.Razor.TagHelpers;
 
 namespace Platformus.Barebone.Backend
 {
   public class CheckboxGenerator : GeneratorBase
   {
-    public TagBuilder GenerateCheckbox(ViewContext viewContext, ModelExpression modelExpression)
+    public TagBuilder GenerateCheckbox(ViewContext viewContext, ModelExpression modelExpression, TagHelperAttributeList attributes, string additionalCssClass = null)
     {
       TagBuilder tb = new TagBuilder("a");
+
+      if (!string.IsNullOrEmpty(additionalCssClass))
+        tb.AddCssClass(additionalCssClass);
 
       tb.AddCssClass("checkbox");
       tb.MergeAttribute("id", this.GetIdentity(modelExpression));
       tb.MergeAttribute("href", "#");
+      this.MergeOtherAttribute(tb, attributes);
       tb.InnerHtml.Clear();
       tb.InnerHtml.AppendHtml(this.GenerateIndicator(viewContext, modelExpression));
       tb.InnerHtml.AppendHtml(this.GenerateLabel(modelExpression));

@@ -5,13 +5,14 @@ using System.Collections.Generic;
 using System.Linq;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.AspNetCore.Mvc.ViewFeatures;
+using Microsoft.AspNetCore.Razor.TagHelpers;
 using Platformus.Barebone.Primitives;
 
 namespace Platformus.Barebone.Backend
 {
   public class RadioButtonListGenerator : GeneratorBase
   {
-    public TagBuilder GenerateRadioButtonList(ViewContext viewContext, ModelExpression modelExpression, IEnumerable<Option> options, string additionalCssClass = null)
+    public TagBuilder GenerateRadioButtonList(ViewContext viewContext, ModelExpression modelExpression, IEnumerable<Option> options, TagHelperAttributeList attributes, string additionalCssClass = null)
     {
       TagBuilder tb = new TagBuilder("div");
 
@@ -20,6 +21,7 @@ namespace Platformus.Barebone.Backend
 
       tb.AddCssClass("radio-button-list");
       tb.MergeAttribute("id", this.GetIdentity(modelExpression));
+      this.MergeOtherAttribute(tb, attributes);
       tb.InnerHtml.Clear();
 
       Option selectedOption = this.GetSelectedOption(viewContext, modelExpression, options);
