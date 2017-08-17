@@ -3,17 +3,18 @@
 
 using System;
 using ExtCore.Infrastructure.Actions;
-using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Mvc.ViewFeatures;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace Platformus.Barebone.Actions
 {
-  public class UseSessionAction : IConfigureAction
+  public class AddTempDataProviderAction : IConfigureServicesAction
   {
     public int Priority => 1010;
 
-    public void Execute(IApplicationBuilder applicationBuilder, IServiceProvider serviceProvider)
+    public void Execute(IServiceCollection services, IServiceProvider serviceProvider)
     {
-      applicationBuilder.UseSession();
+      services.AddSingleton<ITempDataProvider, CookieTempDataProvider>();
     }
   }
 }
