@@ -5,6 +5,9 @@ using ExtCore.Data.Entities.Abstractions;
 
 namespace Platformus.Configurations.Data.Entities
 {
+  /// <summary>
+  /// Represents a configuration variable. The variables are used to store the configuration values.
+  /// </summary>
   public class Variable : IEntity
   {
     public int Id { get; set; }

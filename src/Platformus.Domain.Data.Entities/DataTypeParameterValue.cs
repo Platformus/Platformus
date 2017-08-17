@@ -5,6 +5,10 @@ using ExtCore.Data.Entities.Abstractions;
 
 namespace Platformus.Domain.Data.Entities
 {
+  /// <summary>
+  /// Represents a data type parameter value. The data type parameter values are used to store the data
+  /// for the data type parameters.
+  /// </summary>
   public class DataTypeParameterValue : IEntity
   {
     public int Id { get; set; }

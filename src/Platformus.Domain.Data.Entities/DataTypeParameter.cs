@@ -6,6 +6,10 @@ using ExtCore.Data.Entities.Abstractions;
 
 namespace Platformus.Domain.Data.Entities
 {
+  /// <summary>
+  /// Represents a data type parameter. The data type parameters are used to pass the parameters to the
+  /// object property editors (for example, maximum text length).
+  /// </summary>
   public class DataTypeParameter : IEntity
   {
     public int Id { get; set; }

@@ -7,6 +7,9 @@ using Platformus.Globalization.Data.Entities;
 
 namespace Platformus.Domain.Data.Entities
 {
+  /// <summary>
+  /// Represents an object property. The properties are used to store the object data using the different data types.
+  /// </summary>
   public class Property : IEntity
   {
     public int Id { get; set; }

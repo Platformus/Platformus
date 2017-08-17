@@ -6,6 +6,9 @@ using ExtCore.Data.Entities.Abstractions;
 
 namespace Platformus.Configurations.Data.Entities
 {
+  /// <summary>
+  /// Represents a configuration. The configurations are used to group the variables.
+  /// </summary>
   public class Configuration : IEntity
   {
     public int Id { get; set; }

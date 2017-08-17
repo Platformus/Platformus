@@ -5,6 +5,11 @@ using ExtCore.Data.Entities.Abstractions;
 
 namespace Platformus.Security.Data.Entities
 {
+  /// <summary>
+  /// Represents a credential. The credentials are used to store the information that is used to sign in the users
+  /// using the different identity providers (email and password, Microsoft, Google, Facebook and so on).
+  /// The identity provider is specified by the credential type.
+  /// </summary>
   public class Credential : IEntity
   {
     public int Id { get; set; }

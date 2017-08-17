@@ -6,6 +6,9 @@ using ExtCore.Data.Entities.Abstractions;
 
 namespace Platformus.Globalization.Data.Entities
 {
+  /// <summary>
+  /// Represents a culture. The culture is the central unit in the Platformus globalization mechanism.
+  /// </summary>
   public class Culture : IEntity
   {
     public int Id { get; set; }

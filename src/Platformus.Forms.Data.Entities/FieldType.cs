@@ -5,6 +5,10 @@ using ExtCore.Data.Entities.Abstractions;
 
 namespace Platformus.Forms.Data.Entities
 {
+  /// <summary>
+  /// Represents a field type. The field types are used to specify how the field should look and behave,
+  /// and how it should be processed.
+  /// </summary>
   public class FieldType : IEntity
   {
     public int Id { get; set; }

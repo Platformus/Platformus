@@ -7,6 +7,9 @@ using Platformus.Globalization.Data.Entities;
 
 namespace Platformus.Menus.Data.Entities
 {
+  /// <summary>
+  /// Represents a menu item. The menu items are used to build the menus.
+  /// </summary>
   public class MenuItem : IEntity
   {
     public int Id { get; set; }

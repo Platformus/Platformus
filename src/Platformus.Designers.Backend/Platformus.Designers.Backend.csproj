@@ -22,7 +22,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="ExtCore.Infrastructure" Version="2.0.0" />
+    <PackageReference Include="ExtCore.Infrastructure" Version="2.1.0-beta2" />
     <PackageReference Include="NUglify" Version="1.5.4" />
   </ItemGroup>
 

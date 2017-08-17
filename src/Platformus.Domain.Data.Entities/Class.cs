@@ -6,6 +6,9 @@ using ExtCore.Data.Entities.Abstractions;
 
 namespace Platformus.Domain.Data.Entities
 {
+  /// <summary>
+  /// Represents a class. The classes are used to describe the Platformus data model.
+  /// </summary>
   public class Class : IEntity
   {
     public int Id { get; set; }
@@ -17,7 +20,7 @@ namespace Platformus.Domain.Data.Entities
 
     public virtual Class Parent { get; set; }
     public virtual ICollection<Tab> Tabs { get; set; }
-    //public virtual ICollection<Member> Members { get; set; }
+    public virtual ICollection<Member> Members { get; set; }
     public virtual ICollection<Object> Objects { get; set; }
   }
 }

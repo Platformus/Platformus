@@ -7,6 +7,9 @@ using ExtCore.Data.Entities.Abstractions;
 
 namespace Platformus.Security.Data.Entities
 {
+  /// <summary>
+  /// Represents a user. The user is the central unit in the Platformus authentication and authorization mechanism.
+  /// </summary>
   public class User : IEntity
   {
     public int Id { get; set; }

@@ -7,6 +7,10 @@ using Platformus.Globalization.Data.Entities;
 
 namespace Platformus.Forms.Data.Entities
 {
+  /// <summary>
+  /// Represents a form. The forms are used to render the forms on the frontend.
+  /// They group the fields using the unique code.
+  /// </summary>
   public class Form : IEntity
   {
     public int Id { get; set; }

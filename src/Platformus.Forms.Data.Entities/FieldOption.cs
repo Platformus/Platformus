@@ -6,6 +6,9 @@ using Platformus.Globalization.Data.Entities;
 
 namespace Platformus.Forms.Data.Entities
 {
+  /// <summary>
+  /// Represents a field option. The field options are used to build the fields.
+  /// </summary>
   public class FieldOption : IEntity
   {
     public int Id { get; set; }

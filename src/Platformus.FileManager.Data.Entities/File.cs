@@ -5,6 +5,9 @@ using ExtCore.Data.Entities.Abstractions;
 
 namespace Platformus.FileManager.Data.Entities
 {
+  /// <summary>
+  /// Represents a file. The files are used to store the information about the files that are loaded by the users.
+  /// </summary>
   public class File : IEntity
   {
     public int Id { get; set; }

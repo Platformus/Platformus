@@ -6,6 +6,9 @@ using ExtCore.Data.Entities.Abstractions;
 
 namespace Platformus.Domain.Data.Entities
 {
+  /// <summary>
+  /// Represents a data type. The data types are used to specify, how the object property should be displayed and edited.
+  /// </summary>
   public class DataType : IEntity
   {
     public int Id { get; set; }

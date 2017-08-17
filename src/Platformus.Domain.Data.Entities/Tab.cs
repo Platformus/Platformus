@@ -5,6 +5,9 @@ using ExtCore.Data.Entities.Abstractions;
 
 namespace Platformus.Domain.Data.Entities
 {
+  /// <summary>
+  /// Represents a tab. The tabs are used to group the members.
+  /// </summary>
   public class Tab : IEntity
   {
     public int Id { get; set; }

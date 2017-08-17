@@ -5,6 +5,10 @@ using ExtCore.Data.Entities.Abstractions;
 
 namespace Platformus.Security.Data.Entities
 {
+  /// <summary>
+  /// Represents a permission. The permissions are used to restrict access to the different web application resources.
+  /// They can be grouped using the groups, and then assigned to a user.
+  /// </summary>
   public class Permission : IEntity
   {
     public int Id { get; set; }

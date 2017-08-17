@@ -5,6 +5,10 @@ using ExtCore.Data.Entities.Abstractions;
 
 namespace Platformus.Globalization.Data.Entities
 {
+  /// <summary>
+  /// Represents a localization. The localizations are used to store the localized text value for the given
+  /// dictionary and culture.
+  /// </summary>
   public class Localization : IEntity
   {
     public int Id { get; set; }

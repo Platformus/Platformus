@@ -5,6 +5,10 @@ using ExtCore.Data.Entities.Abstractions;
 
 namespace Platformus.Domain.Data.Entities
 {
+  /// <summary>
+  /// Represents a relation between two objects. The relations are used to connect primary and foreign objects and
+  /// the corresponding member.
+  /// </summary>
   public class Relation : IEntity
   {
     public int Id { get; set; }

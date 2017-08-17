@@ -6,6 +6,10 @@ using Platformus.Globalization.Data.Entities;
 
 namespace Platformus.Domain.Data.Entities
 {
+  /// <summary>
+  /// The serialized object contains the object and corresponding properties data inside the single object.
+  /// This reduces the number of storage read operations while object rendering.
+  /// </summary>
   public class SerializedObject : IEntity
   {
     public int CultureId { get; set; }

@@ -6,6 +6,9 @@ using ExtCore.Data.Entities.Abstractions;
 
 namespace Platformus.Routing.Data.Entities
 {
+  /// <summary>
+  /// Represents an endpoint. The endpoints are used to combine URL template with corresponding C# handler class.
+  /// </summary>
   public class Endpoint : IEntity
   {
     public int Id { get; set; }

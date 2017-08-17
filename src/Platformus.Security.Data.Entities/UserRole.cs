@@ -5,6 +5,9 @@ using ExtCore.Data.Entities.Abstractions;
 
 namespace Platformus.Security.Data.Entities
 {
+  /// <summary>
+  /// Represents a many-to-many relationship between the users and roles.
+  /// </summary>
   public class UserRole : IEntity
   {
     public int UserId { get; set; }

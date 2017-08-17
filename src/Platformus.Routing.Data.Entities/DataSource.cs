@@ -5,6 +5,10 @@ using ExtCore.Data.Entities.Abstractions;
 
 namespace Platformus.Routing.Data.Entities
 {
+  /// <summary>
+  /// Represents a data source. The data sources are used by the endpoints to load (or generate) data
+  /// that is required to process the requests.
+  /// </summary>
   public class DataSource : IEntity
   {
     public int Id { get; set; }

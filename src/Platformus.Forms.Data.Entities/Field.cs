@@ -7,6 +7,9 @@ using Platformus.Globalization.Data.Entities;
 
 namespace Platformus.Forms.Data.Entities
 {
+  /// <summary>
+  /// Represents a field. The fields are used to build the forms.
+  /// </summary>
   public class Field : IEntity
   {
     public int Id { get; set; }

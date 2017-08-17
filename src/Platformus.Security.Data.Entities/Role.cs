@@ -5,6 +5,9 @@ using ExtCore.Data.Entities.Abstractions;
 
 namespace Platformus.Security.Data.Entities
 {
+  /// <summary>
+  /// Represents a role. The roles are used to group the permissions and assign them to the users.
+  /// </summary>
   public class Role : IEntity
   {
     public int Id { get; set; }

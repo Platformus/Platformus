@@ -7,6 +7,10 @@ using Platformus.Globalization.Data.Entities;
 
 namespace Platformus.Menus.Data.Entities
 {
+  /// <summary>
+  /// Represents a menu. The menus are used to render the menus on the frontend.
+  /// They group the menu items using the unique code.
+  /// </summary>
   public class Menu : IEntity
   {
     public int Id { get; set; }

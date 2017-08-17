@@ -18,6 +18,7 @@ namespace Platformus.Domain.Data.EntityFramework.PostgreSql
           etb.Property(e => e.Code).IsRequired().HasMaxLength(32);
           etb.Property(e => e.Name).IsRequired().HasMaxLength(64);
           etb.Property(e => e.PluralizedName).IsRequired().HasMaxLength(64);
+          etb.HasMany(e => e.Members).WithOne(e => e.Class).HasForeignKey(e => e.ClassId);
           etb.ForNpgsqlToTable("Classes");
         }
       );

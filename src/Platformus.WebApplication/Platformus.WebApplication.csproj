@@ -13,9 +13,9 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="ExtCore.Data" Version="2.0.0" />
-    <PackageReference Include="ExtCore.Mvc" Version="2.0.0" />
-    <PackageReference Include="ExtCore.WebApplication" Version="2.0.0" />
+    <PackageReference Include="ExtCore.Data" Version="2.1.0-beta2" />
+    <PackageReference Include="ExtCore.Mvc" Version="2.1.0-beta2" />
+    <PackageReference Include="ExtCore.WebApplication" Version="2.1.0-beta2" />
   </ItemGroup>
 
 </Project>

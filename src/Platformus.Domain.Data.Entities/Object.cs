@@ -6,6 +6,10 @@ using ExtCore.Data.Entities.Abstractions;
 
 namespace Platformus.Domain.Data.Entities
 {
+  /// <summary>
+  /// Represents an object. The object is the central unit in the Platformus data model.
+  /// They are described by the classes and members and store the data using the properties.
+  /// </summary>
   public class Object : IEntity
   {
     public int Id { get; set; }

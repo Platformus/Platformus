@@ -5,6 +5,9 @@ using ExtCore.Data.Entities.Abstractions;
 
 namespace Platformus.Domain.Data.Entities
 {
+  /// <summary>
+  /// Represents a member. The members are used to describe which properties the objects of a given class should have.
+  /// </summary>
   public class Member : IEntity
   {
     public int Id { get; set; }

@@ -6,6 +6,9 @@ using Platformus.Security.Data.Entities;
 
 namespace Platformus.Routing.Data.Entities
 {
+  /// <summary>
+  /// Represents a many-to-many relationship between the endpoints and permissions.
+  /// </summary>
   public class EndpointPermission : IEntity
   {
     public int EndpointId { get; set; }

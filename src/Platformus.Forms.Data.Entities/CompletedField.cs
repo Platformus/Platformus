@@ -5,6 +5,9 @@ using ExtCore.Data.Entities.Abstractions;
 
 namespace Platformus.Forms.Data.Entities
 {
+  /// <summary>
+  /// Represents a completed field. The completed fields are used to store the user input for further processing.
+  /// </summary>
   public class CompletedField : IEntity
   {
     public int Id { get; set; }

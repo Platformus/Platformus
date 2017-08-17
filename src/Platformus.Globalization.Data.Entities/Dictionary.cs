@@ -6,6 +6,10 @@ using ExtCore.Data.Entities.Abstractions;
 
 namespace Platformus.Globalization.Data.Entities
 {
+  /// <summary>
+  /// Represents a dictionary. The dictionaries are used to group the localizations of all the
+  /// localizable properties of the entities.
+  /// </summary>
   public class Dictionary : IEntity
   {
     public int Id { get; set; }
