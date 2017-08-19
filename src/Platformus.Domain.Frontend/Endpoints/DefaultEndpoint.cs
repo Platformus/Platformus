@@ -6,7 +6,6 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Routing;
 using Microsoft.Extensions.DependencyInjection;
 using Platformus.Barebone;
-using Platformus.Domain.DataSources;
 using Platformus.Routing.Data.Abstractions;
 using Platformus.Routing.Data.Entities;
 using Platformus.Routing.DataSources;
@@ -16,7 +15,7 @@ namespace Platformus.Domain.Frontend
 {
   public class DefaultEndpoint : EndpointBase
   {
-    public override IEnumerable<EndpointParameterGroup> EndpointParameterGroups =>
+    public override IEnumerable<EndpointParameterGroup> ParameterGroups =>
       new EndpointParameterGroup[]
       {
         new EndpointParameterGroup(
@@ -28,23 +27,23 @@ namespace Platformus.Domain.Frontend
 
     public override string Description => "Returns specified view with the view model populated using the data sources.";
 
-    public override IActionResult Invoke(IRequestHandler requestHandler, Endpoint endpoint, IEnumerable<KeyValuePair<string, string>> parameters)
+    protected override IActionResult GetActionResult(IRequestHandler requestHandler, Endpoint endpoint, IEnumerable<KeyValuePair<string, string>> arguments)
     {
       string url = string.Format("/{0}", requestHandler.HttpContext.GetRouteValue("url"));
 
-      if (this.GetBoolArgument(ParametersParser.Parse(endpoint.Parameters), "UseCaching"))
+      if (this.GetBoolParameterValue("UseCaching"))
         return requestHandler.HttpContext.RequestServices.GetService<ICache>().GetPageActionResultWithDefaultValue(
-          url + requestHandler.HttpContext.Request.QueryString, () => this.GetActionResult(requestHandler, endpoint, parameters, url)
+          url + requestHandler.HttpContext.Request.QueryString, () => this.GetActionResult(requestHandler, endpoint, arguments, url)
         );
 
-      return this.GetActionResult(requestHandler, endpoint, parameters, url);
+      return this.GetActionResult(requestHandler, endpoint, arguments, url);
     }
 
-    private IActionResult GetActionResult(IRequestHandler requestHandler, Endpoint endpoint, IEnumerable<KeyValuePair<string, string>> parameters, string url)
+    private IActionResult GetActionResult(IRequestHandler requestHandler, Endpoint endpoint, IEnumerable<KeyValuePair<string, string>> arguments, string url)
     {
       dynamic viewModel = this.CreateViewModel(requestHandler, endpoint);
 
-      return (requestHandler as Platformus.Barebone.Frontend.Controllers.ControllerBase).View(this.GetStringArgument(ParametersParser.Parse(endpoint.Parameters), "ViewName"), viewModel);
+      return (requestHandler as Platformus.Barebone.Frontend.Controllers.ControllerBase).View(this.GetStringParameterValue("ViewName"), viewModel);
     }
 
     private dynamic CreateViewModel(IRequestHandler requestHandler, Endpoint endpoint)
@@ -61,17 +60,7 @@ namespace Platformus.Domain.Frontend
     {
       IDataSource dataSourceInstance = StringActivator.CreateInstance<IDataSource>(dataSource.CSharpClassName);
 
-      if (dataSourceInstance is ISingleObjectDataSource)
-        return (dataSourceInstance as ISingleObjectDataSource).GetSerializedObject(
-          requestHandler, ParametersParser.Parse(dataSource.Parameters)
-        );
-
-      if (dataSourceInstance is IMultipleObjectsDataSource)
-        return (dataSourceInstance as IMultipleObjectsDataSource).GetSerializedObjects(
-          requestHandler, ParametersParser.Parse(dataSource.Parameters)
-        );
-
-      return null;
+      return dataSourceInstance.GetData(requestHandler, dataSource);
     }
   }
 }

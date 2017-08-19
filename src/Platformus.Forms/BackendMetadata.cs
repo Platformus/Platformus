@@ -8,6 +8,17 @@ namespace Platformus.Forms
 {
   public class BackendMetadata : BackendMetadataBase
   {
+    public override IEnumerable<BackendScript> BackendScripts
+    {
+      get
+      {
+        return new BackendScript[]
+        {
+          new BackendScript("/wwwroot.areas.backend.js.platformus.forms.min.js", 3000)
+        };
+      }
+    }
+
     public override IEnumerable<BackendMenuGroup> BackendMenuGroups
     {
       get

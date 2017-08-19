@@ -13,7 +13,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <EmbeddedResource Include="Areas\Backend\Views\**" />
+    <EmbeddedResource Include="Areas\Backend\Views\**;wwwroot\**" />
   </ItemGroup>
 
   <ItemGroup>
@@ -25,6 +25,14 @@
   <ItemGroup>
     <PackageReference Include="ExtCore.Data.Abstractions" Version="2.1.0-beta2" />
     <PackageReference Include="ExtCore.Infrastructure" Version="2.1.0-beta2" />
+  </ItemGroup>
+
+  <Target Name="PrecompileScript" BeforeTargets="BeforeBuild">
+    <Exec Command="dotnet bundle" />
+  </Target>
+
+  <ItemGroup>
+    <DotNetCliToolReference Include="BundlerMinifier.Core" Version="2.2.301" />
   </ItemGroup>
 
 </Project>

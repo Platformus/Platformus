@@ -14,14 +14,14 @@ namespace Platformus.Domain.DataSources
 {
   public abstract class DataSourceBase : Platformus.Routing.DataSources.DataSourceBase
   {
-    protected Params GetParams(IRequestHandler requestHandler, KeyValuePair<string, string>[] args, bool enableSorting)
+    protected Params GetParams(IRequestHandler requestHandler, bool enableSorting)
     {
       Sorting sorting = null;
 
       if (enableSorting)
       {
-        int sortingMemberId = this.GetIntArgument(args, "SortingMemberId");
-        string sortingDirection = this.GetStringArgument(args, "SortingDirection");
+        int sortingMemberId = this.GetIntParameterValue("SortingMemberId");
+        string sortingDirection = this.GetStringParameterValue("SortingDirection");
         Member member = requestHandler.Storage.GetRepository<IMemberRepository>().WithKey(sortingMemberId);
         DataType dataType = requestHandler.Storage.GetRepository<IDataTypeRepository>().WithKey((int)member.PropertyDataTypeId);
 
@@ -30,22 +30,22 @@ namespace Platformus.Domain.DataSources
 
       Paging paging = null;
 
-      if (this.HasArgument(args, "EnablePaging") && this.GetBoolArgument(args, "EnablePaging"))
+      if (this.HasParameter("EnablePaging") && this.GetBoolParameterValue("EnablePaging"))
       {
-        int.TryParse(requestHandler.HttpContext.Request.Query[this.GetStringArgument(args, "SkipUrlParameterName")], out int skip);
-        int.TryParse(requestHandler.HttpContext.Request.Query[this.GetStringArgument(args, "TakeUrlParameterName")], out int take);
+        int.TryParse(requestHandler.HttpContext.Request.Query[this.GetStringParameterValue("SkipUrlParameterName")], out int skip);
+        int.TryParse(requestHandler.HttpContext.Request.Query[this.GetStringParameterValue("TakeUrlParameterName")], out int take);
 
         if (take == 0)
-          take = this.GetIntArgument(args, "DefaultTake");
+          take = this.GetIntParameterValue("DefaultTake");
 
         paging = new Paging(skip, take);
       }
 
       Filtering filtering = null;
 
-      if (this.HasArgument(args, "EnableFiltering") && this.GetBoolArgument(args, "EnableFiltering"))
+      if (this.HasParameter("EnableFiltering") && this.GetBoolParameterValue("EnableFiltering"))
       {
-        filtering = new Filtering(requestHandler.HttpContext.Request.Query[this.GetStringArgument(args, "QueryUrlParameterName")]);
+        filtering = new Filtering(requestHandler.HttpContext.Request.Query[this.GetStringParameterValue("QueryUrlParameterName")]);
       }
 
       return new Params(filtering, sorting, paging);
@@ -76,12 +76,12 @@ namespace Platformus.Domain.DataSources
       return viewModelBuilder.Build();
     }
 
-    protected IEnumerable<dynamic> LoadNestedObjects(IRequestHandler requestHandler, IEnumerable<dynamic> objects, KeyValuePair<string, string>[] args)
+    protected IEnumerable<dynamic> LoadNestedObjects(IRequestHandler requestHandler, IEnumerable<dynamic> objects)
     {
-      if (!this.HasArgument(args, "NestedXPaths"))
+      if (!this.HasParameter("NestedXPaths"))
         return objects;
 
-      string nestedXPaths = this.GetStringArgument(args, "NestedXPaths");
+      string nestedXPaths = this.GetStringParameterValue("NestedXPaths");
 
       if (string.IsNullOrEmpty(nestedXPaths))
         return objects;

@@ -22,7 +22,7 @@ namespace Platformus.Forms.Backend.ViewModels.Shared
       {
         Id = form.Id,
         Name = this.GetLocalizationValue(form.NameId),
-        Email = form.Email,
+        ProduceCompletedForms = form.ProduceCompletedForms,
         Fields = this.RequestHandler.Storage.GetRepository<IFieldRepository>().FilteredByFormId(form.Id).ToList().Select(
           f => new FieldViewModelFactory(this.RequestHandler).Create(f)
         )

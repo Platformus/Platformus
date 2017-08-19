@@ -60,29 +60,29 @@ namespace Platformus.Routing.Backend.ViewModels.Endpoints
 
     private IEnumerable<dynamic> GetEndpoints()
     {
-      return ExtensionManager.GetInstances<IEndpoint>().Where(m => !m.GetType().GetTypeInfo().IsAbstract).Select(
-        m => new {
-          cSharpClassName = m.GetType().FullName,
-          endpointParameterGroups = m.EndpointParameterGroups.Select(
-            mpg => new
+      return ExtensionManager.GetInstances<IEndpoint>().Where(e => !e.GetType().GetTypeInfo().IsAbstract).Select(
+        e => new {
+          cSharpClassName = e.GetType().FullName,
+          endpointParameterGroups = e.ParameterGroups.Select(
+            epg => new
             {
-              name = mpg.Name,
-              endpointParameters = mpg.EndpointParameters.Select(
-                mp => new
+              name = epg.Name,
+              endpointParameters = epg.Parameters.Select(
+                ep => new
                 {
-                  code = mp.Code,
-                  name = mp.Name,
-                  javaScriptEditorClassName = mp.JavaScriptEditorClassName,
-                  options = mp.Options == null ? null : mp.Options.Select(
+                  code = ep.Code,
+                  name = ep.Name,
+                  javaScriptEditorClassName = ep.JavaScriptEditorClassName,
+                  options = ep.Options == null ? null : ep.Options.Select(
                     o => new { text = o.Text, value = o.Value }
                   ),
-                  defaultValue = mp.DefaultValue,
-                  isRequired = mp.IsRequired
+                  defaultValue = ep.DefaultValue,
+                  isRequired = ep.IsRequired
                 }
               )
             }
           ),
-          description = m.Description
+          description = e.Description
         }
       );
     }

@@ -8,13 +8,14 @@ using Platformus.Barebone.Primitives;
 using Platformus.Domain.Data.Abstractions;
 using Platformus.Domain.Data.Entities;
 using Platformus.Globalization;
+using Platformus.Routing.Data.Entities;
 using Platformus.Routing.DataSources;
 
 namespace Platformus.Domain.DataSources
 {
-  public class ObjectsDataSource : DataSourceBase, IMultipleObjectsDataSource
+  public class ObjectsDataSource : DataSourceBase
   {
-    public override IEnumerable<DataSourceParameterGroup> DataSourceParameterGroups =>
+    public override IEnumerable<DataSourceParameterGroup> ParameterGroups =>
       new DataSourceParameterGroup[]
       {
         new DataSourceParameterGroup(
@@ -54,39 +55,39 @@ namespace Platformus.Domain.DataSources
 
     public override string Description => "Loads objects of the given class. Supports filtering, sorting, and paging.";
 
-    public IEnumerable<dynamic> GetSerializedObjects(IRequestHandler requestHandler, params KeyValuePair<string, string>[] args)
+    protected override dynamic GetRawData(IRequestHandler requestHandler, DataSource dataSource)
     {
-      if (!this.HasArgument(args, "ClassId"))
+      if (!this.HasParameter("ClassId"))
         return new SerializedObject[] { };
 
       IEnumerable<dynamic> results = null;
 
-      if (!this.HasArgument(args, "SortingMemberId") || !this.HasArgument(args, "SortingDirection"))
-        results = this.GetUnsortedSerializedObjects(requestHandler, args);
+      if (!this.HasParameter("SortingMemberId") || !this.HasParameter("SortingDirection"))
+        results = this.GetUnsortedSerializedObjects(requestHandler);
 
-      else results = this.GetSortedSerializedObjects(requestHandler, args);
+      else results = this.GetSortedSerializedObjects(requestHandler);
 
-      results = this.LoadNestedObjects(requestHandler, results, args);
+      results = this.LoadNestedObjects(requestHandler, results);
       return results;
     }
 
-    private IEnumerable<dynamic> GetUnsortedSerializedObjects(IRequestHandler requestHandler, params KeyValuePair<string, string>[] args)
+    private IEnumerable<dynamic> GetUnsortedSerializedObjects(IRequestHandler requestHandler)
     {
       IEnumerable<SerializedObject> serializedObjects = requestHandler.Storage.GetRepository<ISerializedObjectRepository>().FilteredByCultureIdAndClassId(
         CultureManager.GetCurrentCulture(requestHandler.Storage).Id,
-        this.GetIntArgument(args, "ClassId"),
-        this.GetParams(requestHandler, args, false)
+        this.GetIntParameterValue("ClassId"),
+        this.GetParams(requestHandler, false)
       ).ToList();
 
       return serializedObjects.Select(so => this.CreateSerializedObjectViewModel(so));
     }
 
-    private IEnumerable<dynamic> GetSortedSerializedObjects(IRequestHandler requestHandler, params KeyValuePair<string, string>[] args)
+    private IEnumerable<dynamic> GetSortedSerializedObjects(IRequestHandler requestHandler)
     {
       IEnumerable<SerializedObject> serializedObjects = requestHandler.Storage.GetRepository<ISerializedObjectRepository>().FilteredByCultureIdAndClassId(
         CultureManager.GetCurrentCulture(requestHandler.Storage).Id,
-        this.GetIntArgument(args, "ClassId"),
-        this.GetParams(requestHandler, args, true)
+        this.GetIntParameterValue("ClassId"),
+        this.GetParams(requestHandler, true)
       ).ToList();
 
       return serializedObjects.Select(so => this.CreateSerializedObjectViewModel(so));

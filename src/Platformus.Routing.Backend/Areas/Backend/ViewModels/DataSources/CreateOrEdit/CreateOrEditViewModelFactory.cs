@@ -55,11 +55,11 @@ namespace Platformus.Routing.Backend.ViewModels.DataSources
       return ExtensionManager.GetInstances<IDataSource>().Where(ds => !ds.GetType().GetTypeInfo().IsAbstract).Select(
         ds => new {
           cSharpClassName = ds.GetType().FullName,
-          dataSourceParameterGroups = ds.DataSourceParameterGroups.Select(
+          dataSourceParameterGroups = ds.ParameterGroups.Select(
             dspg => new
             {
               name = dspg.Name,
-              dataSourceParameters = dspg.DataSourceParameters.Select(
+              dataSourceParameters = dspg.Parameters.Select(
                 dsp => new
                 {
                   code = dsp.Code,

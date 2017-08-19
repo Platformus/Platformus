@@ -10,6 +10,6 @@ namespace Platformus.Routing.EndpointResolvers
   public interface IEndpointResolver
   {
     Endpoint GetEndpoint(IRequestHandler requestHandler, string url);
-    IEnumerable<KeyValuePair<string, string>> GetParameters(string urlTemplate, string url);
+    IEnumerable<KeyValuePair<string, string>> GetArguments(string urlTemplate, string url);
   }
 }

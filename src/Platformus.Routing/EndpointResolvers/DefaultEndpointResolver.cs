@@ -24,7 +24,7 @@ namespace Platformus.Routing.EndpointResolvers
       return null;
     }
 
-    public IEnumerable<KeyValuePair<string, string>> GetParameters(string urlTemplate, string url)
+    public IEnumerable<KeyValuePair<string, string>> GetArguments(string urlTemplate, string url)
     {
       if (string.IsNullOrEmpty(urlTemplate) || string.IsNullOrEmpty(url))
         return new KeyValuePair<string, string>[] { };

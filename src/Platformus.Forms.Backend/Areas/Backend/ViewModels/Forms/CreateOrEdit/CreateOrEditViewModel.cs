@@ -25,14 +25,17 @@ namespace Platformus.Forms.Backend.ViewModels.Forms
     public string Name { get; set; }
     public IEnumerable<Localization> NameLocalizations { get; set; }
 
-    [Display(Name = "Email")]
+    [Display(Name = "Produce completed forms")]
     [Required]
-    [StringLength(64)]
-    public string Email { get; set; }
+    public bool ProduceCompletedForms { get; set; }
 
-    [Display(Name = "Redirect URL")]
+    [Display(Name = "C# class name")]
     [Required]
     [StringLength(128)]
-    public string RedirectUrl { get; set; }
+    public string CSharpClassName { get; set; }
+    public IEnumerable<Option> CSharpClassNameOptions { get; set; }
+
+    public string Parameters { get; set; }
+    public IEnumerable<dynamic> FormHandlers { get; set; }
   }
 }

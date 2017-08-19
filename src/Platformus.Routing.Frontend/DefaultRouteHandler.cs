@@ -43,7 +43,7 @@ namespace Platformus.Routing.Frontend
       if (endpointInstance == null)
         return null;
 
-      return endpointInstance.Invoke(requestHandler, endpoint, endpointResolver.GetParameters(endpoint.UrlTemplate, url));
+      return endpointInstance.Invoke(requestHandler, endpoint, endpointResolver.GetArguments(endpoint.UrlTemplate, url));
     }
 
     private IEndpoint GetEndpointInstance(Endpoint endpoint)

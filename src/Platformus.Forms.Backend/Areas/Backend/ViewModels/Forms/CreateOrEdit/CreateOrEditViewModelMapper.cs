@@ -23,8 +23,9 @@ namespace Platformus.Forms.Backend.ViewModels.Forms
         form = this.RequestHandler.Storage.GetRepository<IFormRepository>().WithKey((int)createOrEdit.Id);
 
       form.Code = createOrEdit.Code;
-      form.Email = createOrEdit.Email;
-      form.RedirectUrl = createOrEdit.RedirectUrl;
+      form.ProduceCompletedForms = createOrEdit.ProduceCompletedForms;
+      form.CSharpClassName = createOrEdit.CSharpClassName;
+      form.Parameters = createOrEdit.Parameters;
       return form;
     }
   }

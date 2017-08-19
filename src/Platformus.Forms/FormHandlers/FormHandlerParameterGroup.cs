@@ -3,14 +3,14 @@
 
 using System.Collections.Generic;
 
-namespace Platformus.Routing.Endpoints
+namespace Platformus.Forms.FormHandlers
 {
-  public class EndpointParameterGroup
+  public class FormHandlerParameterGroup
   {
     public string Name { get; set; }
-    public IEnumerable<EndpointParameter> Parameters { get; set; }
+    public IEnumerable<FormHandlerParameter> Parameters { get; set; }
 
-    public EndpointParameterGroup(string name, params EndpointParameter[] parameters)
+    public FormHandlerParameterGroup(string name, params FormHandlerParameter[] parameters)
     {
       this.Name = name;
       this.Parameters = parameters;

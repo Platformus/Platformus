@@ -10,8 +10,9 @@ namespace Platformus.Routing.Endpoints
 {
   public interface IEndpoint
   {
-    IEnumerable<EndpointParameterGroup> EndpointParameterGroups { get; }
+    IEnumerable<EndpointParameterGroup> ParameterGroups { get; }
     string Description { get; }
-    IActionResult Invoke(IRequestHandler requestHandler, Endpoint endpoint, IEnumerable<KeyValuePair<string, string>> parameters);
+
+    IActionResult Invoke(IRequestHandler requestHandler, Endpoint endpoint, IEnumerable<KeyValuePair<string, string>> arguments);
   }
 }

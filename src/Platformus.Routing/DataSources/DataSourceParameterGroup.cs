@@ -8,12 +8,12 @@ namespace Platformus.Routing.DataSources
   public class DataSourceParameterGroup
   {
     public string Name { get; set; }
-    public IEnumerable<DataSourceParameter> DataSourceParameters { get; set; }
+    public IEnumerable<DataSourceParameter> Parameters { get; set; }
 
-    public DataSourceParameterGroup(string name, params DataSourceParameter[] dataSourceParameters)
+    public DataSourceParameterGroup(string name, params DataSourceParameter[] parameters)
     {
       this.Name = name;
-      this.DataSourceParameters = dataSourceParameters;
+      this.Parameters = parameters;
     }
   }
 }

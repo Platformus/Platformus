@@ -16,8 +16,9 @@ namespace Platformus.Forms.Data.Entities
     public int Id { get; set; }
     public string Code { get; set; }
     public int NameId { get; set; }
-    public string Email { get; set; }
-    public string RedirectUrl { get; set; }
+    public bool ProduceCompletedForms { get; set; }
+    public string CSharpClassName { get; set; }
+    public string Parameters { get; set; }
 
     public virtual Dictionary Name { get; set; }
     public virtual ICollection<Field> Fields { get; set; }

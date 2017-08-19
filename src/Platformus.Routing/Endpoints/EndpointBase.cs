@@ -11,49 +11,56 @@ namespace Platformus.Routing.Endpoints
 {
   public abstract class EndpointBase : IEndpoint
   {
-    private Dictionary<string, string> args;
+    private Endpoint endpoint;
+    private Dictionary<string, string> parameterValuesByCodes;
 
-    public virtual IEnumerable<EndpointParameterGroup> EndpointParameterGroups => new EndpointParameterGroup[] { };
+    public virtual IEnumerable<EndpointParameterGroup> ParameterGroups => new EndpointParameterGroup[] { };
     public virtual string Description => null;
 
-    public abstract IActionResult Invoke(IRequestHandler requestHandler, Endpoint endpoint, IEnumerable<KeyValuePair<string, string>> parameters);
-
-    protected bool HasArgument(KeyValuePair<string, string>[] args, string key)
+    public IActionResult Invoke(IRequestHandler requestHandler, Endpoint endpoint, IEnumerable<KeyValuePair<string, string>> arguments)
     {
-      this.CacheArguments(args);
-      return this.args.ContainsKey(key);
+      this.endpoint = endpoint;
+      return this.GetActionResult(requestHandler, endpoint, arguments);
     }
 
-    protected int GetIntArgument(KeyValuePair<string, string>[] args, string key)
-    {
-      this.CacheArguments(args);
+    protected abstract IActionResult GetActionResult(IRequestHandler requestHandler, Endpoint endpoint, IEnumerable<KeyValuePair<string, string>> arguments);
 
-      if (int.TryParse(this.args[key], out int result))
+    protected bool HasParameter(string key)
+    {
+      this.CacheParameterValuesByCodes();
+      return this.parameterValuesByCodes.ContainsKey(key);
+    }
+
+    protected int GetIntParameterValue(string key)
+    {
+      this.CacheParameterValuesByCodes();
+
+      if (int.TryParse(this.parameterValuesByCodes[key], out int result))
         return result;
 
       return 0;
     }
 
-    protected bool GetBoolArgument(KeyValuePair<string, string>[] args, string key)
+    protected bool GetBoolParameterValue(string key)
     {
-      this.CacheArguments(args);
+      this.CacheParameterValuesByCodes();
 
-      if (bool.TryParse(this.args[key], out bool result))
+      if (bool.TryParse(this.parameterValuesByCodes[key], out bool result))
         return result;
 
       return false;
     }
 
-    protected string GetStringArgument(KeyValuePair<string, string>[] args, string key)
+    protected string GetStringParameterValue(string key)
     {
-      this.CacheArguments(args);
-      return this.args[key];
+      this.CacheParameterValuesByCodes();
+      return this.parameterValuesByCodes[key];
     }
 
-    private void CacheArguments(KeyValuePair<string, string>[] args)
+    private void CacheParameterValuesByCodes()
     {
-      if (this.args == null)
-        this.args = args.ToDictionary(a => a.Key, a => a.Value);
+      if (this.parameterValuesByCodes == null)
+        this.parameterValuesByCodes = ParametersParser.Parse(this.endpoint.Parameters).ToDictionary(a => a.Key, a => a.Value);
     }
   }
 }
