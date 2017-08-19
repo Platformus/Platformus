@@ -481,8 +481,9 @@ CREATE TABLE "Forms" (
     "Id" serial NOT NULL,
     "Code" text NOT NULL,
     "NameId" integer NOT NULL,
-    "Email" text NOT NULL,
-	"RedirectUrl" text NOT NULL,
+	"ProduceCompletedForms" boolean NOT NULL,
+    "CSharpClassName" text NOT NULL,
+	"Parameters" text,
     CONSTRAINT "PK_Forms" PRIMARY KEY ("Id"),
     CONSTRAINT "FK_Forms_Dictionaries" FOREIGN KEY ("NameId")
         REFERENCES public."Dictionaries" ("Id") MATCH SIMPLE

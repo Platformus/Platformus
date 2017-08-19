@@ -73,8 +73,10 @@ INSERT INTO "DataTypes" VALUES (5,'datetime','date','Date',5);
 --
 INSERT INTO "FieldTypes" VALUES (1,'TextBox','Text box',1);
 INSERT INTO "FieldTypes" VALUES (2,'TextArea','Text area',2);
-INSERT INTO "FieldTypes" VALUES (3,'DropDownList','Drop down list',3);
-INSERT INTO "FieldTypes" VALUES (4,'FileUpload','File upload',4);
+INSERT INTO "FieldTypes" VALUES (3,'Checkbox','Checkbox',3);
+INSERT INTO "FieldTypes" VALUES (4,'RadioButtonList','Radio button list',4);
+INSERT INTO "FieldTypes" VALUES (5,'DropDownList','Drop down list',5);
+INSERT INTO "FieldTypes" VALUES (6,'FileUpload','File upload',6);
 INSERT INTO "DataTypeParameters" VALUES (1,1,'checkbox','IsRequired','Is required');
 INSERT INTO "DataTypeParameters" VALUES (2,1,'numericTextBox','MaxLength','Max length');
 INSERT INTO "DataTypeParameters" VALUES (3,2,'checkbox','IsRequired','Is required');

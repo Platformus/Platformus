@@ -271,8 +271,9 @@ CREATE TABLE "Forms" (
 	"Id" INTEGER NOT NULL CONSTRAINT "PK_Form" PRIMARY KEY AUTOINCREMENT,
 	"Code" TEXT NOT NULL,
 	"NameId" INTEGER NOT NULL,
-	"Email" TEXT NOT NULL,
-	"RedirectUrl" TEXT NOT NULL,
+	"ProduceCompletedForms" INTEGER NOT NULL,
+	"CSharpClassName" TEXT NOT NULL,
+	"Parameters" TEXT,
 	CONSTRAINT "FK_Form_Dictionary_NameId" FOREIGN KEY ("NameId") REFERENCES "Dictionaries" ("Id")
 );
 CREATE TABLE "FieldTypes" (

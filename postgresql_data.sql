@@ -73,8 +73,10 @@ INSERT INTO public."DataTypes" ("Id","StorageDataType","JavaScriptEditorClassNam
 --
 INSERT INTO public."FieldTypes" ("Id","Code","Name","Position") VALUES (1,'TextBox','Text box',1);
 INSERT INTO public."FieldTypes" ("Id","Code","Name","Position") VALUES (2,'TextArea','Text area',2);
-INSERT INTO public."FieldTypes" ("Id","Code","Name","Position") VALUES (3,'DropDownList','Drop down list',3);
-INSERT INTO public."FieldTypes" ("Id","Code","Name","Position") VALUES (4,'FileUpload','File upload',4);
+INSERT INTO public."FieldTypes" ("Id","Code","Name","Position") VALUES (3,'Checkbox','Checkbox',3);
+INSERT INTO public."FieldTypes" ("Id","Code","Name","Position") VALUES (4,'RadioButtonList','Radio button list',4);
+INSERT INTO public."FieldTypes" ("Id","Code","Name","Position") VALUES (5,'DropDownList','Drop down list',5);
+INSERT INTO public."FieldTypes" ("Id","Code","Name","Position") VALUES (6,'FileUpload','File upload',6);
 INSERT INTO public."DataTypeParameters" ("Id","DataTypeId","JavaScriptEditorClassName","Code","Name") VALUES (1,1,'checkbox','IsRequired','Is required');
 INSERT INTO public."DataTypeParameters" ("Id","DataTypeId","JavaScriptEditorClassName","Code","Name") VALUES (2,1,'numericTextBox','MaxLength','Max length');
 INSERT INTO public."DataTypeParameters" ("Id","DataTypeId","JavaScriptEditorClassName","Code","Name") VALUES (3,2,'checkbox','IsRequired','Is required');

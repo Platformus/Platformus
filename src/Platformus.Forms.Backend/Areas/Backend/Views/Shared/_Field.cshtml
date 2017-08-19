@@ -9,7 +9,7 @@
     </div>
     @Model.Name <span class="marker marker--neutral">@Model.FieldType.Name</span>
   </div>
-  @if (this.Model.FieldType.Code == "DropDownList")
+  @if (this.Model.FieldType.Code == "RadioButtonList" || this.Model.FieldType.Code == "DropDownList")
   {
     <div class="tree__node-content">
       @foreach (var fieldOption in this.Model.FieldOptions)

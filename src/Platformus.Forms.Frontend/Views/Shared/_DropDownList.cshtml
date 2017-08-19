@@ -7,6 +7,6 @@
 <select class="field__drop-down-list drop-down-list" id="field@(this.Model.Id)" name="field@(this.Model.Id)" data-val="true"@Html.Raw(dataValRequiredAttribute)>
   @foreach (var fieldOption in this.Model.FieldOptions)
   {
-    @Html.Partial("_FieldOption", fieldOption)
+    <option>@fieldOption.Value</option>
   }
 </select>
