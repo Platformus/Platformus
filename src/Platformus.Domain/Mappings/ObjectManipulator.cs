@@ -87,9 +87,10 @@ namespace Platformus.Domain
       this.requestHandler.Storage.Save();
     }
 
-    public void CommitTransaction()
+    public int CommitTransaction()
     {
       // TODO: add transactions support to ExtCore
+      return this.objectId;
     }
 
     public void RollbackTransaction()

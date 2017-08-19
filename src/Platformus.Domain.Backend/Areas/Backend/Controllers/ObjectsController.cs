@@ -58,12 +58,7 @@ namespace Platformus.Domain.Backend.Controllers
         if (createOrEdit.Id == null)
           Event<IObjectCreatedEventHandler, IRequestHandler, Object>.Broadcast(this, @object);
 
-        else
-        {
-          Event<IObjectEditedEventHandler, IRequestHandler, Object, Object>.Broadcast(
-            this, this.Storage.GetRepository<IObjectRepository>().WithKey((int)createOrEdit.Id), @object
-          );
-        }
+        else Event<IObjectEditedEventHandler, IRequestHandler, Object>.Broadcast(this, @object);
 
         return this.Redirect(this.Request.CombineUrl("/backend/objects"));
       }

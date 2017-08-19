@@ -4,12 +4,14 @@
 using System.Collections.Generic;
 using System.Linq;
 using ExtCore.Data.Abstractions;
+using ExtCore.Events;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json.Linq;
 using Platformus.Barebone;
 using Platformus.Domain.Data.Abstractions;
 using Platformus.Domain.Data.Entities;
+using Platformus.Domain.Events;
 
 namespace Platformus.Domain.Api.Controllers
 {
@@ -72,7 +74,10 @@ namespace Platformus.Domain.Api.Controllers
         }
       }
 
-      objectManipulator.CommitTransaction();
+      int objectId = objectManipulator.CommitTransaction();
+      Object @object = this.Storage.GetRepository<IObjectRepository>().WithKey(objectId);
+
+      Event<IObjectCreatedEventHandler, IRequestHandler, Object>.Broadcast(this, @object);
     }
 
     [HttpPut("{id}")]
@@ -98,6 +103,7 @@ namespace Platformus.Domain.Api.Controllers
       }
 
       objectManipulator.CommitTransaction();
+      Event<IObjectEditedEventHandler, IRequestHandler, Object>.Broadcast(this, @object);
     }
 
     [HttpDelete("{id}")]
@@ -108,6 +114,7 @@ namespace Platformus.Domain.Api.Controllers
 
       this.Storage.GetRepository<IObjectRepository>().Delete(@object);
       this.Storage.Save();
+      Event<IObjectDeletedEventHandler, IRequestHandler, Object>.Broadcast(this, @object);
     }
 
     private Class GetValidatedClass(string classCode)

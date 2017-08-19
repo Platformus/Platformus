@@ -54,12 +54,7 @@ namespace Platformus.Forms.Backend.Controllers
         if (createOrEdit.Id == null)
           Event<IFormCreatedEventHandler, IRequestHandler, Form>.Broadcast(this, form);
 
-        else
-        {
-          Event<IFormEditedEventHandler, IRequestHandler, Form, Form>.Broadcast(
-            this, this.Storage.GetRepository<IFormRepository>().WithKey((int)createOrEdit.Id), form
-          );
-        }
+        else Event<IFormEditedEventHandler, IRequestHandler, Form>.Broadcast(this, form);
 
         return this.RedirectToAction("Index");
       }

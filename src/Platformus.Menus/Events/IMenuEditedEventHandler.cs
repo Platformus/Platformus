@@ -7,7 +7,7 @@ using Platformus.Menus.Data.Entities;
 
 namespace Platformus.Menus.Events
 {
-  public interface IMenuEditedEventHandler : IEventHandler<IRequestHandler, Menu, Menu>
+  public interface IMenuEditedEventHandler : IEventHandler<IRequestHandler, Menu>
   {
   }
 }

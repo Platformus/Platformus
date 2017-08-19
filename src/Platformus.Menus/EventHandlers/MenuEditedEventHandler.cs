@@ -14,16 +14,12 @@ namespace Platformus.Menus.EventHandlers
   {
     public int Priority => 1000;
 
-    public void HandleEvent(IRequestHandler requestHandler, Menu oldMenu, Menu newMenu)
+    public void HandleEvent(IRequestHandler requestHandler, Menu menu)
     {
-      new SerializationManager(requestHandler).SerializeMenu(newMenu);
-
-      if (oldMenu != null)
-        foreach (Culture culture in CultureManager.GetNotNeutralCultures(requestHandler.Storage))
-          requestHandler.HttpContext.RequestServices.GetService<ICache>().RemoveMenuViewComponentResult(oldMenu.Code, culture.Code);
+      new SerializationManager(requestHandler).SerializeMenu(menu);
 
       foreach (Culture culture in CultureManager.GetNotNeutralCultures(requestHandler.Storage))
-        requestHandler.HttpContext.RequestServices.GetService<ICache>().RemoveMenuViewComponentResult(newMenu.Code, culture.Code);
+        requestHandler.HttpContext.RequestServices.GetService<ICache>().RemoveMenuViewComponentResult(menu.Code, culture.Code);
     }
   }
 }

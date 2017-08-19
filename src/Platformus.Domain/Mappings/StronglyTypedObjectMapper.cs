@@ -4,9 +4,11 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using ExtCore.Events;
 using Platformus.Barebone;
 using Platformus.Domain.Data.Abstractions;
 using Platformus.Domain.Data.Entities;
+using Platformus.Domain.Events;
 
 namespace Platformus.Domain
 {
@@ -60,7 +62,10 @@ namespace Platformus.Domain
       foreach (PropertyInfo propertyInfo in typeof(T).GetProperties())
         objectManipulator.SetPropertyValue(propertyInfo.Name, propertyInfo.GetValue(obj));
 
-      objectManipulator.CommitTransaction();
+      int objectId = objectManipulator.CommitTransaction();
+      Object @object = this.objectRepository.WithKey(objectId);
+
+      Event<IObjectCreatedEventHandler, IRequestHandler, Object>.Broadcast(this.requestHandler, @object);
     }
 
     public void Edit<T>(T obj)
@@ -75,6 +80,8 @@ namespace Platformus.Domain
         objectManipulator.SetPropertyValue(propertyInfo.Name, propertyInfo.GetValue(@object));
 
       objectManipulator.CommitTransaction();
+
+      Event<IObjectEditedEventHandler, IRequestHandler, Object>.Broadcast(this.requestHandler, @object);
     }
 
     public void Delete<T>(T obj)
@@ -84,6 +91,7 @@ namespace Platformus.Domain
 
       this.requestHandler.Storage.GetRepository<IObjectRepository>().Delete(@object);
       this.requestHandler.Storage.Save();
+      Event<IObjectDeletedEventHandler, IRequestHandler, Object>.Broadcast(this.requestHandler, @object);
     }
 
     private int GetId<T>(T @object)

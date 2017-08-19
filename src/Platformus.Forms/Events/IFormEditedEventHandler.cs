@@ -7,7 +7,7 @@ using Platformus.Forms.Data.Entities;
 
 namespace Platformus.Forms.Events
 {
-  public interface IFormEditedEventHandler : IEventHandler<IRequestHandler, Form, Form>
+  public interface IFormEditedEventHandler : IEventHandler<IRequestHandler, Form>
   {
   }
 }

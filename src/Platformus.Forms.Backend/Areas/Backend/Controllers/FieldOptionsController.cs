@@ -45,7 +45,7 @@ namespace Platformus.Forms.Backend.Controllers
         else this.Storage.GetRepository<IFieldOptionRepository>().Edit(fieldOption);
 
         this.Storage.Save();
-        Event<IFormEditedEventHandler, IRequestHandler, Form, Form>.Broadcast(this, null, this.GetForm(fieldOption));
+        Event<IFormEditedEventHandler, IRequestHandler, Form>.Broadcast(this, this.GetForm(fieldOption));
         return this.RedirectToAction("Index", "Forms");
       }
 

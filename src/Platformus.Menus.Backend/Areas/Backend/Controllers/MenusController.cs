@@ -54,12 +54,7 @@ namespace Platformus.Menus.Backend.Controllers
         if (createOrEdit.Id == null)
           Event<IMenuCreatedEventHandler, IRequestHandler, Menu>.Broadcast(this, menu);
 
-        else
-        {
-          Event<IMenuEditedEventHandler, IRequestHandler, Menu, Menu>.Broadcast(
-            this, this.Storage.GetRepository<IMenuRepository>().WithKey((int)createOrEdit.Id), menu
-          );
-        }
+        else Event<IMenuEditedEventHandler, IRequestHandler, Menu>.Broadcast(this, menu);
 
         return this.RedirectToAction("Index");
       }

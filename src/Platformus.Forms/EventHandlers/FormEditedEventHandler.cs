@@ -14,16 +14,12 @@ namespace Platformus.Forms.EventHandlers
   {
     public int Priority => 1000;
 
-    public void HandleEvent(IRequestHandler requestHandler, Form oldForm, Form newForm)
+    public void HandleEvent(IRequestHandler requestHandler, Form form)
     {
-      new SerializationManager(requestHandler).SerializeForm(newForm);
-
-      if (oldForm != null)
-        foreach (Culture culture in CultureManager.GetNotNeutralCultures(requestHandler.Storage))
-          requestHandler.HttpContext.RequestServices.GetService<ICache>().RemoveFormViewComponentResult(oldForm.Code, culture.Code);
+      new SerializationManager(requestHandler).SerializeForm(form);
 
       foreach (Culture culture in CultureManager.GetNotNeutralCultures(requestHandler.Storage))
-        requestHandler.HttpContext.RequestServices.GetService<ICache>().RemoveFormViewComponentResult(newForm.Code, culture.Code);
+        requestHandler.HttpContext.RequestServices.GetService<ICache>().RemoveFormViewComponentResult(form.Code, culture.Code);
     }
   }
 }

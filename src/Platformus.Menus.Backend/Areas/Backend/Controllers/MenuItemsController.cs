@@ -45,7 +45,7 @@ namespace Platformus.Menus.Backend
         else this.Storage.GetRepository<IMenuItemRepository>().Edit(menuItem);
 
         this.Storage.Save();
-        Event<IMenuEditedEventHandler, IRequestHandler, Menu, Menu>.Broadcast(this, null, this.GetMenu(menuItem));
+        Event<IMenuEditedEventHandler, IRequestHandler, Menu>.Broadcast(this, this.GetMenu(menuItem));
         return this.RedirectToAction("Index", "Menus");
       }
 

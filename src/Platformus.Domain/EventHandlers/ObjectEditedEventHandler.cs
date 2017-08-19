@@ -12,9 +12,9 @@ namespace Platformus.Domain.EventHandlers
   {
     public int Priority => 1000;
 
-    public void HandleEvent(IRequestHandler requestHandler, Object oldObject, Object newObject)
+    public void HandleEvent(IRequestHandler requestHandler, Object @object)
     {
-      new SerializationManager(requestHandler).SerializeObject(newObject);
+      new SerializationManager(requestHandler).SerializeObject(@object);
       requestHandler.HttpContext.RequestServices.GetService<ICache>().RemoveAll();
     }
   }

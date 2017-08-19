@@ -7,7 +7,7 @@ using Platformus.Domain.Data.Entities;
 
 namespace Platformus.Domain.Events
 {
-  public interface IObjectEditedEventHandler : IEventHandler<IRequestHandler, Object, Object>
+  public interface IObjectEditedEventHandler : IEventHandler<IRequestHandler, Object>
   {
   }
 }
