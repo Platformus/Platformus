@@ -39,8 +39,8 @@ namespace Platformus.Security.Backend.Controllers
         {
           userManager.SignIn(user, signIn.RememberMe);
 
-          if (!string.IsNullOrEmpty(signIn.ReturnUrl))
-            return this.Redirect(signIn.ReturnUrl);
+          if (!string.IsNullOrEmpty(signIn.Next))
+            return this.Redirect(signIn.Next);
 
           return this.RedirectToAction("Index", "Default");
         }

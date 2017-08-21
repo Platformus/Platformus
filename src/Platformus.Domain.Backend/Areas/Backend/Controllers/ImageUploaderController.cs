@@ -37,7 +37,7 @@ namespace Platformus.Domain.Backend.Controllers
 
       foreach (IFormFile source in files)
       {
-        filename = ContentDispositionHeaderValue.Parse(source.ContentDisposition).FileName.Trim('"');
+        filename = ContentDispositionHeaderValue.Parse(source.ContentDisposition).FileName.ToString().Trim('"');
         filename = this.EnsureCorrectFilename(filename);
 
         using (FileStream output = System.IO.File.Create(this.GetPathAndFilename("\\images\\temp\\", filename)))

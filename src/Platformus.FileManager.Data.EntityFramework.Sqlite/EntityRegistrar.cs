@@ -16,7 +16,7 @@ namespace Platformus.FileManager.Data.EntityFramework.Sqlite
           etb.HasKey(e => e.Id);
           etb.Property(e => e.Id).ValueGeneratedOnAdd();
           etb.Property(e => e.Name).IsRequired().HasMaxLength(64);
-          etb.ForSqliteToTable("Files");
+          etb.ToTable("Files");
         }
       );
     }

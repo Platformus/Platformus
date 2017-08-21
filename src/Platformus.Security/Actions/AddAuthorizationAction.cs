@@ -11,7 +11,7 @@ namespace Platformus.Security.Actions
 {
   public class AddAuthorizationAction : IConfigureServicesAction
   {
-    public int Priority => 2000;
+    public int Priority => 2010;
 
     public void Execute(IServiceCollection services, IServiceProvider serviceProvider)
     {

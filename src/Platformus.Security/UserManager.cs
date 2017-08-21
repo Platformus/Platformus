@@ -1,14 +1,14 @@
 ﻿// Copyright © 2015 Dmitry Sikorsky. All rights reserved.
 // Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information.
 
-using System.Security.Claims;
-using System.Linq;
 using System.Collections.Generic;
+using System.Linq;
+using System.Security.Claims;
+using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Platformus.Barebone;
 using Platformus.Security.Data.Abstractions;
 using Platformus.Security.Data.Entities;
-using Microsoft.AspNetCore.Http.Authentication;
 
 namespace Platformus.Security
 {
@@ -57,14 +57,14 @@ namespace Platformus.Security
       ClaimsIdentity identity = new ClaimsIdentity(this.GetUserClaims(user), CookieAuthenticationDefaults.AuthenticationScheme);
       ClaimsPrincipal principal = new ClaimsPrincipal(identity);
 
-      await this.requestHandler.HttpContext.Authentication.SignInAsync(
+      await this.requestHandler.HttpContext.SignInAsync(
         CookieAuthenticationDefaults.AuthenticationScheme, principal, new AuthenticationProperties() { IsPersistent = isPersistent }
       );
     }
 
     public async void SignOut()
     {
-      await this.requestHandler.HttpContext.Authentication.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
+      await this.requestHandler.HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
     }
 
     public int GetCurrentUserId()

@@ -16,7 +16,7 @@ namespace Platformus.Menus.Data.EntityFramework.SqlServer
           etb.HasKey(e => e.Id);
           etb.Property(e => e.Id).UseSqlServerIdentityColumn();
           etb.Property(e => e.Code).IsRequired().HasMaxLength(32);
-          etb.ForSqlServerToTable("Menus");
+          etb.ToTable("Menus");
         }
       );
 
@@ -25,7 +25,7 @@ namespace Platformus.Menus.Data.EntityFramework.SqlServer
           etb.HasKey(e => e.Id);
           etb.Property(e => e.Id).UseSqlServerIdentityColumn();
           etb.Property(e => e.Url).HasMaxLength(128);
-          etb.ForSqlServerToTable("MenuItems");
+          etb.ToTable("MenuItems");
         }
       );
 
@@ -33,7 +33,7 @@ namespace Platformus.Menus.Data.EntityFramework.SqlServer
         {
           etb.HasKey(e => new { e.CultureId, e.MenuId });
           etb.Property(e => e.Code).IsRequired().HasMaxLength(32);
-          etb.ForSqlServerToTable("SerializedMenus");
+          etb.ToTable("SerializedMenus");
         }
       );
     }

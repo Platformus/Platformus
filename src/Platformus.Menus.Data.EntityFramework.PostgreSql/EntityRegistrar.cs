@@ -16,7 +16,7 @@ namespace Platformus.Menus.Data.EntityFramework.PostgreSql
           etb.HasKey(e => e.Id);
           etb.Property(e => e.Id).ValueGeneratedOnAdd();
           etb.Property(e => e.Code).IsRequired().HasMaxLength(32);
-          etb.ForNpgsqlToTable("Menus");
+          etb.ToTable("Menus");
         }
       );
 
@@ -25,7 +25,7 @@ namespace Platformus.Menus.Data.EntityFramework.PostgreSql
           etb.HasKey(e => e.Id);
           etb.Property(e => e.Id).ValueGeneratedOnAdd();
           etb.Property(e => e.Url).HasMaxLength(128);
-          etb.ForNpgsqlToTable("MenuItems");
+          etb.ToTable("MenuItems");
         }
       );
 
@@ -33,7 +33,7 @@ namespace Platformus.Menus.Data.EntityFramework.PostgreSql
         {
           etb.HasKey(e => new { e.CultureId, e.MenuId });
           etb.Property(e => e.Code).IsRequired().HasMaxLength(32);
-          etb.ForNpgsqlToTable("SerializedMenus");
+          etb.ToTable("SerializedMenus");
         }
       );
     }

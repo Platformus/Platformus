@@ -23,7 +23,7 @@ namespace Platformus.Menus
     /// <summary>
     /// Gets the version of the extension.
     /// </summary>
-    public override string Version => "1.0.0-alpha21";
+    public override string Version => "1.0.0-beta1";
 
     /// <summary>
     /// Gets the authors of the extension (separated by commas).

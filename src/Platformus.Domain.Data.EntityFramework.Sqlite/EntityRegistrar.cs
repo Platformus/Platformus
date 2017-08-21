@@ -19,7 +19,7 @@ namespace Platformus.Domain.Data.EntityFramework.Sqlite
           etb.Property(e => e.Name).IsRequired().HasMaxLength(64);
           etb.Property(e => e.PluralizedName).IsRequired().HasMaxLength(64);
           etb.HasMany(e => e.Members).WithOne(e => e.Class).HasForeignKey(e => e.ClassId);
-          etb.ForSqliteToTable("Classes");
+          etb.ToTable("Classes");
         }
       );
 
@@ -28,7 +28,7 @@ namespace Platformus.Domain.Data.EntityFramework.Sqlite
           etb.HasKey(e => e.Id);
           etb.Property(e => e.Id).ValueGeneratedOnAdd();
           etb.Property(e => e.Name).IsRequired().HasMaxLength(64);
-          etb.ForSqliteToTable("Tabs");
+          etb.ToTable("Tabs");
         }
       );
 
@@ -39,7 +39,7 @@ namespace Platformus.Domain.Data.EntityFramework.Sqlite
           etb.Property(e => e.StorageDataType).IsRequired().HasMaxLength(32);
           etb.Property(e => e.JavaScriptEditorClassName).IsRequired().HasMaxLength(128);
           etb.Property(e => e.Name).IsRequired().HasMaxLength(64);
-          etb.ForSqliteToTable("DataTypes");
+          etb.ToTable("DataTypes");
         }
       );
 
@@ -50,7 +50,7 @@ namespace Platformus.Domain.Data.EntityFramework.Sqlite
           etb.Property(e => e.JavaScriptEditorClassName).IsRequired().HasMaxLength(128);
           etb.Property(e => e.Code).IsRequired().HasMaxLength(32);
           etb.Property(e => e.Name).IsRequired().HasMaxLength(64);
-          etb.ForSqliteToTable("DataTypeParameters");
+          etb.ToTable("DataTypeParameters");
         }
       );
 
@@ -59,7 +59,7 @@ namespace Platformus.Domain.Data.EntityFramework.Sqlite
           etb.HasKey(e => e.Id);
           etb.Property(e => e.Id).ValueGeneratedOnAdd();
           etb.Property(e => e.Value).IsRequired().HasMaxLength(1024);
-          etb.ForSqliteToTable("DataTypeParameterValues");
+          etb.ToTable("DataTypeParameterValues");
         }
       );
 
@@ -69,7 +69,7 @@ namespace Platformus.Domain.Data.EntityFramework.Sqlite
           etb.Property(e => e.Id).ValueGeneratedOnAdd();
           etb.Property(e => e.Code).IsRequired().HasMaxLength(32);
           etb.Property(e => e.Name).IsRequired().HasMaxLength(64);
-          etb.ForSqliteToTable("Members");
+          etb.ToTable("Members");
         }
       );
 
@@ -77,7 +77,7 @@ namespace Platformus.Domain.Data.EntityFramework.Sqlite
         {
           etb.HasKey(e => e.Id);
           etb.Property(e => e.Id).ValueGeneratedOnAdd();
-          etb.ForSqliteToTable("Objects");
+          etb.ToTable("Objects");
         }
       );
 
@@ -85,7 +85,7 @@ namespace Platformus.Domain.Data.EntityFramework.Sqlite
         {
           etb.HasKey(e => e.Id);
           etb.Property(e => e.Id).ValueGeneratedOnAdd();
-          etb.ForSqliteToTable("Properties");
+          etb.ToTable("Properties");
         }
       );
 
@@ -95,7 +95,7 @@ namespace Platformus.Domain.Data.EntityFramework.Sqlite
           etb.Property(e => e.Id).ValueGeneratedOnAdd();
           etb.HasOne(e => e.Primary).WithMany(e => e.PrimaryRelations).HasForeignKey(e => e.PrimaryId);
           etb.HasOne(e => e.Foreign).WithMany(e => e.ForeignRelations).HasForeignKey(e => e.ForeignId);
-          etb.ForSqliteToTable("Relations");
+          etb.ToTable("Relations");
         }
       );
 
@@ -103,7 +103,7 @@ namespace Platformus.Domain.Data.EntityFramework.Sqlite
         {
           etb.HasKey(e => new { e.CultureId, e.ObjectId });
           etb.Property(e => e.UrlPropertyStringValue).HasMaxLength(128);
-          etb.ForSqliteToTable("SerializedObjects");
+          etb.ToTable("SerializedObjects");
         }
       );
     }

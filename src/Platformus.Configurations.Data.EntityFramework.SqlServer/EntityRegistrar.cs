@@ -17,7 +17,7 @@ namespace Platformus.Configurations.Data.EntityFramework.SqlServer
           etb.Property(e => e.Id).UseSqlServerIdentityColumn();
           etb.Property(e => e.Code).IsRequired().HasMaxLength(32);
           etb.Property(e => e.Name).IsRequired().HasMaxLength(64);
-          etb.ForSqlServerToTable("Configurations");
+          etb.ToTable("Configurations");
         }
       );
 
@@ -28,7 +28,7 @@ namespace Platformus.Configurations.Data.EntityFramework.SqlServer
           etb.Property(e => e.Code).IsRequired().HasMaxLength(32);
           etb.Property(e => e.Name).IsRequired().HasMaxLength(64);
           etb.Property(e => e.Value).IsRequired().HasMaxLength(1024);
-          etb.ForSqlServerToTable("Variables");
+          etb.ToTable("Variables");
         }
       );
     }

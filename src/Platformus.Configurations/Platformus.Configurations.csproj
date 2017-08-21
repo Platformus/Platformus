@@ -1,11 +1,11 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <Description>Part of the Platformus.Configurations Platformus extension.</Description>
-    <Copyright>Copyright © 2015 Dmitry Sikorsky</Copyright>
-    <VersionPrefix>1.0.0-alpha21</VersionPrefix>
     <Authors>Dmitry Sikorsky</Authors>
-    <TargetFramework>netstandard1.6</TargetFramework>
+    <Copyright>Copyright © 2015 Dmitry Sikorsky</Copyright>
+    <Description>The Platformus.Configurations extension component.</Description>
+    <VersionPrefix>1.0.0-beta1</VersionPrefix>
+    <TargetFramework>netcoreapp2.0</TargetFramework>
     <AssemblyName>Platformus.Configurations</AssemblyName>
     <PackageId>Platformus.Configurations</PackageId>
     <PackageIconUrl>http://platformus.net/platformus_nuget_icon.png</PackageIconUrl>
@@ -16,10 +16,6 @@
     <ProjectReference Include="..\Platformus.Barebone\Platformus.Barebone.csproj" />
     <ProjectReference Include="..\Platformus.Configurations.Data.Abstractions\Platformus.Configurations.Data.Abstractions.csproj" />
     <ProjectReference Include="..\Platformus.Security\Platformus.Security.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <PackageReference Include="Microsoft.Extensions.Configuration" Version="1.1.1" />
   </ItemGroup>
 
 </Project>

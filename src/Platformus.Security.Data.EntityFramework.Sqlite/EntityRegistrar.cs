@@ -16,7 +16,7 @@ namespace Platformus.Security.Data.EntityFramework.Sqlite
           etb.HasKey(e => e.Id);
           etb.Property(e => e.Id).ValueGeneratedOnAdd();
           etb.Property(e => e.Name).IsRequired().HasMaxLength(64);
-          etb.ForSqliteToTable("Users");
+          etb.ToTable("Users");
         }
       );
 
@@ -26,7 +26,7 @@ namespace Platformus.Security.Data.EntityFramework.Sqlite
           etb.Property(e => e.Id).ValueGeneratedOnAdd();
           etb.Property(e => e.Code).IsRequired().HasMaxLength(32);
           etb.Property(e => e.Name).IsRequired().HasMaxLength(64);
-          etb.ForSqliteToTable("CredentialTypes");
+          etb.ToTable("CredentialTypes");
         }
       );
 
@@ -36,7 +36,7 @@ namespace Platformus.Security.Data.EntityFramework.Sqlite
           etb.Property(e => e.Id).ValueGeneratedOnAdd();
           etb.Property(e => e.Identifier).IsRequired().HasMaxLength(64);
           etb.Property(e => e.Secret).HasMaxLength(1024);
-          etb.ForSqliteToTable("Credentials");
+          etb.ToTable("Credentials");
         }
       );
 
@@ -46,14 +46,14 @@ namespace Platformus.Security.Data.EntityFramework.Sqlite
           etb.Property(e => e.Id).ValueGeneratedOnAdd();
           etb.Property(e => e.Code).IsRequired().HasMaxLength(32);
           etb.Property(e => e.Name).IsRequired().HasMaxLength(64);
-          etb.ForSqliteToTable("Roles");
+          etb.ToTable("Roles");
         }
       );
 
 	  modelBuilder.Entity<UserRole>(etb =>
         {
           etb.HasKey(e => new { e.UserId, e.RoleId });
-          etb.ForSqliteToTable("UserRoles");
+          etb.ToTable("UserRoles");
         }
       );
 
@@ -63,14 +63,14 @@ namespace Platformus.Security.Data.EntityFramework.Sqlite
           etb.Property(e => e.Id).ValueGeneratedOnAdd();
           etb.Property(e => e.Code).IsRequired().HasMaxLength(32);
           etb.Property(e => e.Name).IsRequired().HasMaxLength(64);
-          etb.ForSqliteToTable("Permissions");
+          etb.ToTable("Permissions");
         }
       );
 
       modelBuilder.Entity<RolePermission>(etb =>
         {
           etb.HasKey(e => new { e.RoleId, e.PermissionId });
-          etb.ForSqliteToTable("RolePermissions");
+          etb.ToTable("RolePermissions");
         }
       );
     }

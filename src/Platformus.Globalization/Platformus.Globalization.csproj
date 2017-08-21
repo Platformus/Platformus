@@ -1,11 +1,11 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <Description>Part of the Platformus.Globalization Platformus extension.</Description>
-    <Copyright>Copyright © 2015 Dmitry Sikorsky</Copyright>
-    <VersionPrefix>1.0.0-alpha21</VersionPrefix>
     <Authors>Dmitry Sikorsky</Authors>
-    <TargetFramework>netstandard1.6</TargetFramework>
+    <Copyright>Copyright © 2015 Dmitry Sikorsky</Copyright>
+    <Description>The Platformus.Globalization extension component.</Description>
+    <VersionPrefix>1.0.0-beta1</VersionPrefix>
+    <TargetFramework>netcoreapp2.0</TargetFramework>
     <AssemblyName>Platformus.Globalization</AssemblyName>
     <PackageId>Platformus.Globalization</PackageId>
     <PackageIconUrl>http://platformus.net/platformus_nuget_icon.png</PackageIconUrl>

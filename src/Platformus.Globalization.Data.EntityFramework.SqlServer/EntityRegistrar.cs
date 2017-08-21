@@ -17,7 +17,7 @@ namespace Platformus.Globalization.Data.EntityFramework.SqlServer
           etb.Property(e => e.Id).UseSqlServerIdentityColumn();
           etb.Property(e => e.Code).IsRequired().HasMaxLength(32);
           etb.Property(e => e.Name).IsRequired().HasMaxLength(64);
-          etb.ForSqlServerToTable("Cultures");
+          etb.ToTable("Cultures");
         }
       );
 
@@ -25,7 +25,7 @@ namespace Platformus.Globalization.Data.EntityFramework.SqlServer
         {
           etb.HasKey(e => e.Id);
           etb.Property(e => e.Id).UseSqlServerIdentityColumn();
-          etb.ForSqlServerToTable("Dictionaries");
+          etb.ToTable("Dictionaries");
         }
       );
 
@@ -33,7 +33,7 @@ namespace Platformus.Globalization.Data.EntityFramework.SqlServer
         {
           etb.HasKey(e => e.Id);
           etb.Property(e => e.Id).UseSqlServerIdentityColumn();
-          etb.ForSqlServerToTable("Localizations");
+          etb.ToTable("Localizations");
         }
       );
     }

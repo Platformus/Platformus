@@ -16,7 +16,7 @@ namespace Platformus.Security.Data.EntityFramework.SqlServer
           etb.HasKey(e => e.Id);
           etb.Property(e => e.Id).UseSqlServerIdentityColumn();
           etb.Property(e => e.Name).IsRequired().HasMaxLength(64);
-          etb.ForSqlServerToTable("Users");
+          etb.ToTable("Users");
         }
       );
 
@@ -26,7 +26,7 @@ namespace Platformus.Security.Data.EntityFramework.SqlServer
           etb.Property(e => e.Id).UseSqlServerIdentityColumn();
           etb.Property(e => e.Code).IsRequired().HasMaxLength(32);
           etb.Property(e => e.Name).IsRequired().HasMaxLength(64);
-          etb.ForSqlServerToTable("CredentialTypes");
+          etb.ToTable("CredentialTypes");
         }
       );
 
@@ -36,7 +36,7 @@ namespace Platformus.Security.Data.EntityFramework.SqlServer
           etb.Property(e => e.Id).UseSqlServerIdentityColumn();
           etb.Property(e => e.Identifier).IsRequired().HasMaxLength(64);
           etb.Property(e => e.Secret).HasMaxLength(1024);
-          etb.ForSqlServerToTable("Credentials");
+          etb.ToTable("Credentials");
         }
       );
 
@@ -46,14 +46,14 @@ namespace Platformus.Security.Data.EntityFramework.SqlServer
           etb.Property(e => e.Id).UseSqlServerIdentityColumn();
           etb.Property(e => e.Code).IsRequired().HasMaxLength(32);
           etb.Property(e => e.Name).IsRequired().HasMaxLength(64);
-          etb.ForSqlServerToTable("Roles");
+          etb.ToTable("Roles");
         }
       );
 
 	  modelBuilder.Entity<UserRole>(etb =>
         {
           etb.HasKey(e => new { e.UserId, e.RoleId });
-          etb.ForSqlServerToTable("UserRoles");
+          etb.ToTable("UserRoles");
         }
       );
 
@@ -63,14 +63,14 @@ namespace Platformus.Security.Data.EntityFramework.SqlServer
           etb.Property(e => e.Id).UseSqlServerIdentityColumn();
           etb.Property(e => e.Code).IsRequired().HasMaxLength(32);
           etb.Property(e => e.Name).IsRequired().HasMaxLength(64);
-          etb.ForSqlServerToTable("Permissions");
+          etb.ToTable("Permissions");
         }
       );
 
       modelBuilder.Entity<RolePermission>(etb =>
         {
           etb.HasKey(e => new { e.RoleId, e.PermissionId });
-          etb.ForSqlServerToTable("RolePermissions");
+          etb.ToTable("RolePermissions");
         }
       );
     }

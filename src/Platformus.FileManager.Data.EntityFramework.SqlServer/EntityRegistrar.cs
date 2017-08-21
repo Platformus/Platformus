@@ -16,7 +16,7 @@ namespace Platformus.FileManager.Data.EntityFramework.SqlServer
           etb.HasKey(e => e.Id);
           etb.Property(e => e.Id).UseSqlServerIdentityColumn();
           etb.Property(e => e.Name).IsRequired().HasMaxLength(64);
-          etb.ForSqlServerToTable("Files");
+          etb.ToTable("Files");
         }
       );
     }

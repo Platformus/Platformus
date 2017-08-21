@@ -20,14 +20,14 @@ namespace Platformus.Routing.Data.EntityFramework.PostgreSql
           etb.Property(e => e.SignInUrl).HasMaxLength(128);
           etb.Property(e => e.CSharpClassName).IsRequired().HasMaxLength(128);
           etb.Property(e => e.Parameters).HasMaxLength(1024);
-          etb.ForNpgsqlToTable("Endpoints");
+          etb.ToTable("Endpoints");
         }
       );
 
       modelBuilder.Entity<EndpointPermission>(etb =>
         {
           etb.HasKey(e => new { e.EndpointId, e.PermissionId });
-          etb.ForNpgsqlToTable("EndpointPermissions");
+          etb.ToTable("EndpointPermissions");
         }
       );
 
@@ -38,7 +38,7 @@ namespace Platformus.Routing.Data.EntityFramework.PostgreSql
           etb.Property(e => e.Code).IsRequired().HasMaxLength(32);
           etb.Property(e => e.CSharpClassName).IsRequired().HasMaxLength(128);
           etb.Property(e => e.Parameters).HasMaxLength(1024);
-          etb.ForNpgsqlToTable("DataSources");
+          etb.ToTable("DataSources");
         }
       );
     }

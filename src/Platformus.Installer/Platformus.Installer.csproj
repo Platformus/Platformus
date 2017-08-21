@@ -1,21 +1,15 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <Description>Free, open source and cross-platform CMS based on ASP.NET Core 1.0 and ExtCore framework.</Description>
-    <Copyright>Copyright © 2017 Dmitry Sikorsky</Copyright>
-    <VersionPrefix>1.0.0-alpha21</VersionPrefix>
     <Authors>Dmitry Sikorsky</Authors>
-    <TargetFramework>netstandard1.6</TargetFramework>
+    <Copyright>Copyright © 2015 Dmitry Sikorsky</Copyright>
+    <Description>Free, open source and cross-platform CMS based on ASP.NET Core and ExtCore framework.</Description>
+    <VersionPrefix>1.0.0-beta1</VersionPrefix>
+    <TargetFramework>netcoreapp2.0</TargetFramework>
     <AssemblyName>Platformus.Installer</AssemblyName>
     <PackageId>Platformus.Installer</PackageId>
     <PackageIconUrl>http://platformus.net/platformus_nuget_icon.png</PackageIconUrl>
     <PackageProjectUrl>http://platformus.net/</PackageProjectUrl>
-    <GenerateAssemblyTitleAttribute>false</GenerateAssemblyTitleAttribute>
-    <GenerateAssemblyDescriptionAttribute>false</GenerateAssemblyDescriptionAttribute>
-    <GenerateAssemblyConfigurationAttribute>false</GenerateAssemblyConfigurationAttribute>
-    <GenerateAssemblyCompanyAttribute>false</GenerateAssemblyCompanyAttribute>
-    <GenerateAssemblyProductAttribute>false</GenerateAssemblyProductAttribute>
-    <GenerateAssemblyCopyrightAttribute>false</GenerateAssemblyCopyrightAttribute>
   </PropertyGroup>
 
   <ItemGroup>
@@ -23,12 +17,12 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Platformus.Barebone.Frontend\Platformus.Barebone.Frontend.csproj" />
-    <ProjectReference Include="..\Platformus.Globalization\Platformus.Globalization.csproj" />
+    <PackageReference Include="ExtCore.Infrastructure" Version="3.0.0-alpha1" />
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="ExtCore.Infrastructure" Version="2.1.0-beta2" />
+    <ProjectReference Include="..\Platformus.Barebone.Frontend\Platformus.Barebone.Frontend.csproj" />
+    <ProjectReference Include="..\Platformus.Globalization\Platformus.Globalization.csproj" />
   </ItemGroup>
 
   <Target Name="PrecompileScript" BeforeTargets="BeforeBuild">
@@ -37,6 +31,10 @@
 
   <ItemGroup>
     <DotNetCliToolReference Include="BundlerMinifier.Core" Version="2.2.301" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Properties\" />
   </ItemGroup>
 
 </Project>

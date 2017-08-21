@@ -17,7 +17,7 @@ namespace Platformus.Globalization.Data.EntityFramework.Sqlite
           etb.Property(e => e.Id).ValueGeneratedOnAdd();
           etb.Property(e => e.Code).IsRequired().HasMaxLength(32);
           etb.Property(e => e.Name).IsRequired().HasMaxLength(64);
-          etb.ForSqliteToTable("Cultures");
+          etb.ToTable("Cultures");
         }
       );
 
@@ -25,7 +25,7 @@ namespace Platformus.Globalization.Data.EntityFramework.Sqlite
         {
           etb.HasKey(e => e.Id);
           etb.Property(e => e.Id).ValueGeneratedOnAdd();
-          etb.ForSqliteToTable("Dictionaries");
+          etb.ToTable("Dictionaries");
         }
       );
 
@@ -33,7 +33,7 @@ namespace Platformus.Globalization.Data.EntityFramework.Sqlite
         {
           etb.HasKey(e => e.Id);
           etb.Property(e => e.Id).ValueGeneratedOnAdd();
-          etb.ForSqliteToTable("Localizations");
+          etb.ToTable("Localizations");
         }
       );
     }

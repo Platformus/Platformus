@@ -1,11 +1,11 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <Description>Part of the Platformus.Barebone Platformus extension.</Description>
-    <Copyright>Copyright © 2015 Dmitry Sikorsky</Copyright>
-    <VersionPrefix>1.0.0-alpha21</VersionPrefix>
     <Authors>Dmitry Sikorsky</Authors>
-    <TargetFramework>netstandard1.6</TargetFramework>
+    <Copyright>Copyright © 2015 Dmitry Sikorsky</Copyright>
+    <Description>The Platformus.Barebone extension component.</Description>
+    <VersionPrefix>1.0.0-beta1</VersionPrefix>
+    <TargetFramework>netcoreapp2.0</TargetFramework>
     <AssemblyName>Platformus.Barebone</AssemblyName>
     <PackageId>Platformus.Barebone</PackageId>
     <PackageIconUrl>http://platformus.net/platformus_nuget_icon.png</PackageIconUrl>
@@ -13,12 +13,11 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Platformus.Infrastructure\Platformus.Infrastructure.csproj" />
+    <PackageReference Include="ExtCore.Data.Abstractions" Version="3.0.0-alpha1" />
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="ExtCore.Data.Abstractions" Version="2.1.0-beta2" />
-    <PackageReference Include="Microsoft.AspNetCore.Mvc" Version="1.1.2" />
+    <ProjectReference Include="..\Platformus.Infrastructure\Platformus.Infrastructure.csproj" />
   </ItemGroup>
 
 </Project>

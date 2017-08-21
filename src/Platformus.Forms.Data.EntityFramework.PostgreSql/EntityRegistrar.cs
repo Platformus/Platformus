@@ -18,7 +18,7 @@ namespace Platformus.Forms.Data.EntityFramework.PostgreSql
           etb.Property(e => e.Code).IsRequired().HasMaxLength(32);
           etb.Property(e => e.CSharpClassName).IsRequired().HasMaxLength(128);
           etb.Property(e => e.Parameters).HasMaxLength(1024);
-          etb.ForNpgsqlToTable("Forms");
+          etb.ToTable("Forms");
         }
       );
 
@@ -28,7 +28,7 @@ namespace Platformus.Forms.Data.EntityFramework.PostgreSql
           etb.Property(e => e.Id).ValueGeneratedOnAdd();
           etb.Property(e => e.Code).IsRequired().HasMaxLength(32);
           etb.Property(e => e.Name).IsRequired().HasMaxLength(64);
-          etb.ForNpgsqlToTable("FieldTypes");
+          etb.ToTable("FieldTypes");
         }
       );
 
@@ -36,7 +36,7 @@ namespace Platformus.Forms.Data.EntityFramework.PostgreSql
         {
           etb.HasKey(e => e.Id);
           etb.Property(e => e.Id).ValueGeneratedOnAdd();
-          etb.ForNpgsqlToTable("Fields");
+          etb.ToTable("Fields");
         }
       );
 
@@ -44,7 +44,7 @@ namespace Platformus.Forms.Data.EntityFramework.PostgreSql
         {
           etb.HasKey(e => e.Id);
           etb.Property(e => e.Id).ValueGeneratedOnAdd();
-          etb.ForNpgsqlToTable("FieldOptions");
+          etb.ToTable("FieldOptions");
         }
       );
 
@@ -52,7 +52,7 @@ namespace Platformus.Forms.Data.EntityFramework.PostgreSql
         {
           etb.HasKey(e => e.Id);
           etb.Property(e => e.Id).ValueGeneratedOnAdd();
-          etb.ForNpgsqlToTable("CompletedForms");
+          etb.ToTable("CompletedForms");
         }
       );
 
@@ -60,7 +60,7 @@ namespace Platformus.Forms.Data.EntityFramework.PostgreSql
         {
           etb.HasKey(e => e.Id);
           etb.Property(e => e.Id).ValueGeneratedOnAdd();
-          etb.ForNpgsqlToTable("CompletedFields");
+          etb.ToTable("CompletedFields");
         }
       );
 
@@ -69,7 +69,7 @@ namespace Platformus.Forms.Data.EntityFramework.PostgreSql
           etb.HasKey(e => new { e.CultureId, e.FormId });
           etb.Property(e => e.Code).IsRequired().HasMaxLength(32);
           etb.Property(e => e.Name).IsRequired().HasMaxLength(64);
-          etb.ForNpgsqlToTable("SerializedForms");
+          etb.ToTable("SerializedForms");
         }
       );
     }

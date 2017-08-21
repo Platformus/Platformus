@@ -19,7 +19,7 @@ namespace Platformus.Domain.Data.EntityFramework.SqlServer
           etb.Property(e => e.Name).IsRequired().HasMaxLength(64);
           etb.Property(e => e.PluralizedName).IsRequired().HasMaxLength(64);
           etb.HasMany(e => e.Members).WithOne(e => e.Class).HasForeignKey(e => e.ClassId);
-          etb.ForSqlServerToTable("Classes");
+          etb.ToTable("Classes");
         }
       );
 
@@ -28,7 +28,7 @@ namespace Platformus.Domain.Data.EntityFramework.SqlServer
           etb.HasKey(e => e.Id);
           etb.Property(e => e.Id).UseSqlServerIdentityColumn();
           etb.Property(e => e.Name).IsRequired().HasMaxLength(64);
-          etb.ForSqlServerToTable("Tabs");
+          etb.ToTable("Tabs");
         }
       );
 
@@ -39,7 +39,7 @@ namespace Platformus.Domain.Data.EntityFramework.SqlServer
           etb.Property(e => e.StorageDataType).IsRequired().HasMaxLength(32);
           etb.Property(e => e.JavaScriptEditorClassName).IsRequired().HasMaxLength(128);
           etb.Property(e => e.Name).IsRequired().HasMaxLength(64);
-          etb.ForSqlServerToTable("DataTypes");
+          etb.ToTable("DataTypes");
         }
       );
 
@@ -50,7 +50,7 @@ namespace Platformus.Domain.Data.EntityFramework.SqlServer
           etb.Property(e => e.JavaScriptEditorClassName).IsRequired().HasMaxLength(128);
           etb.Property(e => e.Code).IsRequired().HasMaxLength(32);
           etb.Property(e => e.Name).IsRequired().HasMaxLength(64);
-          etb.ForSqlServerToTable("DataTypeParameters");
+          etb.ToTable("DataTypeParameters");
         }
       );
 
@@ -59,7 +59,7 @@ namespace Platformus.Domain.Data.EntityFramework.SqlServer
           etb.HasKey(e => e.Id);
           etb.Property(e => e.Id).ValueGeneratedOnAdd();
           etb.Property(e => e.Value).IsRequired().HasMaxLength(1024);
-          etb.ForSqlServerToTable("DataTypeParameterValues");
+          etb.ToTable("DataTypeParameterValues");
         }
       );
 
@@ -69,7 +69,7 @@ namespace Platformus.Domain.Data.EntityFramework.SqlServer
           etb.Property(e => e.Id).UseSqlServerIdentityColumn();
           etb.Property(e => e.Code).IsRequired().HasMaxLength(32);
           etb.Property(e => e.Name).IsRequired().HasMaxLength(64);
-          etb.ForSqlServerToTable("Members");
+          etb.ToTable("Members");
         }
       );
 
@@ -77,7 +77,7 @@ namespace Platformus.Domain.Data.EntityFramework.SqlServer
         {
           etb.HasKey(e => e.Id);
           etb.Property(e => e.Id).UseSqlServerIdentityColumn();
-          etb.ForSqlServerToTable("Objects");
+          etb.ToTable("Objects");
         }
       );
 
@@ -85,7 +85,7 @@ namespace Platformus.Domain.Data.EntityFramework.SqlServer
         {
           etb.HasKey(e => e.Id);
           etb.Property(e => e.Id).UseSqlServerIdentityColumn();
-          etb.ForSqlServerToTable("Properties");
+          etb.ToTable("Properties");
         }
       );
 
@@ -95,7 +95,7 @@ namespace Platformus.Domain.Data.EntityFramework.SqlServer
           etb.Property(e => e.Id).UseSqlServerIdentityColumn();
           etb.HasOne(e => e.Primary).WithMany(e => e.PrimaryRelations).HasForeignKey(e => e.PrimaryId);
           etb.HasOne(e => e.Foreign).WithMany(e => e.ForeignRelations).HasForeignKey(e => e.ForeignId);
-          etb.ForSqlServerToTable("Relations");
+          etb.ToTable("Relations");
         }
       );
 
@@ -103,7 +103,7 @@ namespace Platformus.Domain.Data.EntityFramework.SqlServer
         {
           etb.HasKey(e => new { e.CultureId, e.ObjectId });
           etb.Property(e => e.UrlPropertyStringValue).HasMaxLength(128);
-          etb.ForSqlServerToTable("SerializedObjects");
+          etb.ToTable("SerializedObjects");
         }
       );
     }

@@ -18,7 +18,7 @@ namespace Platformus.Forms.Data.EntityFramework.SqlServer
           etb.Property(e => e.Code).IsRequired().HasMaxLength(32);
           etb.Property(e => e.CSharpClassName).IsRequired().HasMaxLength(128);
           etb.Property(e => e.Parameters).HasMaxLength(1024);
-          etb.ForSqlServerToTable("Forms");
+          etb.ToTable("Forms");
         }
       );
 
@@ -28,7 +28,7 @@ namespace Platformus.Forms.Data.EntityFramework.SqlServer
           etb.Property(e => e.Id).UseSqlServerIdentityColumn();
           etb.Property(e => e.Code).IsRequired().HasMaxLength(32);
           etb.Property(e => e.Name).IsRequired().HasMaxLength(64);
-          etb.ForSqlServerToTable("FieldTypes");
+          etb.ToTable("FieldTypes");
         }
       );
 
@@ -36,7 +36,7 @@ namespace Platformus.Forms.Data.EntityFramework.SqlServer
         {
           etb.HasKey(e => e.Id);
           etb.Property(e => e.Id).UseSqlServerIdentityColumn();
-          etb.ForSqlServerToTable("Fields");
+          etb.ToTable("Fields");
         }
       );
 
@@ -44,7 +44,7 @@ namespace Platformus.Forms.Data.EntityFramework.SqlServer
         {
           etb.HasKey(e => e.Id);
           etb.Property(e => e.Id).UseSqlServerIdentityColumn();
-          etb.ForSqlServerToTable("FieldOptions");
+          etb.ToTable("FieldOptions");
         }
       );
 
@@ -52,7 +52,7 @@ namespace Platformus.Forms.Data.EntityFramework.SqlServer
         {
           etb.HasKey(e => e.Id);
           etb.Property(e => e.Id).UseSqlServerIdentityColumn();
-          etb.ForSqlServerToTable("CompletedForms");
+          etb.ToTable("CompletedForms");
         }
       );
 
@@ -60,7 +60,7 @@ namespace Platformus.Forms.Data.EntityFramework.SqlServer
         {
           etb.HasKey(e => e.Id);
           etb.Property(e => e.Id).UseSqlServerIdentityColumn();
-          etb.ForSqlServerToTable("CompletedFields");
+          etb.ToTable("CompletedFields");
         }
       );
 
@@ -69,7 +69,7 @@ namespace Platformus.Forms.Data.EntityFramework.SqlServer
           etb.HasKey(e => new { e.CultureId, e.FormId });
           etb.Property(e => e.Code).IsRequired().HasMaxLength(32);
           etb.Property(e => e.Name).IsRequired().HasMaxLength(64);
-          etb.ForSqlServerToTable("SerializedForms");
+          etb.ToTable("SerializedForms");
         }
       );
     }

@@ -1,11 +1,11 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <Description>Part of the Platformus.Forms Platformus extension.</Description>
-    <Copyright>Copyright © 2015 Dmitry Sikorsky</Copyright>
-    <VersionPrefix>1.0.0-alpha21</VersionPrefix>
     <Authors>Dmitry Sikorsky</Authors>
-    <TargetFramework>netstandard1.6</TargetFramework>
+    <Copyright>Copyright © 2015 Dmitry Sikorsky</Copyright>
+    <Description>The Platformus.Forms extension component.</Description>
+    <VersionPrefix>1.0.0-beta1</VersionPrefix>
+    <TargetFramework>netcoreapp2.0</TargetFramework>
     <AssemblyName>Platformus.Forms</AssemblyName>
     <PackageId>Platformus.Forms</PackageId>
     <PackageIconUrl>http://platformus.net/platformus_nuget_icon.png</PackageIconUrl>
@@ -13,15 +13,14 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Platformus.Barebone\Platformus.Barebone.csproj" />
-    <ProjectReference Include="..\Platformus.Forms.Data.Abstractions\Platformus.Forms.Data.Abstractions.csproj" />
-    <ProjectReference Include="..\Platformus.Globalization\Platformus.Globalization.csproj" />
+    <PackageReference Include="ExtCore.Events" Version="3.0.0-alpha1" />
+    <PackageReference Include="MailKit" Version="1.8.1" />
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="ExtCore.Events" Version="2.1.0-beta2" />
-    <PackageReference Include="MailKit" Version="1.8.1" />
-    <PackageReference Include="Microsoft.Extensions.Configuration" Version="1.1.1" />
+    <ProjectReference Include="..\Platformus.Barebone\Platformus.Barebone.csproj" />
+    <ProjectReference Include="..\Platformus.Forms.Data.Abstractions\Platformus.Forms.Data.Abstractions.csproj" />
+    <ProjectReference Include="..\Platformus.Globalization\Platformus.Globalization.csproj" />
   </ItemGroup>
 
 </Project>
