@@ -22,23 +22,24 @@ namespace Platformus.Barebone.Backend.ViewModels.Shared
 
       foreach (IBackendMetadata backendMetadata in ExtensionManager.GetInstances<IBackendMetadata>())
       {
-        if (backendMetadata.BackendMenuGroups != null)
+        IEnumerable<BackendMenuGroup> backendMenuItems = backendMetadata.GetBackendMenuGroups(
+          this.RequestHandler.HttpContext.RequestServices
+        );
+
+        foreach (BackendMenuGroup backendMenuGroup in backendMenuItems)
         {
-          foreach (BackendMenuGroup backendMenuGroup in backendMetadata.BackendMenuGroups)
-          {
-            List<BackendMenuItemViewModel> backendMenuItemViewModels = new List<BackendMenuItemViewModel>();
+          List<BackendMenuItemViewModel> backendMenuItemViewModels = new List<BackendMenuItemViewModel>();
 
-            foreach (BackendMenuItem backendMenuItem in backendMenuGroup.BackendMenuItems)
-              if (this.RequestHandler.HttpContext.User.Claims.Any(c => backendMenuItem.PermissionCodes.Any(pc => string.Equals(c.Value, pc, StringComparison.OrdinalIgnoreCase)) || string.Equals(c.Value, "DoEverything", StringComparison.OrdinalIgnoreCase)))
-                backendMenuItemViewModels.Add(new BackendMenuItemViewModelFactory(this.RequestHandler).Create(backendMenuItem));
+          foreach (BackendMenuItem backendMenuItem in backendMenuGroup.BackendMenuItems)
+            if (this.RequestHandler.HttpContext.User.Claims.Any(c => backendMenuItem.PermissionCodes.Any(pc => string.Equals(c.Value, pc, StringComparison.OrdinalIgnoreCase)) || string.Equals(c.Value, "DoEverything", StringComparison.OrdinalIgnoreCase)))
+              backendMenuItemViewModels.Add(new BackendMenuItemViewModelFactory(this.RequestHandler).Create(backendMenuItem));
 
-            BackendMenuGroupViewModel backendMenuGroupViewModel = this.GetBackendMenuGroup(backendMenuGroupViewModels, backendMenuGroup);
+          BackendMenuGroupViewModel backendMenuGroupViewModel = this.GetBackendMenuGroup(backendMenuGroupViewModels, backendMenuGroup);
 
-            if (backendMenuGroupViewModel.BackendMenuItems != null)
-              backendMenuItemViewModels.AddRange(backendMenuGroupViewModel.BackendMenuItems);
+          if (backendMenuGroupViewModel.BackendMenuItems != null)
+            backendMenuItemViewModels.AddRange(backendMenuGroupViewModel.BackendMenuItems);
 
-            backendMenuGroupViewModel.BackendMenuItems = backendMenuItemViewModels.OrderBy(bmi => bmi.Position);
-          }
+          backendMenuGroupViewModel.BackendMenuItems = backendMenuItemViewModels.OrderBy(bmi => bmi.Position);
         }
       }
 

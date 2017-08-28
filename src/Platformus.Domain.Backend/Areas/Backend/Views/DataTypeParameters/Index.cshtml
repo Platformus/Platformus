@@ -1,8 +1,9 @@
 ﻿@* Copyright © 2017 Dmitry Yegorov. All rights reserved. *@
 @* Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information. *@
 @model Platformus.Domain.Backend.ViewModels.DataTypeParameters.IndexViewModel
+@inject Microsoft.AspNetCore.Mvc.Localization.IViewLocalizer Localizer
 @{
-  this.ViewBag.Title = "Data Type Parameters";
+  this.ViewBag.Title = this.Localizer["Data Type Parameters"];
   this.ViewBag.ActiveMenuItem = "datatypes";
 }
 @section title {
@@ -10,6 +11,6 @@
 }
 @Html.Partial("_Grid", this.Model.Grid)
 <div class="master-detail__detail-buttons buttons">
-  <a class="buttons__button button button--positive" href="/backend/datatypeparameters/create?datatypeid=@this.Model.DataTypeId">Create data type parameter</a>
-  <a class="buttons__button button button--neutral" href="/backend/datatypes">Back</a>
+  <a class="buttons__button button button--positive" href="/backend/datatypeparameters/create?datatypeid=@this.Model.DataTypeId">@Localizer["Create data type parameter"]</a>
+  <a class="buttons__button button button--neutral" href="/backend/datatypes">@Localizer["Back"]</a>
 </div>

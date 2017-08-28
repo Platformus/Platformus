@@ -1,8 +1,9 @@
 ﻿@* Copyright © 2015 Dmitry Sikorsky. All rights reserved. *@
 @* Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information. *@
 @model Platformus.Configurations.Backend.ViewModels.Variables.CreateOrEditViewModel
+@inject Microsoft.AspNetCore.Mvc.Localization.IViewLocalizer Localizer
 @{
-  this.ViewBag.Title = (this.Model.Id == null ? "Create" : "Edit") + " Variable";
+  this.ViewBag.Title = (this.Model.Id == null ? this.Localizer["Create Variable"].Value : this.Localizer["Edit Variable"].Value);
   this.ViewBag.ActiveMenuItem = "configurations";
 }
 @section title {
@@ -14,7 +15,7 @@
   <single-line-text-field asp-for="Value" />
   <numeric-field asp-for="Position" />
   <div class="form__buttons buttons">
-    <button class="buttons__button button button--positive" type="submit">Save</button>
-    <a class="buttons__button button button--neutral" href="/backend/configurations">Cancel</a>
+    <button class="buttons__button button button--positive" type="submit">@Localizer["Save"]</button>
+    <a class="buttons__button button button--neutral" href="/backend/configurations">@Localizer["Cancel"]</a>
   </div>
 </form>

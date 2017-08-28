@@ -1,7 +1,10 @@
 ﻿// Copyright © 2017 Dmitry Sikorsky. All rights reserved.
 // Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information.
 
+using System;
 using System.Collections.Generic;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Localization;
 using Platformus.Infrastructure;
 
 namespace Platformus.Routing
@@ -30,22 +33,21 @@ namespace Platformus.Routing
       }
     }
 
-    public override IEnumerable<BackendMenuGroup> BackendMenuGroups
+    public override IEnumerable<BackendMenuGroup> GetBackendMenuGroups(IServiceProvider serviceProvider)
     {
-      get
+      IStringLocalizer<BackendMetadata> localizer = serviceProvider.GetService<IStringLocalizer<BackendMetadata>>();
+
+      return new BackendMenuGroup[]
       {
-        return new BackendMenuGroup[]
-        {
-          new BackendMenuGroup(
-            "Development",
-            4000,
-            new BackendMenuItem[]
-            {
-              new BackendMenuItem("/backend/endpoints", "Endpoints", 2000, new string[] { Permissions.BrowseEndpoints })
-            }
-          )
-        };
-      }
+        new BackendMenuGroup(
+          localizer["Development"],
+          4000,
+          new BackendMenuItem[]
+          {
+            new BackendMenuItem("/backend/endpoints", localizer["Endpoints"], 2000, new string[] { Permissions.BrowseEndpoints })
+          }
+        )
+      };
     }
   }
 }

@@ -1,8 +1,9 @@
 ﻿@* Copyright © 2015 Dmitry Sikorsky. All rights reserved. *@
 @* Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information. *@
 @model Platformus.Forms.Backend.ViewModels.CompletedForms.ViewViewModel
+@inject Microsoft.AspNetCore.Mvc.Localization.IViewLocalizer Localizer
 @{
-  this.ViewBag.Title = "View Completed Form";
+  this.ViewBag.Title = this.Localizer["View Completed Form"];
   this.ViewBag.ActiveMenuItem = "forms";
 }
 @section title {
@@ -17,6 +18,6 @@
     </div>
   }
   <div class="form__buttons buttons">
-    <a class="buttons__button button button--neutral" href="@this.Context.Request.CombineUrl("/backend/completedforms")">Back</a>
+    <a class="buttons__button button button--neutral" href="@this.Context.Request.CombineUrl("/backend/completedforms")">@Localizer["Back"]</a>
   </div>
 </div>

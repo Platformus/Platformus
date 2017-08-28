@@ -2,6 +2,8 @@
 // Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information.
 
 using System.Linq;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Localization;
 using Platformus.Barebone;
 using Platformus.Barebone.Backend.ViewModels.Shared;
 using Platformus.Domain.Backend.ViewModels.Shared;
@@ -19,11 +21,13 @@ namespace Platformus.Domain.Backend.ViewModels.Domain
 
     public ClassSelectorFormViewModel Create(int? classId)
     {
+      IStringLocalizer<ClassSelectorFormViewModelFactory> localizer = this.RequestHandler.HttpContext.RequestServices.GetService<IStringLocalizer<ClassSelectorFormViewModelFactory>>();
+
       return new ClassSelectorFormViewModel()
       {
         GridColumns = new[] {
-          new GridColumnViewModelFactory(this.RequestHandler).Create("Parent"),
-          new GridColumnViewModelFactory(this.RequestHandler).Create("Name")
+          new GridColumnViewModelFactory(this.RequestHandler).Create(localizer["Parent Class"]),
+          new GridColumnViewModelFactory(this.RequestHandler).Create(localizer["Name"])
         },
         Classes = this.RequestHandler.Storage.GetRepository<IClassRepository>().All().Select(
           c => new ClassViewModelFactory(this.RequestHandler).Create(c)

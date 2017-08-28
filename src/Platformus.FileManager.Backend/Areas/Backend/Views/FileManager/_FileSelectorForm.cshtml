@@ -1,15 +1,16 @@
 ﻿@* Copyright © 2015 Dmitry Sikorsky. All rights reserved. *@
 @* Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information. *@
 @model Platformus.FileManager.Backend.ViewModels.FileManager.FileSelectorFormViewModel
+@inject Microsoft.AspNetCore.Mvc.Localization.IViewLocalizer Localizer
 <div class="pop-up-form__header">
-  File Selector
+  @Localizer["File Selector"]
 </div>
 <div class="pop-up-form__content">
   <div class="file-selector-pop-up-form__files">
     <table class="table">
       <tr class="table__row">
-        <th class="table__cell table__cell--header">Name</th>
-        <th class="table__cell table__cell--header">Size</th>
+        <th class="table__cell table__cell--header">@Localizer["Name"]</th>
+        <th class="table__cell table__cell--header">@Localizer["Size"]</th>
       </tr>
       @foreach (var file in this.Model.Files)
       {
@@ -21,7 +22,7 @@
     </table>
   </div>
   <div class="pop-up-form__buttons buttons">
-    <button class="buttons__button button button--positive" onclick="return platformus.forms.fileSelectorForm.select();">Select</button>
-    <button class="buttons__button button button--neutral" onclick="return platformus.forms.fileSelectorForm.hideAndRemove();">Cancel</button>
+    <button class="buttons__button button button--positive" onclick="return platformus.forms.fileSelectorForm.select();">@Localizer["Select"]</button>
+    <button class="buttons__button button button--neutral" onclick="return platformus.forms.fileSelectorForm.hideAndRemove();">@Localizer["Cancel"]</button>
   </div>
 </div>

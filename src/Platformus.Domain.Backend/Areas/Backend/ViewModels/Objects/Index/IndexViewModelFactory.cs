@@ -3,6 +3,8 @@
 
 using System.Collections.Generic;
 using System.Linq;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Localization;
 using Platformus.Barebone;
 using Platformus.Barebone.Backend.ViewModels.Shared;
 using Platformus.Domain.Backend.ViewModels.Shared;
@@ -109,8 +111,10 @@ namespace Platformus.Domain.Backend.ViewModels.Objects
           )
         );
 
+      IStringLocalizer<IndexViewModelFactory> localizer = this.RequestHandler.HttpContext.RequestServices.GetService<IStringLocalizer<IndexViewModelFactory>>();
+
       classesByAbstractClasses.Add(
-        new ClassViewModel() { PluralizedName = "Others" },
+        new ClassViewModel() { PluralizedName = localizer["Others"] },
         this.RequestHandler.Storage.GetRepository<IClassRepository>().FilteredByClassId(null).ToList().Select(
           c => new ClassViewModelFactory(this.RequestHandler).Create(c)
         )

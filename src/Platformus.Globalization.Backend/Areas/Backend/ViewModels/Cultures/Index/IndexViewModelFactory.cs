@@ -2,6 +2,8 @@
 // Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information.
 
 using System.Linq;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Localization;
 using Platformus.Barebone;
 using Platformus.Barebone.Backend.ViewModels.Shared;
 using Platformus.Globalization.Backend.ViewModels.Shared;
@@ -19,13 +21,14 @@ namespace Platformus.Globalization.Backend.ViewModels.Cultures
     public IndexViewModel Create(string orderBy, string direction, int skip, int take, string filter)
     {
       ICultureRepository cultureRepository = this.RequestHandler.Storage.GetRepository<ICultureRepository>();
+      IStringLocalizer<IndexViewModelFactory> localizer = this.RequestHandler.HttpContext.RequestServices.GetService<IStringLocalizer<IndexViewModelFactory>>();
 
       return new IndexViewModel()
       {
         Grid = new GridViewModelFactory(this.RequestHandler).Create(
           orderBy, direction, skip, take, cultureRepository.Count(filter),
           new[] {
-            new GridColumnViewModelFactory(this.RequestHandler).Create("Name", "Name"),
+            new GridColumnViewModelFactory(this.RequestHandler).Create(localizer["Name"], "Name"),
             new GridColumnViewModelFactory(this.RequestHandler).CreateEmpty()
           },
           cultureRepository.Range(orderBy, direction, skip, take, filter).ToList().Select(c => new CultureViewModelFactory(this.RequestHandler).Create(c)),

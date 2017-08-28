@@ -3,6 +3,8 @@
 
 using System.Collections.Generic;
 using System.Linq;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Localization;
 using Platformus.Barebone;
 using Platformus.Domain.Backend.ViewModels.Shared;
 using Platformus.Domain.Data.Abstractions;
@@ -46,8 +48,9 @@ namespace Platformus.Domain.Backend.ViewModels.Objects
     private IEnumerable<dynamic> GetMembersByTabs(Object @object, int? classId = null, int? objectId = null)
     {
       List<dynamic> membersByTabs = new List<dynamic>();
+      IStringLocalizer<CreateOrEditViewModelFactory> localizer = this.RequestHandler.HttpContext.RequestServices.GetService<IStringLocalizer<CreateOrEditViewModelFactory>>();
 
-      membersByTabs.Add(new { id = 0, name = "General", members = this.GetMembersByTab(null, @object, classId, objectId) });
+      membersByTabs.Add(new { id = 0, name = localizer["General"].Value, members = this.GetMembersByTab(null, @object, classId, objectId) });
 
       foreach (Tab tab in this.RequestHandler.Storage.GetRepository<ITabRepository>().FilteredByClassIdInlcudingParent(@object != null ? @object.ClassId : (int)classId).ToList())
         membersByTabs.Add(new { id = tab.Id, name = tab.Name, members = this.GetMembersByTab(tab, @object, classId, objectId) });

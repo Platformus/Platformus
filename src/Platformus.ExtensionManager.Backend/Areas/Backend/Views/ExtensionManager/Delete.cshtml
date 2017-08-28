@@ -1,8 +1,9 @@
 ﻿@* Copyright © 2017 Dmitry Sikorsky. All rights reserved. *@
 @* Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information. *@
 @model Platformus.ExtensionManager.Backend.ViewModels.ExtensionManager.DeleteViewModel
+@inject Microsoft.AspNetCore.Mvc.Localization.IViewLocalizer Localizer
 @{
-  this.ViewBag.Title = "Delete Extension";
+  this.ViewBag.Title = this.Localizer["Delete Extension"];
   this.ViewBag.ActiveMenuItem = "extensionmanager";
 }
 @section title {
@@ -13,11 +14,10 @@
   <multiline-text-field asp-for="Files" readonly="readonly" />
   <div class="form__field field">
     <span class="marker marker--highlighted">
-      These files are currently loaded by the web application and can’t be deleted automatically.
-      Please stop the web application, remove these files manually, and run the web application again.
+      @Localizer["These files are currently loaded by the web application and can’t be deleted automatically. Please stop the web application, remove these files manually, and run the web application again."]
     </span>
   </div>
   <div class="form__buttons buttons">
-    <a class="buttons__button button button--neutral" href="@this.Context.Request.CombineUrl("/backend/extensionmanager")">Cancel</a>
+    <a class="buttons__button button button--neutral" href="@this.Context.Request.CombineUrl("/backend/extensionmanager")">@Localizer["Cancel"]</a>
   </div>
 </div>

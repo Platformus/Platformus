@@ -2,6 +2,8 @@
 // Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information.
 
 using System.Linq;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Localization;
 using Platformus.Barebone;
 using Platformus.Barebone.Backend.ViewModels.Shared;
 using Platformus.Domain.Backend.ViewModels.Shared;
@@ -20,6 +22,7 @@ namespace Platformus.Domain.Backend.ViewModels.DataTypeParameters
     public IndexViewModel Create(int dataTypeId, string orderBy, string direction, int skip, int take, string filter)
     {
       IDataTypeParameterRepository dataTypeParameterRepository = this.RequestHandler.Storage.GetRepository<IDataTypeParameterRepository>();
+      IStringLocalizer<IndexViewModelFactory> localizer = this.RequestHandler.HttpContext.RequestServices.GetService<IStringLocalizer<IndexViewModelFactory>>();
 
       return new IndexViewModel()
       {
@@ -27,7 +30,7 @@ namespace Platformus.Domain.Backend.ViewModels.DataTypeParameters
         Grid = new GridViewModelFactory(this.RequestHandler).Create(
           orderBy, direction, skip, take, dataTypeParameterRepository.CountByDataTypeId(dataTypeId, filter),
           new[] {
-            new GridColumnViewModelFactory(this.RequestHandler).Create("Name", "Name"),
+            new GridColumnViewModelFactory(this.RequestHandler).Create(localizer["Name"], "Name"),
             new GridColumnViewModelFactory(this.RequestHandler).CreateEmpty()
           },
           dataTypeParameterRepository.FilteredByDataTypeIdRange(dataTypeId, orderBy, direction, skip, take, filter).Select(dtp => new DataTypeParameterViewModelFactory(this.RequestHandler).Create(dtp)),

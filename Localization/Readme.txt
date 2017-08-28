@@ -1,0 +1,1 @@
+Copy the localizations resources you need to your main web application in order to translate the backend UI.

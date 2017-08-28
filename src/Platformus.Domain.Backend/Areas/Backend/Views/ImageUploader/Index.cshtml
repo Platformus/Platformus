@@ -3,11 +3,12 @@
 @{
   this.Layout = null;
 }
+@inject Microsoft.AspNetCore.Mvc.Localization.IViewLocalizer Localizer
 <!DOCTYPE html>
 <html>
 <head>
   <meta charset="utf-8" />
-  <title>Image Uploader | Platformus CMS</title>
+  <title>@Localizer["Image Uploader"] | @Localizer["Platformus"]</title>
   <link href="~/wwwroot.areas.backend.css.platformus.barebone.min.css" rel="stylesheet" />
   <link href="~/wwwroot.areas.backend.css.platformus.domain.min.css" rel="stylesheet" />
   <link href="~/wwwroot.areas.backend.css.platformus.file_manager.min.css" rel="stylesheet" />
@@ -22,12 +23,12 @@
 <body>
   <div id="imageDragAndDropArea" class="image-drag-and-drop-area">
     <div class="image-drag-and-drop-area__description">
-      Drag and drop image into this area…
+      @Localizer["Drag and drop image into this area…"]
     </div>
     <form class="form" id="form" name="form" action="/backend/imageuploader" enctype="multipart/form-data" method="post">
       <div class="image-drag-and-drop-area__buttons buttons">
         <div class="image-drag-and-drop-area__browse-button buttons__button button button--positive">
-          <div>…or select it on your device</div>
+          <div>@Localizer["…or select it on your device"]</div>
           <input class="image-drag-and-drop-area__browse-input" id="files" name="files" type="file" size="1" onchange="platformus.imageUploader.imageSelected();" />
         </div>
       </div>

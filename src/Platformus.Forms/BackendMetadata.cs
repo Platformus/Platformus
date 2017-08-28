@@ -1,7 +1,10 @@
 ﻿// Copyright © 2015 Dmitry Sikorsky. All rights reserved.
 // Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information.
 
+using System;
 using System.Collections.Generic;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Localization;
 using Platformus.Infrastructure;
 
 namespace Platformus.Forms
@@ -19,22 +22,21 @@ namespace Platformus.Forms
       }
     }
 
-    public override IEnumerable<BackendMenuGroup> BackendMenuGroups
+    public override IEnumerable<BackendMenuGroup> GetBackendMenuGroups(IServiceProvider serviceProvider)
     {
-      get
+      IStringLocalizer<BackendMetadata> localizer = serviceProvider.GetService<IStringLocalizer<BackendMetadata>>();
+
+      return new BackendMenuGroup[]
       {
-        return new BackendMenuGroup[]
-        {
-          new BackendMenuGroup(
-            "Content",
-            1000,
-            new BackendMenuItem[]
-            {
-              new BackendMenuItem("/backend/forms", "Forms", 3000, new string[] { Permissions.BrowseForms })
-            }
-          )
-        };
-      }
+        new BackendMenuGroup(
+          localizer["Content"],
+          1000,
+          new BackendMenuItem[]
+          {
+            new BackendMenuItem("/backend/forms", localizer["Forms"], 3000, new string[] { Permissions.BrowseForms })
+          }
+        )
+      };
     }
   }
 }

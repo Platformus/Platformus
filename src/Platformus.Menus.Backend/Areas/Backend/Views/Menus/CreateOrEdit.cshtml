@@ -1,8 +1,9 @@
 ﻿@* Copyright © 2015 Dmitry Sikorsky. All rights reserved. *@
 @* Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information. *@
 @model Platformus.Menus.Backend.ViewModels.Menus.CreateOrEditViewModel
+@inject Microsoft.AspNetCore.Mvc.Localization.IViewLocalizer Localizer
 @{
-  this.ViewBag.Title = (this.Model.Id == null ? "Create" : "Edit") + " Menu";
+  this.ViewBag.Title = (this.Model.Id == null ? this.Localizer["Create Menu"].Value : this.Localizer["Edit Menu"].Value);
   this.ViewBag.ActiveMenuItem = "menus";
 }
 @section title {
@@ -12,7 +13,7 @@
   <single-line-text-field asp-for="Code" />
   <multilingual-single-line-text-field asp-for="Name" asp-localizations="@Model.NameLocalizations" />
   <div class="form__buttons buttons">
-    <button class="buttons__button button button--positive" type="submit">Save</button>
-    <a class="buttons__button button button--neutral" href="/backend/menus">Cancel</a>
+    <button class="buttons__button button button--positive" type="submit">@Localizer["Save"]</button>
+    <a class="buttons__button button button--neutral" href="/backend/menus">@Localizer["Cancel"]</a>
   </div>
 </form>

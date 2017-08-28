@@ -2,6 +2,8 @@
 // Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information.
 
 using System.Linq;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Localization;
 using Platformus.Barebone;
 using Platformus.Barebone.Backend.ViewModels;
 using Platformus.Barebone.Backend.ViewModels.Shared;
@@ -20,6 +22,7 @@ namespace Platformus.Designers.Backend.ViewModels.Views
     {
       string rootViewsPath = PathManager.GetViewsPath(this.RequestHandler, null);
       string viewsPath = PathManager.GetViewsPath(this.RequestHandler, subdirectory);
+      IStringLocalizer<IndexViewModelFactory> localizer = this.RequestHandler.HttpContext.RequestServices.GetService<IStringLocalizer<IndexViewModelFactory>>();
 
       return new IndexViewModel()
       {
@@ -28,7 +31,7 @@ namespace Platformus.Designers.Backend.ViewModels.Views
         Grid = new GridViewModelFactory(this.RequestHandler).Create(
           orderBy, direction, skip, take, FileSystemRepository.CountFiles(viewsPath, "*.cshtml", filter),
           new[] {
-            new GridColumnViewModelFactory(this.RequestHandler).Create("Filename", "Filename"),
+            new GridColumnViewModelFactory(this.RequestHandler).Create(localizer["Filename"], "Filename"),
             new GridColumnViewModelFactory(this.RequestHandler).CreateEmpty()
           },
           FileSystemRepository.GetFiles(viewsPath, "*.cshtml", filter, orderBy, direction, skip, take).Select(fi => new ViewViewModelFactory(this.RequestHandler).Create(subdirectory, fi)),

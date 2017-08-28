@@ -1,8 +1,9 @@
 ﻿@* Copyright © 2015 Dmitry Sikorsky. All rights reserved. *@
 @* Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information. *@
 @model Platformus.Domain.Backend.ViewModels.DataTypes.IndexViewModel
+@inject Microsoft.AspNetCore.Mvc.Localization.IViewLocalizer Localizer
 @{
-  this.ViewBag.Title = "Data Types";
+  this.ViewBag.Title = this.Localizer["Data Types"];
   this.ViewBag.ActiveMenuItem = "datatypes";
 }
 @section title {
@@ -10,5 +11,5 @@
 }
 @Html.Partial("_Grid", this.Model.Grid)
 <div class="master-detail__detail-buttons buttons">
-  <a class="buttons__button button button--positive" href="@this.Context.Request.CombineUrl("/backend/datatypes/create")">Create data type</a>
+  <a class="buttons__button button button--positive" href="@this.Context.Request.CombineUrl("/backend/datatypes/create")">@Localizer["Create data type"]</a>
 </div>

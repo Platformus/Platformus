@@ -8,7 +8,7 @@ namespace Platformus.ExtensionManager.Backend.ViewModels.ExtensionManager
 {
   public class ViewViewModel : ViewModelBase
   {
-    [Display(Name = "Id")]
+    [Display(Name = "ID")]
     public string Id { get; set; }
 
     [Display(Name = "Name")]
@@ -17,7 +17,7 @@ namespace Platformus.ExtensionManager.Backend.ViewModels.ExtensionManager
     [Display(Name = "Description")]
     public string Description { get; set; }
 
-    [Display(Name = "Url")]
+    [Display(Name = "URL")]
     public string Url { get; set; }
 
     [Display(Name = "Authors")]

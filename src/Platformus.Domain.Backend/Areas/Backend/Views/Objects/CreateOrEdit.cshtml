@@ -1,8 +1,9 @@
 ﻿@* Copyright © 2015 Dmitry Sikorsky. All rights reserved. *@
 @* Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information. *@
 @model Platformus.Domain.Backend.ViewModels.Objects.CreateOrEditViewModel
+@inject Microsoft.AspNetCore.Mvc.Localization.IViewLocalizer Localizer
 @{
-  this.ViewBag.Title = (this.Model.Id == null ? "Create" : "Edit") + " " + this.Model.Class.Name;
+  this.ViewBag.Title = (this.Model.Id == null ? this.Localizer["Create"].Value : this.Localizer["Edit"].Value) + " " + this.Model.Class.Name;
   this.ViewBag.ActiveMenuItem = "objects";
 }
 @section title {
@@ -14,16 +15,13 @@
     <div id="tabPage0" class="tab-pages__tab-page"></div>
   </div>
   <div class="form__buttons buttons">
-    <button class="buttons__button button button--positive" type="submit">Save</button>
-    <a class="buttons__button button button--neutral" href="@this.Context.Request.CombineUrl("/backend/objects")">Cancel</a>
+    <button class="buttons__button button button--positive" type="submit">@Localizer["Save"]</button>
+    <a class="buttons__button button button--neutral" href="@this.Context.Request.CombineUrl("/backend/objects")">@Localizer["Cancel"]</a>
   </div>
 </form>
 <script>
   var membersByTabs = @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(this.Model.MembersByTabs));
 </script>
-@*@section startUpScript {
-  platformus.memberEditors.create();
-}*@
 <script>
   (function (platformus) {
     platformus.initializers = platformus.initializers || [];

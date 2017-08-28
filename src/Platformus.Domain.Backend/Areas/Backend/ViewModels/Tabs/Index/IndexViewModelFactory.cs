@@ -2,6 +2,8 @@
 // Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information.
 
 using System.Linq;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Localization;
 using Platformus.Barebone;
 using Platformus.Barebone.Backend.ViewModels.Shared;
 using Platformus.Domain.Backend.ViewModels.Shared;
@@ -20,6 +22,7 @@ namespace Platformus.Domain.Backend.ViewModels.Tabs
     public IndexViewModel Create(int classId, string orderBy, string direction, int skip, int take, string filter)
     {
       ITabRepository tabRepository = this.RequestHandler.Storage.GetRepository<ITabRepository>();
+      IStringLocalizer<IndexViewModelFactory> localizer = this.RequestHandler.HttpContext.RequestServices.GetService<IStringLocalizer<IndexViewModelFactory>>();
 
       return new IndexViewModel()
       {
@@ -27,8 +30,8 @@ namespace Platformus.Domain.Backend.ViewModels.Tabs
         Grid = new GridViewModelFactory(this.RequestHandler).Create(
           orderBy, direction, skip, take, tabRepository.CountByClassId(classId, filter),
           new[] {
-            new GridColumnViewModelFactory(this.RequestHandler).Create("Name", "Name"),
-            new GridColumnViewModelFactory(this.RequestHandler).Create("Position", "Position"),
+            new GridColumnViewModelFactory(this.RequestHandler).Create(localizer["Name"], "Name"),
+            new GridColumnViewModelFactory(this.RequestHandler).Create(localizer["Position"], "Position"),
             new GridColumnViewModelFactory(this.RequestHandler).CreateEmpty()
           },
           tabRepository.FilteredByClassIdRange(classId, orderBy, direction, skip, take, filter).ToList().Select(t => new TabViewModelFactory(this.RequestHandler).Create(t)),

@@ -1,8 +1,9 @@
 ﻿@* Copyright © 2017 Dmitry Sikorsky. All rights reserved. *@
 @* Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information. *@
 @model Platformus.Domain.Backend.ViewModels.Domain.MemberSelectorFormViewModel
+@inject Microsoft.AspNetCore.Mvc.Localization.IViewLocalizer Localizer
 <div class="pop-up-form__header">
-  Member Selector
+  @Localizer["Member Selector"]
 </div>
 <div class="pop-up-form__content">
   <div class="member-selector-pop-up-form__members">
@@ -26,7 +27,7 @@
     </table>
   </div>
   <div class="pop-up-form__buttons buttons">
-    <button class="buttons__button button button--positive" onclick="return platformus.forms.memberSelectorForm.select();">Select</button>
-    <button class="buttons__button button button--neutral" onclick="return platformus.forms.memberSelectorForm.hideAndRemove();">Cancel</button>
+    <button class="buttons__button button button--positive" onclick="return platformus.forms.memberSelectorForm.select();">@Localizer["Select"]</button>
+    <button class="buttons__button button button--neutral" onclick="return platformus.forms.memberSelectorForm.hideAndRemove();">@Localizer["Cancel"]</button>
   </div>
 </div>

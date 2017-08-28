@@ -1,8 +1,9 @@
 ﻿@* Copyright © 2015 Dmitry Sikorsky. All rights reserved. *@
 @* Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information. *@
 @model Platformus.Security.Backend.ViewModels.Roles.CreateOrEditViewModel
+@inject Microsoft.AspNetCore.Mvc.Localization.IViewLocalizer Localizer
 @{
-  this.ViewBag.Title = (this.Model.Id == null ? "Create" : "Edit") + " Role";
+  this.ViewBag.Title = (this.Model.Id == null ? this.Localizer["Create Role"].Value : this.Localizer["Edit Role"].Value);
   this.ViewBag.ActiveMenuItem = "roles";
 }
 @section title {
@@ -10,8 +11,8 @@
 }
 <form class="form" method="post">
   <div class="tabs">
-    <div class="tabs__tab" data-tab-page-id="General">General</div>
-    <div class="tabs__tab" data-tab-page-id="Permissions">Permissions</div>
+    <div class="tabs__tab" data-tab-page-id="General">@Localizer["General"]</div>
+    <div class="tabs__tab" data-tab-page-id="Permissions">@Localizer["Permissions"]</div>
   </div>
   <div class="tab-pages">
     <div id="tabPageGeneral" class="tab-pages__tab-page">
@@ -29,7 +30,7 @@
     </div>
   </div>
   <div class="form__buttons buttons">
-    <button class="buttons__button button button--positive" type="submit">Save</button>
-    <a class="buttons__button button button--neutral" href="@this.Context.Request.CombineUrl("/backend/roles")">Cancel</a>
+    <button class="buttons__button button button--positive" type="submit">@Localizer["Save"]</button>
+    <a class="buttons__button button button--neutral" href="@this.Context.Request.CombineUrl("/backend/roles")">@Localizer["Cancel"]</a>
   </div>
 </form>

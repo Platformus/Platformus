@@ -2,6 +2,8 @@
 // Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information.
 
 using System.Linq;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Localization;
 using Platformus.Barebone;
 using Platformus.Barebone.Backend.ViewModels;
 using Platformus.Barebone.Backend.ViewModels.Shared;
@@ -20,6 +22,7 @@ namespace Platformus.Routing.Backend.ViewModels.DataSources
     public IndexViewModel Create(int endpointId, string orderBy, string direction, int skip, int take, string filter)
     {
       IDataSourceRepository dataSourceRepository = this.RequestHandler.Storage.GetRepository<IDataSourceRepository>();
+      IStringLocalizer<IndexViewModelFactory> localizer = this.RequestHandler.HttpContext.RequestServices.GetService<IStringLocalizer<IndexViewModelFactory>>();
 
       return new IndexViewModel()
       {
@@ -27,8 +30,8 @@ namespace Platformus.Routing.Backend.ViewModels.DataSources
         Grid = new GridViewModelFactory(this.RequestHandler).Create(
           orderBy, direction, skip, take, dataSourceRepository.CountByEndpointId(endpointId, filter),
           new[] {
-            new GridColumnViewModelFactory(this.RequestHandler).Create("Code", "Code"),
-            new GridColumnViewModelFactory(this.RequestHandler).Create("C# class name", "CSharpClassName"),
+            new GridColumnViewModelFactory(this.RequestHandler).Create(localizer["Code"], "Code"),
+            new GridColumnViewModelFactory(this.RequestHandler).Create(localizer["C# class name"], "CSharpClassName"),
             new GridColumnViewModelFactory(this.RequestHandler).CreateEmpty()
           },
           dataSourceRepository.FilteredByEndpointIdRange(endpointId, orderBy, direction, skip, take, filter).ToList().Select(ds => new DataSourceViewModelFactory(this.RequestHandler).Create(ds)),

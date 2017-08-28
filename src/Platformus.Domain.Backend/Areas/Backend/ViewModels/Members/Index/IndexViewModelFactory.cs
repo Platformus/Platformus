@@ -2,6 +2,8 @@
 // Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information.
 
 using System.Linq;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Localization;
 using Platformus.Barebone;
 using Platformus.Barebone.Backend.ViewModels.Shared;
 using Platformus.Domain.Backend.ViewModels.Shared;
@@ -20,6 +22,7 @@ namespace Platformus.Domain.Backend.ViewModels.Members
     public IndexViewModel Create(int classId, string orderBy, string direction, int skip, int take, string filter)
     {
       IMemberRepository memberRepository = this.RequestHandler.Storage.GetRepository<IMemberRepository>();
+      IStringLocalizer<IndexViewModelFactory> localizer = this.RequestHandler.HttpContext.RequestServices.GetService<IStringLocalizer<IndexViewModelFactory>>();
 
       return new IndexViewModel()
       {
@@ -27,10 +30,10 @@ namespace Platformus.Domain.Backend.ViewModels.Members
         Grid = new GridViewModelFactory(this.RequestHandler).Create(
           orderBy, direction, skip, take, memberRepository.CountByClassId(classId, filter),
           new[] {
-            new GridColumnViewModelFactory(this.RequestHandler).Create("Name", "Name"),
-            new GridColumnViewModelFactory(this.RequestHandler).Create("Property Data Type"),
-            new GridColumnViewModelFactory(this.RequestHandler).Create("Relation Class"),
-            new GridColumnViewModelFactory(this.RequestHandler).Create("Position", "Position"),
+            new GridColumnViewModelFactory(this.RequestHandler).Create(localizer["Name"], "Name"),
+            new GridColumnViewModelFactory(this.RequestHandler).Create(localizer["Property Data Type"]),
+            new GridColumnViewModelFactory(this.RequestHandler).Create(localizer["Relation Class"]),
+            new GridColumnViewModelFactory(this.RequestHandler).Create(localizer["Position"], "Position"),
             new GridColumnViewModelFactory(this.RequestHandler).CreateEmpty()
           },
           memberRepository.FilteredByClassIdRange(classId, orderBy, direction, skip, take, filter).ToList().Select(m => new MemberViewModelFactory(this.RequestHandler).Create(m)),

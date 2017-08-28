@@ -135,70 +135,31 @@ namespace Platformus.Domain.Data.EntityFramework.PostgreSql
       if (@params == null || @params.Filtering == null || string.IsNullOrEmpty(@params.Filtering.Query))
         return this.dbSet.Count(so => so.CultureId == cultureId && so.ClassId == classId);
 
-      int result = 0;
-      NpgsqlConnection connection = (this.storageContext as DbContext).Database.GetDbConnection() as NpgsqlConnection;
-
-      try
-      {
-        connection.Open();
-
-        using (NpgsqlCommand command = connection.CreateCommand())
-        {
-          command.CommandText = "SELECT COUNT(*) FROM \"SerializedObjects\" WHERE \"CultureId\" = @CultureId AND \"ClassId\" = @ClassId AND \"ObjectId\" IN (SELECT \"ObjectId\" FROM \"Properties\" WHERE \"StringValueId\" IN (SELECT \"DictionaryId\" FROM \"Localizations\" WHERE \"Value\" LIKE @Query))";
-          command.Parameters.AddWithValue("@CultureId", cultureId);
-          command.Parameters.AddWithValue("@ClassId", classId);
-          command.Parameters.AddWithValue("@Query", "%" + @params.Filtering.Query + "%");
-
-          using (DbDataReader dataReader = command.ExecuteReader())
-            if (dataReader.HasRows)
-              while (dataReader.Read())
-                result = dataReader.GetInt32(0);
-        }
-      }
-
-      catch (System.Exception e) { connection.Close(); }
-
-      return result;
+      return this.CountByRawSql(
+        "SELECT COUNT(*) FROM \"SerializedObjects\" WHERE \"CultureId\" = @CultureId AND \"ClassId\" = @ClassId AND \"ObjectId\" IN (SELECT \"ObjectId\" FROM \"Properties\" WHERE \"StringValueId\" IN (SELECT \"DictionaryId\" FROM \"Localizations\" WHERE \"Value\" LIKE @Query))",
+        new KeyValuePair<string, object>("@CultureId", cultureId),
+        new KeyValuePair<string, object>("@ClassId", classId),
+        new KeyValuePair<string, object>("@Query", "%" + @params.Filtering.Query + "%")
+      );
     }
 
     public int CountByCultureIdAndClassIdAndObjectId(int cultureId, int classId, int objectId, Params @params)
     {
-      int result = 0;
-      NpgsqlConnection connection = (this.storageContext as DbContext).Database.GetDbConnection() as NpgsqlConnection;
+      if (@params == null || @params.Filtering == null || string.IsNullOrEmpty(@params.Filtering.Query))
+        return this.CountByRawSql(
+          "SELECT COUNT(*) FROM \"SerializedObjects\" WHERE \"CultureId\" = @CultureId AND \"ClassId\" = @ClassId AND \"ObjectId\" IN (SELECT \"PrimaryId\" FROM \"Relations\" WHERE \"ForeignId\" = @ObjectId)",
+          new KeyValuePair<string, object>("@CultureId", cultureId),
+          new KeyValuePair<string, object>("@ClassId", classId),
+          new KeyValuePair<string, object>("@ObjectId", objectId)
+        );
 
-      try
-      {
-        connection.Open();
-
-        using (NpgsqlCommand command = connection.CreateCommand())
-        {
-          if (@params == null || @params.Filtering == null || string.IsNullOrEmpty(@params.Filtering.Query))
-          {
-            command.CommandText = "SELECT COUNT(*) FROM \"SerializedObjects\" WHERE \"CultureId\" = @CultureId AND \"ClassId\" = @ClassId AND \"ObjectId\" IN (SELECT \"PrimaryId\" FROM \"Relations\" WHERE \"ForeignId\" = @ObjectId)";
-            command.Parameters.AddWithValue("@CultureId", cultureId);
-            command.Parameters.AddWithValue("@ClassId", classId);
-            command.Parameters.AddWithValue("@ObjectId", objectId);
-          }
-
-          else
-          {
-            command.CommandText = "SELECT COUNT(*) FROM \"SerializedObjects\" WHERE \"CultureId\" = @CultureId AND \"ClassId\" = @ClassId AND \"ObjectId\" IN (SELECT \"PrimaryId\" FROM \"Relations\" WHERE \"ForeignId\" = @ObjectId) AND \"ObjectId\" IN (SELECT \"ObjectId\" FROM \"Properties\" WHERE \"StringValueId\" IN (SELECT \"DictionaryId\" FROM \"Localizations\" WHERE \"Value\" LIKE @Query))";
-            command.Parameters.AddWithValue("@CultureId", cultureId);
-            command.Parameters.AddWithValue("@ClassId", classId);
-            command.Parameters.AddWithValue("@ObjectId", objectId);
-            command.Parameters.AddWithValue("@Query", "%" + @params.Filtering.Query + "%");
-          }
-
-          using (DbDataReader dataReader = command.ExecuteReader())
-            if (dataReader.HasRows)
-              while (dataReader.Read())
-                result = dataReader.GetInt32(0);
-        }
-      }
-
-      catch { connection.Close(); }
-
-      return result;
+      return this.CountByRawSql(
+        "SELECT COUNT(*) FROM \"SerializedObjects\" WHERE \"CultureId\" = @CultureId AND \"ClassId\" = @ClassId AND \"ObjectId\" IN (SELECT \"PrimaryId\" FROM \"Relations\" WHERE \"ForeignId\" = @ObjectId) AND \"ObjectId\" IN (SELECT \"ObjectId\" FROM \"Properties\" WHERE \"StringValueId\" IN (SELECT \"DictionaryId\" FROM \"Localizations\" WHERE \"Value\" LIKE @Query))",
+        new KeyValuePair<string, object>("@CultureId", cultureId),
+        new KeyValuePair<string, object>("@ClassId", classId),
+        new KeyValuePair<string, object>("@ObjectId", objectId),
+        new KeyValuePair<string, object>("@Query", "%" + @params.Filtering.Query + "%")
+      );
     }
 
     private string GetUnsortedSelectQuerySql(string additionalWhereClause)
@@ -270,6 +231,36 @@ namespace Platformus.Domain.Data.EntityFramework.PostgreSql
     private string GetSortedByDateTimeValueSelectQuerySql(Params @params)
     {
       return "\"Members\".\"Id\" = " + @params.Sorting.MemberId + " ORDER BY \"Properties\".\"DateTimeValue\" " + @params.Sorting.Direction;
+    }
+
+    public int CountByRawSql(string sql, params KeyValuePair<string, object>[] parameters)
+    {
+      int result = 0;
+      NpgsqlConnection connection = (this.storageContext as DbContext).Database.GetDbConnection() as NpgsqlConnection;
+
+      try
+      {
+        connection.Open();
+
+        using (NpgsqlCommand command = connection.CreateCommand())
+        {
+          command.CommandText = sql;
+
+          foreach (KeyValuePair<string, object> parameter in parameters)
+            command.Parameters.AddWithValue(parameter.Key, parameter.Value);
+
+          using (DbDataReader dataReader = command.ExecuteReader())
+            if (dataReader.HasRows)
+              while (dataReader.Read())
+                result = dataReader.GetInt32(0);
+        }
+      }
+
+      catch (System.Exception e) { }
+
+      finally { connection.Close(); }
+
+      return result;
     }
   }
 }
