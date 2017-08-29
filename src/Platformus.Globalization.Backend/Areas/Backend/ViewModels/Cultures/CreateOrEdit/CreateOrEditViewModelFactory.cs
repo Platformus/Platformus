@@ -28,7 +28,8 @@ namespace Platformus.Globalization.Backend.ViewModels.Cultures
         Id = culture.Id,
         Code = culture.Code,
         Name = culture.Name,
-        IsDefault = culture.IsDefault
+        IsDefault = culture.IsDefault,
+        IsBackendUi = culture.IsBackendUi
       };
     }
   }

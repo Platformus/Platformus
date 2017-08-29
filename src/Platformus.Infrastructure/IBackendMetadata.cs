@@ -10,7 +10,6 @@ namespace Platformus.Infrastructure
   {
     IEnumerable<BackendStyleSheet> BackendStyleSheets { get; }
     IEnumerable<BackendScript> BackendScripts { get; }
-    IEnumerable<BackendMenuGroup> BackendMenuGroups { get; }
     IEnumerable<BackendMenuGroup> GetBackendMenuGroups(IServiceProvider serviceProvider);
   }
 }

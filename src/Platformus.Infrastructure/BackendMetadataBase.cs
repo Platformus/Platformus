@@ -24,14 +24,6 @@ namespace Platformus.Infrastructure
       }
     }
 
-    public virtual IEnumerable<BackendMenuGroup> BackendMenuGroups
-    {
-      get
-      {
-        return null;
-      }
-    }
-
     public virtual IEnumerable<BackendMenuGroup> GetBackendMenuGroups(IServiceProvider serviceProvider) => new BackendMenuGroup[] { };
   }
 }

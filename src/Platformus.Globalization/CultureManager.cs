@@ -28,6 +28,13 @@ namespace Platformus.Globalization
       return CultureManager.cultures.FirstOrDefault(c => c.IsDefault);
     }
 
+    public static Culture GetBackendUiCulture(IStorage storage)
+    {
+      CultureManager.CacheCultures(storage);
+
+      return CultureManager.cultures.FirstOrDefault(c => c.IsBackendUi);
+    }
+
     public static Culture GetCurrentCulture(IStorage storage)
     {
       CultureManager.CacheCultures(storage);

@@ -16,6 +16,7 @@ namespace Platformus.Globalization.Data.Entities
     public string Name { get; set; }
     public bool IsNeutral { get; set; }
     public bool IsDefault { get; set; }
+    public bool IsBackendUi { get; set; }
 
     public virtual ICollection<Localization> Localizations { get; set; }
   }

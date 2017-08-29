@@ -120,6 +120,9 @@
   <data name="Code" xml:space="preserve">
     <value>Код</value>
   </data>
+  <data name="Is backend UI" xml:space="preserve">
+    <value>Язык интерфейса бекенда</value>
+  </data>
   <data name="Is default" xml:space="preserve">
     <value>Использовать по умолчанию</value>
   </data>

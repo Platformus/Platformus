@@ -76,8 +76,8 @@ INSERT INTO [dbo].[RolePermissions] ([RoleId], [PermissionId]) VALUES (3, 14);
 -- Version: alpha-21
 --
 SET IDENTITY_INSERT [dbo].[Cultures] ON;
-INSERT INTO [dbo].[Cultures] ([Id], [Code], [Name], [IsNeutral], [IsDefault]) VALUES (1, N'__', N'Neutral', 1, 0);
-INSERT INTO [dbo].[Cultures] ([Id], [Code], [Name], [IsNeutral], [IsDefault]) VALUES (2, N'en', N'English', 0, 1);
+INSERT INTO [dbo].[Cultures] ([Id], [Code], [Name], [IsNeutral], [IsDefault], [IsBackendUi]) VALUES (1, N'__', N'Neutral', 1, 0, 0);
+INSERT INTO [dbo].[Cultures] ([Id], [Code], [Name], [IsNeutral], [IsDefault], [IsBackendUi]) VALUES (2, N'en', N'English', 0, 1, 1);
 SET IDENTITY_INSERT [dbo].[Cultures] OFF;
 
 --

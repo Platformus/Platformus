@@ -54,8 +54,8 @@ INSERT INTO public."RolePermissions" ("RoleId","PermissionId") VALUES (3,14);
 -- Extension: Platformus.Globalization
 -- Version: alpha-21
 --
-INSERT INTO public."Cultures" ("Id","Code","Name","IsNeutral","IsDefault") VALUES (1,'__','Neutral',TRUE,FALSE);
-INSERT INTO public."Cultures" ("Id","Code","Name","IsNeutral","IsDefault") VALUES (2,'en','English',FALSE,TRUE);
+INSERT INTO public."Cultures" ("Id","Code","Name","IsNeutral","IsDefault","IsBackendUi") VALUES (1,'__','Neutral',TRUE,FALSE,FALSE);
+INSERT INTO public."Cultures" ("Id","Code","Name","IsNeutral","IsDefault","IsBackendUi") VALUES (2,'en','English',FALSE,TRUE,TRUE);
 
 --
 -- Extension: Platformus.Domain

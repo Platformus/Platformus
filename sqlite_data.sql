@@ -54,8 +54,8 @@ INSERT INTO "RolePermissions" VALUES (3,14);
 -- Extension: Platformus.Globalization
 -- Version: alpha-21
 --
-INSERT INTO "Cultures" VALUES (1,'__','Neutral',1,0);
-INSERT INTO "Cultures" VALUES (2,'en','English',0,1);
+INSERT INTO "Cultures" VALUES (1,'__','Neutral',1,0,0);
+INSERT INTO "Cultures" VALUES (2,'en','English',0,1,1);
 
 --
 -- Extension: Platformus.Domain

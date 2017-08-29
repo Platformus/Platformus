@@ -144,6 +144,7 @@ CREATE TABLE "Cultures" (
     "Name" text NOT NULL,
     "IsNeutral" boolean NOT NULL,
     "IsDefault" boolean NOT NULL,
+    "IsBackendUi" boolean NOT NULL,
     CONSTRAINT "PK_Cultures" PRIMARY KEY ("Id")
 );
 

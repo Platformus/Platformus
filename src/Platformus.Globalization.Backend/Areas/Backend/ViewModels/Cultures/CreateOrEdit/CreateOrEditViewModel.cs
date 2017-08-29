@@ -21,5 +21,8 @@ namespace Platformus.Globalization.Backend.ViewModels.Cultures
 
     [Display(Name = "Is default")]
     public bool IsDefault { get; set; }
+
+    [Display(Name = "Is backend UI")]
+    public bool IsBackendUi { get; set; }
   }
 }
