@@ -42,7 +42,7 @@ namespace Platformus.ExtensionManager.Backend
 
     private static string[] GetFilteredFiles(string path, string searchPattern, string filter)
     {
-      string[] paths = Directory.GetFiles(path, searchPattern);
+      string[] paths = Directory.GetFiles(path, searchPattern, SearchOption.AllDirectories);
 
       if (!string.IsNullOrEmpty(filter))
         paths = paths.Where(p => p.ToLower().Contains(filter.ToLower())).ToArray();

@@ -16,12 +16,12 @@ namespace Platformus.WebApplication.Extensions
 
     public static void AddPlatformus(this IServiceCollection services, string extensionsPath)
     {
-      services.AddExtCore(extensionsPath);
+      services.AddExtCore(extensionsPath, true);
     }
 
     public static void AddPlatformus(this IServiceCollection services, string extensionsPath, IAssemblyProvider assemblyProvider)
     {
-      services.AddExtCore(extensionsPath, assemblyProvider);
+      services.AddExtCore(extensionsPath, true, assemblyProvider);
     }
   }
 }

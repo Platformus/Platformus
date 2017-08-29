@@ -16,7 +16,7 @@ namespace Platformus.ExtensionManager.Backend.ViewModels.ExtensionManager
     public ViewViewModel Create(string id)
     {
       Extension extension = new Platformus.ExtensionManager.ExtensionManager(this.RequestHandler).ReadExtension(
-        PathManager.GetExtensionPath(this.RequestHandler, id + ".extension")
+        PathManager.GetExtensionPath(this.RequestHandler, id + "\\extension.json")
       );
 
       return new ViewViewModel()

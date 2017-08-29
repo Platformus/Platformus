@@ -26,14 +26,14 @@ namespace Platformus.ExtensionManager.Backend.ViewModels.ExtensionManager
       return new IndexViewModel()
       {
         Grid = new GridViewModelFactory(this.RequestHandler).Create(
-          orderBy, direction, skip, take, FileSystemRepository.CountFiles(extensionsPath, "*.extension", filter),
+          orderBy, direction, skip, take, FileSystemRepository.CountFiles(extensionsPath, "extension.json", filter),
           new[] {
             new GridColumnViewModelFactory(this.RequestHandler).Create(localizer["ID"], "filename"),
             new GridColumnViewModelFactory(this.RequestHandler).Create(localizer["Name"], string.Empty),
             new GridColumnViewModelFactory(this.RequestHandler).Create(localizer["Version"], string.Empty),
             new GridColumnViewModelFactory(this.RequestHandler).CreateEmpty()
           },
-          FileSystemRepository.GetFiles(extensionsPath, "*.extension", filter, orderBy, direction, skip, take).Select(fi => new ExtensionViewModelFactory(this.RequestHandler).Create(fi)),
+          FileSystemRepository.GetFiles(extensionsPath, "extension.json", filter, orderBy, direction, skip, take).Select(fi => new ExtensionViewModelFactory(this.RequestHandler).Create(fi)),
           "_Extension"
         )
       };

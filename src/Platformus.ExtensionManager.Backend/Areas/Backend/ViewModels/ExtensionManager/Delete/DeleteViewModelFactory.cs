@@ -16,13 +16,13 @@ namespace Platformus.ExtensionManager.Backend.ViewModels.ExtensionManager
     public DeleteViewModel Create(string id)
     {
       Extension extension = new Platformus.ExtensionManager.ExtensionManager(this.RequestHandler).ReadExtension(
-        PathManager.GetExtensionPath(this.RequestHandler, id + ".extension")
+        PathManager.GetExtensionPath(this.RequestHandler, id + "\\extension.json")
       );
 
       return new DeleteViewModel()
       {
         Id = extension.Id,
-        Files = id + ".extension\r\n" + string.Join("\r\n", extension.Files)
+        Files = "extension.json\r\n" + string.Join("\r\n", extension.Files)
       };
     }
   }
