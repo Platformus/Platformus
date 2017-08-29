@@ -2,11 +2,14 @@
 // Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information.
 
 using ExtCore.Data.Abstractions;
+using ExtCore.Events;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Platformus.Barebone;
 using Platformus.Domain.Backend.ViewModels.DataTypes;
 using Platformus.Domain.Data.Abstractions;
 using Platformus.Domain.Data.Entities;
+using Platformus.Domain.Events;
 
 namespace Platformus.Domain.Backend.Controllers
 {
@@ -45,6 +48,12 @@ namespace Platformus.Domain.Backend.Controllers
         else this.Storage.GetRepository<IDataTypeRepository>().Edit(dataType);
 
         this.Storage.Save();
+
+        if (createOrEdit.Id == null)
+          Event<IDataTypeCreatedEventHandler, IRequestHandler, DataType>.Broadcast(this, dataType);
+
+        else Event<IDataTypeEditedEventHandler, IRequestHandler, DataType>.Broadcast(this, dataType);
+
         return this.Redirect(this.Request.CombineUrl("/backend/datatypes"));
       }
 
@@ -53,8 +62,11 @@ namespace Platformus.Domain.Backend.Controllers
 
     public ActionResult Delete(int id)
     {
-      this.Storage.GetRepository<IDataTypeRepository>().Delete(id);
+      DataType dataType = this.Storage.GetRepository<IDataTypeRepository>().WithKey(id);
+
+      this.Storage.GetRepository<IDataTypeRepository>().Delete(dataType);
       this.Storage.Save();
+      Event<IDataTypeDeletedEventHandler, IRequestHandler, DataType>.Broadcast(this, dataType);
       return this.RedirectToAction("Index");
     }
   }

@@ -2,9 +2,12 @@
 // Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information.
 
 using ExtCore.Data.Abstractions;
+using ExtCore.Events;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Platformus.Barebone;
 using Platformus.Designers.Backend.ViewModels.Scripts;
+using Platformus.Designers.Events;
 
 namespace Platformus.Designers.Backend.Controllers
 {
@@ -39,7 +42,12 @@ namespace Platformus.Designers.Backend.Controllers
           System.IO.File.Delete(PathManager.GetScriptPath(this, createOrEdit.Id));
 
         System.IO.File.WriteAllText(PathManager.GetScriptPath(this, createOrEdit.Filename), createOrEdit.Content);
-        BandleManager.RebuildAllBundles(this);
+
+        if (string.IsNullOrEmpty(createOrEdit.Id))
+          Event<IScriptCreatedEventHandler, IRequestHandler, string>.Broadcast(this, createOrEdit.Filename);
+
+        else Event<IScriptCreatedEventHandler, IRequestHandler, string>.Broadcast(this, createOrEdit.Filename);
+
         return this.RedirectToAction("Index");
       }
 
@@ -49,6 +57,7 @@ namespace Platformus.Designers.Backend.Controllers
     public ActionResult Delete(string id)
     {
       System.IO.File.Delete(PathManager.GetScriptPath(this, id));
+      Event<IScriptDeletedEventHandler, IRequestHandler, string>.Broadcast(this, id);
       return this.RedirectToAction("Index");
     }
   }

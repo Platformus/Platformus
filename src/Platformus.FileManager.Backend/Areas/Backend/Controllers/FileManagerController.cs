@@ -5,13 +5,16 @@ using System.Collections.Generic;
 using System.IO;
 using System.Threading.Tasks;
 using ExtCore.Data.Abstractions;
+using ExtCore.Events;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Net.Http.Headers;
+using Platformus.Barebone;
 using Platformus.FileManager.Backend.ViewModels.FileManager;
 using Platformus.FileManager.Data.Abstractions;
+using Platformus.FileManager.Events;
 
 namespace Platformus.FileManager.Backend.Controllers
 {
@@ -50,6 +53,7 @@ namespace Platformus.FileManager.Backend.Controllers
         file.Size = source.Length;
         this.Storage.GetRepository<IFileRepository>().Create(file);
         this.Storage.Save();
+        Event<IFileCreatedEventHandler, IRequestHandler, Platformus.FileManager.Data.Entities.File>.Broadcast(this, file);
       }
 
       return this.RedirectToAction("Index");
@@ -68,6 +72,7 @@ namespace Platformus.FileManager.Backend.Controllers
 
       this.Storage.GetRepository<IFileRepository>().Delete(file);
       this.Storage.Save();
+      Event<IFileDeletedEventHandler, IRequestHandler, Platformus.FileManager.Data.Entities.File>.Broadcast(this, file);
       return this.RedirectToAction("Index");
     }
 

@@ -2,11 +2,14 @@
 // Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information.
 
 using ExtCore.Data.Abstractions;
+using ExtCore.Events;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Platformus.Barebone;
 using Platformus.Security.Backend.ViewModels.Permissions;
 using Platformus.Security.Data.Abstractions;
 using Platformus.Security.Data.Entities;
+using Platformus.Security.Events;
 
 namespace Platformus.Security.Backend.Controllers
 {
@@ -45,6 +48,12 @@ namespace Platformus.Security.Backend.Controllers
         else this.Storage.GetRepository<IPermissionRepository>().Edit(permission);
 
         this.Storage.Save();
+
+        if (createOrEdit.Id == null)
+          Event<IPermissionCreatedEventHandler, IRequestHandler, Permission>.Broadcast(this, permission);
+
+        else Event<IPermissionEditedEventHandler, IRequestHandler, Permission>.Broadcast(this, permission);
+
         return this.Redirect(this.Request.CombineUrl("/backend/permissions"));
       }
 
@@ -53,8 +62,11 @@ namespace Platformus.Security.Backend.Controllers
 
     public ActionResult Delete(int id)
     {
-      this.Storage.GetRepository<IPermissionRepository>().Delete(id);
+      Permission permission = this.Storage.GetRepository<IPermissionRepository>().WithKey(id);
+
+      this.Storage.GetRepository<IPermissionRepository>().Delete(permission);
       this.Storage.Save();
+      Event<IPermissionDeletedEventHandler, IRequestHandler, Permission>.Broadcast(this, permission);
       return this.RedirectToAction("Index");
     }
   }

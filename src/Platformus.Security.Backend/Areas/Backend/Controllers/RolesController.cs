@@ -2,11 +2,14 @@
 // Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information.
 
 using ExtCore.Data.Abstractions;
+using ExtCore.Events;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Platformus.Barebone;
 using Platformus.Security.Backend.ViewModels.Roles;
 using Platformus.Security.Data.Abstractions;
 using Platformus.Security.Data.Entities;
+using Platformus.Security.Events;
 
 namespace Platformus.Security.Backend.Controllers
 {
@@ -46,6 +49,12 @@ namespace Platformus.Security.Backend.Controllers
 
         this.Storage.Save();
         this.CreateOrEditRolePermissions(role);
+
+        if (createOrEdit.Id == null)
+          Event<IRoleCreatedEventHandler, IRequestHandler, Role>.Broadcast(this, role);
+
+        else Event<IRoleEditedEventHandler, IRequestHandler, Role>.Broadcast(this, role);
+
         return this.Redirect(this.Request.CombineUrl("/backend/roles"));
       }
 
@@ -54,8 +63,11 @@ namespace Platformus.Security.Backend.Controllers
 
     public ActionResult Delete(int id)
     {
-      this.Storage.GetRepository<IRoleRepository>().Delete(id);
+      Role role = this.Storage.GetRepository<IRoleRepository>().WithKey(id);
+
+      this.Storage.GetRepository<IRoleRepository>().Delete(role);
       this.Storage.Save();
+      Event<IRoleDeletedEventHandler, IRequestHandler, Role>.Broadcast(this, role);
       return this.RedirectToAction("Index");
     }
 

@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 
-namespace Platformus.Designers.Backend
+namespace Platformus.Designers
 {
   public static class FileSystemRepository
   {

@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.DependencyInjection;
 using Platformus.Barebone;
 
-namespace Platformus.Designers.Backend
+namespace Platformus.Designers
 {
   public static class PathManager
   {

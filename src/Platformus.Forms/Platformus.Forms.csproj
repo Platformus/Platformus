@@ -13,7 +13,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="ExtCore.Events" Version="3.0.0-alpha1" />
     <PackageReference Include="MailKit" Version="1.8.1" />
   </ItemGroup>
 

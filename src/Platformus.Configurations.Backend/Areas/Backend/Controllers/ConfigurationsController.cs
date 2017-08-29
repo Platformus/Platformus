@@ -2,11 +2,14 @@
 // Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information.
 
 using ExtCore.Data.Abstractions;
+using ExtCore.Events;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Platformus.Barebone;
 using Platformus.Configurations.Backend.ViewModels.Configurations;
 using Platformus.Configurations.Data.Abstractions;
 using Platformus.Configurations.Data.Entities;
+using Platformus.Configurations.Events;
 
 namespace Platformus.Configurations.Backend.Controllers
 {
@@ -45,6 +48,12 @@ namespace Platformus.Configurations.Backend.Controllers
         else this.Storage.GetRepository<IConfigurationRepository>().Edit(configuration);
 
         this.Storage.Save();
+
+        if (createOrEdit.Id == null)
+          Event<IConfigurationCreatedEventHandler, IRequestHandler, Configuration>.Broadcast(this, configuration);
+
+        else Event<IConfigurationEditedEventHandler, IRequestHandler, Configuration>.Broadcast(this, configuration);
+
         return this.RedirectToAction("Index");
       }
 
@@ -53,8 +62,11 @@ namespace Platformus.Configurations.Backend.Controllers
 
     public ActionResult Delete(int id)
     {
-      this.Storage.GetRepository<IConfigurationRepository>().Delete(id);
+      Configuration configuration = this.Storage.GetRepository<IConfigurationRepository>().WithKey(id);
+
+      this.Storage.GetRepository<IConfigurationRepository>().Delete(configuration);
       this.Storage.Save();
+      Event<IConfigurationDeletedEventHandler, IRequestHandler, Configuration>.Broadcast(this, configuration);
       return this.RedirectToAction("Index");
     }
   }

@@ -2,9 +2,12 @@
 // Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information.
 
 using ExtCore.Data.Abstractions;
+using ExtCore.Events;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Platformus.Barebone;
 using Platformus.Designers.Backend.ViewModels.Views;
+using Platformus.Designers.Events;
 
 namespace Platformus.Designers.Backend.Controllers
 {
@@ -39,6 +42,12 @@ namespace Platformus.Designers.Backend.Controllers
           System.IO.File.Delete(PathManager.GetViewPath(this, createOrEdit.Subdirectory, createOrEdit.Id));
 
         System.IO.File.WriteAllText(PathManager.GetViewPath(this, createOrEdit.Subdirectory, createOrEdit.Filename), createOrEdit.Content);
+
+        if (string.IsNullOrEmpty(createOrEdit.Id))
+          Event<IViewCreatedEventHandler, IRequestHandler, string>.Broadcast(this, createOrEdit.Filename);
+
+        else Event<IViewCreatedEventHandler, IRequestHandler, string>.Broadcast(this, createOrEdit.Filename);
+
         return this.RedirectToAction("Index", new { subdirectory = createOrEdit.Subdirectory });
       }
 
@@ -48,6 +57,7 @@ namespace Platformus.Designers.Backend.Controllers
     public ActionResult Delete(string subdirectory, string id)
     {
       System.IO.File.Delete(PathManager.GetViewPath(this, subdirectory, id));
+      Event<IViewDeletedEventHandler, IRequestHandler, string>.Broadcast(this, subdirectory + "\\" + id);
       return this.RedirectToAction("Index", new { subdirectory = subdirectory });
     }
   }

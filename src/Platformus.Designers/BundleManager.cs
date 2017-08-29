@@ -8,7 +8,7 @@ using Newtonsoft.Json;
 using NUglify;
 using Platformus.Barebone;
 
-namespace Platformus.Designers.Backend
+namespace Platformus.Designers
 {
   public static class BandleManager
   {

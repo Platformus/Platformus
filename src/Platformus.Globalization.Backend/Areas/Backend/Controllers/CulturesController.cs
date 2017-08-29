@@ -2,11 +2,14 @@
 // Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information.
 
 using ExtCore.Data.Abstractions;
+using ExtCore.Events;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Platformus.Barebone;
 using Platformus.Globalization.Backend.ViewModels.Cultures;
 using Platformus.Globalization.Data.Abstractions;
 using Platformus.Globalization.Data.Entities;
+using Platformus.Globalization.Events;
 
 namespace Platformus.Globalization.Backend.Controllers
 {
@@ -45,7 +48,12 @@ namespace Platformus.Globalization.Backend.Controllers
         else this.Storage.GetRepository<ICultureRepository>().Edit(culture);
 
         this.Storage.Save();
-        CultureManager.InvalidateCache();
+
+        if (createOrEdit.Id == null)
+          Event<ICultureCreatedEventHandler, IRequestHandler, Culture>.Broadcast(this, culture);
+
+        else Event<ICultureEditedEventHandler, IRequestHandler, Culture>.Broadcast(this, culture);
+
         return this.Redirect(this.Request.CombineUrl("/backend/cultures"));
       }
 
@@ -54,9 +62,11 @@ namespace Platformus.Globalization.Backend.Controllers
 
     public ActionResult Delete(int id)
     {
-      this.Storage.GetRepository<ICultureRepository>().Delete(id);
+      Culture culture = this.Storage.GetRepository<ICultureRepository>().WithKey(id);
+
+      this.Storage.GetRepository<ICultureRepository>().Delete(culture);
       this.Storage.Save();
-      CultureManager.InvalidateCache();
+      Event<ICultureDeletedEventHandler, IRequestHandler, Culture>.Broadcast(this, culture);
       return this.RedirectToAction("Index");
     }
   }

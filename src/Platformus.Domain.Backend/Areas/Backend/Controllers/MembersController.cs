@@ -2,11 +2,14 @@
 // Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information.
 
 using ExtCore.Data.Abstractions;
+using ExtCore.Events;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Platformus.Barebone;
 using Platformus.Domain.Backend.ViewModels.Members;
 using Platformus.Domain.Data.Abstractions;
 using Platformus.Domain.Data.Entities;
+using Platformus.Domain.Events;
 
 namespace Platformus.Domain.Backend.Controllers
 {
@@ -46,6 +49,12 @@ namespace Platformus.Domain.Backend.Controllers
 
         this.Storage.Save();
         this.CreateOrEditDataTypeParameterValues(member);
+
+        if (createOrEdit.Id == null)
+          Event<IMemberCreatedEventHandler, IRequestHandler, Member>.Broadcast(this, member);
+
+        else Event<IMemberEditedEventHandler, IRequestHandler, Member>.Broadcast(this, member);
+
         return this.Redirect(this.Request.CombineUrl("/backend/members"));
       }
 
@@ -58,6 +67,7 @@ namespace Platformus.Domain.Backend.Controllers
 
       this.Storage.GetRepository<IMemberRepository>().Delete(member);
       this.Storage.Save();
+      Event<IMemberDeletedEventHandler, IRequestHandler, Member>.Broadcast(this, member);
       return this.Redirect(string.Format("/backend/members?classid={0}", member.ClassId));
     }
 

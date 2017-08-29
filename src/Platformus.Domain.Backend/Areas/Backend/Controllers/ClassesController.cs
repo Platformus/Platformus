@@ -2,11 +2,14 @@
 // Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information.
 
 using ExtCore.Data.Abstractions;
+using ExtCore.Events;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Platformus.Barebone;
 using Platformus.Domain.Backend.ViewModels.Classes;
 using Platformus.Domain.Data.Abstractions;
 using Platformus.Domain.Data.Entities;
+using Platformus.Domain.Events;
 
 namespace Platformus.Domain.Backend.Controllers
 {
@@ -45,6 +48,12 @@ namespace Platformus.Domain.Backend.Controllers
         else this.Storage.GetRepository<IClassRepository>().Edit(@class);
 
         this.Storage.Save();
+
+        if (createOrEdit.Id == null)
+          Event<IClassCreatedEventHandler, IRequestHandler, Class>.Broadcast(this, @class);
+
+        else Event<IClassEditedEventHandler, IRequestHandler, Class>.Broadcast(this, @class);
+
         return this.Redirect(this.Request.CombineUrl("/backend/classes"));
       }
 
@@ -53,8 +62,11 @@ namespace Platformus.Domain.Backend.Controllers
 
     public ActionResult Delete(int id)
     {
-      this.Storage.GetRepository<IClassRepository>().Delete(id);
+      Class @class = this.Storage.GetRepository<IClassRepository>().WithKey(id);
+
+      this.Storage.GetRepository<IClassRepository>().Delete(@class);
       this.Storage.Save();
+      Event<IClassDeletedEventHandler, IRequestHandler, Class>.Broadcast(this, @class);
       return this.RedirectToAction("Index");
     }
   }
