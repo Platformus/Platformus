@@ -16,9 +16,9 @@ namespace Platformus.Domain
       this.result = new ExpandoObject();
     }
 
-    public override void BuildId(Object @object)
+    public override void BuildId(int id)
     {
-      (this.result as IDictionary<string, dynamic>).Add("Id", @object.Id);
+      (this.result as IDictionary<string, dynamic>).Add("Id", id);
     }
 
     public override void BuildIntegerProperty(string memberCode, int? value)

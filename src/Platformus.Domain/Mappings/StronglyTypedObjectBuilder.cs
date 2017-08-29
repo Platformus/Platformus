@@ -16,9 +16,9 @@ namespace Platformus.Domain
       this.result = System.Activator.CreateInstance<T>();
     }
 
-    public override void BuildId(Object @object)
+    public override void BuildId(int id)
     {
-      this.SetPropertyValue("Id", @object.Id);
+      this.SetPropertyValue("Id", id);
     }
 
     public override void BuildIntegerProperty(string memberCode, int? value)

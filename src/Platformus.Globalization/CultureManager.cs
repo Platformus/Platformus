@@ -1,6 +1,7 @@
 ﻿// Copyright © 2015 Dmitry Sikorsky. All rights reserved.
 // Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information.
 
+using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
@@ -13,6 +14,20 @@ namespace Platformus.Globalization
   public static class CultureManager
   {
     private static IEnumerable<Culture> cultures;
+
+    public static Culture GetCulture(IStorage storage, int id)
+    {
+      CultureManager.CacheCultures(storage);
+
+      return CultureManager.cultures.FirstOrDefault(c => c.Id == id);
+    }
+
+    public static Culture GetCulture(IStorage storage, string code)
+    {
+      CultureManager.CacheCultures(storage);
+
+      return CultureManager.cultures.FirstOrDefault(c => string.Equals(c.Code, code, StringComparison.OrdinalIgnoreCase));
+    }
 
     public static Culture GetNeutralCulture(IStorage storage)
     {

@@ -3,6 +3,7 @@
 
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using ExtCore.Data.Abstractions;
 using ExtCore.Events;
 using Microsoft.AspNetCore.Authorization;
@@ -12,6 +13,8 @@ using Platformus.Barebone;
 using Platformus.Domain.Data.Abstractions;
 using Platformus.Domain.Data.Entities;
 using Platformus.Domain.Events;
+using Platformus.Globalization;
+using Platformus.Globalization.Data.Entities;
 
 namespace Platformus.Domain.Api.Controllers
 {
@@ -25,18 +28,30 @@ namespace Platformus.Domain.Api.Controllers
     }
 
     [HttpGet]
-    public IEnumerable<dynamic> Get(string classCode)
+    public IEnumerable<dynamic> Get(string classCode, string filteringQuery, string sortingMemberCode, string sortingDirection, int? pagingSkip, int? pagingTake)
     {
+      ISerializedObjectRepository serializedObjectRepository = this.Storage.GetRepository<ISerializedObjectRepository>();
       Class @class = this.GetValidatedClass(classCode);
-      IEnumerable<Object> objects = this.Storage.GetRepository<IObjectRepository>().FilteredByClassId(@class.Id);
+      Culture defaultCulture = CultureManager.GetDefaultCulture(this.Storage);
+      Params @params = this.GetParams(filteringQuery, @class.Id, sortingMemberCode, sortingDirection, pagingSkip, pagingTake);
+      IEnumerable<SerializedObject> serializedObjects = serializedObjectRepository.FilteredByCultureIdAndClassId(
+        defaultCulture.Id, @class.Id, @params
+      );
+
       ObjectDirector objectDirector = new ObjectDirector(this);
 
-      return objects.Select(
-        o =>
+      this.Response.Headers.Add("Filtering-Query", WebUtility.UrlEncode(filteringQuery));
+      this.Response.Headers.Add("Sorting-Member-Code", sortingMemberCode);
+      this.Response.Headers.Add("Sorting-Direction", sortingDirection);
+      this.Response.Headers.Add("Paging-Skip", pagingSkip.ToString());
+      this.Response.Headers.Add("Paging-Take", pagingTake.ToString());
+      this.Response.Headers.Add("Paging-Total", serializedObjectRepository.CountByCultureIdAndClassId(defaultCulture.Id, @class.Id, @params).ToString());
+      return serializedObjects.Select(
+        so =>
         {
           DynamicObjectBuilder objectBuilder = new DynamicObjectBuilder();
 
-          objectDirector.ConstructObject(objectBuilder, o);
+          objectDirector.ConstructObject(objectBuilder, so);
           return objectBuilder.Build();
         }
       );
@@ -46,10 +61,10 @@ namespace Platformus.Domain.Api.Controllers
     public dynamic Get(string classCode, int id)
     {
       Class @class = this.GetValidatedClass(classCode);
-      Object @object = this.GetValidatedObject(@class, id);
+      SerializedObject serializedObject = this.GetValidatedSerializedObject(@class, id);
       DynamicObjectBuilder objectBuilder = new DynamicObjectBuilder();
 
-      new ObjectDirector(this).ConstructObject(objectBuilder, @object);
+      new ObjectDirector(this).ConstructObject(objectBuilder, serializedObject);
       return objectBuilder.Build();
     }
 
@@ -138,6 +153,44 @@ namespace Platformus.Domain.Api.Controllers
         throw new HttpException(400, "Object identifier doesn't match given class code.");
 
       return @object;
+    }
+
+    private SerializedObject GetValidatedSerializedObject(Class @class, int id)
+    {
+      SerializedObject serializedObject = this.Storage.GetRepository<ISerializedObjectRepository>().WithKey(CultureManager.GetDefaultCulture(this.Storage).Id, id);
+
+      if (serializedObject == null)
+        throw new HttpException(400, "Object identifier is not valid.");
+
+      if (serializedObject.ClassId != @class.Id)
+        throw new HttpException(400, "Object identifier doesn't match given class code.");
+
+      return serializedObject;
+    }
+
+    protected Params GetParams(string filteringQuery, int sortingClassId, string sortingMemberCode, string sortingDirection, int? pagingSkip, int? pagingTake)
+    {
+      Filtering filtering = null;
+
+      if (!string.IsNullOrEmpty(filteringQuery))
+        filtering = new Filtering(filteringQuery);
+
+      Sorting sorting = null;
+
+      if (!string.IsNullOrEmpty(sortingMemberCode) && !string.IsNullOrEmpty(sortingDirection))
+      {
+        Member member = this.Storage.GetRepository<IMemberRepository>().WithClassIdAndCode(sortingClassId, sortingMemberCode);
+        DataType dataType = this.Storage.GetRepository<IDataTypeRepository>().WithKey((int)member.PropertyDataTypeId);
+
+        sorting = new Sorting(dataType.StorageDataType, member.Id, sortingDirection);
+      }
+
+      Paging paging = null;
+
+      if (pagingSkip != null && pagingTake != null)
+        paging = new Paging(pagingSkip, pagingTake);
+
+      return new Params(filtering, sorting, paging);
     }
   }
 }

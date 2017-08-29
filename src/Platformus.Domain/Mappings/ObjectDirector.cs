@@ -2,6 +2,7 @@
 // Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information.
 
 using System.Collections.Generic;
+using Newtonsoft.Json;
 using Platformus.Barebone;
 using Platformus.Domain.Data.Abstractions;
 using Platformus.Domain.Data.Entities;
@@ -32,7 +33,7 @@ namespace Platformus.Domain
 
     public void ConstructObject(ObjectBuilderBase objectBuilder, Object @object)
     {
-      objectBuilder.BuildId(@object);
+      objectBuilder.BuildId(@object.Id);
 
       Class @class = this.classRepository.WithKey(@object.ClassId);
 
@@ -47,6 +48,29 @@ namespace Platformus.Domain
 
         else if (member.RelationClassId != null)
           this.ConstructRelation(objectBuilder, @object, member);
+      }
+    }
+
+    public void ConstructObject(ObjectBuilderBase objectBuilder, SerializedObject serializedObject)
+    {
+      foreach (SerializedProperty serializedProperty in JsonConvert.DeserializeObject<IEnumerable<SerializedProperty>>(serializedObject.SerializedProperties))
+      {
+        if (serializedProperty.Member.PropertyDataTypeStorageDataType == StorageDataType.Integer)
+          objectBuilder.BuildIntegerProperty(serializedProperty.Member.Code, serializedProperty.IntegerValue);
+
+        else if (serializedProperty.Member.PropertyDataTypeStorageDataType == StorageDataType.Decimal)
+          objectBuilder.BuildDecimalProperty(serializedProperty.Member.Code, serializedProperty.DecimalValue);
+
+        if (serializedProperty.Member.PropertyDataTypeStorageDataType == StorageDataType.String)
+        {
+          Member member = this.memberRepository.WithClassIdAndCode(serializedObject.ClassId, serializedProperty.Member.Code);
+          Property property = this.propertyRepository.WithObjectIdAndMemberId(serializedObject.ObjectId, member.Id);
+
+          objectBuilder.BuildStringProperty(serializedProperty.Member.Code, this.GetLocalizationValuesByCultureCodes(property));
+        }
+
+        if (serializedProperty.Member.PropertyDataTypeStorageDataType == StorageDataType.DateTime)
+          objectBuilder.BuildDateTimeProperty(serializedProperty.Member.Code, serializedProperty.DateTimeValue);
       }
     }
 
