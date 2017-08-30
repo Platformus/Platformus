@@ -100,7 +100,7 @@ namespace Platformus.Domain
     {
       Dictionary<string, string> localizationValuesByCultureCodes = new Dictionary<string, string>();
 
-      foreach (Culture culture in CultureManager.GetCultures(this.requestHandler.Storage))
+      foreach (Culture culture in this.requestHandler.GetService<ICultureManager>().GetCultures())
         localizationValuesByCultureCodes.Add(
           culture.Code,
           this.localizationRepository.WithDictionaryIdAndCultureId((int)property.StringValueId, culture.Id)?.Value

@@ -39,7 +39,7 @@ namespace Platformus.Domain.Backend.ViewModels.Objects
 
       if (classId != null)
       {
-        currentCulture = CultureManager.GetCurrentCulture(this.RequestHandler.Storage);
+        currentCulture = this.RequestHandler.GetService<ICultureManager>().GetCurrentCulture();
         @params = this.GetParams((int)classId, orderBy, direction, skip, take, filter);
       }
 

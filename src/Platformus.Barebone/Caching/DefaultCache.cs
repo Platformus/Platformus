@@ -3,7 +3,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using Microsoft.Extensions.Caching.Memory;
 
 namespace Platformus
@@ -26,13 +25,18 @@ namespace Platformus
 
     public T GetWithDefaultValue<T>(string key, Func<T> defaultValueFunc)
     {
+      return this.GetWithDefaultValue<T>(key, defaultValueFunc, null);
+    }
+
+    public T GetWithDefaultValue<T>(string key, Func<T> defaultValueFunc, CacheEntryOptions options)
+    {
       T result = this.Get<T>(key);
 
       if (result == null)
       {
         T defaultValue = defaultValueFunc();
 
-        this.Set(key, defaultValue);
+        this.Set(key, defaultValue, options);
         return defaultValue;
       }
 
@@ -41,7 +45,25 @@ namespace Platformus
 
     public void Set<T>(string key, T value)
     {
-      this.memoryCache.Set(key, value);
+      this.Set<T>(key, value, null);
+    }
+
+    public void Set<T>(string key, T value, CacheEntryOptions options)
+    {
+      if (options == null)
+        this.memoryCache.Set(key, value);
+
+      else this.memoryCache.Set(
+        key,
+        value,
+        new MemoryCacheEntryOptions()
+        {
+          AbsoluteExpiration = options.AbsoluteExpiration,
+          SlidingExpiration = options.SlidingExpiration,
+          Priority = (CacheItemPriority)options.Priority
+        }
+      );
+
       this.keys.Add(key);
     }
 

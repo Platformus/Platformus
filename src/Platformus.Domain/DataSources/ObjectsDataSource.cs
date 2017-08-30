@@ -74,7 +74,7 @@ namespace Platformus.Domain.DataSources
     private IEnumerable<dynamic> GetUnsortedSerializedObjects(IRequestHandler requestHandler)
     {
       IEnumerable<SerializedObject> serializedObjects = requestHandler.Storage.GetRepository<ISerializedObjectRepository>().FilteredByCultureIdAndClassId(
-        CultureManager.GetCurrentCulture(requestHandler.Storage).Id,
+        requestHandler.GetService<ICultureManager>().GetCurrentCulture().Id,
         this.GetIntParameterValue("ClassId"),
         this.GetParams(requestHandler, false)
       ).ToList();
@@ -85,7 +85,7 @@ namespace Platformus.Domain.DataSources
     private IEnumerable<dynamic> GetSortedSerializedObjects(IRequestHandler requestHandler)
     {
       IEnumerable<SerializedObject> serializedObjects = requestHandler.Storage.GetRepository<ISerializedObjectRepository>().FilteredByCultureIdAndClassId(
-        CultureManager.GetCurrentCulture(requestHandler.Storage).Id,
+        requestHandler.GetService<ICultureManager>().GetCurrentCulture().Id,
         this.GetIntParameterValue("ClassId"),
         this.GetParams(requestHandler, true)
       ).ToList();

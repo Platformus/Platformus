@@ -5,7 +5,6 @@ using System;
 using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
-using ExtCore.Data.Abstractions;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Localization;
 using Microsoft.Extensions.DependencyInjection;
@@ -47,8 +46,7 @@ namespace Platformus.Globalization.Frontend
 
     private string GetDefaultCultureCode()
     {
-      IStorage storage = this.serviceProvider.GetService<IStorage>();
-      Data.Entities.Culture defaultCulture = CultureManager.GetDefaultCulture(storage);
+      Data.Entities.Culture defaultCulture = this.serviceProvider.GetService<ICultureManager>().GetDefaultCulture();
 
       if (defaultCulture == null)
         return DefaultCulture.Code;
@@ -58,12 +56,12 @@ namespace Platformus.Globalization.Frontend
 
     private bool CheckCulture(string cultureCode)
     {
-      IStorage storage = this.serviceProvider.GetService<IStorage>();
+      ICultureManager cultureManager = this.serviceProvider.GetService<ICultureManager>();
 
-      if (CultureManager.GetNotNeutralCultures(storage).Count() == 0)
+      if (cultureManager.GetNotNeutralCultures().Count() == 0)
         return cultureCode == DefaultCulture.Code;
 
-      return CultureManager.GetNotNeutralCultures(storage).Any(c => c.Code == cultureCode);
+      return cultureManager.GetNotNeutralCultures().Any(c => c.Code == cultureCode);
     }
   }
 }

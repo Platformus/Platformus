@@ -28,22 +28,22 @@ namespace Platformus.Globalization.Frontend.Actions
 
       string template = string.Empty;
 
-      if (this.MustSpecifyCultureInUrl(storage))
-        template = "{culture=" + this.GetDefaultCultureCode(storage) + "}/{*url}";
+      if (this.MustSpecifyCultureInUrl(serviceProvider))
+        template = "{culture=" + this.GetDefaultCultureCode(serviceProvider) + "}/{*url}";
 
       else template = "{*url}";
 
       routeBuilder.MapRoute(name: "Default", template: template, defaults: new { controller = "Default", action = "Index" });
     }
 
-    private bool MustSpecifyCultureInUrl(IStorage storage)
+    private bool MustSpecifyCultureInUrl(IServiceProvider serviceProvider)
     {
-      return new ConfigurationManager(storage)["Globalization", "SpecifyCultureInUrl"] != "no";
+      return serviceProvider.GetService<IConfigurationManager>()["Globalization", "SpecifyCultureInUrl"] != "no";
     }
 
-    private string GetDefaultCultureCode(IStorage storage)
+    private string GetDefaultCultureCode(IServiceProvider serviceProvider)
     {
-      Culture defaultCulture = CultureManager.GetDefaultCulture(storage);
+      Culture defaultCulture = serviceProvider.GetService<ICultureManager>().GetDefaultCulture();
 
       if (defaultCulture == null)
         return DefaultCulture.Code;

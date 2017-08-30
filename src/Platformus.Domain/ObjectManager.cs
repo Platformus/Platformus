@@ -32,7 +32,7 @@ namespace Platformus.Domain
           if (property == null)
             return null;
 
-          Culture neutralCulture = CultureManager.GetNeutralCulture(this.requestHandler.Storage);
+          Culture neutralCulture = requestHandler.GetService<ICultureManager>().GetNeutralCulture();
           Localization localization = null;
 
           if (neutralCulture != null)
@@ -48,8 +48,8 @@ namespace Platformus.Domain
     public IEnumerable<string> GetDisplayProperties(Object @object)
     {
       List<string> properties = new List<string>();
-      Culture neutralCulture = CultureManager.GetNeutralCulture(this.requestHandler.Storage);
-      Culture defaultCulture = CultureManager.GetDefaultCulture(this.requestHandler.Storage);
+      Culture neutralCulture = requestHandler.GetService<ICultureManager>().GetNeutralCulture();
+      Culture defaultCulture = requestHandler.GetService<ICultureManager>().GetDefaultCulture();
 
       if (defaultCulture != null)
       {

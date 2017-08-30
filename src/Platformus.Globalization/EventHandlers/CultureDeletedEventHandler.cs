@@ -13,7 +13,7 @@ namespace Platformus.Globalization.EventHandlers
 
     public void HandleEvent(IRequestHandler requestHandler, Culture culture)
     {
-      CultureManager.InvalidateCache();
+      requestHandler.GetService<ICultureManager>().InvalidateCache();
     }
   }
 }

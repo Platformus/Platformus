@@ -33,7 +33,7 @@ namespace Platformus.Forms.Frontend.ViewModels.Shared
         MaxLength = serializedField.MaxLength,
         FieldOptions = cachedFieldOptions.Select(
           fo => new FieldOptionViewModelFactory(this.RequestHandler).Create(fo)
-        )
+        ).ToList()
       };
     }
   }

@@ -32,7 +32,7 @@ namespace Platformus.Domain.Api.Controllers
     {
       ISerializedObjectRepository serializedObjectRepository = this.Storage.GetRepository<ISerializedObjectRepository>();
       Class @class = this.GetValidatedClass(classCode);
-      Culture defaultCulture = CultureManager.GetDefaultCulture(this.Storage);
+      Culture defaultCulture = this.GetService<ICultureManager>().GetDefaultCulture();
       Params @params = this.GetParams(filteringQuery, @class.Id, sortingMemberCode, sortingDirection, pagingSkip, pagingTake);
       IEnumerable<SerializedObject> serializedObjects = serializedObjectRepository.FilteredByCultureIdAndClassId(
         defaultCulture.Id, @class.Id, @params
@@ -157,7 +157,7 @@ namespace Platformus.Domain.Api.Controllers
 
     private SerializedObject GetValidatedSerializedObject(Class @class, int id)
     {
-      SerializedObject serializedObject = this.Storage.GetRepository<ISerializedObjectRepository>().WithKey(CultureManager.GetDefaultCulture(this.Storage).Id, id);
+      SerializedObject serializedObject = this.Storage.GetRepository<ISerializedObjectRepository>().WithKey(this.GetService<ICultureManager>().GetDefaultCulture().Id, id);
 
       if (serializedObject == null)
         throw new HttpException(400, "Object identifier is not valid.");

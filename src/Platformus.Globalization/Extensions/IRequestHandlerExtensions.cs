@@ -11,7 +11,7 @@ namespace Platformus
   {
     public static string GetLocalizationValue(this IRequestHandler requestHandler, int dictionaryId)
     {
-      return requestHandler.GetLocalizationValue(dictionaryId, CultureManager.GetCurrentCulture(requestHandler.Storage).Id);
+      return requestHandler.GetLocalizationValue(dictionaryId, requestHandler.GetService<ICultureManager>().GetCurrentCulture().Id);
     }
 
     public static string GetLocalizationValue(this IRequestHandler requestHandler, int dictionaryId, int cultureId)

@@ -30,7 +30,7 @@ namespace Platformus.Forms.Frontend.ViewModels.Shared
         Name = serializedForm.Name,
         Fields = serializedFields.Select(
           sf => new FieldViewModelFactory(this.RequestHandler).Create(sf)
-        )
+        ).ToList()
       };
     }
   }

@@ -23,7 +23,7 @@ namespace Platformus.Menus
 
     private static string GetMenuViewComponentResultKey(string code, string cultureCode = null)
     {
-      return "menu:" + code + ":" + (string.IsNullOrEmpty(cultureCode) ? CultureInfo.CurrentCulture.TwoLetterISOLanguageName : cultureCode);
+      return "menu-view-component:" + code + ":" + (string.IsNullOrEmpty(cultureCode) ? CultureInfo.CurrentCulture.TwoLetterISOLanguageName : cultureCode);
     }
   }
 }

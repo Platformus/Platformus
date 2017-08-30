@@ -18,7 +18,7 @@ namespace Platformus.Domain.DataSources
     {
       string url = string.Format("/{0}", requestHandler.HttpContext.GetRouteValue("url"));
       SerializedObject serializedObject = requestHandler.Storage.GetRepository<ISerializedObjectRepository>().WithCultureIdAndUrlPropertyStringValue(
-        CultureManager.GetCurrentCulture(requestHandler.Storage).Id, url
+        requestHandler.GetService<ICultureManager>().GetCurrentCulture().Id, url
       );
 
       if (serializedObject == null)

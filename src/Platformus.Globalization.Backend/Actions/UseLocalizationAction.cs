@@ -32,7 +32,7 @@ namespace Platformus.Globalization.Backend.Actions
 
       else
       {
-        Culture backendUiCulture = CultureManager.GetBackendUiCulture(storage);
+        Culture backendUiCulture = serviceProvider.GetService<ICultureManager>().GetBackendUiCulture();
 
         if (backendUiCulture == null)
         {

@@ -30,7 +30,7 @@ namespace Platformus.Menus.Frontend.ViewComponents
     private IViewComponentResult GetViewComponentResult(string code)
     {
       SerializedMenu serializedMenu = this.Storage.GetRepository<ISerializedMenuRepository>().WithCultureIdAndCode(
-        CultureManager.GetCurrentCulture(this.Storage).Id, code
+        this.GetService<ICultureManager>().GetCurrentCulture().Id, code
       );
 
       if (serializedMenu == null)

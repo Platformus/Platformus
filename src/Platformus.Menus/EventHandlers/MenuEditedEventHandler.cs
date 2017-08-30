@@ -18,7 +18,7 @@ namespace Platformus.Menus.EventHandlers
     {
       new SerializationManager(requestHandler).SerializeMenu(menu);
 
-      foreach (Culture culture in CultureManager.GetNotNeutralCultures(requestHandler.Storage))
+      foreach (Culture culture in requestHandler.GetService<ICultureManager>().GetNotNeutralCultures())
         requestHandler.HttpContext.RequestServices.GetService<ICache>().RemoveMenuViewComponentResult(menu.Code, culture.Code);
     }
   }

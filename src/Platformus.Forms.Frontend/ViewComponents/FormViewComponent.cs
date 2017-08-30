@@ -22,6 +22,13 @@ namespace Platformus.Forms.Frontend.ViewComponents
 
     public async Task<IViewComponentResult> InvokeAsync(string code)
     {
+      SerializedForm serializedForm = this.Storage.GetRepository<ISerializedFormRepository>().WithCultureIdAndCode(
+        this.GetService<ICultureManager>().GetCurrentCulture().Id, code
+      );
+
+      if (serializedForm == null)
+        return this.Content($"There is no form with code “{code}” defined.");
+
       return this.HttpContext.RequestServices.GetService<ICache>().GetFormViewComponentResultWithDefaultValue(
         code, () => this.GetViewComponentResult(code)
       );
@@ -30,7 +37,7 @@ namespace Platformus.Forms.Frontend.ViewComponents
     private IViewComponentResult GetViewComponentResult(string code)
     {
       SerializedForm serializedForm = this.Storage.GetRepository<ISerializedFormRepository>().WithCultureIdAndCode(
-        CultureManager.GetCurrentCulture(this.Storage).Id, code
+        this.GetService<ICultureManager>().GetCurrentCulture().Id, code
       );
 
       if (serializedForm == null)

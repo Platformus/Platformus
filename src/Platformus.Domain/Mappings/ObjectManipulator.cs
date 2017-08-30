@@ -160,7 +160,7 @@ namespace Platformus.Domain
 
     private void CreateLocalizations(int dictionaryId, IDictionary<string, string> valuesByCultureCodes)
     {
-      foreach (Culture culture in CultureManager.GetNotNeutralCultures(this.requestHandler.Storage))
+      foreach (Culture culture in this.requestHandler.GetService<ICultureManager>().GetNotNeutralCultures())
       {
         Localization localization = new Localization();
 

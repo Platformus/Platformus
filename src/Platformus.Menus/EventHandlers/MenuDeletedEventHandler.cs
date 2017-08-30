@@ -16,7 +16,7 @@ namespace Platformus.Menus.EventHandlers
 
     public void HandleEvent(IRequestHandler requestHandler, Menu menu)
     {
-      foreach (Culture culture in CultureManager.GetNotNeutralCultures(requestHandler.Storage))
+      foreach (Culture culture in requestHandler.GetService<ICultureManager>().GetNotNeutralCultures())
         requestHandler.HttpContext.RequestServices.GetService<ICache>().RemoveMenuViewComponentResult(menu.Code, culture.Code);
     }
   }

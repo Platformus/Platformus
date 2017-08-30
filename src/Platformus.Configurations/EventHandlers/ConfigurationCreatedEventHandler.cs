@@ -13,7 +13,7 @@ namespace Platformus.Configurations.EventHandlers
 
     public void HandleEvent(IRequestHandler requestHandler, Configuration configuration)
     {
-      ConfigurationManager.InvalidateCache();
+      requestHandler.GetService<IConfigurationManager>().InvalidateCache();
     }
   }
 }

@@ -73,7 +73,7 @@ namespace Platformus.Globalization.Backend.Controllers
 
     private void CreateLocalizations(PropertyInfo propertyInfo, Dictionary dictionary)
     {
-      foreach (Culture culture in CultureManager.GetNotNeutralCultures(this.Storage))
+      foreach (Culture culture in this.GetService<ICultureManager>().GetNotNeutralCultures())
       {
         Localization localization = new Localization();
 
@@ -105,7 +105,7 @@ namespace Platformus.Globalization.Backend.Controllers
 
           bool hasRequiredAttribute = propertyInfo.CustomAttributes.Any(ca => ca.AttributeType == typeof(RequiredAttribute));
 
-          foreach (Culture culture in CultureManager.GetNotNeutralCultures(this.Storage))
+          foreach (Culture culture in this.GetService<ICultureManager>().GetNotNeutralCultures())
           {
             string identity = propertyInfo.Name + culture.Code;
             string value = this.Request.Form[identity];

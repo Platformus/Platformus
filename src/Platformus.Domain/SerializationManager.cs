@@ -23,7 +23,7 @@ namespace Platformus.Domain
 
     public void SerializeObject(Object @object)
     {
-      foreach (Culture culture in CultureManager.GetNotNeutralCultures(this.requestHandler.Storage).ToList())
+      foreach (Culture culture in this.requestHandler.GetService<ICultureManager>().GetNotNeutralCultures())
       {
         SerializedObject serializedObject = this.requestHandler.Storage.GetRepository<ISerializedObjectRepository>().WithKey(culture.Id, @object.Id);
 
@@ -46,7 +46,7 @@ namespace Platformus.Domain
     private SerializedObject SerializeObject(Culture culture, Object @object)
     {
       Class @class = this.requestHandler.Storage.GetRepository<IClassRepository>().WithKey(@object.ClassId);
-      Culture neutralCulture = CultureManager.GetNeutralCulture(this.requestHandler.Storage);
+      Culture neutralCulture = requestHandler.GetService<ICultureManager>().GetNeutralCulture();
       List<SerializedProperty> serializedProperties = new List<SerializedProperty>();
 
       foreach (Member member in this.requestHandler.Storage.GetRepository<IMemberRepository>().FilteredByClassIdInlcudingParent(@class.Id).ToList())
@@ -91,7 +91,7 @@ namespace Platformus.Domain
 
       else if (dataType.StorageDataType == StorageDataType.String)
       {
-        Culture neutralCulture = CultureManager.GetNeutralCulture(requestHandler.Storage);
+        Culture neutralCulture = this.requestHandler.GetService<ICultureManager>().GetNeutralCulture();
         string stringValue = member.IsPropertyLocalizable == true ?
           this.requestHandler.GetLocalizationValue((int)property.StringValueId, culture.Id) : this.requestHandler.GetLocalizationValue((int)property.StringValueId, neutralCulture.Id);
 

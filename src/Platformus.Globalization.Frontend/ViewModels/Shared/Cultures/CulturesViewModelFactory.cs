@@ -17,9 +17,9 @@ namespace Platformus.Globalization.Frontend.ViewModels.Shared
     {
       return new CulturesViewModel()
       {
-        Cultures = CultureManager.GetCultures(this.RequestHandler.Storage).Where(c => !c.IsNeutral).Select(
+        Cultures = this.RequestHandler.GetService<ICultureManager>().GetCultures().Where(c => !c.IsNeutral).Select(
           c => new CultureViewModelFactory(this.RequestHandler).Create(c)
-        )
+        ).ToList()
       };
     }
   }

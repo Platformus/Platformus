@@ -20,7 +20,7 @@ namespace Platformus.Globalization.Backend.ViewModels
     public string GetLocalizationValue(int dictionaryId)
     {
       Localization localization = this.RequestHandler.Storage.GetRepository<ILocalizationRepository>().WithDictionaryIdAndCultureId(
-        dictionaryId, CultureManager.GetCurrentCulture(this.RequestHandler.Storage).Id
+        dictionaryId, this.RequestHandler.GetService<ICultureManager>().GetCurrentCulture().Id
       );
 
       if (localization == null)

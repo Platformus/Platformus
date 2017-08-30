@@ -28,10 +28,10 @@ namespace Platformus.Menus.Frontend.ViewModels.Shared
       return new MenuItemViewModel()
       {
         Name = serializedMenuItem.Name,
-        Url = GlobalizedUrlFormatter.Format(this.RequestHandler.Storage, serializedMenuItem.Url),
+        Url = GlobalizedUrlFormatter.Format(this.RequestHandler, serializedMenuItem.Url),
         MenuItems = cachedMenuItems.OrderBy(cmi => cmi.Position).Select(
           cmi => new MenuItemViewModelFactory(this.RequestHandler).Create(cmi)
-        )
+        ).ToList()
       };
     }
   }

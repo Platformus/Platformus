@@ -33,14 +33,14 @@ namespace Platformus.Globalization.Frontend.Actions
 
       else
       {
-        Culture defaultCulture = CultureManager.GetDefaultCulture(storage);
+        Culture defaultCulture = serviceProvider.GetService<ICultureManager>().GetDefaultCulture();
 
         if (defaultCulture == null)
           requestLocalizationOptions.DefaultRequestCulture = new RequestCulture(DefaultCulture.Code);
 
         else requestLocalizationOptions.DefaultRequestCulture = new RequestCulture(defaultCulture.Code);
 
-        if (CultureManager.GetNotNeutralCultures(storage).Count() == 0)
+        if (serviceProvider.GetService<ICultureManager>().GetNotNeutralCultures().Count() == 0)
         {
           requestLocalizationOptions.SupportedCultures = requestLocalizationOptions.SupportedUICultures =
             new CultureInfo[] { new CultureInfo(DefaultCulture.Code) }.ToList();
@@ -49,10 +49,10 @@ namespace Platformus.Globalization.Frontend.Actions
         else
         {
           requestLocalizationOptions.SupportedCultures = requestLocalizationOptions.SupportedUICultures =
-            CultureManager.GetNotNeutralCultures(storage).Select(c => new CultureInfo(c.Code)).ToList();
+            serviceProvider.GetService<ICultureManager>().GetNotNeutralCultures().Select(c => new CultureInfo(c.Code)).ToList();
         }
 
-        if (this.MustSpecifyCultureInUrl(storage))
+        if (this.MustSpecifyCultureInUrl(serviceProvider))
           requestLocalizationOptions.RequestCultureProviders.Insert(0, new RouteValueRequestCultureProvider(serviceProvider));
       }
 
@@ -65,9 +65,9 @@ namespace Platformus.Globalization.Frontend.Actions
       );
     }
 
-    private bool MustSpecifyCultureInUrl(IStorage storage)
+    private bool MustSpecifyCultureInUrl(IServiceProvider serviceProvider)
     {
-      return new ConfigurationManager(storage)["Globalization", "SpecifyCultureInUrl"] != "no";
+      return serviceProvider.GetService<IConfigurationManager>()["Globalization", "SpecifyCultureInUrl"] != "no";
     }
   }
 }
