@@ -14,17 +14,17 @@ namespace Platformus.Configurations.Data.EntityFramework.PostgreSql
   {
     public Variable WithKey(int id)
     {
-      return this.dbSet.FirstOrDefault(v => v.Id == id);
+      return this.dbSet.AsNoTracking().FirstOrDefault(v => v.Id == id);
     }
 
     public Variable WithConfigurationIdAndCode(int configurationId, string code)
     {
-      return this.dbSet.FirstOrDefault(v => v.ConfigurationId == configurationId && string.Equals(v.Code, code, System.StringComparison.OrdinalIgnoreCase));
+      return this.dbSet.AsNoTracking().FirstOrDefault(v => v.ConfigurationId == configurationId && string.Equals(v.Code, code, System.StringComparison.OrdinalIgnoreCase));
     }
 
     public IEnumerable<Variable> FilteredByConfigurationId(int configurationId)
     {
-      return this.dbSet.Where(v => v.ConfigurationId == configurationId).OrderBy(v => v.Position);
+      return this.dbSet.AsNoTracking().Where(v => v.ConfigurationId == configurationId).OrderBy(v => v.Position);
     }
 
     public void Create(Variable variable)

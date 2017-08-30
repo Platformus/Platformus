@@ -14,12 +14,12 @@ namespace Platformus.Security.Data.EntityFramework.SqlServer
   {
     public RolePermission WithKey(int roleId, int permissionId)
     {
-      return this.dbSet.FirstOrDefault(rp => rp.RoleId == roleId && rp.PermissionId == permissionId);
+      return this.dbSet.AsNoTracking().FirstOrDefault(rp => rp.RoleId == roleId && rp.PermissionId == permissionId);
     }
 
     public IEnumerable<RolePermission> FilteredByRoleId(int roleId)
     {
-      return this.dbSet.Where(rp => rp.RoleId == roleId);
+      return this.dbSet.AsNoTracking().Where(rp => rp.RoleId == roleId);
     }
 
     public void Create(RolePermission rolePermission)

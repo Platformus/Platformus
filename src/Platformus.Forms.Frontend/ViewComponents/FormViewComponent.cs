@@ -4,7 +4,6 @@
 using System.Threading.Tasks;
 using ExtCore.Data.Abstractions;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.DependencyInjection;
 using Platformus.Barebone.Frontend.ViewComponents;
 using Platformus.Forms.Data.Abstractions;
 using Platformus.Forms.Data.Entities;
@@ -29,7 +28,7 @@ namespace Platformus.Forms.Frontend.ViewComponents
       if (serializedForm == null)
         return this.Content($"There is no form with code “{code}” defined.");
 
-      return this.HttpContext.RequestServices.GetService<ICache>().GetFormViewComponentResultWithDefaultValue(
+      return this.GetService<ICache>().GetFormViewComponentResultWithDefaultValue(
         code, () => this.GetViewComponentResult(code)
       );
     }

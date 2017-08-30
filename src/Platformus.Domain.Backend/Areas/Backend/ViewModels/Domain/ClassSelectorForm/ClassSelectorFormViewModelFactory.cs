@@ -2,7 +2,6 @@
 // Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information.
 
 using System.Linq;
-using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Localization;
 using Platformus.Barebone;
 using Platformus.Barebone.Backend.ViewModels.Shared;
@@ -21,7 +20,7 @@ namespace Platformus.Domain.Backend.ViewModels.Domain
 
     public ClassSelectorFormViewModel Create(int? classId)
     {
-      IStringLocalizer<ClassSelectorFormViewModelFactory> localizer = this.RequestHandler.HttpContext.RequestServices.GetService<IStringLocalizer<ClassSelectorFormViewModelFactory>>();
+      IStringLocalizer<ClassSelectorFormViewModelFactory> localizer = this.RequestHandler.GetService<IStringLocalizer<ClassSelectorFormViewModelFactory>>();
 
       return new ClassSelectorFormViewModel()
       {

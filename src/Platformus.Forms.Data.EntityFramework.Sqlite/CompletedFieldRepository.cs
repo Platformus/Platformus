@@ -4,6 +4,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using ExtCore.Data.EntityFramework;
+using Microsoft.EntityFrameworkCore;
 using Platformus.Forms.Data.Abstractions;
 using Platformus.Forms.Data.Entities;
 
@@ -13,7 +14,7 @@ namespace Platformus.Forms.Data.EntityFramework.Sqlite
   {
     public IEnumerable<CompletedField> FilteredByCompletedFormId(int completedFormId)
     {
-      return this.dbSet.Where(cf => cf.CompletedFormId == completedFormId).OrderBy(cf => cf.Id);
+      return this.dbSet.AsNoTracking().Where(cf => cf.CompletedFormId == completedFormId).OrderBy(cf => cf.Id);
     }
 
     public void Create(CompletedField completedField)

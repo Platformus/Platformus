@@ -15,17 +15,17 @@ namespace Platformus.Routing.Data.EntityFramework.Sqlite
   {
     public Endpoint WithKey(int id)
     {
-      return this.dbSet.FirstOrDefault(e => e.Id == id);
+      return this.dbSet.AsNoTracking().FirstOrDefault(e => e.Id == id);
     }
 
     public IEnumerable<Endpoint> All()
     {
-      return this.dbSet.OrderBy(e => e.Position);
+      return this.dbSet.AsNoTracking().OrderBy(e => e.Position);
     }
 
     public IEnumerable<Endpoint> Range(string orderBy, string direction, int skip, int take, string filter)
     {
-      return this.GetFilteredEndpoints(dbSet, filter).OrderBy(orderBy, direction).Skip(skip).Take(take);
+      return this.GetFilteredEndpoints(dbSet.AsNoTracking(), filter).OrderBy(orderBy, direction).Skip(skip).Take(take);
     }
 
     public void Create(Endpoint endpoint)

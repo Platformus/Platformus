@@ -4,7 +4,6 @@
 using System.Threading.Tasks;
 using ExtCore.Data.Abstractions;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.DependencyInjection;
 using Platformus.Barebone.Frontend.ViewComponents;
 using Platformus.Globalization;
 using Platformus.Menus.Data.Abstractions;
@@ -22,7 +21,7 @@ namespace Platformus.Menus.Frontend.ViewComponents
 
     public async Task<IViewComponentResult> InvokeAsync(string code)
     {
-      return this.HttpContext.RequestServices.GetService<ICache>().GetMenuViewComponentResultWithDefaultValue(
+      return this.GetService<ICache>().GetMenuViewComponentResultWithDefaultValue(
         code, () => this.GetViewComponentResult(code)
       );
     }

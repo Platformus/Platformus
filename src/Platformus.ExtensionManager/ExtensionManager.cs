@@ -4,7 +4,6 @@
 using System.IO.Compression;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
 using Newtonsoft.Json;
 using Platformus.Barebone;
 
@@ -22,7 +21,7 @@ namespace Platformus.ExtensionManager
       {
         if (string.IsNullOrEmpty(ExtensionManager.extensionsPath))
         {
-          IHostingEnvironment hostingEnvironment = this.requestHandler.HttpContext.RequestServices.GetService<IHostingEnvironment>();
+          IHostingEnvironment hostingEnvironment = this.requestHandler.GetService<IHostingEnvironment>();
           IConfigurationRoot configurationRoot = new ConfigurationBuilder()
             .SetBasePath(hostingEnvironment.ContentRootPath)
             .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true)

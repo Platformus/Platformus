@@ -15,40 +15,40 @@ namespace Platformus.Domain.Data.EntityFramework.SqlServer
   {
     public Class WithKey(int id)
     {
-      return this.dbSet.FirstOrDefault(c => c.Id == id);
+      return this.dbSet.AsNoTracking().FirstOrDefault(c => c.Id == id);
     }
 
     public Class WithCode(string code)
     {
-      return this.dbSet.FirstOrDefault(c => string.Equals(c.Code, code, System.StringComparison.OrdinalIgnoreCase));
+      return this.dbSet.AsNoTracking().FirstOrDefault(c => string.Equals(c.Code, code, System.StringComparison.OrdinalIgnoreCase));
     }
 
     public IEnumerable<Class> All()
     {
-      return this.dbSet.OrderBy(c => c.Name);
+      return this.dbSet.AsNoTracking().OrderBy(c => c.Name);
     }
 
     public IEnumerable<Class> Range(string orderBy, string direction, int skip, int take, string filter)
     {
-      return this.GetFilteredClasses(dbSet, filter).OrderBy(orderBy, direction).Skip(skip).Take(take);
+      return this.GetFilteredClasses(dbSet.AsNoTracking(), filter).OrderBy(orderBy, direction).Skip(skip).Take(take);
     }
 
     public IEnumerable<Class> FilteredByClassId(int? classId)
     {
       if (classId == null)
-        return this.dbSet.FromSql("SELECT * FROM Classes WHERE Id NOT IN (SELECT RelationClassId FROM Members WHERE IsRelationSingleParent IS NOT NULL) AND ClassId IS NULL AND IsAbstract = {0} ORDER BY Name", false);
+        return this.dbSet.AsNoTracking().FromSql("SELECT * FROM Classes WHERE Id NOT IN (SELECT RelationClassId FROM Members WHERE IsRelationSingleParent IS NOT NULL) AND ClassId IS NULL AND IsAbstract = {0} ORDER BY Name", false);
 
-      return this.dbSet.FromSql("SELECT * FROM Classes WHERE Id NOT IN (SELECT RelationClassId FROM Members WHERE IsRelationSingleParent IS NOT NULL) AND ClassId = {0} AND IsAbstract = {1} ORDER BY Name", classId, false);
+      return this.dbSet.AsNoTracking().FromSql("SELECT * FROM Classes WHERE Id NOT IN (SELECT RelationClassId FROM Members WHERE IsRelationSingleParent IS NOT NULL) AND ClassId = {0} AND IsAbstract = {1} ORDER BY Name", classId, false);
     }
 
     public IEnumerable<Class> Abstract()
     {
-      return this.dbSet.Where(c => c.IsAbstract).OrderBy(c => c.Name);
+      return this.dbSet.AsNoTracking().Where(c => c.IsAbstract).OrderBy(c => c.Name);
     }
 
     public IEnumerable<Class> NotAbstract()
     {
-      return this.dbSet.Where(c => !c.IsAbstract).OrderBy(c => c.Name);
+      return this.dbSet.AsNoTracking().Where(c => !c.IsAbstract).OrderBy(c => c.Name);
     }
 
     public void Create(Class @class)

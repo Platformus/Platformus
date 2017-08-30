@@ -14,17 +14,17 @@ namespace Platformus.Forms.Data.EntityFramework.SqlServer
   {
     public Form WithKey(int id)
     {
-      return this.dbSet.FirstOrDefault(f => f.Id == id);
+      return this.dbSet.AsNoTracking().FirstOrDefault(f => f.Id == id);
     }
 
     public Form WithCode(string code)
     {
-      return this.dbSet.FirstOrDefault(f => string.Equals(f.Code, code, System.StringComparison.OrdinalIgnoreCase));
+      return this.dbSet.AsNoTracking().FirstOrDefault(f => string.Equals(f.Code, code, System.StringComparison.OrdinalIgnoreCase));
     }
 
     public IEnumerable<Form> All()
     {
-      return this.dbSet.OrderBy(f => f.Name);
+      return this.dbSet.AsNoTracking().OrderBy(f => f.Name);
     }
 
     public void Create(Form form)

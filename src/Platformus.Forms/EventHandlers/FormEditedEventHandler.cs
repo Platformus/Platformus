@@ -1,7 +1,6 @@
 ﻿// Copyright © 2017 Dmitry Sikorsky. All rights reserved.
 // Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information.
 
-using Microsoft.Extensions.DependencyInjection;
 using Platformus.Barebone;
 using Platformus.Forms.Data.Entities;
 using Platformus.Forms.Events;
@@ -19,7 +18,7 @@ namespace Platformus.Forms.EventHandlers
       new SerializationManager(requestHandler).SerializeForm(form);
 
       foreach (Culture culture in requestHandler.GetService<ICultureManager>().GetNotNeutralCultures())
-        requestHandler.HttpContext.RequestServices.GetService<ICache>().RemoveFormViewComponentResult(form.Code, culture.Code);
+        requestHandler.GetService<ICache>().RemoveFormViewComponentResult(form.Code, culture.Code);
     }
   }
 }

@@ -15,37 +15,37 @@ namespace Platformus.Globalization.Data.EntityFramework.SqlServer
   {
     public Culture WithKey(int id)
     {
-      return this.dbSet.FirstOrDefault(c => c.Id == id);
+      return this.dbSet.AsNoTracking().FirstOrDefault(c => c.Id == id);
     }
 
     public Culture WithCode(string code)
     {
-      return this.dbSet.FirstOrDefault(c => string.Equals(c.Code, code, System.StringComparison.OrdinalIgnoreCase));
+      return this.dbSet.AsNoTracking().FirstOrDefault(c => string.Equals(c.Code, code, System.StringComparison.OrdinalIgnoreCase));
     }
 
     public Culture Neutral()
     {
-      return this.dbSet.FirstOrDefault(c => c.IsNeutral);
+      return this.dbSet.AsNoTracking().FirstOrDefault(c => c.IsNeutral);
     }
 
     public Culture Default()
     {
-      return this.dbSet.FirstOrDefault(c => c.IsDefault);
+      return this.dbSet.AsNoTracking().FirstOrDefault(c => c.IsDefault);
     }
 
     public IEnumerable<Culture> All()
     {
-      return this.dbSet.OrderBy(c => c.Code);
+      return this.dbSet.AsNoTracking().OrderBy(c => c.Code);
     }
 
     public IEnumerable<Culture> NotNeutral()
     {
-      return this.dbSet.Where(c => !c.IsNeutral).OrderBy(c => c.Name);
+      return this.dbSet.AsNoTracking().Where(c => !c.IsNeutral).OrderBy(c => c.Name);
     }
 
     public IEnumerable<Culture> Range(string orderBy, string direction, int skip, int take, string filter)
     {
-      return this.GetFilteredCultures(dbSet, filter).OrderBy(orderBy, direction).Skip(skip).Take(take);
+      return this.GetFilteredCultures(dbSet.AsNoTracking(), filter).OrderBy(orderBy, direction).Skip(skip).Take(take);
     }
 
     public void Create(Culture culture)

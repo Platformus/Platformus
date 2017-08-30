@@ -14,17 +14,17 @@ namespace Platformus.Configurations.Data.EntityFramework.SqlServer
   {
     public Configuration WithKey(int id)
     {
-      return this.dbSet.FirstOrDefault(c => c.Id == id);
+      return this.dbSet.AsNoTracking().FirstOrDefault(c => c.Id == id);
     }
 
     public Configuration WithCode(string code)
     {
-      return this.dbSet.FirstOrDefault(c => string.Equals(c.Code, code, System.StringComparison.OrdinalIgnoreCase));
+      return this.dbSet.AsNoTracking().FirstOrDefault(c => string.Equals(c.Code, code, System.StringComparison.OrdinalIgnoreCase));
     }
 
     public IEnumerable<Configuration> All()
     {
-      return this.dbSet.OrderBy(c => c.Name);
+      return this.dbSet.AsNoTracking().OrderBy(c => c.Name);
     }
 
     public void Create(Configuration configuration)

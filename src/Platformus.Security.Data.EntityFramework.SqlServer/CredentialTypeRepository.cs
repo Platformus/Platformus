@@ -4,6 +4,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using ExtCore.Data.EntityFramework;
+using Microsoft.EntityFrameworkCore;
 using Platformus.Security.Data.Abstractions;
 using Platformus.Security.Data.Entities;
 
@@ -13,17 +14,17 @@ namespace Platformus.Security.Data.EntityFramework.SqlServer
   {
     public CredentialType WithKey(int id)
     {
-      return this.dbSet.FirstOrDefault(ct => ct.Id == id);
+      return this.dbSet.AsNoTracking().FirstOrDefault(ct => ct.Id == id);
     }
 
     public CredentialType WithCode(string code)
     {
-      return this.dbSet.FirstOrDefault(ct => string.Equals(ct.Code, code, System.StringComparison.OrdinalIgnoreCase));
+      return this.dbSet.AsNoTracking().FirstOrDefault(ct => string.Equals(ct.Code, code, System.StringComparison.OrdinalIgnoreCase));
     }
 
     public IEnumerable<CredentialType> All()
     {
-      return this.dbSet.OrderBy(ct => ct.Position);
+      return this.dbSet.AsNoTracking().OrderBy(ct => ct.Position);
     }
   }
 }

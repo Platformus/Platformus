@@ -15,17 +15,17 @@ namespace Platformus.Security.Data.EntityFramework.Sqlite
   {
     public Permission WithKey(int id)
     {
-      return this.dbSet.FirstOrDefault(p => p.Id == id);
+      return this.dbSet.AsNoTracking().FirstOrDefault(p => p.Id == id);
     }
 
     public IEnumerable<Permission> All()
     {
-      return this.dbSet.OrderBy(p => p.Position);
+      return this.dbSet.AsNoTracking().OrderBy(p => p.Position);
     }
 
     public IEnumerable<Permission> Range(string orderBy, string direction, int skip, int take, string filter)
     {
-      return this.GetFilteredPermissions(dbSet, filter).OrderBy(orderBy, direction).Skip(skip).Take(take);
+      return this.GetFilteredPermissions(dbSet.AsNoTracking(), filter).OrderBy(orderBy, direction).Skip(skip).Take(take);
     }
 
     public void Create(Permission permission)

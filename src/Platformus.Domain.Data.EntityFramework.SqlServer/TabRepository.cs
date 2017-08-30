@@ -15,17 +15,17 @@ namespace Platformus.Domain.Data.EntityFramework.SqlServer
   {
     public Tab WithKey(int id)
     {
-      return this.dbSet.FirstOrDefault(t => t.Id == id);
+      return this.dbSet.AsNoTracking().FirstOrDefault(t => t.Id == id);
     }
 
     public IEnumerable<Tab> FilteredByClassId(int classId)
     {
-      return this.dbSet.Where(t => t.ClassId == classId).OrderBy(t => t.Position);
+      return this.dbSet.AsNoTracking().Where(t => t.ClassId == classId).OrderBy(t => t.Position);
     }
 
     public IEnumerable<Tab> FilteredByClassIdInlcudingParent(int classId)
     {
-      return this.dbSet.FromSql(
+      return this.dbSet.AsNoTracking().FromSql(
         "SELECT * FROM Tabs WHERE ClassId = {0} OR ClassId IN (SELECT ClassId FROM Classes WHERE Id = {0}) ORDER BY Position",
         classId
       );
@@ -33,7 +33,7 @@ namespace Platformus.Domain.Data.EntityFramework.SqlServer
 
     public IEnumerable<Tab> FilteredByClassIdRange(int classId, string orderBy, string direction, int skip, int take, string filter)
     {
-      return this.GetFilteredTabs(dbSet, classId, filter).OrderBy(orderBy, direction).Skip(skip).Take(take);
+      return this.GetFilteredTabs(dbSet.AsNoTracking(), classId, filter).OrderBy(orderBy, direction).Skip(skip).Take(take);
     }
 
     public void Create(Tab tab)

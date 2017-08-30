@@ -14,12 +14,12 @@ namespace Platformus.Routing.Data.EntityFramework.PostgreSql
   {
     public EndpointPermission WithKey(int endpointId, int permissionId)
     {
-      return this.dbSet.FirstOrDefault(ep => ep.EndpointId == endpointId && ep.PermissionId == permissionId);
+      return this.dbSet.AsNoTracking().FirstOrDefault(ep => ep.EndpointId == endpointId && ep.PermissionId == permissionId);
     }
 
     public IEnumerable<EndpointPermission> FilteredByEndpointId(int endpointId)
     {
-      return this.dbSet.Where(ep => ep.EndpointId == endpointId);
+      return this.dbSet.AsNoTracking().Where(ep => ep.EndpointId == endpointId);
     }
 
     public void Create(EndpointPermission endpointPermission)

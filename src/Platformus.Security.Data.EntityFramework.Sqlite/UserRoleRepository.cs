@@ -14,12 +14,12 @@ namespace Platformus.Security.Data.EntityFramework.Sqlite
   {
     public UserRole WithKey(int userId, int roleId)
     {
-      return this.dbSet.FirstOrDefault(ur => ur.UserId == userId && ur.RoleId == roleId);
+      return this.dbSet.AsNoTracking().FirstOrDefault(ur => ur.UserId == userId && ur.RoleId == roleId);
     }
 
     public IEnumerable<UserRole> FilteredByUserId(int userId)
     {
-      return this.dbSet.Where(ur => ur.UserId == userId);
+      return this.dbSet.AsNoTracking().Where(ur => ur.UserId == userId);
     }
 
     public void Create(UserRole userRole)

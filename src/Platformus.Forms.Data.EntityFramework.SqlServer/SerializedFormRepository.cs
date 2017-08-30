@@ -13,12 +13,12 @@ namespace Platformus.Forms.Data.EntityFramework.SqlServer
   {
     public SerializedForm WithKey(int cultureId, int formId)
     {
-      return this.dbSet.FirstOrDefault(sf => sf.CultureId == cultureId && sf.FormId == formId);
+      return this.dbSet.AsNoTracking().FirstOrDefault(sf => sf.CultureId == cultureId && sf.FormId == formId);
     }
 
     public SerializedForm WithCultureIdAndCode(int cultureId, string code)
     {
-      return this.dbSet.FirstOrDefault(sf => sf.CultureId == cultureId && string.Equals(sf.Code, code, System.StringComparison.OrdinalIgnoreCase));
+      return this.dbSet.AsNoTracking().FirstOrDefault(sf => sf.CultureId == cultureId && string.Equals(sf.Code, code, System.StringComparison.OrdinalIgnoreCase));
     }
 
     public void Create(SerializedForm serializedForm)

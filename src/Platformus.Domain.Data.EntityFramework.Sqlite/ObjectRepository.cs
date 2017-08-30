@@ -15,17 +15,17 @@ namespace Platformus.Domain.Data.EntityFramework.Sqlite
   {
     public Object WithKey(int id)
     {
-      return this.dbSet.FirstOrDefault(o => o.Id == id);
+      return this.dbSet.AsNoTracking().FirstOrDefault(o => o.Id == id);
     }
 
     public IEnumerable<Object> All()
     {
-      return this.dbSet.OrderBy(o => o.Id);
+      return this.dbSet.AsNoTracking().OrderBy(o => o.Id);
     }
 
     public IEnumerable<Object> FilteredByClassId(int classId)
     {
-      return this.dbSet.Where(o => o.ClassId == classId).OrderBy(o => o.Id);
+      return this.dbSet.AsNoTracking().Where(o => o.ClassId == classId).OrderBy(o => o.Id);
     }
 
     public void Create(Object @object)

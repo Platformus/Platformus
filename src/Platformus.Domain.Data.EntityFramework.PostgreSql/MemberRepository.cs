@@ -15,17 +15,17 @@ namespace Platformus.Domain.Data.EntityFramework.PostgreSql
   {
     public Member WithKey(int id)
     {
-      return this.dbSet.FirstOrDefault(m => m.Id == id);
+      return this.dbSet.AsNoTracking().FirstOrDefault(m => m.Id == id);
     }
 
     public Member WithClassIdAndCode(int classId, string code)
     {
-      return this.dbSet.FirstOrDefault(m => m.ClassId == classId && string.Equals(m.Code, code, System.StringComparison.OrdinalIgnoreCase));
+      return this.dbSet.AsNoTracking().FirstOrDefault(m => m.ClassId == classId && string.Equals(m.Code, code, System.StringComparison.OrdinalIgnoreCase));
     }
 
     public Member WithClassIdAndCodeInlcudingParent(int classId, string code)
     {
-      return this.dbSet.FromSql(
+      return this.dbSet.AsNoTracking().FromSql(
         "SELECT * FROM \"Members\" WHERE \"ClassId\" = {0} OR \"ClassId\" IN (SELECT \"ClassId\" FROM \"Classes\" WHERE \"Id\" = {0})",
         classId
       ).FirstOrDefault(m => string.Equals(m.Code, code, System.StringComparison.OrdinalIgnoreCase));
@@ -33,12 +33,12 @@ namespace Platformus.Domain.Data.EntityFramework.PostgreSql
 
     public IEnumerable<Member> FilteredByClassId(int classId)
     {
-      return this.dbSet.Where(m => m.ClassId == classId).OrderBy(m => m.Position);
+      return this.dbSet.AsNoTracking().Where(m => m.ClassId == classId).OrderBy(m => m.Position);
     }
 
     public IEnumerable<Member> FilteredByClassIdInlcudingParent(int classId)
     {
-      return this.dbSet.FromSql(
+      return this.dbSet.AsNoTracking().FromSql(
         "SELECT * FROM \"Members\" WHERE \"ClassId\" = {0} OR \"ClassId\" IN (SELECT \"ClassId\" FROM \"Classes\" WHERE \"Id\" = {0}) ORDER BY \"Position\"",
         classId
       );
@@ -46,12 +46,12 @@ namespace Platformus.Domain.Data.EntityFramework.PostgreSql
 
     public IEnumerable<Member> FilteredByClassIdPropertyVisibleInList(int classId)
     {
-      return this.dbSet.Where(m => m.ClassId == classId && m.IsPropertyVisibleInList == true).OrderBy(m => m.Position);
+      return this.dbSet.AsNoTracking().Where(m => m.ClassId == classId && m.IsPropertyVisibleInList == true).OrderBy(m => m.Position);
     }
 
     public IEnumerable<Member> FilteredByClassIdInlcudingParentPropertyVisibleInList(int classId)
     {
-      return this.dbSet.FromSql(
+      return this.dbSet.AsNoTracking().FromSql(
         "SELECT * FROM \"Members\" WHERE (\"ClassId\" = {0} OR \"ClassId\" IN (SELECT \"ClassId\" FROM \"Classes\" WHERE \"Id\" = {0})) AND \"IsPropertyVisibleInList\" = {1} ORDER BY \"Position\"",
         classId, true
       );
@@ -59,12 +59,12 @@ namespace Platformus.Domain.Data.EntityFramework.PostgreSql
 
     public IEnumerable<Member> FilteredByClassIdRelationSingleParent(int classId)
     {
-      return this.dbSet.Where(m => m.ClassId == classId && m.IsRelationSingleParent == true).OrderBy(m => m.Position);
+      return this.dbSet.AsNoTracking().Where(m => m.ClassId == classId && m.IsRelationSingleParent == true).OrderBy(m => m.Position);
     }
 
     public IEnumerable<Member> FilteredByClassIdRange(int classId, string orderBy, string direction, int skip, int take, string filter)
     {
-      return this.GetFilteredMembers(dbSet, classId, filter).OrderBy(orderBy, direction).Skip(skip).Take(take);
+      return this.GetFilteredMembers(dbSet.AsNoTracking(), classId, filter).OrderBy(orderBy, direction).Skip(skip).Take(take);
     }
 
     public void Create(Member member)

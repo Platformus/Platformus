@@ -4,7 +4,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.DependencyInjection;
 using Platformus.Barebone;
 using Platformus.Globalization.Frontend;
 using Platformus.Routing.Data.Abstractions;
@@ -21,7 +20,7 @@ namespace Platformus.Routing.Frontend
   {
     public IActionResult TryHandle(IRequestHandler requestHandler, string url)
     {
-      IEndpointResolver endpointResolver = requestHandler.HttpContext.RequestServices.GetService<IEndpointResolver>();
+      IEndpointResolver endpointResolver = requestHandler.GetService<IEndpointResolver>();
       Endpoint endpoint = endpointResolver.GetEndpoint(requestHandler, url);
 
       if (endpoint == null)

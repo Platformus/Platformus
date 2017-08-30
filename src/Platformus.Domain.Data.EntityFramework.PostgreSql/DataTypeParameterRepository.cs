@@ -15,22 +15,22 @@ namespace Platformus.Domain.Data.EntityFramework.PostgreSql
   {
     public DataTypeParameter WithKey(int id)
     {
-      return this.dbSet.FirstOrDefault(dtp => dtp.Id == id);
+      return this.dbSet.AsNoTracking().FirstOrDefault(dtp => dtp.Id == id);
     }
 
     public IEnumerable<DataTypeParameter> All()
     {
-      return this.dbSet.OrderBy(dtp => dtp.Name);
+      return this.dbSet.AsNoTracking().OrderBy(dtp => dtp.Name);
     }
 
     public IEnumerable<DataTypeParameter> FilteredByDataTypeId(int dataTypeId)
     {
-      return this.dbSet.Where(dtp => dtp.DataTypeId == dataTypeId).OrderBy(dtp => dtp.Name);
+      return this.dbSet.AsNoTracking().Where(dtp => dtp.DataTypeId == dataTypeId).OrderBy(dtp => dtp.Name);
     }
 
     public IEnumerable<DataTypeParameter> FilteredByDataTypeIdRange(int dataTypeId, string orderBy, string direction, int skip, int take, string filter)
     {
-      return this.GetFilteredDataTypeParameters(dbSet, dataTypeId, filter).OrderBy(orderBy, direction).Skip(skip).Take(take);
+      return this.GetFilteredDataTypeParameters(dbSet.AsNoTracking(), dataTypeId, filter).OrderBy(orderBy, direction).Skip(skip).Take(take);
     }
 
     public void Create(DataTypeParameter dataTypeParameter)

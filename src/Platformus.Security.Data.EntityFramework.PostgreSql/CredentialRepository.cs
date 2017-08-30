@@ -16,17 +16,17 @@ namespace Platformus.Security.Data.EntityFramework.PostgreSql
   {
     public Credential WithKey(int id)
     {
-      return this.dbSet.FirstOrDefault(c => c.Id == id);
+      return this.dbSet.AsNoTracking().FirstOrDefault(c => c.Id == id);
     }
 
     public Credential WithCredentialTypeIdAndIdentifierAndSecret(int credentialTypeId, string identifier, string secret)
     {
-      return this.dbSet.FirstOrDefault(c => c.CredentialTypeId == credentialTypeId && string.Equals(c.Identifier, identifier, StringComparison.OrdinalIgnoreCase) && c.Secret == secret);
+      return this.dbSet.AsNoTracking().FirstOrDefault(c => c.CredentialTypeId == credentialTypeId && string.Equals(c.Identifier, identifier, StringComparison.OrdinalIgnoreCase) && c.Secret == secret);
     }
 
     public IEnumerable<Credential> FilteredByUserIdRange(int userId, string orderBy, string direction, int skip, int take, string filter)
     {
-      return this.GetFilteredCredentials(dbSet, userId, filter).OrderBy(orderBy, direction).Skip(skip).Take(take);
+      return this.GetFilteredCredentials(dbSet.AsNoTracking(), userId, filter).OrderBy(orderBy, direction).Skip(skip).Take(take);
     }
 
     public void Create(Credential credential)

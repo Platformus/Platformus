@@ -13,7 +13,7 @@ namespace Platformus.Domain.Data.EntityFramework.PostgreSql
   {
     public DataTypeParameterValue WithDataTypeParameterIdAndMemberId(int dataTypeParameterId, int memberId)
     {
-      return this.dbSet.FirstOrDefault(dtpv => dtpv.DataTypeParameterId == dataTypeParameterId && dtpv.MemberId == memberId);
+      return this.dbSet.AsNoTracking().FirstOrDefault(dtpv => dtpv.DataTypeParameterId == dataTypeParameterId && dtpv.MemberId == memberId);
     }
 
     public void Create(DataTypeParameterValue dataTypeParameterValue)

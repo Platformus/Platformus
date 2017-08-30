@@ -14,17 +14,17 @@ namespace Platformus.Menus.Data.EntityFramework.PostgreSql
   {
     public Menu WithKey(int id)
     {
-      return this.dbSet.FirstOrDefault(m => m.Id == id);
+      return this.dbSet.AsNoTracking().FirstOrDefault(m => m.Id == id);
     }
 
     public Menu WithCode(string code)
     {
-      return this.dbSet.FirstOrDefault(m => string.Equals(m.Code, code, System.StringComparison.OrdinalIgnoreCase));
+      return this.dbSet.AsNoTracking().FirstOrDefault(m => string.Equals(m.Code, code, System.StringComparison.OrdinalIgnoreCase));
     }
 
     public IEnumerable<Menu> All()
     {
-      return this.dbSet.OrderBy(m => m.Code);
+      return this.dbSet.AsNoTracking().OrderBy(m => m.Code);
     }
 
     public void Create(Menu menu)

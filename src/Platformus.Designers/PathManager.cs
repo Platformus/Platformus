@@ -2,7 +2,6 @@
 // Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information.
 
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.Extensions.DependencyInjection;
 using Platformus.Barebone;
 
 namespace Platformus.Designers
@@ -19,7 +18,7 @@ namespace Platformus.Designers
     {
       if (string.IsNullOrEmpty(PathManager.contentRootPath))
       {
-        IHostingEnvironment hostingEnvironment = requestHandler.HttpContext.RequestServices.GetService<IHostingEnvironment>();
+        IHostingEnvironment hostingEnvironment = requestHandler.GetService<IHostingEnvironment>();
 
         PathManager.contentRootPath = hostingEnvironment.ContentRootPath;
       }

@@ -14,12 +14,12 @@ namespace Platformus.Forms.Data.EntityFramework.PostgreSql
   {
     public Field WithKey(int id)
     {
-      return this.dbSet.FirstOrDefault(f => f.Id == id);
+      return this.dbSet.AsNoTracking().FirstOrDefault(f => f.Id == id);
     }
 
     public IEnumerable<Field> FilteredByFormId(int formId)
     {
-      return this.dbSet.Where(f => f.FormId == formId).OrderBy(f => f.Position);
+      return this.dbSet.AsNoTracking().Where(f => f.FormId == formId).OrderBy(f => f.Position);
     }
 
     public void Create(Field field)

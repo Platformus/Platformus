@@ -14,17 +14,17 @@ namespace Platformus.Domain.Data.EntityFramework.SqlServer
   {
     public Property WithKey(int id)
     {
-      return this.dbSet.FirstOrDefault(p => p.Id == id);
+      return this.dbSet.AsNoTracking().FirstOrDefault(p => p.Id == id);
     }
 
     public Property WithObjectIdAndMemberId(int objectId, int memberId)
     {
-      return this.dbSet.FirstOrDefault(p => p.ObjectId == objectId && p.MemberId == memberId);
+      return this.dbSet.AsNoTracking().FirstOrDefault(p => p.ObjectId == objectId && p.MemberId == memberId);
     }
 
     public IEnumerable<Property> FilteredByObjectId(int objectId)
     {
-      return this.dbSet.Where(p => p.ObjectId == objectId);
+      return this.dbSet.AsNoTracking().Where(p => p.ObjectId == objectId);
     }
 
     public void Create(Property property)

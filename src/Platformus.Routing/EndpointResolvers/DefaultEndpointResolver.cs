@@ -4,7 +4,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
-using Microsoft.Extensions.DependencyInjection;
 using Platformus.Barebone;
 using Platformus.Routing.Data.Abstractions;
 using Platformus.Routing.Data.Entities;
@@ -34,7 +33,7 @@ namespace Platformus.Routing.EndpointResolvers
 
     private IEnumerable<Endpoint> GetEndpoints(IRequestHandler requestHandler)
     {
-      return requestHandler.HttpContext.RequestServices.GetService<ICache>().GetWithDefaultValue(
+      return requestHandler.GetService<ICache>().GetWithDefaultValue(
         "endpoints", () => requestHandler.Storage.GetRepository<IEndpointRepository>().All().ToList()
       );
     }

@@ -13,12 +13,12 @@ namespace Platformus.Menus.Data.EntityFramework.SqlServer
   {
     public SerializedMenu WithKey(int cultureId, int menuId)
     {
-      return this.dbSet.FirstOrDefault(sm => sm.CultureId == cultureId && sm.MenuId == menuId);
+      return this.dbSet.AsNoTracking().FirstOrDefault(sm => sm.CultureId == cultureId && sm.MenuId == menuId);
     }
 
     public SerializedMenu WithCultureIdAndCode(int cultureId, string code)
     {
-      return this.dbSet.FirstOrDefault(sm => sm.CultureId == cultureId && string.Equals(sm.Code, code, System.StringComparison.OrdinalIgnoreCase));
+      return this.dbSet.AsNoTracking().FirstOrDefault(sm => sm.CultureId == cultureId && string.Equals(sm.Code, code, System.StringComparison.OrdinalIgnoreCase));
     }
 
     public void Create(SerializedMenu serializedMenu)

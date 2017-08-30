@@ -14,17 +14,17 @@ namespace Platformus.Globalization.Data.EntityFramework.SqlServer
   {
     public Localization WithKey(int id)
     {
-      return this.dbSet.FirstOrDefault(l => l.Id == id);
+      return this.dbSet.AsNoTracking().FirstOrDefault(l => l.Id == id);
     }
 
     public Localization WithDictionaryIdAndCultureId(int dictionaryId, int cultureId)
     {
-      return this.dbSet.FirstOrDefault(l => l.DictionaryId == dictionaryId && l.CultureId == cultureId);
+      return this.dbSet.AsNoTracking().FirstOrDefault(l => l.DictionaryId == dictionaryId && l.CultureId == cultureId);
     }
 
     public IEnumerable<Localization> FilteredByDictionaryId(int dictionaryId)
     {
-      return this.dbSet.Where(l => l.DictionaryId == dictionaryId);
+      return this.dbSet.AsNoTracking().Where(l => l.DictionaryId == dictionaryId);
     }
 
     public void Create(Localization localization)

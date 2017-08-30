@@ -15,17 +15,17 @@ namespace Platformus.Security.Data.EntityFramework.Sqlite
   {
     public Role WithKey(int id)
     {
-      return this.dbSet.FirstOrDefault(r => r.Id == id);
+      return this.dbSet.AsNoTracking().FirstOrDefault(r => r.Id == id);
     }
 
     public IEnumerable<Role> All()
     {
-      return this.dbSet.OrderBy(r => r.Position);
+      return this.dbSet.AsNoTracking().OrderBy(r => r.Position);
     }
 
     public IEnumerable<Role> Range(string orderBy, string direction, int skip, int take, string filter)
     {
-      return this.GetFilteredRoles(dbSet, filter).OrderBy(orderBy, direction).Skip(skip).Take(take);
+      return this.GetFilteredRoles(dbSet.AsNoTracking(), filter).OrderBy(orderBy, direction).Skip(skip).Take(take);
     }
 
     public void Create(Role role)

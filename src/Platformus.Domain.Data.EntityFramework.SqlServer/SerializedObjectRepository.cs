@@ -17,22 +17,22 @@ namespace Platformus.Domain.Data.EntityFramework.SqlServer
   {
     public SerializedObject WithKey(int cultureId, int objectId)
     {
-      return this.dbSet.FirstOrDefault(so => so.CultureId == cultureId && so.ObjectId == objectId);
+      return this.dbSet.AsNoTracking().FirstOrDefault(so => so.CultureId == cultureId && so.ObjectId == objectId);
     }
 
     public SerializedObject WithCultureIdAndUrlPropertyStringValue(int cultureId, string urlPropertyStringValue)
     {
-      return this.dbSet.FirstOrDefault(so => so.CultureId == cultureId && string.Equals(so.UrlPropertyStringValue, urlPropertyStringValue, System.StringComparison.OrdinalIgnoreCase));
+      return this.dbSet.AsNoTracking().FirstOrDefault(so => so.CultureId == cultureId && string.Equals(so.UrlPropertyStringValue, urlPropertyStringValue, System.StringComparison.OrdinalIgnoreCase));
     }
 
     public IEnumerable<SerializedObject> FilteredByCultureIdAndClassId(int cultureId, int classId)
     {
-      return this.dbSet.Where(so => so.CultureId == cultureId && so.ClassId == classId);
+      return this.dbSet.AsNoTracking().Where(so => so.CultureId == cultureId && so.ClassId == classId);
     }
 
     public IEnumerable<SerializedObject> FilteredByCultureIdAndClassId(int cultureId, int classId, Params @params)
     {
-      return this.dbSet.FromSql(
+      return this.dbSet.AsNoTracking().FromSql(
         this.GetSortedSelectQuerySql("SerializedObjects.ClassId = {1}", @params),
         cultureId, classId
       );
@@ -40,7 +40,7 @@ namespace Platformus.Domain.Data.EntityFramework.SqlServer
 
     public IEnumerable<SerializedObject> FilteredByCultureIdAndClassIdAndObjectId(int cultureId, int classId, int objectId, Params @params)
     {
-      return this.dbSet.FromSql(
+      return this.dbSet.AsNoTracking().FromSql(
         this.GetSortedSelectQuerySql("SerializedObjects.ClassId = {1} AND SerializedObjects.ObjectId IN (SELECT PrimaryId FROM Relations WHERE ForeignId = {2})", @params),
         cultureId, classId, objectId
       );
@@ -48,7 +48,7 @@ namespace Platformus.Domain.Data.EntityFramework.SqlServer
 
     public IEnumerable<SerializedObject> Primary(int cultureId, int objectId)
     {
-      return this.dbSet.FromSql(
+      return this.dbSet.AsNoTracking().FromSql(
         this.GetUnsortedSelectQuerySql("ObjectId IN (SELECT PrimaryId FROM Relations WHERE ForeignId = {1})"),
         cultureId, objectId
       );
@@ -56,7 +56,7 @@ namespace Platformus.Domain.Data.EntityFramework.SqlServer
 
     public IEnumerable<SerializedObject> Primary(int cultureId, int objectId, Params @params)
     {
-      return this.dbSet.FromSql(
+      return this.dbSet.AsNoTracking().FromSql(
         this.GetSortedSelectQuerySql("SerializedObjects.ObjectId IN (SELECT PrimaryId FROM Relations WHERE ForeignId = {1})", @params),
         cultureId, objectId
       );
@@ -64,7 +64,7 @@ namespace Platformus.Domain.Data.EntityFramework.SqlServer
 
     public IEnumerable<SerializedObject> Primary(int cultureId, int memberId, int objectId)
     {
-      return this.dbSet.FromSql(
+      return this.dbSet.AsNoTracking().FromSql(
         this.GetUnsortedSelectQuerySql("ObjectId IN (SELECT PrimaryId FROM Relations WHERE MemberId = {1} AND ForeignId = {2})"),
         cultureId, memberId, objectId
       );
@@ -72,7 +72,7 @@ namespace Platformus.Domain.Data.EntityFramework.SqlServer
 
     public IEnumerable<SerializedObject> Primary(int cultureId, int memberId, int objectId, Params @params)
     {
-      return this.dbSet.FromSql(
+      return this.dbSet.AsNoTracking().FromSql(
         this.GetSortedSelectQuerySql("SerializedObjects.ObjectId IN (SELECT PrimaryId FROM Relations WHERE MemberId = {1} AND ForeignId = {2})", @params),
         cultureId, memberId, objectId
       );
@@ -80,7 +80,7 @@ namespace Platformus.Domain.Data.EntityFramework.SqlServer
 
     public IEnumerable<SerializedObject> Foreign(int cultureId, int objectId)
     {
-      return this.dbSet.FromSql(
+      return this.dbSet.AsNoTracking().FromSql(
         this.GetUnsortedSelectQuerySql("ObjectId IN (SELECT PrimaryId FROM Relations WHERE ForeignId = {1})"),
         cultureId, objectId
       );
@@ -88,7 +88,7 @@ namespace Platformus.Domain.Data.EntityFramework.SqlServer
 
     public IEnumerable<SerializedObject> Foreign(int cultureId, int objectId, Params @params)
     {
-      return this.dbSet.FromSql(
+      return this.dbSet.AsNoTracking().FromSql(
         this.GetSortedSelectQuerySql("SerializedObjects.ObjectId IN (SELECT PrimaryId FROM Relations WHERE ForeignId = {1})", @params),
         cultureId, objectId
       );
@@ -96,7 +96,7 @@ namespace Platformus.Domain.Data.EntityFramework.SqlServer
 
     public IEnumerable<SerializedObject> Foreign(int cultureId, int memberId, int objectId)
     {
-      return this.dbSet.FromSql(
+      return this.dbSet.AsNoTracking().FromSql(
         this.GetUnsortedSelectQuerySql("ObjectId IN (SELECT ForeignId FROM Relations WHERE MemberId = {1} AND PrimaryId = {2})"),
         cultureId, memberId, objectId
       );
@@ -104,7 +104,7 @@ namespace Platformus.Domain.Data.EntityFramework.SqlServer
 
     public IEnumerable<SerializedObject> Foreign(int cultureId, int memberId, int objectId, Params @params)
     {
-      return this.dbSet.FromSql(
+      return this.dbSet.AsNoTracking().FromSql(
         this.GetSortedSelectQuerySql("SerializedObjects.ObjectId IN (SELECT ForeignId FROM Relations WHERE MemberId = {1} AND PrimaryId = {2})", @params),
         cultureId, memberId, objectId
       );

@@ -4,7 +4,6 @@
 using System.Threading.Tasks;
 using ExtCore.Data.Abstractions;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.DependencyInjection;
 using Platformus.Barebone.Frontend.ViewComponents;
 using Platformus.Globalization.Frontend.ViewModels.Shared;
 
@@ -19,7 +18,7 @@ namespace Platformus.Globalization.Frontend.ViewComponents
 
     public async Task<IViewComponentResult> InvokeAsync()
     {
-      return this.HttpContext.RequestServices.GetService<ICache>().GetCulturesViewComponentResultWithDefaultValue(
+      return this.GetService<ICache>().GetCulturesViewComponentResultWithDefaultValue(
         () => this.GetViewComponentResult()
       );
     }

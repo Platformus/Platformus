@@ -15,12 +15,12 @@ namespace Platformus.Security.Data.EntityFramework.SqlServer
   {
     public User WithKey(int id)
     {
-      return this.dbSet.FirstOrDefault(u => u.Id == id);
+      return this.dbSet.AsNoTracking().FirstOrDefault(u => u.Id == id);
     }
 
     public IEnumerable<User> Range(string orderBy, string direction, int skip, int take, string filter)
     {
-      return this.GetFilteredUsers(this.dbSet, filter).OrderBy(orderBy, direction).Skip(skip).Take(take);
+      return this.GetFilteredUsers(this.dbSet.AsNoTracking(), filter).OrderBy(orderBy, direction).Skip(skip).Take(take);
     }
 
     public void Create(User user)

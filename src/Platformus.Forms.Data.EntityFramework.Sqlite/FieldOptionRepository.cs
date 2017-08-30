@@ -14,12 +14,12 @@ namespace Platformus.Forms.Data.EntityFramework.Sqlite
   {
     public FieldOption WithKey(int id)
     {
-      return this.dbSet.FirstOrDefault(fo => fo.Id == id);
+      return this.dbSet.AsNoTracking().FirstOrDefault(fo => fo.Id == id);
     }
 
     public IEnumerable<FieldOption> FilteredByFieldId(int fieldId)
     {
-      return this.dbSet.Where(fo => fo.FieldId == fieldId).OrderBy(fo => fo.Position);
+      return this.dbSet.AsNoTracking().Where(fo => fo.FieldId == fieldId).OrderBy(fo => fo.Position);
     }
 
     public void Create(FieldOption fieldOption)

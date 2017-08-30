@@ -14,17 +14,17 @@ namespace Platformus.Menus.Data.EntityFramework.SqlServer
   {
     public MenuItem WithKey(int id)
     {
-      return this.dbSet.FirstOrDefault(mi => mi.Id == id);
+      return this.dbSet.AsNoTracking().FirstOrDefault(mi => mi.Id == id);
     }
 
     public IEnumerable<MenuItem> FilteredByMenuId(int menuId)
     {
-      return this.dbSet.Where(mi => mi.MenuId == menuId).OrderBy(mi => mi.Position);
+      return this.dbSet.AsNoTracking().Where(mi => mi.MenuId == menuId).OrderBy(mi => mi.Position);
     }
 
     public IEnumerable<MenuItem> FilteredByMenuItemId(int menuItemId)
     {
-      return this.dbSet.Where(mi => mi.MenuItemId == menuItemId).OrderBy(mi => mi.Position);
+      return this.dbSet.AsNoTracking().Where(mi => mi.MenuItemId == menuItemId).OrderBy(mi => mi.Position);
     }
 
     public void Create(MenuItem menuItem)

@@ -2,7 +2,6 @@
 // Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information.
 
 using System.Linq;
-using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Localization;
 using Platformus.Barebone;
 using Platformus.Barebone.Backend.ViewModels;
@@ -22,7 +21,7 @@ namespace Platformus.Security.Backend.ViewModels.Credentials
     public IndexViewModel Create(int userId, string orderBy, string direction, int skip, int take, string filter)
     {
       ICredentialRepository credentialRepository = this.RequestHandler.Storage.GetRepository<ICredentialRepository>();
-      IStringLocalizer<IndexViewModelFactory> localizer = this.RequestHandler.HttpContext.RequestServices.GetService<IStringLocalizer<IndexViewModelFactory>>();
+      IStringLocalizer<IndexViewModelFactory> localizer = this.RequestHandler.GetService<IStringLocalizer<IndexViewModelFactory>>();
 
       return new IndexViewModel()
       {

@@ -14,12 +14,12 @@ namespace Platformus.Forms.Data.EntityFramework.Sqlite
   {
     public CompletedForm WithKey(int id)
     {
-      return this.dbSet.FirstOrDefault(cf => cf.Id == id);
+      return this.dbSet.AsNoTracking().FirstOrDefault(cf => cf.Id == id);
     }
 
     public IEnumerable<CompletedForm> Range(int formId, string orderBy, string direction, int skip, int take)
     {
-      return this.dbSet.Where(cf => cf.FormId == formId).OrderByDescending(cf => cf.Created).Skip(skip).Take(take);
+      return this.dbSet.AsNoTracking().Where(cf => cf.FormId == formId).OrderByDescending(cf => cf.Created).Skip(skip).Take(take);
     }
 
     public void Create(CompletedForm completedForm)

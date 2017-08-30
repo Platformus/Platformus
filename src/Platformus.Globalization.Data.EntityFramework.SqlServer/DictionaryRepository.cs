@@ -13,7 +13,7 @@ namespace Platformus.Globalization.Data.EntityFramework.SqlServer
   {
     public Dictionary WithKey(int id)
     {
-      return this.dbSet.FirstOrDefault(d => d.Id == id);
+      return this.dbSet.AsNoTracking().FirstOrDefault(d => d.Id == id);
     }
 
     public void Create(Dictionary dictionary)

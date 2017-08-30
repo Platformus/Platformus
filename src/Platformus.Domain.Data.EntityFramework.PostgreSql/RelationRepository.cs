@@ -14,22 +14,22 @@ namespace Platformus.Domain.Data.EntityFramework.PostgreSql
   {
     public Relation WithKey(int id)
     {
-      return this.dbSet.FirstOrDefault(r => r.Id == id);
+      return this.dbSet.AsNoTracking().FirstOrDefault(r => r.Id == id);
     }
 
     public IEnumerable<Relation> FilteredByPrimaryId(int primaryId)
     {
-      return this.dbSet.Where(r => r.PrimaryId == primaryId);
+      return this.dbSet.AsNoTracking().Where(r => r.PrimaryId == primaryId);
     }
 
     public IEnumerable<Relation> FilteredByForeignId(int foreignId)
     {
-      return this.dbSet.Where(r => r.ForeignId == foreignId);
+      return this.dbSet.AsNoTracking().Where(r => r.ForeignId == foreignId);
     }
 
     public IEnumerable<Relation> FilteredByMemberIdAndForeignId(int memberId, int foreignId)
     {
-      return this.dbSet.Where(r => r.MemberId == memberId && r.ForeignId == foreignId);
+      return this.dbSet.AsNoTracking().Where(r => r.MemberId == memberId && r.ForeignId == foreignId);
     }
 
     public void Create(Relation relation)

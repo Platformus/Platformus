@@ -1,7 +1,6 @@
 ﻿// Copyright © 2015 Dmitry Sikorsky. All rights reserved.
 // Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information.
 
-using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Localization;
 using Platformus.Barebone.Primitives;
 
@@ -16,7 +15,7 @@ namespace Platformus.Barebone.Backend.ViewModels.Shared
 
     public TakeSelectorViewModel Create(int take)
     {
-      IStringLocalizer<TakeSelectorViewModelFactory> localizer = this.RequestHandler.HttpContext.RequestServices.GetService<IStringLocalizer<TakeSelectorViewModelFactory>>();
+      IStringLocalizer<TakeSelectorViewModelFactory> localizer = this.RequestHandler.GetService<IStringLocalizer<TakeSelectorViewModelFactory>>();
 
       return new TakeSelectorViewModel()
       {

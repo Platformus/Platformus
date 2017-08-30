@@ -15,17 +15,17 @@ namespace Platformus.FileManager.Data.EntityFramework.Sqlite
   {
     public File WithKey(int id)
     {
-      return this.dbSet.FirstOrDefault(f => f.Id == id);
+      return this.dbSet.AsNoTracking().FirstOrDefault(f => f.Id == id);
     }
 
     public IEnumerable<File> All()
     {
-      return this.dbSet.OrderBy(f => f.Name);
+      return this.dbSet.AsNoTracking().OrderBy(f => f.Name);
     }
 
     public IEnumerable<File> Range(string orderBy, string direction, int skip, int take, string filter)
     {
-      return this.GetFilteredFiles(this.dbSet, filter).OrderBy(orderBy, direction).Skip(skip).Take(take);
+      return this.GetFilteredFiles(this.dbSet.AsNoTracking(), filter).OrderBy(orderBy, direction).Skip(skip).Take(take);
     }
 
     public void Create(File file)

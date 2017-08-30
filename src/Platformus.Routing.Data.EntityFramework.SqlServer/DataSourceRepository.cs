@@ -15,17 +15,17 @@ namespace Platformus.Routing.Data.EntityFramework.SqlServer
   {
     public DataSource WithKey(int id)
     {
-      return this.dbSet.FirstOrDefault(ds => ds.Id == id);
+      return this.dbSet.AsNoTracking().FirstOrDefault(ds => ds.Id == id);
     }
 
     public IEnumerable<DataSource> FilteredByEndpointId(int endpointId)
     {
-      return this.dbSet.Where(ds => ds.EndpointId == endpointId).OrderBy(ds => ds.CSharpClassName);
+      return this.dbSet.AsNoTracking().Where(ds => ds.EndpointId == endpointId).OrderBy(ds => ds.CSharpClassName);
     }
 
     public IEnumerable<DataSource> FilteredByEndpointIdRange(int endpointId, string orderBy, string direction, int skip, int take, string filter)
     {
-      return this.GetFilteredDataSources(dbSet, endpointId, filter).OrderBy(orderBy, direction).Skip(skip).Take(take);
+      return this.GetFilteredDataSources(dbSet.AsNoTracking(), endpointId, filter).OrderBy(orderBy, direction).Skip(skip).Take(take);
     }
 
     public void Create(DataSource dataSource)

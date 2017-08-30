@@ -4,7 +4,6 @@
 using System.Collections.Generic;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Routing;
-using Microsoft.Extensions.DependencyInjection;
 using Platformus.Barebone;
 using Platformus.Routing.Data.Abstractions;
 using Platformus.Routing.Data.Entities;
@@ -32,7 +31,7 @@ namespace Platformus.Domain.Frontend
       string url = string.Format("/{0}", requestHandler.HttpContext.GetRouteValue("url"));
 
       if (this.GetBoolParameterValue("UseCaching"))
-        return requestHandler.HttpContext.RequestServices.GetService<ICache>().GetPageActionResultWithDefaultValue(
+        return requestHandler.GetService<ICache>().GetPageActionResultWithDefaultValue(
           url + requestHandler.HttpContext.Request.QueryString, () => this.GetActionResult(requestHandler, endpoint, arguments, url)
         );
 

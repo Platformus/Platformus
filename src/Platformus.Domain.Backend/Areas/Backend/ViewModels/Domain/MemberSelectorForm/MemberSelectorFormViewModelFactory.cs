@@ -3,7 +3,6 @@
 
 using System.Collections.Generic;
 using System.Linq;
-using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Localization;
 using Platformus.Barebone;
 using Platformus.Barebone.Backend.ViewModels.Shared;
@@ -24,7 +23,7 @@ namespace Platformus.Domain.Backend.ViewModels.Domain
     public MemberSelectorFormViewModel Create(int? memberId)
     {
       Dictionary<ClassViewModel, IEnumerable<MemberViewModel>> membersByClasses = new Dictionary<ClassViewModel, IEnumerable<MemberViewModel>>();
-      IStringLocalizer<MemberSelectorFormViewModelFactory> localizer = this.RequestHandler.HttpContext.RequestServices.GetService<IStringLocalizer<MemberSelectorFormViewModelFactory>>();
+      IStringLocalizer<MemberSelectorFormViewModelFactory> localizer = this.RequestHandler.GetService<IStringLocalizer<MemberSelectorFormViewModelFactory>>();
 
       foreach (Class @class in this.RequestHandler.Storage.GetRepository<IClassRepository>().All())
         membersByClasses.Add(

@@ -7,7 +7,6 @@ using System.Text;
 using ExtCore.Data.Abstractions;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
 using Platformus.Barebone;
 using Platformus.Configurations;
 using Platformus.Forms.Data.Entities;
@@ -36,7 +35,7 @@ namespace Platformus.Forms.Frontend.FormHandlers
       foreach (KeyValuePair<Field, string> valueByField in valuesByFields)
         body.AppendFormat("<p>{0}: {1}</p>", requestHandler.GetLocalizationValue(valueByField.Key.NameId), valueByField.Value);
 
-      IEmailSender emailSender = requestHandler.HttpContext.RequestServices.GetService<IEmailSender>();
+      IEmailSender emailSender = requestHandler.GetService<IEmailSender>();
 
       if (emailSender != null)
       {
@@ -63,7 +62,7 @@ namespace Platformus.Forms.Frontend.FormHandlers
     private IConfigurationRoot GetConfigurationRoot(IRequestHandler requestHandler)
     {
       IConfigurationBuilder configurationBuilder = new ConfigurationBuilder().AddStorage(
-        requestHandler.HttpContext.RequestServices.GetService<IStorage>()
+        requestHandler.GetService<IStorage>()
       );
 
       return configurationBuilder.Build();
