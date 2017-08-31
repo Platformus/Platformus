@@ -2,10 +2,12 @@
 // Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information.
 
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using ExtCore.Data.Abstractions;
 using ExtCore.Events;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Platformus.Barebone;
 using Platformus.Domain.Backend.ViewModels.Objects;
@@ -21,9 +23,12 @@ namespace Platformus.Domain.Backend.Controllers
   [Authorize(Policy = Policies.HasBrowseObjectsPermission)]
   public class ObjectsController : Platformus.Globalization.Backend.Controllers.ControllerBase
   {
-    public ObjectsController(IStorage storage)
+    public IHostingEnvironment hostingEnvironment;
+
+    public ObjectsController(IStorage storage, IHostingEnvironment hostingEnvironment)
       : base(storage)
     {
+      this.hostingEnvironment = hostingEnvironment;
     }
 
     public IActionResult Index(int? classId, int? objectId, string orderBy = null, string direction = "asc", int skip = 0, int take = 10, string filter = null)
@@ -68,6 +73,15 @@ namespace Platformus.Domain.Backend.Controllers
 
     public ActionResult Delete(int id)
     {
+      try
+      {
+        string imagesPath = this.hostingEnvironment.WebRootPath + "\\images\\objects\\" + id;
+
+        Directory.Delete(imagesPath, true);
+      }
+
+      catch { }
+
       Object @object = this.Storage.GetRepository<IObjectRepository>().WithKey(id);
 
       this.Storage.GetRepository<IObjectRepository>().Delete(@object);
@@ -120,7 +134,7 @@ namespace Platformus.Domain.Backend.Controllers
         this.CreateDecimalProperty(property, objectId, memberId, value);
 
       else if (dataType.StorageDataType == StorageDataType.String)
-        this.CreateStringProperty(property, objectId, memberId, cultureCode, value);
+        this.CreateStringProperty(property, objectId, memberId, cultureCode, value, dataType.JavaScriptEditorClassName == "image");
 
       else if (dataType.StorageDataType == StorageDataType.DateTime)
         this.CreateDateTimeProperty(property, objectId, memberId, value);
@@ -142,7 +156,7 @@ namespace Platformus.Domain.Backend.Controllers
       this.Storage.Save();
     }
 
-    private void CreateStringProperty(Property property, int objectId, int memberId, string cultureCode, string value)
+    private void CreateStringProperty(Property property, int objectId, int memberId, string cultureCode, string value, bool isImage)
     {
       if (property == null)
       {
@@ -160,9 +174,34 @@ namespace Platformus.Domain.Backend.Controllers
 
       localization.DictionaryId = (int)property.StringValueId;
       localization.CultureId = this.Storage.GetRepository<ICultureRepository>().WithCode(cultureCode).Id;
+
+      // TODO: we must do that better
+      if (isImage)
+        value = this.MoveImageToValidObjectPath(objectId, value);
+
       localization.Value = value;
       this.Storage.GetRepository<ILocalizationRepository>().Create(localization);
       this.Storage.Save();
+    }
+
+    private string MoveImageToValidObjectPath(int objectId, string imageUrl)
+    {
+      string sourceImagePathAndFilename = this.hostingEnvironment.WebRootPath + imageUrl.Replace("/", "\\");
+      string imageFilename = Path.GetFileName(sourceImagePathAndFilename);
+      string destinationImagePathAndFilename = this.hostingEnvironment.WebRootPath + "\\images\\objects\\" + objectId + "\\" + imageFilename;
+
+      if (sourceImagePathAndFilename == destinationImagePathAndFilename)
+        return imageUrl;
+
+      try
+      {
+        Directory.CreateDirectory(Path.GetDirectoryName(destinationImagePathAndFilename));
+        System.IO.File.Move(sourceImagePathAndFilename, destinationImagePathAndFilename);
+      }
+
+      catch { }
+
+      return "/images/objects/" + objectId + "/" + imageFilename;
     }
 
     private void CreateDateTimeProperty(Property property, int objectId, int memberId, string value)

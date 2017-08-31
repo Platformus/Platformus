@@ -16,12 +16,12 @@ namespace Platformus.Domain.Backend.Controllers
   [Area("Backend")]
   public class ImageUploaderController : Platformus.Globalization.Backend.Controllers.ControllerBase
   {
-    public IHostingEnvironment HostingEnvironment { get; private set; }
+    private IHostingEnvironment hostingEnvironment;
 
     public ImageUploaderController(IStorage storage, IHostingEnvironment hostingEnvironment)
       : base(storage)
     {
-      this.HostingEnvironment = hostingEnvironment;
+      this.hostingEnvironment = hostingEnvironment;
     }
 
     [HttpGet]
@@ -92,7 +92,7 @@ namespace Platformus.Domain.Backend.Controllers
 
     private string GetPathAndFilename(string basePath, string filename)
     {
-      return this.HostingEnvironment.WebRootPath + basePath.Replace('/', '\\') + filename;
+      return this.hostingEnvironment.WebRootPath + basePath.Replace('/', '\\') + filename;
     }
   }
 }
