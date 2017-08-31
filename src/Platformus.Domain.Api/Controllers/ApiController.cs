@@ -134,7 +134,7 @@ namespace Platformus.Domain.Api.Controllers
 
     private Class GetValidatedClass(string classCode)
     {
-      Class @class = this.Storage.GetRepository<IClassRepository>().WithCode(classCode);
+      Class @class = this.GetService<IDomainManager>().GetClass(classCode);
 
       if (@class == null)
         throw new HttpException(400, "Class code is not valid.");
@@ -179,8 +179,9 @@ namespace Platformus.Domain.Api.Controllers
 
       if (!string.IsNullOrEmpty(sortingMemberCode) && !string.IsNullOrEmpty(sortingDirection))
       {
-        Member member = this.Storage.GetRepository<IMemberRepository>().WithClassIdAndCode(sortingClassId, sortingMemberCode);
-        DataType dataType = this.Storage.GetRepository<IDataTypeRepository>().WithKey((int)member.PropertyDataTypeId);
+        IDomainManager domainManager = this.GetService<IDomainManager>();
+        Member member = domainManager.GetMemberByClassIdAndCodeInlcudingParent(sortingClassId, sortingMemberCode);
+        DataType dataType = domainManager.GetDataType((int)member.PropertyDataTypeId);
 
         sorting = new Sorting(dataType.StorageDataType, member.Id, sortingDirection);
       }

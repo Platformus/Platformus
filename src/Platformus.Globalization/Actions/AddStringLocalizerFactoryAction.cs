@@ -10,7 +10,7 @@ namespace Platformus.Globalization.Actions
 {
   public class AddStringLocalizerFactoryAction : IConfigureServicesAction
   {
-    public int Priority => 3010;
+    public int Priority => 4010;
 
     public void Execute(IServiceCollection services, IServiceProvider serviceProvider)
     {

@@ -16,7 +16,7 @@ namespace Platformus.Globalization.Backend.Actions
 {
   public class UseLocalizationAction : IConfigureAction
   {
-    public int Priority => 3010;
+    public int Priority => 4010;
 
     public void Execute(IApplicationBuilder applicationBuilder, IServiceProvider serviceProvider)
     {

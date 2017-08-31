@@ -9,7 +9,7 @@ namespace Platformus.Globalization.Actions
 {
   public class AddLocalizationAction : IConfigureServicesAction
   {
-    public int Priority => 3000;
+    public int Priority => 4000;
 
     public void Execute(IServiceCollection services, IServiceProvider serviceProvider)
     {

@@ -10,7 +10,7 @@ namespace Platformus.Forms.Actions
 {
   public class AddEmailSenderAction : IConfigureServicesAction
   {
-    public int Priority => 1500;
+    public int Priority => 7000;
 
     public void Execute(IServiceCollection services, IServiceProvider serviceProvider)
     {

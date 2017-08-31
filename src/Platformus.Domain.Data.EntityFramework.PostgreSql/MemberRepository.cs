@@ -31,6 +31,11 @@ namespace Platformus.Domain.Data.EntityFramework.PostgreSql
       ).FirstOrDefault(m => string.Equals(m.Code, code, System.StringComparison.OrdinalIgnoreCase));
     }
 
+    public IEnumerable<Member> All()
+    {
+      return this.dbSet.AsNoTracking().OrderBy(m => m.ClassId).ThenBy(m => m.Position);
+    }
+
     public IEnumerable<Member> FilteredByClassId(int classId)
     {
       return this.dbSet.AsNoTracking().Where(m => m.ClassId == classId).OrderBy(m => m.Position);

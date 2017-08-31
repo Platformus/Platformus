@@ -63,12 +63,12 @@ namespace Platformus.Globalization
 
     public IEnumerable<Culture> GetCultures()
     {
-      return this.GetCachedCultures().OrderBy(c => c.Name);
+      return this.GetCachedCultures();
     }
 
     public IEnumerable<Culture> GetNotNeutralCultures()
     {
-      return this.GetCachedCultures().Where(c => !c.IsNeutral).OrderBy(c => c.Name);
+      return this.GetCachedCultures().Where(c => !c.IsNeutral);
     }
 
     public void InvalidateCache()
@@ -79,7 +79,9 @@ namespace Platformus.Globalization
     private IEnumerable<Culture> GetCachedCultures()
     {
       return this.cache.GetWithDefaultValue<IEnumerable<Culture>>(
-        "cultures", () => this.storage.GetRepository<ICultureRepository>().All(), new CacheEntryOptions(priority: CacheEntryPriority.NeverRemove)
+        "cultures",
+        () => this.storage.GetRepository<ICultureRepository>().All().ToList(),
+        new CacheEntryOptions(priority: CacheEntryPriority.NeverRemove)
       );
     }
   }

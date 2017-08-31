@@ -10,7 +10,7 @@ namespace Platformus.Routing.Actions
 {
   public class AddEndpointResolverAction : IConfigureServicesAction
   {
-    public int Priority => 4000;
+    public int Priority => 5000;
 
     public void Execute(IServiceCollection services, IServiceProvider serviceProvider)
     {

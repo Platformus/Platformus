@@ -16,14 +16,22 @@ namespace Platformus.Domain.DataSources
   {
     protected Params GetParams(IRequestHandler requestHandler, bool enableSorting)
     {
+      Filtering filtering = null;
+
+      if (this.HasParameter("EnableFiltering") && this.GetBoolParameterValue("EnableFiltering"))
+      {
+        filtering = new Filtering(requestHandler.HttpContext.Request.Query[this.GetStringParameterValue("QueryUrlParameterName")]);
+      }
+
       Sorting sorting = null;
 
       if (enableSorting)
       {
         int sortingMemberId = this.GetIntParameterValue("SortingMemberId");
         string sortingDirection = this.GetStringParameterValue("SortingDirection");
-        Member member = requestHandler.Storage.GetRepository<IMemberRepository>().WithKey(sortingMemberId);
-        DataType dataType = requestHandler.Storage.GetRepository<IDataTypeRepository>().WithKey((int)member.PropertyDataTypeId);
+        IDomainManager domainManager = requestHandler.GetService<IDomainManager>();
+        Member member = domainManager.GetMember(sortingMemberId);
+        DataType dataType = domainManager.GetDataType((int)member.PropertyDataTypeId);
 
         sorting = new Sorting(dataType.StorageDataType, sortingMemberId, sortingDirection);
       }
@@ -39,13 +47,6 @@ namespace Platformus.Domain.DataSources
           take = this.GetIntParameterValue("DefaultTake");
 
         paging = new Paging(skip, take);
-      }
-
-      Filtering filtering = null;
-
-      if (this.HasParameter("EnableFiltering") && this.GetBoolParameterValue("EnableFiltering"))
-      {
-        filtering = new Filtering(requestHandler.HttpContext.Request.Query[this.GetStringParameterValue("QueryUrlParameterName")]);
       }
 
       return new Params(filtering, sorting, paging);
@@ -100,7 +101,7 @@ namespace Platformus.Domain.DataSources
       int classId = objects.First().ClassId;
       string xPathSegment = xPathSegments[xPathSegmentIndex];
 
-      foreach (Member member in requestHandler.Storage.GetRepository<IMemberRepository>().FilteredByClassIdInlcudingParent(classId))
+      foreach (Member member in requestHandler.GetService<IDomainManager>().GetMembersByClassIdInlcudingParent(classId))
       {
         if (member.RelationClassId != null && string.Equals(member.Code, xPathSegment, StringComparison.OrdinalIgnoreCase))
         {

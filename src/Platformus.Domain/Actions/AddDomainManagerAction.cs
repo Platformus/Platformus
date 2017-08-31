@@ -5,15 +5,15 @@ using System;
 using ExtCore.Infrastructure.Actions;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace Platformus.Globalization.Actions
+namespace Platformus.Domain.Actions
 {
-  public class AddCultureManagerAction : IConfigureServicesAction
+  public class AddDomainManagerAction : IConfigureServicesAction
   {
-    public int Priority => 4020;
+    public int Priority => 6000;
 
     public void Execute(IServiceCollection services, IServiceProvider serviceProvider)
     {
-      services.AddScoped<ICultureManager, DefaultCultureManager>();
+      services.AddScoped<IDomainManager, DefaultDomainManager>();
     }
   }
 }

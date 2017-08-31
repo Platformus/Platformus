@@ -10,7 +10,7 @@ namespace Platformus.Globalization.Actions
 {
   public class AddMvcAction : IAddMvcAction
   {
-    public int Priority => 3000;
+    public int Priority => 4000;
 
     public void Execute(IMvcBuilder mvcBuilder, IServiceProvider serviceProvider)
     {

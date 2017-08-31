@@ -9,7 +9,7 @@ namespace Platformus.Security.Actions
 {
   public class UseAuthenticationAction : IConfigureAction
   {
-    public int Priority => 2000;
+    public int Priority => 3000;
 
     public void Execute(IApplicationBuilder applicationBuilder, IServiceProvider serviceProvider)
     {
