@@ -13,7 +13,7 @@
     $("<div>").addClass("form__description").html(dataSource.description).appendTo(dataSourceParameterEditors);
 
     for (var i = 0; i < dataSource.dataSourceParameterGroups.length; i++) {
-      var group = $("<h2>").addClass("form_title").html(dataSource.dataSourceParameterGroups[i].name).appendTo(dataSourceParameterEditors);
+      var group = $("<h2>").addClass("form__title").html(dataSource.dataSourceParameterGroups[i].name).appendTo(dataSourceParameterEditors);
 
       for (var j = 0; j < dataSource.dataSourceParameterGroups[i].dataSourceParameters.length; j++) {
         var f = platformus.dataSourceParameterEditors[dataSource.dataSourceParameterGroups[i].dataSourceParameters[j].javaScriptEditorClassName]["create"];

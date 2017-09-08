@@ -13,7 +13,7 @@
     $("<div>").addClass("form__description").html(endpoint.description).appendTo(endpointParameterEditors);
 
     for (var i = 0; i < endpoint.endpointParameterGroups.length; i++) {
-      var group = $("<h2>").addClass("form_title").html(endpoint.endpointParameterGroups[i].name).appendTo(endpointParameterEditors);
+      var group = $("<h2>").addClass("form__title").html(endpoint.endpointParameterGroups[i].name).appendTo(endpointParameterEditors);
 
       for (var j = 0; j < endpoint.endpointParameterGroups[i].endpointParameters.length; j++) {
         var f = platformus.endpointParameterEditors[endpoint.endpointParameterGroups[i].endpointParameters[j].javaScriptEditorClassName]["create"];

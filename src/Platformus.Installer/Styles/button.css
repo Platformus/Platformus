@@ -1,4 +1,4 @@
-﻿/* Copyright © 2015 Dmitry Sikorsky. All rights reserved. */
+﻿/* Copyright © 2017 Dmitry Sikorsky. All rights reserved. */
 /* Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information. */
 
 .button {
@@ -38,26 +38,4 @@
 .button--minor {
   font-size: 13px;
   padding: 0 10px;
-}
-
-.button--delete {
-  background-image: url(/wwwroot.areas.backend.images.button_delete.png);
-  background-position: center;
-  background-repeat: no-repeat;
-  padding: 0;
-  width: 20px;
-  height: 20px;
-}
-
-@media
-only screen and (-webkit-min-device-pixel-ratio: 2),
-only screen and (   min--moz-device-pixel-ratio: 2),
-only screen and (     -o-min-device-pixel-ratio: 2/1),
-only screen and (        min-device-pixel-ratio: 2),
-only screen and (                min-resolution: 192dpi),
-only screen and (                min-resolution: 2dppx) {
-  .button--delete {
-    background-image: url(/wwwroot.areas.backend.images.button_delete@2x.png);
-    background-size: 16px 16px;
-  }
 }

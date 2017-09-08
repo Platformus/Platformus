@@ -2,7 +2,6 @@
 // Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information.
 
 using System;
-using ExtCore.Data.Abstractions;
 using ExtCore.Mvc.Infrastructure.Actions;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Routing;
@@ -18,14 +17,6 @@ namespace Platformus.Globalization.Frontend.Actions
 
     public void Execute(IRouteBuilder routeBuilder, IServiceProvider serviceProvider)
     {
-      IStorage storage = serviceProvider.GetService<IStorage>();
-
-      if (storage == null)
-      {
-        routeBuilder.MapRoute(name: "Default", template: "", defaults: new { controller = "Installation", action = "Index" });
-        return;
-      }
-
       string template = string.Empty;
 
       if (this.MustSpecifyCultureInUrl(serviceProvider))

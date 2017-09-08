@@ -14,8 +14,15 @@
 
   <ItemGroup>
     <PackageReference Include="ExtCore.Data" Version="3.0.0-alpha1" />
+    <PackageReference Include="ExtCore.Data.EntityFramework" Version="3.0.0-alpha1" />
     <PackageReference Include="ExtCore.Mvc" Version="3.0.0-alpha1" />
     <PackageReference Include="ExtCore.WebApplication" Version="3.0.0-alpha1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Platformus.Barebone.Backend\Platformus.Barebone.Backend.csproj" />
+    <ProjectReference Include="..\Platformus.Barebone.Data.Extensions\Platformus.Barebone.Data.Extensions.csproj" />
+    <ProjectReference Include="..\Platformus.Barebone.Frontend\Platformus.Barebone.Frontend.csproj" />
   </ItemGroup>
 
 </Project>
