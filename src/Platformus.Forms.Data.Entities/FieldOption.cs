@@ -11,9 +11,24 @@ namespace Platformus.Forms.Data.Entities
   /// </summary>
   public class FieldOption : IEntity
   {
+    /// <summary>
+    /// Gets or sets the unique identifier of the field option.
+    /// </summary>
     public int Id { get; set; }
+
+    /// <summary>
+    /// Gets or sets the field identifier this field option belongs to.
+    /// </summary>
     public int FieldId { get; set; }
+
+    /// <summary>
+    /// Gets or sets the dictionary identifier this field is related to. It is used to store the localizable field option value.
+    /// </summary>
     public int ValueId { get; set; }
+
+    /// <summary>
+    /// Gets or sets the field option position. Position is used to sort the field options inside the field (smallest to largest).
+    /// </summary>
     public int? Position { get; set; }
 
     public virtual Field Field { get; set; }

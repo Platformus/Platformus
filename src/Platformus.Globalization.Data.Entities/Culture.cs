@@ -11,11 +11,37 @@ namespace Platformus.Globalization.Data.Entities
   /// </summary>
   public class Culture : IEntity
   {
+    /// <summary>
+    /// Gets or sets the unique identifier of the culture.
+    /// </summary>
     public int Id { get; set; }
+
+    /// <summary>
+    /// Gets or sets the unique code of the culture. It is set by the user and might be used for the culture retrieval.
+    /// Only standard two letter culture codes are allowed.
+    /// </summary>
     public string Code { get; set; }
+
+    /// <summary>
+    /// Gets or sets the culture name.
+    /// </summary>
     public string Name { get; set; }
+
+    /// <summary>
+    /// Gets or sets the value indicating whether the culture is neutral or not. Neutral culture is used to store
+    /// not localizable property values.
+    /// </summary>
     public bool IsNeutral { get; set; }
+
+    /// <summary>
+    /// Gets or sets the value indicating whether the culture is default or not. Default culture is used to display
+    /// localizable content on the frontend when no culture is explicitly selected.
+    /// </summary>
     public bool IsDefault { get; set; }
+
+    /// <summary>
+    /// Gets or sets the value indicating whether the culture is backend UI one or not.
+    /// </summary>
     public bool IsBackendUi { get; set; }
 
     public virtual ICollection<Localization> Localizations { get; set; }

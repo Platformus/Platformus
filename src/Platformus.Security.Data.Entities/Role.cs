@@ -10,9 +10,24 @@ namespace Platformus.Security.Data.Entities
   /// </summary>
   public class Role : IEntity
   {
+    /// <summary>
+    /// Gets or sets the unique identifier of the role.
+    /// </summary>
     public int Id { get; set; }
+
+    /// <summary>
+    /// Gets or sets the unique code of the role. It is set by the user and might be used for the role retrieval.
+    /// </summary>
     public string Code { get; set; }
+
+    /// <summary>
+    /// Gets or sets the role name.
+    /// </summary>
     public string Name { get; set; }
+
+    /// <summary>
+    /// Gets or sets the role position. Position is used to sort the roles (smallest to largest).
+    /// </summary>
     public int? Position { get; set; }
   }
 }

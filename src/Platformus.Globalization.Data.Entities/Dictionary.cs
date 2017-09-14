@@ -12,6 +12,9 @@ namespace Platformus.Globalization.Data.Entities
   /// </summary>
   public class Dictionary : IEntity
   {
+    /// <summary>
+    /// Gets or sets the unique identifier of the dictionary.
+    /// </summary>
     public int Id { get; set; }
 
     public virtual ICollection<Localization> Localizations { get; set; }

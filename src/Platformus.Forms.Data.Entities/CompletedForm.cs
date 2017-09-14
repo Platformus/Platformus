@@ -12,8 +12,19 @@ namespace Platformus.Forms.Data.Entities
   /// </summary>
   public class CompletedForm : IEntity
   {
+    /// <summary>
+    /// Gets or sets the unique identifier of the completed form.
+    /// </summary>
     public int Id { get; set; }
+
+    /// <summary>
+    /// Gets or sets the form identifier this completed form belongs to.
+    /// </summary>
     public int FormId { get; set; }
+
+    /// <summary>
+    /// Gets or sets the date and time this completed form is created at.
+    /// </summary>
     public DateTime Created { get; set; }
 
     public virtual Form Form { get; set; }

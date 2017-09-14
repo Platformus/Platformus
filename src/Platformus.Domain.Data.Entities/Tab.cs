@@ -10,9 +10,24 @@ namespace Platformus.Domain.Data.Entities
   /// </summary>
   public class Tab : IEntity
   {
+    /// <summary>
+    /// Gets or sets the unique identifier of the tab.
+    /// </summary>
     public int Id { get; set; }
+
+    /// <summary>
+    /// Gets or sets the class identifier this tab belongs to.
+    /// </summary>
     public int ClassId { get; set; }
+
+    /// <summary>
+    /// Gets or sets the tab name.
+    /// </summary>
     public string Name { get; set; }
+
+    /// <summary>
+    /// Gets or sets the tab position. Position is used to sort the tabs inside the class (smallest to largest).
+    /// </summary>
     public int? Position { get; set; }
 
     public virtual Class Class { get; set; }

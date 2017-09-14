@@ -10,9 +10,24 @@ namespace Platformus.Forms.Data.Entities
   /// </summary>
   public class CompletedField : IEntity
   {
+    /// <summary>
+    /// Gets or sets the unique identifier of the completed field.
+    /// </summary>
     public int Id { get; set; }
+
+    /// <summary>
+    /// Gets or sets the completed form identifier this completed field belongs to.
+    /// </summary>
     public int CompletedFormId { get; set; }
+
+    /// <summary>
+    /// Gets or sets the field identifier this completed field is related to.
+    /// </summary>
     public int FieldId { get; set; }
+
+    /// <summary>
+    /// Gets or sets the completed field value.
+    /// </summary>
     public string Value { get; set; }
 
     public virtual CompletedForm CompletedForm { get; set; }

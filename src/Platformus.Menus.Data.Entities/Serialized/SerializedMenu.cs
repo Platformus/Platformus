@@ -7,14 +7,29 @@ using Platformus.Globalization.Data.Entities;
 namespace Platformus.Menus.Data.Entities
 {
   /// <summary>
-  /// The serialized menu contains the menu and corresponding menu items data inside the single object.
-  /// This reduces the number of storage read operations while menu rendering.
+  /// Represents a serialized menu. The serialized menus contain the menu and corresponding menu items data
+  /// inside the single entity. This reduces the number of storage read operations while menu retrieval.
   /// </summary>
   public class SerializedMenu : IEntity
   {
+    /// <summary>
+    /// Gets or sets the culture identifier this serialized menu belongs to.
+    /// </summary>
     public int CultureId { get; set; }
+
+    /// <summary>
+    /// Gets or sets the menu identifier this serialized menu belongs to.
+    /// </summary>
     public int MenuId { get; set; }
+
+    /// <summary>
+    /// Gets or sets the unique code of the menu. It is set by the user and might be used for the menu retrieval.
+    /// </summary>
     public string Code { get; set; }
+
+    /// <summary>
+    /// Gets or sets the menu items serialized into a string.
+    /// </summary>
     public string SerializedMenuItems { get; set; }
 
     public virtual Culture Culture { get; set; }

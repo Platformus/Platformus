@@ -11,9 +11,24 @@ namespace Platformus.Security.Data.Entities
   /// </summary>
   public class Permission : IEntity
   {
+    /// <summary>
+    /// Gets or sets the unique identifier of the permission.
+    /// </summary>
     public int Id { get; set; }
+
+    /// <summary>
+    /// Gets or sets the unique code of the permission. It is set by the user and might be used for the permission retrieval.
+    /// </summary>
     public string Code { get; set; }
+
+    /// <summary>
+    /// Gets or sets the permission name.
+    /// </summary>
     public string Name { get; set; }
+
+    /// <summary>
+    /// Gets or sets the permission position. Position is used to sort the permission (smallest to largest).
+    /// </summary>
     public int? Position { get; set; }
   }
 }

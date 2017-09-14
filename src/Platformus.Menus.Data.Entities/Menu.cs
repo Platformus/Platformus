@@ -13,8 +13,19 @@ namespace Platformus.Menus.Data.Entities
   /// </summary>
   public class Menu : IEntity
   {
+    /// <summary>
+    /// Gets or sets the unique identifier of the menu.
+    /// </summary>
     public int Id { get; set; }
+
+    /// <summary>
+    /// Gets or sets the unique code of the menu. It is set by the user and might be used for the menu retrieval.
+    /// </summary>
     public string Code { get; set; }
+
+    /// <summary>
+    /// Gets or sets the dictionary identifier this field is related to. It is used to store the localizable menu name.
+    /// </summary>
     public int NameId { get; set; }
 
     public virtual Dictionary Name { get; set; }

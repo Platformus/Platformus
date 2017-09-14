@@ -10,7 +10,14 @@ namespace Platformus.Security.Data.Entities
   /// </summary>
   public class UserRole : IEntity
   {
+    /// <summary>
+    /// Gets or sets the user identifier this user role is related to.
+    /// </summary>
     public int UserId { get; set; }
+
+    /// <summary>
+    /// Gets or sets the role identifier this user role is related to.
+    /// </summary>
     public int RoleId { get; set; }
 
     public virtual User User { get; set; }

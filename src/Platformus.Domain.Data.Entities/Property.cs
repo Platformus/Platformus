@@ -12,12 +12,40 @@ namespace Platformus.Domain.Data.Entities
   /// </summary>
   public class Property : IEntity
   {
+    /// <summary>
+    /// Gets or sets the unique identifier of the property.
+    /// </summary>
     public int Id { get; set; }
+
+    /// <summary>
+    /// Gets or sets the object identifier this property belongs to.
+    /// </summary>
     public int ObjectId { get; set; }
+
+    /// <summary>
+    /// Gets or sets the member identifier this property is related to.
+    /// </summary>
     public int MemberId { get; set; }
+
+    /// <summary>
+    /// Gets or sets the property integer value.
+    /// </summary>
     public int? IntegerValue { get; set; }
+
+    /// <summary>
+    /// Gets or sets the property decimal value.
+    /// </summary>
     public decimal? DecimalValue { get; set; }
+
+    /// <summary>
+    /// Gets or sets the dictionary identifier this field is related to.
+    /// It is used to store the property (optionally localizable) string value.
+    /// </summary>
     public int? StringValueId { get; set; }
+
+    /// <summary>
+    /// Gets or sets the property <see cref="DateTime"/> value.
+    /// </summary>
     public DateTime? DateTimeValue { get; set; }
 
     public virtual Object Object { get; set; }

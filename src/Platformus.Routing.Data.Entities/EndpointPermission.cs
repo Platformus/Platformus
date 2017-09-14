@@ -11,7 +11,14 @@ namespace Platformus.Routing.Data.Entities
   /// </summary>
   public class EndpointPermission : IEntity
   {
+    /// <summary>
+    /// Gets or sets the endpoint identifier this endpoint permission is related to.
+    /// </summary>
     public int EndpointId { get; set; }
+
+    /// <summary>
+    /// Gets or sets the permission identifier this endpoint permission is related to.
+    /// </summary>
     public int PermissionId { get; set; }
 
     public virtual Endpoint Endpoint { get; set; }

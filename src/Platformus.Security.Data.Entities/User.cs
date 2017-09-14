@@ -12,8 +12,19 @@ namespace Platformus.Security.Data.Entities
   /// </summary>
   public class User : IEntity
   {
+    /// <summary>
+    /// Gets or sets the unique identifier of the user.
+    /// </summary>
     public int Id { get; set; }
+
+    /// <summary>
+    /// Gets or sets the user name.
+    /// </summary>
     public string Name { get; set; }
+
+    /// <summary>
+    /// Gets or sets the date and time this user is created at.
+    /// </summary>
     public DateTime Created { get; set; }
 
     public virtual ICollection<Credential> Credentials { get; set; }

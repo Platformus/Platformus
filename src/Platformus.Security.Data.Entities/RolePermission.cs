@@ -10,7 +10,14 @@ namespace Platformus.Security.Data.Entities
   /// </summary>
   public class RolePermission : IEntity
   {
+    /// <summary>
+    /// Gets or sets the role identifier this role permission is related to.
+    /// </summary>
     public int RoleId { get; set; }
+
+    /// <summary>
+    /// Gets or sets the permission identifier this role permission is related to.
+    /// </summary>
     public int PermissionId { get; set; }
 
     public virtual Role Role { get; set; }
