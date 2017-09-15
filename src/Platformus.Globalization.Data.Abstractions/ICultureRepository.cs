@@ -7,6 +7,9 @@ using Platformus.Globalization.Data.Entities;
 
 namespace Platformus.Globalization.Data.Abstractions
 {
+  /// <summary>
+  /// Describes a repository for manipulating the <see cref="Culture"/> entities.
+  /// </summary>
   public interface ICultureRepository : IRepository
   {
     Culture WithKey(int id);

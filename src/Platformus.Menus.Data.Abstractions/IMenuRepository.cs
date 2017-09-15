@@ -7,6 +7,9 @@ using Platformus.Menus.Data.Entities;
 
 namespace Platformus.Menus.Data.Abstractions
 {
+  /// <summary>
+  /// Describes a repository for manipulating the <see cref="Menu"/> entities.
+  /// </summary>
   public interface IMenuRepository : IRepository
   {
     Menu WithKey(int id);

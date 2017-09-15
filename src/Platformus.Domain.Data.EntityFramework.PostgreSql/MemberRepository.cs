@@ -11,6 +11,10 @@ using Platformus.Domain.Data.Entities;
 
 namespace Platformus.Domain.Data.EntityFramework.PostgreSql
 {
+  /// <summary>
+  /// Implements the <see cref="IMemberRepository"/> interface and represents the repository
+  /// for manipulating the <see cref="Member"/> entities in the context of PostgreSQL database.
+  /// </summary>
   public class MemberRepository : RepositoryBase<Member>, IMemberRepository
   {
     public Member WithKey(int id)

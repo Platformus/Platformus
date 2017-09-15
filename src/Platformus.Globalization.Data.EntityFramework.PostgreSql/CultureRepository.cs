@@ -11,6 +11,10 @@ using Platformus.Globalization.Data.Entities;
 
 namespace Platformus.Globalization.Data.EntityFramework.PostgreSql
 {
+  /// <summary>
+  /// Implements the <see cref="ICultureRepository"/> interface and represents the repository
+  /// for manipulating the <see cref="Culture"/> entities in the context of PostgreSQL database.
+  /// </summary>
   public class CultureRepository : RepositoryBase<Culture>, ICultureRepository
   {
     public Culture WithKey(int id)

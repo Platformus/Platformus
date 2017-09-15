@@ -11,6 +11,10 @@ using Platformus.Domain.Data.Entities;
 
 namespace Platformus.Domain.Data.EntityFramework.Sqlite
 {
+  /// <summary>
+  /// Implements the <see cref="IDataTypeParameterRepository"/> interface and represents the repository
+  /// for manipulating the <see cref="DataTypeParameter"/> entities in the context of SQLite database.
+  /// </summary>
   public class DataTypeParameterRepository : RepositoryBase<DataTypeParameter>, IDataTypeParameterRepository
   {
     public DataTypeParameter WithKey(int id)

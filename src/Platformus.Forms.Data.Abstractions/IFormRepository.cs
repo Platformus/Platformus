@@ -7,6 +7,9 @@ using Platformus.Forms.Data.Entities;
 
 namespace Platformus.Forms.Data.Abstractions
 {
+  /// <summary>
+  /// Describes a repository for manipulating the <see cref="Form"/> entities.
+  /// </summary>
   public interface IFormRepository : IRepository
   {
     Form WithKey(int id);

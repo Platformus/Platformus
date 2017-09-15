@@ -10,6 +10,10 @@ using Platformus.Forms.Data.Entities;
 
 namespace Platformus.Forms.Data.EntityFramework.PostgreSql
 {
+  /// <summary>
+  /// Implements the <see cref="IFieldTypeRepository"/> interface and represents the repository
+  /// for manipulating the <see cref="FieldType"/> entities in the context of PostgreSQL database.
+  /// </summary>
   public class FieldTypeRepository : RepositoryBase<FieldType>, IFieldTypeRepository
   {
     public FieldType WithKey(int id)

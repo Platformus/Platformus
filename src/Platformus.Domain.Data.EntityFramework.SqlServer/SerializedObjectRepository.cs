@@ -13,6 +13,10 @@ using Platformus.Domain.Data.Entities;
 
 namespace Platformus.Domain.Data.EntityFramework.SqlServer
 {
+  /// <summary>
+  /// Implements the <see cref="ISerializedObjectRepository"/> interface and represents the repository
+  /// for manipulating the <see cref="SerializedObject"/> entities in the context of SQL Server database.
+  /// </summary>
   public class SerializedObjectRepository : RepositoryBase<SerializedObject>, ISerializedObjectRepository
   {
     public SerializedObject WithKey(int cultureId, int objectId)

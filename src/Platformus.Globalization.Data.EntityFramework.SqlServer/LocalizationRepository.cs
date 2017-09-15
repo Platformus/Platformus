@@ -10,6 +10,10 @@ using Platformus.Globalization.Data.Entities;
 
 namespace Platformus.Globalization.Data.EntityFramework.SqlServer
 {
+  /// <summary>
+  /// Implements the <see cref="ILocalizationRepository"/> interface and represents the repository
+  /// for manipulating the <see cref="Localization"/> entities in the context of SQL Server database.
+  /// </summary>
   public class LocalizationRepository : RepositoryBase<Localization>, ILocalizationRepository
   {
     public Localization WithKey(int id)

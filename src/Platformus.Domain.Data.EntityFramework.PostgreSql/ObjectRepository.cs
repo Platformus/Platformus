@@ -11,6 +11,10 @@ using Platformus.Domain.Data.Entities;
 
 namespace Platformus.Domain.Data.EntityFramework.PostgreSql
 {
+  /// <summary>
+  /// Implements the <see cref="IObjectRepository"/> interface and represents the repository
+  /// for manipulating the <see cref="Object"/> entities in the context of PostgreSQL database.
+  /// </summary>
   public class ObjectRepository : RepositoryBase<Object>, IObjectRepository
   {
     public Object WithKey(int id)

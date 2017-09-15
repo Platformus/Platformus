@@ -11,6 +11,10 @@ using Platformus.Security.Data.Entities;
 
 namespace Platformus.Security.Data.EntityFramework.Sqlite
 {
+  /// <summary>
+  /// Implements the <see cref="IPermissionRepository"/> interface and represents the repository
+  /// for manipulating the <see cref="Permission"/> entities in the context of SQLite database.
+  /// </summary>
   public class PermissionRepository : RepositoryBase<Permission>, IPermissionRepository
   {
     public Permission WithKey(int id)

@@ -10,6 +10,10 @@ using Platformus.Configurations.Data.Entities;
 
 namespace Platformus.Configurations.Data.EntityFramework.PostgreSql
 {
+  /// <summary>
+  /// Implements the <see cref="IVariableRepository"/> interface and represents the repository
+  /// for manipulating the <see cref="Variable"/> entities in the context of PostgreSQL database.
+  /// </summary>
   public class VariableRepository : RepositoryBase<Variable>, IVariableRepository
   {
     public Variable WithKey(int id)

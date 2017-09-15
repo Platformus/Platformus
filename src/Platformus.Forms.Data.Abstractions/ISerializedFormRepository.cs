@@ -6,6 +6,9 @@ using Platformus.Forms.Data.Entities;
 
 namespace Platformus.Forms.Data.Abstractions
 {
+  /// <summary>
+  /// Describes a repository for manipulating the <see cref="SerializedForm"/> entities.
+  /// </summary>
   public interface ISerializedFormRepository : IRepository
   {
     SerializedForm WithKey(int cultureId, int formId);

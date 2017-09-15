@@ -7,6 +7,9 @@ using Platformus.Domain.Data.Entities;
 
 namespace Platformus.Domain.Data.Abstractions
 {
+  /// <summary>
+  /// Describes a repository for manipulating the <see cref="Tab"/> entities.
+  /// </summary>
   public interface ITabRepository : IRepository
   {
     Tab WithKey(int id);

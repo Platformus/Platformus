@@ -6,6 +6,9 @@ using Platformus.Globalization.Data.Entities;
 
 namespace Platformus.Globalization.Data.Abstractions
 {
+  /// <summary>
+  /// Describes a repository for manipulating the <see cref="Dictionary"/> entities.
+  /// </summary>
   public interface IDictionaryRepository : IRepository
   {
     Dictionary WithKey(int id);

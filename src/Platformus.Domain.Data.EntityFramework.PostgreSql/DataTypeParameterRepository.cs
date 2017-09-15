@@ -11,6 +11,10 @@ using Platformus.Domain.Data.Entities;
 
 namespace Platformus.Domain.Data.EntityFramework.PostgreSql
 {
+  /// <summary>
+  /// Implements the <see cref="IDataTypeParameterRepository"/> interface and represents the repository
+  /// for manipulating the <see cref="DataTypeParameter"/> entities in the context of PostgreSQL database.
+  /// </summary>
   public class DataTypeParameterRepository : RepositoryBase<DataTypeParameter>, IDataTypeParameterRepository
   {
     public DataTypeParameter WithKey(int id)

@@ -10,6 +10,10 @@ using Platformus.Security.Data.Entities;
 
 namespace Platformus.Security.Data.EntityFramework.PostgreSql
 {
+  /// <summary>
+  /// Implements the <see cref="ICredentialTypeRepository"/> interface and represents the repository
+  /// for manipulating the <see cref="CredentialType"/> entities in the context of PostgreSQL database.
+  /// </summary>
   public class CredentialTypeRepository : RepositoryBase<CredentialType>, ICredentialTypeRepository
   {
     public CredentialType WithKey(int id)

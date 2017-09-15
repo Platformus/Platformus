@@ -11,6 +11,10 @@ using Platformus.Routing.Data.Entities;
 
 namespace Platformus.Routing.Data.EntityFramework.Sqlite
 {
+  /// <summary>
+  /// Implements the <see cref="IEndpointRepository"/> interface and represents the repository
+  /// for manipulating the <see cref="Endpoint"/> entities in the context of SQLite database.
+  /// </summary>
   public class EndpointRepository : RepositoryBase<Endpoint>, IEndpointRepository
   {
     public Endpoint WithKey(int id)

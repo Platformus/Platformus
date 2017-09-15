@@ -7,6 +7,9 @@ using Platformus.Security.Data.Entities;
 
 namespace Platformus.Security.Data.Abstractions
 {
+  /// <summary>
+  /// Describes a repository for manipulating the <see cref="CredentialType"/> entities.
+  /// </summary>
   public interface ICredentialTypeRepository : IRepository
   {
     CredentialType WithKey(int id);

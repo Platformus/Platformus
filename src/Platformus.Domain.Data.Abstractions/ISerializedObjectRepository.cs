@@ -7,6 +7,9 @@ using Platformus.Domain.Data.Entities;
 
 namespace Platformus.Domain.Data.Abstractions
 {
+  /// <summary>
+  /// Describes a repository for manipulating the <see cref="SerializedObject"/> entities.
+  /// </summary>
   public interface ISerializedObjectRepository : IRepository
   {
     SerializedObject WithKey(int cultureId, int objectId);

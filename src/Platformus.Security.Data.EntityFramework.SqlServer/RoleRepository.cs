@@ -11,6 +11,10 @@ using Platformus.Security.Data.Entities;
 
 namespace Platformus.Security.Data.EntityFramework.SqlServer
 {
+  /// <summary>
+  /// Implements the <see cref="IRoleRepository"/> interface and represents the repository
+  /// for manipulating the <see cref="Role"/> entities in the context of SQL Server database.
+  /// </summary>
   public class RoleRepository : RepositoryBase<Role>, IRoleRepository
   {
     public Role WithKey(int id)

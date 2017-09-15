@@ -12,6 +12,10 @@ using Platformus.Security.Data.Entities;
 
 namespace Platformus.Security.Data.EntityFramework.Sqlite
 {
+  /// <summary>
+  /// Implements the <see cref="ICredentialRepository"/> interface and represents the repository
+  /// for manipulating the <see cref="Credential"/> entities in the context of SQLite database.
+  /// </summary>
   public class CredentialRepository : RepositoryBase<Credential>, ICredentialRepository
   {
     public Credential WithKey(int id)

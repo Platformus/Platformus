@@ -7,6 +7,9 @@ using Platformus.Routing.Data.Entities;
 
 namespace Platformus.Routing.Data.Abstractions
 {
+  /// <summary>
+  /// Describes a repository for manipulating the <see cref="DataSource"/> entities.
+  /// </summary>
   public interface IDataSourceRepository : IRepository
   {
     DataSource WithKey(int id);

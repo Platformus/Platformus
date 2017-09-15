@@ -10,6 +10,10 @@ using Platformus.Domain.Data.Entities;
 
 namespace Platformus.Domain.Data.EntityFramework.PostgreSql
 {
+  /// <summary>
+  /// Implements the <see cref="IRelationRepository"/> interface and represents the repository
+  /// for manipulating the <see cref="Relation"/> entities in the context of PostgreSQL database.
+  /// </summary>
   public class RelationRepository : RepositoryBase<Relation>, IRelationRepository
   {
     public Relation WithKey(int id)

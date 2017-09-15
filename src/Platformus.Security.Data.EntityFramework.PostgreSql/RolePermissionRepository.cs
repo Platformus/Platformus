@@ -10,6 +10,10 @@ using Platformus.Security.Data.Entities;
 
 namespace Platformus.Security.Data.EntityFramework.PostgreSql
 {
+  /// <summary>
+  /// Implements the <see cref="IRolePermissionRepository"/> interface and represents the repository
+  /// for manipulating the <see cref="RolePermission"/> entities in the context of PostgreSQL database.
+  /// </summary>
   public class RolePermissionRepository : RepositoryBase<RolePermission>, IRolePermissionRepository
   {
     public RolePermission WithKey(int roleId, int permissionId)

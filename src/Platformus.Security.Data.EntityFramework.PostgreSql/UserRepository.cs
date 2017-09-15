@@ -11,6 +11,10 @@ using Platformus.Security.Data.Entities;
 
 namespace Platformus.Security.Data.EntityFramework.PostgreSql
 {
+  /// <summary>
+  /// Implements the <see cref="IUserRepository"/> interface and represents the repository
+  /// for manipulating the <see cref="User"/> entities in the context of PostgreSQL database.
+  /// </summary>
   public class UserRepository : RepositoryBase<User>, IUserRepository
   {
     public User WithKey(int id)

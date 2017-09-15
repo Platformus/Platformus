@@ -9,6 +9,10 @@ using Platformus.Globalization.Data.Entities;
 
 namespace Platformus.Globalization.Data.EntityFramework.Sqlite
 {
+  /// <summary>
+  /// Implements the <see cref="IDictionaryRepository"/> interface and represents the repository
+  /// for manipulating the <see cref="Dictionary"/> entities in the context of SQLite database.
+  /// </summary>
   public class DictionaryRepository : RepositoryBase<Dictionary>, IDictionaryRepository
   {
     public Dictionary WithKey(int id)

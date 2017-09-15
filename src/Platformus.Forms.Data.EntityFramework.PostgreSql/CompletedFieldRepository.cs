@@ -10,6 +10,10 @@ using Platformus.Forms.Data.Entities;
 
 namespace Platformus.Forms.Data.EntityFramework.PostgreSql
 {
+  /// <summary>
+  /// Implements the <see cref="ICompletedFieldRepository"/> interface and represents the repository
+  /// for manipulating the <see cref="CompletedField"/> entities in the context of PostgreSQL database.
+  /// </summary>
   public class CompletedFieldRepository : RepositoryBase<CompletedField>, ICompletedFieldRepository
   {
     public IEnumerable<CompletedField> FilteredByCompletedFormId(int completedFormId)

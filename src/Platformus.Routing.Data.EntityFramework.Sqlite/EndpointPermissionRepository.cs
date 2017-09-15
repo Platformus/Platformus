@@ -10,6 +10,10 @@ using Platformus.Routing.Data.Entities;
 
 namespace Platformus.Routing.Data.EntityFramework.Sqlite
 {
+  /// <summary>
+  /// Implements the <see cref="IEndpointPermissionRepository"/> interface and represents the repository
+  /// for manipulating the <see cref="EndpointPermission"/> entities in the context of SQLite database.
+  /// </summary>
   public class EndpointPermissionRepository : RepositoryBase<EndpointPermission>, IEndpointPermissionRepository
   {
     public EndpointPermission WithKey(int endpointId, int permissionId)

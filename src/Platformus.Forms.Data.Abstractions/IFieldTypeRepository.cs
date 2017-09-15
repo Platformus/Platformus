@@ -7,6 +7,9 @@ using Platformus.Forms.Data.Entities;
 
 namespace Platformus.Forms.Data.Abstractions
 {
+  /// <summary>
+  /// Describes a repository for manipulating the <see cref="FieldType"/> entities.
+  /// </summary>
   public interface IFieldTypeRepository : IRepository
   {
     FieldType WithKey(int id);

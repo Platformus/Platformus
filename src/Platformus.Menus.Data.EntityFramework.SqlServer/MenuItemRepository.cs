@@ -10,6 +10,10 @@ using Platformus.Menus.Data.Entities;
 
 namespace Platformus.Menus.Data.EntityFramework.SqlServer
 {
+  /// <summary>
+  /// Implements the <see cref="IMenuItemRepository"/> interface and represents the repository
+  /// for manipulating the <see cref="MenuItem"/> entities in the context of SQL Server database.
+  /// </summary>
   public class MenuItemRepository : RepositoryBase<MenuItem>, IMenuItemRepository
   {
     public MenuItem WithKey(int id)

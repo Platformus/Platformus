@@ -10,6 +10,10 @@ using Platformus.Forms.Data.Entities;
 
 namespace Platformus.Forms.Data.EntityFramework.SqlServer
 {
+  /// <summary>
+  /// Implements the <see cref="IFieldOptionRepository"/> interface and represents the repository
+  /// for manipulating the <see cref="FieldOption"/> entities in the context of SQL Server database.
+  /// </summary>
   public class FieldOptionRepository : RepositoryBase<FieldOption>, IFieldOptionRepository
   {
     public FieldOption WithKey(int id)

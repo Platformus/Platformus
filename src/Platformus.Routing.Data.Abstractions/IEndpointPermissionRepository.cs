@@ -7,6 +7,9 @@ using Platformus.Routing.Data.Entities;
 
 namespace Platformus.Routing.Data.Abstractions
 {
+  /// <summary>
+  /// Describes a repository for manipulating the <see cref="EndpointPermission"/> entities.
+  /// </summary>
   public interface IEndpointPermissionRepository : IRepository
   {
     EndpointPermission WithKey(int endpointId, int permissionId);

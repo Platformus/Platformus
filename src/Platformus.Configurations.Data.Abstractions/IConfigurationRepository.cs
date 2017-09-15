@@ -7,6 +7,9 @@ using Platformus.Configurations.Data.Entities;
 
 namespace Platformus.Configurations.Data.Abstractions
 {
+  /// <summary>
+  /// Describes a repository for manipulating the <see cref="Configuration"/> entities.
+  /// </summary>
   public interface IConfigurationRepository : IRepository
   {
     Configuration WithKey(int id);

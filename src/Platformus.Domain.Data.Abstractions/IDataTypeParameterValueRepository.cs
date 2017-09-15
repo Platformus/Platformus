@@ -6,6 +6,9 @@ using Platformus.Domain.Data.Entities;
 
 namespace Platformus.Domain.Data.Abstractions
 {
+  /// <summary>
+  /// Describes a repository for manipulating the <see cref="DataTypeParameterValue"/> entities.
+  /// </summary>
   public interface IDataTypeParameterValueRepository : IRepository
   {
     DataTypeParameterValue WithDataTypeParameterIdAndMemberId(int dataTypeParameterId, int memberId);

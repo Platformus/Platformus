@@ -11,6 +11,10 @@ using Platformus.Routing.Data.Entities;
 
 namespace Platformus.Routing.Data.EntityFramework.PostgreSql
 {
+  /// <summary>
+  /// Implements the <see cref="IDataSourceRepository"/> interface and represents the repository
+  /// for manipulating the <see cref="DataSource"/> entities in the context of PostgreSQL database.
+  /// </summary>
   public class DataSourceRepository : RepositoryBase<DataSource>, IDataSourceRepository
   {
     public DataSource WithKey(int id)

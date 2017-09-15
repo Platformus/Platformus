@@ -10,6 +10,10 @@ using Platformus.Domain.Data.Entities;
 
 namespace Platformus.Domain.Data.EntityFramework.Sqlite
 {
+  /// <summary>
+  /// Implements the <see cref="IPropertyRepository"/> interface and represents the repository
+  /// for manipulating the <see cref="Property"/> entities in the context of SQLite database.
+  /// </summary>
   public class PropertyRepository : RepositoryBase<Property>, IPropertyRepository
   {
     public Property WithKey(int id)

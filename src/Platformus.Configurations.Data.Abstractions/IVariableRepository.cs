@@ -7,6 +7,9 @@ using Platformus.Configurations.Data.Entities;
 
 namespace Platformus.Configurations.Data.Abstractions
 {
+  /// <summary>
+  /// Describes a repository for manipulating the <see cref="Variable"/> entities.
+  /// </summary>
   public interface IVariableRepository : IRepository
   {
     Variable WithKey(int id);

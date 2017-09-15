@@ -9,6 +9,10 @@ using Platformus.Forms.Data.Entities;
 
 namespace Platformus.Forms.Data.EntityFramework.PostgreSql
 {
+  /// <summary>
+  /// Implements the <see cref="ISerializedFormRepository"/> interface and represents the repository
+  /// for manipulating the <see cref="SerializedForm"/> entities in the context of PostgreSQL database.
+  /// </summary>
   public class SerializedFormRepository : RepositoryBase<SerializedForm>, ISerializedFormRepository
   {
     public SerializedForm WithKey(int cultureId, int formId)

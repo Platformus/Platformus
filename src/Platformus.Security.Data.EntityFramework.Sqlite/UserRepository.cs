@@ -11,6 +11,10 @@ using Platformus.Security.Data.Entities;
 
 namespace Platformus.Security.Data.EntityFramework.Sqlite
 {
+  /// <summary>
+  /// Implements the <see cref="IUserRepository"/> interface and represents the repository
+  /// for manipulating the <see cref="User"/> entities in the context of SQLite database.
+  /// </summary>
   public class UserRepository : RepositoryBase<User>, IUserRepository
   {
     public User WithKey(int id)

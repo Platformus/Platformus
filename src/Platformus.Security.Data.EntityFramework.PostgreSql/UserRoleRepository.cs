@@ -10,6 +10,10 @@ using Platformus.Security.Data.Entities;
 
 namespace Platformus.Security.Data.EntityFramework.PostgreSql
 {
+  /// <summary>
+  /// Implements the <see cref="IUserRoleRepository"/> interface and represents the repository
+  /// for manipulating the <see cref="UserRole"/> entities in the context of PostgreSQL database.
+  /// </summary>
   public class UserRoleRepository : RepositoryBase<UserRole>, IUserRoleRepository
   {
     public UserRole WithKey(int userId, int roleId)

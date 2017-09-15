@@ -7,6 +7,9 @@ using Platformus.FileManager.Data.Entities;
 
 namespace Platformus.FileManager.Data.Abstractions
 {
+  /// <summary>
+  /// Describes a repository for manipulating the <see cref="File"/> entities.
+  /// </summary>
   public interface IFileRepository : IRepository
   {
     File WithKey(int id);

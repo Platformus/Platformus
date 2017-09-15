@@ -9,6 +9,10 @@ using Platformus.Menus.Data.Entities;
 
 namespace Platformus.Menus.Data.EntityFramework.SqlServer
 {
+  /// <summary>
+  /// Implements the <see cref="ISerializedMenuRepository"/> interface and represents the repository
+  /// for manipulating the <see cref="SerializedMenu"/> entities in the context of SQL Server database.
+  /// </summary>
   public class SerializedMenuRepository : RepositoryBase<SerializedMenu>, ISerializedMenuRepository
   {
     public SerializedMenu WithKey(int cultureId, int menuId)

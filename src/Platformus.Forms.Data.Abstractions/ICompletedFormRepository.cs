@@ -7,6 +7,9 @@ using Platformus.Forms.Data.Entities;
 
 namespace Platformus.Forms.Data.Abstractions
 {
+  /// <summary>
+  /// Describes a repository for manipulating the <see cref="CompletedForm"/> entities.
+  /// </summary>
   public interface ICompletedFormRepository : IRepository
   {
     CompletedForm WithKey(int id);

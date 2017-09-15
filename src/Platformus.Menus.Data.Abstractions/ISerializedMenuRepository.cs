@@ -6,6 +6,9 @@ using Platformus.Menus.Data.Entities;
 
 namespace Platformus.Menus.Data.Abstractions
 {
+  /// <summary>
+  /// Describes a repository for manipulating the <see cref="SerializedMenu"/> entities.
+  /// </summary>
   public interface ISerializedMenuRepository : IRepository
   {
     SerializedMenu WithKey(int cultureId, int menuId);

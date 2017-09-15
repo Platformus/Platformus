@@ -13,6 +13,10 @@ using Platformus.Domain.Data.Entities;
 
 namespace Platformus.Domain.Data.EntityFramework.Sqlite
 {
+  /// <summary>
+  /// Implements the <see cref="ISerializedObjectRepository"/> interface and represents the repository
+  /// for manipulating the <see cref="SerializedObject"/> entities in the context of SQLite database.
+  /// </summary>
   public class SerializedObjectRepository : RepositoryBase<SerializedObject>, ISerializedObjectRepository
   {
     public SerializedObject WithKey(int cultureId, int objectId)

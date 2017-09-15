@@ -7,6 +7,9 @@ using Platformus.Routing.Data.Entities;
 
 namespace Platformus.Routing.Data.Abstractions
 {
+  /// <summary>
+  /// Describes a repository for manipulating the <see cref="Endpoint"/> entities.
+  /// </summary>
   public interface IEndpointRepository : IRepository
   {
     Endpoint WithKey(int id);

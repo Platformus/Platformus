@@ -11,6 +11,10 @@ using Platformus.FileManager.Data.Entities;
 
 namespace Platformus.FileManager.Data.EntityFramework.SqlServer
 {
+  /// <summary>
+  /// Implements the <see cref="IFileRepository"/> interface and represents the repository
+  /// for manipulating the <see cref="File"/> entities in the context of SQL Server database.
+  /// </summary>
   public class FileRepository : RepositoryBase<File>, IFileRepository
   {
     public File WithKey(int id)

@@ -7,6 +7,9 @@ using Platformus.Security.Data.Entities;
 
 namespace Platformus.Security.Data.Abstractions
 {
+  /// <summary>
+  /// Describes a repository for manipulating the <see cref="Role"/> entities.
+  /// </summary>
   public interface IRoleRepository : IRepository
   {
     Role WithKey(int id);

@@ -10,6 +10,10 @@ using Platformus.Configurations.Data.Entities;
 
 namespace Platformus.Configurations.Data.EntityFramework.PostgreSql
 {
+  /// <summary>
+  /// Implements the <see cref="IConfigurationRepository"/> interface and represents the repository
+  /// for manipulating the <see cref="Configuration"/> entities in the context of PostgreSQL database.
+  /// </summary>
   public class ConfigurationRepository : RepositoryBase<Configuration>, IConfigurationRepository
   {
     public Configuration WithKey(int id)

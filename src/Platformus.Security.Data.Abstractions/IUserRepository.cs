@@ -7,6 +7,9 @@ using Platformus.Security.Data.Entities;
 
 namespace Platformus.Security.Data.Abstractions
 {
+  /// <summary>
+  /// Describes a repository for manipulating the <see cref="User"/> entities.
+  /// </summary>
   public interface IUserRepository : IRepository
   {
     User WithKey(int id);

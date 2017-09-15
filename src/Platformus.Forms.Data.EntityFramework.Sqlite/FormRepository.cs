@@ -10,6 +10,10 @@ using Platformus.Forms.Data.Entities;
 
 namespace Platformus.Forms.Data.EntityFramework.Sqlite
 {
+  /// <summary>
+  /// Implements the <see cref="IFormRepository"/> interface and represents the repository
+  /// for manipulating the <see cref="Form"/> entities in the context of SQLite database.
+  /// </summary>
   public class FormRepository : RepositoryBase<Form>, IFormRepository
   {
     public Form WithKey(int id)

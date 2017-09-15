@@ -7,6 +7,9 @@ using Platformus.Domain.Data.Entities;
 
 namespace Platformus.Domain.Data.Abstractions
 {
+  /// <summary>
+  /// Describes a repository for manipulating the <see cref="Relation"/> entities.
+  /// </summary>
   public interface IRelationRepository : IRepository
   {
     Relation WithKey(int id);

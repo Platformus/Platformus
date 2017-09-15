@@ -7,6 +7,9 @@ using Platformus.Security.Data.Entities;
 
 namespace Platformus.Security.Data.Abstractions
 {
+  /// <summary>
+  /// Describes a repository for manipulating the <see cref="Permission"/> entities.
+  /// </summary>
   public interface IPermissionRepository : IRepository
   {
     Permission WithKey(int id);

@@ -11,6 +11,10 @@ using Platformus.Domain.Data.Entities;
 
 namespace Platformus.Domain.Data.EntityFramework.SqlServer
 {
+  /// <summary>
+  /// Implements the <see cref="ITabRepository"/> interface and represents the repository
+  /// for manipulating the <see cref="Tab"/> entities in the context of SQL Server database.
+  /// </summary>
   public class TabRepository : RepositoryBase<Tab>, ITabRepository
   {
     public Tab WithKey(int id)
