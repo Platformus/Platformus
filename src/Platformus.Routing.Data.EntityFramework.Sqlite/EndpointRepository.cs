@@ -17,36 +17,70 @@ namespace Platformus.Routing.Data.EntityFramework.Sqlite
   /// </summary>
   public class EndpointRepository : RepositoryBase<Endpoint>, IEndpointRepository
   {
+    /// <summary>
+    /// Gets the endpoint by the identifier.
+    /// </summary>
+    /// <param name="id">The unique identifier of the endpoint.</param>
+    /// <returns>Found endpoint with the given identifier.</returns>
     public Endpoint WithKey(int id)
     {
       return this.dbSet.AsNoTracking().FirstOrDefault(e => e.Id == id);
     }
 
+    /// <summary>
+    /// Gets all the endpoints using sorting by position (ascending).
+    /// </summary>
+    /// <returns>Found endpoints.</returns>
     public IEnumerable<Endpoint> All()
     {
       return this.dbSet.AsNoTracking().OrderBy(e => e.Position);
     }
 
+    /// <summary>
+    /// Gets all the endpoints using the given filtering, sorting, and paging.
+    /// </summary>
+    /// <param name="orderBy">The endpoint property name to sort by.</param>
+    /// <param name="direction">The sorting direction.</param>
+    /// <param name="skip">The number of endpoints that should be skipped.</param>
+    /// <param name="take">The number of endpoints that should be taken.</param>
+    /// <param name="filter">The filtering query.</param>
+    /// <returns>Found endpoints using the given filtering, sorting, and paging.</returns>
     public IEnumerable<Endpoint> Range(string orderBy, string direction, int skip, int take, string filter)
     {
       return this.GetFilteredEndpoints(dbSet.AsNoTracking(), filter).OrderBy(orderBy, direction).Skip(skip).Take(take);
     }
 
+    /// <summary>
+    /// Creates the endpoint.
+    /// </summary>
+    /// <param name="endpoint">The endpoint to create.</param>
     public void Create(Endpoint endpoint)
     {
       this.dbSet.Add(endpoint);
     }
 
+    /// <summary>
+    /// Edits the endpoint.
+    /// </summary>
+    /// <param name="endpoint">The endpoint to edit.</param>
     public void Edit(Endpoint endpoint)
     {
       this.storageContext.Entry(endpoint).State = EntityState.Modified;
     }
 
+    /// <summary>
+    /// Deletes the endpoint specified by the identifier.
+    /// </summary>
+    /// <param name="id">The unique identifier of the endpoint to delete.</param>
     public void Delete(int id)
     {
       this.Delete(this.WithKey(id));
     }
 
+    /// <summary>
+    /// Deletes the endpoint.
+    /// </summary>
+    /// <param name="endpoint">The endpoint to delete.</param>
     public void Delete(Endpoint endpoint)
     {
       this.storageContext.Database.ExecuteSqlCommand(
@@ -60,6 +94,11 @@ namespace Platformus.Routing.Data.EntityFramework.Sqlite
       this.dbSet.Remove(endpoint);
     }
 
+    /// <summary>
+    /// Counts the number of the endpoints with the given filtering.
+    /// </summary>
+    /// <param name="filter">The filtering query.</param>
+    /// <returns>The number of endpoints found.</returns>
     public int Count(string filter)
     {
       return this.GetFilteredEndpoints(dbSet, filter).Count();

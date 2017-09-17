@@ -16,11 +16,20 @@ namespace Platformus.Forms.Data.EntityFramework.SqlServer
   /// </summary>
   public class CompletedFieldRepository : RepositoryBase<CompletedField>, ICompletedFieldRepository
   {
+    /// <summary>
+    /// Gets the completed fields filtered by the completed form identifier using sorting by position (ascending).
+    /// </summary>
+    /// <param name="completedFormId">The unique identifier of the completed form these completed fields belongs to.</param>
+    /// <returns>Found completed fields.</returns>
     public IEnumerable<CompletedField> FilteredByCompletedFormId(int completedFormId)
     {
       return this.dbSet.AsNoTracking().Where(cf => cf.CompletedFormId == completedFormId).OrderBy(cf => cf.Id);
     }
 
+    /// <summary>
+    /// Creates the completed field.
+    /// </summary>
+    /// <param name="completedField">The completed field to create.</param>
     public void Create(CompletedField completedField)
     {
       this.dbSet.Add(completedField);

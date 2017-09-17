@@ -17,36 +17,70 @@ namespace Platformus.Domain.Data.EntityFramework.PostgreSql
   /// </summary>
   public class DataTypeRepository : RepositoryBase<DataType>, IDataTypeRepository
   {
+    /// <summary>
+    /// Gets the data type by the identifier.
+    /// </summary>
+    /// <param name="id">The unique identifier of the data type.</param>
+    /// <returns>Found data type with the given identifier.</returns>
     public DataType WithKey(int id)
     {
       return this.dbSet.AsNoTracking().FirstOrDefault(dt => dt.Id == id);
     }
 
+    /// <summary>
+    /// Gets all the data types using sorting by position (ascending).
+    /// </summary>
+    /// <returns>Found data types.</returns>
     public IEnumerable<DataType> All()
     {
       return this.dbSet.AsNoTracking().OrderBy(dt => dt.Position);
     }
 
+    /// <summary>
+    /// Gets all the data types using the given filtering, sorting, and paging.
+    /// </summary>
+    /// <param name="orderBy">The data type property name to sort by.</param>
+    /// <param name="direction">The sorting direction.</param>
+    /// <param name="skip">The number of data types that should be skipped.</param>
+    /// <param name="take">The number of data types that should be taken.</param>
+    /// <param name="filter">The filtering query.</param>
+    /// <returns>Found data types using the given filtering, sorting, and paging.</returns>
     public IEnumerable<DataType> Range(string orderBy, string direction, int skip, int take, string filter)
     {
       return this.GetFilteredDataTypes(dbSet.AsNoTracking(), filter).OrderBy(orderBy, direction).Skip(skip).Take(take);
     }
 
+    /// <summary>
+    /// Creates the data type.
+    /// </summary>
+    /// <param name="dataType">The data type to create.</param>
     public void Create(DataType dataType)
     {
       this.dbSet.Add(dataType);
     }
 
+    /// <summary>
+    /// Edits the data type.
+    /// </summary>
+    /// <param name="dataType">The data type to edit.</param>
     public void Edit(DataType dataType)
     {
       this.storageContext.Entry(dataType).State = EntityState.Modified;
     }
 
+    /// <summary>
+    /// Deletes the data type specified by the identifier.
+    /// </summary>
+    /// <param name="id">The unique identifier of the data type to delete.</param>
     public void Delete(int id)
     {
       this.Delete(this.WithKey(id));
     }
 
+    /// <summary>
+    /// Deletes the data type.
+    /// </summary>
+    /// <param name="dataType">The data type to delete.</param>
     public void Delete(DataType dataType)
     {
       this.storageContext.Database.ExecuteSqlCommand(
@@ -67,6 +101,11 @@ namespace Platformus.Domain.Data.EntityFramework.PostgreSql
       this.dbSet.Remove(dataType);
     }
 
+    /// <summary>
+    /// Counts the number of the data types with the given filtering.
+    /// </summary>
+    /// <param name="filter">The filtering query.</param>
+    /// <returns>The number of data types found.</returns>
     public int Count(string filter)
     {
       return this.GetFilteredDataTypes(dbSet, filter).Count();

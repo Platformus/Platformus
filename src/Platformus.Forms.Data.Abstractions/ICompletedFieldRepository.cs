@@ -12,7 +12,17 @@ namespace Platformus.Forms.Data.Abstractions
   /// </summary>
   public interface ICompletedFieldRepository : IRepository
   {
+    /// <summary>
+    /// Gets the completed fields filtered by the completed form identifier using sorting by position (ascending).
+    /// </summary>
+    /// <param name="completedFormId">The unique identifier of the completed form these completed fields belongs to.</param>
+    /// <returns>Found completed fields.</returns>
     IEnumerable<CompletedField> FilteredByCompletedFormId(int completedFormId);
+
+    /// <summary>
+    /// Creates the completed field.
+    /// </summary>
+    /// <param name="completedField">The completed field to create.</param>
     void Create(CompletedField completedField);
   }
 }

@@ -12,11 +12,42 @@ namespace Platformus.Forms.Data.Abstractions
   /// </summary>
   public interface IFieldRepository : IRepository
   {
+    /// <summary>
+    /// Gets the field by the identifier.
+    /// </summary>
+    /// <param name="id">The unique identifier of the field.</param>
+    /// <returns>Found field with the given identifier.</returns>
     Field WithKey(int id);
+
+    /// <summary>
+    /// Gets the fields filtered by the form identifier using sorting by position (ascending).
+    /// </summary>
+    /// <param name="formId">The unique identifier of the form these fields belongs to.</param>
+    /// <returns>Found fields.</returns>
     IEnumerable<Field> FilteredByFormId(int formId);
+
+    /// <summary>
+    /// Creates the field.
+    /// </summary>
+    /// <param name="field">The field to create.</param>
     void Create(Field field);
+
+    /// <summary>
+    /// Edits the field.
+    /// </summary>
+    /// <param name="field">The field to edit.</param>
     void Edit(Field field);
+
+    /// <summary>
+    /// Deletes the field specified by the identifier.
+    /// </summary>
+    /// <param name="id">The unique identifier of the field to delete.</param>
     void Delete(int id);
+
+    /// <summary>
+    /// Deletes the field.
+    /// </summary>
+    /// <param name="field">The field to delete.</param>
     void Delete(Field field);
   }
 }

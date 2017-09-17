@@ -18,41 +18,85 @@ namespace Platformus.Security.Data.EntityFramework.PostgreSql
   /// </summary>
   public class CredentialRepository : RepositoryBase<Credential>, ICredentialRepository
   {
+    /// <summary>
+    /// Gets the credential by the identifier.
+    /// </summary>
+    /// <param name="id">The unique identifier of the credential.</param>
+    /// <returns>Found credential with the given identifier.</returns>
     public Credential WithKey(int id)
     {
       return this.dbSet.AsNoTracking().FirstOrDefault(c => c.Id == id);
     }
 
+    /// <summary>
+    /// Gets the credential by the credential type identifier, user identifier and user secret MD5 hash.
+    /// </summary>
+    /// <param name="credentialTypeId">The unique identifier of the credential type this credential belongs to.</param>
+    /// <param name="identifier">The identifier of the user.</param>
+    /// <param name="secret">The secret MD5 hash of the user.</param>
+    /// <returns>Found credential with the given credential type identifier, user identifier and user secret MD5 hash.</returns>
     public Credential WithCredentialTypeIdAndIdentifierAndSecret(int credentialTypeId, string identifier, string secret)
     {
       return this.dbSet.AsNoTracking().FirstOrDefault(c => c.CredentialTypeId == credentialTypeId && string.Equals(c.Identifier, identifier, StringComparison.OrdinalIgnoreCase) && c.Secret == secret);
     }
 
+    /// <summary>
+    /// Gets all the credentials filtered by the user identifier using the given filtering, sorting, and paging.
+    /// </summary>
+    /// <param name="userId">The unique identifier of the user these credentials belongs to.</param>
+    /// <param name="orderBy">The credential property name to sort by.</param>
+    /// <param name="direction">The sorting direction.</param>
+    /// <param name="skip">The number of credentials that should be skipped.</param>
+    /// <param name="take">The number of credentials that should be taken.</param>
+    /// <param name="filter">The filtering query.</param>
+    /// <returns>Found credentials filtered by the user identifier using the given filtering, sorting, and paging.</returns>
     public IEnumerable<Credential> FilteredByUserIdRange(int userId, string orderBy, string direction, int skip, int take, string filter)
     {
       return this.GetFilteredCredentials(dbSet.AsNoTracking(), userId, filter).OrderBy(orderBy, direction).Skip(skip).Take(take);
     }
 
+    /// <summary>
+    /// Creates the credential.
+    /// </summary>
+    /// <param name="credential">The credential to create.</param>
     public void Create(Credential credential)
     {
       this.dbSet.Add(credential);
     }
 
+    /// <summary>
+    /// Edits the credential.
+    /// </summary>
+    /// <param name="credential">The credential to edit.</param>
     public void Edit(Credential credential)
     {
       this.storageContext.Entry(credential).State = EntityState.Modified;
     }
 
+    /// <summary>
+    /// Deletes the credential specified by the identifier.
+    /// </summary>
+    /// <param name="id">The unique identifier of the credential to delete.</param>
     public void Delete(int id)
     {
       this.Delete(this.WithKey(id));
     }
 
+    /// <summary>
+    /// Deletes the credential.
+    /// </summary>
+    /// <param name="credential">The credential to delete.</param>
     public void Delete(Credential credential)
     {
       this.dbSet.Remove(credential);
     }
 
+    /// <summary>
+    /// Counts the number of the credentials filtered by the user identifier with the given filtering.
+    /// </summary>
+    /// <param name="userId">The unique identifier of the user these credentials belongs to.</param>
+    /// <param name="filter">The filtering query.</param>
+    /// <returns>The number of credentials found.</returns>
     public int CountByUserId(int userId, string filter)
     {
       return this.GetFilteredCredentials(dbSet, userId, filter).Count();

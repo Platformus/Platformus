@@ -16,36 +16,66 @@ namespace Platformus.Forms.Data.EntityFramework.PostgreSql
   /// </summary>
   public class FormRepository : RepositoryBase<Form>, IFormRepository
   {
+    /// <summary>
+    /// Gets the form by the identifier.
+    /// </summary>
+    /// <param name="id">The unique identifier of the form.</param>
+    /// <returns>Found form with the given identifier.</returns>
     public Form WithKey(int id)
     {
       return this.dbSet.AsNoTracking().FirstOrDefault(f => f.Id == id);
     }
 
+    /// <summary>
+    /// Gets the form by the code (case insensitive).
+    /// </summary>
+    /// <param name="code">The unique code of the form.</param>
+    /// <returns>Found form with the given code.</returns>
     public Form WithCode(string code)
     {
       return this.dbSet.AsNoTracking().FirstOrDefault(f => string.Equals(f.Code, code, System.StringComparison.OrdinalIgnoreCase));
     }
 
+    /// <summary>
+    /// Gets all the forms using sorting by name (ascending).
+    /// </summary>
+    /// <returns>Found forms.</returns>
     public IEnumerable<Form> All()
     {
       return this.dbSet.AsNoTracking().OrderBy(f => f.Name);
     }
 
+    /// <summary>
+    /// Creates the form.
+    /// </summary>
+    /// <param name="form">The form to create.</param>
     public void Create(Form form)
     {
       this.dbSet.Add(form);
     }
 
+    /// <summary>
+    /// Edits the form.
+    /// </summary>
+    /// <param name="form">The form to edit.</param>
     public void Edit(Form form)
     {
       this.storageContext.Entry(form).State = EntityState.Modified;
     }
 
+    /// <summary>
+    /// Deletes the form specified by the identifier.
+    /// </summary>
+    /// <param name="id">The unique identifier of the form to delete.</param>
     public void Delete(int id)
     {
       this.Delete(this.WithKey(id));
     }
 
+    /// <summary>
+    /// Deletes the form.
+    /// </summary>
+    /// <param name="form">The form to delete.</param>
     public void Delete(Form form)
     {
       this.storageContext.Database.ExecuteSqlCommand(

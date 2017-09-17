@@ -12,11 +12,43 @@ namespace Platformus.Security.Data.Abstractions
   /// </summary>
   public interface IUserRoleRepository : IRepository
   {
+    /// <summary>
+    /// Gets the user role by the user identifier and role identifier.
+    /// </summary>
+    /// <param name="userId">The unique identifier of the user this user role is related to.</param>
+    /// <param name="roleId">The unique identifier of the role this user role is related to.</param>
+    /// <returns>Found user role with the given user identifier and role identifier.</returns>
     UserRole WithKey(int userId, int roleId);
+
+    /// <summary>
+    /// Gets the user role filtered by the user identifier.
+    /// </summary>
+    /// <param name="userId">The unique identifier of the user these user roles belongs to.</param>
     IEnumerable<UserRole> FilteredByUserId(int userId);
+
+    /// <summary>
+    /// Creates the user role.
+    /// </summary>
+    /// <param name="userRole">The user role to create.</param>
     void Create(UserRole userRole);
+
+    /// <summary>
+    /// Edits the user role.
+    /// </summary>
+    /// <param name="userRole">The user role to edit.</param>
     void Edit(UserRole userRole);
+
+    /// <summary>
+    /// Deletes the user role specified by the user identifier and role identifier.
+    /// </summary>
+    /// <param name="userId">The unique identifier of the user this user role is related to.</param>
+    /// <param name="roleId">The unique identifier of the role this user role is related to.</param>
     void Delete(int userId, int roleId);
+
+    /// <summary>
+    /// Deletes the user role.
+    /// </summary>
+    /// <param name="userRole">The user role to delete.</param>
     void Delete(UserRole userRole);
   }
 }

@@ -17,16 +17,33 @@ namespace Platformus.Domain.Data.EntityFramework.Sqlite
   /// </summary>
   public class MemberRepository : RepositoryBase<Member>, IMemberRepository
   {
+    /// <summary>
+    /// Gets the member by the identifier.
+    /// </summary>
+    /// <param name="id">The unique identifier of the member.</param>
+    /// <returns>Found member with the given identifier.</returns>
     public Member WithKey(int id)
     {
       return this.dbSet.AsNoTracking().FirstOrDefault(m => m.Id == id);
     }
 
+    /// <summary>
+    /// Gets the member by the class identifier and code (case insensitive).
+    /// </summary>
+    /// <param name="classId">The unique identifier of the class this member belongs to.</param>
+    /// <param name="code">The unique code of the member.</param>
+    /// <returns>Found member with the given class identifier and code.</returns>
     public Member WithClassIdAndCode(int classId, string code)
     {
       return this.dbSet.AsNoTracking().FirstOrDefault(m => m.ClassId == classId && string.Equals(m.Code, code, System.StringComparison.OrdinalIgnoreCase));
     }
 
+    /// <summary>
+    /// Gets the member by the class identifier (including members of the parent class) and code (case insensitive).
+    /// </summary>
+    /// <param name="classId">The unique identifier of the class this member belongs to.</param>
+    /// <param name="code">The unique code of the member.</param>
+    /// <returns>Found member with the given class identifier and code.</returns>
     public Member WithClassIdAndCodeInlcudingParent(int classId, string code)
     {
       return this.dbSet.AsNoTracking().FromSql(
@@ -35,16 +52,30 @@ namespace Platformus.Domain.Data.EntityFramework.Sqlite
       ).FirstOrDefault(m => string.Equals(m.Code, code, System.StringComparison.OrdinalIgnoreCase));
     }
 
+    /// <summary>
+    /// Gets all the members using sorting by class identifier (ascending) and then by position (ascending).
+    /// </summary>
+    /// <returns>Found members.</returns>
     public IEnumerable<Member> All()
     {
       return this.dbSet.AsNoTracking().OrderBy(m => m.ClassId).ThenBy(m => m.Position);
     }
 
+    /// <summary>
+    /// Gets the members filtered by the class identifier using sorting by position (ascending).
+    /// </summary>
+    /// <param name="classId">The unique identifier of the class these members belongs to.</param>
+    /// <returns>Found members.</returns>
     public IEnumerable<Member> FilteredByClassId(int classId)
     {
       return this.dbSet.AsNoTracking().Where(m => m.ClassId == classId).OrderBy(m => m.Position);
     }
 
+    /// <summary>
+    /// Gets the members filtered by the class identifier (including members of the parent class) using sorting by position (ascending).
+    /// </summary>
+    /// <param name="classId">The unique identifier of the class these members belongs to.</param>
+    /// <returns>Found members.</returns>
     public IEnumerable<Member> FilteredByClassIdInlcudingParent(int classId)
     {
       return this.dbSet.AsNoTracking().FromSql(
@@ -53,11 +84,22 @@ namespace Platformus.Domain.Data.EntityFramework.Sqlite
       );
     }
 
+    /// <summary>
+    /// Gets the members (visible in list properties only) filtered by the class identifier using sorting by position (ascending).
+    /// </summary>
+    /// <param name="classId">The unique identifier of the class these members belongs to.</param>
+    /// <returns>Found members.</returns>
     public IEnumerable<Member> FilteredByClassIdPropertyVisibleInList(int classId)
     {
       return this.dbSet.AsNoTracking().Where(m => m.ClassId == classId && m.IsPropertyVisibleInList == true).OrderBy(m => m.Position);
     }
 
+    /// <summary>
+    /// Gets the members (visible in list properties only) filtered by the class identifier (including members of the parent class)
+    /// using sorting by position (ascending).
+    /// </summary>
+    /// <param name="classId">The unique identifier of the class these members belongs to.</param>
+    /// <returns>Found members.</returns>
     public IEnumerable<Member> FilteredByClassIdInlcudingParentPropertyVisibleInList(int classId)
     {
       return this.dbSet.AsNoTracking().FromSql(
@@ -66,31 +108,62 @@ namespace Platformus.Domain.Data.EntityFramework.Sqlite
       );
     }
 
+    /// <summary>
+    /// Gets the members (relation single parent only) filtered by the class identifier using sorting by position (ascending).
+    /// </summary>
+    /// <param name="classId">The unique identifier of the class these members belongs to.</param>
+    /// <returns>Found members.</returns>
     public IEnumerable<Member> FilteredByClassIdRelationSingleParent(int classId)
     {
       return this.dbSet.AsNoTracking().Where(m => m.ClassId == classId && m.IsRelationSingleParent == true).OrderBy(m => m.Position);
     }
 
+    /// <summary>
+    /// Gets all the members filtered by the class identifier using the given filtering, sorting, and paging.
+    /// </summary>
+    /// <param name="classId">The unique identifier of the class these members belongs to.</param>
+    /// <param name="orderBy">The member property name to sort by.</param>
+    /// <param name="direction">The sorting direction.</param>
+    /// <param name="skip">The number of members that should be skipped.</param>
+    /// <param name="take">The number of members that should be taken.</param>
+    /// <param name="filter">The filtering query.</param>
+    /// <returns>Found members filtered by the class identifier using the given filtering, sorting, and paging.</returns>
     public IEnumerable<Member> FilteredByClassIdRange(int classId, string orderBy, string direction, int skip, int take, string filter)
     {
       return this.GetFilteredMembers(dbSet.AsNoTracking(), classId, filter).OrderBy(orderBy, direction).Skip(skip).Take(take);
     }
 
+    /// <summary>
+    /// Creates the member.
+    /// </summary>
+    /// <param name="member">The member to create.</param>
     public void Create(Member member)
     {
       this.dbSet.Add(member);
     }
 
+    /// <summary>
+    /// Edits the member.
+    /// </summary>
+    /// <param name="member">The member to edit.</param>
     public void Edit(Member member)
     {
       this.storageContext.Entry(member).State = EntityState.Modified;
     }
 
+    /// <summary>
+    /// Deletes the member specified by the identifier.
+    /// </summary>
+    /// <param name="id">The unique identifier of the member to delete.</param>
     public void Delete(int id)
     {
       this.Delete(this.WithKey(id));
     }
 
+    /// <summary>
+    /// Deletes the member.
+    /// </summary>
+    /// <param name="member">The member to delete.</param>
     public void Delete(Member member)
     {
       this.storageContext.Database.ExecuteSqlCommand(
@@ -110,6 +183,12 @@ namespace Platformus.Domain.Data.EntityFramework.Sqlite
       this.dbSet.Remove(member);
     }
 
+    /// <summary>
+    /// Counts the number of the members filtered by the class identifier with the given filtering.
+    /// </summary>
+    /// <param name="classId">The unique identifier of the class these members belongs to.</param>
+    /// <param name="filter">The filtering query.</param>
+    /// <returns>The number of members found.</returns>
     public int CountByClassId(int classId, string filter)
     {
       return this.GetFilteredMembers(dbSet, classId, filter).Count();

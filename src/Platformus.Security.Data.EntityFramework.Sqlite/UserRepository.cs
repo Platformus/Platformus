@@ -17,31 +17,61 @@ namespace Platformus.Security.Data.EntityFramework.Sqlite
   /// </summary>
   public class UserRepository : RepositoryBase<User>, IUserRepository
   {
+    /// <summary>
+    /// Gets the user by the identifier.
+    /// </summary>
+    /// <param name="id">The unique identifier of the user.</param>
+    /// <returns>Found user with the given identifier.</returns>
     public User WithKey(int id)
     {
       return this.dbSet.AsNoTracking().FirstOrDefault(u => u.Id == id);
     }
 
+    /// <summary>
+    /// Gets all the users using the given filtering, sorting, and paging.
+    /// </summary>
+    /// <param name="orderBy">The user property name to sort by.</param>
+    /// <param name="direction">The sorting direction.</param>
+    /// <param name="skip">The number of users that should be skipped.</param>
+    /// <param name="take">The number of users that should be taken.</param>
+    /// <param name="filter">The filtering query.</param>
+    /// <returns>Found users using the given filtering, sorting, and paging.</returns>
     public IEnumerable<User> Range(string orderBy, string direction, int skip, int take, string filter)
     {
       return this.GetFilteredUsers(this.dbSet.AsNoTracking(), filter).OrderBy(orderBy, direction).Skip(skip).Take(take);
     }
 
+    /// <summary>
+    /// Creates the user.
+    /// </summary>
+    /// <param name="user">The user to create.</param>
     public void Create(User user)
     {
       this.dbSet.Add(user);
     }
 
+    /// <summary>
+    /// Edits the user.
+    /// </summary>
+    /// <param name="user">The user to edit.</param>
     public void Edit(User user)
     {
       this.storageContext.Entry(user).State = EntityState.Modified;
     }
 
+    /// <summary>
+    /// Deletes the user specified by the identifier.
+    /// </summary>
+    /// <param name="id">The unique identifier of the user to delete.</param>
     public void Delete(int id)
     {
       this.Delete(this.WithKey(id));
     }
 
+    /// <summary>
+    /// Deletes the user.
+    /// </summary>
+    /// <param name="user">The user to delete.</param>
     public void Delete(User user)
     {
       this.storageContext.Database.ExecuteSqlCommand(
@@ -55,6 +85,11 @@ namespace Platformus.Security.Data.EntityFramework.Sqlite
       this.dbSet.Remove(user);
     }
 
+    /// <summary>
+    /// Counts the number of the users with the given filtering.
+    /// </summary>
+    /// <param name="filter">The filtering query.</param>
+    /// <returns>The number of users found.</returns>
     public int Count(string filter)
     {
       return this.GetFilteredUsers(this.dbSet, filter).Count();

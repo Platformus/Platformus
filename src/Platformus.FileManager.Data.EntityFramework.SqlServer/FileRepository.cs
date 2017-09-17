@@ -17,41 +17,80 @@ namespace Platformus.FileManager.Data.EntityFramework.SqlServer
   /// </summary>
   public class FileRepository : RepositoryBase<File>, IFileRepository
   {
+    /// <summary>
+    /// Gets the file by the identifier.
+    /// </summary>
+    /// <param name="id">The unique identifier of the file.</param>
+    /// <returns>Found file with the given identifier.</returns>
     public File WithKey(int id)
     {
       return this.dbSet.AsNoTracking().FirstOrDefault(f => f.Id == id);
     }
 
+    /// <summary>
+    /// Gets all the files using sorting by name (ascending).
+    /// </summary>
+    /// <returns>Found files.</returns>
     public IEnumerable<File> All()
     {
       return this.dbSet.AsNoTracking().OrderBy(f => f.Name);
     }
 
+    /// <summary>
+    /// Gets all the files using the given filtering, sorting, and paging.
+    /// </summary>
+    /// <param name="orderBy">The file property name to sort by.</param>
+    /// <param name="direction">The sorting direction.</param>
+    /// <param name="skip">The number of files that should be skipped.</param>
+    /// <param name="take">The number of files that should be taken.</param>
+    /// <param name="filter">The filtering query.</param>
+    /// <returns>Found files using the given filtering, sorting, and paging.</returns>
     public IEnumerable<File> Range(string orderBy, string direction, int skip, int take, string filter)
     {
       return this.GetFilteredFiles(this.dbSet.AsNoTracking(), filter).OrderBy(orderBy, direction).Skip(skip).Take(take);
     }
 
+    /// <summary>
+    /// Creates the file.
+    /// </summary>
+    /// <param name="file">The file to create.</param>
     public void Create(File file)
     {
       this.dbSet.Add(file);
     }
 
+    /// <summary>
+    /// Edits the file.
+    /// </summary>
+    /// <param name="file">The file to edit.</param>
     public void Edit(File file)
     {
       this.storageContext.Entry(file).State = EntityState.Modified;
     }
 
+    /// <summary>
+    /// Deletes the file specified by the identifier.
+    /// </summary>
+    /// <param name="id">The unique identifier of the file to delete.</param>
     public void Delete(int id)
     {
       this.Delete(this.WithKey(id));
     }
 
+    /// <summary>
+    /// Deletes the file.
+    /// </summary>
+    /// <param name="file">The file to delete.</param>
     public void Delete(File file)
     {
       this.dbSet.Remove(file);
     }
 
+    /// <summary>
+    /// Counts the number of the files with the given filtering.
+    /// </summary>
+    /// <param name="filter">The filtering query.</param>
+    /// <returns>The number of files found.</returns>
     public int Count(string filter)
     {
       return this.GetFilteredFiles(this.dbSet, filter).Count();

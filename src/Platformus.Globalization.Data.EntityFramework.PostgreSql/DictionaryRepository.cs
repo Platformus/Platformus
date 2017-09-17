@@ -15,26 +15,47 @@ namespace Platformus.Globalization.Data.EntityFramework.PostgreSql
   /// </summary>
   public class DictionaryRepository : RepositoryBase<Dictionary>, IDictionaryRepository
   {
+    /// <summary>
+    /// Gets the dictionary by the identifier.
+    /// </summary>
+    /// <param name="id">The unique identifier of the dictionary.</param>
+    /// <returns>Found dictionary with the given identifier.</returns>
     public Dictionary WithKey(int id)
     {
       return this.dbSet.AsNoTracking().FirstOrDefault(d => d.Id == id);
     }
 
+    /// <summary>
+    /// Creates the dictionary.
+    /// </summary>
+    /// <param name="dictionary">The dictionary to create.</param>
     public void Create(Dictionary dictionary)
     {
       this.dbSet.Add(dictionary);
     }
 
+    /// <summary>
+    /// Edits the dictionary.
+    /// </summary>
+    /// <param name="dictionary">The dictionary to edit.</param>
     public void Edit(Dictionary dictionary)
     {
       this.storageContext.Entry(dictionary).State = EntityState.Modified;
     }
 
+    /// <summary>
+    /// Deletes the dictionary specified by the identifier.
+    /// </summary>
+    /// <param name="id">The unique identifier of the dictionary to delete.</param>
     public void Delete(int id)
     {
       this.Delete(this.WithKey(id));
     }
 
+    /// <summary>
+    /// Deletes the dictionary.
+    /// </summary>
+    /// <param name="dictionary">The dictionary to delete.</param>
     public void Delete(Dictionary dictionary)
     {
       this.dbSet.Remove(dictionary);

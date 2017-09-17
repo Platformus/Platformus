@@ -16,31 +16,58 @@ namespace Platformus.Security.Data.EntityFramework.Sqlite
   /// </summary>
   public class UserRoleRepository : RepositoryBase<UserRole>, IUserRoleRepository
   {
+    /// <summary>
+    /// Gets the user role by the user identifier and role identifier.
+    /// </summary>
+    /// <param name="userId">The unique identifier of the user this user role is related to.</param>
+    /// <param name="roleId">The unique identifier of the role this user role is related to.</param>
+    /// <returns>Found user role with the given user identifier and role identifier.</returns>
     public UserRole WithKey(int userId, int roleId)
     {
       return this.dbSet.AsNoTracking().FirstOrDefault(ur => ur.UserId == userId && ur.RoleId == roleId);
     }
 
+    /// <summary>
+    /// Gets the user role filtered by the user identifier.
+    /// </summary>
+    /// <param name="userId">The unique identifier of the user these user roles belongs to.</param>
     public IEnumerable<UserRole> FilteredByUserId(int userId)
     {
       return this.dbSet.AsNoTracking().Where(ur => ur.UserId == userId);
     }
 
+    /// <summary>
+    /// Creates the user role.
+    /// </summary>
+    /// <param name="userRole">The user role to create.</param>
     public void Create(UserRole userRole)
     {
       this.dbSet.Add(userRole);
     }
 
+    /// <summary>
+    /// Edits the user role.
+    /// </summary>
+    /// <param name="userRole">The user role to edit.</param>
     public void Edit(UserRole userRole)
     {
       this.storageContext.Entry(userRole).State = EntityState.Modified;
     }
 
+    /// <summary>
+    /// Deletes the user role specified by the user identifier and role identifier.
+    /// </summary>
+    /// <param name="userId">The unique identifier of the user this user role is related to.</param>
+    /// <param name="roleId">The unique identifier of the role this user role is related to.</param>
     public void Delete(int userId, int roleId)
     {
       this.Delete(this.WithKey(userId, roleId));
     }
 
+    /// <summary>
+    /// Deletes the user role.
+    /// </summary>
+    /// <param name="userRole">The user role to delete.</param>
     public void Delete(UserRole userRole)
     {
       this.dbSet.Remove(userRole);

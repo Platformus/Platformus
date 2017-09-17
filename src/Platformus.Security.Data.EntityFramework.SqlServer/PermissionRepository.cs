@@ -17,36 +17,70 @@ namespace Platformus.Security.Data.EntityFramework.SqlServer
   /// </summary>
   public class PermissionRepository : RepositoryBase<Permission>, IPermissionRepository
   {
+    /// <summary>
+    /// Gets the permission by the identifier.
+    /// </summary>
+    /// <param name="id">The unique identifier of the permission.</param>
+    /// <returns>Found permission with the given identifier.</returns>
     public Permission WithKey(int id)
     {
       return this.dbSet.AsNoTracking().FirstOrDefault(p => p.Id == id);
     }
 
+    /// <summary>
+    /// Gets all the permissions using sorting by position (ascending).
+    /// </summary>
+    /// <returns>Found permissions.</returns>
     public IEnumerable<Permission> All()
     {
       return this.dbSet.AsNoTracking().OrderBy(p => p.Position);
     }
 
+    /// <summary>
+    /// Gets all the permissions using the given filtering, sorting, and paging.
+    /// </summary>
+    /// <param name="orderBy">The permission property name to sort by.</param>
+    /// <param name="direction">The sorting direction.</param>
+    /// <param name="skip">The number of permissions that should be skipped.</param>
+    /// <param name="take">The number of permissions that should be taken.</param>
+    /// <param name="filter">The filtering query.</param>
+    /// <returns>Found permissions using the given filtering, sorting, and paging.</returns>
     public IEnumerable<Permission> Range(string orderBy, string direction, int skip, int take, string filter)
     {
       return this.GetFilteredPermissions(dbSet.AsNoTracking(), filter).OrderBy(orderBy, direction).Skip(skip).Take(take);
     }
 
+    /// <summary>
+    /// Creates the permission.
+    /// </summary>
+    /// <param name="permission">The permission to create.</param>
     public void Create(Permission permission)
     {
       this.dbSet.Add(permission);
     }
 
+    /// <summary>
+    /// Edits the permission.
+    /// </summary>
+    /// <param name="permission">The permission to edit.</param>
     public void Edit(Permission permission)
     {
       this.storageContext.Entry(permission).State = EntityState.Modified;
     }
 
+    /// <summary>
+    /// Deletes the permission specified by the identifier.
+    /// </summary>
+    /// <param name="id">The unique identifier of the permission to delete.</param>
     public void Delete(int id)
     {
       this.Delete(this.WithKey(id));
     }
 
+    /// <summary>
+    /// Deletes the permission.
+    /// </summary>
+    /// <param name="permission">The permission to delete.</param>
     public void Delete(Permission permission)
     {
       this.storageContext.Database.ExecuteSqlCommand(
@@ -59,6 +93,11 @@ namespace Platformus.Security.Data.EntityFramework.SqlServer
       this.dbSet.Remove(permission);
     }
 
+    /// <summary>
+    /// Counts the number of the permissions with the given filtering.
+    /// </summary>
+    /// <param name="filter">The filtering query.</param>
+    /// <returns>The number of permissions found.</returns>
     public int Count(string filter)
     {
       return this.GetFilteredPermissions(dbSet, filter).Count();

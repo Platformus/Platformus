@@ -19,21 +19,36 @@ namespace Platformus.Domain.Data.EntityFramework.SqlServer
   /// </summary>
   public class SerializedObjectRepository : RepositoryBase<SerializedObject>, ISerializedObjectRepository
   {
+    /// <summary>
+    /// Gets the serialized object by the culture identifier and object identifier.
+    /// </summary>
+    /// <param name="cultureId">The unique identifier of the culture this serialized object belongs to.</param>
+    /// <param name="objectId">The unique identifier of the object this serialized object belongs to.</param>
+    /// <returns>Found serialized object with the given culture identifier and object identifier.</returns>
     public SerializedObject WithKey(int cultureId, int objectId)
     {
       return this.dbSet.AsNoTracking().FirstOrDefault(so => so.CultureId == cultureId && so.ObjectId == objectId);
     }
 
+    /// <summary>
+    /// Gets the serialized object by the culture identifier and URL object property value (case insensitive).
+    /// </summary>
+    /// <param name="cultureId">The unique identifier of the culture this serialized object belongs to.</param>
+    /// <param name="urlPropertyStringValue">The URL object property value.</param>
+    /// <returns>Found serialized object with the given culture identifier and URL object property value.</returns>
     public SerializedObject WithCultureIdAndUrlPropertyStringValue(int cultureId, string urlPropertyStringValue)
     {
       return this.dbSet.AsNoTracking().FirstOrDefault(so => so.CultureId == cultureId && string.Equals(so.UrlPropertyStringValue, urlPropertyStringValue, System.StringComparison.OrdinalIgnoreCase));
     }
 
-    public IEnumerable<SerializedObject> FilteredByCultureIdAndClassId(int cultureId, int classId)
-    {
-      return this.dbSet.AsNoTracking().Where(so => so.CultureId == cultureId && so.ClassId == classId);
-    }
-
+    /// <summary>
+    /// Gets the serialized objects filtered by the culture identifier and class identifier
+    /// using the given filtering, sorting, and paging.
+    /// </summary>
+    /// <param name="cultureId">The unique identifier of the culture these serialized objects belongs to.</param>
+    /// <param name="classId">The unique identifier of the class these serialized objects belongs to.</param>
+    /// <param name="@params">The filtering, sorting, and paging parameters.</param>
+    /// <returns>Found serialized objects.</returns>
     public IEnumerable<SerializedObject> FilteredByCultureIdAndClassId(int cultureId, int classId, Params @params)
     {
       return this.dbSet.AsNoTracking().FromSql(
@@ -42,6 +57,15 @@ namespace Platformus.Domain.Data.EntityFramework.SqlServer
       );
     }
 
+    /// <summary>
+    /// Gets the serialized objects filtered by the culture identifier, class identifier, and object identifier
+    /// using the given filtering, sorting, and paging.
+    /// </summary>
+    /// <param name="cultureId">The unique identifier of the culture these serialized objects belongs to.</param>
+    /// <param name="classId">The unique identifier of the class these serialized objects belongs to.</param>
+    /// <param name="objectId">The unique identifier of the object these serialized objects belongs to.</param>
+    /// <param name="@params">The filtering, sorting, and paging parameters.</param>
+    /// <returns>Found serialized objects.</returns>
     public IEnumerable<SerializedObject> FilteredByCultureIdAndClassIdAndObjectId(int cultureId, int classId, int objectId, Params @params)
     {
       return this.dbSet.AsNoTracking().FromSql(
@@ -50,6 +74,13 @@ namespace Platformus.Domain.Data.EntityFramework.SqlServer
       );
     }
 
+    /// <summary>
+    /// Gets the primary serialized objects filtered by the culture identifier and object identifier
+    /// using sorting by identifier (ascending).
+    /// </summary>
+    /// <param name="cultureId">The unique identifier of the culture these serialized objects belongs to.</param>
+    /// <param name="objectId">The unique identifier of the object these serialized objects belongs to.</param>
+    /// <returns>Found primary serialized objects.</returns>
     public IEnumerable<SerializedObject> Primary(int cultureId, int objectId)
     {
       return this.dbSet.AsNoTracking().FromSql(
@@ -58,6 +89,14 @@ namespace Platformus.Domain.Data.EntityFramework.SqlServer
       );
     }
 
+    /// <summary>
+    /// Gets the primary serialized objects filtered by the culture identifier and object identifier
+    /// using the given filtering, sorting, and paging.
+    /// </summary>
+    /// <param name="cultureId">The unique identifier of the culture these serialized objects belongs to.</param>
+    /// <param name="objectId">The unique identifier of the object these serialized objects belongs to.</param>
+    /// <param name="@params">The filtering, sorting, and paging parameters.</param>
+    /// <returns>Found primary serialized objects.</returns>
     public IEnumerable<SerializedObject> Primary(int cultureId, int objectId, Params @params)
     {
       return this.dbSet.AsNoTracking().FromSql(
@@ -66,6 +105,14 @@ namespace Platformus.Domain.Data.EntityFramework.SqlServer
       );
     }
 
+    /// <summary>
+    /// Gets the primary serialized objects filtered by the culture identifier, member identifier, and object identifier
+    /// using sorting by identifier (ascending).
+    /// </summary>
+    /// <param name="cultureId">The unique identifier of the culture these serialized objects belongs to.</param>
+    /// <param name="memberId">The unique identifier of the member these serialized objects belongs to.</param>
+    /// <param name="objectId">The unique identifier of the object these serialized objects belongs to.</param>
+    /// <returns>Found primary serialized objects.</returns>
     public IEnumerable<SerializedObject> Primary(int cultureId, int memberId, int objectId)
     {
       return this.dbSet.AsNoTracking().FromSql(
@@ -74,6 +121,15 @@ namespace Platformus.Domain.Data.EntityFramework.SqlServer
       );
     }
 
+    /// <summary>
+    /// Gets the primary serialized objects filtered by the culture identifier, member identifier, and object identifier
+    /// using the given filtering, sorting, and paging.
+    /// </summary>
+    /// <param name="cultureId">The unique identifier of the culture these serialized objects belongs to.</param>
+    /// <param name="memberId">The unique identifier of the member these serialized objects belongs to.</param>
+    /// <param name="objectId">The unique identifier of the object these serialized objects belongs to.</param>
+    /// <param name="@params">The filtering, sorting, and paging parameters.</param>
+    /// <returns>Found primary serialized objects.</returns>
     public IEnumerable<SerializedObject> Primary(int cultureId, int memberId, int objectId, Params @params)
     {
       return this.dbSet.AsNoTracking().FromSql(
@@ -82,6 +138,13 @@ namespace Platformus.Domain.Data.EntityFramework.SqlServer
       );
     }
 
+    /// <summary>
+    /// Gets the foreign serialized objects filtered by the culture identifier and object identifier
+    /// using sorting by identifier (ascending).
+    /// </summary>
+    /// <param name="cultureId">The unique identifier of the culture these serialized objects belongs to.</param>
+    /// <param name="objectId">The unique identifier of the object these serialized objects belongs to.</param>
+    /// <returns>Found foreign serialized objects.</returns>
     public IEnumerable<SerializedObject> Foreign(int cultureId, int objectId)
     {
       return this.dbSet.AsNoTracking().FromSql(
@@ -90,6 +153,14 @@ namespace Platformus.Domain.Data.EntityFramework.SqlServer
       );
     }
 
+    /// <summary>
+    /// Gets the foreign serialized objects filtered by the culture identifier and object identifier
+    /// using the given filtering, sorting, and paging.
+    /// </summary>
+    /// <param name="cultureId">The unique identifier of the culture these serialized objects belongs to.</param>
+    /// <param name="objectId">The unique identifier of the object these serialized objects belongs to.</param>
+    /// <param name="@params">The filtering, sorting, and paging parameters.</param>
+    /// <returns>Found foreign serialized objects.</returns>
     public IEnumerable<SerializedObject> Foreign(int cultureId, int objectId, Params @params)
     {
       return this.dbSet.AsNoTracking().FromSql(
@@ -98,6 +169,14 @@ namespace Platformus.Domain.Data.EntityFramework.SqlServer
       );
     }
 
+    /// <summary>
+    /// Gets the foreign serialized objects filtered by the culture identifier, member identifier, and object identifier
+    /// using sorting by identifier (ascending).
+    /// </summary>
+    /// <param name="cultureId">The unique identifier of the culture these serialized objects belongs to.</param>
+    /// <param name="memberId">The unique identifier of the member these serialized objects belongs to.</param>
+    /// <param name="objectId">The unique identifier of the object these serialized objects belongs to.</param>
+    /// <returns>Found foreign serialized objects.</returns>
     public IEnumerable<SerializedObject> Foreign(int cultureId, int memberId, int objectId)
     {
       return this.dbSet.AsNoTracking().FromSql(
@@ -106,6 +185,15 @@ namespace Platformus.Domain.Data.EntityFramework.SqlServer
       );
     }
 
+    /// <summary>
+    /// Gets the foreign serialized objects filtered by the culture identifier, member identifier, and object identifier
+    /// using the given filtering, sorting, and paging.
+    /// </summary>
+    /// <param name="cultureId">The unique identifier of the culture these serialized objects belongs to.</param>
+    /// <param name="memberId">The unique identifier of the member these serialized objects belongs to.</param>
+    /// <param name="objectId">The unique identifier of the object these serialized objects belongs to.</param>
+    /// <param name="@params">The filtering, sorting, and paging parameters.</param>
+    /// <returns>Found foreign serialized objects.</returns>
     public IEnumerable<SerializedObject> Foreign(int cultureId, int memberId, int objectId, Params @params)
     {
       return this.dbSet.AsNoTracking().FromSql(
@@ -114,26 +202,50 @@ namespace Platformus.Domain.Data.EntityFramework.SqlServer
       );
     }
 
+    /// <summary>
+    /// Creates the serialized object.
+    /// </summary>
+    /// <param name="serializedObject">The serialized object to create.</param>
     public void Create(SerializedObject serializedObject)
     {
       this.dbSet.Add(serializedObject);
     }
 
+    /// <summary>
+    /// Edits the serialized object.
+    /// </summary>
+    /// <param name="serializedObject">The serialized object to edit.</param>
     public void Edit(SerializedObject serializedObject)
     {
       this.storageContext.Entry(serializedObject).State = EntityState.Modified;
     }
 
+    /// <summary>
+    /// Deletes the serialized object specified by the culture identifier and object identifier.
+    /// </summary>
+    /// <param name="cultureId">The unique identifier of the culture this serialized object belongs to.</param>
+    /// <param name="objectId">The unique identifier of the object this serialized object belongs to.</param>
     public void Delete(int cultureId, int objectId)
     {
       this.Delete(this.WithKey(cultureId, objectId));
     }
 
+    /// <summary>
+    /// Deletes the serialized object.
+    /// </summary>
+    /// <param name="serializedObject">The serialized object to delete.</param>
     public void Delete(SerializedObject serializedObject)
     {
       this.dbSet.Remove(serializedObject);
     }
 
+    /// <summary>
+    /// Counts the number of the serialized objects filtered by the culture identifier and class identifier with the given filtering.
+    /// </summary>
+    /// <param name="cultureId">The unique identifier of the culture these serialized objects belongs to.</param>
+    /// <param name="classId">The unique identifier of the class these serialized objects belongs to.</param>
+    /// <param name="filter">The filtering query.</param>
+    /// <returns>The number of serialized objects found.</returns>
     public int CountByCultureIdAndClassId(int cultureId, int classId, Params @params)
     {
       if (@params == null || @params.Filtering == null || string.IsNullOrEmpty(@params.Filtering.Query))
@@ -147,6 +259,15 @@ namespace Platformus.Domain.Data.EntityFramework.SqlServer
       );
     }
 
+    /// <summary>
+    /// Counts the number of the serialized objects filtered by the culture identifier, class identifier, and object identifier
+    /// with the given filtering.
+    /// </summary>
+    /// <param name="cultureId">The unique identifier of the culture these serialized objects belongs to.</param>
+    /// <param name="classId">The unique identifier of the class these serialized objects belongs to.</param>
+    /// <param name="objectId">The unique identifier of the object these serialized objects belongs to.</param>
+    /// <param name="filter">The filtering query.</param>
+    /// <returns>The number of serialized objects found.</returns>
     public int CountByCultureIdAndClassIdAndObjectId(int cultureId, int classId, int objectId, Params @params)
     {
       if (@params == null || @params.Filtering == null || string.IsNullOrEmpty(@params.Filtering.Query))

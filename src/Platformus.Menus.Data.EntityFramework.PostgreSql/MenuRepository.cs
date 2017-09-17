@@ -16,36 +16,66 @@ namespace Platformus.Menus.Data.EntityFramework.PostgreSql
   /// </summary>
   public class MenuRepository : RepositoryBase<Menu>, IMenuRepository
   {
+    /// <summary>
+    /// Gets the menu by the identifier.
+    /// </summary>
+    /// <param name="id">The unique identifier of the menu.</param>
+    /// <returns>Found menu with the given identifier.</returns>
     public Menu WithKey(int id)
     {
       return this.dbSet.AsNoTracking().FirstOrDefault(m => m.Id == id);
     }
 
+    /// <summary>
+    /// Gets the menu by the code (case insensitive).
+    /// </summary>
+    /// <param name="code">The unique code of the menu.</param>
+    /// <returns>Found menu with the given code.</returns>
     public Menu WithCode(string code)
     {
       return this.dbSet.AsNoTracking().FirstOrDefault(m => string.Equals(m.Code, code, System.StringComparison.OrdinalIgnoreCase));
     }
 
+    /// <summary>
+    /// Gets all the menus using sorting by code (ascending).
+    /// </summary>
+    /// <returns>Found menus.</returns>
     public IEnumerable<Menu> All()
     {
       return this.dbSet.AsNoTracking().OrderBy(m => m.Code);
     }
 
+    /// <summary>
+    /// Creates the menu.
+    /// </summary>
+    /// <param name="menu">The menu to create.</param>
     public void Create(Menu menu)
     {
       this.dbSet.Add(menu);
     }
 
+    /// <summary>
+    /// Edits the menu.
+    /// </summary>
+    /// <param name="menu">The menu to edit.</param>
     public void Edit(Menu menu)
     {
       this.storageContext.Entry(menu).State = EntityState.Modified;
     }
 
+    /// <summary>
+    /// Deletes the menu specified by the identifier.
+    /// </summary>
+    /// <param name="id">The unique identifier of the menu to delete.</param>
     public void Delete(int id)
     {
       this.Delete(this.WithKey(id));
     }
 
+    /// <summary>
+    /// Deletes the menu.
+    /// </summary>
+    /// <param name="menu">The menu to delete.</param>
     public void Delete(Menu menu)
     {
       this.storageContext.Database.ExecuteSqlCommand(

@@ -16,36 +16,68 @@ namespace Platformus.Domain.Data.EntityFramework.SqlServer
   /// </summary>
   public class PropertyRepository : RepositoryBase<Property>, IPropertyRepository
   {
+    /// <summary>
+    /// Gets the property by the identifier.
+    /// </summary>
+    /// <param name="id">The unique identifier of the property.</param>
+    /// <returns>Found propertyv with the given identifier.</returns>
     public Property WithKey(int id)
     {
       return this.dbSet.AsNoTracking().FirstOrDefault(p => p.Id == id);
     }
 
+    /// <summary>
+    /// Gets the property by the object identifier and member identifier.
+    /// </summary>
+    /// <param name="objectId">The unique identifier of the object this property belongs to.</param>
+    /// <param name="memberId">The unique identifier of the member this property is related to.</param>
+    /// <returns>Found properties with the given object identifier and member identifier.</returns>
     public Property WithObjectIdAndMemberId(int objectId, int memberId)
     {
       return this.dbSet.AsNoTracking().FirstOrDefault(p => p.ObjectId == objectId && p.MemberId == memberId);
     }
 
+    /// <summary>
+    /// Gets the properties filtered by the object identifier using sorting by identifier (ascending).
+    /// </summary>
+    /// <param name="objectId">The unique identifier of the object these properties belongs to.</param>
+    /// <returns>Found properties.</returns>
     public IEnumerable<Property> FilteredByObjectId(int objectId)
     {
       return this.dbSet.AsNoTracking().Where(p => p.ObjectId == objectId);
     }
 
+    /// <summary>
+    /// Creates the property.
+    /// </summary>
+    /// <param name="property">The property to create.</param>
     public void Create(Property property)
     {
       this.dbSet.Add(property);
     }
 
+    /// <summary>
+    /// Edits the property.
+    /// </summary>
+    /// <param name="property">The property to edit.</param>
     public void Edit(Property property)
     {
       this.storageContext.Entry(property).State = EntityState.Modified;
     }
 
+    /// <summary>
+    /// Deletes the property specified by the identifier.
+    /// </summary>
+    /// <param name="id">The unique identifier of the property to delete.</param>
     public void Delete(int id)
     {
       this.Delete(this.WithKey(id));
     }
 
+    /// <summary>
+    /// Deletes the property.
+    /// </summary>
+    /// <param name="property">The property to delete.</param>
     public void Delete(Property property)
     {
       this.storageContext.Database.ExecuteSqlCommand(

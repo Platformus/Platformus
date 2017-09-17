@@ -16,11 +16,20 @@ namespace Platformus.Forms.Data.EntityFramework.SqlServer
   /// </summary>
   public class FieldTypeRepository : RepositoryBase<FieldType>, IFieldTypeRepository
   {
+    /// <summary>
+    /// Gets the field type by the identifier.
+    /// </summary>
+    /// <param name="id">The unique identifier of the field type.</param>
+    /// <returns>Found field type with the given identifier.</returns>
     public FieldType WithKey(int id)
     {
       return this.dbSet.AsNoTracking().FirstOrDefault(ft => ft.Id == id);
     }
 
+    /// <summary>
+    /// Gets all the field types using sorting by position (ascending).
+    /// </summary>
+    /// <returns>Found field types.</returns>
     public IEnumerable<FieldType> All()
     {
       return this.dbSet.AsNoTracking().OrderBy(ft => ft.Position);

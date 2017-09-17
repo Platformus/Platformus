@@ -16,16 +16,30 @@ namespace Platformus.Security.Data.EntityFramework.SqlServer
   /// </summary>
   public class CredentialTypeRepository : RepositoryBase<CredentialType>, ICredentialTypeRepository
   {
+    /// <summary>
+    /// Gets the credential type by the identifier.
+    /// </summary>
+    /// <param name="id">The unique identifier of the credential type.</param>
+    /// <returns>Found credential type with the given identifier.</returns>
     public CredentialType WithKey(int id)
     {
       return this.dbSet.AsNoTracking().FirstOrDefault(ct => ct.Id == id);
     }
 
+    /// <summary>
+    /// Gets the credential type by the code (case insensitive).
+    /// </summary>
+    /// <param name="code">The unique code of the credential type.</param>
+    /// <returns>Found credential type with the given code.</returns>
     public CredentialType WithCode(string code)
     {
       return this.dbSet.AsNoTracking().FirstOrDefault(ct => string.Equals(ct.Code, code, System.StringComparison.OrdinalIgnoreCase));
     }
 
+    /// <summary>
+    /// Gets all the credential types using sorting by position (ascending).
+    /// </summary>
+    /// <returns>Found credential types.</returns>
     public IEnumerable<CredentialType> All()
     {
       return this.dbSet.AsNoTracking().OrderBy(ct => ct.Position);

@@ -17,56 +17,107 @@ namespace Platformus.Globalization.Data.EntityFramework.Sqlite
   /// </summary>
   public class CultureRepository : RepositoryBase<Culture>, ICultureRepository
   {
+    /// <summary>
+    /// Gets the culture by the identifier.
+    /// </summary>
+    /// <param name="id">The unique identifier of the culture.</param>
+    /// <returns>Found culture with the given identifier.</returns>
     public Culture WithKey(int id)
     {
       return this.dbSet.AsNoTracking().FirstOrDefault(c => c.Id == id);
     }
 
+    /// <summary>
+    /// Gets the culture by the code (case insensitive).
+    /// </summary>
+    /// <param name="code">The unique code of the culture.</param>
+    /// <returns>Found culture with the given code.</returns>
     public Culture WithCode(string code)
     {
       return this.dbSet.AsNoTracking().FirstOrDefault(c => string.Equals(c.Code, code, System.StringComparison.OrdinalIgnoreCase));
     }
 
+    /// <summary>
+    /// Gets the neutral culture.
+    /// </summary>
+    /// <returns>Found neutral culture.</returns>
     public Culture Neutral()
     {
       return this.dbSet.AsNoTracking().FirstOrDefault(c => c.IsNeutral);
     }
 
+    /// <summary>
+    /// Gets the default culture.
+    /// </summary>
+    /// <returns>Found default culture.</returns>
     public Culture Default()
     {
       return this.dbSet.AsNoTracking().FirstOrDefault(c => c.IsDefault);
     }
 
+    /// <summary>
+    /// Gets all the cultures using sorting by name (ascending).
+    /// </summary>
+    /// <returns>Found cultures.</returns>
     public IEnumerable<Culture> All()
     {
       return this.dbSet.AsNoTracking().OrderBy(c => c.Name);
     }
 
+    /// <summary>
+    /// Gets the not neutral cultures using sorting by name (ascending).
+    /// </summary>
+    /// <returns>Found not neutral cultures.</returns>
     public IEnumerable<Culture> NotNeutral()
     {
       return this.dbSet.AsNoTracking().Where(c => !c.IsNeutral).OrderBy(c => c.Name);
     }
 
+    /// <summary>
+    /// Gets all the cultures using the given filtering, sorting, and paging.
+    /// </summary>
+    /// <param name="orderBy">The culture property name to sort by.</param>
+    /// <param name="direction">The sorting direction.</param>
+    /// <param name="skip">The number of cultures that should be skipped.</param>
+    /// <param name="take">The number of cultures that should be taken.</param>
+    /// <param name="filter">The filtering query.</param>
+    /// <returns>Found cultures using the given filtering, sorting, and paging.</returns>
     public IEnumerable<Culture> Range(string orderBy, string direction, int skip, int take, string filter)
     {
       return this.GetFilteredCultures(dbSet.AsNoTracking(), filter).OrderBy(orderBy, direction).Skip(skip).Take(take);
     }
 
+    /// <summary>
+    /// Creates the culture.
+    /// </summary>
+    /// <param name="culture">The culture to create.</param>
     public void Create(Culture culture)
     {
       this.dbSet.Add(culture);
     }
 
+    /// <summary>
+    /// Edits the culture.
+    /// </summary>
+    /// <param name="culture">The culture to edit.</param>
     public void Edit(Culture culture)
     {
       this.storageContext.Entry(culture).State = EntityState.Modified;
     }
 
+    /// <summary>
+    /// Deletes the culture specified by the identifier.
+    /// </summary>
+    /// <param name="id">The unique identifier of the culture to delete.</param>
     public void Delete(int id)
     {
       this.Delete(this.WithKey(id));
     }
 
+    /// <summary>
+    /// Deletes the culture.
+    /// </summary>
+    /// <param name="culture">The culture to delete.</param>
     public void Delete(Culture culture)
     {
       this.storageContext.Database.ExecuteSqlCommand(
@@ -82,6 +133,11 @@ namespace Platformus.Globalization.Data.EntityFramework.Sqlite
       this.dbSet.Remove(culture);
     }
 
+    /// <summary>
+    /// Counts the number of the cultures with the given filtering.
+    /// </summary>
+    /// <param name="filter">The filtering query.</param>
+    /// <returns>The number of cultures found.</returns>
     public int Count(string filter)
     {
       return this.GetFilteredCultures(dbSet, filter).Count();

@@ -16,31 +16,57 @@ namespace Platformus.Forms.Data.EntityFramework.SqlServer
   /// </summary>
   public class FieldRepository : RepositoryBase<Field>, IFieldRepository
   {
+    /// <summary>
+    /// Gets the field by the identifier.
+    /// </summary>
+    /// <param name="id">The unique identifier of the field.</param>
+    /// <returns>Found field with the given identifier.</returns>
     public Field WithKey(int id)
     {
       return this.dbSet.AsNoTracking().FirstOrDefault(f => f.Id == id);
     }
 
+    /// <summary>
+    /// Gets the fields filtered by the form identifier using sorting by position (ascending).
+    /// </summary>
+    /// <param name="formId">The unique identifier of the form these fields belongs to.</param>
+    /// <returns>Found fields.</returns>
     public IEnumerable<Field> FilteredByFormId(int formId)
     {
       return this.dbSet.AsNoTracking().Where(f => f.FormId == formId).OrderBy(f => f.Position);
     }
 
+    /// <summary>
+    /// Creates the field.
+    /// </summary>
+    /// <param name="field">The field to create.</param>
     public void Create(Field field)
     {
       this.dbSet.Add(field);
     }
 
+    /// <summary>
+    /// Edits the field.
+    /// </summary>
+    /// <param name="field">The field to edit.</param>
     public void Edit(Field field)
     {
       this.storageContext.Entry(field).State = EntityState.Modified;
     }
 
+    /// <summary>
+    /// Deletes the field specified by the identifier.
+    /// </summary>
+    /// <param name="id">The unique identifier of the field to delete.</param>
     public void Delete(int id)
     {
       this.Delete(this.WithKey(id));
     }
 
+    /// <summary>
+    /// Deletes the field.
+    /// </summary>
+    /// <param name="field">The field to delete.</param>
     public void Delete(Field field)
     {
       this.storageContext.Database.ExecuteSqlCommand(
