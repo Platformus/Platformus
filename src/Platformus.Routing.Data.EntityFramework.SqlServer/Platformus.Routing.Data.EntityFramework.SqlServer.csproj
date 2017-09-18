@@ -13,7 +13,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="ExtCore.Data.EntityFramework.SqlServer" Version="3.0.0-alpha1" />
+    <PackageReference Include="ExtCore.Data.EntityFramework.SqlServer" Version="3.0.0-beta1" />
   </ItemGroup>
 
   <ItemGroup>
