@@ -1,6 +1,6 @@
 --
 -- Extension: Platformus.Configurations
--- Version: alpha-21
+-- Version: beta1
 --
 CREATE TABLE "Configurations" (
     "Id" serial NOT NULL,
@@ -29,7 +29,7 @@ ALTER TABLE "Variables" OWNER TO postgres;
 
 --
 -- Extension: Platformus.Security
--- Version: alpha-21
+-- Version: beta1
 --
 CREATE TABLE "Users" (
     "Id" serial NOT NULL,
@@ -123,7 +123,7 @@ ALTER TABLE "RolePermissions" OWNER TO postgres;
 
 --
 -- Extension: Platformus.FileManager
--- Version: alpha-21
+-- Version: beta1
 --
 CREATE TABLE "Files" (
     "Id" serial NOT NULL,
@@ -136,7 +136,7 @@ ALTER TABLE "Files" OWNER TO postgres;
 
 --
 -- Extension: Platformus.Globalization
--- Version: alpha-21
+-- Version: beta1
 --
 CREATE TABLE "Cultures" (
     "Id" serial NOT NULL,
@@ -177,7 +177,7 @@ ALTER TABLE "Localizations" OWNER TO postgres;
 
 --
 -- Extension: Platformus.Routing
--- Version: alpha-21
+-- Version: beta1
 --
 CREATE TABLE "Endpoints" (
     "Id" serial NOT NULL,
@@ -226,7 +226,7 @@ ALTER TABLE "DataSources" OWNER TO postgres;
 
 --
 -- Extension: Platformus.Domain
--- Version: alpha-21
+-- Version: beta1
 --
 CREATE TABLE "Classes" (
     "Id" serial NOT NULL,
@@ -274,7 +274,7 @@ CREATE TABLE "DataTypeParameters" (
     "DataTypeId" integer NOT NULL,
     "JavaScriptEditorClassName" text NOT NULL,
     "Code" text NOT NULL,
-    "Name" integer,
+    "Name" text,
     CONSTRAINT "PK_DataTypeParameters" PRIMARY KEY ("Id"),
     CONSTRAINT "FK_DataTypeParameters_DataTypes_DataTypeId" FOREIGN KEY ("DataTypeId")
         REFERENCES public."DataTypes" ("Id") MATCH SIMPLE
@@ -421,7 +421,7 @@ ALTER TABLE "SerializedObjects" OWNER TO postgres;
 
 --
 -- Extension: Platformus.Menus
--- Version: alpha-21
+-- Version: beta1
 --
 CREATE TABLE "Menus" (
     "Id" serial NOT NULL,
@@ -476,7 +476,7 @@ ALTER TABLE "SerializedMenus" OWNER TO postgres;
 
 --
 -- Extension: Platformus.Forms
--- Version: alpha-21
+-- Version: beta1
 --
 CREATE TABLE "Forms" (
     "Id" serial NOT NULL,

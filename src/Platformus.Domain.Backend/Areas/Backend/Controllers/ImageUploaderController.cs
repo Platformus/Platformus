@@ -40,7 +40,7 @@ namespace Platformus.Domain.Backend.Controllers
         filename = ContentDispositionHeaderValue.Parse(source.ContentDisposition).FileName.ToString().Trim('"');
         filename = this.EnsureCorrectFilename(filename);
 
-        using (FileStream output = System.IO.File.Create(this.GetPathAndFilename("\\images\\temp\\", filename)))
+        using (FileStream output = System.IO.File.Create(this.GetFilepath("\\images\\temp\\", filename)))
           await source.CopyToAsync(output);
       }
 
@@ -51,7 +51,7 @@ namespace Platformus.Domain.Backend.Controllers
     public ActionResult GetCroppedImageUrl(string sourceImageUrl, int sourceX, int sourceY, int sourceWidth, int sourceHeight, string destinationImageBaseUrl, int destinationWidth, int destinationHeight)
     {
       string filename = sourceImageUrl.Substring(sourceImageUrl.LastIndexOf("/") + 1);
-      Image sourceImage = this.LoadImageFromFile(this.GetPathAndFilename("\\images\\temp\\", filename));
+      Image sourceImage = this.LoadImageFromFile(this.GetFilepath("\\images\\temp\\", filename));
 
       if (sourceImage.Width == destinationWidth && sourceImage.Height == destinationHeight)
         return this.Content(sourceImageUrl);
@@ -67,16 +67,16 @@ namespace Platformus.Domain.Backend.Controllers
           GraphicsUnit.Pixel
         );
 
-        destinationImage.Save(this.GetPathAndFilename(destinationImageBaseUrl, filename));
+        destinationImage.Save(this.GetFilepath(destinationImageBaseUrl, filename));
         return this.Content(destinationImageBaseUrl + filename);
       }
     }
 
-    private Image LoadImageFromFile(string pathAndFilename)
+    private Image LoadImageFromFile(string filepath)
     {
       Image image = null;
 
-      using (Bitmap temp = new Bitmap(pathAndFilename))
+      using (Bitmap temp = new Bitmap(filepath))
         image = new Bitmap(temp);
 
       return image;
@@ -90,7 +90,7 @@ namespace Platformus.Domain.Backend.Controllers
       return filename;
     }
 
-    private string GetPathAndFilename(string basePath, string filename)
+    private string GetFilepath(string basePath, string filename)
     {
       return this.hostingEnvironment.WebRootPath + basePath.Replace('/', '\\') + filename;
     }

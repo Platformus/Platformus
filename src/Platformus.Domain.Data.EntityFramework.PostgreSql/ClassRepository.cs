@@ -70,7 +70,7 @@ namespace Platformus.Domain.Data.EntityFramework.PostgreSql
       if (classId == null)
         return this.dbSet.AsNoTracking().FromSql("SELECT * FROM \"Classes\" WHERE \"Id\" NOT IN (SELECT \"RelationClassId\" FROM \"Members\" WHERE \"IsRelationSingleParent\" IS NOT NULL) AND \"ClassId\" IS NULL AND \"IsAbstract\" = {0} ORDER BY \"Name\"", false);
 
-      return this.dbSet.AsNoTracking().FromSql("SELECT * FROM \"Classes\" WHERE \"Id\" NOT IN (SELECT \"RelationClassId\" FROM \"Members\" WHERE \"IsRelationSingleParent\" IS NOT NULL) AND \"ClassId\" = {0} AND \"IsAbstract\" = {0} ORDER BY \"Name\"", classId, false);
+      return this.dbSet.AsNoTracking().FromSql("SELECT * FROM \"Classes\" WHERE \"Id\" NOT IN (SELECT \"RelationClassId\" FROM \"Members\" WHERE \"IsRelationSingleParent\" IS NOT NULL) AND \"ClassId\" = {0} AND \"IsAbstract\" = {1} ORDER BY \"Name\"", classId, false);
     }
 
     /// <summary>

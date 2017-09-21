@@ -44,7 +44,7 @@ namespace Platformus.FileManager.Backend.Controllers
 
         filename = this.EnsureCorrectFilename(filename);
 
-        using (FileStream output = System.IO.File.Create(this.GetPathAndFilename(filename)))
+        using (FileStream output = System.IO.File.Create(this.GetFilepath(filename)))
           await source.CopyToAsync(output);
 
         Platformus.FileManager.Data.Entities.File file = new Platformus.FileManager.Data.Entities.File();
@@ -65,7 +65,7 @@ namespace Platformus.FileManager.Backend.Controllers
 
       try
       {
-        System.IO.File.Delete(this.GetPathAndFilename(file.Name));
+        System.IO.File.Delete(this.GetFilepath(file.Name));
       }
 
       catch { }
@@ -89,7 +89,7 @@ namespace Platformus.FileManager.Backend.Controllers
       return filename;
     }
 
-    private string GetPathAndFilename(string filename)
+    private string GetFilepath(string filename)
     {
       return this.HostingEnvironment.WebRootPath + "\\files\\" + filename;
     }

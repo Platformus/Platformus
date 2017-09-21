@@ -105,7 +105,7 @@ namespace Platformus.Domain.Backend.ViewModels.Objects
       foreach (Class abstractClass in this.RequestHandler.Storage.GetRepository<IClassRepository>().Abstract().ToList())
         classesByAbstractClasses.Add(
           new ClassViewModelFactory(this.RequestHandler).Create(abstractClass),
-          this.RequestHandler.Storage.GetRepository<IClassRepository>().FilteredByClassId(abstractClass.Id).Select(
+          this.RequestHandler.Storage.GetRepository<IClassRepository>().FilteredByClassId(abstractClass.Id).ToList().Select(
             c => new ClassViewModelFactory(this.RequestHandler).Create(c)
           )
         );

@@ -19,14 +19,14 @@ namespace Platformus.Menus.Frontend.ViewComponents
     {
     }
 
-    public async Task<IViewComponentResult> InvokeAsync(string code)
+    public async Task<IViewComponentResult> InvokeAsync(string code, string additionalCssClass)
     {
       return this.GetService<ICache>().GetMenuViewComponentResultWithDefaultValue(
-        code, () => this.GetViewComponentResult(code)
+        code, () => this.GetViewComponentResult(code, additionalCssClass)
       );
     }
 
-    private IViewComponentResult GetViewComponentResult(string code)
+    private IViewComponentResult GetViewComponentResult(string code, string additionalCssClass)
     {
       SerializedMenu serializedMenu = this.Storage.GetRepository<ISerializedMenuRepository>().WithCultureIdAndCode(
         this.GetService<ICultureManager>().GetCurrentCulture().Id, code
@@ -35,7 +35,7 @@ namespace Platformus.Menus.Frontend.ViewComponents
       if (serializedMenu == null)
         return this.Content($"There is no menu with code “{code}” defined.");
 
-      return this.View(new MenuViewModelFactory(this).Create(serializedMenu));
+      return this.View(new MenuViewModelFactory(this).Create(serializedMenu, additionalCssClass));
     }
   }
 }

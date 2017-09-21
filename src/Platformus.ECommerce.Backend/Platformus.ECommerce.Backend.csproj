@@ -12,11 +12,6 @@
     <PackageProjectUrl>http://platformus.net/</PackageProjectUrl>
   </PropertyGroup>
 
- <ItemGroup>
-    <PackageReference Include="ExtCore.Data.Abstractions" Version="3.0.0-beta1" />
-    <PackageReference Include="ExtCore.Infrastructure" Version="3.0.0-beta1" />
-  </ItemGroup>
-
   <ItemGroup>
     <ProjectReference Include="..\Platformus.Barebone.Backend\Platformus.Barebone.Backend.csproj" />
     <ProjectReference Include="..\Platformus.ECommerce\Platformus.ECommerce.csproj" />

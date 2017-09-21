@@ -1,7 +1,7 @@
 BEGIN TRANSACTION;
 --
 -- Extension: Platformus.Configurations
--- Version: alpha-21
+-- Version: beta1
 --
 CREATE TABLE "Configurations" (
 	"Id" INTEGER NOT NULL CONSTRAINT "PK_Configuration" PRIMARY KEY AUTOINCREMENT,
@@ -20,7 +20,7 @@ CREATE TABLE "Variables" (
 
 --
 -- Extension: Platformus.Security
--- Version: alpha-21
+-- Version: beta1
 --
 CREATE TABLE "Users" (
 	"Id" INTEGER NOT NULL CONSTRAINT "PK_User" PRIMARY KEY AUTOINCREMENT,
@@ -71,7 +71,7 @@ CREATE TABLE "RolePermissions" (
 
 --
 -- Extension: Platformus.FileManager
--- Version: alpha-21
+-- Version: beta1
 --
 CREATE TABLE "Files" (
 	"Id" INTEGER NOT NULL CONSTRAINT "PK_File" PRIMARY KEY AUTOINCREMENT,
@@ -81,7 +81,7 @@ CREATE TABLE "Files" (
 
 --
 -- Extension: Platformus.Globalization
--- Version: alpha-21
+-- Version: beta1
 --
 CREATE TABLE "Cultures" (
 	"Id" INTEGER NOT NULL CONSTRAINT "PK_Culture" PRIMARY KEY AUTOINCREMENT,
@@ -105,7 +105,7 @@ CREATE TABLE "Localizations" (
 
 --
 -- Extension: Platformus.Routing
--- Version: alpha-21
+-- Version: beta1
 --
 CREATE TABLE "Endpoints" (
 	"Id" INTEGER NOT NULL CONSTRAINT "PK_Endpoint" PRIMARY KEY AUTOINCREMENT,
@@ -135,7 +135,7 @@ CREATE TABLE "DataSources" (
 
 --
 -- Extension: Platformus.Domain
--- Version: alpha-21
+-- Version: beta1
 --
 CREATE TABLE "Classes" (
 	"Id" INTEGER NOT NULL CONSTRAINT "PK_Class" PRIMARY KEY AUTOINCREMENT,
@@ -235,7 +235,7 @@ CREATE TABLE "SerializedObjects" (
 
 --
 -- Extension: Platformus.Menus
--- Version: alpha-21
+-- Version: beta1
 --
 CREATE TABLE "Menus" (
 	"Id" INTEGER NOT NULL CONSTRAINT "PK_Menu" PRIMARY KEY AUTOINCREMENT,
@@ -266,7 +266,7 @@ CREATE TABLE "SerializedMenus" (
 
 --
 -- Extension: Platformus.Forms
--- Version: alpha-21
+-- Version: beta1
 --
 CREATE TABLE "Forms" (
 	"Id" INTEGER NOT NULL CONSTRAINT "PK_Form" PRIMARY KEY AUTOINCREMENT,

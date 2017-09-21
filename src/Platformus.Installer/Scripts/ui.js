@@ -29,4 +29,23 @@
       }
     );
   };
+
+  platformus.ui.testConnection = function () {
+    $.post(
+      "/installation/testconnection",
+      {
+        storageTypeCode: $("input[name='storageType']:checked").val(),
+        connectionString: $("#connectionString").val()
+      },
+      function (result) {
+        if (result.successfulConnection) {
+          alert("Successful connection!");
+        }
+
+        else {
+          alert("An error occurred while trying to connect!");
+        }
+      }
+    );
+  };
 })(window.platformus = window.platformus || {});

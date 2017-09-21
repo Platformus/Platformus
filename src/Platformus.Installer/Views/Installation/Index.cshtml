@@ -84,8 +84,8 @@
             <label class="field__label label" for="connectionString">Connection string</label>
             <input class="field__text-box text-box" id="connectionString" name="connectionString" type="text" /> 
           </div>
-          <div class="form__description">
-            Please, specify corresponding connection string depending on the selected storage type.
+          <div class="form__buttons form__buttons--minor buttons">
+            <button class="buttons__button buttons__button--minor button button--minor button--neutral" type="button" onclick="platformus.ui.testConnection();">Test connection</button>
           </div>
           <div class="form__buttons buttons">
             <button class="buttons__button button button--neutral" type="button" onclick="platformus.ui.showWizardPage('storageTypeWizardPage');">Previous</button>
@@ -108,7 +108,7 @@
             <label class="field__label label" for="password">Password</label>
             <input class="field__text-box text-box" id="password" name="password" type="text" value="admin" disabled="disabled" />
           </div>
-          <div class="form__description">
+          <div class="form__field field">
             You will be able to change the administrator account (or to add more ones) later.
           </div>
           <div class="form__buttons buttons">
@@ -145,6 +145,9 @@
           Step 6 of 6
         </div>
         <h1>Finish</h1>
+        <div class="form__field field">
+          Now we are ready to complete the installation.
+        </div>
         <div class="form">
           <div class="form__buttons buttons">
             <button class="buttons__button button button--neutral" type="button" onclick="platformus.ui.showWizardPage('languagePacksWizardPage');">Previous</button>

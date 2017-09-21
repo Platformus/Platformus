@@ -1,10 +1,11 @@
 BEGIN TRANSACTION;
 --
 -- Extension: Platformus.Configurations
--- Version: alpha-21
+-- Version: beta1
 --
 INSERT INTO public."Configurations" ("Id","Code","Name") VALUES (1,'Email','Email');
 INSERT INTO public."Configurations" ("Id","Code","Name") VALUES (2,'Globalization','Globalization');
+ALTER SEQUENCE "Configurations_Id_seq" RESTART WITH 3;
 INSERT INTO public."Variables" ("Id","ConfigurationId","Code","Name","Value","Position") VALUES (1,1,'SmtpServer','SMTP server','test',1);
 INSERT INTO public."Variables" ("Id","ConfigurationId","Code","Name","Value","Position") VALUES (2,1,'SmtpPort','SMTP port','25',2);
 INSERT INTO public."Variables" ("Id","ConfigurationId","Code","Name","Value","Position") VALUES (3,1,'SmtpLogi','SMTP logi','test',3);
@@ -12,17 +13,22 @@ INSERT INTO public."Variables" ("Id","ConfigurationId","Code","Name","Value","Po
 INSERT INTO public."Variables" ("Id","ConfigurationId","Code","Name","Value","Position") VALUES (5,1,'SmtpSenderEmail','SMTP sender email','test',5);
 INSERT INTO public."Variables" ("Id","ConfigurationId","Code","Name","Value","Position") VALUES (6,1,'SmtpSenderName','SMTP sender name','test',6);
 INSERT INTO public."Variables" ("Id","ConfigurationId","Code","Name","Value","Position") VALUES (7,2,'SpecifyCultureInUrl','Specify culture in URL','yes',1);
+ALTER SEQUENCE "Variables_Id_seq" RESTART WITH 8;
 
 --
 -- Extension: Platformus.Security
--- Version: alpha-21
+-- Version: beta1
 --
 INSERT INTO public."Users" ("Id","Name","Created") VALUES (1,'Administrator','2017-01-01 00:00:00.000000');
+ALTER SEQUENCE "Users_Id_seq" RESTART WITH 2;
 INSERT INTO public."CredentialTypes" ("Id","Code","Name","Position") VALUES (1,'Email','Email',1);
+ALTER SEQUENCE "CredentialTypes_Id_seq" RESTART WITH 2;
 INSERT INTO public."Credentials" ("Id","CredentialTypeId","Identifier","Secret","UserId") VALUES (1,1,'admin@platformus.net','21-23-2F-29-7A-57-A5-A7-43-89-4A-0E-4A-80-1F-C3',1);
+ALTER SEQUENCE "Credentials_Id_seq" RESTART WITH 2;
 INSERT INTO public."Roles" ("Id","Code","Name","Position") VALUES (1,'Administrator','Administrator',100);
 INSERT INTO public."Roles" ("Id","Code","Name","Position") VALUES (2,'ApplicationOwner','Application owner',200);
 INSERT INTO public."Roles" ("Id","Code","Name","Position") VALUES (3,'ContentManager','Content manager',300);
+ALTER SEQUENCE "Roles_Id_seq" RESTART WITH 4;
 INSERT INTO public."UserRoles" ("UserId","RoleId") VALUES (1,1);
 INSERT INTO public."UserRoles" ("UserId","RoleId") VALUES (1,2);
 INSERT INTO public."Permissions" ("Id","Code","Name","Position") VALUES (1,'BrowseBackend','Browse backend',1);
@@ -43,6 +49,7 @@ INSERT INTO public."Permissions" ("Id","Code","Name","Position") VALUES (15,'Bro
 INSERT INTO public."Permissions" ("Id","Code","Name","Position") VALUES (16,'BrowseStyles','Browse styles',910);
 INSERT INTO public."Permissions" ("Id","Code","Name","Position") VALUES (17,'BrowseScripts','Browse scripts',920);
 INSERT INTO public."Permissions" ("Id","Code","Name","Position") VALUES (18,'BrowseBundles','Browse bundles',930);
+ALTER SEQUENCE "Permissions_Id_seq" RESTART WITH 19;
 INSERT INTO public."RolePermissions" ("RoleId","PermissionId") VALUES (1,1);
 INSERT INTO public."RolePermissions" ("RoleId","PermissionId") VALUES (2,2);
 INSERT INTO public."RolePermissions" ("RoleId","PermissionId") VALUES (3,7);
@@ -52,31 +59,22 @@ INSERT INTO public."RolePermissions" ("RoleId","PermissionId") VALUES (3,14);
 
 --
 -- Extension: Platformus.Globalization
--- Version: alpha-21
+-- Version: beta1
 --
 INSERT INTO public."Cultures" ("Id","Code","Name","IsNeutral","IsDefault","IsBackendUi") VALUES (1,'__','Neutral',TRUE,FALSE,FALSE);
 INSERT INTO public."Cultures" ("Id","Code","Name","IsNeutral","IsDefault","IsBackendUi") VALUES (2,'en','English',FALSE,TRUE,TRUE);
+ALTER SEQUENCE "Cultures_Id_seq" RESTART WITH 3;
 
 --
 -- Extension: Platformus.Domain
--- Version: alpha-21
+-- Version: beta1
 --
 INSERT INTO public."DataTypes" ("Id","StorageDataType","JavaScriptEditorClassName","Name","Position") VALUES (1,'string','singleLinePlainText','Single line plain text',1);
 INSERT INTO public."DataTypes" ("Id","StorageDataType","JavaScriptEditorClassName","Name","Position") VALUES (2,'string','multilinePlainText','Multiline plain text',2);
 INSERT INTO public."DataTypes" ("Id","StorageDataType","JavaScriptEditorClassName","Name","Position") VALUES (3,'string','html','Html',3);
 INSERT INTO public."DataTypes" ("Id","StorageDataType","JavaScriptEditorClassName","Name","Position") VALUES (4,'string','image','Image',4);
 INSERT INTO public."DataTypes" ("Id","StorageDataType","JavaScriptEditorClassName","Name","Position") VALUES (5,'datetime','date','Date',5);
-
---
--- Extension: Platformus.Forms
--- Version: alpha-21
---
-INSERT INTO public."FieldTypes" ("Id","Code","Name","Position") VALUES (1,'TextBox','Text box',1);
-INSERT INTO public."FieldTypes" ("Id","Code","Name","Position") VALUES (2,'TextArea','Text area',2);
-INSERT INTO public."FieldTypes" ("Id","Code","Name","Position") VALUES (3,'Checkbox','Checkbox',3);
-INSERT INTO public."FieldTypes" ("Id","Code","Name","Position") VALUES (4,'RadioButtonList','Radio button list',4);
-INSERT INTO public."FieldTypes" ("Id","Code","Name","Position") VALUES (5,'DropDownList','Drop down list',5);
-INSERT INTO public."FieldTypes" ("Id","Code","Name","Position") VALUES (6,'FileUpload','File upload',6);
+ALTER SEQUENCE "DataTypes_Id_seq" RESTART WITH 6;
 INSERT INTO public."DataTypeParameters" ("Id","DataTypeId","JavaScriptEditorClassName","Code","Name") VALUES (1,1,'checkbox','IsRequired','Is required');
 INSERT INTO public."DataTypeParameters" ("Id","DataTypeId","JavaScriptEditorClassName","Code","Name") VALUES (2,1,'numericTextBox','MaxLength','Max length');
 INSERT INTO public."DataTypeParameters" ("Id","DataTypeId","JavaScriptEditorClassName","Code","Name") VALUES (3,2,'checkbox','IsRequired','Is required');
@@ -84,5 +82,18 @@ INSERT INTO public."DataTypeParameters" ("Id","DataTypeId","JavaScriptEditorClas
 INSERT INTO public."DataTypeParameters" ("Id","DataTypeId","JavaScriptEditorClassName","Code","Name") VALUES (5,4,'numericTextBox','Width','Width');
 INSERT INTO public."DataTypeParameters" ("Id","DataTypeId","JavaScriptEditorClassName","Code","Name") VALUES (6,4,'numericTextBox','Height','Height');
 INSERT INTO public."DataTypeParameters" ("Id","DataTypeId","JavaScriptEditorClassName","Code","Name") VALUES (7,5,'checkbox','IsRequired','Is required');
+ALTER SEQUENCE "DataTypeParameters_Id_seq" RESTART WITH 8;
+
+--
+-- Extension: Platformus.Forms
+-- Version: beta1
+--
+INSERT INTO public."FieldTypes" ("Id","Code","Name","Position") VALUES (1,'TextBox','Text box',1);
+INSERT INTO public."FieldTypes" ("Id","Code","Name","Position") VALUES (2,'TextArea','Text area',2);
+INSERT INTO public."FieldTypes" ("Id","Code","Name","Position") VALUES (3,'Checkbox','Checkbox',3);
+INSERT INTO public."FieldTypes" ("Id","Code","Name","Position") VALUES (4,'RadioButtonList','Radio button list',4);
+INSERT INTO public."FieldTypes" ("Id","Code","Name","Position") VALUES (5,'DropDownList','Drop down list',5);
+INSERT INTO public."FieldTypes" ("Id","Code","Name","Position") VALUES (6,'FileUpload','File upload',6);
+ALTER SEQUENCE "FieldTypes_Id_seq" RESTART WITH 7;
 
 COMMIT;

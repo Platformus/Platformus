@@ -17,6 +17,7 @@
     <PackageReference Include="ExtCore.Data.EntityFramework" Version="3.0.0-beta1" />
     <PackageReference Include="ExtCore.Mvc" Version="3.0.0-beta1" />
     <PackageReference Include="ExtCore.WebApplication" Version="3.0.0-beta1" />
+    <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="2.0.0" />
   </ItemGroup>
 
   <ItemGroup>

@@ -19,7 +19,7 @@ namespace Platformus.Forms.Frontend.ViewComponents
     {
     }
 
-    public async Task<IViewComponentResult> InvokeAsync(string code)
+    public async Task<IViewComponentResult> InvokeAsync(string code, string additionalCssClass)
     {
       SerializedForm serializedForm = this.Storage.GetRepository<ISerializedFormRepository>().WithCultureIdAndCode(
         this.GetService<ICultureManager>().GetCurrentCulture().Id, code
@@ -29,11 +29,11 @@ namespace Platformus.Forms.Frontend.ViewComponents
         return this.Content($"There is no form with code “{code}” defined.");
 
       return this.GetService<ICache>().GetFormViewComponentResultWithDefaultValue(
-        code, () => this.GetViewComponentResult(code)
+        code, () => this.GetViewComponentResult(code, additionalCssClass)
       );
     }
 
-    private IViewComponentResult GetViewComponentResult(string code)
+    private IViewComponentResult GetViewComponentResult(string code, string additionalCssClass)
     {
       SerializedForm serializedForm = this.Storage.GetRepository<ISerializedFormRepository>().WithCultureIdAndCode(
         this.GetService<ICultureManager>().GetCurrentCulture().Id, code
@@ -42,7 +42,7 @@ namespace Platformus.Forms.Frontend.ViewComponents
       if (serializedForm == null)
         return this.Content($"There is no form with code “{code}” defined.");
 
-      return this.View(new FormViewModelFactory(this).Create(serializedForm));
+      return this.View(new FormViewModelFactory(this).Create(serializedForm, additionalCssClass));
     }
   }
 }

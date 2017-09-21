@@ -40,12 +40,12 @@ namespace Platformus.ExtensionManager.Backend.Controllers
 
         filename = this.EnsureCorrectFilename(filename);
 
-        string pathAndFilename = this.GetPathAndFilename(filename);
+        string filepath = this.GetFilepath(filename);
 
-        using (FileStream output = System.IO.File.Create(pathAndFilename))
+        using (FileStream output = System.IO.File.Create(filepath))
           await source.CopyToAsync(output);
 
-        new ExtensionManager(this).UnzipExtensionArchive(pathAndFilename);
+        new ExtensionManager(this).UnzipExtensionArchive(filepath);
       }
 
       return this.RedirectToAction("Index");
@@ -69,7 +69,7 @@ namespace Platformus.ExtensionManager.Backend.Controllers
       return filename;
     }
 
-    private string GetPathAndFilename(string filename)
+    private string GetFilepath(string filename)
     {
       return this.hostingEnvironment.WebRootPath + "\\temp\\" + filename;
     }

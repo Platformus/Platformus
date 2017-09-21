@@ -13,8 +13,14 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="CoreCompat.System.Drawing" Version="1.0.0-beta006" />
     <PackageReference Include="ExtCore.Data.Abstractions" Version="3.0.0-beta1" />
     <PackageReference Include="ExtCore.Events" Version="3.0.0-beta1" />
+    <PackageReference Include="ExtCore.Infrastructure" Version="3.0.0-beta1" />
+    <PackageReference Include="MailKit" Version="1.8.1" />
+    <PackageReference Include="NUglify" Version="1.5.4" />
+    <PackageReference Include="runtime.linux-x64.CoreCompat.System.Drawing" Version="1.0.0-beta009" />
+    <PackageReference Include="runtime.osx.10.10-x64.CoreCompat.System.Drawing" Version="1.0.1-beta004" />
   </ItemGroup>
 
   <ItemGroup>

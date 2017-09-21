@@ -1,7 +1,7 @@
 ﻿{
   "usageScenarios": [
     {
-      "code": "empty",
+      "code": "Empty",
       "name": "Empty",
       "packages": [
         {
@@ -282,7 +282,292 @@
         }
       ],
       "content": [
-        "Empty.db.zip"
+        "Empty.WebApplication.zip"
+      ]
+    },
+    {
+      "code": "PersonalWebsite",
+      "name": "Personal website",
+      "packages": [
+        {
+          "name": "ExtCore.Data.EntityFramework.PostgreSql.dll",
+          "condition": "StorageType=PostgreSql"
+        },
+        {
+          "name": "ExtCore.Data.EntityFramework.Sqlite.dll",
+          "condition": "StorageType=Sqlite"
+        },
+        {
+          "name": "ExtCore.Data.EntityFramework.SqlServer.dll",
+          "condition": "StorageType=SqlServer"
+        },
+        {
+          "name": "Platformus.Configurations.Backend.dll",
+          "condition": null
+        },
+        {
+          "name": "Platformus.Configurations.Data.Abstractions.dll",
+          "condition": null
+        },
+        {
+          "name": "Platformus.Configurations.Data.Entities.dll",
+          "condition": null
+        },
+        {
+          "name": "Platformus.Configurations.Data.EntityFramework.PostgreSql.dll",
+          "condition": "StorageType=PostgreSql"
+        },
+        {
+          "name": "Platformus.Configurations.Data.EntityFramework.Sqlite.dll",
+          "condition": "StorageType=Sqlite"
+        },
+        {
+          "name": "Platformus.Configurations.Data.EntityFramework.SqlServer.dll",
+          "condition": "StorageType=SqlServer"
+        },
+        {
+          "name": "Platformus.Configurations.dll",
+          "condition": null
+        },
+        {
+          "name": "Platformus.Designers.Backend.dll",
+          "condition": null
+        },
+        {
+          "name": "Platformus.Designers.dll",
+          "condition": null
+        },
+        {
+          "name": "Platformus.Domain.Api.dll",
+          "condition": null
+        },
+        {
+          "name": "Platformus.Domain.Backend.dll",
+          "condition": null
+        },
+        {
+          "name": "Platformus.Domain.Data.Abstractions.dll",
+          "condition": null
+        },
+        {
+          "name": "Platformus.Domain.Data.Entities.dll",
+          "condition": null
+        },
+        {
+          "name": "Platformus.Domain.Data.EntityFramework.PostgreSql.dll",
+          "condition": "StorageType=PostgreSql"
+        },
+        {
+          "name": "Platformus.Domain.Data.EntityFramework.Sqlite.dll",
+          "condition": "StorageType=Sqlite"
+        },
+        {
+          "name": "Platformus.Domain.Data.EntityFramework.SqlServer.dll",
+          "condition": "StorageType=SqlServer"
+        },
+        {
+          "name": "Platformus.Domain.dll",
+          "condition": null
+        },
+        {
+          "name": "Platformus.Domain.Frontend.dll",
+          "condition": null
+        },
+        {
+          "name": "Platformus.ExtensionManager.Backend.dll",
+          "condition": null
+        },
+        {
+          "name": "Platformus.ExtensionManager.dll",
+          "condition": null
+        },
+        {
+          "name": "Platformus.FileManager.Backend.dll",
+          "condition": null
+        },
+        {
+          "name": "Platformus.FileManager.Data.Abstractions.dll",
+          "condition": null
+        },
+        {
+          "name": "Platformus.FileManager.Data.Entities.dll",
+          "condition": null
+        },
+        {
+          "name": "Platformus.FileManager.Data.EntityFramework.PostgreSql.dll",
+          "condition": "StorageType=PostgreSql"
+        },
+        {
+          "name": "Platformus.FileManager.Data.EntityFramework.Sqlite.dll",
+          "condition": "StorageType=Sqlite"
+        },
+        {
+          "name": "Platformus.FileManager.Data.EntityFramework.SqlServer.dll",
+          "condition": "StorageType=SqlServer"
+        },
+        {
+          "name": "Platformus.FileManager.dll",
+          "condition": null
+        },
+        {
+          "name": "Platformus.Forms.Backend.dll",
+          "condition": null
+        },
+        {
+          "name": "Platformus.Forms.Data.Abstractions.dll",
+          "condition": null
+        },
+        {
+          "name": "Platformus.Forms.Data.Entities.dll",
+          "condition": null
+        },
+        {
+          "name": "Platformus.Forms.Data.EntityFramework.PostgreSql.dll",
+          "condition": "StorageType=PostgreSql"
+        },
+        {
+          "name": "Platformus.Forms.Data.EntityFramework.Sqlite.dll",
+          "condition": "StorageType=Sqlite"
+        },
+        {
+          "name": "Platformus.Forms.Data.EntityFramework.SqlServer.dll",
+          "condition": "StorageType=SqlServer"
+        },
+        {
+          "name": "Platformus.Forms.dll",
+          "condition": null
+        },
+        {
+          "name": "Platformus.Forms.Frontend.dll",
+          "condition": null
+        },
+        {
+          "name": "Platformus.Globalization.Backend.dll",
+          "condition": null
+        },
+        {
+          "name": "Platformus.Globalization.Data.Abstractions.dll",
+          "condition": null
+        },
+        {
+          "name": "Platformus.Globalization.Data.Entities.dll",
+          "condition": null
+        },
+        {
+          "name": "Platformus.Globalization.Data.EntityFramework.PostgreSql.dll",
+          "condition": "StorageType=PostgreSql"
+        },
+        {
+          "name": "Platformus.Globalization.Data.EntityFramework.Sqlite.dll",
+          "condition": "StorageType=Sqlite"
+        },
+        {
+          "name": "Platformus.Globalization.Data.EntityFramework.SqlServer.dll",
+          "condition": "StorageType=SqlServer"
+        },
+        {
+          "name": "Platformus.Globalization.dll",
+          "condition": null
+        },
+        {
+          "name": "Platformus.Globalization.Frontend.dll",
+          "condition": null
+        },
+        {
+          "name": "Platformus.Menus.Backend.dll",
+          "condition": null
+        },
+        {
+          "name": "Platformus.Menus.Data.Abstractions.dll",
+          "condition": null
+        },
+        {
+          "name": "Platformus.Menus.Data.Entities.dll",
+          "condition": null
+        },
+        {
+          "name": "Platformus.Menus.Data.EntityFramework.PostgreSql.dll",
+          "condition": "StorageType=PostgreSql"
+        },
+        {
+          "name": "Platformus.Menus.Data.EntityFramework.Sqlite.dll",
+          "condition": "StorageType=Sqlite"
+        },
+        {
+          "name": "Platformus.Menus.Data.EntityFramework.SqlServer.dll",
+          "condition": "StorageType=SqlServer"
+        },
+        {
+          "name": "Platformus.Menus.dll",
+          "condition": null
+        },
+        {
+          "name": "Platformus.Menus.Frontend.dll",
+          "condition": null
+        },
+        {
+          "name": "Platformus.Routing.Backend.dll",
+          "condition": null
+        },
+        {
+          "name": "Platformus.Routing.Data.Abstractions.dll",
+          "condition": null
+        },
+        {
+          "name": "Platformus.Routing.Data.Entities.dll",
+          "condition": null
+        },
+        {
+          "name": "Platformus.Routing.Data.EntityFramework.PostgreSql.dll",
+          "condition": "StorageType=PostgreSql"
+        },
+        {
+          "name": "Platformus.Routing.Data.EntityFramework.Sqlite.dll",
+          "condition": "StorageType=Sqlite"
+        },
+        {
+          "name": "Platformus.Routing.Data.EntityFramework.SqlServer.dll",
+          "condition": "StorageType=SqlServer"
+        },
+        {
+          "name": "Platformus.Routing.dll",
+          "condition": null
+        },
+        {
+          "name": "Platformus.Routing.Frontend.dll",
+          "condition": null
+        },
+        {
+          "name": "Platformus.Security.Backend.dll",
+          "condition": null
+        },
+        {
+          "name": "Platformus.Security.Data.Abstractions.dll",
+          "condition": null
+        },
+        {
+          "name": "Platformus.Security.Data.Entities.dll",
+          "condition": null
+        },
+        {
+          "name": "Platformus.Security.Data.EntityFramework.PostgreSql.dll",
+          "condition": "StorageType=PostgreSql"
+        },
+        {
+          "name": "Platformus.Security.Data.EntityFramework.Sqlite.dll",
+          "condition": "StorageType=Sqlite"
+        },
+        {
+          "name": "Platformus.Security.Data.EntityFramework.SqlServer.dll",
+          "condition": "StorageType=SqlServer"
+        },
+        {
+          "name": "Platformus.Security.dll",
+          "condition": null
+        }
+      ],
+      "content": [
+        "PersonalWebsite.WebApplication.zip"
       ]
     }
   ],

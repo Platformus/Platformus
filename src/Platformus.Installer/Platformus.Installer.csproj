@@ -19,6 +19,7 @@
   <ItemGroup>
     <PackageReference Include="ExtCore.Mvc" Version="3.0.0-beta1" />
     <PackageReference Include="Microsoft.AspNetCore.All" Version="2.0.0" />
+    <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="2.0.0" />
   </ItemGroup>
 
   <Target Name="PrecompileScript" BeforeTargets="BeforeBuild">
@@ -27,11 +28,6 @@
 
   <ItemGroup>
     <DotNetCliToolReference Include="BundlerMinifier.Core" Version="2.2.301" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Sources\Content\Empty\" />
-    <Folder Include="Sources\LanguagePacks\" />
   </ItemGroup>
 
 </Project>

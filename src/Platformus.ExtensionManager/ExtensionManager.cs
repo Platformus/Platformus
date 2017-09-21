@@ -44,12 +44,12 @@ namespace Platformus.ExtensionManager
       this.requestHandler = requestHandler;
     }
 
-    public string[] UnzipExtensionArchive(string pathAndFilename)
+    public string[] UnzipExtensionArchive(string filepath)
     {
       try
       {
-        ZipFile.ExtractToDirectory(pathAndFilename, this.ExtensionsPath);
-        System.IO.File.Delete(pathAndFilename);
+        ZipFile.ExtractToDirectory(filepath, this.ExtensionsPath);
+        System.IO.File.Delete(filepath);
       }
 
       catch { }
@@ -57,9 +57,9 @@ namespace Platformus.ExtensionManager
       return null;
     }
 
-    public Extension ReadExtension(string pathAndFilename)
+    public Extension ReadExtension(string filepath)
     {
-      return JsonConvert.DeserializeObject<Extension>(System.IO.File.ReadAllText(pathAndFilename));
+      return JsonConvert.DeserializeObject<Extension>(System.IO.File.ReadAllText(filepath));
     }
   }
 }

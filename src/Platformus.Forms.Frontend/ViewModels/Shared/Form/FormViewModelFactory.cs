@@ -17,7 +17,7 @@ namespace Platformus.Forms.Frontend.ViewModels.Shared
     {
     }
 
-    public FormViewModel Create(SerializedForm serializedForm)
+    public FormViewModel Create(SerializedForm serializedForm, string additionalCssClass)
     {
       IEnumerable<SerializedField> serializedFields = new SerializedField[] { };
 
@@ -30,7 +30,8 @@ namespace Platformus.Forms.Frontend.ViewModels.Shared
         Name = serializedForm.Name,
         Fields = serializedFields.Select(
           sf => new FieldViewModelFactory(this.RequestHandler).Create(sf)
-        ).ToList()
+        ).ToList(),
+        AdditionalCssClass = additionalCssClass
       };
     }
   }

@@ -13,10 +13,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="MailKit" Version="1.8.1" />
-  </ItemGroup>
-
-  <ItemGroup>
     <ProjectReference Include="..\Platformus.Barebone\Platformus.Barebone.csproj" />
     <ProjectReference Include="..\Platformus.Forms.Data.Abstractions\Platformus.Forms.Data.Abstractions.csproj" />
     <ProjectReference Include="..\Platformus.Globalization\Platformus.Globalization.csproj" />

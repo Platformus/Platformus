@@ -17,11 +17,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="ExtCore.Data.Abstractions" Version="3.0.0-beta1" />
-    <PackageReference Include="ExtCore.Infrastructure" Version="3.0.0-beta1" />
-  </ItemGroup>
-
-  <ItemGroup>
     <ProjectReference Include="..\Platformus.Barebone.Frontend\Platformus.Barebone.Frontend.csproj" />
     <ProjectReference Include="..\Platformus.Configurations\Platformus.Configurations.csproj" />
     <ProjectReference Include="..\Platformus.Forms\Platformus.Forms.csproj" />

@@ -186,17 +186,17 @@ namespace Platformus.Domain.Backend.Controllers
 
     private string MoveImageToValidObjectPath(int objectId, string imageUrl)
     {
-      string sourceImagePathAndFilename = this.hostingEnvironment.WebRootPath + imageUrl.Replace("/", "\\");
-      string imageFilename = Path.GetFileName(sourceImagePathAndFilename);
-      string destinationImagePathAndFilename = this.hostingEnvironment.WebRootPath + "\\images\\objects\\" + objectId + "\\" + imageFilename;
+      string sourceImageFilepath = this.hostingEnvironment.WebRootPath + imageUrl.Replace("/", "\\");
+      string imageFilename = Path.GetFileName(sourceImageFilepath);
+      string destinationImageFilepath = this.hostingEnvironment.WebRootPath + "\\images\\objects\\" + objectId + "\\" + imageFilename;
 
-      if (sourceImagePathAndFilename == destinationImagePathAndFilename)
+      if (sourceImageFilepath == destinationImageFilepath)
         return imageUrl;
 
       try
       {
-        Directory.CreateDirectory(Path.GetDirectoryName(destinationImagePathAndFilename));
-        System.IO.File.Move(sourceImagePathAndFilename, destinationImagePathAndFilename);
+        Directory.CreateDirectory(Path.GetDirectoryName(destinationImageFilepath));
+        System.IO.File.Move(sourceImageFilepath, destinationImageFilepath);
       }
 
       catch { }

@@ -9,5 +9,6 @@ namespace Platformus.Menus.Frontend.ViewModels.Shared
   public class MenuViewModel : ViewModelBase
   {
     public IEnumerable<MenuItemViewModel> MenuItems { get; set; }
+    public string AdditionalCssClass { get; set; }
   }
 }
