@@ -58,7 +58,7 @@ namespace Platformus.Installer.Controllers
         string tempPath = this.hostingEnvironment.ContentRootPath + "\\temp.zip";
 
         ResourceManager.WriteResourceToFile(
-          "Platformus.Installer.Sources.Content." + contentEntry,
+          "Platformus.Installer.Sources.UsageScenarios." + usageScenario.Code + "." + contentEntry,
           tempPath
         );
 
