@@ -4,6 +4,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using ExtCore.Infrastructure;
 using Platformus.Infrastructure;
 
@@ -16,38 +17,47 @@ namespace Platformus.Barebone.Backend.ViewModels.Shared
     {
     }
 
-    public BackendMenuViewModel Create()
+    public async Task<BackendMenuViewModel> CreateAsync()
     {
-      List<BackendMenuGroupViewModel> backendMenuGroupViewModels = new List<BackendMenuGroupViewModel>();
+        var menuViewModelsResultTask = Task.Run(() => GetBackendMenuViewModel());
 
-      foreach (IBackendMetadata backendMetadata in ExtensionManager.GetInstances<IBackendMetadata>())
-      {
-        IEnumerable<BackendMenuGroup> backendMenuItems = backendMetadata.GetBackendMenuGroups(
-          this.RequestHandler.HttpContext.RequestServices
-        );
-
-        foreach (BackendMenuGroup backendMenuGroup in backendMenuItems)
-        {
-          List<BackendMenuItemViewModel> backendMenuItemViewModels = new List<BackendMenuItemViewModel>();
-
-          foreach (BackendMenuItem backendMenuItem in backendMenuGroup.BackendMenuItems)
-            if (this.RequestHandler.HttpContext.User.Claims.Any(c => backendMenuItem.PermissionCodes.Any(pc => string.Equals(c.Value, pc, StringComparison.OrdinalIgnoreCase)) || string.Equals(c.Value, "DoEverything", StringComparison.OrdinalIgnoreCase)))
-              backendMenuItemViewModels.Add(new BackendMenuItemViewModelFactory(this.RequestHandler).Create(backendMenuItem));
-
-          BackendMenuGroupViewModel backendMenuGroupViewModel = this.GetBackendMenuGroup(backendMenuGroupViewModels, backendMenuGroup);
-
-          if (backendMenuGroupViewModel.BackendMenuItems != null)
-            backendMenuItemViewModels.AddRange(backendMenuGroupViewModel.BackendMenuItems);
-
-          backendMenuGroupViewModel.BackendMenuItems = backendMenuItemViewModels.OrderBy(bmi => bmi.Position);
+        BackendMenuViewModel menu = await menuViewModelsResultTask;
+        return menu;
         }
-      }
 
-      return new BackendMenuViewModel()
+
+      private BackendMenuViewModel GetBackendMenuViewModel()
       {
-        BackendMenuGroups = backendMenuGroupViewModels.Where(bmg => bmg.BackendMenuItems.Count() != 0).OrderBy(bmg => bmg.Position)
-      };
-    }
+          List<BackendMenuGroupViewModel> backendMenuGroupViewModels = new List<BackendMenuGroupViewModel>();
+
+          foreach (IBackendMetadata backendMetadata in ExtensionManager.GetInstances<IBackendMetadata>())
+          {
+              IEnumerable<BackendMenuGroup> backendMenuItems = backendMetadata.GetBackendMenuGroups(
+                  this.RequestHandler.HttpContext.RequestServices
+              );
+
+              foreach (BackendMenuGroup backendMenuGroup in backendMenuItems)
+              {
+                  List<BackendMenuItemViewModel> backendMenuItemViewModels = new List<BackendMenuItemViewModel>();
+
+                  foreach (BackendMenuItem backendMenuItem in backendMenuGroup.BackendMenuItems)
+                      if (this.RequestHandler.HttpContext.User.Claims.Any(c => backendMenuItem.PermissionCodes.Any(pc => string.Equals(c.Value, pc, StringComparison.OrdinalIgnoreCase)) || string.Equals(c.Value, "DoEverything", StringComparison.OrdinalIgnoreCase)))
+                          backendMenuItemViewModels.Add(new BackendMenuItemViewModelFactory(this.RequestHandler).Create(backendMenuItem));
+
+                  BackendMenuGroupViewModel backendMenuGroupViewModel = this.GetBackendMenuGroup(backendMenuGroupViewModels, backendMenuGroup);
+
+                  if (backendMenuGroupViewModel.BackendMenuItems != null)
+                      backendMenuItemViewModels.AddRange(backendMenuGroupViewModel.BackendMenuItems);
+
+                  backendMenuGroupViewModel.BackendMenuItems = backendMenuItemViewModels.OrderBy(bmi => bmi.Position);
+              }
+          }
+
+          return new BackendMenuViewModel()
+          {
+              BackendMenuGroups = backendMenuGroupViewModels.Where(bmg => bmg.BackendMenuItems.Count() != 0).OrderBy(bmg => bmg.Position)
+          };
+        }
 
     private BackendMenuGroupViewModel GetBackendMenuGroup(List<BackendMenuGroupViewModel> backendMenuGroupViewModels, Platformus.Infrastructure.BackendMenuGroup backendMenuGroup)
     {
