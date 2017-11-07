@@ -64,8 +64,18 @@ INSERT INTO "Cultures" VALUES (2,'en','English',0,1,1);
 INSERT INTO "DataTypes" VALUES (1,'string','singleLinePlainText','Single line plain text',1);
 INSERT INTO "DataTypes" VALUES (2,'string','multilinePlainText','Multiline plain text',2);
 INSERT INTO "DataTypes" VALUES (3,'string','html','Html',3);
-INSERT INTO "DataTypes" VALUES (4,'string','image','Image',4);
-INSERT INTO "DataTypes" VALUES (5,'datetime','date','Date',5);
+INSERT INTO "DataTypes" VALUES (4,'integer','integerNumber','Integer number',4);
+INSERT INTO "DataTypes" VALUES (5,'decimal','decimalNumber','Decimal number',5);
+INSERT INTO "DataTypes" VALUES (6,'integer','booleanFlag','Boolean flag',6);
+INSERT INTO "DataTypes" VALUES (7,'string','image','Image',7);
+INSERT INTO "DataTypes" VALUES (8,'datetime','date','Date',8);
+INSERT INTO "DataTypeParameters" VALUES (1,1,'checkbox','IsRequired','Is required');
+INSERT INTO "DataTypeParameters" VALUES (2,1,'numericTextBox','MaxLength','Max length');
+INSERT INTO "DataTypeParameters" VALUES (3,2,'checkbox','IsRequired','Is required');
+INSERT INTO "DataTypeParameters" VALUES (4,2,'numericTextBox','MaxLength','Max length');
+INSERT INTO "DataTypeParameters" VALUES (5,7,'numericTextBox','Width','Width');
+INSERT INTO "DataTypeParameters" VALUES (6,7,'numericTextBox','Height','Height');
+INSERT INTO "DataTypeParameters" VALUES (7,8,'checkbox','IsRequired','Is required');
 
 --
 -- Extension: Platformus.Forms
@@ -77,12 +87,5 @@ INSERT INTO "FieldTypes" VALUES (3,'Checkbox','Checkbox',3);
 INSERT INTO "FieldTypes" VALUES (4,'RadioButtonList','Radio button list',4);
 INSERT INTO "FieldTypes" VALUES (5,'DropDownList','Drop down list',5);
 INSERT INTO "FieldTypes" VALUES (6,'FileUpload','File upload',6);
-INSERT INTO "DataTypeParameters" VALUES (1,1,'checkbox','IsRequired','Is required');
-INSERT INTO "DataTypeParameters" VALUES (2,1,'numericTextBox','MaxLength','Max length');
-INSERT INTO "DataTypeParameters" VALUES (3,2,'checkbox','IsRequired','Is required');
-INSERT INTO "DataTypeParameters" VALUES (4,2,'numericTextBox','MaxLength','Max length');
-INSERT INTO "DataTypeParameters" VALUES (5,4,'numericTextBox','Width','Width');
-INSERT INTO "DataTypeParameters" VALUES (6,4,'numericTextBox','Height','Height');
-INSERT INTO "DataTypeParameters" VALUES (7,5,'checkbox','IsRequired','Is required');
 
 COMMIT;

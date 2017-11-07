@@ -5,7 +5,7 @@
 <tr class="table__row">
   @foreach (var property in this.Model.Properties)
   {
-    <td class="table__cell">@property</td>
+    <td class="table__cell">@Html.Raw(property)</td>
   }
   @foreach (var relatedClass in this.Model.RelatedClasses)
   {

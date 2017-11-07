@@ -2,6 +2,7 @@
 // Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information.
 
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using Platformus.Barebone;
 using Platformus.Domain.Data.Abstractions;
@@ -65,7 +66,19 @@ namespace Platformus.Domain
             DataType dataType = this.requestHandler.Storage.GetRepository<IDataTypeRepository>().WithKey((int)member.PropertyDataTypeId);
 
             if (dataType.StorageDataType == StorageDataType.Integer)
-              properties.Add(property.IntegerValue == null ? string.Empty : property.IntegerValue.ToString());
+            {
+              if (dataType.JavaScriptEditorClassName == "booleanFlag")
+              {
+                bool value = property.IntegerValue == null || property.IntegerValue == 0 ? false : true;
+                string displayValue = value ?
+                  true.ToString(CultureInfo.CurrentUICulture).ToLower() : false.ToString(CultureInfo.CurrentUICulture).ToLower();
+                string modifierCssClass = value ? "marker--positive" : "marker--negative";
+
+                properties.Add($"<span class=\"marker {modifierCssClass}\">{displayValue}</span>");
+              }
+
+              else properties.Add(property.IntegerValue == null ? string.Empty : property.IntegerValue.ToString());
+            }
 
             else if (dataType.StorageDataType == StorageDataType.Decimal)
               properties.Add(property.DecimalValue == null ? string.Empty : property.DecimalValue.ToString());
@@ -83,7 +96,13 @@ namespace Platformus.Domain
               if (localization == null)
                 properties.Add(string.Empty);
 
-              else properties.Add(localization.Value);
+              else
+              {
+                if (dataType.JavaScriptEditorClassName == "image")
+                  properties.Add($"<img class=\"table__image\" src=\"{localization.Value}\" />");
+
+                else properties.Add(localization.Value);
+              }
             }
 
             else if (dataType.StorageDataType == StorageDataType.DateTime)

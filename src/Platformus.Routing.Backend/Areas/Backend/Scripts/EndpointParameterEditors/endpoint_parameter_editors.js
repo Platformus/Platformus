@@ -16,9 +16,15 @@
       var group = $("<h2>").addClass("form__title").html(endpoint.endpointParameterGroups[i].name).appendTo(endpointParameterEditors);
 
       for (var j = 0; j < endpoint.endpointParameterGroups[i].endpointParameters.length; j++) {
-        var f = platformus.endpointParameterEditors[endpoint.endpointParameterGroups[i].endpointParameters[j].javaScriptEditorClassName]["create"];
+        var endpointParameterEditor = platformus.endpointParameterEditors[endpoint.endpointParameterGroups[i].endpointParameters[j].javaScriptEditorClassName];
 
-        f.call(this, endpointParameterEditors, endpoint.endpointParameterGroups[i].endpointParameters[j]);
+        if (endpointParameterEditor != null) {
+          var f = endpointParameterEditor["create"];
+
+          if (f != null) {
+            f.call(this, endpointParameterEditors, endpoint.endpointParameterGroups[i].endpointParameters[j]);
+          }
+        }
       }
     }
 

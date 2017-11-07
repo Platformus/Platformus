@@ -16,14 +16,31 @@
     $.fn.val = function (value) {
       if (arguments.length == 0) {
         if (this.hasClass("checkbox")) {
-          return this.find("input").val() == true.toString();
+          var value = this.find("input").val();
+
+          if (this.data("useIntegerNumber")) {
+            return value == "1";
+          }
+
+          return value == "true";
         }
 
         return $val.call(this);
       }
 
       if (this.hasClass("checkbox")) {
-        var result = this.find("input").val(value);
+        var result = null;
+        var input = this.find("input");
+
+        value = value == true || value == "true" || value == 1 || value == "1";
+
+        if (this.data("useIntegerNumber")) {
+          input.val(value ? 1 : 0);
+        }
+
+        else {
+          input.val(value ? true : false);
+        }
 
         this.trigger("change");
         return result;
@@ -39,7 +56,17 @@
 
   function checkboxClickHandler() {
     $(this).find(".checkbox__indicator").toggleClass("checkbox__indicator--checked");
-    $(this).val((!$(this).val()).toString());
+
+    var value = $(this).val();
+
+    if ($(this).data("useIntegerNumber")) {
+      $(this).val(value ? "0" : "1");
+    }
+
+    else {
+      $(this).val(value ? "false" : "true");
+    }
+
     return false;
   }
 })(window.platformus = window.platformus || {});

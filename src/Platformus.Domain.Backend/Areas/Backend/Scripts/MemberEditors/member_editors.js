@@ -22,9 +22,15 @@
         }
 
         else if (member.propertyDataType != null) {
-          var f = platformus.memberEditors[member.propertyDataType.javaScriptEditorClassName]["create"];
+          var memberEditor = platformus.memberEditors[member.propertyDataType.javaScriptEditorClassName];
 
-          f.call(this, tabPage, member);
+          if (memberEditor != null) {
+            var f = memberEditor["create"];
+
+            if (f != null) {
+              f.call(this, tabPage, member);
+            }
+          }
         }
       }
     }

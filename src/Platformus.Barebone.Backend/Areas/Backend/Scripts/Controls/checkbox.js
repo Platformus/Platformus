@@ -10,6 +10,10 @@
       .attr("id", descriptor.identity)
       .attr("href", "#");
 
+    if (descriptor.useIntegerNumber) {
+      checkbox.attr("data-use-integer-number", true);
+    }
+
     createIndicator(descriptor).appendTo(checkbox);
     createLabel(descriptor).appendTo(checkbox);
     createInput(descriptor).appendTo(checkbox);
@@ -19,7 +23,7 @@
   function createIndicator(descriptor) {
     var indicator = $("<div>").addClass("checkbox__indicator");
 
-    if (descriptor.value == "true")
+    if (getValue(descriptor))
       indicator.addClass("checkbox__indicator--checked");
 
     return indicator;
@@ -33,6 +37,21 @@
     return $("<input>")
       .attr("name", descriptor.identity)
       .attr("type", "hidden")
-      .attr("value", platformus.string.isNullOrEmpty(descriptor.value) ? "false" : descriptor.value);
+      .attr("value", formatValue(descriptor));
+  }
+
+  function formatValue(descriptor) {
+    var value = getValue(descriptor);
+
+    if (descriptor.useIntegerNumber) {
+      return value ? 1 : 0;
+    }
+
+    return value ? true : false;
+  }
+
+  function getValue(descriptor) {
+    return platformus.string.isNullOrEmpty(descriptor.value) ?
+      false : descriptor.value == true || descriptor.value == "true" || descriptor.value == 1 || descriptor.value == "1";
   }
 })(window.platformus = window.platformus || {});

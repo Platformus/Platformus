@@ -15,9 +15,15 @@
     }
 
     for (var i = 0; i < dataType.dataTypeParameters.length; i++) {
-      var f = platformus.dataTypeParameterEditors[dataType.dataTypeParameters[i].javaScriptEditorClassName]["create"];
+      var dataTypeParameterEditor = platformus.dataTypeParameterEditors[dataType.dataTypeParameters[i].javaScriptEditorClassName];
 
-      f.call(this, dataTypeParameterEditors, dataType.dataTypeParameters[i]);
+      if (dataTypeParameterEditor != null) {
+        var f = dataTypeParameterEditor["create"];
+
+        if (f != null) {
+          f.call(this, dataTypeParameterEditors, dataType.dataTypeParameters[i]);
+        }
+      }
     }
   };
 
