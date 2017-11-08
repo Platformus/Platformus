@@ -38,6 +38,9 @@ namespace Platformus.Routing.Backend.Controllers
     [ExportModelStateToTempData]
     public IActionResult CreateOrEdit(CreateOrEditViewModel createOrEdit)
     {
+      if (createOrEdit.Id == null && !this.IsCodeUnique(createOrEdit.EndpointId, createOrEdit.Code))
+        this.ModelState.AddModelError("code", string.Empty);
+
       if (this.ModelState.IsValid)
       {
         DataSource dataSource = new CreateOrEditViewModelMapper(this).Map(createOrEdit);
@@ -73,6 +76,11 @@ namespace Platformus.Routing.Backend.Controllers
       this.Storage.Save();
       Event<IDataSourceDeletedEventHandler, IRequestHandler, DataSource>.Broadcast(this, dataSource);
       return this.Redirect(string.Format("/backend/datasources?endpointid={0}", dataSource.EndpointId));
+    }
+
+    private bool IsCodeUnique(int endpointId, string code)
+    {
+      return this.Storage.GetRepository<IDataSourceRepository>().WithEndpointIdAndCode(endpointId, code) == null;
     }
   }
 }

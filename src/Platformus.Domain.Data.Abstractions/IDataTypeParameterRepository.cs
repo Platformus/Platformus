@@ -20,6 +20,14 @@ namespace Platformus.Domain.Data.Abstractions
     DataTypeParameter WithKey(int id);
 
     /// <summary>
+    /// Gets the data type parameter by the data type identifier and code (case insensitive).
+    /// </summary>
+    /// <param name="dataTypeId">The unique identifier of the data type this data type parameter belongs to.</param>
+    /// <param name="code">The unique code of the data type parameter.</param>
+    /// <returns>Found data type parameter with the given data type identifier and code.</returns>
+    DataTypeParameter WithDataTypeIdAndCode(int dataTypeId, string code);
+
+    /// <summary>
     /// Gets the data type parameters filtered by the data type identifier using sorting by name (ascending).
     /// </summary>
     /// <param name="dataTypeId">The unique identifier of the data type these data type parameters belongs to.</param>

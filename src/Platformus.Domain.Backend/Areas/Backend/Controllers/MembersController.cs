@@ -38,6 +38,9 @@ namespace Platformus.Domain.Backend.Controllers
     [ExportModelStateToTempData]
     public IActionResult CreateOrEdit(CreateOrEditViewModel createOrEdit)
     {
+      if (createOrEdit.Id == null && !this.IsCodeUnique(createOrEdit.ClassId, createOrEdit.Code))
+        this.ModelState.AddModelError("code", string.Empty);
+
       if (this.ModelState.IsValid)
       {
         Member member = new CreateOrEditViewModelMapper(this).Map(createOrEdit);
@@ -69,6 +72,11 @@ namespace Platformus.Domain.Backend.Controllers
       this.Storage.Save();
       Event<IMemberDeletedEventHandler, IRequestHandler, Member>.Broadcast(this, member);
       return this.Redirect(string.Format("/backend/members?classid={0}", member.ClassId));
+    }
+
+    private bool IsCodeUnique(int classId, string code)
+    {
+      return this.Storage.GetRepository<IMemberRepository>().WithClassIdAndCodeInlcudingParent(classId, code) == null;
     }
 
     private void CreateOrEditDataTypeParameterValues(Member member)

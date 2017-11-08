@@ -38,6 +38,9 @@ namespace Platformus.Security.Backend.Controllers
     [ExportModelStateToTempData]
     public IActionResult CreateOrEdit(CreateOrEditViewModel createOrEdit)
     {
+      if (createOrEdit.Id == null && !this.IsCodeUnique(createOrEdit.Code))
+        this.ModelState.AddModelError("code", string.Empty);
+
       if (this.ModelState.IsValid)
       {
         Permission permission = new CreateOrEditViewModelMapper(this).Map(createOrEdit);
@@ -68,6 +71,11 @@ namespace Platformus.Security.Backend.Controllers
       this.Storage.Save();
       Event<IPermissionDeletedEventHandler, IRequestHandler, Permission>.Broadcast(this, permission);
       return this.RedirectToAction("Index");
+    }
+
+    private bool IsCodeUnique(string code)
+    {
+      return this.Storage.GetRepository<IPermissionRepository>().WithCode(code) == null;
     }
   }
 }

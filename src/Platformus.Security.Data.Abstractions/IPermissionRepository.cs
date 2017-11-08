@@ -20,6 +20,13 @@ namespace Platformus.Security.Data.Abstractions
     Permission WithKey(int id);
 
     /// <summary>
+    /// Gets the permission by the code (case insensitive).
+    /// </summary>
+    /// <param name="code">The unique code of the permission.</param>
+    /// <returns>Found permission with the given code.</returns>
+    Permission WithCode(string code);
+
+    /// <summary>
     /// Gets all the permissions using sorting by position (ascending).
     /// </summary>
     /// <returns>Found permissions.</returns>

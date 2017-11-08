@@ -1,6 +1,7 @@
 ﻿// Copyright © 2015 Dmitry Sikorsky. All rights reserved.
 // Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information.
 
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using ExtCore.Data.EntityFramework;
@@ -25,6 +26,16 @@ namespace Platformus.Security.Data.EntityFramework.PostgreSql
     public Permission WithKey(int id)
     {
       return this.dbSet.AsNoTracking().FirstOrDefault(p => p.Id == id);
+    }
+
+    /// <summary>
+    /// Gets the permission by the code (case insensitive).
+    /// </summary>
+    /// <param name="code">The unique code of the permission.</param>
+    /// <returns>Found permission with the given code.</returns>
+    public Permission WithCode(string code)
+    {
+      return this.dbSet.AsNoTracking().FirstOrDefault(p => string.Equals(p.Code, code, StringComparison.OrdinalIgnoreCase));
     }
 
     /// <summary>

@@ -38,6 +38,9 @@ namespace Platformus.Globalization.Backend.Controllers
     [ExportModelStateToTempData]
     public IActionResult CreateOrEdit(CreateOrEditViewModel createOrEdit)
     {
+      if (createOrEdit.Id == null && !this.IsCodeUnique(createOrEdit.Code))
+        this.ModelState.AddModelError("code", string.Empty);
+
       if (this.ModelState.IsValid)
       {
         Culture culture = new CreateOrEditViewModelMapper(this).Map(createOrEdit);
@@ -68,6 +71,11 @@ namespace Platformus.Globalization.Backend.Controllers
       this.Storage.Save();
       Event<ICultureDeletedEventHandler, IRequestHandler, Culture>.Broadcast(this, culture);
       return this.RedirectToAction("Index");
+    }
+
+    private bool IsCodeUnique(string code)
+    {
+      return this.Storage.GetRepository<ICultureRepository>().WithCode(code) == null;
     }
   }
 }

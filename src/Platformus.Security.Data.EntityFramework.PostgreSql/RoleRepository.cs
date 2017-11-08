@@ -1,6 +1,7 @@
 ﻿// Copyright © 2015 Dmitry Sikorsky. All rights reserved.
 // Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information.
 
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using ExtCore.Data.EntityFramework;
@@ -25,6 +26,16 @@ namespace Platformus.Security.Data.EntityFramework.PostgreSql
     public Role WithKey(int id)
     {
       return this.dbSet.AsNoTracking().FirstOrDefault(r => r.Id == id);
+    }
+
+    /// <summary>
+    /// Gets the role by the code (case insensitive).
+    /// </summary>
+    /// <param name="code">The unique code of the role.</param>
+    /// <returns>Found role with the given code.</returns>
+    public Role WithCode(string code)
+    {
+      return this.dbSet.AsNoTracking().FirstOrDefault(r => string.Equals(r.Code, code, StringComparison.OrdinalIgnoreCase));
     }
 
     /// <summary>

@@ -38,6 +38,9 @@ namespace Platformus.Configurations.Backend.Controllers
     [ExportModelStateToTempData]
     public IActionResult CreateOrEdit(CreateOrEditViewModel createOrEdit)
     {
+      if (createOrEdit.Id == null && !this.IsCodeUnique(createOrEdit.Code))
+        this.ModelState.AddModelError("code", string.Empty);
+
       if (this.ModelState.IsValid)
       {
         Configuration configuration = new CreateOrEditViewModelMapper(this).Map(createOrEdit);
@@ -68,6 +71,11 @@ namespace Platformus.Configurations.Backend.Controllers
       this.Storage.Save();
       Event<IConfigurationDeletedEventHandler, IRequestHandler, Configuration>.Broadcast(this, configuration);
       return this.RedirectToAction("Index");
+    }
+
+    private bool IsCodeUnique(string code)
+    {
+      return this.Storage.GetRepository<IConfigurationRepository>().WithCode(code) == null;
     }
   }
 }

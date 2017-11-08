@@ -38,6 +38,9 @@ namespace Platformus.Security.Backend.Controllers
     [ExportModelStateToTempData]
     public IActionResult CreateOrEdit(CreateOrEditViewModel createOrEdit)
     {
+      if (createOrEdit.Id == null && !this.IsCodeUnique(createOrEdit.Code))
+        this.ModelState.AddModelError("code", string.Empty);
+
       if (this.ModelState.IsValid)
       {
         Role role = new CreateOrEditViewModelMapper(this).Map(createOrEdit);
@@ -69,6 +72,11 @@ namespace Platformus.Security.Backend.Controllers
       this.Storage.Save();
       Event<IRoleDeletedEventHandler, IRequestHandler, Role>.Broadcast(this, role);
       return this.RedirectToAction("Index");
+    }
+
+    private bool IsCodeUnique(string code)
+    {
+      return this.Storage.GetRepository<IRoleRepository>().WithCode(code) == null;
     }
 
     private void CreateOrEditRolePermissions(Role role)

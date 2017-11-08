@@ -35,6 +35,9 @@ namespace Platformus.Domain.Backend.Controllers
     [ExportModelStateToTempData]
     public IActionResult CreateOrEdit(CreateOrEditViewModel createOrEdit)
     {
+      if (createOrEdit.Id == null && !this.IsCodeUnique(createOrEdit.DataTypeId, createOrEdit.Code))
+        this.ModelState.AddModelError("code", string.Empty);
+
       if (this.ModelState.IsValid)
       {
         DataTypeParameter dataTypeParameter = new CreateOrEditViewModelMapper(this).Map(createOrEdit);
@@ -58,6 +61,11 @@ namespace Platformus.Domain.Backend.Controllers
       this.Storage.GetRepository<IDataTypeParameterRepository>().Delete(dataTypeParameter);
       this.Storage.Save();
       return this.Redirect(string.Format("/backend/datatypeparameters?datatypeid={0}", dataTypeParameter.DataTypeId));
+    }
+
+    private bool IsCodeUnique(int dataTypeId, string code)
+    {
+      return this.Storage.GetRepository<IDataTypeParameterRepository>().WithDataTypeIdAndCode(dataTypeId, code) == null;
     }
   }
 }

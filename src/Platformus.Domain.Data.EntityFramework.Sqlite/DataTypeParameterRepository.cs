@@ -1,6 +1,7 @@
 ﻿// Copyright © 2017 Dmitry Yegorov. All rights reserved.
 // Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information.
 
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using ExtCore.Data.EntityFramework;
@@ -25,6 +26,17 @@ namespace Platformus.Domain.Data.EntityFramework.Sqlite
     public DataTypeParameter WithKey(int id)
     {
       return this.dbSet.AsNoTracking().FirstOrDefault(dtp => dtp.Id == id);
+    }
+
+    /// <summary>
+    /// Gets the data type parameter by the data type identifier and code (case insensitive).
+    /// </summary>
+    /// <param name="dataTypeId">The unique identifier of the data type this data type parameter belongs to.</param>
+    /// <param name="code">The unique code of the data type parameter.</param>
+    /// <returns>Found data type parameter with the given data type identifier and code.</returns>
+    public DataTypeParameter WithDataTypeIdAndCode(int dataTypeId, string code)
+    {
+      return this.dbSet.AsNoTracking().FirstOrDefault(dtp => dtp.DataTypeId == dataTypeId && string.Equals(dtp.Code, code, StringComparison.OrdinalIgnoreCase));
     }
 
     /// <summary>

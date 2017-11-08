@@ -20,6 +20,13 @@ namespace Platformus.Security.Data.Abstractions
     Role WithKey(int id);
 
     /// <summary>
+    /// Gets the role by the code (case insensitive).
+    /// </summary>
+    /// <param name="code">The unique code of the role.</param>
+    /// <returns>Found role with the given code.</returns>
+    Role WithCode(string code);
+
+    /// <summary>
     /// Gets all the roles using sorting by position (ascending).
     /// </summary>
     /// <returns>Found roles.</returns>

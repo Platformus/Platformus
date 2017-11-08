@@ -1,6 +1,7 @@
 ﻿// Copyright © 2015 Dmitry Sikorsky. All rights reserved.
 // Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information.
 
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using ExtCore.Data.EntityFramework;
@@ -34,7 +35,7 @@ namespace Platformus.Configurations.Data.EntityFramework.SqlServer
     /// <returns>Found variable with the given configuration identifier and code.</returns>
     public Variable WithConfigurationIdAndCode(int configurationId, string code)
     {
-      return this.dbSet.AsNoTracking().FirstOrDefault(v => v.ConfigurationId == configurationId && string.Equals(v.Code, code, System.StringComparison.OrdinalIgnoreCase));
+      return this.dbSet.AsNoTracking().FirstOrDefault(v => v.ConfigurationId == configurationId && string.Equals(v.Code, code, StringComparison.OrdinalIgnoreCase));
     }
 
     /// <summary>

@@ -20,6 +20,14 @@ namespace Platformus.Routing.Data.Abstractions
     DataSource WithKey(int id);
 
     /// <summary>
+    /// Gets the data source by the endpoint identifier and code (case insensitive).
+    /// </summary>
+    /// <param name="endpointId">The unique identifier of the endpoint this data source belongs to.</param>
+    /// <param name="code">The unique code of the data source.</param>
+    /// <returns>Found data source with the given endpoint identifier and code.</returns>
+    DataSource WithEndpointIdAndCode(int endpointId, string code);
+
+    /// <summary>
     /// Gets the data sources filtered by the endpoint identifier using sorting by C# class name (ascending).
     /// </summary>
     /// <param name="classId">The unique identifier of the endpoint these data sources belongs to.</param>

@@ -1,6 +1,7 @@
 ﻿// Copyright © 2015 Dmitry Sikorsky. All rights reserved.
 // Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information.
 
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using ExtCore.Data.EntityFramework;
@@ -33,7 +34,7 @@ namespace Platformus.Configurations.Data.EntityFramework.Sqlite
     /// <returns>Found configuration with the given code.</returns>
     public Configuration WithCode(string code)
     {
-      return this.dbSet.AsNoTracking().FirstOrDefault(c => string.Equals(c.Code, code, System.StringComparison.OrdinalIgnoreCase));
+      return this.dbSet.AsNoTracking().FirstOrDefault(c => string.Equals(c.Code, code, StringComparison.OrdinalIgnoreCase));
     }
 
     /// <summary>

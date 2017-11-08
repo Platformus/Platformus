@@ -38,6 +38,9 @@ namespace Platformus.Menus.Backend.Controllers
     [ExportModelStateToTempData]
     public IActionResult CreateOrEdit(CreateOrEditViewModel createOrEdit)
     {
+      if (createOrEdit.Id == null && !this.IsCodeUnique(createOrEdit.Code))
+        this.ModelState.AddModelError("code", string.Empty);
+
       if (this.ModelState.IsValid)
       {
         Menu menu = new CreateOrEditViewModelMapper(this).Map(createOrEdit);
@@ -70,6 +73,11 @@ namespace Platformus.Menus.Backend.Controllers
       this.Storage.Save();
       Event<IMenuDeletedEventHandler, IRequestHandler, Menu>.Broadcast(this, menu);
       return this.RedirectToAction("Index");
+    }
+
+    private bool IsCodeUnique(string code)
+    {
+      return this.Storage.GetRepository<IMenuRepository>().WithCode(code) == null;
     }
   }
 }

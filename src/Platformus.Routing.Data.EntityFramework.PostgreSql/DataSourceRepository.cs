@@ -1,6 +1,7 @@
 ﻿// Copyright © 2017 Dmitry Sikorsky. All rights reserved.
 // Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information.
 
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using ExtCore.Data.EntityFramework;
@@ -25,6 +26,17 @@ namespace Platformus.Routing.Data.EntityFramework.PostgreSql
     public DataSource WithKey(int id)
     {
       return this.dbSet.AsNoTracking().FirstOrDefault(ds => ds.Id == id);
+    }
+
+    /// <summary>
+    /// Gets the data source by the endpoint identifier and code (case insensitive).
+    /// </summary>
+    /// <param name="endpointId">The unique identifier of the endpoint this data source belongs to.</param>
+    /// <param name="code">The unique code of the data source.</param>
+    /// <returns>Found data source with the given endpoint identifier and code.</returns>
+    public DataSource WithEndpointIdAndCode(int endpointId, string code)
+    {
+      return this.dbSet.AsNoTracking().FirstOrDefault(ds => ds.EndpointId == endpointId && string.Equals(ds.Code, code, StringComparison.OrdinalIgnoreCase));
     }
 
     /// <summary>
