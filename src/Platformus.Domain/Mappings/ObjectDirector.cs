@@ -63,7 +63,7 @@ namespace Platformus.Domain
 
         if (serializedProperty.Member.PropertyDataTypeStorageDataType == StorageDataType.String)
         {
-          Member member = this.memberRepository.WithClassIdAndCode(serializedObject.ClassId, serializedProperty.Member.Code);
+          Member member = this.memberRepository.WithClassIdAndCodeInlcudingParent(serializedObject.ClassId, serializedProperty.Member.Code);
           Property property = this.propertyRepository.WithObjectIdAndMemberId(serializedObject.ObjectId, member.Id);
 
           objectBuilder.BuildStringProperty(serializedProperty.Member.Code, this.GetLocalizationValuesByCultureCodes(property));

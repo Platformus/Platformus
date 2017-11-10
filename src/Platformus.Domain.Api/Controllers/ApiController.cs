@@ -168,6 +168,7 @@ namespace Platformus.Domain.Api.Controllers
       return serializedObject;
     }
 
+    // TODO: move to ParamsBuilder
     protected Params GetParams(string filteringQuery, int sortingClassId, string sortingMemberCode, string sortingDirection, int? pagingSkip, int? pagingTake)
     {
       Filtering filtering = null;

@@ -9,6 +9,8 @@ using Platformus.Barebone;
 using Platformus.Domain.Data.Abstractions;
 using Platformus.Domain.Data.Entities;
 using Platformus.Domain.Events;
+using Platformus.Globalization;
+using Platformus.Globalization.Data.Entities;
 
 namespace Platformus.Domain
 {
@@ -17,39 +19,55 @@ namespace Platformus.Domain
     private IRequestHandler requestHandler;
     private IClassRepository classRepository;
     private IObjectRepository objectRepository;
+    private ISerializedObjectRepository serializedObjectRepository;
 
     public StronglyTypedObjectMapper(IRequestHandler requestHandler)
     {
       this.requestHandler = requestHandler;
       this.classRepository = this.requestHandler.Storage.GetRepository<IClassRepository>();
       this.objectRepository = this.requestHandler.Storage.GetRepository<IObjectRepository>();
+      this.serializedObjectRepository = this.requestHandler.Storage.GetRepository<ISerializedObjectRepository>();
     }
 
     public T WithKey<T>(int id)
     {
       Class @class = this.GetValidatedClass<T>();
-      Object @object = this.GetValidatedObject(@class, id);
+      SerializedObject serializedObject = this.GetValidatedSerializedObject(@class, id);
       StronglyTypedObjectBuilder<T> stronglyTypedObjectBuilder = new StronglyTypedObjectBuilder<T>();
 
-      new ObjectDirector(this.requestHandler).ConstructObject(stronglyTypedObjectBuilder, @object);
+      new ObjectDirector(this.requestHandler).ConstructObject(stronglyTypedObjectBuilder, serializedObject);
       return stronglyTypedObjectBuilder.Build();
     }
 
-    public IEnumerable<T> All<T>()
+    public IEnumerable<T> All<T>(string filteringQuery = null, string sortingMemberCode = null, string sortingDirection = null, int? pagingSkip = null, int? pagingTake = null)
     {
       Class @class = this.GetValidatedClass<T>();
-      IEnumerable<Object> objects = this.objectRepository.FilteredByClassId(@class.Id);
+      Culture defaultCulture = this.requestHandler.GetService<ICultureManager>().GetDefaultCulture();
+      Params @params = this.GetParams(filteringQuery, @class.Id, sortingMemberCode, sortingDirection, pagingSkip, pagingTake);
+      IEnumerable<SerializedObject> serializedObjects = this.serializedObjectRepository.FilteredByCultureIdAndClassId(
+        defaultCulture.Id, @class.Id, @params
+      );
+
       ObjectDirector objectDirector = new ObjectDirector(this.requestHandler);
 
-      return objects.Select(
-        o =>
+      return serializedObjects.Select(
+        so =>
         {
-          StronglyTypedObjectBuilder<T> stronglyTypedObjectBuilder = new StronglyTypedObjectBuilder<T>();
+          StronglyTypedObjectBuilder<T> objectBuilder = new StronglyTypedObjectBuilder<T>();
 
-          objectDirector.ConstructObject(stronglyTypedObjectBuilder, o);
-          return stronglyTypedObjectBuilder.Build();
+          objectDirector.ConstructObject(objectBuilder, so);
+          return objectBuilder.Build();
         }
       );
+    }
+
+    public int Count<T>(string filteringQuery = null)
+    {
+      Class @class = this.GetValidatedClass<T>();
+      Culture defaultCulture = this.requestHandler.GetService<ICultureManager>().GetDefaultCulture();
+      Params @params = this.GetParams(filteringQuery, @class.Id, null, null, null, null);
+
+      return serializedObjectRepository.CountByCultureIdAndClassId(defaultCulture.Id, @class.Id, @params);
     }
 
     public void Create<T>(T obj)
@@ -133,6 +151,46 @@ namespace Platformus.Domain
         throw new System.ArgumentException("Object identifier doesn't match given class code.");
 
       return @object;
+    }
+
+    private SerializedObject GetValidatedSerializedObject(Class @class, int id)
+    {
+      SerializedObject serializedObject = this.serializedObjectRepository.WithKey(this.requestHandler.GetService<ICultureManager>().GetDefaultCulture().Id, id);
+
+      if (serializedObject == null)
+        throw new System.ArgumentException("Object identifier is not valid.");
+
+      if (serializedObject.ClassId != @class.Id)
+        throw new System.ArgumentException("Object identifier doesn't match given class code.");
+
+      return serializedObject;
+    }
+
+    // TODO: move to ParamsBuilder
+    protected Params GetParams(string filteringQuery, int sortingClassId, string sortingMemberCode, string sortingDirection, int? pagingSkip, int? pagingTake)
+    {
+      Filtering filtering = null;
+
+      if (!string.IsNullOrEmpty(filteringQuery))
+        filtering = new Filtering(filteringQuery);
+
+      Sorting sorting = null;
+
+      if (!string.IsNullOrEmpty(sortingMemberCode) && !string.IsNullOrEmpty(sortingDirection))
+      {
+        IDomainManager domainManager = this.requestHandler.GetService<IDomainManager>();
+        Member member = domainManager.GetMemberByClassIdAndCodeInlcudingParent(sortingClassId, sortingMemberCode);
+        DataType dataType = domainManager.GetDataType((int)member.PropertyDataTypeId);
+
+        sorting = new Sorting(dataType.StorageDataType, member.Id, sortingDirection);
+      }
+
+      Paging paging = null;
+
+      if (pagingSkip != null && pagingTake != null)
+        paging = new Paging(pagingSkip, pagingTake);
+
+      return new Params(filtering, sorting, paging);
     }
   }
 }
