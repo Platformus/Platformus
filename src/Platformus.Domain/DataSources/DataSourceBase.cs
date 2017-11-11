@@ -16,40 +16,36 @@ namespace Platformus.Domain.DataSources
   {
     protected Params GetParams(IRequestHandler requestHandler, bool enableSorting)
     {
-      Filtering filtering = null;
+      string filteringQuery = null;
 
       if (this.HasParameter("EnableFiltering") && this.GetBoolParameterValue("EnableFiltering"))
-      {
-        filtering = new Filtering(requestHandler.HttpContext.Request.Query[this.GetStringParameterValue("QueryUrlParameterName")]);
-      }
+        filteringQuery = requestHandler.HttpContext.Request.Query[this.GetStringParameterValue("QueryUrlParameterName")];
 
-      Sorting sorting = null;
+      int? sortingMemberId = null;
+      string sortingDirection = null;
 
       if (enableSorting)
       {
-        int sortingMemberId = this.GetIntParameterValue("SortingMemberId");
-        string sortingDirection = this.GetStringParameterValue("SortingDirection");
-        IDomainManager domainManager = requestHandler.GetService<IDomainManager>();
-        Member member = domainManager.GetMember(sortingMemberId);
-        DataType dataType = domainManager.GetDataType((int)member.PropertyDataTypeId);
-
-        sorting = new Sorting(dataType.StorageDataType, sortingMemberId, sortingDirection);
+        sortingMemberId = this.GetIntParameterValue("SortingMemberId");
+        sortingDirection = this.GetStringParameterValue("SortingDirection");
       }
 
-      Paging paging = null;
+      int? pagingSkip = null;
+      int? pagingTake = null;
 
       if (this.HasParameter("EnablePaging") && this.GetBoolParameterValue("EnablePaging"))
       {
-        int.TryParse(requestHandler.HttpContext.Request.Query[this.GetStringParameterValue("SkipUrlParameterName")], out int skip);
-        int.TryParse(requestHandler.HttpContext.Request.Query[this.GetStringParameterValue("TakeUrlParameterName")], out int take);
+        int.TryParse(requestHandler.HttpContext.Request.Query[this.GetStringParameterValue("SkipUrlParameterName")], out int tempSkip);
+        int.TryParse(requestHandler.HttpContext.Request.Query[this.GetStringParameterValue("TakeUrlParameterName")], out int tempTake);
 
-        if (take == 0)
-          take = this.GetIntParameterValue("DefaultTake");
+        pagingSkip = tempSkip;
+        pagingTake = tempTake;
 
-        paging = new Paging(skip, take);
+        if (pagingTake == 0)
+          pagingTake = this.GetIntParameterValue("DefaultTake");
       }
 
-      return new Params(filtering, sorting, paging);
+      return new ParamsFactory(requestHandler).Create(filteringQuery, sortingMemberId, sortingDirection, pagingSkip, pagingTake);
     }
 
     protected dynamic CreateSerializedObjectViewModel(SerializedObject serializedObject)

@@ -3,6 +3,7 @@
 
 namespace Platformus.Domain.Data.Abstractions
 {
+  // TODO: name should be changed
   public class Params
   {
     public Filtering Filtering { get; set; }

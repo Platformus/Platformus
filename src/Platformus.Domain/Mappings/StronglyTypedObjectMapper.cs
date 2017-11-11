@@ -43,7 +43,7 @@ namespace Platformus.Domain
     {
       Class @class = this.GetValidatedClass<T>();
       Culture defaultCulture = this.requestHandler.GetService<ICultureManager>().GetDefaultCulture();
-      Params @params = this.GetParams(filteringQuery, @class.Id, sortingMemberCode, sortingDirection, pagingSkip, pagingTake);
+      Params @params = new ParamsFactory(this.requestHandler).Create(filteringQuery, @class.Id, sortingMemberCode, sortingDirection, pagingSkip, pagingTake);
       IEnumerable<SerializedObject> serializedObjects = this.serializedObjectRepository.FilteredByCultureIdAndClassId(
         defaultCulture.Id, @class.Id, @params
       );
@@ -65,7 +65,7 @@ namespace Platformus.Domain
     {
       Class @class = this.GetValidatedClass<T>();
       Culture defaultCulture = this.requestHandler.GetService<ICultureManager>().GetDefaultCulture();
-      Params @params = this.GetParams(filteringQuery, @class.Id, null, null, null, null);
+      Params @params = new ParamsFactory(this.requestHandler).Create(filteringQuery, @class.Id, null, null, null, null);
 
       return serializedObjectRepository.CountByCultureIdAndClassId(defaultCulture.Id, @class.Id, @params);
     }
@@ -164,33 +164,6 @@ namespace Platformus.Domain
         throw new System.ArgumentException("Object identifier doesn't match given class code.");
 
       return serializedObject;
-    }
-
-    // TODO: move to ParamsBuilder
-    protected Params GetParams(string filteringQuery, int sortingClassId, string sortingMemberCode, string sortingDirection, int? pagingSkip, int? pagingTake)
-    {
-      Filtering filtering = null;
-
-      if (!string.IsNullOrEmpty(filteringQuery))
-        filtering = new Filtering(filteringQuery);
-
-      Sorting sorting = null;
-
-      if (!string.IsNullOrEmpty(sortingMemberCode) && !string.IsNullOrEmpty(sortingDirection))
-      {
-        IDomainManager domainManager = this.requestHandler.GetService<IDomainManager>();
-        Member member = domainManager.GetMemberByClassIdAndCodeInlcudingParent(sortingClassId, sortingMemberCode);
-        DataType dataType = domainManager.GetDataType((int)member.PropertyDataTypeId);
-
-        sorting = new Sorting(dataType.StorageDataType, member.Id, sortingDirection);
-      }
-
-      Paging paging = null;
-
-      if (pagingSkip != null && pagingTake != null)
-        paging = new Paging(pagingSkip, pagingTake);
-
-      return new Params(filtering, sorting, paging);
     }
   }
 }

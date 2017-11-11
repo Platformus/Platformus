@@ -31,6 +31,11 @@ namespace Platformus.Domain
       (this.result as IDictionary<string, dynamic>).Add(memberCode, value);
     }
 
+    public override void BuildStringProperty(string memberCode, string value)
+    {
+      (this.result as IDictionary<string, dynamic>).Add(memberCode, value);
+    }
+
     public override void BuildStringProperty(string memberCode, IDictionary<string, string> value)
     {
       (this.result as IDictionary<string, dynamic>).Add(memberCode, value);

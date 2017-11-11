@@ -39,7 +39,7 @@ namespace Platformus.Domain.Backend.ViewModels.Objects
       if (classId != null)
       {
         currentCulture = this.RequestHandler.GetService<ICultureManager>().GetCurrentCulture();
-        @params = this.GetParams((int)classId, orderBy, direction, skip, take, filter);
+        @params = new ParamsFactory(this.RequestHandler).Create(filter, classId, orderBy, direction, skip, take);
       }
 
       return new IndexViewModel()
@@ -72,17 +72,6 @@ namespace Platformus.Domain.Backend.ViewModels.Objects
           "_Object"
         )
       };
-    }
-
-    private Params GetParams(int classId, string orderBy, string direction, int skip, int take, string filter)
-    {
-      Member member = this.RequestHandler.Storage.GetRepository<IMemberRepository>().WithClassIdAndCodeInlcudingParent((int)classId, orderBy);
-
-      return new Params(
-        sorting: member == null ? null : new Sorting(this.RequestHandler.Storage.GetRepository<IDataTypeRepository>().WithKey((int)member.PropertyDataTypeId).StorageDataType, member.Id, direction),
-        paging: new Paging(skip, take),
-        filtering: string.IsNullOrEmpty(filter) ? null : new Filtering(filter)
-      );
     }
 
     private Member GetDefaultMember(int classId)

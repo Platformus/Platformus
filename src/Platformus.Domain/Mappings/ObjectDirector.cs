@@ -66,7 +66,10 @@ namespace Platformus.Domain
           Member member = this.memberRepository.WithClassIdAndCodeInlcudingParent(serializedObject.ClassId, serializedProperty.Member.Code);
           Property property = this.propertyRepository.WithObjectIdAndMemberId(serializedObject.ObjectId, member.Id);
 
-          objectBuilder.BuildStringProperty(serializedProperty.Member.Code, this.GetLocalizationValuesByCultureCodes(property));
+          if (member.IsPropertyLocalizable == true)
+            objectBuilder.BuildStringProperty(serializedProperty.Member.Code, this.GetLocalizationValuesByCultureCodes(property));
+
+          else objectBuilder.BuildStringProperty(serializedProperty.Member.Code, this.GetLocalizationValue(property));
         }
 
         if (serializedProperty.Member.PropertyDataTypeStorageDataType == StorageDataType.DateTime)
@@ -85,7 +88,12 @@ namespace Platformus.Domain
         objectBuilder.BuildDecimalProperty(member.Code, property.DecimalValue);
 
       if (dataType.StorageDataType == StorageDataType.String)
-        objectBuilder.BuildStringProperty(member.Code, this.GetLocalizationValuesByCultureCodes(property));
+      {
+        if (member.IsPropertyLocalizable == true)
+          objectBuilder.BuildStringProperty(member.Code, this.GetLocalizationValuesByCultureCodes(property));
+
+        else objectBuilder.BuildStringProperty(member.Code, this.GetLocalizationValue(property));
+      }
 
       if (dataType.StorageDataType == StorageDataType.DateTime)
         objectBuilder.BuildDateTimeProperty(member.Code, property.DateTimeValue);
@@ -96,11 +104,18 @@ namespace Platformus.Domain
       // TODO: implement relations processing
     }
 
+    private string GetLocalizationValue(Property property)
+    {
+      Culture neutralCulture = this.requestHandler.GetService<ICultureManager>().GetNeutralCulture();
+
+      return this.localizationRepository.WithDictionaryIdAndCultureId((int)property.StringValueId, neutralCulture.Id)?.Value;
+    }
+
     private IDictionary<string, string> GetLocalizationValuesByCultureCodes(Property property)
     {
       Dictionary<string, string> localizationValuesByCultureCodes = new Dictionary<string, string>();
 
-      foreach (Culture culture in this.requestHandler.GetService<ICultureManager>().GetCultures())
+      foreach (Culture culture in this.requestHandler.GetService<ICultureManager>().GetNotNeutralCultures())
         localizationValuesByCultureCodes.Add(
           culture.Code,
           this.localizationRepository.WithDictionaryIdAndCultureId((int)property.StringValueId, culture.Id)?.Value

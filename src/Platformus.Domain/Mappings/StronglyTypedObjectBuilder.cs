@@ -31,6 +31,11 @@ namespace Platformus.Domain
       this.SetPropertyValue(memberCode, value);
     }
 
+    public override void BuildStringProperty(string memberCode, string value)
+    {
+      this.SetPropertyValue(memberCode, value);
+    }
+
     public override void BuildStringProperty(string memberCode, IDictionary<string, string> value)
     {
       this.SetPropertyValue(memberCode, value);

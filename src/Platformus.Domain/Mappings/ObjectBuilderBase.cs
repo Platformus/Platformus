@@ -10,6 +10,7 @@ namespace Platformus.Domain
     public abstract void BuildId(int id);
     public abstract void BuildIntegerProperty(string memberCode, int? value);
     public abstract void BuildDecimalProperty(string memberCode, decimal? value);
+    public abstract void BuildStringProperty(string memberCode, string value);
     public abstract void BuildStringProperty(string memberCode, IDictionary<string, string> value);
     public abstract void BuildDateTimeProperty(string memberCode, System.DateTime? value);
   }

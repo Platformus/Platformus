@@ -128,7 +128,10 @@ namespace Platformus.Domain
           if (property.StringValueId == null)
             property.StringValueId = this.CreateDictionary().Id;
 
-          this.CreateLocalizations((int)property.StringValueId, value is JArray ? this.GetValuesByCultureCodes(value as JArray) : value as IDictionary<string, string>);
+          if (value is string)
+            this.CreateLocalizations((int)property.StringValueId, value as string);
+
+          else this.CreateLocalizations((int)property.StringValueId, value is JArray ? this.GetValuesByCultureCodes(value as JArray) : value as IDictionary<string, string>);
         }
 
         else if (dataType.StorageDataType == StorageDataType.DateTime)
@@ -156,6 +159,18 @@ namespace Platformus.Domain
       this.dictionaryRepository.Create(dictionary);
       this.requestHandler.Storage.Save();
       return dictionary;
+    }
+
+    private void CreateLocalizations(int dictionaryId, string value)
+    {
+      Culture neutralCulture = this.requestHandler.GetService<ICultureManager>().GetNeutralCulture();
+      Localization localization = new Localization();
+
+      localization.DictionaryId = dictionaryId;
+      localization.CultureId = neutralCulture.Id;
+      localization.Value = value;
+      this.requestHandler.Storage.GetRepository<ILocalizationRepository>().Create(localization);
+      this.requestHandler.Storage.Save();
     }
 
     private void CreateLocalizations(int dictionaryId, IDictionary<string, string> valuesByCultureCodes)
