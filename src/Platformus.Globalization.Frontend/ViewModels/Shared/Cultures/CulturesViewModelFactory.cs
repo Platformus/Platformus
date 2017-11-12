@@ -17,7 +17,7 @@ namespace Platformus.Globalization.Frontend.ViewModels.Shared
     {
       return new CulturesViewModel()
       {
-        Cultures = this.RequestHandler.GetService<ICultureManager>().GetCultures().Where(c => !c.IsNeutral).Select(
+        Cultures = this.RequestHandler.GetService<ICultureManager>().GetNotNeutralCultures().Select(
           c => new CultureViewModelFactory(this.RequestHandler).Create(c)
         ).ToList(),
         AdditionalCssClass = additionalCssClass

@@ -1,9 +1,28 @@
 ﻿@* Copyright © 2015 Dmitry Sikorsky. All rights reserved. *@
 @* Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information. *@
 @model Platformus.Globalization.Frontend.ViewModels.Shared.CultureViewModel
+@inject Platformus.Globalization.ICultureManager CultureManager
 @{
-  bool isActive = string.Equals(this.Model.Code, System.Globalization.CultureInfo.CurrentCulture.TwoLetterISOLanguageName, StringComparison.OrdinalIgnoreCase);
+  string url = this.Context.Request.Path;
+  string cultureCode = System.Globalization.CultureInfo.CurrentCulture.TwoLetterISOLanguageName;
+
+  if (url.StartsWith($"/{cultureCode}/", StringComparison.OrdinalIgnoreCase))
+  {
+    url = url.Replace($"/{cultureCode}/", $"/{this.Model.Code}/");
+  }
+
+  else
+  {
+    url = $"/{this.Model.Code}/";
+  }
+
+  if (string.Equals(url, $"/{CultureManager.GetDefaultCulture().Code}/", StringComparison.OrdinalIgnoreCase))
+  {
+    url = "/";
+  }
+
+  bool isActive = string.Equals(this.Model.Code, cultureCode, StringComparison.OrdinalIgnoreCase);
 }
 <div class="cultures__culture @(isActive ? "cultures__culture--active" : null)">
-  <a class="cultures__culture-name @(isActive ? "cultures__culture-name--active" : null)" href="/@Model.Code/">@Model.Name</a>
+  <a class="cultures__culture-name @(isActive ? "cultures__culture-name--active" : null)" href="@url">@Model.Name</a>
 </div>
