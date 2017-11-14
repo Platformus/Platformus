@@ -29,7 +29,7 @@ namespace Platformus.Designers
         UgliflyResult result = outputFile.EndsWith(".css") ? Uglify.Css(input) : outputFile.EndsWith(".js") ? Uglify.Js(input) : default(UgliflyResult);
 
         if (!result.HasErrors)
-          File.WriteAllText(PathManager.GetContentRootPath(requestHandler) + "\\" + outputFile, result.Code);
+          File.WriteAllText(Path.Combine(PathManager.GetContentRootPath(requestHandler), outputFile), result.Code);
       }
 
       catch { }
@@ -40,7 +40,7 @@ namespace Platformus.Designers
       StringBuilder result = new StringBuilder();
 
       foreach (string file in files)
-        result.AppendLine(File.ReadAllText(PathManager.GetContentRootPath(requestHandler) + "\\" + file));
+        result.AppendLine(File.ReadAllText(Path.Combine(PathManager.GetContentRootPath(requestHandler), file)));
 
       return result.ToString();
     }

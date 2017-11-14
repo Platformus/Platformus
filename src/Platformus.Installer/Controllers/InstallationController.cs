@@ -3,6 +3,7 @@
 
 using System;
 using System.Data.SqlClient;
+using System.IO;
 using System.IO.Compression;
 using System.Linq;
 using Microsoft.AspNetCore.Hosting;
@@ -48,14 +49,14 @@ namespace Platformus.Installer.Controllers
         {
           ResourceManager.WriteResourceToFile(
             "Platformus.Installer.Sources.Packages." + package.Name,
-            this.hostingEnvironment.ContentRootPath + "\\Extensions\\" + package.Name
+            Path.Combine(this.hostingEnvironment.ContentRootPath, "Extensions", package.Name)
           );
         }
       }
 
       foreach (string contentEntry in usageScenario.Content)
       {
-        string tempPath = this.hostingEnvironment.ContentRootPath + "\\temp.zip";
+        string tempPath = Path.Combine(this.hostingEnvironment.ContentRootPath, "temp.zip");
 
         ResourceManager.WriteResourceToFile(
           "Platformus.Installer.Sources.UsageScenarios." + usageScenario.Code + "." + contentEntry,
@@ -67,7 +68,7 @@ namespace Platformus.Installer.Controllers
       }
 
       System.IO.File.WriteAllText(
-        this.hostingEnvironment.ContentRootPath + "\\appsettings.json",
+        Path.Combine(this.hostingEnvironment.ContentRootPath, "appsettings.json"),
         ResourceManager.GetAppSettingsTemplate().Replace("{connectionString}", connectionString)
       );
 
@@ -75,14 +76,14 @@ namespace Platformus.Installer.Controllers
       {
         foreach (string languagePack in languagePacks.Split(',').Where(lp => !string.Equals(lp, "en", StringComparison.OrdinalIgnoreCase)))
         {
-          string languagePackPath = this.hostingEnvironment.ContentRootPath + "\\Resources\\" + languagePack + ".zip";
+          string languagePackPath = Path.Combine(this.hostingEnvironment.ContentRootPath, languagePack + ".zip");
 
           ResourceManager.WriteResourceToFile(
             "Platformus.Installer.Sources.LanguagePacks." + languagePack + ".zip",
             languagePackPath
           );
 
-          ZipFile.ExtractToDirectory(languagePackPath, this.hostingEnvironment.ContentRootPath + "\\Resources\\");
+          ZipFile.ExtractToDirectory(languagePackPath, this.hostingEnvironment.ContentRootPath);
           System.IO.File.Delete(languagePackPath);
         }
       }

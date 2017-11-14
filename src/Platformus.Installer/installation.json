@@ -9,6 +9,14 @@
           "condition": "StorageType=PostgreSql"
         },
         {
+          "name": "Npgsql.dll",
+          "condition": "StorageType=PostgreSql"
+        },
+        {
+          "name": "Npgsql.EntityFrameworkCore.PostgreSQL.dll",
+          "condition": "StorageType=PostgreSql"
+        },
+        {
           "name": "ExtCore.Data.EntityFramework.Sqlite.dll",
           "condition": "StorageType=Sqlite"
         },
