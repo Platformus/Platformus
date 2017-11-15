@@ -38,6 +38,10 @@
   width: 450px;
 }
 
+.field__file-uploader {
+  width: 450px;
+}
+
 .field__culture {
   position: relative;
   left: 450px;
