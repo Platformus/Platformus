@@ -1,8 +1,8 @@
 ﻿// Copyright © 2015 Dmitry Sikorsky. All rights reserved.
 // Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information.
 
+using System;
 using System.Collections.Generic;
-using System.Drawing;
 using System.IO;
 using System.Threading.Tasks;
 using ExtCore.Data.Abstractions;
@@ -10,6 +10,10 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Net.Http.Headers;
+using SixLabors.ImageSharp;
+using SixLabors.ImageSharp.Formats;
+using SixLabors.ImageSharp.Formats.Jpeg;
+using SixLabors.Primitives;
 
 namespace Platformus.Barebone.Backend.Controllers
 {
@@ -51,35 +55,28 @@ namespace Platformus.Barebone.Backend.Controllers
     public ActionResult GetCroppedImageUrl(string sourceImageUrl, int sourceX, int sourceY, int sourceWidth, int sourceHeight, string destinationImageBaseUrl, int destinationWidth, int destinationHeight)
     {
       string filename = sourceImageUrl.Substring(sourceImageUrl.LastIndexOf("/") + 1);
-      Image sourceImage = this.LoadImageFromFile(this.GetFilepath("\\images\\temp\\", filename));
 
-      if (sourceImage.Width == destinationWidth && sourceImage.Height == destinationHeight)
-        return this.Content(sourceImageUrl);
-
-      using (Image destinationImage = new Bitmap(destinationWidth, destinationHeight))
+      using (Image<Rgba32> image = this.LoadImageFromFile(this.GetFilepath("\\images\\temp\\", filename), out IImageFormat imageFormat))
       {
-        Graphics g = Graphics.FromImage(destinationImage);
+        if (image.Width == destinationWidth && image.Height == destinationHeight)
+          return this.Content(sourceImageUrl);
 
-        g.DrawImage(
-          sourceImage,
-          new Rectangle(0, 0, destinationWidth, destinationHeight),
-          new Rectangle(sourceX, sourceY, sourceWidth, sourceHeight),
-          GraphicsUnit.Pixel
+        image.Mutate(
+          i => i.Crop(new Rectangle(sourceX, sourceY, sourceWidth, sourceHeight)).Resize(destinationWidth, destinationHeight)
         );
+        
+        if (string.Equals(imageFormat.Name, "Jpeg", StringComparison.OrdinalIgnoreCase))
+          image.Save(this.GetFilepath(destinationImageBaseUrl, filename), new JpegEncoder() { Quality = 80 });
 
-        destinationImage.Save(this.GetFilepath(destinationImageBaseUrl, filename));
+        else image.Save(this.GetFilepath(destinationImageBaseUrl, filename));
+
         return this.Content(destinationImageBaseUrl + filename);
       }
     }
 
-    private Image LoadImageFromFile(string filepath)
+    private Image<Rgba32> LoadImageFromFile(string filepath, out IImageFormat imageFormat)
     {
-      Image image = null;
-
-      using (Bitmap temp = new Bitmap(filepath))
-        image = new Bitmap(temp);
-
-      return image;
+      return Image.Load(filepath, out imageFormat);
     }
 
     private string EnsureCorrectFilename(string filename)
