@@ -14,6 +14,7 @@
       "Areas/Backend/Styles/radio-button-list.css",
       "Areas/Backend/Styles/drop_down_list.css",
       "Areas/Backend/Styles/file_uploader.css",
+      "Areas/Backend/Styles/image_uploader.css",
       "Areas/Backend/Styles/picker.css",
       "Areas/Backend/Styles/date_picker.css",
       "Areas/Backend/Styles/input_validation_error.css",
@@ -21,6 +22,7 @@
       "Areas/Backend/Styles/button.css",
       "Areas/Backend/Styles/buttons.css",
       "Areas/Backend/Styles/form.css",
+      "Areas/Backend/Styles/image_drag_and_drop_area.css",
       "Areas/Backend/Styles/menu.css",
       "Areas/Backend/Styles/tabs.css",
       "Areas/Backend/Styles/tab_pages.css",
@@ -30,7 +32,8 @@
       "Areas/Backend/Styles/grid.css",
       "Areas/Backend/Styles/master_detail.css",
       "Areas/Backend/Styles/pop_up_modal.css",
-      "Areas/Backend/Styles/pop_up_form.css"
+      "Areas/Backend/Styles/pop_up_form.css",
+      "Areas/Backend/Styles/image_uploader_pop_up_form.css"
     ]
   },
   {
@@ -56,10 +59,13 @@
       "Areas/Backend/Scripts/Behaviors/text_box_numeric_behavior.js",
       "Areas/Backend/Scripts/Behaviors/text_box_date_behavior.js",
       "Areas/Backend/Scripts/Behaviors/file_uploader_behavior.js",
+      "Areas/Backend/Scripts/Behaviors/image_uploader_behavior.js",
+      "Areas/Backend/Scripts/Behaviors/image_drag_and_drop_area_behavior.js",
       "Areas/Backend/Scripts/Behaviors/tabs_behavior.js",
       "Areas/Backend/Scripts/Behaviors/grid_behavior.js",
       "Areas/Backend/Scripts/Forms/base_form.js",
       "Areas/Backend/Scripts/Forms/delete_form.js",
+      "Areas/Backend/Scripts/Forms/image_uploader_form.js",
       "Areas/Backend/Scripts/global.js"
     ],
     "minify": {

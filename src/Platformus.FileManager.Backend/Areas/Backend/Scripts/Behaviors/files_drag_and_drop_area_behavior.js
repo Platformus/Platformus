@@ -2,8 +2,8 @@
 // Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information.
 
 (function (platformus) {
-  platformus.fileUploader = {};
-  platformus.fileUploader.fileSelected = function () {
+  platformus.filesDragAndDropArea = {};
+  platformus.filesDragAndDropArea.fileSelected = function () {
     document["form"].submit();
   };
 

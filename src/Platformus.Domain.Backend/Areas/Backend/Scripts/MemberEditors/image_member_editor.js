@@ -9,7 +9,7 @@
   };
 
   function createField(member) {
-    var field = $("<div>").addClass("image-member-editor").addClass("form__field").addClass("field");
+    var field = $("<div>").addClass("form__field").addClass("field");
 
     platformus.controls.label.create({ text: member.name }).appendTo(field);
 
@@ -21,9 +21,7 @@
         var localization = member.property.stringValue.localizations[i];
 
         if (localization.culture.code == "__") {
-          createInput(member, localization).appendTo(field);
-          createImage(member, localization).appendTo(field);
-          createButtons(member, localization).appendTo(field);
+          createImageUploader(member, localization).appendTo(field);
         }
       }
     }
@@ -31,15 +29,30 @@
     return field;
   }
 
+  function createImageUploader(member, localization) {
+    var imageUploader = $("<div>").addClass("image-uploader");
+    var width = platformus.memberEditors.base.getDataTypeParameterValue(member, "Width", null);
+    var height = platformus.memberEditors.base.getDataTypeParameterValue(member, "Height", null);
+
+    if (width != null && height != null) {
+      imageUploader.attr("data-width", width).attr("data-height", height);
+    }
+
+    createInput(member, localization).appendTo(imageUploader);
+    createImage(member, localization).appendTo(imageUploader);
+    createButtons(member, localization).appendTo(imageUploader);
+    return imageUploader;
+  }
+
   function createInput(member, localization) {
     var identity = platformus.memberEditors.base.getIdentity(member, localization);
 
-    return $("<input>").attr("id", identity).attr("name", identity).attr("type", "hidden").attr("value", localization.value);
+    return $("<input>").attr("name", identity).attr("type", "hidden").attr("value", localization.value);
   }
 
   function createImage(member, localization) {
     var identity = platformus.memberEditors.base.getIdentity(member, localization);
-    var img = $("<img>").addClass("image-member-editor__image").attr("id", identity + "Image").attr("src", localization.value);
+    var img = $("<img>").addClass("image-uploader__image").attr("src", localization.value);
 
     if (localization.value == null) {
       img.hide();
@@ -57,31 +70,26 @@
   }
 
   function createUploadButton(member, localization) {
-    var identity = platformus.memberEditors.base.getIdentity(member, localization);
-
-    return $("<button>").addClass("buttons__button").addClass("buttons__button--minor").addClass("button").addClass("button--positive").addClass("button--minor").attr("type", "button").html("Upload…").click(
-      function () {
-        new platformus.forms.imageUploaderForm.show(
-          "/images/objects/",
-          platformus.memberEditors.base.getDataTypeParameterValue(member, "Width", null),
-          platformus.memberEditors.base.getDataTypeParameterValue(member, "Height", null),
-          function (imageUrl) {
-            $("#" + identity).val(imageUrl);
-            $("#" + identity + "Image").attr("src", imageUrl).show();
-          }
-        );
-      }
-    );
+    return $("<button>")
+      .addClass("image-uploader__upload-button")
+      .addClass("buttons__button")
+      .addClass("buttons__button--minor")
+      .addClass("button")
+      .addClass("button--positive")
+      .addClass("button--minor")
+      .attr("type", "button")
+      .html("Upload…");
   }
 
   function createRemoveButton(member, localization) {
-    var identity = platformus.memberEditors.base.getIdentity(member, localization);
-
-    return $("<button>").addClass("buttons__button").addClass("buttons__button--minor").addClass("button").addClass("button--negative").addClass("button--minor").attr("type", "button").html("Remove").click(
-      function () {
-        $("#" + identity).val(platformus.string.empty);
-        $("#" + identity + "Image").removeAttr("src").hide();
-      }
-    );
+    return $("<button>")
+      .addClass("image-uploader__remove-button")
+      .addClass("buttons__button")
+      .addClass("buttons__button--minor")
+      .addClass("button")
+      .addClass("button--negative")
+      .addClass("button--minor")
+      .attr("type", "button")
+      .html("Remove");
   }
 })(window.platformus = window.platformus || {});

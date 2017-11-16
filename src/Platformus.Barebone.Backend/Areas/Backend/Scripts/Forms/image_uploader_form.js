@@ -27,8 +27,7 @@
     _destinationWidth = width;
     _destinationHeight = height;
     _callback = callback;
-
-    return platformus.forms.baseForm.show("/backend/domain/imageuploaderform", defineHandlers, "image-uploader-pop-up-form");
+    return platformus.forms.baseForm.show("/backend/barebone/imageuploaderform", defineHandlers, "image-uploader-pop-up-form");
   };
 
   platformus.forms.imageUploaderForm.uploadingStarted = function (checkIsFinished) {

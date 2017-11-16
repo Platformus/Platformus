@@ -11,10 +11,10 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Net.Http.Headers;
 
-namespace Platformus.Domain.Backend.Controllers
+namespace Platformus.Barebone.Backend.Controllers
 {
   [Area("Backend")]
-  public class ImageUploaderController : Platformus.Globalization.Backend.Controllers.ControllerBase
+  public class ImageUploaderController : ControllerBase
   {
     private IHostingEnvironment hostingEnvironment;
 

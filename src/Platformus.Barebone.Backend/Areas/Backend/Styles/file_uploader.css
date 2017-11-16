@@ -8,9 +8,8 @@
 .file-uploader__filename {
   background-color: #f0f0f0;
   box-sizing: border-box;
-  padding: 5px 120px 5px 10px;
+  padding: 5px 10px;
   width: 100%;
-  overflow: hidden;
 }
 
 .file-uploader__filename:hover {
@@ -22,11 +21,13 @@
   font-style: italic;
 }
 
+.file-uploader__filename--size {
+  color: #ccc;
+  font-style: italic;
+}
+
 .file-uploader__browse-button {
   text-align: center;
-  position: absolute;
-  right: 5px;
-  top: 5px;
   width: 80px;
   height: 20px;
   overflow: hidden;

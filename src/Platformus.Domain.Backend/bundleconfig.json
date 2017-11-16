@@ -2,10 +2,7 @@
   {
     "outputFileName": "wwwroot/areas/backend/css/platformus.domain.min.css",
     "inputFiles": [
-      "Areas/Backend/Styles/MemberEditors/image_member_editor.css",
       "Areas/Backend/Styles/MemberEditors/relation_member_editor.css",
-      "Areas/Backend/Styles/image_drag_and_drop_area.css",
-      "Areas/Backend/Styles/image_uploader_pop_up_form.css",
       "Areas/Backend/Styles/class_selector_pop_up_form.css",
       "Areas/Backend/Styles/member_selector_pop_up_form.css",
       "Areas/Backend/Styles/object_selector_pop_up_form.css"
@@ -15,8 +12,6 @@
     "outputFileName": "wwwroot/areas/backend/js/platformus.domain.min.js",
     "inputFiles": [
       "Areas/Backend/Scripts/ui.js",
-      "Areas/Backend/Scripts/Behaviors/image_uploader_behavior.js",
-      "Areas/Backend/Scripts/Forms/image_uploader_form.js",
       "Areas/Backend/Scripts/Forms/class_selector_form.js",
       "Areas/Backend/Scripts/Forms/member_selector_form.js",
       "Areas/Backend/Scripts/Forms/object_selector_form.js",

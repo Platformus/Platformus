@@ -17,10 +17,11 @@ namespace Platformus.Barebone.Backend
         tb.AddCssClass(additionalCssClass);
 
       tb.AddCssClass("file-uploader");
+      tb.MergeAttribute("id", this.GetIdentity(modelExpression));
       this.MergeOtherAttribute(tb, attributes);
       tb.InnerHtml.Clear();
       tb.InnerHtml.AppendHtml(this.GenerateFilename());
-      tb.InnerHtml.AppendHtml(this.GenerateBrowseButton(modelExpression, isMultiple));
+      tb.InnerHtml.AppendHtml(this.GenerateButtons(modelExpression, isMultiple));
       return tb;
     }
 
@@ -30,6 +31,16 @@ namespace Platformus.Barebone.Backend
 
       tb.AddCssClass("file-uploader__filename file-uploader__filename--not-selected");
       tb.InnerHtml.AppendHtml("File not selected");
+      return tb;
+    }
+
+    private TagBuilder GenerateButtons(ModelExpression modelExpression, bool isMultiple)
+    {
+      TagBuilder tb = new TagBuilder("div");
+
+      tb.AddCssClass("form__buttons form__buttons--minor buttons");
+      tb.InnerHtml.Clear();
+      tb.InnerHtml.AppendHtml(this.GenerateBrowseButton(modelExpression, isMultiple));
       return tb;
     }
 
@@ -48,7 +59,6 @@ namespace Platformus.Barebone.Backend
       TagBuilder tb = new TagBuilder("input");
 
       tb.AddCssClass("file-uploader__browse-input");
-      tb.MergeAttribute("id", this.GetIdentity(modelExpression));
       tb.MergeAttribute("name", this.GetIdentity(modelExpression));
       tb.MergeAttribute("type", "file");
       tb.MergeAttribute("size", "1");

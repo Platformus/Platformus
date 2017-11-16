@@ -10,15 +10,11 @@
   <meta charset="utf-8" />
   <title>@Localizer["Image Uploader"] | @Localizer["Platformus"]</title>
   <link href="~/wwwroot.areas.backend.css.platformus.barebone.min.css" rel="stylesheet" />
-  <link href="~/wwwroot.areas.backend.css.platformus.domain.min.css" rel="stylesheet" />
-  <link href="~/wwwroot.areas.backend.css.platformus.file_manager.min.css" rel="stylesheet" />
   <link href="//fonts.googleapis.com/css?family=PT+Sans:400,400italic&subset=latin,cyrillic" type="text/css" rel="stylesheet" />
   <script src="//ajax.aspnetcdn.com/ajax/jquery/jquery-1.11.3.min.js"></script>
   <script src="//ajax.aspnetcdn.com/ajax/jquery.validate/1.14.0/jquery.validate.min.js"></script>
   <script src="//ajax.aspnetcdn.com/ajax/jquery.validation.unobtrusive/3.2.6/jquery.validate.unobtrusive.min.js"></script>
   <script src="~/wwwroot.areas.backend.js.platformus.barebone.min.js"></script>
-  <script src="~/wwwroot.areas.backend.js.platformus.domain.min.js"></script>
-  <script src="~/wwwroot.areas.backend.js.platformus.file_manager.min.js"></script>
 </head>
 <body>
   <div id="imageDragAndDropArea" class="image-drag-and-drop-area">
@@ -29,7 +25,7 @@
       <div class="image-drag-and-drop-area__buttons buttons">
         <div class="image-drag-and-drop-area__browse-button buttons__button button button--positive">
           <div>@Localizer["…or select it on your device"]</div>
-          <input class="image-drag-and-drop-area__browse-input" id="files" name="files" type="file" size="1" onchange="platformus.imageUploader.imageSelected();" />
+          <input class="image-drag-and-drop-area__browse-input" id="files" name="files" type="file" size="1" onchange="platformus.imageDragAndDropArea.imageSelected();" />
         </div>
       </div>
     </form>

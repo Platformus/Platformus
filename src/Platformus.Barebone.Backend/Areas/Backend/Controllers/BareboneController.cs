@@ -19,5 +19,10 @@ namespace Platformus.Barebone.Backend.Controllers
     {
       return this.PartialView("_DeleteForm", new DeleteFormViewModelFactory(this).Create(targetUrl));
     }
+
+    public ActionResult ImageUploaderForm()
+    {
+      return this.PartialView("_ImageUploaderForm", new ImageUploaderFormViewModelFactory(this).Create());
+    }
   }
 }

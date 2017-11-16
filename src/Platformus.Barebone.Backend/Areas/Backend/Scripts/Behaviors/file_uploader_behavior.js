@@ -15,9 +15,10 @@
 
   function fileSelected() {
     var input = $(this);
-    var filename = input.parent().parent().find(".file-uploader__filename");
+    var filename = input.parent().parent().parent().find(".file-uploader__filename");
+    var size = this.files[0].size;
 
     filename.removeClass("file-uploader__filename--not-selected");
-    filename.html(input.val().replace(/^.*[\\\/]/, ""));
+    filename.html(input.val().replace(/^.*[\\\/]/, "") + " <span class=\"file-uploader__filename--size\">(" + size + " bytes)</span>");
   }
 })(window.platformus = window.platformus || {});
