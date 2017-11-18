@@ -13,20 +13,12 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <EmbeddedResource Include="Areas\Backend\Views\**;wwwroot\**" />
+    <EmbeddedResource Include="Areas\Backend\Views\**" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\Platformus.Barebone.Backend\Platformus.Barebone.Backend.csproj" />
     <ProjectReference Include="..\Platformus.ExtensionManager\Platformus.ExtensionManager.csproj" />
-  </ItemGroup>
-
-  <Target Name="PrecompileScript" BeforeTargets="BeforeBuild">
-    <Exec Command="dotnet bundle" />
-  </Target>
-
-  <ItemGroup>
-    <DotNetCliToolReference Include="BundlerMinifier.Core" Version="2.2.301" />
   </ItemGroup>
 
 </Project>

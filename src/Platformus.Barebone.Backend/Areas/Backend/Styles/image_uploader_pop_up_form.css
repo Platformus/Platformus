@@ -9,6 +9,12 @@
   display: block;
 }
 
+.image-uploader-pop-up-form__drag-and-drop-area {
+  box-sizing: border-box;
+  padding: 250px 0 0;
+  height: 600px;
+}
+
 .image-uploader-pop-up-form__image-uploading-indicator {
   background: #f0f0f0;
   display: none;

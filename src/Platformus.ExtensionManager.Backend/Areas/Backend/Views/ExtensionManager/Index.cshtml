@@ -10,17 +10,16 @@
   @ViewBag.Title <span class="master-detail__detail-header-counter">@Model.Grid.Pager.Total</span>
 }
 @Html.Partial("_Grid", this.Model.Grid)
-<div class="extensions-drag-and-drop-area" id="extensionsDragAndDropArea">
-  <div class="extensions-drag-and-drop-area__description">
+<div class="drag-and-drop-area" id="dragAndDropArea">
+  <div class="drag-and-drop-area__description">
     @Localizer["Drag and drop extensions into this area…"]
   </div>
-</div>
-<form class="form" id="form" name="form" action="/backend/extensionmanager/create" enctype="multipart/form-data" method="post">
-  <div class="form__buttons buttons">
-    <div class="extensions-drag-and-drop-area__browse-button buttons__button button button--positive">
-      <div>@Localizer["…or select them on your device"]</div>
-      <input class="extensions-drag-and-drop-area__browse-input" id="files" name="files" type="file" size="1" multiple onchange="platformus.extensionUploader.extensionSelected();" />
+  <form class="form" id="form" name="form" action="/backend/extensionmanager/create" enctype="multipart/form-data" method="post">
+    <div class="drag-and-drop-area__buttons form__buttons buttons">
+      <div class="drag-and-drop-area__browse-button buttons__button button button--positive">
+        <div>@Localizer["…or select them on your device"]</div>
+        <input class="drag-and-drop-area__browse-input" id="files" name="files" type="file" size="1" multiple onchange="platformus.dragAndDropArea.selected();" />
+      </div>
     </div>
-    <div class="clear"></div>
-  </div>
-</form>
+  </form>
+</div>

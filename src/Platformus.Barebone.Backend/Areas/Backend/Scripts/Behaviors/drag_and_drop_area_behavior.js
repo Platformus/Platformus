@@ -2,8 +2,8 @@
 // Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information.
 
 (function (platformus) {
-  platformus.extensionUploader = {};
-  platformus.extensionUploader.extensionSelected = function () {
+  platformus.dragAndDropArea = {};
+  platformus.dragAndDropArea.selected = function () {
     document["form"].submit();
   };
 
@@ -19,24 +19,24 @@
       return;
     }
 
-    var extensionsDragAndDropArea = $("#extensionsDragAndDropArea");
+    var dragAndDropArea = $("#dragAndDropArea");
 
-    if (extensionsDragAndDropArea.length == 0) {
+    if (dragAndDropArea.length == 0) {
       return;
     }
 
-    extensionsDragAndDropArea[0].ondragover = function () {
-      extensionsDragAndDropArea.addClass("extensions-drag-and-drop-area--dragging");
+    dragAndDropArea[0].ondragover = function () {
+      dragAndDropArea.addClass("drag-and-drop-area--dragging");
       return false;
     };
 
-    extensionsDragAndDropArea[0].ondragleave = function () {
-      extensionsDragAndDropArea.removeClass("extensions-drag-and-drop-area--dragging");
+    dragAndDropArea[0].ondragleave = function () {
+      dragAndDropArea.removeClass("drag-and-drop-area--dragging");
       return false;
     };
 
-    extensionsDragAndDropArea[0].ondrop = function (event) {
-      extensionsDragAndDropArea.removeClass("extensions-drag-and-drop-area--dragging");
+    dragAndDropArea[0].ondrop = function (event) {
+      dragAndDropArea.removeClass("drag-and-drop-area--dragging");
 
       var formData = new FormData();
 
@@ -46,7 +46,7 @@
 
       $.ajax(
         {
-          url: "/backend/extensionmanager/create",
+          url: dragAndDropArea.find("form").attr("action"),
           data: formData,
           processData: false,
           contentType: false,

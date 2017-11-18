@@ -11,28 +11,6 @@ namespace Platformus.ExtensionManager
 {
   public class BackendMetadata : BackendMetadataBase
   {
-    public override IEnumerable<BackendStyleSheet> BackendStyleSheets
-    {
-      get
-      {
-        return new BackendStyleSheet[]
-        {
-          new BackendStyleSheet("/wwwroot.areas.backend.css.platformus.extension_manager.min.css", 4000)
-        };
-      }
-    }
-
-    public override IEnumerable<BackendScript> BackendScripts
-    {
-      get
-      {
-        return new BackendScript[]
-        {
-          new BackendScript("/wwwroot.areas.backend.js.platformus.extension_manager.min.js", 4000)
-        };
-      }
-    }
-
     public override IEnumerable<BackendMenuGroup> GetBackendMenuGroups(IServiceProvider serviceProvider)
     {
       IStringLocalizer<BackendMetadata> localizer = serviceProvider.GetService<IStringLocalizer<BackendMetadata>>();

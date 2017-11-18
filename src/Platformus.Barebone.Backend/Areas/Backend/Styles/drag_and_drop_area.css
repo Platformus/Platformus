@@ -1,31 +1,36 @@
-/* Copyright � 2017 Dmitry Sikorsky. All rights reserved. */
+﻿/* Copyright © 2017 Dmitry Sikorsky. All rights reserved. */
 /* Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information. */
 
-.extensions-drag-and-drop-area {
+.drag-and-drop-area {
   background-color: #f0f0f0;
-  margin-top: 20px;
-  height: 100px;
+  padding: 50px 0;
 }
 
-.extensions-drag-and-drop-area--dragging {
+.drag-and-drop-area--dragging {
   background-color: #f5f5f5;
 }
 
-.extensions-drag-and-drop-area__description {
+.drag-and-drop-area__description {
   color: #ccc;
   font-style: italic;
   text-align: center;
-  line-height: 100px;
 }
 
-.extensions-drag-and-drop-area__browse-button {
+.drag-and-drop-area__buttons {
   text-align: center;
+  margin-top: 20px;
+}
+
+.drag-and-drop-area__browse-button {
+  text-align: center;
+  float: none;
+  display: inline-block;
   width: 250px;
   height: 20px;
   overflow: hidden;
 }
 
-.extensions-drag-and-drop-area__browse-input {
+.drag-and-drop-area__browse-input {
   cursor: pointer;
   font-size: 150px;
   opacity: 0;

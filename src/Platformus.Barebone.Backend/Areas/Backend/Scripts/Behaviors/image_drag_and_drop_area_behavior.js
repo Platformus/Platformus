@@ -3,7 +3,7 @@
 
 (function (platformus) {
   platformus.imageDragAndDropArea = {};
-  platformus.imageDragAndDropArea.imageSelected = function () {
+  platformus.imageDragAndDropArea.selected = function () {
     parent.platformus.forms.imageUploaderForm.uploadingStarted(true);
     document["form"].submit();
   };
@@ -27,17 +27,17 @@
     }
 
     imageDragAndDropArea[0].ondragover = function () {
-      imageDragAndDropArea.addClass("image-drag-and-drop-area--dragging");
+      imageDragAndDropArea.addClass("drag-and-drop-area--dragging");
       return false;
     };
 
     imageDragAndDropArea[0].ondragleave = function () {
-      imageDragAndDropArea.removeClass("image-drag-and-drop-area--dragging");
+      imageDragAndDropArea.removeClass("drag-and-drop-area--dragging");
       return false;
     };
 
     imageDragAndDropArea[0].ondrop = function (event) {
-      imageDragAndDropArea.removeClass("image-drag-and-drop-area--dragging");
+      imageDragAndDropArea.removeClass("drag-and-drop-area--dragging");
 
       var formData = new FormData();
 
@@ -53,7 +53,7 @@
           contentType: false,
           type: "POST",
           success: function (data) {
-            parent.platformus.forms.imageUploaderForm.uploadingFinished(data.replace("filename=", String.empty));
+            parent.platformus.forms.imageUploaderForm.uploadingFinished(data.replace("filename=", platformus.string.empty));
           },
           error: function (jqXHR, textStatus) {
             parent.platformus.forms.imageUploaderForm.uploadingErrorOccurred(textStatus);
