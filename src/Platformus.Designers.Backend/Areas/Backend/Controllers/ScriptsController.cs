@@ -46,7 +46,7 @@ namespace Platformus.Designers.Backend.Controllers
         if (string.IsNullOrEmpty(createOrEdit.Id))
           Event<IScriptCreatedEventHandler, IRequestHandler, string>.Broadcast(this, createOrEdit.Filename);
 
-        else Event<IScriptCreatedEventHandler, IRequestHandler, string>.Broadcast(this, createOrEdit.Filename);
+        else Event<IScriptEditedEventHandler, IRequestHandler, string>.Broadcast(this, createOrEdit.Filename);
 
         return this.RedirectToAction("Index");
       }

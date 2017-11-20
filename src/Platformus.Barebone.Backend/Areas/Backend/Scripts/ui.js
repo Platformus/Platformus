@@ -94,13 +94,15 @@
 
         $(window).on("beforeunload", function () {
           if (platformus.ui.needsSaveConfirmation) {
-            return confirm("");
+            return confirm("Your changes might be lost!");
           }
         });
 
         // TODO: add another controls change events
         $(document.body).on("change", "input, textarea", function () {
-          platformus.ui.needsSaveConfirmation = true;
+          if ($(this).attr("type") != "file") {
+            platformus.ui.needsSaveConfirmation = true;
+          }
         });
 
         $(document.body).on("click", "button[type='submit']", function () {

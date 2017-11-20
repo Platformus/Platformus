@@ -47,7 +47,7 @@ namespace Platformus.Designers.Backend.Controllers
         if (string.IsNullOrEmpty(createOrEdit.Id))
           Event<IViewCreatedEventHandler, IRequestHandler, string>.Broadcast(this, createOrEdit.Filename);
 
-        else Event<IViewCreatedEventHandler, IRequestHandler, string>.Broadcast(this, createOrEdit.Filename);
+        else Event<IViewEditedEventHandler, IRequestHandler, string>.Broadcast(this, createOrEdit.Filename);
 
         return this.RedirectToAction("Index", new { subdirectory = createOrEdit.Subdirectory });
       }
