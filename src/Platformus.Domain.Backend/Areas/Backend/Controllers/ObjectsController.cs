@@ -75,7 +75,7 @@ namespace Platformus.Domain.Backend.Controllers
     {
       try
       {
-        string imagesPath = this.hostingEnvironment.WebRootPath + "\\images\\objects\\" + id;
+        string imagesPath = Path.Combine(this.hostingEnvironment.WebRootPath, "images", "objects", id.ToString());
 
         Directory.Delete(imagesPath, true);
       }
@@ -186,9 +186,11 @@ namespace Platformus.Domain.Backend.Controllers
 
     private string MoveImageToValidObjectPath(int objectId, string imageUrl)
     {
-      string sourceImageFilepath = this.hostingEnvironment.WebRootPath + imageUrl.Replace("/", "\\");
+      imageUrl = imageUrl.Replace('/', '\\');
+
+      string sourceImageFilepath = this.hostingEnvironment.WebRootPath + imageUrl.Replace('\\', Path.DirectorySeparatorChar);
       string imageFilename = Path.GetFileName(sourceImageFilepath);
-      string destinationImageFilepath = this.hostingEnvironment.WebRootPath + "\\images\\objects\\" + objectId + "\\" + imageFilename;
+      string destinationImageFilepath = Path.Combine(this.hostingEnvironment.WebRootPath, "images", "objects", objectId.ToString(), imageFilename);
 
       if (sourceImageFilepath == destinationImageFilepath)
         return imageUrl;

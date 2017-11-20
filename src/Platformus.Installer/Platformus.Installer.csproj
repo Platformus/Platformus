@@ -13,7 +13,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <EmbeddedResource Include="Sources\**;Views\**;wwwroot\**;installation.json" />
+    <EmbeddedResource Include="Input\**;Views\**;wwwroot\**" />
   </ItemGroup>
 
   <ItemGroup>

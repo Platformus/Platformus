@@ -72,8 +72,8 @@ namespace Platformus.Forms.Frontend.Controllers
           {
             string filename = file.FileName;
 
-            if (!string.IsNullOrEmpty(filename) && filename.Contains("\\"))
-              filename = filename.Substring(filename.LastIndexOf("\\") + 1);
+            if (!string.IsNullOrEmpty(filename) && filename.Contains(Path.DirectorySeparatorChar.ToString()))
+              filename = Path.GetFileName(filename);
 
             attachmentsByFilenames.Add(filename, this.GetBytesFromStream(file.OpenReadStream()));
           }

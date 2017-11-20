@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.26430.16
+VisualStudioVersion = 15.0.27004.2009
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{0D7AEFA3-ABB0-4AF1-A4C1-F8E05C241753}"
 EndProject
@@ -190,6 +190,8 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Platformus.Routing.Data.EntityFramework.Sqlite", "src\Platformus.Routing.Data.EntityFramework.Sqlite\Platformus.Routing.Data.EntityFramework.Sqlite.csproj", "{B918287E-7FF2-45BE-9D9F-58C63D8B74FD}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Platformus.Routing.Data.EntityFramework.SqlServer", "src\Platformus.Routing.Data.EntityFramework.SqlServer\Platformus.Routing.Data.EntityFramework.SqlServer.csproj", "{10F42544-5454-41A7-9D42-BE2FBA3F8F21}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Platformus.Routing.Frontend", "src\Platformus.Routing.Frontend\Platformus.Routing.Frontend.csproj", "{B8FB4CEC-5372-400E-943B-CF97A20CEFF9}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -517,6 +519,10 @@ Global
 		{10F42544-5454-41A7-9D42-BE2FBA3F8F21}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{10F42544-5454-41A7-9D42-BE2FBA3F8F21}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{10F42544-5454-41A7-9D42-BE2FBA3F8F21}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B8FB4CEC-5372-400E-943B-CF97A20CEFF9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B8FB4CEC-5372-400E-943B-CF97A20CEFF9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B8FB4CEC-5372-400E-943B-CF97A20CEFF9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B8FB4CEC-5372-400E-943B-CF97A20CEFF9}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -615,6 +621,10 @@ Global
 		{C652A2B8-8625-40A5-B3FF-18E3E67B49F2} = {E64DD19B-0DF8-4F70-A7CA-481E74BF4419}
 		{B918287E-7FF2-45BE-9D9F-58C63D8B74FD} = {E64DD19B-0DF8-4F70-A7CA-481E74BF4419}
 		{10F42544-5454-41A7-9D42-BE2FBA3F8F21} = {E64DD19B-0DF8-4F70-A7CA-481E74BF4419}
+		{B8FB4CEC-5372-400E-943B-CF97A20CEFF9} = {E64DD19B-0DF8-4F70-A7CA-481E74BF4419}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {7DA5CEAA-994B-40A0-AE3D-48B982BF000B}
 	EndGlobalSection
 	GlobalSection(SolutionConfigurationsPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU

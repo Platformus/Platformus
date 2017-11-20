@@ -12,13 +12,13 @@ namespace Platformus.Installer
     public static Installation GetInstallation()
     {
       return JsonConvert.DeserializeObject<Platformus.Installer.Installation>(
-        ResourceManager.GetResourceString("Platformus.Installer.installation.json")
+        ResourceManager.GetResourceString("Platformus.Installer.Input.installation.json")
       );
     }
 
     public static string GetAppSettingsTemplate()
     {
-      return ResourceManager.GetResourceString("Platformus.Installer.Sources.appsettings.json.template");
+      return ResourceManager.GetResourceString("Platformus.Installer.Input.appsettings.json.template");
     }
 
     public static string GetResourceString(string resourceName)

@@ -1,6 +1,7 @@
 .vs/
 bin/
 obj/
+src/Platformus.Installer/Input/
 *.min.css
 *.min.js
 pack.bat

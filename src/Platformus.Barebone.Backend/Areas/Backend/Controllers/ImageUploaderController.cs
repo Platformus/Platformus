@@ -44,7 +44,7 @@ namespace Platformus.Barebone.Backend.Controllers
         filename = ContentDispositionHeaderValue.Parse(source.ContentDisposition).FileName.ToString().Trim('"');
         filename = this.EnsureCorrectFilename(filename);
 
-        using (FileStream output = System.IO.File.Create(this.GetFilepath("\\images\\temp\\", filename)))
+        using (FileStream output = System.IO.File.Create(this.GetTempFilepath(filename)))
           await source.CopyToAsync(output);
       }
 
@@ -56,7 +56,7 @@ namespace Platformus.Barebone.Backend.Controllers
     {
       string filename = sourceImageUrl.Substring(sourceImageUrl.LastIndexOf("/") + 1);
 
-      using (Image<Rgba32> image = this.LoadImageFromFile(this.GetFilepath("\\images\\temp\\", filename), out IImageFormat imageFormat))
+      using (Image<Rgba32> image = this.LoadImageFromFile(this.GetTempFilepath(filename), out IImageFormat imageFormat))
       {
         if (image.Width == destinationWidth && image.Height == destinationHeight)
           return this.Content(sourceImageUrl);
@@ -81,15 +81,29 @@ namespace Platformus.Barebone.Backend.Controllers
 
     private string EnsureCorrectFilename(string filename)
     {
-      if (filename.Contains("\\"))
-        filename = filename.Substring(filename.LastIndexOf("\\") + 1);
+      if (filename.Contains(Path.DirectorySeparatorChar.ToString()))
+        filename = filename.Substring(filename.LastIndexOf(Path.DirectorySeparatorChar) + 1);
 
       return filename;
     }
 
+    private string GetTempFilepath(string filename)
+    {
+      return this.GetFilepath(this.GetTempBasePath(), filename);
+    }
+
     private string GetFilepath(string basePath, string filename)
     {
-      return this.hostingEnvironment.WebRootPath + basePath.Replace('/', '\\') + filename;
+      basePath = basePath.Replace('/', '\\');
+
+      return this.hostingEnvironment.WebRootPath + basePath.Replace('\\', Path.DirectorySeparatorChar) + filename;
+    }
+
+    private string GetTempBasePath()
+    {
+      char directorySeparatorChar = Path.DirectorySeparatorChar;
+
+      return $"{directorySeparatorChar}images{directorySeparatorChar}temp{directorySeparatorChar}";
     }
   }
 }

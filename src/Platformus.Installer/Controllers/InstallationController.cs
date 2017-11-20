@@ -48,7 +48,7 @@ namespace Platformus.Installer.Controllers
         if (string.IsNullOrEmpty(package.Condition) || string.Equals(package.Condition.Replace("StorageType=", string.Empty), storageTypeCode, StringComparison.OrdinalIgnoreCase))
         {
           ResourceManager.WriteResourceToFile(
-            "Platformus.Installer.Sources.Packages." + package.Name,
+            "Platformus.Installer.Input.Packages." + package.Name,
             Path.Combine(this.hostingEnvironment.ContentRootPath, "Extensions", package.Name)
           );
         }
@@ -59,7 +59,7 @@ namespace Platformus.Installer.Controllers
         string tempPath = Path.Combine(this.hostingEnvironment.ContentRootPath, "temp.zip");
 
         ResourceManager.WriteResourceToFile(
-          "Platformus.Installer.Sources.UsageScenarios." + usageScenario.Code + "." + contentEntry,
+          "Platformus.Installer.Input.UsageScenarios." + usageScenario.Code + "." + contentEntry,
           tempPath
         );
 
@@ -79,7 +79,7 @@ namespace Platformus.Installer.Controllers
           string languagePackPath = Path.Combine(this.hostingEnvironment.ContentRootPath, languagePack + ".zip");
 
           ResourceManager.WriteResourceToFile(
-            "Platformus.Installer.Sources.LanguagePacks." + languagePack + ".zip",
+            "Platformus.Installer.Input.LanguagePacks." + languagePack + ".zip",
             languagePackPath
           );
 
@@ -166,7 +166,7 @@ namespace Platformus.Installer.Controllers
     private void ExecuteStorageScript(string usageScenarioCode, string storageTypeCode, string connectionString)
     {
       string storageScript = ResourceManager.GetResourceString(
-        "Platformus.Installer.Sources.UsageScenarios." + usageScenarioCode + "." + storageTypeCode + ".sql"
+        "Platformus.Installer.Input.UsageScenarios." + usageScenarioCode + "." + storageTypeCode + ".sql"
       );
 
       // TODO: move storage logic from the controller

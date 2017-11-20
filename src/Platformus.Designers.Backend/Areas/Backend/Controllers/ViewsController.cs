@@ -1,6 +1,7 @@
 ﻿// Copyright © 2017 Dmitry Sikorsky. All rights reserved.
 // Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information.
 
+using System.IO;
 using ExtCore.Data.Abstractions;
 using ExtCore.Events;
 using Microsoft.AspNetCore.Authorization;
@@ -57,7 +58,7 @@ namespace Platformus.Designers.Backend.Controllers
     public ActionResult Delete(string subdirectory, string id)
     {
       System.IO.File.Delete(PathManager.GetViewPath(this, subdirectory, id));
-      Event<IViewDeletedEventHandler, IRequestHandler, string>.Broadcast(this, subdirectory + "\\" + id);
+      Event<IViewDeletedEventHandler, IRequestHandler, string>.Broadcast(this, subdirectory + Path.DirectorySeparatorChar + id);
       return this.RedirectToAction("Index", new { subdirectory = subdirectory });
     }
   }

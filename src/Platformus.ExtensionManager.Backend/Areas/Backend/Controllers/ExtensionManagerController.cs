@@ -63,15 +63,15 @@ namespace Platformus.ExtensionManager.Backend.Controllers
 
     private string EnsureCorrectFilename(string filename)
     {
-      if (filename.Contains("\\"))
-        filename = filename.Substring(filename.LastIndexOf("\\") + 1);
+      if (filename.Contains(Path.DirectorySeparatorChar.ToString()))
+        filename = filename.Substring(filename.LastIndexOf(Path.DirectorySeparatorChar) + 1);
 
       return filename;
     }
 
     private string GetFilepath(string filename)
     {
-      return this.hostingEnvironment.WebRootPath + "\\temp\\" + filename;
+      return Path.Combine(this.hostingEnvironment.WebRootPath, "temp", filename);
     }
   }
 }

@@ -7,14 +7,14 @@
 
   if (this.Model.Subdirectory != null)
   {
-    this.ViewBag.Title += "\\" + this.Model.Subdirectory.Name;
+    this.ViewBag.Title += System.IO.Path.DirectorySeparatorChar + this.Model.Subdirectory.Name;
   }
 
   this.ViewBag.ActiveMenuItem = "views";
   this.ViewBag.HasSecondaryMaster = true;
 }
 @{
-  string path = "\\";
+  string path = System.IO.Path.DirectorySeparatorChar.ToString();
 
   if (this.Model.Subdirectory != null)
   {
