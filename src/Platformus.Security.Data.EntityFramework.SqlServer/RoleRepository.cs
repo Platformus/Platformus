@@ -25,7 +25,7 @@ namespace Platformus.Security.Data.EntityFramework.SqlServer
     /// <returns>Found role with the given identifier.</returns>
     public Role WithKey(int id)
     {
-      return this.dbSet.AsNoTracking().FirstOrDefault(r => r.Id == id);
+      return this.dbSet.Find(id);
     }
 
     /// <summary>
@@ -35,7 +35,7 @@ namespace Platformus.Security.Data.EntityFramework.SqlServer
     /// <returns>Found role with the given code.</returns>
     public Role WithCode(string code)
     {
-      return this.dbSet.AsNoTracking().FirstOrDefault(r => string.Equals(r.Code, code, StringComparison.OrdinalIgnoreCase));
+      return this.dbSet.FirstOrDefault(r => string.Equals(r.Code, code, StringComparison.OrdinalIgnoreCase));
     }
 
     /// <summary>

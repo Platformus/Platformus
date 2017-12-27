@@ -23,7 +23,7 @@ namespace Platformus.Menus.Data.EntityFramework.SqlServer
     /// <returns>Found menu item with the given identifier.</returns>
     public MenuItem WithKey(int id)
     {
-      return this.dbSet.AsNoTracking().FirstOrDefault(mi => mi.Id == id);
+      return this.dbSet.Find(id);
     }
 
     /// <summary>

@@ -1,6 +1,7 @@
 ﻿// Copyright © 2017 Dmitry Sikorsky. All rights reserved.
 // Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information.
 
+using System;
 using System.Collections.Generic;
 using System.Data.Common;
 using System.Linq;
@@ -27,7 +28,7 @@ namespace Platformus.Domain.Data.EntityFramework.PostgreSql
     /// <returns>Found serialized object with the given culture identifier and object identifier.</returns>
     public SerializedObject WithKey(int cultureId, int objectId)
     {
-      return this.dbSet.AsNoTracking().FirstOrDefault(so => so.CultureId == cultureId && so.ObjectId == objectId);
+      return this.dbSet.Find(cultureId, objectId);
     }
 
     /// <summary>
@@ -38,7 +39,7 @@ namespace Platformus.Domain.Data.EntityFramework.PostgreSql
     /// <returns>Found serialized object with the given culture identifier and URL object property value.</returns>
     public SerializedObject WithCultureIdAndUrlPropertyStringValue(int cultureId, string urlPropertyStringValue)
     {
-      return this.dbSet.AsNoTracking().FirstOrDefault(so => so.CultureId == cultureId && string.Equals(so.UrlPropertyStringValue, urlPropertyStringValue, System.StringComparison.OrdinalIgnoreCase));
+      return this.dbSet.FirstOrDefault(so => so.CultureId == cultureId && string.Equals(so.UrlPropertyStringValue, urlPropertyStringValue, StringComparison.OrdinalIgnoreCase));
     }
 
     /// <summary>

@@ -1,6 +1,7 @@
 ﻿// Copyright © 2015 Dmitry Sikorsky. All rights reserved.
 // Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information.
 
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using ExtCore.Data.EntityFramework;
@@ -23,7 +24,7 @@ namespace Platformus.Security.Data.EntityFramework.PostgreSql
     /// <returns>Found credential type with the given identifier.</returns>
     public CredentialType WithKey(int id)
     {
-      return this.dbSet.AsNoTracking().FirstOrDefault(ct => ct.Id == id);
+      return this.dbSet.Find(id);
     }
 
     /// <summary>
@@ -33,7 +34,7 @@ namespace Platformus.Security.Data.EntityFramework.PostgreSql
     /// <returns>Found credential type with the given code.</returns>
     public CredentialType WithCode(string code)
     {
-      return this.dbSet.AsNoTracking().FirstOrDefault(ct => string.Equals(ct.Code, code, System.StringComparison.OrdinalIgnoreCase));
+      return this.dbSet.FirstOrDefault(ct => string.Equals(ct.Code, code, StringComparison.OrdinalIgnoreCase));
     }
 
     /// <summary>

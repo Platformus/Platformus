@@ -25,7 +25,7 @@ namespace Platformus.Routing.Data.EntityFramework.Sqlite
     /// <returns>Found data source with the given identifier.</returns>
     public DataSource WithKey(int id)
     {
-      return this.dbSet.AsNoTracking().FirstOrDefault(ds => ds.Id == id);
+      return this.dbSet.Find(id);
     }
 
     /// <summary>
@@ -36,7 +36,7 @@ namespace Platformus.Routing.Data.EntityFramework.Sqlite
     /// <returns>Found data source with the given endpoint identifier and code.</returns>
     public DataSource WithEndpointIdAndCode(int endpointId, string code)
     {
-      return this.dbSet.AsNoTracking().FirstOrDefault(ds => ds.EndpointId == endpointId && string.Equals(ds.Code, code, StringComparison.OrdinalIgnoreCase));
+      return this.dbSet.FirstOrDefault(ds => ds.EndpointId == endpointId && string.Equals(ds.Code, code, StringComparison.OrdinalIgnoreCase));
     }
 
     /// <summary>

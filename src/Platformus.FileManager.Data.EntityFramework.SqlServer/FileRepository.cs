@@ -24,7 +24,7 @@ namespace Platformus.FileManager.Data.EntityFramework.SqlServer
     /// <returns>Found file with the given identifier.</returns>
     public File WithKey(int id)
     {
-      return this.dbSet.AsNoTracking().FirstOrDefault(f => f.Id == id);
+      return this.dbSet.Find(id);
     }
 
     /// <summary>

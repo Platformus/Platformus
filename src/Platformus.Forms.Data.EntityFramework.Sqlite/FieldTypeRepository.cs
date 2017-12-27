@@ -23,7 +23,7 @@ namespace Platformus.Forms.Data.EntityFramework.Sqlite
     /// <returns>Found field type with the given identifier.</returns>
     public FieldType WithKey(int id)
     {
-      return this.dbSet.AsNoTracking().FirstOrDefault(ft => ft.Id == id);
+      return this.dbSet.Find(id);
     }
 
     /// <summary>

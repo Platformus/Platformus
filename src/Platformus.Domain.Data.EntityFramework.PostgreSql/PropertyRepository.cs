@@ -23,7 +23,7 @@ namespace Platformus.Domain.Data.EntityFramework.PostgreSql
     /// <returns>Found property with the given identifier.</returns>
     public Property WithKey(int id)
     {
-      return this.dbSet.AsNoTracking().FirstOrDefault(p => p.Id == id);
+      return this.dbSet.Find(id);
     }
 
     /// <summary>
@@ -34,7 +34,7 @@ namespace Platformus.Domain.Data.EntityFramework.PostgreSql
     /// <returns>Found properties with the given object identifier and member identifier.</returns>
     public Property WithObjectIdAndMemberId(int objectId, int memberId)
     {
-      return this.dbSet.AsNoTracking().FirstOrDefault(p => p.ObjectId == objectId && p.MemberId == memberId);
+      return this.dbSet.FirstOrDefault(p => p.ObjectId == objectId && p.MemberId == memberId);
     }
 
     /// <summary>

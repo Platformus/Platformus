@@ -24,7 +24,7 @@ namespace Platformus.Routing.Data.EntityFramework.SqlServer
     /// <returns>Found endpoint with the given identifier.</returns>
     public Endpoint WithKey(int id)
     {
-      return this.dbSet.AsNoTracking().FirstOrDefault(e => e.Id == id);
+      return this.dbSet.Find(id);
     }
 
     /// <summary>

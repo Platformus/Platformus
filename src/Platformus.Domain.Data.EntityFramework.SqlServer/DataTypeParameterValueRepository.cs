@@ -23,7 +23,7 @@ namespace Platformus.Domain.Data.EntityFramework.SqlServer
     /// <returns>Found data type parameter value with the given data type parameter identifier and member identifier.</returns>
     public DataTypeParameterValue WithDataTypeParameterIdAndMemberId(int dataTypeParameterId, int memberId)
     {
-      return this.dbSet.AsNoTracking().FirstOrDefault(dtpv => dtpv.DataTypeParameterId == dataTypeParameterId && dtpv.MemberId == memberId);
+      return this.dbSet.FirstOrDefault(dtpv => dtpv.DataTypeParameterId == dataTypeParameterId && dtpv.MemberId == memberId);
     }
 
     /// <summary>

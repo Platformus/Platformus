@@ -24,7 +24,7 @@ namespace Platformus.Security.Data.EntityFramework.PostgreSql
     /// <returns>Found role permission with the given role identifier and permission identifier.</returns>
     public RolePermission WithKey(int roleId, int permissionId)
     {
-      return this.dbSet.AsNoTracking().FirstOrDefault(rp => rp.RoleId == roleId && rp.PermissionId == permissionId);
+      return this.dbSet.Find(roleId, permissionId);
     }
 
     /// <summary>

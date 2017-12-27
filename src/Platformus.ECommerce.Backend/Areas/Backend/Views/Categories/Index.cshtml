@@ -1,0 +1,22 @@
+﻿@* Copyright © 2017 Dmitry Sikorsky. All rights reserved. *@
+@* Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information. *@
+@model Platformus.ECommerce.Backend.ViewModels.Categories.IndexViewModel
+@inject Microsoft.AspNetCore.Mvc.Localization.IViewLocalizer Localizer
+@{
+  this.ViewBag.Title = this.Localizer["Categories"];
+  this.ViewBag.ActiveMenuItem = "categories";
+}
+@section title {
+  @ViewBag.Title <span class="master-detail__detail-header-counter">@Model.Categories.Count()</span>
+}
+<div class="tree">
+  @foreach (var category in this.Model.Categories)
+  {
+    @Html.Partial("_Category", category)
+  }
+  <div class="tree__node">
+    <div class="tree__buttons buttons">
+      <a class="buttons__button buttons__button--minor button button--positive button--minor" href="/backend/categories/create">@Localizer["Create category"]</a>
+    </div>
+  </div>
+</div>

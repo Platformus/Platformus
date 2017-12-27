@@ -23,7 +23,7 @@ namespace Platformus.Forms.Data.EntityFramework.Sqlite
     /// <returns>Found completed form with the given identifier.</returns>
     public CompletedForm WithKey(int id)
     {
-      return this.dbSet.AsNoTracking().FirstOrDefault(cf => cf.Id == id);
+      return this.dbSet.Find(id);
     }
 
     /// <summary>

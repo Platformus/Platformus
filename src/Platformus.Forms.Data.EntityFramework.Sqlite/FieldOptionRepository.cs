@@ -23,7 +23,7 @@ namespace Platformus.Forms.Data.EntityFramework.Sqlite
     /// <returns>Found field option with the given identifier.</returns>
     public FieldOption WithKey(int id)
     {
-      return this.dbSet.AsNoTracking().FirstOrDefault(fo => fo.Id == id);
+      return this.dbSet.Find(id);
     }
 
     /// <summary>

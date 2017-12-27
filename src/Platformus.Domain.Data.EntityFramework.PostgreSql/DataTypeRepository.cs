@@ -24,7 +24,7 @@ namespace Platformus.Domain.Data.EntityFramework.PostgreSql
     /// <returns>Found data type with the given identifier.</returns>
     public DataType WithKey(int id)
     {
-      return this.dbSet.AsNoTracking().FirstOrDefault(dt => dt.Id == id);
+      return this.dbSet.Find(id);
     }
 
     /// <summary>

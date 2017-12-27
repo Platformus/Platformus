@@ -24,7 +24,7 @@ namespace Platformus.Domain.Data.EntityFramework.SqlServer
     /// <returns>Found tab with the given identifier.</returns>
     public Tab WithKey(int id)
     {
-      return this.dbSet.AsNoTracking().FirstOrDefault(t => t.Id == id);
+      return this.dbSet.Find(id);
     }
 
     /// <summary>

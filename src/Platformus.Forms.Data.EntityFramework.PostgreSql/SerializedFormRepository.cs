@@ -1,6 +1,7 @@
 ﻿// Copyright © 2017 Dmitry Sikorsky. All rights reserved.
 // Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information.
 
+using System;
 using System.Linq;
 using ExtCore.Data.EntityFramework;
 using Microsoft.EntityFrameworkCore;
@@ -23,7 +24,7 @@ namespace Platformus.Forms.Data.EntityFramework.PostgreSql
     /// <returns>Found serialized form with the given culture identifier and form identifier.</returns>
     public SerializedForm WithKey(int cultureId, int formId)
     {
-      return this.dbSet.AsNoTracking().FirstOrDefault(sf => sf.CultureId == cultureId && sf.FormId == formId);
+      return this.dbSet.Find(cultureId, formId);
     }
 
     /// <summary>
@@ -34,7 +35,7 @@ namespace Platformus.Forms.Data.EntityFramework.PostgreSql
     /// <returns>Found serialized form with the given culture identifier and form code.</returns>
     public SerializedForm WithCultureIdAndCode(int cultureId, string code)
     {
-      return this.dbSet.AsNoTracking().FirstOrDefault(sf => sf.CultureId == cultureId && string.Equals(sf.Code, code, System.StringComparison.OrdinalIgnoreCase));
+      return this.dbSet.FirstOrDefault(sf => sf.CultureId == cultureId && string.Equals(sf.Code, code, StringComparison.OrdinalIgnoreCase));
     }
 
     /// <summary>

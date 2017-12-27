@@ -1,0 +1,19 @@
+﻿@* Copyright © 2017 Dmitry Sikorsky. All rights reserved. *@
+@* Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information. *@
+@model Platformus.ECommerce.Backend.ViewModels.Catalogs.CreateOrEditViewModel
+@inject Microsoft.AspNetCore.Mvc.Localization.IViewLocalizer Localizer
+@{
+  this.ViewBag.Title = (this.Model.Id == null ? this.Localizer["Create Catalog"].Value : this.Localizer["Edit Catalog"].Value);
+  this.ViewBag.ActiveMenuItem = "catalogs";
+}
+@section title {
+  @ViewBag.Title
+}
+<form class="form" method="post">
+  <multilingual-single-line-text-field asp-for="Name" asp-localizations="@Model.NameLocalizations" />
+  <numeric-field asp-for="Position" />
+  <div class="form__buttons buttons">
+    <button class="buttons__button button button--positive" type="submit">@Localizer["Save"]</button>
+    <a class="buttons__button button button--neutral" href="/backend/catalogs">@Localizer["Cancel"]</a>
+  </div>
+</form>

@@ -4,7 +4,7 @@
     <Authors>Dmitry Sikorsky</Authors>
     <Copyright>Copyright © 2015 Dmitry Sikorsky</Copyright>
     <Description>The Platformus.ECommerce extension component.</Description>
-    <VersionPrefix>1.0.0-beta2</VersionPrefix>
+    <VersionPrefix>1.0.0-beta3</VersionPrefix>
     <TargetFramework>netcoreapp2.0</TargetFramework>
     <AssemblyName>Platformus.ECommerce.Frontend</AssemblyName>
     <PackageId>Platformus.ECommerce.Frontend</PackageId>
@@ -13,8 +13,8 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Platformus.Barebone.Frontend\Platformus.Barebone.Frontend.csproj" />
     <ProjectReference Include="..\Platformus.ECommerce\Platformus.ECommerce.csproj" />
+    <ProjectReference Include="..\Platformus.Globalization.Frontend\Platformus.Globalization.Frontend.csproj" />
   </ItemGroup>
 
 </Project>

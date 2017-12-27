@@ -4,7 +4,7 @@
     <Authors>Dmitry Sikorsky</Authors>
     <Copyright>Copyright © 2015 Dmitry Sikorsky</Copyright>
     <Description>The Platformus.Forms extension component.</Description>
-    <VersionPrefix>1.0.0-beta2</VersionPrefix>
+    <VersionPrefix>1.0.0-beta3</VersionPrefix>
     <TargetFramework>netcoreapp2.0</TargetFramework>
     <AssemblyName>Platformus.Forms.Backend</AssemblyName>
     <PackageId>Platformus.Forms.Backend</PackageId>
@@ -17,7 +17,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Platformus.Barebone.Backend\Platformus.Barebone.Backend.csproj" />
     <ProjectReference Include="..\Platformus.Forms\Platformus.Forms.csproj" />
     <ProjectReference Include="..\Platformus.Globalization.Backend\Platformus.Globalization.Backend.csproj" />
   </ItemGroup>

@@ -24,7 +24,7 @@ namespace Platformus.Configurations.Data.EntityFramework.Sqlite
     /// <returns>Found configuration with the given identifier.</returns>
     public Configuration WithKey(int id)
     {
-      return this.dbSet.AsNoTracking().FirstOrDefault(c => c.Id == id);
+      return this.dbSet.Find(id);
     }
 
     /// <summary>
@@ -34,7 +34,7 @@ namespace Platformus.Configurations.Data.EntityFramework.Sqlite
     /// <returns>Found configuration with the given code.</returns>
     public Configuration WithCode(string code)
     {
-      return this.dbSet.AsNoTracking().FirstOrDefault(c => string.Equals(c.Code, code, StringComparison.OrdinalIgnoreCase));
+      return this.dbSet.FirstOrDefault(c => string.Equals(c.Code, code, StringComparison.OrdinalIgnoreCase));
     }
 
     /// <summary>

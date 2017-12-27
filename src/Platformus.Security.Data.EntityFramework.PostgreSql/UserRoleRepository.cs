@@ -24,7 +24,7 @@ namespace Platformus.Security.Data.EntityFramework.PostgreSql
     /// <returns>Found user role with the given user identifier and role identifier.</returns>
     public UserRole WithKey(int userId, int roleId)
     {
-      return this.dbSet.AsNoTracking().FirstOrDefault(ur => ur.UserId == userId && ur.RoleId == roleId);
+      return this.dbSet.Find(userId, roleId);
     }
 
     /// <summary>

@@ -4,7 +4,7 @@
     <Authors>Dmitry Sikorsky</Authors>
     <Copyright>Copyright © 2015 Dmitry Sikorsky</Copyright>
     <Description>The Platformus.ECommerce extension component.</Description>
-    <VersionPrefix>1.0.0-beta2</VersionPrefix>
+    <VersionPrefix>1.0.0-beta3</VersionPrefix>
     <TargetFramework>netcoreapp2.0</TargetFramework>
     <AssemblyName>Platformus.ECommerce.Backend</AssemblyName>
     <PackageId>Platformus.ECommerce.Backend</PackageId>
@@ -13,7 +13,20 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Platformus.Barebone.Backend\Platformus.Barebone.Backend.csproj" />
+    <EmbeddedResource Include="Areas\Backend\Views\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Remove="Areas\Backend\Views\Catalogs\CreateOrEdit.cshtml" />
+    <None Remove="Areas\Backend\Views\Catalogs\Index.cshtml" />
+    <None Remove="Areas\Backend\Views\Products\CreateOrEdit.cshtml" />
+    <None Remove="Areas\Backend\Views\Products\Index.cshtml" />
+    <None Remove="Areas\Backend\Views\Shared\_Catalog.cshtml" />
+    <None Remove="Areas\Backend\Views\Shared\_Product.cshtml" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Platformus.Globalization.Backend\Platformus.Globalization.Backend.csproj" />
     <ProjectReference Include="..\Platformus.ECommerce\Platformus.ECommerce.csproj" />
   </ItemGroup>
 

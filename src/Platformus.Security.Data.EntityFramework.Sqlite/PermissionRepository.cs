@@ -25,7 +25,7 @@ namespace Platformus.Security.Data.EntityFramework.Sqlite
     /// <returns>Found permission with the given identifier.</returns>
     public Permission WithKey(int id)
     {
-      return this.dbSet.AsNoTracking().FirstOrDefault(p => p.Id == id);
+      return this.dbSet.Find(id);
     }
 
     /// <summary>
@@ -35,7 +35,7 @@ namespace Platformus.Security.Data.EntityFramework.Sqlite
     /// <returns>Found permission with the given code.</returns>
     public Permission WithCode(string code)
     {
-      return this.dbSet.AsNoTracking().FirstOrDefault(p => string.Equals(p.Code, code, StringComparison.OrdinalIgnoreCase));
+      return this.dbSet.FirstOrDefault(p => string.Equals(p.Code, code, StringComparison.OrdinalIgnoreCase));
     }
 
     /// <summary>

@@ -25,7 +25,7 @@ namespace Platformus.Domain.Data.EntityFramework.PostgreSql
     /// <returns>Found data type parameter with the given identifier.</returns>
     public DataTypeParameter WithKey(int id)
     {
-      return this.dbSet.AsNoTracking().FirstOrDefault(dtp => dtp.Id == id);
+      return this.dbSet.Find(id);
     }
 
     /// <summary>
@@ -36,7 +36,7 @@ namespace Platformus.Domain.Data.EntityFramework.PostgreSql
     /// <returns>Found data type parameter with the given data type identifier and code.</returns>
     public DataTypeParameter WithDataTypeIdAndCode(int dataTypeId, string code)
     {
-      return this.dbSet.AsNoTracking().FirstOrDefault(dtp => dtp.DataTypeId == dataTypeId && string.Equals(dtp.Code, code, StringComparison.OrdinalIgnoreCase));
+      return this.dbSet.FirstOrDefault(dtp => dtp.DataTypeId == dataTypeId && string.Equals(dtp.Code, code, StringComparison.OrdinalIgnoreCase));
     }
 
     /// <summary>

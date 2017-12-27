@@ -24,7 +24,7 @@ namespace Platformus.Security.Data.EntityFramework.PostgreSql
     /// <returns>Found user with the given identifier.</returns>
     public User WithKey(int id)
     {
-      return this.dbSet.AsNoTracking().FirstOrDefault(u => u.Id == id);
+      return this.dbSet.Find(id);
     }
 
     /// <summary>

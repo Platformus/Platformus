@@ -4,7 +4,7 @@
     <Authors>Dmitry Sikorsky</Authors>
     <Copyright>Copyright © 2015 Dmitry Sikorsky</Copyright>
     <Description>The Platformus.ECommerce extension component.</Description>
-    <VersionPrefix>1.0.0-beta2</VersionPrefix>
+    <VersionPrefix>1.0.0-beta3</VersionPrefix>
     <TargetFramework>netcoreapp2.0</TargetFramework>
     <AssemblyName>Platformus.ECommerce.Data.EntityFramework.SqlServer</AssemblyName>
     <PackageId>Platformus.ECommerce.Data.EntityFramework.SqlServer</PackageId>
@@ -17,6 +17,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Platformus.Barebone.Data.Extensions\Platformus.Barebone.Data.Extensions.csproj" />
     <ProjectReference Include="..\Platformus.ECommerce.Data.Abstractions\Platformus.ECommerce.Data.Abstractions.csproj" />
   </ItemGroup>
 

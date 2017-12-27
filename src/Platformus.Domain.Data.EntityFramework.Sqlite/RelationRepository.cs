@@ -23,7 +23,7 @@ namespace Platformus.Domain.Data.EntityFramework.Sqlite
     /// <returns>Found relation with the given identifier.</returns>
     public Relation WithKey(int id)
     {
-      return this.dbSet.AsNoTracking().FirstOrDefault(r => r.Id == id);
+      return this.dbSet.Find(id);
     }
 
     /// <summary>

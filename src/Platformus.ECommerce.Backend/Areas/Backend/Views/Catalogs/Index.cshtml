@@ -1,0 +1,22 @@
+﻿@* Copyright © 2017 Dmitry Sikorsky. All rights reserved. *@
+@* Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information. *@
+@model Platformus.ECommerce.Backend.ViewModels.Catalogs.IndexViewModel
+@inject Microsoft.AspNetCore.Mvc.Localization.IViewLocalizer Localizer
+@{
+  this.ViewBag.Title = this.Localizer["Catalogs"];
+  this.ViewBag.ActiveMenuItem = "catalogs";
+}
+@section title {
+  @ViewBag.Title <span class="master-detail__detail-header-counter">@Model.Catalogs.Count()</span>
+}
+<div class="tree">
+  @foreach (var catalog in this.Model.Catalogs)
+  {
+    @Html.Partial("_Catalog", catalog)
+  }
+  <div class="tree__node">
+    <div class="tree__buttons buttons">
+      <a class="buttons__button buttons__button--minor button button--positive button--minor" href="/backend/catalogs/create">@Localizer["Create catalog"]</a>
+    </div>
+  </div>
+</div>

@@ -24,7 +24,7 @@ namespace Platformus.Routing.Data.EntityFramework.Sqlite
     /// <returns>Found endpoint permission with the given endpoint identifier and permission identifier.</returns>
     public EndpointPermission WithKey(int endpointId, int permissionId)
     {
-      return this.dbSet.AsNoTracking().FirstOrDefault(ep => ep.EndpointId == endpointId && ep.PermissionId == permissionId);
+      return this.dbSet.Find(endpointId, permissionId);
     }
 
     /// <summary>

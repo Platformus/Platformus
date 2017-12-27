@@ -1,6 +1,7 @@
 ﻿// Copyright © 2017 Dmitry Sikorsky. All rights reserved.
 // Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information.
 
+using System;
 using System.Linq;
 using ExtCore.Data.EntityFramework;
 using Microsoft.EntityFrameworkCore;
@@ -23,7 +24,7 @@ namespace Platformus.Menus.Data.EntityFramework.PostgreSql
     /// <returns>Found serialized menu with the given culture identifier and menu identifier.</returns>
     public SerializedMenu WithKey(int cultureId, int menuId)
     {
-      return this.dbSet.AsNoTracking().FirstOrDefault(sm => sm.CultureId == cultureId && sm.MenuId == menuId);
+      return this.dbSet.Find(cultureId, menuId);
     }
 
     /// <summary>
@@ -34,7 +35,7 @@ namespace Platformus.Menus.Data.EntityFramework.PostgreSql
     /// <returns>Found serialized menu with the given culture identifier and menu code.</returns>
     public SerializedMenu WithCultureIdAndCode(int cultureId, string code)
     {
-      return this.dbSet.AsNoTracking().FirstOrDefault(sm => sm.CultureId == cultureId && string.Equals(sm.Code, code, System.StringComparison.OrdinalIgnoreCase));
+      return this.dbSet.FirstOrDefault(sm => sm.CultureId == cultureId && string.Equals(sm.Code, code, StringComparison.OrdinalIgnoreCase));
     }
 
     /// <summary>

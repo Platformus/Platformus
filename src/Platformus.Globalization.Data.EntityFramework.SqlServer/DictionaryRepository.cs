@@ -22,7 +22,7 @@ namespace Platformus.Globalization.Data.EntityFramework.SqlServer
     /// <returns>Found dictionary with the given identifier.</returns>
     public Dictionary WithKey(int id)
     {
-      return this.dbSet.AsNoTracking().FirstOrDefault(d => d.Id == id);
+      return this.dbSet.Find(id);
     }
 
     /// <summary>

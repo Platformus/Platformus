@@ -1,6 +1,7 @@
 ﻿// Copyright © 2015 Dmitry Sikorsky. All rights reserved.
 // Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information.
 
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using ExtCore.Data.EntityFramework;
@@ -23,7 +24,7 @@ namespace Platformus.Menus.Data.EntityFramework.PostgreSql
     /// <returns>Found menu with the given identifier.</returns>
     public Menu WithKey(int id)
     {
-      return this.dbSet.AsNoTracking().FirstOrDefault(m => m.Id == id);
+      return this.dbSet.Find(id);
     }
 
     /// <summary>
@@ -33,7 +34,7 @@ namespace Platformus.Menus.Data.EntityFramework.PostgreSql
     /// <returns>Found menu with the given code.</returns>
     public Menu WithCode(string code)
     {
-      return this.dbSet.AsNoTracking().FirstOrDefault(m => string.Equals(m.Code, code, System.StringComparison.OrdinalIgnoreCase));
+      return this.dbSet.FirstOrDefault(m => string.Equals(m.Code, code, StringComparison.OrdinalIgnoreCase));
     }
 
     /// <summary>

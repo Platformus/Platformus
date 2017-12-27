@@ -1,6 +1,7 @@
 ﻿// Copyright © 2015 Dmitry Sikorsky. All rights reserved.
 // Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information.
 
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using ExtCore.Data.EntityFramework;
@@ -23,7 +24,7 @@ namespace Platformus.Forms.Data.EntityFramework.PostgreSql
     /// <returns>Found form with the given identifier.</returns>
     public Form WithKey(int id)
     {
-      return this.dbSet.AsNoTracking().FirstOrDefault(f => f.Id == id);
+      return this.dbSet.Find(id);
     }
 
     /// <summary>
@@ -33,7 +34,7 @@ namespace Platformus.Forms.Data.EntityFramework.PostgreSql
     /// <returns>Found form with the given code.</returns>
     public Form WithCode(string code)
     {
-      return this.dbSet.AsNoTracking().FirstOrDefault(f => string.Equals(f.Code, code, System.StringComparison.OrdinalIgnoreCase));
+      return this.dbSet.FirstOrDefault(f => string.Equals(f.Code, code, StringComparison.OrdinalIgnoreCase));
     }
 
     /// <summary>

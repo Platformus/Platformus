@@ -25,7 +25,7 @@ namespace Platformus.Security.Data.EntityFramework.Sqlite
     /// <returns>Found credential with the given identifier.</returns>
     public Credential WithKey(int id)
     {
-      return this.dbSet.AsNoTracking().FirstOrDefault(c => c.Id == id);
+      return this.dbSet.Find(id);
     }
 
     /// <summary>
@@ -37,7 +37,7 @@ namespace Platformus.Security.Data.EntityFramework.Sqlite
     /// <returns>Found credential with the given credential type identifier, user identifier and user secret MD5 hash.</returns>
     public Credential WithCredentialTypeIdAndIdentifierAndSecret(int credentialTypeId, string identifier, string secret)
     {
-      return this.dbSet.AsNoTracking().FirstOrDefault(c => c.CredentialTypeId == credentialTypeId && string.Equals(c.Identifier, identifier, StringComparison.OrdinalIgnoreCase) && c.Secret == secret);
+      return this.dbSet.FirstOrDefault(c => c.CredentialTypeId == credentialTypeId && string.Equals(c.Identifier, identifier, StringComparison.OrdinalIgnoreCase) && c.Secret == secret);
     }
 
     /// <summary>

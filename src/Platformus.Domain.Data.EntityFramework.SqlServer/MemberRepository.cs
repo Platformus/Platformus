@@ -1,6 +1,7 @@
 ﻿// Copyright © 2015 Dmitry Sikorsky. All rights reserved.
 // Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information.
 
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using ExtCore.Data.EntityFramework;
@@ -24,7 +25,7 @@ namespace Platformus.Domain.Data.EntityFramework.SqlServer
     /// <returns>Found member with the given identifier.</returns>
     public Member WithKey(int id)
     {
-      return this.dbSet.AsNoTracking().FirstOrDefault(m => m.Id == id);
+      return this.dbSet.Find(id);
     }
 
     /// <summary>
@@ -35,7 +36,7 @@ namespace Platformus.Domain.Data.EntityFramework.SqlServer
     /// <returns>Found member with the given class identifier and code.</returns>
     public Member WithClassIdAndCode(int classId, string code)
     {
-      return this.dbSet.AsNoTracking().FirstOrDefault(m => m.ClassId == classId && string.Equals(m.Code, code, System.StringComparison.OrdinalIgnoreCase));
+      return this.dbSet.FirstOrDefault(m => m.ClassId == classId && string.Equals(m.Code, code, StringComparison.OrdinalIgnoreCase));
     }
 
     /// <summary>
@@ -49,7 +50,7 @@ namespace Platformus.Domain.Data.EntityFramework.SqlServer
       return this.dbSet.AsNoTracking().FromSql(
         "SELECT * FROM Members WHERE ClassId = {0} OR ClassId IN (SELECT ClassId FROM Classes WHERE Id = {0})",
         classId
-      ).FirstOrDefault(m => string.Equals(m.Code, code, System.StringComparison.OrdinalIgnoreCase));
+      ).FirstOrDefault(m => string.Equals(m.Code, code, StringComparison.OrdinalIgnoreCase));
     }
 
     /// <summary>

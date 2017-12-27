@@ -24,7 +24,7 @@ namespace Platformus.Configurations.Data.EntityFramework.SqlServer
     /// <returns>Found variable with the given identifier.</returns>
     public Variable WithKey(int id)
     {
-      return this.dbSet.AsNoTracking().FirstOrDefault(v => v.Id == id);
+      return this.dbSet.Find(id);
     }
 
     /// <summary>
@@ -35,7 +35,7 @@ namespace Platformus.Configurations.Data.EntityFramework.SqlServer
     /// <returns>Found variable with the given configuration identifier and code.</returns>
     public Variable WithConfigurationIdAndCode(int configurationId, string code)
     {
-      return this.dbSet.AsNoTracking().FirstOrDefault(v => v.ConfigurationId == configurationId && string.Equals(v.Code, code, StringComparison.OrdinalIgnoreCase));
+      return this.dbSet.FirstOrDefault(v => v.ConfigurationId == configurationId && string.Equals(v.Code, code, StringComparison.OrdinalIgnoreCase));
     }
 
     /// <summary>

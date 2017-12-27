@@ -23,7 +23,7 @@ namespace Platformus.Globalization.Data.EntityFramework.PostgreSql
     /// <returns>Found localization with the given identifier.</returns>
     public Localization WithKey(int id)
     {
-      return this.dbSet.AsNoTracking().FirstOrDefault(l => l.Id == id);
+      return this.dbSet.Find(id);
     }
 
     /// <summary>
@@ -34,7 +34,7 @@ namespace Platformus.Globalization.Data.EntityFramework.PostgreSql
     /// <returns>Found localization with the given dictionary identifier and culture identifier.</returns>
     public Localization WithDictionaryIdAndCultureId(int dictionaryId, int cultureId)
     {
-      return this.dbSet.AsNoTracking().FirstOrDefault(l => l.DictionaryId == dictionaryId && l.CultureId == cultureId);
+      return this.dbSet.FirstOrDefault(l => l.DictionaryId == dictionaryId && l.CultureId == cultureId);
     }
 
     /// <summary>

@@ -1,0 +1,22 @@
+﻿@* Copyright © 2017 Dmitry Sikorsky. All rights reserved. *@
+@* Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information. *@
+@model Platformus.ECommerce.Backend.ViewModels.Shared.CatalogViewModel
+@inject Microsoft.AspNetCore.Mvc.Localization.IViewLocalizer Localizer
+<div class="tree__node">
+  <div class="tree__node-header">
+    <div class="tree__buttons tree__buttons--node-header buttons">
+      <a class="buttons__button buttons__button--minor button button--positive button--minor" href="/backend/catalogs/edit/@Model.Id">@Localizer["Edit"]</a>
+      <a class="buttons__button buttons__button--minor button button--negative button--minor button--delete" href="#" onclick="return platformus.forms.deleteForm.show('/backend/catalogs/delete/@Model.Id');"></a>
+    </div>
+    @Model.Name
+  </div>
+  <div class="tree__node-content">
+    @foreach (var catalog in this.Model.Catalogs)
+    {
+      @Html.Partial("_Catalog", catalog)
+    }
+    <div class="tree__buttons buttons">
+      <a class="buttons__button buttons__button--minor button button--positive button--minor" href="/backend/catalogs/create?catalogid=@Model.Id">@Localizer["Create catalog"]</a>
+    </div>
+  </div>
+</div>
