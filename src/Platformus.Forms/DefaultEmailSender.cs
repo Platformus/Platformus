@@ -43,8 +43,9 @@ namespace Platformus.Forms
 
       bodyBuilder.HtmlBody = body;
 
-      foreach (KeyValuePair<string, byte[]> attachmentByFilename in attachmentsByFilenames)
-        bodyBuilder.Attachments.Add(attachmentByFilename.Key, attachmentByFilename.Value);
+      if (attachmentsByFilenames != null)
+        foreach (KeyValuePair<string, byte[]> attachmentByFilename in attachmentsByFilenames)
+          bodyBuilder.Attachments.Add(attachmentByFilename.Key, attachmentByFilename.Value);
 
       message.Body = bodyBuilder.ToMessageBody();
 
