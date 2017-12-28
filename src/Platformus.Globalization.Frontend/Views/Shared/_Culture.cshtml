@@ -21,6 +21,8 @@
     url = "/";
   }
 
+  url += this.Context.Request.QueryString;
+
   bool isActive = string.Equals(this.Model.Code, cultureCode, StringComparison.OrdinalIgnoreCase);
 }
 <div class="cultures__culture @(isActive ? "cultures__culture--active" : null)">
