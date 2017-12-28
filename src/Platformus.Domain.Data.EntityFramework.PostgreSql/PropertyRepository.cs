@@ -83,7 +83,7 @@ namespace Platformus.Domain.Data.EntityFramework.PostgreSql
       this.storageContext.Database.ExecuteSqlCommand(
         @"
           CREATE TEMP TABLE ""TempDictionaries"" (""Id"" INT PRIMARY KEY);
-          INSERT INTO ""TempDictionaries"" SELECT ""StringValueId"" FROM ""Properties"" WHERE ""Id"" = {0};
+          INSERT INTO ""TempDictionaries"" SELECT ""StringValueId"" FROM ""Properties"" WHERE ""Id"" = {0} AND ""StringValueId"" IS NOT NULL;
           DELETE FROM ""Properties"" WHERE ""Id"" = {0};
           DELETE FROM ""Localizations"" WHERE ""DictionaryId"" IN (SELECT ""Id"" FROM ""TempDictionaries"");
           DELETE FROM ""Dictionaries"" WHERE ""Id"" IN (SELECT ""Id"" FROM ""TempDictionaries"");

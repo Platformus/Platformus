@@ -83,7 +83,7 @@ namespace Platformus.Domain.Data.EntityFramework.SqlServer
       this.storageContext.Database.ExecuteSqlCommand(
         @"
           CREATE TABLE #Dictionaries (Id INT PRIMARY KEY);
-          INSERT INTO #Dictionaries SELECT StringValueId FROM Properties WHERE Id = {0};
+          INSERT INTO #Dictionaries SELECT StringValueId FROM Properties WHERE Id = {0} AND StringValueId IS NOT NULL;
           DELETE FROM Properties WHERE Id = {0};
           DELETE FROM Localizations WHERE DictionaryId IN (SELECT Id FROM #Dictionaries);
           DELETE FROM Dictionaries WHERE Id IN (SELECT Id FROM #Dictionaries);

@@ -89,7 +89,7 @@ namespace Platformus.Domain.Data.EntityFramework.SqlServer
           DELETE FROM DataTypeParameters WHERE DataTypeId = {0};
           DELETE FROM SerializedObjects WHERE ObjectId IN (SELECT Id FROM Objects WHERE ClassId IN (SELECT ClassId FROM Members WHERE PropertyDataTypeId = {0}));
           CREATE TABLE #Dictionaries (Id INT PRIMARY KEY);
-          INSERT INTO #Dictionaries SELECT StringValueId FROM Properties WHERE MemberId IN (SELECT Id FROM Members WHERE PropertyDataTypeId = {0});
+          INSERT INTO #Dictionaries SELECT StringValueId FROM Properties WHERE MemberId IN (SELECT Id FROM Members WHERE PropertyDataTypeId = {0}) AND StringValueId IS NOT NULL;
           DELETE FROM Properties WHERE MemberId IN (SELECT Id FROM Members WHERE PropertyDataTypeId = {0});
           DELETE FROM Localizations WHERE DictionaryId IN (SELECT Id FROM #Dictionaries);
           DELETE FROM Dictionaries WHERE Id IN (SELECT Id FROM #Dictionaries);
