@@ -75,6 +75,7 @@ namespace Platformus.Forms
 
       serializedField.FieldId = field.Id;
       serializedField.FieldTypeCode = this.requestHandler.Storage.GetRepository<IFieldTypeRepository>().WithKey(field.FieldTypeId).Code;
+      serializedField.Code = field.Code;
       serializedField.Name = this.requestHandler.GetLocalizationValue(field.NameId, culture.Id);
       serializedField.IsRequired = field.IsRequired;
       serializedField.MaxLength = field.MaxLength;

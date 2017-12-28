@@ -28,6 +28,11 @@ namespace Platformus.Forms.Data.Entities
     public int FieldTypeId { get; set; }
 
     /// <summary>
+    /// Gets or sets the unique code of the field. It is set by the user and might be used for the field retrieval or data binding.
+    /// </summary>
+    public string Code { get; set; }
+
+    /// <summary>
     /// Gets or sets the dictionary identifier this field is related to. It is used to store the localizable field name.
     /// </summary>
     public int NameId { get; set; }

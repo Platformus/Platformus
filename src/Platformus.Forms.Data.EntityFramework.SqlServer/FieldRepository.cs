@@ -1,6 +1,7 @@
 ﻿// Copyright © 2015 Dmitry Sikorsky. All rights reserved.
 // Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information.
 
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using ExtCore.Data.EntityFramework;
@@ -24,6 +25,17 @@ namespace Platformus.Forms.Data.EntityFramework.SqlServer
     public Field WithKey(int id)
     {
       return this.dbSet.Find(id);
+    }
+
+    /// <summary>
+    /// Gets the field by the form identifier and code (case insensitive).
+    /// </summary>
+    /// <param name="formId">The unique identifier of the form this field belongs to.</param>
+    /// <param name="code">The unique code of the field.</param>
+    /// <returns>Found field with the given form identifier and code.</returns>
+    public Field WithFormIdAndCode(int formId, string code)
+    {
+      return this.dbSet.FirstOrDefault(f => f.FormId == formId && string.Equals(f.Code, code, StringComparison.OrdinalIgnoreCase));
     }
 
     /// <summary>

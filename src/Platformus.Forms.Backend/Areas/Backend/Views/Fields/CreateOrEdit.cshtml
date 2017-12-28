@@ -11,6 +11,7 @@
 }
 <form class="form" method="post">
   <drop-down-list-field asp-for="FieldTypeId" asp-options="@Model.FieldTypeOptions" />
+  <single-line-text-field asp-for="Code" />
   <multilingual-single-line-text-field asp-for="Name" asp-localizations="@Model.NameLocalizations" />
   <checkbox-field asp-for="IsRequired" />
   <single-line-text-field asp-for="MaxLength" />

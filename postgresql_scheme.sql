@@ -508,6 +508,7 @@ CREATE TABLE "Fields" (
     "Id" serial NOT NULL,
     "FormId" integer NOT NULL,
     "FieldTypeId" integer NOT NULL,
+	"Code" text NOT NULL,
     "NameId" integer NOT NULL,
     "IsRequired" boolean NOT NULL,
     "MaxLength" integer,

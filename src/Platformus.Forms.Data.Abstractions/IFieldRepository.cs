@@ -20,6 +20,14 @@ namespace Platformus.Forms.Data.Abstractions
     Field WithKey(int id);
 
     /// <summary>
+    /// Gets the field by the form identifier and code (case insensitive).
+    /// </summary>
+    /// <param name="formId">The unique identifier of the form this field belongs to.</param>
+    /// <param name="code">The unique code of the field.</param>
+    /// <returns>Found field with the given form identifier and code.</returns>
+    Field WithFormIdAndCode(int formId, string code);
+
+    /// <summary>
     /// Gets the fields filtered by the form identifier using sorting by position (ascending).
     /// </summary>
     /// <param name="formId">The unique identifier of the form these fields belongs to.</param>

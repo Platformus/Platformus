@@ -19,6 +19,11 @@ namespace Platformus.Forms.Backend.ViewModels.Fields
     public int FieldTypeId { get; set; }
     public IEnumerable<Option> FieldTypeOptions { get; set; }
 
+    [Display(Name = "Code")]
+    [Required]
+    [StringLength(32)]
+    public string Code { get; set; }
+
     [Multilingual]
     [Display(Name = "Name")]
     [Required]

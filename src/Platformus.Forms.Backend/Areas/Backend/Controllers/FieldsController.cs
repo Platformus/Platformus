@@ -33,6 +33,9 @@ namespace Platformus.Forms.Backend.Controllers
     [ExportModelStateToTempData]
     public IActionResult CreateOrEdit(CreateOrEditViewModel createOrEdit)
     {
+      if (createOrEdit.Id == null && !this.IsCodeUnique(createOrEdit.FormId, createOrEdit.Code))
+        this.ModelState.AddModelError("code", string.Empty);
+
       if (this.ModelState.IsValid)
       {
         Field field = new CreateOrEditViewModelMapper(this).Map(createOrEdit);
@@ -61,6 +64,11 @@ namespace Platformus.Forms.Backend.Controllers
       this.Storage.Save();
       new SerializationManager(this).SerializeForm(form);
       return this.RedirectToAction("Index", "Forms");
+    }
+
+    private bool IsCodeUnique(int formId, string code)
+    {
+      return this.Storage.GetRepository<IFieldRepository>().WithFormIdAndCode(formId, code) == null;
     }
 
     private Form GetForm(Field field)

@@ -33,9 +33,10 @@ namespace Platformus.Forms.Backend.ViewModels.Fields
       return new CreateOrEditViewModel()
       {
         Id = field.Id,
-        NameLocalizations = this.GetLocalizations(field.NameId),
         FieldTypeId = field.FieldTypeId,
         FieldTypeOptions = this.GetFieldTypeOptions(),
+        Code = field.Code,
+        NameLocalizations = this.GetLocalizations(field.NameId),
         IsRequired = field.IsRequired,
         MaxLength = field.MaxLength,
         Position = field.Position

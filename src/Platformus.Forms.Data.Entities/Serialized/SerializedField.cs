@@ -9,6 +9,7 @@ namespace Platformus.Forms.Data.Entities
   {
     public int FieldId { get; set; }
     public string FieldTypeCode { get; set; }
+    public string Code { get; set; }
     public string Name { get; set; }
     public bool IsRequired { get; set; }
     public int? MaxLength { get; set; }
