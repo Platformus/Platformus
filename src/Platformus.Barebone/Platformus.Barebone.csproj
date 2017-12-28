@@ -13,8 +13,8 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="ExtCore.Data.Abstractions" Version="3.1.0-beta3" />
-    <PackageReference Include="ExtCore.Events" Version="3.1.0-beta3" />
+    <PackageReference Include="ExtCore.Data.Abstractions" Version="3.1.0" />
+    <PackageReference Include="ExtCore.Events" Version="3.1.0" />
     <PackageReference Include="MailKit" Version="1.18.1.1" />
     <PackageReference Include="NUglify" Version="1.5.4" />
     <PackageReference Include="SixLabors.ImageSharp" Version="1.0.0-beta0001" />

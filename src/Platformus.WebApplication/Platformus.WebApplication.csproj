@@ -13,10 +13,10 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="ExtCore.Data" Version="3.1.0-beta3" />
-    <PackageReference Include="ExtCore.Data.EntityFramework" Version="3.1.0-beta3" />
-    <PackageReference Include="ExtCore.Mvc" Version="3.1.0-beta3" />
-    <PackageReference Include="ExtCore.WebApplication" Version="3.1.0-beta3" />
+    <PackageReference Include="ExtCore.Data" Version="3.1.0" />
+    <PackageReference Include="ExtCore.Data.EntityFramework" Version="3.1.0" />
+    <PackageReference Include="ExtCore.Mvc" Version="3.1.0" />
+    <PackageReference Include="ExtCore.WebApplication" Version="3.1.0" />
   </ItemGroup>
 
   <ItemGroup>
