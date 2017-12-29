@@ -170,7 +170,6 @@ namespace Platformus.Domain.Data.EntityFramework.SqlServer
       this.storageContext.Database.ExecuteSqlCommand(
         @"
           DELETE FROM DataTypeParameterValues WHERE MemberId = {0};
-          DELETE FROM SerializedObjects WHERE ObjectId IN (SELECT Id FROM Objects WHERE ClassId IN (SELECT ClassId FROM Members WHERE Id = {0}));
           CREATE TABLE #Dictionaries (Id INT PRIMARY KEY);
           INSERT INTO #Dictionaries SELECT StringValueId FROM Properties WHERE MemberId = {0} AND StringValueId IS NOT NULL;
           DELETE FROM Properties WHERE MemberId = {0};

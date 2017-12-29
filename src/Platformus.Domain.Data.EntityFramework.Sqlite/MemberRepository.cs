@@ -170,7 +170,6 @@ namespace Platformus.Domain.Data.EntityFramework.Sqlite
       this.storageContext.Database.ExecuteSqlCommand(
         @"
           DELETE FROM DataTypeParameterValues WHERE MemberId = {0};
-          DELETE FROM SerializedObjects WHERE ObjectId IN (SELECT Id FROM Objects WHERE ClassId IN (SELECT ClassId FROM Members WHERE Id = {0}));
           CREATE TEMP TABLE TempDictionaries (Id INT PRIMARY KEY);
           INSERT INTO TempDictionaries SELECT StringValueId FROM Properties WHERE MemberId = {0} AND StringValueId IS NOT NULL;
           DELETE FROM Properties WHERE MemberId = {0};
