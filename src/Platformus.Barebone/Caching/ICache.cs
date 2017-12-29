@@ -36,5 +36,6 @@ namespace Platformus
     void Set<T>(string key, T value, CacheEntryOptions options);
     void Remove(string key);
     void RemoveAll();
+    void RemoveAll(Func<string, bool> predicate);
   }
 }

@@ -2,28 +2,27 @@
 // Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information.
 
 using System;
-using System.Globalization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Platformus.Globalization
 {
   public static class ICacheExtensions
   {
-    public static IViewComponentResult GetCulturesViewComponentResultWithDefaultValue(this ICache cache, Func<IViewComponentResult> defaultValueFunc)
+    public static IViewComponentResult GetCulturesViewComponentResultWithDefaultValue(this ICache cache, string additionalCssClass, Func<IViewComponentResult> defaultValueFunc)
     {
       return cache.GetWithDefaultValue(
-        ICacheExtensions.GetCulturesViewComponentResultKey(), defaultValueFunc
+        ICacheExtensions.GetCulturesViewComponentResultKey(additionalCssClass), defaultValueFunc
       );
     }
 
-    public static void RemoveCulturesViewComponentResult(this ICache cache, string code, string cultureCode)
+    public static void RemoveCulturesViewComponentResult(this ICache cache)
     {
-      cache.Remove(ICacheExtensions.GetCulturesViewComponentResultKey());
+      cache.RemoveAll(k => k.StartsWith("cultures-view-component"));
     }
 
-    private static string GetCulturesViewComponentResultKey()
+    private static string GetCulturesViewComponentResultKey(string additionalCssClass)
     {
-      return "cultures-view-component";
+      return "cultures-view-component" + (string.IsNullOrEmpty(additionalCssClass) ? null : ":" + additionalCssClass);
     }
   }
 }

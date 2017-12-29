@@ -16,9 +16,9 @@ namespace Platformus.Domain
       );
     }
 
-    public static void RemovePageActionResult(this ICache cache, string url, string cultureCode)
+    public static void RemovePageActionResult(this ICache cache, string url)
     {
-      cache.Remove(ICacheExtensions.GetPageActionResultKey(url, cultureCode));
+      cache.RemoveAll(k => k.StartsWith("page:" + url + ":"));
     }
 
     private static string GetPageActionResultKey(string url, string cultureCode = null)

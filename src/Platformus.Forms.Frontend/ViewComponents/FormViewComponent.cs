@@ -29,7 +29,7 @@ namespace Platformus.Forms.Frontend.ViewComponents
         return this.Content($"There is no form with code “{code}” defined.");
 
       return this.GetService<ICache>().GetFormViewComponentResultWithDefaultValue(
-        code, () => this.GetViewComponentResult(code, additionalCssClass)
+        code, additionalCssClass, () => this.GetViewComponentResult(code, additionalCssClass)
       );
     }
 

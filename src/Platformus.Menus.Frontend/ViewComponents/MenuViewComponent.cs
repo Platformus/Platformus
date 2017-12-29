@@ -22,7 +22,7 @@ namespace Platformus.Menus.Frontend.ViewComponents
     public async Task<IViewComponentResult> InvokeAsync(string code, string additionalCssClass)
     {
       return this.GetService<ICache>().GetMenuViewComponentResultWithDefaultValue(
-        code, () => this.GetViewComponentResult(code, additionalCssClass)
+        code, additionalCssClass, () => this.GetViewComponentResult(code, additionalCssClass)
       );
     }
 

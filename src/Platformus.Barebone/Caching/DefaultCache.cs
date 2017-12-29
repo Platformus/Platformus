@@ -80,5 +80,22 @@ namespace Platformus
 
       this.keys.Clear();
     }
+
+    public void RemoveAll(Func<string, bool> predicate)
+    {
+      IList<string> removedKeys = new List<string>();
+
+      foreach (string key in this.keys)
+      {
+        if (predicate(key))
+        {
+          this.memoryCache.Remove(key);
+          removedKeys.Add(key);
+        }
+      }
+
+      foreach (string removedKey in removedKeys)
+        this.keys.Remove(removedKey);
+    }
   }
 }

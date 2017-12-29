@@ -9,21 +9,24 @@ namespace Platformus.Menus
 {
   public static class ICacheExtensions
   {
-    public static IViewComponentResult GetMenuViewComponentResultWithDefaultValue(this ICache cache, string code, Func<IViewComponentResult> defaultValueFunc)
+    public static IViewComponentResult GetMenuViewComponentResultWithDefaultValue(this ICache cache, string code, string additionalCssClass, Func<IViewComponentResult> defaultValueFunc)
     {
       return cache.GetWithDefaultValue(
-        ICacheExtensions.GetMenuViewComponentResultKey(code), defaultValueFunc
+        ICacheExtensions.GetMenuViewComponentResultKey(code, additionalCssClass), defaultValueFunc
       );
     }
 
-    public static void RemoveMenuViewComponentResult(this ICache cache, string code, string cultureCode)
+    public static void RemoveMenuViewComponentResult(this ICache cache, string code)
     {
-      cache.Remove(ICacheExtensions.GetMenuViewComponentResultKey(code, cultureCode));
+      cache.RemoveAll(k => k.StartsWith("menu-view-component:" + code + ":"));
     }
 
-    private static string GetMenuViewComponentResultKey(string code, string cultureCode = null)
+    private static string GetMenuViewComponentResultKey(string code, string additionalCssClass, string cultureCode = null)
     {
-      return "menu-view-component:" + code + ":" + (string.IsNullOrEmpty(cultureCode) ? CultureInfo.CurrentCulture.TwoLetterISOLanguageName : cultureCode);
+      if (string.IsNullOrEmpty(cultureCode))
+        cultureCode = CultureInfo.CurrentCulture.TwoLetterISOLanguageName;
+
+      return "menu-view-component:" + code + ":" + (string.IsNullOrEmpty(additionalCssClass) ? null : additionalCssClass + ":") + cultureCode;
     }
   }
 }

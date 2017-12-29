@@ -9,21 +9,24 @@ namespace Platformus.Forms
 {
   public static class ICacheExtensions
   {
-    public static IViewComponentResult GetFormViewComponentResultWithDefaultValue(this ICache cache, string code, Func<IViewComponentResult> defaultValueFunc)
+    public static IViewComponentResult GetFormViewComponentResultWithDefaultValue(this ICache cache, string code, string additionalCssClass, Func<IViewComponentResult> defaultValueFunc)
     {
       return cache.GetWithDefaultValue(
-        ICacheExtensions.GetFormViewComponentResultKey(code), defaultValueFunc
+        ICacheExtensions.GetFormViewComponentResultKey(code, additionalCssClass), defaultValueFunc
       );
     }
 
-    public static void RemoveFormViewComponentResult(this ICache cache, string code, string cultureCode)
+    public static void RemoveFormViewComponentResult(this ICache cache, string code)
     {
-      cache.Remove(ICacheExtensions.GetFormViewComponentResultKey(code, cultureCode));
+      cache.RemoveAll(k => k.StartsWith("form-view-component:" + code + ":"));
     }
 
-    private static string GetFormViewComponentResultKey(string code, string cultureCode = null)
+    private static string GetFormViewComponentResultKey(string code, string additionalCssClass, string cultureCode = null)
     {
-      return "form-view-component:" + code + ":" + (string.IsNullOrEmpty(cultureCode) ? CultureInfo.CurrentCulture.TwoLetterISOLanguageName : cultureCode);
+      if (string.IsNullOrEmpty(cultureCode))
+        cultureCode = CultureInfo.CurrentCulture.TwoLetterISOLanguageName;
+
+      return "form-view-component:" + code + ":" + (string.IsNullOrEmpty(additionalCssClass) ? null : additionalCssClass + ":") + cultureCode;
     }
   }
 }

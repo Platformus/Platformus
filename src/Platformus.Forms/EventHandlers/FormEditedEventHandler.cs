@@ -4,8 +4,6 @@
 using Platformus.Barebone;
 using Platformus.Forms.Data.Entities;
 using Platformus.Forms.Events;
-using Platformus.Globalization;
-using Platformus.Globalization.Data.Entities;
 
 namespace Platformus.Forms.EventHandlers
 {
@@ -16,9 +14,7 @@ namespace Platformus.Forms.EventHandlers
     public void HandleEvent(IRequestHandler requestHandler, Form form)
     {
       new SerializationManager(requestHandler).SerializeForm(form);
-
-      foreach (Culture culture in requestHandler.GetService<ICultureManager>().GetNotNeutralCultures())
-        requestHandler.GetService<ICache>().RemoveFormViewComponentResult(form.Code, culture.Code);
+      requestHandler.GetService<ICache>().RemoveFormViewComponentResult(form.Code);
     }
   }
 }

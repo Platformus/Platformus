@@ -19,7 +19,7 @@ namespace Platformus.Globalization.Frontend.ViewComponents
     public async Task<IViewComponentResult> InvokeAsync(string additionalCssClass)
     {
       return this.GetService<ICache>().GetCulturesViewComponentResultWithDefaultValue(
-        () => this.GetViewComponentResult(additionalCssClass)
+        additionalCssClass, () => this.GetViewComponentResult(additionalCssClass)
       );
     }
 
