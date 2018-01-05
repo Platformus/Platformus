@@ -1,4 +1,4 @@
-# Platformus 1.0.0-beta2
+# Platformus 1.0.0-beta3
 
 [![Join the chat at https://gitter.im/Platformus/Platformus](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/Platformus/Platformus?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
@@ -53,7 +53,7 @@ or many relations to the objects of class Contact.
 
 Please take a look at our [sample](https://github.com/Platformus/Platformus-Sample) on GitHub.
 
-You can also download our [ready to use sample](http://platformus.net/files/Platformus-Sample-1.0.0-beta2.zip).
+You can also download our [ready to use sample](http://platformus.net/files/Platformus-Sample-1.0.0-beta3.zip).
 It contains everything you need to run Platformus-based web application from Visual Studio 2017, including SQLite
 database with the test data.
 
