@@ -35,6 +35,11 @@ namespace Platformus.Security
       this.credentialRepository = this.requestHandler.Storage.GetRepository<ICredentialRepository>();
     }
 
+    public User Validate(string loginTypeCode, string identifier)
+    {
+      return this.Validate(loginTypeCode, identifier, null);
+    }
+
     public User Validate(string loginTypeCode, string identifier, string secret)
     {
       CredentialType credentialType = this.credentialTypeRepository.WithCode(loginTypeCode);
@@ -43,7 +48,7 @@ namespace Platformus.Security
         return null;
 
       Credential credential = this.credentialRepository.WithCredentialTypeIdAndIdentifierAndSecret(
-        credentialType.Id, identifier, MD5Hasher.ComputeHash(secret)
+        credentialType.Id, identifier, string.IsNullOrEmpty(secret) ? null : MD5Hasher.ComputeHash(secret)
       );
 
       if (credential == null)

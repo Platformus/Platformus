@@ -26,7 +26,7 @@ namespace Platformus.Designers
         string outputFile = bundle.outputFile;
         IEnumerable<string> inputFiles = bundle.inputFiles.ToObject<IEnumerable<string>>();
         string input = BandleManager.ConcatFiles(requestHandler, inputFiles);
-        UgliflyResult result = outputFile.EndsWith(".css") ? Uglify.Css(input) : outputFile.EndsWith(".js") ? Uglify.Js(input) : default(UgliflyResult);
+        UglifyResult result = outputFile.EndsWith(".css") ? Uglify.Css(input) : outputFile.EndsWith(".js") ? Uglify.Js(input) : default(UglifyResult);
 
         if (!result.HasErrors)
           File.WriteAllText(Path.Combine(PathManager.GetContentRootPath(requestHandler), outputFile), result.Code);
