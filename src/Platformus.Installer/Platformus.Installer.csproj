@@ -10,6 +10,7 @@
     <PackageId>Platformus.Installer</PackageId>
     <PackageIconUrl>http://platformus.net/platformus_nuget_icon.png</PackageIconUrl>
     <PackageProjectUrl>http://platformus.net/</PackageProjectUrl>
+    <GenerateRuntimeConfigurationFiles>true</GenerateRuntimeConfigurationFiles>
   </PropertyGroup>
 
   <ItemGroup>
@@ -17,9 +18,9 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="ExtCore.Mvc" Version="3.2.0-beta3" />
-    <PackageReference Include="Microsoft.AspNetCore.All" Version="2.0.3" />
-    <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="2.0.0" />
+    <PackageReference Include="ExtCore.Mvc" Version="3.2.0" />
+    <PackageReference Include="Microsoft.AspNetCore.All" Version="2.0.6" />
+    <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="2.0.1" />
   </ItemGroup>
 
   <Target Name="PrecompileScript" BeforeTargets="BeforeBuild">
@@ -27,7 +28,7 @@
   </Target>
 
   <ItemGroup>
-    <DotNetCliToolReference Include="BundlerMinifier.Core" Version="2.2.301" />
+    <DotNetCliToolReference Include="BundlerMinifier.Core" Version="2.6.362" />
   </ItemGroup>
 
 </Project>
