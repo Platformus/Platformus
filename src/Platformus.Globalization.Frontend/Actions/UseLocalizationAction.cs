@@ -33,12 +33,12 @@ namespace Platformus.Globalization.Frontend.Actions
 
       else
       {
-        Culture defaultCulture = serviceProvider.GetService<ICultureManager>().GetDefaultCulture();
+        Culture frontendDefaultCulture = serviceProvider.GetService<ICultureManager>().GetFrontendDefaultCulture();
 
-        if (defaultCulture == null)
+        if (frontendDefaultCulture == null)
           requestLocalizationOptions.DefaultRequestCulture = new RequestCulture(DefaultCulture.Code);
 
-        else requestLocalizationOptions.DefaultRequestCulture = new RequestCulture(defaultCulture.Code);
+        else requestLocalizationOptions.DefaultRequestCulture = new RequestCulture(frontendDefaultCulture.Code);
 
         if (serviceProvider.GetService<ICultureManager>().GetNotNeutralCultures().Count() == 0)
         {

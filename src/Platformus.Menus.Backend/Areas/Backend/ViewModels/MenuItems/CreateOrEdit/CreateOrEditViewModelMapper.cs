@@ -8,7 +8,7 @@ using Platformus.Menus.Data.Entities;
 
 namespace Platformus.Menus.Backend.ViewModels.MenuItems
 {
-  public class CreateOrEditViewModelMapper : ViewModelFactoryBase
+  public class CreateOrEditViewModelMapper : ViewModelMapperBase
   {
     public CreateOrEditViewModelMapper(IRequestHandler requestHandler)
       : base(requestHandler)

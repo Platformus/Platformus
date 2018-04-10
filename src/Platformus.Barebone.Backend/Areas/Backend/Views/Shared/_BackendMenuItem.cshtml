@@ -1,6 +1,6 @@
 ﻿@* Copyright © 2015 Dmitry Sikorsky. All rights reserved. *@
 @* Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information. *@
-@model Platformus.Barebone.Backend.ViewModels.Shared.BackendMenuItemViewModel
+@model Platformus.Barebone.Backend.Metadata.MenuItem
 <a class="master-detail__master-menu-item--primary @(this.ViewBag.ActiveMenuItem == this.Model.Url.Replace("/backend/", string.Empty) ? (this.ViewBag.HasSecondaryMaster == null ? "master-detail__master-menu-item--primary-active" : "master-detail__master-menu-item--primary-active-with-secondary-master") : null) menu__item" href="@Model.Url">
   @Model.Name
 </a>

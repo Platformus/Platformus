@@ -1,36 +1,9 @@
 --
--- Extension: Platformus.Configurations
--- Version: beta1
---
-CREATE TABLE "Configurations" (
-    "Id" serial NOT NULL,
-    "Code" text NOT NULL,
-    "Name" text NOT NULL,
-	CONSTRAINT "PK_Configurations" PRIMARY KEY ("Id")
-);
-
-ALTER TABLE "Configurations" OWNER TO postgres;
-
-CREATE TABLE "Variables" (
-    "Id" serial NOT NULL,
-    "ConfigurationId" integer NOT NULL,
-    "Code" text NOT NULL,
-    "Name" text NOT NULL,
-    "Value" text NOT NULL,
-    "Position" integer,
-    CONSTRAINT "PK_Variable" PRIMARY KEY ("Id"),
-    CONSTRAINT "FK_Variables_Configurations" FOREIGN KEY ("ConfigurationId")
-        REFERENCES public."Configurations" ("Id") MATCH SIMPLE
-        ON UPDATE NO ACTION
-        ON DELETE NO ACTION
-);
-
-ALTER TABLE "Variables" OWNER TO postgres;
-
---
 -- Extension: Platformus.Security
--- Version: beta1
+-- Version: beta4
 --
+
+-- Users
 CREATE TABLE "Users" (
     "Id" serial NOT NULL,
     "Name" text NOT NULL,
@@ -40,6 +13,7 @@ CREATE TABLE "Users" (
 
 ALTER TABLE "Users" OWNER TO postgres;
 
+-- CredentialTypes
 CREATE TABLE "CredentialTypes" (
     "Id" serial NOT NULL,
     "Code" text NOT NULL,
@@ -50,6 +24,7 @@ CREATE TABLE "CredentialTypes" (
 
 ALTER TABLE "CredentialTypes" OWNER TO postgres;
 
+-- Credentials
 CREATE TABLE "Credentials" (
     "Id" serial NOT NULL,
     "UserId" integer NOT NULL,
@@ -69,6 +44,7 @@ CREATE TABLE "Credentials" (
 
 ALTER TABLE "Credentials" OWNER TO postgres;
 
+-- Roles
 CREATE TABLE "Roles" (
     "Id" serial NOT NULL,
     "Code" text NOT NULL,
@@ -79,6 +55,7 @@ CREATE TABLE "Roles" (
 
 ALTER TABLE "Roles" OWNER TO postgres;
 
+-- UserRoles
 CREATE TABLE "UserRoles" (
     "UserId" integer NOT NULL,
     "RoleId" integer NOT NULL,
@@ -95,6 +72,7 @@ CREATE TABLE "UserRoles" (
 
 ALTER TABLE "UserRoles" OWNER TO postgres;
 
+-- Permissions
 CREATE TABLE "Permissions" (
     "Id" serial NOT NULL,
     "Code" text NOT NULL,
@@ -105,6 +83,7 @@ CREATE TABLE "Permissions" (
 
 ALTER TABLE "Permissions" OWNER TO postgres;
 
+-- RolePermissions
 CREATE TABLE "RolePermissions" (
     "RoleId" integer NOT NULL,
     "PermissionId" integer NOT NULL,
@@ -122,34 +101,56 @@ CREATE TABLE "RolePermissions" (
 ALTER TABLE "RolePermissions" OWNER TO postgres;
 
 --
--- Extension: Platformus.FileManager
--- Version: beta1
+-- Extension: Platformus.Configurations
+-- Version: beta4
 --
-CREATE TABLE "Files" (
+
+-- Configurations
+CREATE TABLE "Configurations" (
     "Id" serial NOT NULL,
+    "Code" text NOT NULL,
     "Name" text NOT NULL,
-    "Size" bigint NOT NULL,
-    CONSTRAINT "PK_Files" PRIMARY KEY ("Id")
+	CONSTRAINT "PK_Configurations" PRIMARY KEY ("Id")
 );
 
-ALTER TABLE "Files" OWNER TO postgres;
+ALTER TABLE "Configurations" OWNER TO postgres;
+
+-- Variables
+CREATE TABLE "Variables" (
+    "Id" serial NOT NULL,
+    "ConfigurationId" integer NOT NULL,
+    "Code" text NOT NULL,
+    "Name" text NOT NULL,
+    "Value" text NOT NULL,
+    "Position" integer,
+    CONSTRAINT "PK_Variable" PRIMARY KEY ("Id"),
+    CONSTRAINT "FK_Variables_Configurations" FOREIGN KEY ("ConfigurationId")
+        REFERENCES public."Configurations" ("Id") MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION
+);
+
+ALTER TABLE "Variables" OWNER TO postgres;
 
 --
 -- Extension: Platformus.Globalization
--- Version: beta1
+-- Version: beta4
 --
+
+-- Cultures
 CREATE TABLE "Cultures" (
     "Id" serial NOT NULL,
     "Code" text NOT NULL,
     "Name" text NOT NULL,
     "IsNeutral" boolean NOT NULL,
-    "IsDefault" boolean NOT NULL,
-    "IsBackendUi" boolean NOT NULL,
+    "IsFrontendDefault" boolean NOT NULL,
+    "IsBackendDefault" boolean NOT NULL,
     CONSTRAINT "PK_Cultures" PRIMARY KEY ("Id")
 );
 
 ALTER TABLE "Cultures" OWNER TO postgres;
 
+-- Dictionaries
 CREATE TABLE "Dictionaries" (
     "Id" serial NOT NULL,
     CONSTRAINT "PK_Dictionaries" PRIMARY KEY ("Id")
@@ -157,6 +158,7 @@ CREATE TABLE "Dictionaries" (
 
 ALTER TABLE "Dictionaries" OWNER TO postgres;
 
+-- Localizations
 CREATE TABLE "Localizations" (
     "Id" serial NOT NULL,
     "DictionaryId" integer NOT NULL,
@@ -177,8 +179,10 @@ ALTER TABLE "Localizations" OWNER TO postgres;
 
 --
 -- Extension: Platformus.Routing
--- Version: beta1
+-- Version: beta4
 --
+
+-- Endpoints
 CREATE TABLE "Endpoints" (
     "Id" serial NOT NULL,
     "Name" text NOT NULL,
@@ -193,6 +197,7 @@ CREATE TABLE "Endpoints" (
 
 ALTER TABLE "Endpoints" OWNER TO postgres;
 
+-- EndpointPermissions
 CREATE TABLE "EndpointPermissions" (
     "EndpointId" integer NOT NULL,
     "PermissionId" integer NOT NULL,
@@ -209,6 +214,7 @@ CREATE TABLE "EndpointPermissions" (
 
 ALTER TABLE "EndpointPermissions" OWNER TO postgres;
 
+-- DataSources
 CREATE TABLE "DataSources" (
     "Id" serial NOT NULL,
     "EndpointId" integer NOT NULL,
@@ -226,8 +232,10 @@ ALTER TABLE "DataSources" OWNER TO postgres;
 
 --
 -- Extension: Platformus.Domain
--- Version: beta1
+-- Version: beta4
 --
+
+-- Classes
 CREATE TABLE "Classes" (
     "Id" serial NOT NULL,
     "ClassId" integer,
@@ -244,6 +252,7 @@ CREATE TABLE "Classes" (
 
 ALTER TABLE "Classes" OWNER TO postgres;
 
+-- Tabs
 CREATE TABLE "Tabs" (
     "Id" serial NOT NULL,
     "ClassId" integer NOT NULL,
@@ -258,6 +267,7 @@ CREATE TABLE "Tabs" (
 
 ALTER TABLE "Tabs" OWNER TO postgres;
 
+-- DataTypes
 CREATE TABLE "DataTypes" (
     "Id" serial NOT NULL,
     "StorageDataType" text NOT NULL,
@@ -269,6 +279,7 @@ CREATE TABLE "DataTypes" (
 
 ALTER TABLE "DataTypes" OWNER TO postgres;
 
+-- DataTypeParameters
 CREATE TABLE "DataTypeParameters" (
     "Id" serial NOT NULL,
     "DataTypeId" integer NOT NULL,
@@ -284,6 +295,7 @@ CREATE TABLE "DataTypeParameters" (
 
 ALTER TABLE "DataTypeParameters" OWNER TO postgres;
 
+-- Members
 CREATE TABLE "Members" (
     "Id" serial NOT NULL,
     "ClassId" integer NOT NULL,
@@ -319,6 +331,7 @@ CREATE TABLE "Members" (
 
 ALTER TABLE "Members" OWNER TO postgres;
 
+-- DataTypeParameterValues
 CREATE TABLE "DataTypeParameterValues" (
     "Id" serial NOT NULL,
     "DataTypeParameterId" integer NOT NULL,
@@ -337,6 +350,7 @@ CREATE TABLE "DataTypeParameterValues" (
 
 ALTER TABLE "DataTypeParameterValues" OWNER TO postgres;
 
+-- Objects
 CREATE TABLE "Objects" (
     "Id" serial NOT NULL,
     "ClassId" integer NOT NULL,
@@ -349,6 +363,7 @@ CREATE TABLE "Objects" (
 
 ALTER TABLE "Objects" OWNER TO postgres;
 
+-- Properties
 CREATE TABLE "Properties" (
     "Id" serial NOT NULL,
     "ObjectId" integer NOT NULL,
@@ -374,6 +389,7 @@ CREATE TABLE "Properties" (
 
 ALTER TABLE "Properties" OWNER TO postgres;
 
+-- Relations
 CREATE TABLE "Relations" (
     "Id" serial NOT NULL,
     "MemberId" integer NOT NULL,
@@ -396,6 +412,7 @@ CREATE TABLE "Relations" (
 
 ALTER TABLE "Relations" OWNER TO postgres;
 
+-- SerializedObjects
 CREATE TABLE "SerializedObjects" (
     "CultureId" integer NOT NULL,
     "ObjectId" integer NOT NULL,
@@ -421,8 +438,10 @@ ALTER TABLE "SerializedObjects" OWNER TO postgres;
 
 --
 -- Extension: Platformus.Menus
--- Version: beta1
+-- Version: beta4
 --
+
+-- Menus
 CREATE TABLE "Menus" (
     "Id" serial NOT NULL,
     "Code" text NOT NULL,
@@ -432,6 +451,7 @@ CREATE TABLE "Menus" (
 
 ALTER TABLE "Menus" OWNER TO postgres;
 
+-- MenuItems
 CREATE TABLE "MenuItems" (
     "Id" serial NOT NULL,
     "MenuId" integer,
@@ -456,6 +476,7 @@ CREATE TABLE "MenuItems" (
 
 ALTER TABLE "MenuItems" OWNER TO postgres;
 
+-- SerializedMenus
 CREATE TABLE "SerializedMenus" (
     "CultureId" integer NOT NULL,
     "MenuId" integer NOT NULL,
@@ -476,8 +497,10 @@ ALTER TABLE "SerializedMenus" OWNER TO postgres;
 
 --
 -- Extension: Platformus.Forms
--- Version: beta1
+-- Version: beta4
 --
+
+-- Forms
 CREATE TABLE "Forms" (
     "Id" serial NOT NULL,
     "Code" text NOT NULL,
@@ -494,6 +517,7 @@ CREATE TABLE "Forms" (
 
 ALTER TABLE "Forms" OWNER TO postgres;
 
+-- FieldTypes
 CREATE TABLE "FieldTypes" (
     "Id" serial NOT NULL,
     "Code" text NOT NULL,
@@ -504,6 +528,7 @@ CREATE TABLE "FieldTypes" (
 
 ALTER TABLE "FieldTypes" OWNER TO postgres;
 
+-- Fields
 CREATE TABLE "Fields" (
     "Id" serial NOT NULL,
     "FormId" integer NOT NULL,
@@ -530,6 +555,7 @@ CREATE TABLE "Fields" (
 
 ALTER TABLE "Fields" OWNER TO postgres;
 
+-- FieldOptions
 CREATE TABLE "FieldOptions" (
     "Id" serial NOT NULL,
     "FieldId" integer NOT NULL,
@@ -548,6 +574,7 @@ CREATE TABLE "FieldOptions" (
 
 ALTER TABLE "FieldOptions" OWNER TO postgres;
 
+-- CompletedForms
 CREATE TABLE "CompletedForms" (
     "Id" serial NOT NULL,
     "FormId" integer NOT NULL,
@@ -561,6 +588,7 @@ CREATE TABLE "CompletedForms" (
 
 ALTER TABLE "CompletedForms" OWNER TO postgres;
 
+-- CompletedFields
 CREATE TABLE "CompletedFields" (
     "Id" serial NOT NULL,
     "CompletedFormId" integer NOT NULL,
@@ -579,6 +607,7 @@ CREATE TABLE "CompletedFields" (
 
 ALTER TABLE "CompletedFields" OWNER TO postgres;
 
+-- SerializedForms
 CREATE TABLE "SerializedForms" (
     "CultureId" integer NOT NULL,
     "FormId" integer NOT NULL,
@@ -597,3 +626,209 @@ CREATE TABLE "SerializedForms" (
 );
 
 ALTER TABLE "SerializedForms" OWNER TO postgres;
+
+--
+-- Extension: Platformus.FileManager
+-- Version: beta4
+--
+
+-- Files
+CREATE TABLE "Files" (
+    "Id" serial NOT NULL,
+    "Name" text NOT NULL,
+    "Size" bigint NOT NULL,
+    CONSTRAINT "PK_Files" PRIMARY KEY ("Id")
+);
+
+ALTER TABLE "Files" OWNER TO postgres;
+
+--
+-- Extension: Platformus.ECommerce
+-- Version: beta4
+--
+
+-- Catalogs
+CREATE TABLE "Catalogs" (
+    "Id" serial NOT NULL,
+    "CatalogId" integer,
+	"Url" text NOT NULL,
+    "NameId" integer NOT NULL,
+	"CSharpClassName" text NOT NULL,
+	"Parameters" text,
+    "Position" integer,
+    CONSTRAINT "PK_Catalogs" PRIMARY KEY ("Id"),
+    CONSTRAINT "FK_Catalogs_Catalogs" FOREIGN KEY ("CatalogId")
+        REFERENCES public."Catalogs" ("Id") MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION,
+    CONSTRAINT "FK_Catalogs_Dictionaries" FOREIGN KEY ("NameId")
+        REFERENCES public."Dictionaries" ("Id") MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION
+);
+
+ALTER TABLE "Catalogs" OWNER TO postgres;
+
+-- Categories
+CREATE TABLE "Categories" (
+    "Id" serial NOT NULL,
+    "CategoryId" integer,
+    "NameId" integer NOT NULL,
+    "Position" integer,
+    CONSTRAINT "PK_Categories" PRIMARY KEY ("Id"),
+    CONSTRAINT "FK_Categories_Categories" FOREIGN KEY ("CategoryId")
+        REFERENCES public."Categories" ("Id") MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION,
+    CONSTRAINT "FK_Categories_Dictionaries" FOREIGN KEY ("NameId")
+        REFERENCES public."Dictionaries" ("Id") MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION
+);
+
+ALTER TABLE "Categories" OWNER TO postgres;
+
+-- Products
+CREATE TABLE "Products" (
+    "Id" serial NOT NULL,
+    "CategoryId" integer NOT NULL,
+	"Url" text NOT NULL,
+	"Code" text NOT NULL,
+    "NameId" integer NOT NULL,
+    "Price" real,
+	CONSTRAINT "PK_Products" PRIMARY KEY ("Id"),
+    CONSTRAINT "FK_Products_Categories" FOREIGN KEY ("CategoryId")
+        REFERENCES public."Categories" ("Id") MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION,
+	CONSTRAINT "FK_Products_Dictionaries" FOREIGN KEY ("NameId")
+        REFERENCES public."Dictionaries" ("Id") MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION
+);
+
+ALTER TABLE "Products" OWNER TO postgres;
+
+-- Photos
+CREATE TABLE "Photos" (
+    "Id" serial NOT NULL,
+    "ProductId" integer NOT NULL,
+	"Filename" text NOT NULL,
+    "IsCover" boolean NOT NULL,
+    "Position" integer,
+	CONSTRAINT "PK_Photos" PRIMARY KEY ("Id"),
+    CONSTRAINT "FK_Photos_Products" FOREIGN KEY ("ProductId")
+        REFERENCES public."Products" ("Id") MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION
+);
+
+ALTER TABLE "Photos" OWNER TO postgres;
+
+-- OrderStates
+CREATE TABLE "OrderStates" (
+    "Id" serial NOT NULL,
+	"Code" text NOT NULL,
+    "NameId" integer NOT NULL,
+    "Position" integer,
+	CONSTRAINT "PK_OrderStates" PRIMARY KEY ("Id"),
+	CONSTRAINT "FK_OrderStates_Dictionaries" FOREIGN KEY ("NameId")
+        REFERENCES public."Dictionaries" ("Id") MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION
+);
+
+ALTER TABLE "OrderStates" OWNER TO postgres;
+
+-- PaymentMethods
+CREATE TABLE "PaymentMethods" (
+    "Id" serial NOT NULL,
+	"Code" text NOT NULL,
+    "NameId" integer NOT NULL,
+    "Position" integer,
+	CONSTRAINT "PK_PaymentMethods" PRIMARY KEY ("Id"),
+	CONSTRAINT "FK_PaymentMethods_Dictionaries" FOREIGN KEY ("NameId")
+        REFERENCES public."Dictionaries" ("Id") MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION
+);
+
+ALTER TABLE "PaymentMethods" OWNER TO postgres;
+
+-- DeliveryMethods
+CREATE TABLE "DeliveryMethods" (
+    "Id" serial NOT NULL,
+	"Code" text NOT NULL,
+    "NameId" integer NOT NULL,
+    "Position" integer,
+	CONSTRAINT "PK_DeliveryMethods" PRIMARY KEY ("Id"),
+	CONSTRAINT "FK_DeliveryMethods_Dictionaries" FOREIGN KEY ("NameId")
+        REFERENCES public."Dictionaries" ("Id") MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION
+);
+
+ALTER TABLE "DeliveryMethods" OWNER TO postgres;
+
+-- Orders
+CREATE TABLE "Orders" (
+    "Id" serial NOT NULL,
+    "OrderStateId" integer NOT NULL,
+	"PaymentMethodId" integer NOT NULL,
+	"DeliveryMethodId" integer NOT NULL,
+	"CustomerFirstName" text NOT NULL,
+	"CustomerLastName" text,
+	"CustomerPhone" text NOT NULL,
+	"CustomerEmail" text,
+	"CustomerAddress" text,
+	"Note" text,
+    "Created" timestamp NOT NULL,
+	CONSTRAINT "PK_Orders" PRIMARY KEY ("Id"),
+    CONSTRAINT "FK_Orders_OrderStates" FOREIGN KEY ("OrderStateId")
+        REFERENCES public."OrderStates" ("Id") MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION,
+	CONSTRAINT "FK_Orders_PaymentMethods" FOREIGN KEY ("PaymentMethodId")
+        REFERENCES public."PaymentMethods" ("Id") MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION,
+	CONSTRAINT "FK_Orders_DeliveryMethods" FOREIGN KEY ("DeliveryMethodId")
+        REFERENCES public."DeliveryMethods" ("Id") MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION
+);
+
+ALTER TABLE "Orders" OWNER TO postgres;
+
+-- Carts
+CREATE TABLE "Carts" (
+    "Id" serial NOT NULL,
+    "OrderId" integer,
+	"ClientSideId" text NOT NULL,
+	"Created" timestamp NOT NULL,
+	CONSTRAINT "PK_Carts" PRIMARY KEY ("Id"),
+    CONSTRAINT "FK_Carts_Orders" FOREIGN KEY ("OrderId")
+        REFERENCES public."Orders" ("Id") MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION
+);
+
+ALTER TABLE "Carts" OWNER TO postgres;
+
+-- Positions
+CREATE TABLE "Positions" (
+    "Id" serial NOT NULL,
+    "CartId" integer NOT NULL,
+	"ProductId" integer NOT NULL,
+	CONSTRAINT "PK_Positions" PRIMARY KEY ("Id"),
+    CONSTRAINT "FK_Positions_Carts" FOREIGN KEY ("CartId")
+        REFERENCES public."Carts" ("Id") MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION,
+	CONSTRAINT "FK_Positions_Products" FOREIGN KEY ("ProductId")
+        REFERENCES public."Products" ("Id") MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION
+);
+
+ALTER TABLE "Positions" OWNER TO postgres;

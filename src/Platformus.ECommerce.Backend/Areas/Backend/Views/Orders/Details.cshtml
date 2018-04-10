@@ -1,0 +1,78 @@
+﻿@* Copyright © 2018 Dmitry Sikorsky. All rights reserved. *@
+@* Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information. *@
+@model Platformus.ECommerce.Backend.ViewModels.Orders.DetailsViewModel
+@inject Microsoft.AspNetCore.Mvc.Localization.IViewLocalizer Localizer
+@{
+  this.ViewBag.Title = this.Localizer["Order Details"];
+  this.ViewBag.ActiveMenuItem = "orders";
+}
+@section title {
+  @ViewBag.Title
+}
+<table class="table">
+  <tbody>
+    <tr class="table__row">
+      <td class="table__cell table__cell--header table__cell--no-width">@Localizer["Order state"]</td>
+      <td class="table__cell">@Model.OrderState.Name</td>
+    </tr>
+    <tr class="table__row">
+      <td class="table__cell table__cell--header table__cell--no-width">@Localizer["Payment method"]</td>
+      <td class="table__cell">@Model.PaymentMethod.Name</td>
+    </tr>
+    <tr class="table__row">
+      <td class="table__cell table__cell--header table__cell--no-width">@Localizer["Delivery method"]</td>
+      <td class="table__cell">@Model.DeliveryMethod.Name</td>
+    </tr>
+    <tr class="table__row">
+      <td class="table__cell table__cell--header table__cell--no-width">@Localizer["Customer first name"]</td>
+      <td class="table__cell">@Model.CustomerFirstName</td>
+    </tr>
+    <tr class="table__row">
+      <td class="table__cell table__cell--header table__cell--no-width">@Localizer["Customer last name"]</td>
+      <td class="table__cell">@Model.CustomerLastName</td>
+    </tr>
+    <tr class="table__row">
+      <td class="table__cell table__cell--header table__cell--no-width">@Localizer["Customer phone"]</td>
+      <td class="table__cell">@Model.CustomerPhone</td>
+    </tr>
+    <tr class="table__row">
+      <td class="table__cell table__cell--header table__cell--no-width">@Localizer["Customer email"]</td>
+      <td class="table__cell">@Model.CustomerEmail</td>
+    </tr>
+    <tr class="table__row">
+      <td class="table__cell table__cell--header table__cell--no-width">@Localizer["Customer address"]</td>
+      <td class="table__cell">@Model.CustomerAddress</td>
+    </tr>
+    <tr class="table__row">
+      <td class="table__cell table__cell--header table__cell--no-width">@Localizer["Note"]</td>
+      <td class="table__cell">@Model.Note</td>
+    </tr>
+  </tbody>
+</table>
+<div class="master-detail__detail-buttons master-detail__detail-buttons--minor buttons">
+  <a class="buttons__button buttons__button--minor button button--positive button--minor" href="/backend/orders/edit/@Model.Id">@Localizer["Edit"]</a>
+</div>
+<h2 class="form__title">
+  @Localizer["Positions"]
+</h2>
+<table class="table">
+  <colgroup>
+    <col>
+    <col>
+    <col>
+  </colgroup>
+  <tbody>
+    <tr class="table__row">
+      <th class="table__cell table__cell--header">@Localizer["Product"]</th>
+      <th class="table__cell table__cell--header">@Localizer["Price"]</th>
+      <th class="table__cell table__cell--header table__cell--no-width">&nbsp;</th>
+    </tr>
+    @foreach (var position in this.Model.Cart.Positions)
+    {
+      @Html.Partial("_Position", position)
+    }
+  </tbody>
+</table>
+<div class="master-detail__detail-buttons master-detail__detail-buttons--minor buttons">
+  <button class="buttons__button buttons__button--minor button button--positive button--minor" onclick="platformus.ui.addProductToCart(@Model.Cart.Id);">@Localizer["Add position"]</button>
+</div>

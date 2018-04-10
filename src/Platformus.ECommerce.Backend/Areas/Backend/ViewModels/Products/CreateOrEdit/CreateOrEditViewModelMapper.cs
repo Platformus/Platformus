@@ -8,7 +8,7 @@ using Platformus.Globalization.Backend.ViewModels;
 
 namespace Platformus.ECommerce.Backend.ViewModels.Products
 {
-  public class CreateOrEditViewModelMapper : ViewModelFactoryBase
+  public class CreateOrEditViewModelMapper : ViewModelMapperBase
   {
     public CreateOrEditViewModelMapper(IRequestHandler requestHandler)
       : base(requestHandler)
@@ -22,7 +22,10 @@ namespace Platformus.ECommerce.Backend.ViewModels.Products
       if (createOrEdit.Id != null)
         product = this.RequestHandler.Storage.GetRepository<IProductRepository>().WithKey((int)createOrEdit.Id);
 
+      product.CategoryId = createOrEdit.CategoryId;
+      product.Url = createOrEdit.Url;
       product.Code = createOrEdit.Code;
+      product.Price = createOrEdit.Price;
       return product;
     }
   }

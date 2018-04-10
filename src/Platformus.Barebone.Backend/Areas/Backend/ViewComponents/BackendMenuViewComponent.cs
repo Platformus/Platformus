@@ -4,20 +4,23 @@
 using System.Threading.Tasks;
 using ExtCore.Data.Abstractions;
 using Microsoft.AspNetCore.Mvc;
-using Platformus.Barebone.Backend.ViewModels.Shared;
+using Platformus.Barebone.Backend.Metadata.Providers;
 
 namespace Platformus.Barebone.Backend.ViewComponents
 {
   public class BackendMenuViewComponent : ViewComponentBase
   {
-    public BackendMenuViewComponent(IStorage storage)
+    private IMenuGroupsProvider menuGroupsProvider;
+
+    public BackendMenuViewComponent(IStorage storage, IMenuGroupsProvider menuGroupsProvider)
       : base(storage)
     {
+      this.menuGroupsProvider = menuGroupsProvider;
     }
 
     public async Task<IViewComponentResult> InvokeAsync()
     {
-      return this.View(new BackendMenuViewModelFactory(this).Create());
+      return this.View(this.menuGroupsProvider.GetMenuGroups(this));
     }
   }
 }

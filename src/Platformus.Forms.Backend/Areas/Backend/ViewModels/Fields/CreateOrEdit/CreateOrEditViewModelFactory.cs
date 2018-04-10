@@ -45,7 +45,7 @@ namespace Platformus.Forms.Backend.ViewModels.Fields
 
     private IEnumerable<Option> GetFieldTypeOptions()
     {
-      return this.RequestHandler.Storage.GetRepository<IFieldTypeRepository>().All().Select(
+      return this.RequestHandler.Storage.GetRepository<IFieldTypeRepository>().All().ToList().Select(
         ft => new Option(ft.Name, ft.Id.ToString())
       );
     }

@@ -11,7 +11,10 @@ namespace Platformus.Forms.FormHandlers
 {
   public abstract class FormHandlerBase : IFormHandler
   {
-    private Form form;
+    protected IRequestHandler requestHandler;
+    protected Form form;
+    protected IDictionary<Field, string> valuesByFields;
+    protected IDictionary<string, byte[]> attachmentsByFilenames;
     private Dictionary<string, string> parameterValuesByCodes;
 
     public virtual IEnumerable<FormHandlerParameterGroup> ParameterGroups => new FormHandlerParameterGroup[] { };
@@ -19,11 +22,14 @@ namespace Platformus.Forms.FormHandlers
 
     public IActionResult Handle(IRequestHandler requestHandler, Form form, IDictionary<Field, string> valuesByFields, IDictionary<string, byte[]> attachmentsByFilenames)
     {
+      this.requestHandler = requestHandler;
       this.form = form;
-      return this.GetActionResult(requestHandler, form, valuesByFields, attachmentsByFilenames);
+      this.valuesByFields = valuesByFields;
+      this.attachmentsByFilenames = attachmentsByFilenames;
+      return this.Handle();
     }
 
-    protected abstract IActionResult GetActionResult(IRequestHandler requestHandler, Form form, IDictionary<Field, string> valuesByFields, IDictionary<string, byte[]> attachmentsByFilenames);
+    protected abstract IActionResult Handle();
 
     protected bool HasParameter(string code)
     {

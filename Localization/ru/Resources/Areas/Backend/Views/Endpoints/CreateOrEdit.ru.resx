@@ -126,6 +126,12 @@
   <data name="Edit Endpoint" xml:space="preserve">
     <value>Редактирование конечной точки</value>
   </data>
+  <data name="General" xml:space="preserve">
+    <value>Основное</value>
+  </data>
+  <data name="Permissions" xml:space="preserve">
+    <value>Разрешения</value>
+  </data>
   <data name="Save" xml:space="preserve">
     <value>Сохранить</value>
   </data>

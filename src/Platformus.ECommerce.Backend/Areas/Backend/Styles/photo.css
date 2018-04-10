@@ -1,0 +1,24 @@
+﻿/* Copyright © 2018 Dmitry Sikorsky. All rights reserved. */
+/* Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information. */
+
+.photo {
+  position: relative;
+}
+
+.photo--new {
+}
+
+.photo__thumbnail {
+  background-color: #f0f0f0;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: contain;
+  width: 200px;
+  height: 200px;
+}
+
+.photo__form {
+  position: absolute;
+  left: 220px;
+  top: 0;
+}

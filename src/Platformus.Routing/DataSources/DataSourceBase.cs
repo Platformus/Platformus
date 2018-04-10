@@ -10,7 +10,8 @@ namespace Platformus.Routing.DataSources
 {
   public abstract class DataSourceBase : IDataSource
   {
-    private DataSource dataSource;
+    protected IRequestHandler requestHandler;
+    protected DataSource dataSource;
     private Dictionary<string, string> parameterValuesByCodes;
 
     public virtual IEnumerable<DataSourceParameterGroup> ParameterGroups => new DataSourceParameterGroup[] { };
@@ -18,11 +19,12 @@ namespace Platformus.Routing.DataSources
 
     public dynamic GetData(IRequestHandler requestHandler, DataSource dataSource)
     {
+      this.requestHandler = requestHandler;
       this.dataSource = dataSource;
-      return this.GetRawData(requestHandler, dataSource);
+      return this.GetData();
     }
 
-    protected abstract dynamic GetRawData(IRequestHandler requestHandler, DataSource dataSource);
+    protected abstract dynamic GetData();
 
     protected bool HasParameter(string key)
     {

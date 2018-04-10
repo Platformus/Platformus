@@ -28,6 +28,16 @@ namespace Platformus.ECommerce.Data.EntityFramework.PostgreSql
     }
 
     /// <summary>
+    /// Gets the cover photo filtered by the product identifier.
+    /// </summary>
+    /// <param name="productId">The unique identifier of the product this photo belongs to.</param>
+    /// <returns>Found cover photo with the given product identifier.</returns>
+    public Photo CoverByProductId(int productId)
+    {
+      return this.dbSet.FirstOrDefault(ph => ph.ProductId == productId && ph.IsCover);
+    }
+
+    /// <summary>
     /// Gets the photos filtered by the product identifier using sorting by position (ascending).
     /// </summary>
     /// <param name="productId">The unique identifier of the product these photos belongs to.</param>
@@ -35,21 +45,6 @@ namespace Platformus.ECommerce.Data.EntityFramework.PostgreSql
     public IEnumerable<Photo> FilteredByProductId(int productId)
     {
       return this.dbSet.AsNoTracking().Where(ph => ph.ProductId == productId).OrderBy(ph => ph.Position);
-    }
-
-    /// <summary>
-    /// Gets the photos filtered by the product identifier using the given filtering, sorting, and paging.
-    /// </summary>
-    /// <param name="productId">The unique identifier of the product these photos belongs to.</param>
-    /// <param name="orderBy">The photo property name to sort by.</param>
-    /// <param name="direction">The sorting direction.</param>
-    /// <param name="skip">The number of photos that should be skipped.</param>
-    /// <param name="take">The number of photos that should be taken.</param>
-    /// <param name="filter">The filtering query.</param>
-    /// <returns>Found photos using the given filtering, sorting, and paging.</returns>
-    public IEnumerable<Photo> Range(int productId, string orderBy, string direction, int skip, int take, string filter)
-    {
-      return this.GetFilteredPhotos(dbSet.AsNoTracking(), productId, filter).OrderBy(orderBy, direction).Skip(skip).Take(take);
     }
 
     /// <summary>

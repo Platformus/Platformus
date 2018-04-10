@@ -31,7 +31,7 @@
       @Localizer["Objects"]
     </div>
     <div class="master-detail__master-content">
-      <div class="menu">
+      <div class="menu" data-code="classes">
         @foreach (var abstractClass in this.Model.ClassesByAbstractClasses.Keys)
         {
           <div class="menu__group" data-code="class-@(abstractClass.Id)">

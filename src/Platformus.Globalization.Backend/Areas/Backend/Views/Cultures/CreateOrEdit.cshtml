@@ -12,8 +12,8 @@
 <form class="form" method="post">
   <single-line-text-field asp-for="Code" />
   <single-line-text-field asp-for="Name" />
-  <checkbox-field asp-for="IsDefault" />
-  <checkbox-field asp-for="IsBackendUi" />
+  <checkbox-field asp-for="IsFrontendDefault" />
+  <checkbox-field asp-for="IsBackendDefault" />
   <div class="form__buttons buttons">
     <button class="buttons__button button button--positive" type="submit">@Localizer["Save"]</button>
     <a class="buttons__button button button--neutral" href="@this.Context.Request.CombineUrl("/backend/cultures")">@Localizer["Cancel"]</a>

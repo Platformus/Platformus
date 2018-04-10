@@ -19,9 +19,9 @@
       {
         <div class="master-detail__master-content">
           @await Component.InvokeAsync("BackendMenu")
-          <div class="master-detail__master-user-menu menu">
+          <div class="master-detail__master-user-menu menu" data-code="user">
             <div class="menu__group" data-code="user">
-              <div class="menu__group-header">
+              <div class="menu__group-header menu__group-header--collapsed">
                 @User.Identity.Name
               </div>
               <div class="menu__group-content">

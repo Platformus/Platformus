@@ -11,8 +11,8 @@ namespace Platformus.Globalization
     Culture GetCulture(int id);
     Culture GetCulture(string code);
     Culture GetNeutralCulture();
-    Culture GetDefaultCulture();
-    Culture GetBackendUiCulture();
+    Culture GetFrontendDefaultCulture();
+    Culture GetBackendDefaultCulture();
     Culture GetCurrentCulture();
     IEnumerable<Culture> GetCultures();
     IEnumerable<Culture> GetNotNeutralCultures();

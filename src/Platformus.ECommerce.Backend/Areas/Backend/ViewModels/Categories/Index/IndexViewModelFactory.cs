@@ -3,9 +3,9 @@
 
 using System.Linq;
 using Platformus.Barebone;
-using Platformus.Globalization.Backend.ViewModels;
 using Platformus.ECommerce.Backend.ViewModels.Shared;
 using Platformus.ECommerce.Data.Abstractions;
+using Platformus.Globalization.Backend.ViewModels;
 
 namespace Platformus.ECommerce.Backend.ViewModels.Categories
 {

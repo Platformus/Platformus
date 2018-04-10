@@ -1,6 +1,7 @@
 ﻿// Copyright © 2017 Dmitry Sikorsky. All rights reserved.
 // Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information.
 
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using ExtCore.Data.EntityFramework;
@@ -24,6 +25,16 @@ namespace Platformus.ECommerce.Data.EntityFramework.Sqlite
     public Catalog WithKey(int id)
     {
       return this.dbSet.Find(id);
+    }
+
+    /// <summary>
+    /// Gets the catalog by the URL (case insensitive).
+    /// </summary>
+    /// <param name="url">The URL.</param>
+    /// <returns>Found catalog with the given URL.</returns>
+    public Catalog WithUrl(string url)
+    {
+      return this.dbSet.FirstOrDefault(c => string.Equals(c.Url, url, StringComparison.OrdinalIgnoreCase));
     }
 
     /// <summary>

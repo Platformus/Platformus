@@ -23,7 +23,7 @@ namespace Platformus.ECommerce.Data.Entities
     public int? CategoryId { get; set; }
 
     /// <summary>
-    /// Gets or sets the dictionary identifier this field is related to. It is used to store the localizable category name.
+    /// Gets or sets the dictionary identifier this category is related to. It is used to store the localizable category name.
     /// </summary>
     public int NameId { get; set; }
 

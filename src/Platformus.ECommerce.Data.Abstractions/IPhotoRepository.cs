@@ -20,23 +20,18 @@ namespace Platformus.ECommerce.Data.Abstractions
     Photo WithKey(int id);
 
     /// <summary>
+    /// Gets the cover photo filtered by the product identifier.
+    /// </summary>
+    /// <param name="productId">The unique identifier of the product this photo belongs to.</param>
+    /// <returns>Found cover photo with the given product identifier.</returns>
+    Photo CoverByProductId(int productId);
+
+    /// <summary>
     /// Gets the photos filtered by the product identifier using sorting by position (ascending).
     /// </summary>
     /// <param name="productId">The unique identifier of the product these photos belongs to.</param>
     /// <returns>Found photos.</returns>
     IEnumerable<Photo> FilteredByProductId(int productId);
-
-    /// <summary>
-    /// Gets the photos filtered by the product identifier using the given filtering, sorting, and paging.
-    /// </summary>
-    /// <param name="productId">The unique identifier of the product these photos belongs to.</param>
-    /// <param name="orderBy">The photo property name to sort by.</param>
-    /// <param name="direction">The sorting direction.</param>
-    /// <param name="skip">The number of photos that should be skipped.</param>
-    /// <param name="take">The number of photos that should be taken.</param>
-    /// <param name="filter">The filtering query.</param>
-    /// <returns>Found photos using the given filtering, sorting, and paging.</returns>
-    IEnumerable<Photo> Range(int productId, string orderBy, string direction, int skip, int take, string filter);
 
     /// <summary>
     /// Creates the photo.

@@ -26,40 +26,40 @@ namespace Platformus.Domain.Frontend
 
     public override string Description => "Returns specified view with the view model populated using the data sources.";
 
-    protected override IActionResult GetActionResult(IRequestHandler requestHandler, Endpoint endpoint, IEnumerable<KeyValuePair<string, string>> arguments)
+    protected override IActionResult Invoke()
     {
-      string url = string.Format("/{0}", requestHandler.HttpContext.GetRouteValue("url"));
+      string url = string.Format("/{0}", this.requestHandler.HttpContext.GetRouteValue("url"));
 
       if (this.GetBoolParameterValue("UseCaching"))
-        return requestHandler.GetService<ICache>().GetPageActionResultWithDefaultValue(
-          url + requestHandler.HttpContext.Request.QueryString, () => this.GetActionResult(requestHandler, endpoint, arguments, url)
+        return this.requestHandler.GetService<ICache>().GetPageActionResultWithDefaultValue(
+          url + this.requestHandler.HttpContext.Request.QueryString, () => this.GetActionResult(endpoint, arguments, url)
         );
 
-      return this.GetActionResult(requestHandler, endpoint, arguments, url);
+      return this.GetActionResult(endpoint, arguments, url);
     }
 
-    private IActionResult GetActionResult(IRequestHandler requestHandler, Endpoint endpoint, IEnumerable<KeyValuePair<string, string>> arguments, string url)
+    private IActionResult GetActionResult(Endpoint endpoint, IEnumerable<KeyValuePair<string, string>> arguments, string url)
     {
-      dynamic viewModel = this.CreateViewModel(requestHandler, endpoint);
+      dynamic viewModel = this.CreateViewModel(endpoint);
 
-      return (requestHandler as Platformus.Barebone.Frontend.Controllers.ControllerBase).View(this.GetStringParameterValue("ViewName"), viewModel);
+      return (this.requestHandler as Platformus.Barebone.Frontend.Controllers.ControllerBase).View(this.GetStringParameterValue("ViewName"), viewModel);
     }
 
-    private dynamic CreateViewModel(IRequestHandler requestHandler, Endpoint endpoint)
+    private dynamic CreateViewModel(Endpoint endpoint)
     {
-      ViewModelBuilder viewModelBuilder = new ViewModelBuilder();
+      ExpandoObjectBuilder expandoObjectBuilder = new ExpandoObjectBuilder();
 
-      foreach (DataSource dataSource in requestHandler.Storage.GetRepository<IDataSourceRepository>().FilteredByEndpointId(endpoint.Id))
-        viewModelBuilder.BuildProperty(dataSource.Code, this.CreateDataSourceViewModel(requestHandler, dataSource));
+      foreach (DataSource dataSource in this.requestHandler.Storage.GetRepository<IDataSourceRepository>().FilteredByEndpointId(endpoint.Id))
+        expandoObjectBuilder.AddProperty(dataSource.Code, this.CreateDataSourceViewModel(dataSource));
 
-      return viewModelBuilder.Build();
+      return expandoObjectBuilder.Build();
     }
 
-    private dynamic CreateDataSourceViewModel(IRequestHandler requestHandler, DataSource dataSource)
+    private dynamic CreateDataSourceViewModel(DataSource dataSource)
     {
       IDataSource dataSourceInstance = StringActivator.CreateInstance<IDataSource>(dataSource.CSharpClassName);
 
-      return dataSourceInstance.GetData(requestHandler, dataSource);
+      return dataSourceInstance.GetData(this.requestHandler, dataSource);
     }
   }
 }

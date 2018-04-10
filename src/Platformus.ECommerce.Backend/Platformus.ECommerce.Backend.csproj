@@ -4,7 +4,7 @@
     <Authors>Dmitry Sikorsky</Authors>
     <Copyright>Copyright © 2015 Dmitry Sikorsky</Copyright>
     <Description>The Platformus.ECommerce extension component.</Description>
-    <VersionPrefix>1.0.0-beta3</VersionPrefix>
+    <VersionPrefix>1.0.0-beta4</VersionPrefix>
     <TargetFramework>netcoreapp2.0</TargetFramework>
     <AssemblyName>Platformus.ECommerce.Backend</AssemblyName>
     <PackageId>Platformus.ECommerce.Backend</PackageId>
@@ -13,21 +13,26 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <EmbeddedResource Include="Areas\Backend\Views\**" />
+    <EmbeddedResource Include="Areas\Backend\Views\**;wwwroot\**" />
   </ItemGroup>
 
   <ItemGroup>
-    <None Remove="Areas\Backend\Views\Catalogs\CreateOrEdit.cshtml" />
-    <None Remove="Areas\Backend\Views\Catalogs\Index.cshtml" />
-    <None Remove="Areas\Backend\Views\Products\CreateOrEdit.cshtml" />
-    <None Remove="Areas\Backend\Views\Products\Index.cshtml" />
-    <None Remove="Areas\Backend\Views\Shared\_Catalog.cshtml" />
-    <None Remove="Areas\Backend\Views\Shared\_Product.cshtml" />
+    <None Remove="Areas\Backend\Views\Carts\Details.cshtml" />
+    <None Remove="Areas\Backend\Views\ECommerce\_CategorySelectorForm.cshtml" />
+    <None Remove="Areas\Backend\Views\ECommerce\_ProductSelectorForm.cshtml" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\Platformus.Globalization.Backend\Platformus.Globalization.Backend.csproj" />
     <ProjectReference Include="..\Platformus.ECommerce\Platformus.ECommerce.csproj" />
+  </ItemGroup>
+
+  <Target Name="PrecompileScript" BeforeTargets="BeforeBuild">
+    <Exec Command="dotnet bundle" />
+  </Target>
+
+  <ItemGroup>
+    <DotNetCliToolReference Include="BundlerMinifier.Core" Version="2.2.301" />
   </ItemGroup>
 
 </Project>

@@ -69,7 +69,8 @@
   color: #fff;
 }
 
-.table__cell--last {
+.table__cell--no-width {
+  white-space: nowrap;
   width: 0;
 }
 
@@ -87,6 +88,10 @@
 .table__image {
   max-width: 100px;
   max-height: 100px;
+}
+
+.table__secondary {
+  font-size: 10px;
 }
 
 .table__buttons {

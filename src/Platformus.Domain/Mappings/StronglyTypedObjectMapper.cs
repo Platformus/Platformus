@@ -42,10 +42,10 @@ namespace Platformus.Domain
     public IEnumerable<T> All<T>(string filteringQuery = null, string sortingMemberCode = null, string sortingDirection = null, int? pagingSkip = null, int? pagingTake = null)
     {
       Class @class = this.GetValidatedClass<T>();
-      Culture defaultCulture = this.requestHandler.GetService<ICultureManager>().GetDefaultCulture();
+      Culture frontendDefaultCulture = this.requestHandler.GetService<ICultureManager>().GetFrontendDefaultCulture();
       Params @params = new ParamsFactory(this.requestHandler).Create(filteringQuery, @class.Id, sortingMemberCode, sortingDirection, pagingSkip, pagingTake);
       IEnumerable<SerializedObject> serializedObjects = this.serializedObjectRepository.FilteredByCultureIdAndClassId(
-        defaultCulture.Id, @class.Id, @params
+        frontendDefaultCulture.Id, @class.Id, @params
       );
 
       ObjectDirector objectDirector = new ObjectDirector(this.requestHandler);
@@ -64,13 +64,13 @@ namespace Platformus.Domain
     public int Count<T>(string filteringQuery = null)
     {
       Class @class = this.GetValidatedClass<T>();
-      Culture defaultCulture = this.requestHandler.GetService<ICultureManager>().GetDefaultCulture();
+      Culture frontendDefaultCulture = this.requestHandler.GetService<ICultureManager>().GetFrontendDefaultCulture();
       Params @params = new ParamsFactory(this.requestHandler).Create(filteringQuery, @class.Id, null, null, null, null);
 
-      return serializedObjectRepository.CountByCultureIdAndClassId(defaultCulture.Id, @class.Id, @params);
+      return serializedObjectRepository.CountByCultureIdAndClassId(frontendDefaultCulture.Id, @class.Id, @params);
     }
 
-    public void Create<T>(T obj)
+    public Object Create<T>(T obj)
     {
       Class @class = this.GetValidatedClass<T>();
       ObjectManipulator objectManipulator = new ObjectManipulator(this.requestHandler);
@@ -84,6 +84,7 @@ namespace Platformus.Domain
       Object @object = this.objectRepository.WithKey(objectId);
 
       Event<IObjectCreatedEventHandler, IRequestHandler, Object>.Broadcast(this.requestHandler, @object);
+      return @object;
     }
 
     public void Edit<T>(T obj)
@@ -155,7 +156,7 @@ namespace Platformus.Domain
 
     private SerializedObject GetValidatedSerializedObject(Class @class, int id)
     {
-      SerializedObject serializedObject = this.serializedObjectRepository.WithKey(this.requestHandler.GetService<ICultureManager>().GetDefaultCulture().Id, id);
+      SerializedObject serializedObject = this.serializedObjectRepository.WithKey(this.requestHandler.GetService<ICultureManager>().GetFrontendDefaultCulture().Id, id);
 
       if (serializedObject == null)
         throw new System.ArgumentException("Object identifier is not valid.");

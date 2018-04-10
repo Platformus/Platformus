@@ -120,11 +120,11 @@
   <data name="Code" xml:space="preserve">
     <value>Код</value>
   </data>
-  <data name="Is backend UI" xml:space="preserve">
-    <value>Мова інтерфейсу бекенду</value>
+  <data name="Is backend default" xml:space="preserve">
+    <value>Мова бекенду за замовчуванням</value>
   </data>
-  <data name="Is default" xml:space="preserve">
-    <value>Використовувати за замовчуванням</value>
+  <data name="Is frontend default" xml:space="preserve">
+    <value>Мова фронтенду за замовчуванням</value>
   </data>
   <data name="Name" xml:space="preserve">
     <value>Назва</value>

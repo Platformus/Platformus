@@ -4,7 +4,7 @@
     <Authors>Dmitry Sikorsky</Authors>
     <Copyright>Copyright © 2015 Dmitry Sikorsky</Copyright>
     <Description>The Platformus.Domain extension component.</Description>
-    <VersionPrefix>1.0.0-beta3</VersionPrefix>
+    <VersionPrefix>1.0.0-beta4</VersionPrefix>
     <TargetFramework>netcoreapp2.0</TargetFramework>
     <AssemblyName>Platformus.Domain</AssemblyName>
     <PackageId>Platformus.Domain</PackageId>
@@ -16,7 +16,6 @@
     <ProjectReference Include="..\Platformus.Barebone\Platformus.Barebone.csproj" />
     <ProjectReference Include="..\Platformus.Domain.Data.Abstractions\Platformus.Domain.Data.Abstractions.csproj" />
     <ProjectReference Include="..\Platformus.Globalization\Platformus.Globalization.csproj" />
-    <ProjectReference Include="..\Platformus.Routing\Platformus.Routing.csproj" />
   </ItemGroup>
 
 </Project>

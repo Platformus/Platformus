@@ -20,6 +20,13 @@ namespace Platformus.ECommerce.Data.Abstractions
     Catalog WithKey(int id);
 
     /// <summary>
+    /// Gets the catalog by the URL (case insensitive).
+    /// </summary>
+    /// <param name="url">The URL.</param>
+    /// <returns>Found catalog with the given URL.</returns>
+    Catalog WithUrl(string url);
+
+    /// <summary>
     /// Gets the catalogs filtered by the parent catalog identifier using sorting by position (ascending).
     /// </summary>
     /// <param name="catalogId">The unique identifier of the parent catalog these catalogs belongs to.</param>

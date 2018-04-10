@@ -1,6 +1,7 @@
 ﻿// Copyright © 2017 Dmitry Sikorsky. All rights reserved.
 // Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information.
 
+using System;
 using ExtCore.Data.Abstractions;
 using ExtCore.Events;
 using Microsoft.AspNetCore.Authorization;
@@ -53,6 +54,7 @@ namespace Platformus.ECommerce.Backend.Controllers
         else this.Storage.GetRepository<IProductRepository>().Edit(product);
 
         this.Storage.Save();
+        this.CreateOrEditPhotos(product, createOrEdit.RemovedPhotoIds);
 
         if (createOrEdit.Id == null)
           Event<IProductCreatedEventHandler, IRequestHandler, Product>.Broadcast(this, product);
@@ -71,13 +73,101 @@ namespace Platformus.ECommerce.Backend.Controllers
 
       this.Storage.GetRepository<IProductRepository>().Delete(product);
       this.Storage.Save();
-      Event<IProductDeletedEventHandler, IRequestHandler, Product>.Broadcast(this, product);
+      Event<IProductCreatedEventHandler, IRequestHandler, Product>.Broadcast(this, product);
       return this.RedirectToAction("Index");
     }
 
     private bool IsCodeUnique(string code)
     {
       return this.Storage.GetRepository<IProductRepository>().WithCode(code) == null;
+    }
+
+    private void CreateOrEditPhotos(Product product, string removedPhotoIds)
+    {
+      this.CreatePhotos(product);
+      this.EditPhotos(product);
+      this.RemovePhotos(product, removedPhotoIds);
+    }
+
+    // TODO: refactor this method
+    private void CreatePhotos(Product product)
+    {
+      foreach (string key in this.Request.Form.Keys)
+      {
+        if (key.StartsWith("newPhoto"))
+        {
+          Photo photo = new Photo();
+
+          photo.ProductId = product.Id;
+          photo.Filename = this.Request.Form[key];
+          photo.IsCover = this.GetPhotoIsCover("_" + key.Replace("Filename", string.Empty) + "IsCover");
+          photo.Position = this.GetPhotoPosition("_" + key.Replace("Filename", string.Empty) + "Position");
+          this.Storage.GetRepository<IPhotoRepository>().Create(photo);
+        }
+      }
+
+      this.Storage.Save();
+    }
+
+    // TODO: refactor this method
+    private void EditPhotos(Product product)
+    {
+      foreach (string key in this.Request.Form.Keys)
+      {
+        if (key.StartsWith("_photo") && key.EndsWith("IsCover"))
+        {
+          int photoId = int.Parse(key.Replace("_photo", string.Empty).Replace("IsCover", string.Empty));
+          Photo photo = this.Storage.GetRepository<IPhotoRepository>().WithKey(photoId);
+
+          photo.IsCover = this.GetPhotoIsCover("_photo" + photoId + "IsCover");
+          photo.Position = this.GetPhotoPosition("_photo" + photoId + "Position");
+          this.Storage.GetRepository<IPhotoRepository>().Edit(photo);
+        }
+      }
+
+      this.Storage.Save();
+    }
+
+    private void RemovePhotos(Product product, string removedPhotoIds)
+    {
+      if (string.IsNullOrEmpty(removedPhotoIds))
+        return;
+
+      foreach (string photoIdToRemove in removedPhotoIds.Split(','))
+      {
+        Photo photo = this.Storage.GetRepository<IPhotoRepository>().WithKey(int.Parse(photoIdToRemove));
+
+        try
+        {
+          //System.IO.File.Delete();
+        }
+
+        catch { }
+
+        this.Storage.GetRepository<IPhotoRepository>().Delete(photo);
+      }
+
+      this.Storage.Save();
+    }
+
+    private bool GetPhotoIsCover(string key)
+    {
+      return string.Equals(this.Request.Form[key], true.ToString(), StringComparison.OrdinalIgnoreCase);
+    }
+
+    private int? GetPhotoPosition(string key)
+    {
+      string value = this.Request.Form[key];
+
+      if (string.IsNullOrEmpty(value))
+        return null;
+
+      int result = 0;
+
+      if (!int.TryParse(value, out result))
+        return null;
+
+      return result;
     }
   }
 }

@@ -10,10 +10,34 @@
   @ViewBag.Title
 }
 <form class="form" method="post">
-  <single-line-text-field asp-for="Code" />
-  <multilingual-single-line-text-field asp-for="Name" asp-localizations="this.Model.NameLocalizations" />
+  <div class="tabs">
+    <div class="tabs__tab" data-tab-page-id="General">@Localizer["General"]</div>
+    <div class="tabs__tab" data-tab-page-id="Photos">@Localizer["Photos"]</div>
+  </div>
+  <div class="tab-pages">
+    <div id="tabPageGeneral" class="tab-pages__tab-page">
+      <drop-down-list-field asp-for="CategoryId" asp-options="@Model.CategoryOptions" />
+      <single-line-text-field asp-for="Url" />
+      <single-line-text-field asp-for="Code" />
+      <multilingual-single-line-text-field asp-for="Name" asp-localizations="this.Model.NameLocalizations" />
+      <numeric-field asp-for="Price" />
+    </div>
+    <div id="tabPagePhotos" class="tab-pages__tab-page">
+      <div id="photos" class="photos">
+        @if (this.Model.Photos != null)
+        {
+          foreach (var photo in this.Model.Photos)
+          {
+            @Html.Partial("_Photo", photo)
+          }
+        }
+      </div>
+      <iframe id="photoUploader" name="photoUploader" src="/backend/photouploader" frameborder="0" marginwidth="0" marginheight="0" width="100%" height="170" scrolling="no"></iframe>
+      <input asp-for="RemovedPhotoIds" type="hidden" value="" />
+    </div>
+  </div>
   <div class="form__buttons buttons">
     <button class="buttons__button button button--positive" type="submit">@Localizer["Save"]</button>
-    <a class="buttons__button button button--neutral" href="@this.Context.Request.CombineUrl("/backend/cultures")">@Localizer["Cancel"]</a>
+    <a class="buttons__button button button--neutral" href="@this.Context.Request.CombineUrl("/backend/products")">@Localizer["Cancel"]</a>
   </div>
 </form>

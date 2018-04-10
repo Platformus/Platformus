@@ -1,0 +1,14 @@
+﻿@* Copyright © 2018 Dmitry Sikorsky. All rights reserved. *@
+@* Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information. *@
+@model Platformus.ECommerce.Backend.ViewModels.Shared.CartViewModel
+@inject Microsoft.AspNetCore.Mvc.Localization.IViewLocalizer Localizer
+<tr class="table__row">
+  <td class="table__cell"><a href="/backend/carts/details/@Model.Id">@Model.Id</a></td>
+  <td class="table__cell">@Model.Total</td>
+  <td class="table__cell">@Model.Created.ToString()</td>
+  <td class="table__cell table__buttons buttons">
+    <a class="table__button buttons__button buttons__button--minor button button--neutral button--minor" href="@(this.Context.Request.CombineUrl("/backend/carts/details/" + this.Model.Id))">@Localizer["Details"]</a>
+    <a class="table__button buttons__button buttons__button--minor button button--positive button--minor" href="@(this.Context.Request.CombineUrl("/backend/carts/edit/" + this.Model.Id))">@Localizer["Edit"]</a>
+    <a class="table__button buttons__button buttons__button--minor button button--negative button--minor button--delete" href="#" onclick="return platformus.forms.deleteForm.show('/backend/carts/delete/@Model.Id');"></a>
+  </td>
+</tr>

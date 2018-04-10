@@ -20,11 +20,24 @@ namespace Platformus.ECommerce.Data.Abstractions
     Product WithKey(int id);
 
     /// <summary>
+    /// Gets the product by the URL (case insensitive).
+    /// </summary>
+    /// <param name="url">The URL.</param>
+    /// <returns>Found product with the given URL.</returns>
+    Product WithUrl(string url);
+
+    /// <summary>
     /// Gets the product by the code (case insensitive).
     /// </summary>
     /// <param name="code">The unique code of the product.</param>
     /// <returns>Found product with the given code.</returns>
     Product WithCode(string code);
+
+    /// <summary>
+    /// Gets all the products using sorting by code (ascending).
+    /// </summary>
+    /// <returns>Found products.</returns>
+    IEnumerable<Product> All();
 
     /// <summary>
     /// Gets all the products using the given filtering, sorting, and paging.
@@ -36,6 +49,18 @@ namespace Platformus.ECommerce.Data.Abstractions
     /// <param name="filter">The filtering query.</param>
     /// <returns>Found products using the given filtering, sorting, and paging.</returns>
     IEnumerable<Product> Range(string orderBy, string direction, int skip, int take, string filter);
+
+    /// <summary>
+    /// Gets all the products filtered by the category identifier using the given filtering, sorting, and paging.
+    /// </summary>
+    /// <param name="categoryId">The unique identifier of the category these products belongs to.</param>
+    /// <param name="orderBy">The product property name to sort by.</param>
+    /// <param name="direction">The sorting direction.</param>
+    /// <param name="skip">The number of products that should be skipped.</param>
+    /// <param name="take">The number of products that should be taken.</param>
+    /// <param name="filter">The filtering query.</param>
+    /// <returns>Found products filtered by the category identifier using the given filtering, sorting, and paging.</returns>
+    IEnumerable<Product> FilteredByCategoryIdRange(int categoryId, string orderBy, string direction, int skip, int take, string filter);
 
     /// <summary>
     /// Creates the product.

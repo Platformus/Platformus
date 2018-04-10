@@ -23,7 +23,12 @@ namespace Platformus.ECommerce.Data.Entities
     public int? CatalogId { get; set; }
 
     /// <summary>
-    /// Gets or sets the dictionary identifier this field is related to. It is used to store the localizable catalog name.
+    /// Gets or sets the unique URL of the catalog.
+    /// </summary>
+    public string Url { get; set; }
+
+    /// <summary>
+    /// Gets or sets the dictionary identifier this catalog is related to. It is used to store the localizable catalog name.
     /// </summary>
     public int NameId { get; set; }
 
@@ -32,6 +37,11 @@ namespace Platformus.ECommerce.Data.Entities
     /// when the catalog content is requested by a user.
     /// </summary>
     public string CSharpClassName { get; set; }
+
+    /// <summary>
+    /// Gets or sets the parameters (key=value pairs separated by commas) for the C# class instances.
+    /// </summary>
+    public string Parameters { get; set; }
 
     /// <summary>
     /// Gets or sets the catalog position. Position is used to sort the catalogs inside the parent catalog (smallest to largest).

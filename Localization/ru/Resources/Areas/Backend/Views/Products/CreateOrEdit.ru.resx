@@ -126,6 +126,12 @@
   <data name="Edit Product" xml:space="preserve">
     <value>Редактирование товара</value>
   </data>
+  <data name="General" xml:space="preserve">
+    <value>Основное</value>
+  </data>
+  <data name="Photos" xml:space="preserve">
+    <value>Фотографии</value>
+  </data>
   <data name="Save" xml:space="preserve">
     <value>Сохранить</value>
   </data>

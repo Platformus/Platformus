@@ -16,7 +16,7 @@
     url = $"/{this.Model.Code}/";
   }
 
-  if (string.Equals(url, $"/{CultureManager.GetDefaultCulture().Code}/", StringComparison.OrdinalIgnoreCase))
+  if (string.Equals(url, $"/{CultureManager.GetFrontendDefaultCulture().Code}/", StringComparison.OrdinalIgnoreCase))
   {
     url = "/";
   }

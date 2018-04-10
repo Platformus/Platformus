@@ -28,14 +28,14 @@ namespace Platformus.Forms.Frontend.FormHandlers
 
     public override string Description => "Sends the form data to the specific email address.";
 
-    protected override IActionResult GetActionResult(IRequestHandler requestHandler, Form form, IDictionary<Field, string> valuesByFields, IDictionary<string, byte[]> attachmentsByFilenames)
+    protected override IActionResult Handle()
     {
       StringBuilder body = new StringBuilder();
 
-      foreach (KeyValuePair<Field, string> valueByField in valuesByFields)
-        body.AppendFormat("<p>{0}: {1}</p>", requestHandler.GetLocalizationValue(valueByField.Key.NameId), valueByField.Value);
+      foreach (KeyValuePair<Field, string> valueByField in this.valuesByFields)
+        body.AppendFormat("<p>{0}: {1}</p>", this.requestHandler.GetLocalizationValue(valueByField.Key.NameId), valueByField.Value);
 
-      IEmailSender emailSender = requestHandler.GetService<IEmailSender>();
+      IEmailSender emailSender = this.requestHandler.GetService<IEmailSender>();
 
       if (emailSender != null)
       {
@@ -45,18 +45,18 @@ namespace Platformus.Forms.Frontend.FormHandlers
           foreach (string recipientEmail in recipientEmails.Split(','))
             emailSender.SendEmail(
               recipientEmail,
-              string.Format("{0} form data", requestHandler.GetLocalizationValue(form.NameId)),
+              string.Format("{0} form data", this.requestHandler.GetLocalizationValue(this.form.NameId)),
               body.ToString(),
-              attachmentsByFilenames
+              this.attachmentsByFilenames
             );
       }
 
       string redirectUrl = this.GetStringParameterValue("RedirectUrl");
 
-      if (this.GetConfigurationRoot(requestHandler)["Globalization:SpecifyCultureInUrl"] == "yes")
+      if (this.GetConfigurationRoot(this.requestHandler)["Globalization:SpecifyCultureInUrl"] == "yes")
         redirectUrl = "/" + CultureInfo.CurrentCulture.TwoLetterISOLanguageName + redirectUrl;
 
-      return (requestHandler as Controller).Redirect(redirectUrl);
+      return (this.requestHandler as Controller).Redirect(redirectUrl);
     }
 
     private IConfigurationRoot GetConfigurationRoot(IRequestHandler requestHandler)

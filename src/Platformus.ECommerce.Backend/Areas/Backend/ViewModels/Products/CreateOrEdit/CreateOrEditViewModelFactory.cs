@@ -1,7 +1,11 @@
 ﻿// Copyright © 2017 Dmitry Sikorsky. All rights reserved.
 // Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information.
 
+using System.Collections.Generic;
+using System.Linq;
 using Platformus.Barebone;
+using Platformus.Barebone.Primitives;
+using Platformus.ECommerce.Backend.ViewModels.Shared;
 using Platformus.ECommerce.Data.Abstractions;
 using Platformus.ECommerce.Data.Entities;
 using Platformus.Globalization.Backend.ViewModels;
@@ -20,6 +24,8 @@ namespace Platformus.ECommerce.Backend.ViewModels.Products
       if (id == null)
         return new CreateOrEditViewModel()
         {
+          CategoryOptions = this.GetCategoryOptions(),
+          Url = "/",
           NameLocalizations = this.GetLocalizations()
         };
 
@@ -28,9 +34,28 @@ namespace Platformus.ECommerce.Backend.ViewModels.Products
       return new CreateOrEditViewModel()
       {
         Id = product.Id,
+        CategoryId = product.CategoryId,
+        CategoryOptions = this.GetCategoryOptions(),
+        Url = product.Url,
         Code = product.Code,
-        NameLocalizations = this.GetLocalizations(product.NameId)
+        NameLocalizations = this.GetLocalizations(product.NameId),
+        Price = product.Price,
+        Photos = this.GetPhotos(product)
       };
+    }
+
+    private IEnumerable<Option> GetCategoryOptions()
+    {
+      return this.RequestHandler.Storage.GetRepository<ICategoryRepository>().FilteredByCategoryId(null).ToList().Select(
+        c => new Option(this.GetLocalizationValue(c.NameId), c.Id.ToString())
+      );
+    }
+
+    private IEnumerable<PhotoViewModel> GetPhotos(Product product)
+    {
+      return this.RequestHandler.Storage.GetRepository<IPhotoRepository>().FilteredByProductId(product.Id).ToList().Select(
+        ph => new PhotoViewModelFactory(this.RequestHandler).Create(ph)
+      );
     }
   }
 }

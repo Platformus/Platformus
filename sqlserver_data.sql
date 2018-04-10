@@ -1,26 +1,7 @@
 BEGIN TRANSACTION;
 --
--- Extension: Platformus.Configurations
--- Version: beta1
---
-SET IDENTITY_INSERT [dbo].[Configurations] ON;
-INSERT INTO [dbo].[Configurations] ([Id], [Code], [Name]) VALUES (1, N'Email', N'Email');
-INSERT INTO [dbo].[Configurations] ([Id], [Code], [Name]) VALUES (2, N'Globalization', N'Globalization');
-SET IDENTITY_INSERT [dbo].[Configurations] OFF;
-
-SET IDENTITY_INSERT [dbo].[Variables] ON;
-INSERT INTO [dbo].[Variables] ([Id], [ConfigurationId], [Code], [Name], [Value], [Position]) VALUES (1, 1, N'SmtpServer', N'SMTP server', N'test', 1);
-INSERT INTO [dbo].[Variables] ([Id], [ConfigurationId], [Code], [Name], [Value], [Position]) VALUES (2, 1, N'SmtpPort', N'SMTP port', N'25', 2);
-INSERT INTO [dbo].[Variables] ([Id], [ConfigurationId], [Code], [Name], [Value], [Position]) VALUES (3, 1, N'SmtpLogin', N'SMTP login', N'test', 3);
-INSERT INTO [dbo].[Variables] ([Id], [ConfigurationId], [Code], [Name], [Value], [Position]) VALUES (4, 1, N'SmtpPassword', N'SMTP password', N'test', 4);
-INSERT INTO [dbo].[Variables] ([Id], [ConfigurationId], [Code], [Name], [Value], [Position]) VALUES (5, 1, N'SmtpSenderEmail', N'SMTP sender email', N'test', 5);
-INSERT INTO [dbo].[Variables] ([Id], [ConfigurationId], [Code], [Name], [Value], [Position]) VALUES (6, 1, N'SmtpSenderName', N'SMTP sender name', N'test', 6);
-INSERT INTO [dbo].[Variables] ([Id], [ConfigurationId], [Code], [Name], [Value], [Position]) VALUES (7, 2, N'SpecifyCultureInUrl', N'Specify culture in URL', N'yes', 6);
-SET IDENTITY_INSERT [dbo].[Variables] OFF;
-
---
 -- Extension: Platformus.Security
--- Version: beta1
+-- Version: beta4
 --
 SET IDENTITY_INSERT [dbo].[Users] ON;
 INSERT INTO [dbo].[Users] ([Id], [Name], [Created]) VALUES (1, N'Administrator', N'2017-01-01 00:00:00.000');
@@ -46,43 +27,71 @@ INSERT INTO [UserRoles] ([UserId], [RoleId]) VALUES (1, 2);
 SET IDENTITY_INSERT [dbo].[Permissions] ON;
 INSERT INTO [dbo].[Permissions] ([Id], [Code], [Name], [Position]) VALUES (1, N'BrowseBackend', N'Browse backend',1);
 INSERT INTO [dbo].[Permissions] ([Id], [Code], [Name], [Position]) VALUES (2, N'DoEverything', N'Do everything',100);
-INSERT INTO [dbo].[Permissions] ([Id], [Code], [Name], [Position]) VALUES (3, N'BrowseConfigurations', N'Browse configurations',200);
-INSERT INTO [dbo].[Permissions] ([Id], [Code], [Name], [Position]) VALUES (4, N'BrowsePermissions', N'Browse permissions',300);
-INSERT INTO [dbo].[Permissions] ([Id], [Code], [Name], [Position]) VALUES (5, N'BrowseRoles', N'Browse roles',310);
-INSERT INTO [dbo].[Permissions] ([Id], [Code], [Name], [Position]) VALUES (6, N'BrowseUsers', N'Browse users',320);
-INSERT INTO [dbo].[Permissions] ([Id], [Code], [Name], [Position]) VALUES (7, N'BrowseFileManager', N'Browse file manager',400);
-INSERT INTO [dbo].[Permissions] ([Id], [Code], [Name], [Position]) VALUES (8, N'BrowseCultures', N'Browse cultures',500);
+INSERT INTO [dbo].[Permissions] ([Id], [Code], [Name], [Position]) VALUES (3, N'BrowsePermissions', N'Browse permissions',200);
+INSERT INTO [dbo].[Permissions] ([Id], [Code], [Name], [Position]) VALUES (4, N'BrowseRoles', N'Browse roles',210);
+INSERT INTO [dbo].[Permissions] ([Id], [Code], [Name], [Position]) VALUES (5, N'BrowseUsers', N'Browse users',220);
+INSERT INTO [dbo].[Permissions] ([Id], [Code], [Name], [Position]) VALUES (6, N'BrowseConfigurations', N'Browse configurations',300);
+INSERT INTO [dbo].[Permissions] ([Id], [Code], [Name], [Position]) VALUES (7, N'BrowseCultures', N'Browse cultures',400);
+INSERT INTO [dbo].[Permissions] ([Id], [Code], [Name], [Position]) VALUES (8, N'BrowseEndpoints', N'Browse endpoints',500);
 INSERT INTO [dbo].[Permissions] ([Id], [Code], [Name], [Position]) VALUES (9, N'BrowseObjects', N'Browse objects',600);
 INSERT INTO [dbo].[Permissions] ([Id], [Code], [Name], [Position]) VALUES (10, N'BrowseDataTypes', N'Browse data types',610);
 INSERT INTO [dbo].[Permissions] ([Id], [Code], [Name], [Position]) VALUES (11, N'BrowseClasses', N'Browse classes',620);
-INSERT INTO [dbo].[Permissions] ([Id], [Code], [Name], [Position]) VALUES (12, N'BrowseEndpoints', N'Browse endpoints',630);
-INSERT INTO [dbo].[Permissions] ([Id], [Code], [Name], [Position]) VALUES (13, N'BrowseMenus', N'Browse menus',700);
-INSERT INTO [dbo].[Permissions] ([Id], [Code], [Name], [Position]) VALUES (14, N'BrowseForms', N'Browse forms',800);
-INSERT INTO [dbo].[Permissions] ([Id], [Code], [Name], [Position]) VALUES (15, N'BrowseViews', N'Browse views',900);
-INSERT INTO [dbo].[Permissions] ([Id], [Code], [Name], [Position]) VALUES (16, N'BrowseStyles', N'Browse styles',910);
-INSERT INTO [dbo].[Permissions] ([Id], [Code], [Name], [Position]) VALUES (17, N'BrowseScripts', N'Browse scripts',920);
-INSERT INTO [dbo].[Permissions] ([Id], [Code], [Name], [Position]) VALUES (18, N'BrowseBundles', N'Browse bundles',930);
+INSERT INTO [dbo].[Permissions] ([Id], [Code], [Name], [Position]) VALUES (12, N'BrowseMenus', N'Browse menus',700);
+INSERT INTO [dbo].[Permissions] ([Id], [Code], [Name], [Position]) VALUES (13, N'BrowseForms', N'Browse forms',800);
+INSERT INTO [dbo].[Permissions] ([Id], [Code], [Name], [Position]) VALUES (14, N'BrowseFileManager', N'Browse file manager',900);
+INSERT INTO [dbo].[Permissions] ([Id], [Code], [Name], [Position]) VALUES (15, N'BrowseViews', N'Browse views',1000);
+INSERT INTO [dbo].[Permissions] ([Id], [Code], [Name], [Position]) VALUES (16, N'BrowseStyles', N'Browse styles',1010);
+INSERT INTO [dbo].[Permissions] ([Id], [Code], [Name], [Position]) VALUES (17, N'BrowseScripts', N'Browse scripts',1020);
+INSERT INTO [dbo].[Permissions] ([Id], [Code], [Name], [Position]) VALUES (18, N'BrowseBundles', N'Browse bundles',1030);
+
+INSERT INTO [dbo].[Permissions] ([Id], [Code], [Name], [Position]) VALUES (19, N'BrowseCatalogs', N'Browse catalogs',1100);
+INSERT INTO [dbo].[Permissions] ([Id], [Code], [Name], [Position]) VALUES (20, N'BrowseCategories', N'Browse categories',1110);
+INSERT INTO [dbo].[Permissions] ([Id], [Code], [Name], [Position]) VALUES (21, N'BrowseProducts', N'Browse products',1120);
+INSERT INTO [dbo].[Permissions] ([Id], [Code], [Name], [Position]) VALUES (22, N'BrowseCarts', N'Browse carts',1130);
+INSERT INTO [dbo].[Permissions] ([Id], [Code], [Name], [Position]) VALUES (23, N'BrowseOrderStates', N'Browse order states',1140);
+INSERT INTO [dbo].[Permissions] ([Id], [Code], [Name], [Position]) VALUES (24, N'BrowsePaymentMethods', N'Browse payment methods',1150);
+INSERT INTO [dbo].[Permissions] ([Id], [Code], [Name], [Position]) VALUES (25, N'BrowseDeliveryMethods', N'Browse delivery methods',1160);
+INSERT INTO [dbo].[Permissions] ([Id], [Code], [Name], [Position]) VALUES (26, N'BrowseOrders', N'Browse orders',1170);
 SET IDENTITY_INSERT [dbo].[Permissions] OFF;
 
 INSERT INTO [dbo].[RolePermissions] ([RoleId], [PermissionId]) VALUES (1, 1);
 INSERT INTO [dbo].[RolePermissions] ([RoleId], [PermissionId]) VALUES (2, 2);
-INSERT INTO [dbo].[RolePermissions] ([RoleId], [PermissionId]) VALUES (3, 7);
 INSERT INTO [dbo].[RolePermissions] ([RoleId], [PermissionId]) VALUES (3, 9);
+INSERT INTO [dbo].[RolePermissions] ([RoleId], [PermissionId]) VALUES (3, 12);
 INSERT INTO [dbo].[RolePermissions] ([RoleId], [PermissionId]) VALUES (3, 13);
 INSERT INTO [dbo].[RolePermissions] ([RoleId], [PermissionId]) VALUES (3, 14);
 
 --
+-- Extension: Platformus.Configurations
+-- Version: beta4
+--
+SET IDENTITY_INSERT [dbo].[Configurations] ON;
+INSERT INTO [dbo].[Configurations] ([Id], [Code], [Name]) VALUES (1, N'Email', N'Email');
+INSERT INTO [dbo].[Configurations] ([Id], [Code], [Name]) VALUES (2, N'Globalization', N'Globalization');
+SET IDENTITY_INSERT [dbo].[Configurations] OFF;
+
+SET IDENTITY_INSERT [dbo].[Variables] ON;
+INSERT INTO [dbo].[Variables] ([Id], [ConfigurationId], [Code], [Name], [Value], [Position]) VALUES (1, 1, N'SmtpServer', N'SMTP server', N'test', 1);
+INSERT INTO [dbo].[Variables] ([Id], [ConfigurationId], [Code], [Name], [Value], [Position]) VALUES (2, 1, N'SmtpPort', N'SMTP port', N'25', 2);
+INSERT INTO [dbo].[Variables] ([Id], [ConfigurationId], [Code], [Name], [Value], [Position]) VALUES (3, 1, N'SmtpLogin', N'SMTP login', N'test', 3);
+INSERT INTO [dbo].[Variables] ([Id], [ConfigurationId], [Code], [Name], [Value], [Position]) VALUES (4, 1, N'SmtpPassword', N'SMTP password', N'test', 4);
+INSERT INTO [dbo].[Variables] ([Id], [ConfigurationId], [Code], [Name], [Value], [Position]) VALUES (5, 1, N'SmtpSenderEmail', N'SMTP sender email', N'test', 5);
+INSERT INTO [dbo].[Variables] ([Id], [ConfigurationId], [Code], [Name], [Value], [Position]) VALUES (6, 1, N'SmtpSenderName', N'SMTP sender name', N'test', 6);
+INSERT INTO [dbo].[Variables] ([Id], [ConfigurationId], [Code], [Name], [Value], [Position]) VALUES (7, 2, N'SpecifyCultureInUrl', N'Specify culture in URL', N'yes', 6);
+SET IDENTITY_INSERT [dbo].[Variables] OFF;
+
+--
 -- Extension: Platformus.Globalization
--- Version: beta1
+-- Version: beta4
 --
 SET IDENTITY_INSERT [dbo].[Cultures] ON;
-INSERT INTO [dbo].[Cultures] ([Id], [Code], [Name], [IsNeutral], [IsDefault], [IsBackendUi]) VALUES (1, N'__', N'Neutral', 1, 0, 0);
-INSERT INTO [dbo].[Cultures] ([Id], [Code], [Name], [IsNeutral], [IsDefault], [IsBackendUi]) VALUES (2, N'en', N'English', 0, 1, 1);
+INSERT INTO [dbo].[Cultures] ([Id], [Code], [Name], [IsNeutral], [IsFrontendDefault], [IsBackendDefault]) VALUES (1, N'__', N'Neutral', 1, 0, 0);
+INSERT INTO [dbo].[Cultures] ([Id], [Code], [Name], [IsNeutral], [IsFrontendDefault], [IsBackendDefault]) VALUES (2, N'en', N'English', 0, 1, 1);
 SET IDENTITY_INSERT [dbo].[Cultures] OFF;
 
 --
 -- Extension: Platformus.Domain
--- Version: beta1
+-- Version: beta4
 --
 SET IDENTITY_INSERT [dbo].[DataTypes] ON;
 INSERT INTO [dbo].[DataTypes] ([Id], [StorageDataType], [JavaScriptEditorClassName], [Name], [Position]) VALUES (1, N'string', N'singleLinePlainText', N'Single line plain text', 1);
@@ -107,7 +116,7 @@ SET IDENTITY_INSERT [dbo].[DataTypeParameters] OFF;
 
 --
 -- Extension: Platformus.Forms
--- Version: beta1
+-- Version: beta4
 --
 SET IDENTITY_INSERT [dbo].[FieldTypes] ON;
 INSERT INTO [dbo].[FieldTypes] ([Id], [Code], [Name], [Position]) VALUES (1, N'TextBox', N'Text box', 1);

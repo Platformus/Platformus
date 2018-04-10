@@ -1,0 +1,33 @@
+﻿@* Copyright © 2018 Dmitry Sikorsky. All rights reserved. *@
+@* Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information. *@
+@model Platformus.ECommerce.Frontend.ViewModels.Checkout.IndexViewModel
+<h1>Checkout</h1>
+<form class="form" method="post">
+  <div class="form__field field">
+    <label class="field__label label" asp-for="@Model.CustomerFirstName"></label>
+    <input class="field__text-box text-box" asp-for="@Model.CustomerFirstName" />
+  </div>
+  <div class="form__field field">
+    <label class="field__label label" asp-for="@Model.CustomerLastName"></label>
+    <input class="field__text-box text-box" asp-for="@Model.CustomerLastName" />
+  </div>
+  <div class="form__field field">
+    <label class="field__label label" asp-for="@Model.CustomerPhone"></label>
+    <input class="field__text-box text-box" asp-for="@Model.CustomerPhone" />
+  </div>
+  <div class="form__field field">
+    <label class="field__label label" asp-for="@Model.CustomerEmail"></label>
+    <input class="field__text-box text-box" asp-for="@Model.CustomerEmail" />
+  </div>
+  <div class="form__field field">
+    <label class="field__label label" asp-for="@Model.CustomerAddress"></label>
+    <input class="field__text-box text-box" asp-for="@Model.CustomerAddress" />
+  </div>
+  <div class="form__field field">
+    <label class="field__label label" asp-for="@Model.Note"></label>
+    <textarea class="field__text-area text-area" asp-for="@Model.Note"></textarea>
+  </div>
+  <div class="form__buttons buttons">
+    <button class="buttons__button button" type="submit">Checkout</button>
+  </div>
+</form>

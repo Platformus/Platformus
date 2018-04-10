@@ -29,6 +29,16 @@ namespace Platformus.ECommerce.Data.EntityFramework.Sqlite
     }
 
     /// <summary>
+    /// Gets the product by the URL (case insensitive).
+    /// </summary>
+    /// <param name="url">The URL.</param>
+    /// <returns>Found product with the given URL.</returns>
+    public Product WithUrl(string url)
+    {
+      return this.dbSet.FirstOrDefault(p => string.Equals(p.Url, url, StringComparison.OrdinalIgnoreCase));
+    }
+
+    /// <summary>
     /// Gets the product by the code (case insensitive).
     /// </summary>
     /// <param name="code">The unique code of the product.</param>
@@ -36,6 +46,15 @@ namespace Platformus.ECommerce.Data.EntityFramework.Sqlite
     public Product WithCode(string code)
     {
       return this.dbSet.FirstOrDefault(p => string.Equals(p.Code, code, StringComparison.OrdinalIgnoreCase));
+    }
+
+    /// <summary>
+    /// Gets all the products using sorting by code (ascending).
+    /// </summary>
+    /// <returns>Found products.</returns>
+    public IEnumerable<Product> All()
+    {
+      return this.dbSet.OrderBy(p => p.Code);
     }
 
     /// <summary>
@@ -50,6 +69,21 @@ namespace Platformus.ECommerce.Data.EntityFramework.Sqlite
     public IEnumerable<Product> Range(string orderBy, string direction, int skip, int take, string filter)
     {
       return this.GetFilteredProducts(dbSet.AsNoTracking(), filter).OrderBy(orderBy, direction).Skip(skip).Take(take);
+    }
+
+    /// <summary>
+    /// Gets all the products filtered by the category identifier using the given filtering, sorting, and paging.
+    /// </summary>
+    /// <param name="categoryId">The unique identifier of the category these products belongs to.</param>
+    /// <param name="orderBy">The product property name to sort by.</param>
+    /// <param name="direction">The sorting direction.</param>
+    /// <param name="skip">The number of products that should be skipped.</param>
+    /// <param name="take">The number of products that should be taken.</param>
+    /// <param name="filter">The filtering query.</param>
+    /// <returns>Found products filtered by the category identifier using the given filtering, sorting, and paging.</returns>
+    public IEnumerable<Product> FilteredByCategoryIdRange(int categoryId, string orderBy, string direction, int skip, int take, string filter)
+    {
+      return this.GetFilteredProducts(dbSet.AsNoTracking(), categoryId, filter).OrderBy(orderBy, direction).Skip(skip).Take(take);
     }
 
     /// <summary>
@@ -113,6 +147,11 @@ namespace Platformus.ECommerce.Data.EntityFramework.Sqlite
         return products;
 
       return products.Where(p => p.Code.Contains(filter.ToLower()));
+    }
+
+    private IQueryable<Product> GetFilteredProducts(IQueryable<Product> products, int categoryId, string filter)
+    {
+      return this.GetFilteredProducts(products, filter).Where(p => p.CategoryId == categoryId);
     }
   }
 }

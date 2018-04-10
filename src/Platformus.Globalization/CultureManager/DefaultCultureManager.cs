@@ -37,14 +37,14 @@ namespace Platformus.Globalization
       return this.GetCachedCultures().FirstOrDefault(c => c.IsNeutral);
     }
 
-    public Culture GetDefaultCulture()
+    public Culture GetFrontendDefaultCulture()
     {
-      return this.GetCachedCultures().FirstOrDefault(c => c.IsDefault);
+      return this.GetCachedCultures().FirstOrDefault(c => c.IsFrontendDefault);
     }
 
-    public Culture GetBackendUiCulture()
+    public Culture GetBackendDefaultCulture()
     {
-      return this.GetCachedCultures().FirstOrDefault(c => c.IsBackendUi);
+      return this.GetCachedCultures().FirstOrDefault(c => c.IsBackendDefault);
     }
 
     public Culture GetCurrentCulture()

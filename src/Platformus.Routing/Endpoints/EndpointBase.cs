@@ -11,7 +11,9 @@ namespace Platformus.Routing.Endpoints
 {
   public abstract class EndpointBase : IEndpoint
   {
-    private Endpoint endpoint;
+    protected IRequestHandler requestHandler;
+    protected Endpoint endpoint;
+    protected IEnumerable<KeyValuePair<string, string>> arguments;
     private Dictionary<string, string> parameterValuesByCodes;
 
     public virtual IEnumerable<EndpointParameterGroup> ParameterGroups => new EndpointParameterGroup[] { };
@@ -19,11 +21,13 @@ namespace Platformus.Routing.Endpoints
 
     public IActionResult Invoke(IRequestHandler requestHandler, Endpoint endpoint, IEnumerable<KeyValuePair<string, string>> arguments)
     {
+      this.requestHandler = requestHandler;
       this.endpoint = endpoint;
-      return this.GetActionResult(requestHandler, endpoint, arguments);
+      this.arguments = arguments;
+      return this.Invoke();
     }
 
-    protected abstract IActionResult GetActionResult(IRequestHandler requestHandler, Endpoint endpoint, IEnumerable<KeyValuePair<string, string>> arguments);
+    protected abstract IActionResult Invoke();
 
     protected bool HasParameter(string key)
     {

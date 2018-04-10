@@ -1,0 +1,30 @@
+﻿@* Copyright © 2018 Dmitry Sikorsky. All rights reserved. *@
+@* Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information. *@
+@model Platformus.ECommerce.Backend.ViewModels.Shared.PhotoViewModel
+@inject Microsoft.AspNetCore.Mvc.Localization.IViewLocalizer Localizer
+@{ 
+  string identity = "photo" + this.Model.Id;
+}
+<div id="@identity" class="photos__photo photo">
+  <div class="photo__thumbnail" style="background-image: url(/images/temp/@Model.Filename);"></div>
+  <div class="photo__form form">
+    <div class="form__field form__field--separated field">
+      <a class="checkbox" id="_@(identity)IsCover" href="#">
+        <div class="checkbox__indicator @(this.Model.IsCover ? "checkbox__indicator--checked" : null)"></div>
+        <div class="checkbox__label">@Localizer["Is cover"]</div>
+        <input name="_@(identity)IsCover" type="hidden" value="@(this.Model.IsCover ? "true" : "false")" />
+      </a>
+    </div>
+    <div class="form__field field">
+      <div class="field__label label">@Localizer["Position"]</div>
+      <input class="field__text-box field__text-box--numeric text-box" id="_@(identity)Position" name="_@(identity)Position" type="text" value="@Model.Position" />
+      <div class="field__numeric-buttons">
+        <a class="field__numeric-button field__numeric-button--up"></a>
+        <a class="field__numeric-button field__numeric-button--down"></a>
+      </div>
+    </div>
+    <div class="form__buttons form__buttons--minor buttons">
+      <button class="buttons__button buttons__button--minor button button--negative button--minor" type="button" onclick="platformus.ui.removePhoto('photo@(this.Model.Id)');">@Localizer["Remove"]</button>
+    </div>
+  </div>
+</div>

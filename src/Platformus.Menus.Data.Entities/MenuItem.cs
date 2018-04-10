@@ -28,7 +28,7 @@ namespace Platformus.Menus.Data.Entities
     public int? MenuItemId { get; set; }
 
     /// <summary>
-    /// Gets or sets the dictionary identifier this field is related to. It is used to store the localizable menu item name.
+    /// Gets or sets the dictionary identifier this menu item is related to. It is used to store the localizable menu item name.
     /// </summary>
     public int NameId { get; set; }
 

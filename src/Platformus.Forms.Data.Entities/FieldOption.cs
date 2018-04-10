@@ -22,7 +22,7 @@ namespace Platformus.Forms.Data.Entities
     public int FieldId { get; set; }
 
     /// <summary>
-    /// Gets or sets the dictionary identifier this field is related to. It is used to store the localizable field option value.
+    /// Gets or sets the dictionary identifier this field option is related to. It is used to store the localizable field option value.
     /// </summary>
     public int ValueId { get; set; }
 

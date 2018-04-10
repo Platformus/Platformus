@@ -28,7 +28,14 @@ namespace Platformus
       {
         if ((filterContext.Result is RedirectResult) || (filterContext.Result is RedirectToRouteResult))
         {
-          IEnumerable<ModelStateWrapper> modelStateWrappers = controller.ViewData.ModelState.Select(ms => new ModelStateWrapper() { Key = ms.Key, ValidationState = ms.Value.ValidationState, Value = ms.Value.AttemptedValue  });
+          IEnumerable<ModelStateWrapper> modelStateWrappers = controller.ViewData.ModelState.Select(
+            ms => new ModelStateWrapper() {
+              Key = ms.Key,
+              Value = ms.Value.AttemptedValue,
+              ValidationState = ms.Value.ValidationState
+              //Errors = ms.Value.Errors.Select(e => e.ErrorMessage)
+            }
+          );
 
           controller.TempData[Key] = JsonConvert.SerializeObject(modelStateWrappers, Formatting.None, new JsonSerializerSettings() { ContractResolver = new NoCultureInfoResolver() });
         }
@@ -60,6 +67,10 @@ namespace Platformus
               {
                 controller.ViewData.ModelState.SetModelValue(modelStateWrapper.Key, modelStateWrapper.Value, modelStateWrapper.Value);
                 controller.ViewData.ModelState[modelStateWrapper.Key].ValidationState = modelStateWrapper.ValidationState;
+
+                //if (modelStateWrapper.ValidationState == ModelValidationState.Invalid)
+                //  foreach (string error in modelStateWrapper.Errors)
+                //    controller.ViewData.ModelState[modelStateWrapper.Key].Errors.Add(new ModelError(error));
               }
             }
 
@@ -80,8 +91,9 @@ namespace Platformus
   public class ModelStateWrapper
   {
     public string Key { get; set; }
-    public ModelValidationState ValidationState { get; set; }
     public string Value { get; set; }
+    public ModelValidationState ValidationState { get; set; }
+    public IEnumerable<string> Errors { get; set; }
   }
 
   public class NoCultureInfoResolver : DefaultContractResolver

@@ -6,7 +6,6 @@ using Microsoft.Extensions.Localization;
 using Platformus.Barebone;
 using Platformus.Barebone.Backend.ViewModels;
 using Platformus.Barebone.Backend.ViewModels.Shared;
-using Platformus.Designers.Backend.ViewModels.Shared;
 
 namespace Platformus.Designers.Backend.ViewModels.Scripts
 {
@@ -30,7 +29,7 @@ namespace Platformus.Designers.Backend.ViewModels.Scripts
             new GridColumnViewModelFactory(this.RequestHandler).Create(localizer["Filename"], "Filename"),
             new GridColumnViewModelFactory(this.RequestHandler).CreateEmpty()
           },
-          FileSystemRepository.GetFiles(scriptsPath, "*.js", filter, orderBy, direction, skip, take).Select(fi => new ScriptViewModelFactory(this.RequestHandler).Create(fi)),
+          FileSystemRepository.GetFiles(scriptsPath, "*.js", filter, orderBy, direction, skip, take).Select(fi => new Platformus.Designers.Backend.ViewModels.Shared.ScriptViewModelFactory(this.RequestHandler).Create(fi)),
           "_Script"
         )
       };

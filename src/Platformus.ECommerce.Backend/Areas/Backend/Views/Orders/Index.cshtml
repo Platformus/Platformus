@@ -1,0 +1,15 @@
+﻿@* Copyright © 2017 Dmitry Sikorsky. All rights reserved. *@
+@* Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information. *@
+@model Platformus.ECommerce.Backend.ViewModels.Orders.IndexViewModel
+@inject Microsoft.AspNetCore.Mvc.Localization.IViewLocalizer Localizer
+@{
+  this.ViewBag.Title = this.Localizer["Orders"];
+  this.ViewBag.ActiveMenuItem = "orders";
+}
+@section title {
+  @ViewBag.Title <span class="master-detail__detail-header-counter">@Model.Grid.Pager.Total</span>
+}
+@Html.Partial("_Grid", this.Model.Grid)
+<div class="master-detail__detail-buttons buttons">
+  <a class="buttons__button button button--positive" href="@this.Context.Request.CombineUrl("/backend/orders/create")">@Localizer["Create order"]</a>
+</div>

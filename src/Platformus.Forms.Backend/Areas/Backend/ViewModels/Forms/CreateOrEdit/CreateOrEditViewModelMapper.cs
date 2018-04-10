@@ -8,7 +8,7 @@ using Platformus.Globalization.Backend.ViewModels;
 
 namespace Platformus.Forms.Backend.ViewModels.Forms
 {
-  public class CreateOrEditViewModelMapper : ViewModelFactoryBase
+  public class CreateOrEditViewModelMapper : ViewModelMapperBase
   {
     public CreateOrEditViewModelMapper(IRequestHandler requestHandler)
       : base(requestHandler)

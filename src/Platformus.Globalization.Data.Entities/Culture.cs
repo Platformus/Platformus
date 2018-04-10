@@ -34,15 +34,16 @@ namespace Platformus.Globalization.Data.Entities
     public bool IsNeutral { get; set; }
 
     /// <summary>
-    /// Gets or sets the value indicating whether the culture is default or not. Default culture is used to display
-    /// localizable content on the frontend when no culture is explicitly selected.
+    /// Gets or sets the value indicating whether the culture is frontend default or not. Frontend default culture is used
+    /// to display localizable content on the frontend when no culture is explicitly selected and to display frontend UI.
     /// </summary>
-    public bool IsDefault { get; set; }
+    public bool IsFrontendDefault { get; set; }
 
     /// <summary>
-    /// Gets or sets the value indicating whether the culture is backend UI one or not.
+    /// Gets or sets the value indicating whether the culture is backend default or not. Backend default culture is used
+    /// to display localizable content on the backend when no culture is explicitly selected and to display backend UI.
     /// </summary>
-    public bool IsBackendUi { get; set; }
+    public bool IsBackendDefault { get; set; }
 
     public virtual ICollection<Localization> Localizations { get; set; }
   }

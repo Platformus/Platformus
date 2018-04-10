@@ -4,7 +4,7 @@
     <Authors>Dmitry Sikorsky</Authors>
     <Copyright>Copyright © 2015 Dmitry Sikorsky</Copyright>
     <Description>The Platformus.Barebone extension component.</Description>
-    <VersionPrefix>1.0.0-beta3</VersionPrefix>
+    <VersionPrefix>1.0.0-beta4</VersionPrefix>
     <TargetFramework>netcoreapp2.0</TargetFramework>
     <AssemblyName>Platformus.Barebone.Frontend</AssemblyName>
     <PackageId>Platformus.Barebone.Frontend</PackageId>

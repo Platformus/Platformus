@@ -8,17 +8,21 @@
       action: function() {
         $(".menu__group-header").click(
           function () {
+            var menu = $(this).parent().parent();
             var menuGroup = $(this).parent();
+            var menuGroupHeader = menuGroup.find(".menu__group-header");
             var menuGroupContent = menuGroup.find(".menu__group-content");
 
             if (menuGroupContent.is(":visible")) {
-              removeFromExpandedMenuGroups(menuGroup.data("code"));
+              removeFromExpandedMenuGroups(menu.data("code"), menuGroup.data("code"));
+              menuGroupHeader.removeClass("menu__group-header--expanded").addClass("menu__group-header--collapsed");
               menuGroupContent.slideUp("fast");
               
             }
 
             else {
-              addToExpandedMenuGroups(menuGroup.data("code"));
+              addToExpandedMenuGroups(menu.data("code"), menuGroup.data("code"));
+              menuGroupHeader.removeClass("menu__group-header--collapsed").addClass("menu__group-header--expanded");
               menuGroupContent.slideDown("fast");
             }
           }
@@ -31,54 +35,64 @@
   );
 
   function syncExpandedMenuGroups() {
-    if ($.cookie("expanded-menu-groups") == null) {
-      $(".menu").each(
-        function () {
-          var menuGroup = $(this).find(".menu__group").first();
+    $(".menu__group-header").removeClass("menu__group-header--expanded").addClass("menu__group-header--collapsed");
+    $(".menu").each(
+      function () {
+        var menu = $(this);
+
+        if ($.cookie(getExpandedMenuGroupsCookieKey(menu.data("code"))) == null) {
+          var menuGroup = menu.find(".menu__group").first();
+
+          addToExpandedMenuGroups(menu.data("code"), menuGroup.data("code"));
+        }
+
+        var expandedMenuGroups = getExpandedMenuGroups(menu.data("code"));
+
+        for (var i = 0; i < expandedMenuGroups.length; i++) {
+          var menuGroup = $(".menu__group[data-code='" + expandedMenuGroups[i] + "']");
+          var menuGroupHeader = menuGroup.find(".menu__group-header");
           var menuGroupContent = menuGroup.find(".menu__group-content");
 
-          addToExpandedMenuGroups(menuGroup.data("code"));
+          menuGroupHeader.removeClass("menu__group-header--collapsed").addClass("menu__group-header--expanded");
           menuGroupContent.show();
         }
-      );
-    }
-
-    else {
-      var expandedMenuGroups = getExpandedMenuGroups();
-
-      for (var i = 0; i < expandedMenuGroups.length; i++) {
-        $(".menu__group[data-code='" + expandedMenuGroups[i] + "']").find(".menu__group-content").show();
       }
-    }
+    );
   }
 
-  function addToExpandedMenuGroups(code) {
-    var expandedMenuGroups = getExpandedMenuGroups();
+  function addToExpandedMenuGroups(menuCode, menuGroupCode) {
+    var expandedMenuGroups = getExpandedMenuGroups(menuCode);
 
-    if (expandedMenuGroups.indexOf(code) == -1) {
-      expandedMenuGroups.push(code);
+    if (expandedMenuGroups.indexOf(menuGroupCode) == -1) {
+      expandedMenuGroups.push(menuGroupCode);
     }
 
-    setExpandedMenuGroups(expandedMenuGroups);
+    setExpandedMenuGroups(menuCode, expandedMenuGroups);
   }
 
-  function removeFromExpandedMenuGroups(code) {
-    var expandedMenuGroups = getExpandedMenuGroups();
-    var index = expandedMenuGroups.indexOf(code);
+  function removeFromExpandedMenuGroups(menuCode, menuGroupCode) {
+    var expandedMenuGroups = getExpandedMenuGroups(menuCode);
+    var index = expandedMenuGroups.indexOf(menuGroupCode);
 
     if (index != -1) {
       expandedMenuGroups.splice(index, 1);
     }
 
-    setExpandedMenuGroups(expandedMenuGroups);
+    setExpandedMenuGroups(menuCode, expandedMenuGroups);
   }
 
-  function getExpandedMenuGroups() {
-    return $.cookie("expanded-menu-groups") == null ? [] : $.cookie("expanded-menu-groups").split(",");
+  function getExpandedMenuGroups(menuCode) {
+    var key = getExpandedMenuGroupsCookieKey(menuCode);
+
+    return $.cookie(key) == null ? [] : $.cookie(key).split(",");
   }
 
-  function setExpandedMenuGroups(expandedMenuGroups) {
-    $.cookie("expanded-menu-groups", expandedMenuGroups.join(), { path: "/backend/" });
+  function setExpandedMenuGroups(menuCode, expandedMenuGroups) {
+    $.cookie(getExpandedMenuGroupsCookieKey(menuCode), expandedMenuGroups.join(), { path: "/" });
+  }
+
+  function getExpandedMenuGroupsCookieKey(menuCode) {
+    return "expanded-" + menuCode + "-menu-groups";
   }
 })(window.platformus = window.platformus || {});
 

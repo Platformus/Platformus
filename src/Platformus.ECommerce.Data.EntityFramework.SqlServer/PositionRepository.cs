@@ -28,28 +28,28 @@ namespace Platformus.ECommerce.Data.EntityFramework.SqlServer
     }
 
     /// <summary>
-    /// Gets the positions filtered by the order identifier using sorting by identifier (ascending).
+    /// Gets the positions filtered by the cart identifier using sorting by identifier (ascending).
     /// </summary>
-    /// <param name="orderId">The unique identifier of the order these positions belongs to.</param>
+    /// <param name="cartId">The unique identifier of the cart these positions belongs to.</param>
     /// <returns>Found positions.</returns>
-    public IEnumerable<Position> FilteredByOrderId(int orderId)
+    public IEnumerable<Position> FilteredByCartId(int cartId)
     {
-      return this.dbSet.AsNoTracking().Where(p => p.OrderId == orderId).OrderBy(p => p.Id);
+      return this.dbSet.AsNoTracking().Where(p => p.CartId == cartId).OrderBy(p => p.Id);
     }
 
     /// <summary>
-    /// Gets the positions filtered by the order identifier using the given filtering, sorting, and paging.
+    /// Gets the positions filtered by the cart identifier using the given filtering, sorting, and paging.
     /// </summary>
-    /// <param name="orderId">The unique identifier of the order these positions belongs to.</param>
+    /// <param name="cartId">The unique identifier of the cart these positions belongs to.</param>
     /// <param name="orderBy">The position property name to sort by.</param>
     /// <param name="direction">The sorting direction.</param>
     /// <param name="skip">The number of positions that should be skipped.</param>
     /// <param name="take">The number of positions that should be taken.</param>
     /// <param name="filter">The filtering query.</param>
     /// <returns>Found positions using the given filtering, sorting, and paging.</returns>
-    public IEnumerable<Position> Range(int orderId, string orderBy, string direction, int skip, int take, string filter)
+    public IEnumerable<Position> Range(int cartId, string orderBy, string direction, int skip, int take, string filter)
     {
-      return this.GetFilteredPositions(dbSet.AsNoTracking(), orderId, filter).OrderBy(orderBy, direction).Skip(skip).Take(take);
+      return this.GetFilteredPositions(dbSet.AsNoTracking(), cartId, filter).OrderBy(orderBy, direction).Skip(skip).Take(take);
     }
 
     /// <summary>
@@ -89,19 +89,19 @@ namespace Platformus.ECommerce.Data.EntityFramework.SqlServer
     }
 
     /// <summary>
-    /// Counts the number of the positions filtered by the order identifier with the given filtering.
+    /// Counts the number of the positions filtered by the cart identifier with the given filtering.
     /// </summary>
-    /// <param name="orderId">The unique identifier of the order these positions belongs to.</param>
+    /// <param name="cartId">The unique identifier of the cart these positions belongs to.</param>
     /// <param name="filter">The filtering query.</param>
     /// <returns>The number of positions found.</returns>
-    public int Count(int orderId, string filter)
+    public int Count(int cartId, string filter)
     {
-      return this.GetFilteredPositions(dbSet, orderId, filter).Count();
+      return this.GetFilteredPositions(dbSet, cartId, filter).Count();
     }
 
-    private IQueryable<Position> GetFilteredPositions(IQueryable<Position> positions, int orderId, string filter)
+    private IQueryable<Position> GetFilteredPositions(IQueryable<Position> positions, int cartId, string filter)
     {
-      positions = positions.Where(p => p.OrderId == orderId);
+      positions = positions.Where(p => p.CartId == cartId);
 
       if (string.IsNullOrEmpty(filter))
         return positions;

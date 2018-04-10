@@ -4,20 +4,23 @@
 using System.Threading.Tasks;
 using ExtCore.Data.Abstractions;
 using Microsoft.AspNetCore.Mvc;
-using Platformus.Barebone.Backend.ViewModels.Shared;
+using Platformus.Barebone.Backend.Metadata.Providers;
 
 namespace Platformus.Barebone.Backend.ViewComponents
 {
   public class BackendStyleSheetsViewComponent : ViewComponentBase
   {
-    public BackendStyleSheetsViewComponent(IStorage storage)
+    private IStyleSheetsProvider styleSheetsProvider;
+
+    public BackendStyleSheetsViewComponent(IStorage storage, IStyleSheetsProvider styleSheetsProvider)
       : base(storage)
     {
+      this.styleSheetsProvider = styleSheetsProvider;
     }
 
     public async Task<IViewComponentResult> InvokeAsync()
     {
-      return this.View(new BackendStyleSheetsViewModelFactory(this).Create());
+      return this.View(this.styleSheetsProvider.GetStyleSheets(this));
     }
   }
 }

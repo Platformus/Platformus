@@ -8,7 +8,7 @@ using Platformus.Globalization.Backend.ViewModels;
 
 namespace Platformus.ECommerce.Backend.ViewModels.Catalogs
 {
-  public class CreateOrEditViewModelMapper : ViewModelFactoryBase
+  public class CreateOrEditViewModelMapper : ViewModelMapperBase
   {
     public CreateOrEditViewModelMapper(IRequestHandler requestHandler)
       : base(requestHandler)
@@ -24,6 +24,9 @@ namespace Platformus.ECommerce.Backend.ViewModels.Catalogs
 
       else catalog.CatalogId = createOrEdit.CatalogId;
 
+      catalog.Url = createOrEdit.Url;
+      catalog.CSharpClassName = createOrEdit.CSharpClassName;
+      catalog.Parameters = createOrEdit.Parameters;
       catalog.Position = createOrEdit.Position;
       return catalog;
     }

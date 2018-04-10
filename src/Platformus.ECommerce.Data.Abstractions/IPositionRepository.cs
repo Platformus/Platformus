@@ -20,23 +20,23 @@ namespace Platformus.ECommerce.Data.Abstractions
     Position WithKey(int id);
 
     /// <summary>
-    /// Gets the positions filtered by the order identifier using sorting by identifier (ascending).
+    /// Gets the positions filtered by the cart identifier using sorting by identifier (ascending).
     /// </summary>
-    /// <param name="orderId">The unique identifier of the order these positions belongs to.</param>
+    /// <param name="cartId">The unique identifier of the cart these positions belongs to.</param>
     /// <returns>Found positions.</returns>
-    IEnumerable<Position> FilteredByOrderId(int orderId);
+    IEnumerable<Position> FilteredByCartId(int cartId);
 
     /// <summary>
-    /// Gets the positions filtered by the order identifier using the given filtering, sorting, and paging.
+    /// Gets the positions filtered by the cart identifier using the given filtering, sorting, and paging.
     /// </summary>
-    /// <param name="orderId">The unique identifier of the order these positions belongs to.</param>
+    /// <param name="cartId">The unique identifier of the cart these positions belongs to.</param>
     /// <param name="orderBy">The position property name to sort by.</param>
     /// <param name="direction">The sorting direction.</param>
     /// <param name="skip">The number of positions that should be skipped.</param>
     /// <param name="take">The number of positions that should be taken.</param>
     /// <param name="filter">The filtering query.</param>
     /// <returns>Found positions using the given filtering, sorting, and paging.</returns>
-    IEnumerable<Position> Range(int orderId, string orderBy, string direction, int skip, int take, string filter);
+    IEnumerable<Position> Range(int cartId, string orderBy, string direction, int skip, int take, string filter);
 
     /// <summary>
     /// Creates the position.
@@ -63,11 +63,11 @@ namespace Platformus.ECommerce.Data.Abstractions
     void Delete(Position position);
 
     /// <summary>
-    /// Counts the number of the positions filtered by the order identifier with the given filtering.
+    /// Counts the number of the positions filtered by the cart identifier with the given filtering.
     /// </summary>
-    /// <param name="orderId">The unique identifier of the order these positions belongs to.</param>
+    /// <param name="cartId">The unique identifier of the cart these positions belongs to.</param>
     /// <param name="filter">The filtering query.</param>
     /// <returns>The number of positions found.</returns>
-    int Count(int orderId, string filter);
+    int Count(int cartId, string filter);
   }
 }

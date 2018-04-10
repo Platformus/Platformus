@@ -123,6 +123,9 @@
   <data name="Disallow anonymous" xml:space="preserve">
     <value>Запрещать доступ для анонимных пользователей</value>
   </data>
+  <data name="Name" xml:space="preserve">
+    <value>Название</value>
+  </data>
   <data name="Position" xml:space="preserve">
     <value>Позиция</value>
   </data>

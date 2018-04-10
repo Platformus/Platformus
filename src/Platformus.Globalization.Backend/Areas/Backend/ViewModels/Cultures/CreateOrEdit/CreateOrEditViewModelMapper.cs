@@ -7,7 +7,7 @@ using Platformus.Globalization.Data.Entities;
 
 namespace Platformus.Globalization.Backend.ViewModels.Cultures
 {
-  public class CreateOrEditViewModelMapper : ViewModelFactoryBase
+  public class CreateOrEditViewModelMapper : ViewModelMapperBase
   {
     public CreateOrEditViewModelMapper(IRequestHandler requestHandler)
       : base(requestHandler)
@@ -23,8 +23,8 @@ namespace Platformus.Globalization.Backend.ViewModels.Cultures
 
       culture.Code = createOrEdit.Code;
       culture.Name = createOrEdit.Name;
-      culture.IsDefault = createOrEdit.IsDefault;
-      culture.IsBackendUi = createOrEdit.IsBackendUi;
+      culture.IsFrontendDefault = createOrEdit.IsFrontendDefault;
+      culture.IsBackendDefault = createOrEdit.IsBackendDefault;
       return culture;
     }
   }

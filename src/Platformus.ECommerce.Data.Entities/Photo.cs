@@ -26,6 +26,11 @@ namespace Platformus.ECommerce.Data.Entities
     public string Filename { get; set; }
 
     /// <summary>
+    /// Gets or sets the value indicating whether the photo is cover one or not.
+    /// </summary>
+    public bool IsCover { get; set; }
+
+    /// <summary>
     /// Gets or sets the photo position. Position is used to sort the photos inside the product (smallest to largest).
     /// </summary>
     public int? Position { get; set; }

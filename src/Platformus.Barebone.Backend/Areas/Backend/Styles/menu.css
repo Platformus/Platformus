@@ -14,6 +14,14 @@
   padding: 0 20px;
 }
 
+.menu__group-header--expanded {
+  background: url(/wwwroot.areas.backend.images.menu_group_header_expanded.png) right no-repeat;
+}
+
+.menu__group-header--collapsed {
+  background: url(/wwwroot.areas.backend.images.menu_group_header_collapsed.png) right no-repeat;
+}
+
 .menu__group-content {
   display: none;
 }
@@ -21,4 +29,22 @@
 .menu__item {
   display: block;
   padding: 5px 20px;
+}
+
+@media
+only screen and (-webkit-min-device-pixel-ratio: 2),
+only screen and (   min--moz-device-pixel-ratio: 2),
+only screen and (     -o-min-device-pixel-ratio: 2/1),
+only screen and (        min-device-pixel-ratio: 2),
+only screen and (                min-resolution: 192dpi),
+only screen and (                min-resolution: 2dppx) {
+  .menu__group-header--expanded {
+    background: url(/wwwroot.areas.backend.images.menu_group_header_expanded@2x.png) right no-repeat;
+    background-size: 30px 5px;
+  }
+
+  .menu__group-header--collapsed {
+    background: url(/wwwroot.areas.backend.images.menu_group_header_collapsed@2x.png) right no-repeat;
+    background-size: 30px 5px;
+  }
 }

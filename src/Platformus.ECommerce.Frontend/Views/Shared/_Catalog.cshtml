@@ -1,0 +1,22 @@
+﻿@* Copyright © 2018 Dmitry Sikorsky. All rights reserved. *@
+@* Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information. *@
+@model Platformus.ECommerce.Frontend.ViewModels.Shared.CatalogViewModel
+@using Microsoft.AspNetCore.Routing
+@{
+  string url = "/" + System.Globalization.CultureInfo.CurrentCulture.TwoLetterISOLanguageName + "/" + this.Context.GetRouteValue("url") as string;
+  bool isActive = string.Equals(this.Model.Url, url, StringComparison.OrdinalIgnoreCase);
+  string levelSuffix = this.Model.Level == 1 ? null : "-level-" + this.Model.Level;
+}
+<div class="catalogs__catalog@(levelSuffix) @(isActive ? "catalogs__catalog--active" + levelSuffix : null)">
+  <a class="catalogs__catalog-name@(levelSuffix) @(isActive ? "catalogs__catalog-name--active" + levelSuffix : null)" href="@Model.Url">@Model.Name</a>
+  @if (this.Model.Catalogs.Count() != 0)
+  {
+    <div class="catalogs__catalogs-level-@(this.Model.Level + 1)">
+      @foreach (var catalog in this.Model.Catalogs)
+      {
+        catalog.Level = this.Model.Level + 1;
+        @Html.Partial("_Catalog", catalog)
+      }
+    </div>
+  }
+</div>

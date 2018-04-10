@@ -1,0 +1,21 @@
+﻿/* Copyright © 2018 Dmitry Sikorsky. All rights reserved. */
+/* Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information. */
+
+.category-product-provider-parameter-editor {
+}
+
+.category-product-provider-parameter-editor__names {
+  background: #f0f0f0;
+  width: 450px;
+  max-height: 300px;
+  overflow: auto;
+}
+
+.category-product-provider-parameter-editor__names--required {
+  border-right: 5px solid #ff4100;
+}
+
+.category-product-provider-parameter-editor__name {
+  display: block;
+  padding: 5px 10px;
+}

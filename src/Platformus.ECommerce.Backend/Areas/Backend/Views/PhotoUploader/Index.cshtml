@@ -1,0 +1,36 @@
+﻿@* Copyright © 2018 Dmitry Sikorsky. All rights reserved. *@
+@* Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information. *@
+@{
+  this.Layout = null;
+}
+@inject Microsoft.AspNetCore.Mvc.Localization.IViewLocalizer Localizer
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <title>@Localizer["Photo Uploader"] | @Localizer["Platformus"]</title>
+  <link href="/wwwroot.areas.backend.css.platformus.barebone.min.css" rel="stylesheet" />
+  <link href="//fonts.googleapis.com/css?family=PT+Sans:400,400italic&subset=latin,cyrillic" type="text/css" rel="stylesheet" />
+  <script src="//ajax.aspnetcdn.com/ajax/jquery/jquery-1.11.3.min.js"></script>
+  <script src="//ajax.aspnetcdn.com/ajax/jquery.validate/1.14.0/jquery.validate.min.js"></script>
+  <script src="//ajax.aspnetcdn.com/ajax/jquery.validation.unobtrusive/3.2.6/jquery.validate.unobtrusive.min.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js"></script>
+  <script src="/wwwroot.areas.backend.js.platformus.barebone.min.js"></script>
+  <script src="/wwwroot.areas.backend.js.platformus.ecommerce.min.js"></script>
+</head>
+<body>
+  <div class="drag-and-drop-area" id="photoDragAndDropArea">
+    <div class="drag-and-drop-area__description">
+      @Localizer["Drag and drop photos into this area…"]
+    </div>
+    <form class="form" id="form" name="form" action="/backend/photouploader" enctype="multipart/form-data" method="post">
+      <div class="drag-and-drop-area__buttons form__buttons buttons">
+        <div class="drag-and-drop-area__browse-button buttons__button button button--positive">
+          <div>@Localizer["…or select them on your device"]</div>
+          <input class="drag-and-drop-area__browse-input" id="files" name="files" type="file" size="1" multiple onchange="platformus.photoDragAndDropArea.selected();" />
+        </div>
+      </div>
+    </form>
+  </div>
+</body>
+</html>

@@ -53,7 +53,7 @@ namespace Platformus.Globalization.Data.EntityFramework.Sqlite
     /// <returns>Found default culture.</returns>
     public Culture Default()
     {
-      return this.dbSet.FirstOrDefault(c => c.IsDefault);
+      return this.dbSet.FirstOrDefault(c => c.IsFrontendDefault);
     }
 
     /// <summary>

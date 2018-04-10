@@ -8,7 +8,7 @@ using Platformus.Configurations.Data.Entities;
 
 namespace Platformus.Configurations.Backend.ViewModels.Variables
 {
-  public class CreateOrEditViewModelMapper : ViewModelFactoryBase
+  public class CreateOrEditViewModelMapper : ViewModelMapperBase
   {
     public CreateOrEditViewModelMapper(IRequestHandler requestHandler)
       : base(requestHandler)

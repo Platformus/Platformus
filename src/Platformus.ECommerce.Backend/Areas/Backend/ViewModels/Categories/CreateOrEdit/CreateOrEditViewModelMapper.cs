@@ -8,7 +8,7 @@ using Platformus.Globalization.Backend.ViewModels;
 
 namespace Platformus.ECommerce.Backend.ViewModels.Categories
 {
-  public class CreateOrEditViewModelMapper : ViewModelFactoryBase
+  public class CreateOrEditViewModelMapper : ViewModelMapperBase
   {
     public CreateOrEditViewModelMapper(IRequestHandler requestHandler)
       : base(requestHandler)

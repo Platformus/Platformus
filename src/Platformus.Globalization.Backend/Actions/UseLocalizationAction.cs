@@ -32,9 +32,9 @@ namespace Platformus.Globalization.Backend.Actions
 
       else
       {
-        Culture backendUiCulture = serviceProvider.GetService<ICultureManager>().GetBackendUiCulture();
+        Culture backendDefaultCulture = serviceProvider.GetService<ICultureManager>().GetBackendDefaultCulture();
 
-        if (backendUiCulture == null)
+        if (backendDefaultCulture == null)
         {
           requestLocalizationOptions.DefaultRequestCulture = new RequestCulture(DefaultCulture.Code);
           requestLocalizationOptions.SupportedCultures = requestLocalizationOptions.SupportedUICultures =
@@ -43,17 +43,17 @@ namespace Platformus.Globalization.Backend.Actions
 
         else
         {
-          requestLocalizationOptions.DefaultRequestCulture = new RequestCulture(backendUiCulture.Code);
+          requestLocalizationOptions.DefaultRequestCulture = new RequestCulture(backendDefaultCulture.Code);
           requestLocalizationOptions.SupportedCultures = requestLocalizationOptions.SupportedUICultures =
-            new CultureInfo[] { new CultureInfo(backendUiCulture.Code) }.ToList();
+            new CultureInfo[] { new CultureInfo(backendDefaultCulture.Code) }.ToList();
         }
       }
 
       applicationBuilder.UseWhen(
         context => context.Request.Path.StartsWithSegments(new PathString("/backend")),
-        frontendApplicationBuilder =>
+        backendApplicationBuilder =>
         {
-          frontendApplicationBuilder.UseRequestLocalization(requestLocalizationOptions);
+          backendApplicationBuilder.UseRequestLocalization(requestLocalizationOptions);
         }
       );
     }

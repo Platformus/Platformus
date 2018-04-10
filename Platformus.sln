@@ -119,8 +119,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Platformus.Menus.Frontend",
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Platformus.Globalization.Frontend", "src\Platformus.Globalization.Frontend\Platformus.Globalization.Frontend.csproj", "{8D565D18-5290-4EAD-A718-F73EB500B695}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Platformus.Infrastructure", "src\Platformus.Infrastructure\Platformus.Infrastructure.csproj", "{B6DA19CE-E8FE-4D74-B397-8C08C7C21299}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Platformus.FileManager.Data.EntityFramework.PostgreSql", "src\Platformus.FileManager.Data.EntityFramework.PostgreSql\Platformus.FileManager.Data.EntityFramework.PostgreSql.csproj", "{AB19BEDA-D1BA-40F7-8E7A-44F6890E767A}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Platformus.Security.Data.EntityFramework.PostgreSql", "src\Platformus.Security.Data.EntityFramework.PostgreSql\Platformus.Security.Data.EntityFramework.PostgreSql.csproj", "{E05ABD63-5AF8-4B94-B9D2-9284F15DD96B}"
@@ -192,6 +190,12 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Platformus.Routing.Data.EntityFramework.SqlServer", "src\Platformus.Routing.Data.EntityFramework.SqlServer\Platformus.Routing.Data.EntityFramework.SqlServer.csproj", "{10F42544-5454-41A7-9D42-BE2FBA3F8F21}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Platformus.Routing.Frontend", "src\Platformus.Routing.Frontend\Platformus.Routing.Frontend.csproj", "{B8FB4CEC-5372-400E-943B-CF97A20CEFF9}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Platformus.ECommerce.Api", "src\Platformus.ECommerce.Api\Platformus.ECommerce.Api.csproj", "{232AB05D-70D5-4891-A10C-F345830CEB27}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Platformus.Images", "src\Platformus.Images\Platformus.Images.csproj", "{F6A940F6-9EB2-4C50-A71E-FABA00B43E16}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Images", "Images", "{E0F6B788-F6F5-4B48-9CF6-73570CCC5242}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -395,10 +399,6 @@ Global
 		{8D565D18-5290-4EAD-A718-F73EB500B695}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8D565D18-5290-4EAD-A718-F73EB500B695}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8D565D18-5290-4EAD-A718-F73EB500B695}.Release|Any CPU.Build.0 = Release|Any CPU
-		{B6DA19CE-E8FE-4D74-B397-8C08C7C21299}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{B6DA19CE-E8FE-4D74-B397-8C08C7C21299}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{B6DA19CE-E8FE-4D74-B397-8C08C7C21299}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{B6DA19CE-E8FE-4D74-B397-8C08C7C21299}.Release|Any CPU.Build.0 = Release|Any CPU
 		{AB19BEDA-D1BA-40F7-8E7A-44F6890E767A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{AB19BEDA-D1BA-40F7-8E7A-44F6890E767A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{AB19BEDA-D1BA-40F7-8E7A-44F6890E767A}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -523,6 +523,14 @@ Global
 		{B8FB4CEC-5372-400E-943B-CF97A20CEFF9}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B8FB4CEC-5372-400E-943B-CF97A20CEFF9}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B8FB4CEC-5372-400E-943B-CF97A20CEFF9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{232AB05D-70D5-4891-A10C-F345830CEB27}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{232AB05D-70D5-4891-A10C-F345830CEB27}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{232AB05D-70D5-4891-A10C-F345830CEB27}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{232AB05D-70D5-4891-A10C-F345830CEB27}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F6A940F6-9EB2-4C50-A71E-FABA00B43E16}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F6A940F6-9EB2-4C50-A71E-FABA00B43E16}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F6A940F6-9EB2-4C50-A71E-FABA00B43E16}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F6A940F6-9EB2-4C50-A71E-FABA00B43E16}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -585,7 +593,6 @@ Global
 		{DC68B352-7D3F-4709-B076-6F74BFAC823D} = {E69F478C-55F9-45D7-9424-47906DFA3F02}
 		{642F44BD-D153-4EA8-A331-A700FE737E8A} = {6AAB030E-FDFF-49B7-AD82-4871F2BFA43E}
 		{8D565D18-5290-4EAD-A718-F73EB500B695} = {E75AEBF8-62DF-4222-B960-5E509AD644B3}
-		{B6DA19CE-E8FE-4D74-B397-8C08C7C21299} = {0D7AEFA3-ABB0-4AF1-A4C1-F8E05C241753}
 		{AB19BEDA-D1BA-40F7-8E7A-44F6890E767A} = {6FFAC33C-F31A-454E-961B-CD80908E5F88}
 		{E05ABD63-5AF8-4B94-B9D2-9284F15DD96B} = {E0E19C64-C048-4155-A00C-F28D1C28F1B5}
 		{54D5EC70-4283-40E4-BA39-F89AEF212BB1} = {6AAB030E-FDFF-49B7-AD82-4871F2BFA43E}
@@ -622,6 +629,9 @@ Global
 		{B918287E-7FF2-45BE-9D9F-58C63D8B74FD} = {E64DD19B-0DF8-4F70-A7CA-481E74BF4419}
 		{10F42544-5454-41A7-9D42-BE2FBA3F8F21} = {E64DD19B-0DF8-4F70-A7CA-481E74BF4419}
 		{B8FB4CEC-5372-400E-943B-CF97A20CEFF9} = {E64DD19B-0DF8-4F70-A7CA-481E74BF4419}
+		{232AB05D-70D5-4891-A10C-F345830CEB27} = {161BDC88-CACD-4FDF-87A7-A559FBF1CCDC}
+		{F6A940F6-9EB2-4C50-A71E-FABA00B43E16} = {E0F6B788-F6F5-4B48-9CF6-73570CCC5242}
+		{E0F6B788-F6F5-4B48-9CF6-73570CCC5242} = {0D7AEFA3-ABB0-4AF1-A4C1-F8E05C241753}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {7DA5CEAA-994B-40A0-AE3D-48B982BF000B}

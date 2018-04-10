@@ -4,7 +4,7 @@
     <Authors>Dmitry Sikorsky</Authors>
     <Copyright>Copyright © 2015 Dmitry Sikorsky</Copyright>
     <Description>The Platformus.Barebone extension component.</Description>
-    <VersionPrefix>1.0.0-beta3</VersionPrefix>
+    <VersionPrefix>1.0.0-beta4</VersionPrefix>
     <TargetFramework>netcoreapp2.0</TargetFramework>
     <AssemblyName>Platformus.Barebone</AssemblyName>
     <PackageId>Platformus.Barebone</PackageId>
@@ -13,15 +13,12 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="ExtCore.Data.Abstractions" Version="3.2.0-beta3" />
-    <PackageReference Include="ExtCore.Events" Version="3.2.0-beta3" />
+    <PackageReference Include="ExtCore.Data.Abstractions" Version="3.2.0" />
+    <PackageReference Include="ExtCore.Events" Version="3.2.0" />
+    <PackageReference Include="ExtCore.Mvc" Version="3.2.0" />
     <PackageReference Include="MailKit" Version="2.0.1" />
     <PackageReference Include="NUglify" Version="1.5.9" />
     <PackageReference Include="SixLabors.ImageSharp" Version="1.0.0-beta0002" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <ProjectReference Include="..\Platformus.Infrastructure\Platformus.Infrastructure.csproj" />
   </ItemGroup>
 
 </Project>

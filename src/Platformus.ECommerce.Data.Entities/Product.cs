@@ -1,6 +1,7 @@
 ﻿// Copyright © 2017 Dmitry Sikorsky. All rights reserved.
 // Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information.
 
+using System.Collections.Generic;
 using ExtCore.Data.Entities.Abstractions;
 using Platformus.Globalization.Data.Entities;
 
@@ -22,12 +23,17 @@ namespace Platformus.ECommerce.Data.Entities
     public int CategoryId { get; set; }
 
     /// <summary>
+    /// Gets or sets the unique URL of the product.
+    /// </summary>
+    public string Url { get; set; }
+
+    /// <summary>
     /// Gets or sets the unique code of the product. It is set by the user and might be used for the product retrieval.
     /// </summary>
     public string Code { get; set; }
 
     /// <summary>
-    /// Gets or sets the dictionary identifier this field is related to. It is used to store the localizable product name.
+    /// Gets or sets the dictionary identifier this product is related to. It is used to store the localizable product name.
     /// </summary>
     public int NameId { get; set; }
 
@@ -38,5 +44,6 @@ namespace Platformus.ECommerce.Data.Entities
 
     public virtual Category Category { get; set; }
     public virtual Dictionary Name { get; set; }
+    public virtual ICollection<Photo> Photos { get; set; }
   }
 }

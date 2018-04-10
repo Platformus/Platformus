@@ -8,7 +8,7 @@ using Platformus.Routing.Data.Entities;
 
 namespace Platformus.Routing.Backend.ViewModels.DataSources
 {
-  public class CreateOrEditViewModelMapper : ViewModelFactoryBase
+  public class CreateOrEditViewModelMapper : ViewModelMapperBase
   {
     public CreateOrEditViewModelMapper(IRequestHandler requestHandler)
       : base(requestHandler)

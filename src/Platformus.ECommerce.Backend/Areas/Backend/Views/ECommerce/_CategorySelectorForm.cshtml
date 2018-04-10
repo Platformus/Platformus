@@ -1,0 +1,29 @@
+﻿@* Copyright © 2018 Dmitry Sikorsky. All rights reserved. *@
+@* Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information. *@
+@model Platformus.ECommerce.Backend.ViewModels.ECommerce.CategorySelectorFormViewModel
+@inject Microsoft.AspNetCore.Mvc.Localization.IViewLocalizer Localizer
+<div class="pop-up-form__header">
+  @Localizer["Category Selector"]
+</div>
+<div class="pop-up-form__content">
+  <div class="category-selector-pop-up-form__categories">
+    <table class="table">
+      <tr class="table__row">
+        @foreach (var gridColumn in this.Model.GridColumns)
+        {
+          <th class="table__cell table__cell--header">@gridColumn.Name</th>
+        }
+      </tr>
+      @foreach (var category in this.Model.Categories)
+      {
+        <tr class="table__row @(category.Id == this.Model.CategoryId ? "table__row--selected" : null)" data-category-id="@category.Id">
+          <td class="category-selector-pop-up-form__cell table__cell">@category.Name</td>
+        </tr>
+      }
+    </table>
+  </div>
+  <div class="pop-up-form__buttons buttons">
+    <button class="buttons__button button button--positive" onclick="return platformus.forms.categorySelectorForm.select();">@Localizer["Select"]</button>
+    <button class="buttons__button button button--neutral" onclick="return platformus.forms.categorySelectorForm.hideAndRemove();">@Localizer["Cancel"]</button>
+  </div>
+</div>

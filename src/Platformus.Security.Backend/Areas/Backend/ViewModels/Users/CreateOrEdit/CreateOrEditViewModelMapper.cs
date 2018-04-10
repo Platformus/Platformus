@@ -9,7 +9,7 @@ using Platformus.Security.Data.Entities;
 
 namespace Platformus.Security.Backend.ViewModels.Users
 {
-  public class CreateOrEditViewModelMapper : ViewModelFactoryBase
+  public class CreateOrEditViewModelMapper : ViewModelMapperBase
   {
     public CreateOrEditViewModelMapper(IRequestHandler requestHandler)
       : base(requestHandler)

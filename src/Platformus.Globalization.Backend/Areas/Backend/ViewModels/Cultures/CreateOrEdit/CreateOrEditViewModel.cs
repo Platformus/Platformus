@@ -19,10 +19,10 @@ namespace Platformus.Globalization.Backend.ViewModels.Cultures
     [StringLength(64)]
     public string Name { get; set; }
 
-    [Display(Name = "Is default")]
-    public bool IsDefault { get; set; }
+    [Display(Name = "Is frontend default")]
+    public bool IsFrontendDefault { get; set; }
 
-    [Display(Name = "Is backend UI")]
-    public bool IsBackendUi { get; set; }
+    [Display(Name = "Is backend default")]
+    public bool IsBackendDefault { get; set; }
   }
 }

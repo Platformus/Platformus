@@ -4,7 +4,7 @@
     <Authors>Dmitry Sikorsky</Authors>
     <Copyright>Copyright © 2015 Dmitry Sikorsky</Copyright>
     <Description>The Platformus.ECommerce extension component.</Description>
-    <VersionPrefix>1.0.0-beta3</VersionPrefix>
+    <VersionPrefix>1.0.0-beta4</VersionPrefix>
     <TargetFramework>netcoreapp2.0</TargetFramework>
     <AssemblyName>Platformus.ECommerce.Frontend</AssemblyName>
     <PackageId>Platformus.ECommerce.Frontend</PackageId>
@@ -13,8 +13,19 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <EmbeddedResource Include="Views\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Remove="Views\Shared\Components\Cart\Default.cshtml" />
+    <None Remove="Views\Shared\_Cart.cshtml" />
+    <None Remove="Views\Shared\_Position.cshtml" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\Platformus.ECommerce\Platformus.ECommerce.csproj" />
     <ProjectReference Include="..\Platformus.Globalization.Frontend\Platformus.Globalization.Frontend.csproj" />
+    <ProjectReference Include="..\Platformus.Routing\Platformus.Routing.csproj" />
   </ItemGroup>
 
 </Project>

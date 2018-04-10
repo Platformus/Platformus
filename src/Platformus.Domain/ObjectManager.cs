@@ -50,9 +50,9 @@ namespace Platformus.Domain
     {
       List<string> properties = new List<string>();
       Culture neutralCulture = requestHandler.GetService<ICultureManager>().GetNeutralCulture();
-      Culture defaultCulture = requestHandler.GetService<ICultureManager>().GetDefaultCulture();
+      Culture frontendDefaultCulture = requestHandler.GetService<ICultureManager>().GetFrontendDefaultCulture();
 
-      if (defaultCulture != null)
+      if (frontendDefaultCulture != null)
       {
         foreach (Member member in this.requestHandler.Storage.GetRepository<IMemberRepository>().FilteredByClassIdInlcudingParentPropertyVisibleInList(@object.ClassId).ToList())
         {
@@ -87,8 +87,8 @@ namespace Platformus.Domain
             {
               Localization localization = null;
 
-              if (member.IsPropertyLocalizable == true && defaultCulture != null)
-                localization = this.requestHandler.Storage.GetRepository<ILocalizationRepository>().WithDictionaryIdAndCultureId((int)property.StringValueId, defaultCulture.Id);
+              if (member.IsPropertyLocalizable == true && frontendDefaultCulture != null)
+                localization = this.requestHandler.Storage.GetRepository<ILocalizationRepository>().WithDictionaryIdAndCultureId((int)property.StringValueId, frontendDefaultCulture.Id);
 
               else if (neutralCulture != null)
                 localization = this.requestHandler.Storage.GetRepository<ILocalizationRepository>().WithDictionaryIdAndCultureId((int)property.StringValueId, neutralCulture.Id);

@@ -4,7 +4,7 @@
     <Authors>Dmitry Sikorsky</Authors>
     <Copyright>Copyright © 2017 Dmitry Sikorsky</Copyright>
     <Description>The Platformus.Routing extension component.</Description>
-    <VersionPrefix>1.0.0-beta3</VersionPrefix>
+    <VersionPrefix>1.0.0-beta4</VersionPrefix>
     <TargetFramework>netcoreapp2.0</TargetFramework>
     <AssemblyName>Platformus.Routing</AssemblyName>
     <PackageId>Platformus.Routing</PackageId>
@@ -13,9 +13,8 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Platformus.Barebone\Platformus.Barebone.csproj" />
+    <ProjectReference Include="..\Platformus.Globalization\Platformus.Globalization.csproj" />
     <ProjectReference Include="..\Platformus.Routing.Data.Abstractions\Platformus.Routing.Data.Abstractions.csproj" />
-    <ProjectReference Include="..\Platformus.Security\Platformus.Security.csproj" />
   </ItemGroup>
 
 </Project>

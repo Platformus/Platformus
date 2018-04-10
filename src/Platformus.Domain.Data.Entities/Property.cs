@@ -38,7 +38,7 @@ namespace Platformus.Domain.Data.Entities
     public decimal? DecimalValue { get; set; }
 
     /// <summary>
-    /// Gets or sets the dictionary identifier this field is related to.
+    /// Gets or sets the dictionary identifier this property is related to.
     /// It is used to store the property (optionally localizable) string value.
     /// </summary>
     public int? StringValueId { get; set; }

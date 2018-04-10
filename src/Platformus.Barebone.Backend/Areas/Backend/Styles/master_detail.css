@@ -118,6 +118,10 @@
   margin-top: 20px;
 }
 
+.master-detail__detail-buttons--minor {
+  margin-top: 5px;
+}
+
 @media
 only screen and (-webkit-min-device-pixel-ratio: 2),
 only screen and (   min--moz-device-pixel-ratio: 2),

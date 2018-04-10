@@ -26,7 +26,7 @@ namespace Platformus.Globalization.Frontend
       string cultureCode = null;
 
       // TODO: get rid of these hardcoded strings
-      if (httpContext.Request.Path.HasValue && (httpContext.Request.Path.Value == "/" || httpContext.Request.Path.Value.Contains("/api/v1/")))
+      if (httpContext.Request.Path.HasValue && (httpContext.Request.Path.Value == "/" || httpContext.Request.Path.Value.Contains("/img") || httpContext.Request.Path.Value.Contains("/api/v1/")))
         cultureCode = this.GetDefaultCultureCode();
 
       else if (httpContext.Request.Path.HasValue && httpContext.Request.Path.Value.Length >= 4 && httpContext.Request.Path.Value[0] == '/' && httpContext.Request.Path.Value[3] == '/')
@@ -46,12 +46,12 @@ namespace Platformus.Globalization.Frontend
 
     private string GetDefaultCultureCode()
     {
-      Data.Entities.Culture defaultCulture = this.serviceProvider.GetService<ICultureManager>().GetDefaultCulture();
+      Data.Entities.Culture frontendDefaultCulture = this.serviceProvider.GetService<ICultureManager>().GetFrontendDefaultCulture();
 
-      if (defaultCulture == null)
+      if (frontendDefaultCulture == null)
         return DefaultCulture.Code;
 
-      return defaultCulture.Code;
+      return frontendDefaultCulture.Code;
     }
 
     private bool CheckCulture(string cultureCode)

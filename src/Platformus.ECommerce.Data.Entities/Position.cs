@@ -16,16 +16,16 @@ namespace Platformus.ECommerce.Data.Entities
     public int Id { get; set; }
 
     /// <summary>
-    /// Gets or sets the order identifier this position belongs to.
+    /// Gets or sets the cart identifier this position belongs to.
     /// </summary>
-    public int OrderId { get; set; }
+    public int CartId { get; set; }
 
     /// <summary>
     /// Gets or sets the product identifier this position is related to.
     /// </summary>
     public int ProductId { get; set; }
 
-    public virtual Order Order { get; set; }
+    public virtual Cart Cart { get; set; }
     public virtual Product Product { get; set; }
   }
 }

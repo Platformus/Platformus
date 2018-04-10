@@ -1,0 +1,26 @@
+﻿@* Copyright © 2017 Dmitry Sikorsky. All rights reserved. *@
+@* Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information. *@
+@model Platformus.ECommerce.Backend.ViewModels.Orders.CreateOrEditViewModel
+@inject Microsoft.AspNetCore.Mvc.Localization.IViewLocalizer Localizer
+@{
+  this.ViewBag.Title = (this.Model.Id == null ? this.Localizer["Create Order"].Value : this.Localizer["Edit Order"].Value);
+  this.ViewBag.ActiveMenuItem = "orders";
+}
+@section title {
+  @ViewBag.Title
+}
+<form class="form" method="post">
+  <drop-down-list-field asp-for="OrderStateId" asp-options="@Model.OrderStateOptions" />
+  <drop-down-list-field asp-for="PaymentMethodId" asp-options="@Model.PaymentMethodOptions" />
+  <drop-down-list-field asp-for="DeliveryMethodId" asp-options="@Model.DeliveryMethodOptions" />
+  <single-line-text-field asp-for="CustomerFirstName" />
+  <single-line-text-field asp-for="CustomerLastName" />
+  <single-line-text-field asp-for="CustomerPhone" />
+  <single-line-text-field asp-for="CustomerEmail" />
+  <single-line-text-field asp-for="CustomerAddress" />
+  <multiline-text-field asp-for="Note" />
+  <div class="form__buttons buttons">
+    <button class="buttons__button button button--positive" type="submit">@Localizer["Save"]</button>
+    <a class="buttons__button button button--neutral" href="@this.Context.Request.CombineUrl("/backend/orders")">@Localizer["Cancel"]</a>
+  </div>
+</form>
