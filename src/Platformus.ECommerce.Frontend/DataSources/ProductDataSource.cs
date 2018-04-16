@@ -23,12 +23,19 @@ namespace Platformus.ECommerce.Frontend.DataSources
       if (product == null)
         throw new HttpException(404, "Not found.");
 
+      Photo coverPhoto = this.requestHandler.Storage.GetRepository<IPhotoRepository>().CoverByProductId(product.Id);
       IEnumerable<Photo> photos = this.requestHandler.Storage.GetRepository<IPhotoRepository>().FilteredByProductId(product.Id).ToList();
 
       return new ExpandoObjectBuilder()
         .AddProperty("Id", product.Id)
+        .AddProperty("Code", product.Code)
         .AddProperty("Name", this.requestHandler.GetLocalizationValue(product.NameId))
+        .AddProperty("Description", this.requestHandler.GetLocalizationValue(product.DescriptionId))
         .AddProperty("Price", product.Price)
+        .AddProperty("Title", this.requestHandler.GetLocalizationValue(product.TitleId))
+        .AddProperty("MetaDescription", this.requestHandler.GetLocalizationValue(product.MetaDescriptionId))
+        .AddProperty("MetaKeywords", this.requestHandler.GetLocalizationValue(product.MetaKeywordsId))
+        .AddProperty("CoverPhoto", this.CreatePhotoViewModel(coverPhoto))
         .AddProperty("Photos", photos.Select(ph => this.CreatePhotoViewModel(ph)))
         .Build();
     }

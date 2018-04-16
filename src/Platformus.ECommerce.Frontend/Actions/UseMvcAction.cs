@@ -18,7 +18,7 @@ namespace Platformus.ECommerce.Frontend.Actions
       routeBuilder.MapRoute(name: "Add To Cart", template: "{culture=en}/ecommerce/cart/add", defaults: new { controller = "Cart", action = "Add" });
       routeBuilder.MapRoute(name: "Remove From Cart", template: "{culture=en}/ecommerce/cart/remove", defaults: new { controller = "Cart", action = "Remove" });
       routeBuilder.MapRoute(name: "Checkout", template: "{culture=en}/ecommerce/checkout", defaults: new { controller = "Checkout", action = "Index" });
-      routeBuilder.MapRoute(name: "Received", template: "{culture=en}/ecommerce/received", defaults: new { controller = "Checkout", action = "Received" });
+      routeBuilder.MapRoute(name: "Done", template: "{culture=en}/ecommerce/checkout/done", defaults: new { controller = "Checkout", action = "Done" });
     }
   }
 }

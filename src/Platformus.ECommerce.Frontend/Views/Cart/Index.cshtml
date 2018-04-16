@@ -3,4 +3,6 @@
 @model Platformus.ECommerce.Frontend.ViewModels.Cart.IndexViewModel
 <h1>Cart</h1>
 @await Component.InvokeAsync("Cart")
-<a href="/en/ecommerce/checkout">Checkout</a>
+<div class="form__buttons buttons">
+  <a class="buttons__button button button--positive" href="/en/ecommerce/checkout">Checkout</a>
+</div>

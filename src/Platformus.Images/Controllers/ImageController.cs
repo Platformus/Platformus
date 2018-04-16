@@ -69,6 +69,9 @@ namespace Platformus.Images.Controllers
 
     private async Task<LoadImageFromUrlResult> LoadImageFromUrlAsync(string url)
     {
+      if (!url.Contains("http://") && !url.Contains("http://"))
+        url = $"{this.Request.Scheme}://{this.Request.Host}" + url;
+
       try
       {
         using (HttpClient httpClient = new HttpClient())

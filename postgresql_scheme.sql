@@ -692,16 +692,36 @@ ALTER TABLE "Categories" OWNER TO postgres;
 CREATE TABLE "Products" (
     "Id" serial NOT NULL,
     "CategoryId" integer NOT NULL,
-	"Url" text NOT NULL,
-	"Code" text NOT NULL,
+    "Url" text NOT NULL,
+    "Code" text NOT NULL,
     "NameId" integer NOT NULL,
+    "DescriptionId" integer NOT NULL,
     "Price" real,
+	"TitleId" integer NOT NULL,
+	"MetaDescriptionId" integer NOT NULL,
+	"MetaKeywordsId" integer NOT NULL,
 	CONSTRAINT "PK_Products" PRIMARY KEY ("Id"),
     CONSTRAINT "FK_Products_Categories" FOREIGN KEY ("CategoryId")
         REFERENCES public."Categories" ("Id") MATCH SIMPLE
         ON UPDATE NO ACTION
         ON DELETE NO ACTION,
-	CONSTRAINT "FK_Products_Dictionaries" FOREIGN KEY ("NameId")
+	CONSTRAINT "FK_Products_Dictionaries_NameId" FOREIGN KEY ("NameId")
+        REFERENCES public."Dictionaries" ("Id") MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION,
+	CONSTRAINT "FK_Products_Dictionaries_DescriptionId" FOREIGN KEY ("DescriptionId")
+        REFERENCES public."Dictionaries" ("Id") MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION,
+	CONSTRAINT "FK_Products_Dictionaries_TitleId" FOREIGN KEY ("TitleId")
+        REFERENCES public."Dictionaries" ("Id") MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION,
+	CONSTRAINT "FK_Products_Dictionaries_MetaDescriptionId" FOREIGN KEY ("MetaDescriptionId")
+        REFERENCES public."Dictionaries" ("Id") MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION,
+	CONSTRAINT "FK_Products_Dictionaries_MetaKeywordsId" FOREIGN KEY ("MetaKeywordsId")
         REFERENCES public."Dictionaries" ("Id") MATCH SIMPLE
         ON UPDATE NO ACTION
         ON DELETE NO ACTION

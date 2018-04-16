@@ -10,6 +10,7 @@ using Platformus.ECommerce.Data.Abstractions;
 using Platformus.ECommerce.Data.Entities;
 using Platformus.ECommerce.Events;
 using Platformus.ECommerce.Frontend.ViewModels.Checkout;
+using Platformus.Globalization.Frontend;
 
 namespace Platformus.ECommerce.Frontend.Controllers
 {
@@ -38,16 +39,16 @@ namespace Platformus.ECommerce.Frontend.Controllers
         this.Storage.Save();
         new CartManager(this).AssignTo(order);
         Event<IOrderCreatedEventHandler, IRequestHandler, Order>.Broadcast(this, order);
-        return this.Redirect("received");
+        return this.Redirect(GlobalizedUrlFormatter.Format(this, "/ecommerce/checkout/done?orderid=" + order.Id));
       }
 
       return this.View(indexViewModel);
     }
 
     [HttpGet]
-    public IActionResult Received()
+    public IActionResult Done(int orderId)
     {
-      return this.View();
+      return this.View(orderId);
     }
   }
 }

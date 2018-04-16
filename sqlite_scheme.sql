@@ -412,7 +412,6 @@ CREATE TABLE "Catalogs" (
 	"CatalogId" INTEGER,
 	"Url" TEXT,
 	"NameId" INTEGER NOT NULL,
-	"ProduceCompletedForms" INTEGER NOT NULL,
 	"CSharpClassName" TEXT NOT NULL,
   "Parameters" TEXT,
 	"Position" INTEGER,
@@ -437,9 +436,17 @@ CREATE TABLE "Products" (
 	"Url" TEXT,
 	"Code" TEXT NOT NULL,
 	"NameId" INTEGER NOT NULL,
+	"DescriptionId" INTEGER NOT NULL,
 	"Price" REAL,
+	"TitleId" INTEGER NOT NULL,
+	"MetaDescriptionId" INTEGER NOT NULL,
+	"MetaKeywordsId" INTEGER NOT NULL,
 	CONSTRAINT "FK_Product_Category_CategoryId" FOREIGN KEY("CategoryId") REFERENCES "Categories" ("Id"),
-	CONSTRAINT "FK_Product_Dictionary_NameId" FOREIGN KEY("NameId") REFERENCES "Dictionaries" ("Id")
+	CONSTRAINT "FK_Product_Dictionary_NameId" FOREIGN KEY("NameId") REFERENCES "Dictionaries" ("Id"),
+	CONSTRAINT "FK_Product_Dictionary_DescriptionId" FOREIGN KEY("DescriptionId") REFERENCES "Dictionaries" ("Id"),
+	CONSTRAINT "FK_Product_Dictionary_TitleId" FOREIGN KEY("TitleId") REFERENCES "Dictionaries" ("Id"),
+	CONSTRAINT "FK_Product_Dictionary_MetaDescriptionId" FOREIGN KEY("MetaDescriptionId") REFERENCES "Dictionaries" ("Id"),
+	CONSTRAINT "FK_Product_Dictionary_MetaKeywordsId" FOREIGN KEY("MetaKeywordsId") REFERENCES "Dictionaries" ("Id")
 );
 
 -- Photos

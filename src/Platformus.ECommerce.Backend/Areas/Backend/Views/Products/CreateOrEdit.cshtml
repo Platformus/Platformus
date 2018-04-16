@@ -2,6 +2,7 @@
 @* Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information. *@
 @model Platformus.ECommerce.Backend.ViewModels.Products.CreateOrEditViewModel
 @inject Microsoft.AspNetCore.Mvc.Localization.IViewLocalizer Localizer
+@inject Platformus.Globalization.ICultureManager CultureManager
 @{
   this.ViewBag.Title = (this.Model.Id == null ? this.Localizer["Create Product"].Value : this.Localizer["Edit Product"].Value);
   this.ViewBag.ActiveMenuItem = "products";
@@ -12,6 +13,7 @@
 <form class="form" method="post">
   <div class="tabs">
     <div class="tabs__tab" data-tab-page-id="General">@Localizer["General"]</div>
+    <div class="tabs__tab" data-tab-page-id="Seo">@Localizer["SEO"]</div>
     <div class="tabs__tab" data-tab-page-id="Photos">@Localizer["Photos"]</div>
   </div>
   <div class="tab-pages">
@@ -20,7 +22,13 @@
       <single-line-text-field asp-for="Url" />
       <single-line-text-field asp-for="Code" />
       <multilingual-single-line-text-field asp-for="Name" asp-localizations="this.Model.NameLocalizations" />
+      <multilingual-multiline-text-field asp-for="Description" asp-localizations="this.Model.DescriptionLocalizations" />
       <numeric-field asp-for="Price" />
+    </div>
+    <div id="tabPageSeo" class="tab-pages__tab-page">
+      <multilingual-single-line-text-field asp-for="Title" asp-localizations="this.Model.TitleLocalizations" />
+      <multilingual-single-line-text-field asp-for="MetaDescription" asp-localizations="this.Model.MetaDescriptionLocalizations" />
+      <multilingual-single-line-text-field asp-for="MetaKeywords" asp-localizations="this.Model.MetaKeywordsLocalizations" />
     </div>
     <div id="tabPagePhotos" class="tab-pages__tab-page">
       <div id="photos" class="photos">
@@ -41,3 +49,10 @@
     <a class="buttons__button button button--neutral" href="@this.Context.Request.CombineUrl("/backend/products")">@Localizer["Cancel"]</a>
   </div>
 </form>
+
+@section startUpScript {
+  @foreach (var culture in this.CultureManager.GetNotNeutralCultures())
+  {
+    @:platformus.ui.initializeTinyMce("description@(culture.Code)");
+  }
+}

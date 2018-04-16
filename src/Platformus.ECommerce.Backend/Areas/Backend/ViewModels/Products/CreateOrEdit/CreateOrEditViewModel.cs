@@ -36,9 +36,32 @@ namespace Platformus.ECommerce.Backend.ViewModels.Products
     public string Name { get; set; }
     public IEnumerable<Localization> NameLocalizations { get; set; }
 
+    [Multilingual]
+    [Display(Name = "Description")]
+    public string Description { get; set; }
+    public IEnumerable<Localization> DescriptionLocalizations { get; set; }
+
     [Display(Name = "Price")]
     [Required]
     public decimal Price { get; set; }
+
+    [Multilingual]
+    [Display(Name = "Title")]
+    [StringLength(128)]
+    public string Title { get; set; }
+    public IEnumerable<Localization> TitleLocalizations { get; set; }
+
+    [Multilingual]
+    [Display(Name = "META description")]
+    [StringLength(512)]
+    public string MetaDescription { get; set; }
+    public IEnumerable<Localization> MetaDescriptionLocalizations { get; set; }
+
+    [Multilingual]
+    [Display(Name = "META keywords")]
+    [StringLength(256)]
+    public string MetaKeywords { get; set; }
+    public IEnumerable<Localization> MetaKeywordsLocalizations { get; set; }
 
     public IEnumerable<PhotoViewModel> Photos { get; set; }
     public string RemovedPhotoIds { get; set; }

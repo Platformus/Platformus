@@ -26,7 +26,11 @@ namespace Platformus.ECommerce.Backend.ViewModels.Products
         {
           CategoryOptions = this.GetCategoryOptions(),
           Url = "/",
-          NameLocalizations = this.GetLocalizations()
+          NameLocalizations = this.GetLocalizations(),
+          DescriptionLocalizations = this.GetLocalizations(),
+          TitleLocalizations = this.GetLocalizations(),
+          MetaDescriptionLocalizations = this.GetLocalizations(),
+          MetaKeywordsLocalizations = this.GetLocalizations()
         };
 
       Product product = this.RequestHandler.Storage.GetRepository<IProductRepository>().WithKey((int)id);
@@ -39,7 +43,11 @@ namespace Platformus.ECommerce.Backend.ViewModels.Products
         Url = product.Url,
         Code = product.Code,
         NameLocalizations = this.GetLocalizations(product.NameId),
+        DescriptionLocalizations = this.GetLocalizations(product.DescriptionId),
         Price = product.Price,
+        TitleLocalizations = this.GetLocalizations(product.TitleId),
+        MetaDescriptionLocalizations = this.GetLocalizations(product.MetaDescriptionId),
+        MetaKeywordsLocalizations = this.GetLocalizations(product.MetaKeywordsId),
         Photos = this.GetPhotos(product)
       };
     }

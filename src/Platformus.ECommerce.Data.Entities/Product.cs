@@ -38,12 +38,36 @@ namespace Platformus.ECommerce.Data.Entities
     public int NameId { get; set; }
 
     /// <summary>
+    /// Gets or sets the dictionary identifier this product is related to. It is used to store the localizable product description.
+    /// </summary>
+    public int DescriptionId { get; set; }
+
+    /// <summary>
     /// Gets or sets the product price.
     /// </summary>
     public decimal Price { get; set; }
 
+    /// <summary>
+    /// Gets or sets the dictionary identifier this product is related to. It is used to store the localizable product title.
+    /// </summary>
+    public int TitleId { get; set; }
+
+    /// <summary>
+    /// Gets or sets the dictionary identifier this product is related to. It is used to store the localizable product META description.
+    /// </summary>
+    public int MetaDescriptionId { get; set; }
+
+    /// <summary>
+    /// Gets or sets the dictionary identifier this product is related to. It is used to store the localizable product META keywords.
+    /// </summary>
+    public int MetaKeywordsId { get; set; }
+
     public virtual Category Category { get; set; }
     public virtual Dictionary Name { get; set; }
+    public virtual Dictionary Description { get; set; }
+    public virtual Dictionary Title { get; set; }
+    public virtual Dictionary MetaDescription { get; set; }
+    public virtual Dictionary MetaKeywords { get; set; }
     public virtual ICollection<Photo> Photos { get; set; }
   }
 }

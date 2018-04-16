@@ -40,13 +40,15 @@ namespace Platformus.ECommerce.Frontend.DataSources
 
     private dynamic CreateProductViewModel(Product product)
     {
-      Photo photo = this.requestHandler.Storage.GetRepository<IPhotoRepository>().CoverByProductId(product.Id);
+      Photo coverPhoto = this.requestHandler.Storage.GetRepository<IPhotoRepository>().CoverByProductId(product.Id);
 
       return new ExpandoObjectBuilder()
         .AddProperty("Id", product.Id)
+        .AddProperty("Url", product.Url)
+        .AddProperty("Code", product.Code)
         .AddProperty("Name", this.requestHandler.GetLocalizationValue(product.NameId))
         .AddProperty("Price", product.Price)
-        .AddProperty("Photo", this.CreatePhotoViewModel(photo))
+        .AddProperty("CoverPhoto", this.CreatePhotoViewModel(coverPhoto))
         .Build();
     }
 

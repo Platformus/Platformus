@@ -9,5 +9,7 @@ namespace Platformus.ECommerce.Frontend.ViewModels.Shared
   {
     public int Id { get; set; }
     public string Name { get; set; }
+    public decimal Price { get; set; }
+    public PhotoViewModel Photo { get; set; }
   }
 }

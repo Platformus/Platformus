@@ -21,6 +21,8 @@ namespace Platformus.ECommerce.Frontend.ViewModels.Checkout
       Order order = new Order();
 
       order.OrderStateId = this.RequestHandler.Storage.GetRepository<IOrderStateRepository>().WithCode("New").Id;
+      order.PaymentMethodId = this.RequestHandler.Storage.GetRepository<IPaymentMethodRepository>().WithCode("NotSet").Id;
+      order.DeliveryMethodId = this.RequestHandler.Storage.GetRepository<IDeliveryMethodRepository>().WithCode("NotSet").Id;
       order.CustomerFirstName = indexViewModel.CustomerFirstName;
       order.CustomerLastName = indexViewModel.CustomerLastName;
       order.CustomerPhone = indexViewModel.CustomerPhone;
