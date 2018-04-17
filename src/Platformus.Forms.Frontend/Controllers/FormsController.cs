@@ -50,7 +50,7 @@ namespace Platformus.Forms.Frontend.Controllers
         FieldType fieldType = this.Storage.GetRepository<IFieldTypeRepository>().WithKey(field.FieldTypeId);
 
         if (fieldType.Code != "FileUpload")
-          valuesByFields.Add(field, this.Request.Form[string.Format("field{0}", field.Id)]);
+          valuesByFields.Add(field, this.Request.Form[string.Format("field{0}", field.Code)]);
       }
 
       return valuesByFields;
@@ -66,7 +66,7 @@ namespace Platformus.Forms.Frontend.Controllers
 
         if (fieldType.Code == "FileUpload")
         {
-          IFormFile file = this.Request.Form.Files[string.Format("field{0}", field.Id)];
+          IFormFile file = this.Request.Form.Files[string.Format("field{0}", field.Code)];
 
           if (file != null && !string.IsNullOrEmpty(file.FileName))
           {

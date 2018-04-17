@@ -29,6 +29,7 @@ namespace Platformus.Forms.Frontend.ViewModels.Shared
         Id = serializedField.FieldId,
         FieldType = new FieldTypeViewModel() { Code = serializedField.FieldTypeCode },
         Name = serializedField.Name,
+        Code = serializedField.Code,
         IsRequired = serializedField.IsRequired,
         MaxLength = serializedField.MaxLength,
         FieldOptions = cachedFieldOptions.Select(

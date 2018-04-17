@@ -4,7 +4,7 @@
 @{ 
   string dataValRequiredAttribute = this.Model.IsRequired ? " data-val-required=\"\"" : null;
 }
-<select class="field__drop-down-list drop-down-list" id="field@(this.Model.Id)" name="field@(this.Model.Id)" data-val="true"@Html.Raw(dataValRequiredAttribute)>
+<select class="field__drop-down-list drop-down-list" id="field@(this.Model.Code)" name="field@(this.Model.Code)" data-field-code="@Model.Code" data-val="true"@Html.Raw(dataValRequiredAttribute)>
   @foreach (var fieldOption in this.Model.FieldOptions)
   {
     <option>@fieldOption.Value</option>

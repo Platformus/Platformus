@@ -2,6 +2,6 @@
 @* Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information. *@
 @model Platformus.Forms.Frontend.ViewModels.Shared.FieldViewModel
 <span class="field__checkbox">
-  <input id="field@(this.Model.Id)" name="field@(this.Model.Id)" type="checkbox" />
-  <label for="field@(this.Model.Id)">@Model.Name</label>
+  <input id="field@(this.Model.Code)" name="field@(this.Model.Code)" type="checkbox" data-field-code="@Model.Code" />
+  <label for="field@(this.Model.Code)">@Model.Name</label>
 </span>

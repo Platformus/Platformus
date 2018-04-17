@@ -6,4 +6,4 @@
   string dataValMaxLengthMaxAttribute = this.Model.MaxLength == null ? null : " data-val-maxlength-max=\"" + this.Model.MaxLength + "\"";
   string maxLengthAttribute = this.Model.MaxLength == null ? null : " maxlength=\"" + this.Model.MaxLength + "\"";
 }
-<textarea class="field__text-area text-area" id="field@(this.Model.Id)" name="field@(this.Model.Id)" data-val="true"@Html.Raw(dataValRequiredAttribute)@Html.Raw(dataValMaxLengthMaxAttribute)@Html.Raw(maxLengthAttribute)></textarea>
+<textarea class="field__text-area text-area" id="field@(this.Model.Code)" name="field@(this.Model.Code)" data-field-code="@Model.Code" data-val="true"@Html.Raw(dataValRequiredAttribute)@Html.Raw(dataValMaxLengthMaxAttribute)@Html.Raw(maxLengthAttribute)></textarea>

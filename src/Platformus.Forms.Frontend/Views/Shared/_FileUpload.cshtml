@@ -1,4 +1,4 @@
 ﻿@* Copyright © 2017 Dmitry Sikorsky. All rights reserved. *@
 @* Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information. *@
 @model Platformus.Forms.Frontend.ViewModels.Shared.FieldViewModel
-<input class="field__file-upload file-upload" id="field@(Model.Id)" name="field@(Model.Id)" type="file" />
+<input class="field__file-upload file-upload" id="field@(Model.Code)" name="field@(Model.Code)" type="file" data-field-code="@Model.Code" />

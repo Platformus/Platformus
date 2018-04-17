@@ -10,6 +10,7 @@ namespace Platformus.Forms.Frontend.ViewModels.Shared
   {
     public int Id { get; set; }
     public FieldTypeViewModel FieldType { get; set; }
+    public string Code { get; set; }
     public string Name { get; set; }
     public bool IsRequired { get; set; }
     public int? MaxLength { get; set; }

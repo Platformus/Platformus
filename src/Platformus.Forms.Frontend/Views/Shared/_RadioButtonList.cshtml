@@ -8,7 +8,7 @@
 {
   index++;
   <span class="field__radio-button">
-    <input id="field@(this.Model.Id)Option@(index)" name="field@(this.Model.Id)" type="radio" value="@fieldOption.Value" />
-    <label for="field@(this.Model.Id)Option@(index)">@fieldOption.Value</label>
+    <input id="field@(this.Model.Code)Option@(index)" name="field@(this.Model.Code)" type="radio" value="@fieldOption.Value" data-field-code="@Model.Code" />
+    <label for="field@(this.Model.Code)Option@(index)">@fieldOption.Value</label>
   </span>
 }

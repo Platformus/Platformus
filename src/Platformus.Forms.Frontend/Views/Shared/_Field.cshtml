@@ -2,6 +2,6 @@
 @* Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information. *@
 @model Platformus.Forms.Frontend.ViewModels.Shared.FieldViewModel
 <div class="form__field field">
-  <label class="field__label label" for="field@(this.Model.Id)">@Model.Name</label>
+  <label class="field__label label" for="field@(this.Model.Code)">@Model.Name</label>
   @Html.Partial("_" + this.Model.FieldType.Code, this.Model)
 </div>
