@@ -20,13 +20,12 @@ namespace Platformus.Security.Data.Abstractions
     Credential WithKey(int id);
 
     /// <summary>
-    /// Gets the credential by the credential type identifier, user identifier and user secret MD5 hash.
+    /// Gets the credential by the credential type identifier and user identifier.
     /// </summary>
     /// <param name="credentialTypeId">The unique identifier of the credential type this credential belongs to.</param>
     /// <param name="identifier">The identifier of the user.</param>
-    /// <param name="secret">The secret MD5 hash of the user.</param>
-    /// <returns>Found credential with the given credential type identifier, user identifier and user secret MD5 hash.</returns>
-    Credential WithCredentialTypeIdAndIdentifierAndSecret(int credentialTypeId, string identifier, string secret);
+    /// <returns>Found credential with the given credential type identifier and user identifier.</returns>
+    Credential WithCredentialTypeIdAndIdentifier(int credentialTypeId, string identifier);
 
     /// <summary>
     /// Gets all the credentials filtered by the user identifier using the given filtering, sorting, and paging.

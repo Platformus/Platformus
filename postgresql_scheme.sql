@@ -31,6 +31,7 @@ CREATE TABLE "Credentials" (
     "CredentialTypeId" integer NOT NULL,
     "Identifier" text NOT NULL,
     "Secret" text,
+    "Extra" text,
     CONSTRAINT "PK_Credentials" PRIMARY KEY ("Id"),
     CONSTRAINT "FK_Credentials_Users" FOREIGN KEY ("UserId")
         REFERENCES public."Users" ("Id") MATCH SIMPLE

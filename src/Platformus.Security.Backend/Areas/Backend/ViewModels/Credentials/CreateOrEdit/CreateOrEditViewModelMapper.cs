@@ -1,6 +1,8 @@
 ﻿// Copyright © 2015 Dmitry Sikorsky. All rights reserved.
 // Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information.
 
+using System;
+using System.Text;
 using Platformus.Barebone;
 using Platformus.Barebone.Backend.ViewModels;
 using Platformus.Security.Data.Abstractions;
@@ -28,7 +30,19 @@ namespace Platformus.Security.Backend.ViewModels.Credentials
       credential.Identifier = createOrEdit.Identifier;
 
       if (!string.IsNullOrEmpty(createOrEdit.Secret))
-        credential.Secret = createOrEdit.ApplyMd5HashingToSecret ? MD5Hasher.ComputeHash(createOrEdit.Secret) : createOrEdit.Secret;
+      {
+        if (createOrEdit.ApplyMd5HashingToSecret)
+          credential.Secret = createOrEdit.Secret;
+
+        else
+        {
+          byte[] salt = Pbkdf2Hasher.GenerateRandomSalt();
+          string hash = Pbkdf2Hasher.ComputeHash(createOrEdit.Secret, salt);
+
+          credential.Secret = hash;
+          credential.Extra = Convert.ToBase64String(salt);
+        }
+      }
 
       return credential;
     }

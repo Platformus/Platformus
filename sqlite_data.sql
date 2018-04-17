@@ -5,7 +5,7 @@ BEGIN TRANSACTION;
 --
 INSERT INTO "Users" VALUES (1,'Administrator','2017-01-01 00:00:00.0000000');
 INSERT INTO "CredentialTypes" VALUES (1,'Email','Email',1);
-INSERT INTO "Credentials" VALUES (1,1,1,'admin@platformus.net','21-23-2F-29-7A-57-A5-A7-43-89-4A-0E-4A-80-1F-C3');
+INSERT INTO "Credentials" VALUES (1,1,1,'admin@platformus.net','8lE3xN2Ijiv/Y/aIGwaZLrbcqrt/1jDmzPTdudKbVD0=','0O/ZGwhScZRGbsmiUEckOg==');
 INSERT INTO "Roles" VALUES (1,'Administrator','Administrator',100);
 INSERT INTO "Roles" VALUES (2,'ApplicationOwner','Application owner',200);
 INSERT INTO "Roles" VALUES (3,'ContentManager','Content manager',300);

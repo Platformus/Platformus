@@ -12,7 +12,7 @@ INSERT INTO [dbo].[CredentialTypes] ([Id], [Code], [Name], [Position]) VALUES (1
 SET IDENTITY_INSERT [dbo].[CredentialTypes] OFF;
 
 SET IDENTITY_INSERT [dbo].[Credentials] ON;
-INSERT INTO [dbo].[Credentials] ([Id], [UserId], [CredentialTypeId], [Identifier], [Secret]) VALUES (1, 1, 1, N'admin@platformus.net', N'21-23-2F-29-7A-57-A5-A7-43-89-4A-0E-4A-80-1F-C3');
+INSERT INTO [dbo].[Credentials] ([Id], [UserId], [CredentialTypeId], [Identifier], [Secret], [Extra]) VALUES (1, 1, 1, N'admin@platformus.net', N'8lE3xN2Ijiv/Y/aIGwaZLrbcqrt/1jDmzPTdudKbVD0=', N'0O/ZGwhScZRGbsmiUEckOg==');
 SET IDENTITY_INSERT [dbo].[Credentials] OFF;
 
 SET IDENTITY_INSERT [dbo].[Roles] ON;

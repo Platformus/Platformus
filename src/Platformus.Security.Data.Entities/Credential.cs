@@ -37,6 +37,11 @@ namespace Platformus.Security.Data.Entities
     /// </summary>
     public string Secret { get; set; }
 
+    /// <summary>
+    /// Gets or sets the credential extra data (might be used to store password salt and so on).
+    /// </summary>
+    public string Extra { get; set; }
+
     public virtual User User { get; set; }
     public virtual CredentialType CredentialType { get; set; }
   }

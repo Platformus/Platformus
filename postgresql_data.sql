@@ -7,7 +7,7 @@ INSERT INTO public."Users" ("Id","Name","Created") VALUES (1,'Administrator','20
 ALTER SEQUENCE "Users_Id_seq" RESTART WITH 2;
 INSERT INTO public."CredentialTypes" ("Id","Code","Name","Position") VALUES (1,'Email','Email',1);
 ALTER SEQUENCE "CredentialTypes_Id_seq" RESTART WITH 2;
-INSERT INTO public."Credentials" ("Id","CredentialTypeId","Identifier","Secret","UserId") VALUES (1,1,'admin@platformus.net','21-23-2F-29-7A-57-A5-A7-43-89-4A-0E-4A-80-1F-C3',1);
+INSERT INTO public."Credentials" ("Id","UserId","CredentialTypeId","Identifier","Secret","Extra") VALUES (1,1,1,'admin@platformus.net','8lE3xN2Ijiv/Y/aIGwaZLrbcqrt/1jDmzPTdudKbVD0=','0O/ZGwhScZRGbsmiUEckOg==');
 ALTER SEQUENCE "Credentials_Id_seq" RESTART WITH 2;
 INSERT INTO public."Roles" ("Id","Code","Name","Position") VALUES (1,'Administrator','Administrator',100);
 INSERT INTO public."Roles" ("Id","Code","Name","Position") VALUES (2,'ApplicationOwner','Application owner',200);

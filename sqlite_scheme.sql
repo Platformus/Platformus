@@ -26,6 +26,7 @@ CREATE TABLE "Credentials" (
 	"CredentialTypeId" INTEGER NOT NULL,
 	"Identifier" TEXT NOT NULL,
 	"Secret" TEXT,
+	"Extra" TEXT,
 	CONSTRAINT "FK_Credential_User_UserId" FOREIGN KEY ("UserId") REFERENCES "Users" ("Id"),
 	CONSTRAINT "FK_Credential_CredentialType_CredentialTypeId" FOREIGN KEY ("CredentialTypeId") REFERENCES "CredentialTypes" ("Id")
 );

@@ -29,15 +29,14 @@ namespace Platformus.Security.Data.EntityFramework.Sqlite
     }
 
     /// <summary>
-    /// Gets the credential by the credential type identifier, user identifier and user secret MD5 hash.
+    /// Gets the credential by the credential type identifier and user identifier.
     /// </summary>
     /// <param name="credentialTypeId">The unique identifier of the credential type this credential belongs to.</param>
     /// <param name="identifier">The identifier of the user.</param>
-    /// <param name="secret">The secret MD5 hash of the user.</param>
-    /// <returns>Found credential with the given credential type identifier, user identifier and user secret MD5 hash.</returns>
-    public Credential WithCredentialTypeIdAndIdentifierAndSecret(int credentialTypeId, string identifier, string secret)
+    /// <returns>Found credential with the given credential type identifier and user identifier.</returns>
+    public Credential WithCredentialTypeIdAndIdentifier(int credentialTypeId, string identifier)
     {
-      return this.dbSet.FirstOrDefault(c => c.CredentialTypeId == credentialTypeId && string.Equals(c.Identifier, identifier, StringComparison.OrdinalIgnoreCase) && c.Secret == secret);
+      return this.dbSet.FirstOrDefault(c => c.CredentialTypeId == credentialTypeId && string.Equals(c.Identifier, identifier, StringComparison.OrdinalIgnoreCase));
     }
 
     /// <summary>
