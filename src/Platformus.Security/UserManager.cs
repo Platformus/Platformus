@@ -1,6 +1,7 @@
 ﻿// Copyright © 2015 Dmitry Sikorsky. All rights reserved.
 // Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information.
 
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
@@ -33,6 +34,82 @@ namespace Platformus.Security
       this.userRoleRepository = this.requestHandler.Storage.GetRepository<IUserRoleRepository>();
       this.credentialTypeRepository = this.requestHandler.Storage.GetRepository<ICredentialTypeRepository>();
       this.credentialRepository = this.requestHandler.Storage.GetRepository<ICredentialRepository>();
+    }
+
+    public User SignUp(string name, string loginTypeCode, string identifier)
+    {
+      return this.SignUp(name,  loginTypeCode, identifier, null);
+    }
+
+    public User SignUp(string name, string loginTypeCode, string identifier, string secret)
+    {
+      User user = new User();
+
+      user.Name = name;
+      user.Created = DateTime.Now;
+      this.userRepository.Create(user);
+      this.requestHandler.Storage.Save();
+
+      CredentialType credentialType = this.credentialTypeRepository.WithCode(loginTypeCode);
+
+      if (credentialType != null)
+      {
+        Credential credential = new Credential();
+
+        credential.UserId = user.Id;
+        credential.CredentialTypeId = credentialType.Id;
+        credential.Identifier = identifier;
+        credential.Secret = string.IsNullOrEmpty(secret) ? null : MD5Hasher.ComputeHash(secret);
+        this.credentialRepository.Create(credential);
+        this.requestHandler.Storage.Save();
+      }
+
+      return user;
+    }
+
+    public void AddToRole(User user, string roleCode)
+    {
+      Role role = this.roleRepository.WithCode(roleCode);
+
+      if (role == null)
+        return;
+
+      this.AddToRole(user, role);
+    }
+
+    public void AddToRole(User user, Role role)
+    {
+      UserRole userRole = this.userRoleRepository.WithKey(user.Id, role.Id);
+
+      if (userRole != null)
+        return;
+
+      userRole = new UserRole();
+      userRole.UserId = user.Id;
+      userRole.RoleId = role.Id;
+      this.userRoleRepository.Create(userRole);
+      this.requestHandler.Storage.Save();
+    }
+
+    public void RemoveFromRole(User user, string roleCode)
+    {
+      Role role = this.roleRepository.WithCode(roleCode);
+
+      if (role == null)
+        return;
+
+      this.RemoveFromRole(user, role);
+    }
+
+    public void RemoveFromRole(User user, Role role)
+    {
+      UserRole userRole = this.userRoleRepository.WithKey(user.Id, role.Id);
+
+      if (userRole == null)
+        return;
+
+      this.userRoleRepository.Delete(userRole);
+      this.requestHandler.Storage.Save();
     }
 
     public User Validate(string loginTypeCode, string identifier)
