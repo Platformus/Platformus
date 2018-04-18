@@ -16,9 +16,9 @@
     <PackageReference Include="ExtCore.Data.Abstractions" Version="3.2.0" />
     <PackageReference Include="ExtCore.Events" Version="3.2.0" />
     <PackageReference Include="ExtCore.Mvc" Version="3.2.0" />
-    <PackageReference Include="MailKit" Version="2.0.1" />
-    <PackageReference Include="NUglify" Version="1.5.9" />
-    <PackageReference Include="SixLabors.ImageSharp" Version="1.0.0-beta0002" />
+    <PackageReference Include="MailKit" Version="2.0.3" />
+    <PackageReference Include="NUglify" Version="1.5.10" />
+    <PackageReference Include="SixLabors.ImageSharp" Version="1.0.0-beta0003" />
   </ItemGroup>
 
 </Project>

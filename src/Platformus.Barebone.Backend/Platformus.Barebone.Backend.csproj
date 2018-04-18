@@ -25,7 +25,7 @@
   </Target>
 
   <ItemGroup>
-    <DotNetCliToolReference Include="BundlerMinifier.Core" Version="2.2.301" />
+    <DotNetCliToolReference Include="BundlerMinifier.Core" Version="2.6.375" />
   </ItemGroup>
 
 </Project>

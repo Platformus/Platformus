@@ -17,12 +17,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Remove="Areas\Backend\Views\Carts\Details.cshtml" />
-    <None Remove="Areas\Backend\Views\ECommerce\_CategorySelectorForm.cshtml" />
-    <None Remove="Areas\Backend\Views\ECommerce\_ProductSelectorForm.cshtml" />
-  </ItemGroup>
-
-  <ItemGroup>
     <ProjectReference Include="..\Platformus.Globalization.Backend\Platformus.Globalization.Backend.csproj" />
     <ProjectReference Include="..\Platformus.ECommerce\Platformus.ECommerce.csproj" />
   </ItemGroup>
@@ -32,7 +26,7 @@
   </Target>
 
   <ItemGroup>
-    <DotNetCliToolReference Include="BundlerMinifier.Core" Version="2.2.301" />
+    <DotNetCliToolReference Include="BundlerMinifier.Core" Version="2.6.375" />
   </ItemGroup>
 
 </Project>
