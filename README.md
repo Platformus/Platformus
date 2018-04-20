@@ -1,4 +1,4 @@
-# Platformus 1.0.0-beta3
+# Platformus 1.0.0-beta4
 
 [![Join the chat at https://gitter.im/Platformus/Platformus](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/Platformus/Platformus?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
@@ -51,11 +51,14 @@ or many relations to the objects of class Contact.
 
 ### Samples
 
-Please take a look at our [sample](https://github.com/Platformus/Platformus-Sample) on GitHub.
+Please take a look at our samles on GitHub:
 
-You can also download our [ready to use sample](http://platformus.net/files/Platformus-Sample-1.0.0-beta3.zip).
-It contains everything you need to run Platformus-based web application from Visual Studio 2017, including SQLite
-database with the test data.
+* [Platformus-Sample-Personal-Website ](https://github.com/Platformus/Platformus-Sample-Personal-Website );
+* [Platformus-Sample-Personal-Blog ](https://github.com/Platformus/Platformus-Sample-Personal-Blog );
+* [Platformus-Sample-Ecommerce ](https://github.com/Platformus/Platformus-Sample-Ecommerce ).
+
+These samples contain everything you need to run Platformus-based web application from Visual Studio 2017, including SQLite
+database with the test data (and SQL scripts for other DB types).
 
 ### Tutorials
 
@@ -66,8 +69,8 @@ to help you start developing your Platformus-based web applications.
 
 Live demo: http://demo.platformus.net/
 
-Website: http://platformus.net/ (under construction)
+Website: http://platformus.net/
 
-Docs: http://docs.platformus.net/ (under construction)
+Docs: http://docs.platformus.net/
 
 Author: http://sikorsky.pro/
