@@ -24,9 +24,9 @@ namespace Platformus.Forms.Frontend.Controllers
     }
 
     [HttpPost]
-    public IActionResult Send()
+    public IActionResult Send(int formId, string formPageUrl)
     {
-      Form form = this.Storage.GetRepository<IFormRepository>().WithKey(int.Parse(this.Request.Form["formId"]));
+      Form form = this.Storage.GetRepository<IFormRepository>().WithKey(formId);
       IDictionary<Field, string> valuesByFields = this.GetValuesByFields(form);
       IDictionary<string, byte[]> attachmentsByFilenames = this.GetAttachmentsByFilenames(form);
 
@@ -36,7 +36,7 @@ namespace Platformus.Forms.Frontend.Controllers
       IFormHandler formHandler = StringActivator.CreateInstance<IFormHandler>(form.CSharpClassName);
 
       if (formHandler != null)
-        return formHandler.Handle(this, form, valuesByFields, attachmentsByFilenames);
+        return formHandler.Handle(this, form, valuesByFields, attachmentsByFilenames, formPageUrl);
 
       return this.NotFound();
     }

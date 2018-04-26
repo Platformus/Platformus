@@ -13,6 +13,6 @@ namespace Platformus.Forms.FormHandlers
     IEnumerable<FormHandlerParameterGroup> ParameterGroups { get; }
     string Description { get; }
 
-    IActionResult Handle(IRequestHandler requestHandler, Form form, IDictionary<Field, string> valuesByFields, IDictionary<string, byte[]> attachmentsByFilenames);
+    IActionResult Handle(IRequestHandler requestHandler, Form form, IDictionary<Field, string> valuesByFields, IDictionary<string, byte[]> attachmentsByFilenames, string formPageUrl);
   }
 }

@@ -1,8 +1,10 @@
 ﻿@* Copyright © 2015 Dmitry Sikorsky. All rights reserved. *@
 @* Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information. *@
 @model Platformus.Forms.Frontend.ViewModels.Shared.FormViewModel
+@using Microsoft.AspNetCore.Http.Extensions
 <form class="form @Model.AdditionalCssClass" asp-controller="Forms" asp-action="Send" method="post" enctype="multipart/form-data">
   <input id="formId" name="formId" type="hidden" value="@Model.Id" />
+  <input id="formPageUrl" name="formPageUrl" type="hidden" value="@Context.Request.GetEncodedPathAndQuery()" />
   @foreach (var field in this.Model.Fields)
   {
     @Html.Partial("_Field", field)

@@ -15,17 +15,19 @@ namespace Platformus.Forms.FormHandlers
     protected Form form;
     protected IDictionary<Field, string> valuesByFields;
     protected IDictionary<string, byte[]> attachmentsByFilenames;
+    protected string formPageUrl { get; set; }
     private Dictionary<string, string> parameterValuesByCodes;
 
     public virtual IEnumerable<FormHandlerParameterGroup> ParameterGroups => new FormHandlerParameterGroup[] { };
     public virtual string Description => null;
 
-    public IActionResult Handle(IRequestHandler requestHandler, Form form, IDictionary<Field, string> valuesByFields, IDictionary<string, byte[]> attachmentsByFilenames)
+    public IActionResult Handle(IRequestHandler requestHandler, Form form, IDictionary<Field, string> valuesByFields, IDictionary<string, byte[]> attachmentsByFilenames, string formPageUrl)
     {
       this.requestHandler = requestHandler;
       this.form = form;
       this.valuesByFields = valuesByFields;
       this.attachmentsByFilenames = attachmentsByFilenames;
+      this.formPageUrl = formPageUrl;
       return this.Handle();
     }
 
