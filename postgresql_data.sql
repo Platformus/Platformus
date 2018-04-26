@@ -1,7 +1,7 @@
 BEGIN TRANSACTION;
 --
 -- Extension: Platformus.Security
--- Version: beta4
+-- Version: beta5
 --
 INSERT INTO public."Users" ("Id","Name","Created") VALUES (1,'Administrator','2017-01-01 00:00:00.000000');
 ALTER SEQUENCE "Users_Id_seq" RESTART WITH 2;
@@ -51,7 +51,7 @@ INSERT INTO public."RolePermissions" ("RoleId","PermissionId") VALUES (3,14);
 
 --
 -- Extension: Platformus.Configurations
--- Version: beta4
+-- Version: beta5
 --
 INSERT INTO public."Configurations" ("Id","Code","Name") VALUES (1,'Email','Email');
 INSERT INTO public."Configurations" ("Id","Code","Name") VALUES (2,'Globalization','Globalization');
@@ -67,7 +67,7 @@ ALTER SEQUENCE "Variables_Id_seq" RESTART WITH 8;
 
 --
 -- Extension: Platformus.Globalization
--- Version: beta4
+-- Version: beta5
 --
 INSERT INTO public."Cultures" ("Id","Code","Name","IsNeutral","IsFrontendDefault","IsBackendDefault") VALUES (1,'__','Neutral',TRUE,FALSE,FALSE);
 INSERT INTO public."Cultures" ("Id","Code","Name","IsNeutral","IsFrontendDefault","IsBackendDefault") VALUES (2,'en','English',FALSE,TRUE,TRUE);
@@ -75,7 +75,7 @@ ALTER SEQUENCE "Cultures_Id_seq" RESTART WITH 3;
 
 --
 -- Extension: Platformus.Domain
--- Version: beta4
+-- Version: beta5
 --
 INSERT INTO public."DataTypes" ("Id","StorageDataType","JavaScriptEditorClassName","Name","Position") VALUES (1,'string','singleLinePlainText','Single line plain text',1);
 INSERT INTO public."DataTypes" ("Id","StorageDataType","JavaScriptEditorClassName","Name","Position") VALUES (2,'string','multilinePlainText','Multiline plain text',2);
@@ -97,7 +97,7 @@ ALTER SEQUENCE "DataTypeParameters_Id_seq" RESTART WITH 8;
 
 --
 -- Extension: Platformus.Forms
--- Version: beta4
+-- Version: beta5
 --
 INSERT INTO public."FieldTypes" ("Id","Code","Name","Position") VALUES (1,'TextBox','Text box',1);
 INSERT INTO public."FieldTypes" ("Id","Code","Name","Position") VALUES (2,'TextArea','Text area',2);

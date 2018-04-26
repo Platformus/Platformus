@@ -29,6 +29,11 @@ namespace Platformus.Forms.Data.Entities
     public int NameId { get; set; }
 
     /// <summary>
+    /// Gets or sets the dictionary identifier this form is related to. It is used to store the localizable submit button title.
+    /// </summary>
+    public int SubmitButtonTitleId { get; set; }
+
+    /// <summary>
     /// Gets or sets the value indicating whether the completed forms should be produced for the form or not.
     /// Completed forms store all user input for further processing.
     /// </summary>
@@ -46,6 +51,7 @@ namespace Platformus.Forms.Data.Entities
     public string Parameters { get; set; }
 
     public virtual Dictionary Name { get; set; }
+    public virtual Dictionary SubmitButtonTitle { get; set; }
     public virtual ICollection<Field> Fields { get; set; }
   }
 }

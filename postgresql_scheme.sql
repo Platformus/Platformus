@@ -1,6 +1,6 @@
 --
 -- Extension: Platformus.Security
--- Version: beta4
+-- Version: beta5
 --
 
 -- Users
@@ -103,7 +103,7 @@ ALTER TABLE "RolePermissions" OWNER TO postgres;
 
 --
 -- Extension: Platformus.Configurations
--- Version: beta4
+-- Version: beta5
 --
 
 -- Configurations
@@ -135,7 +135,7 @@ ALTER TABLE "Variables" OWNER TO postgres;
 
 --
 -- Extension: Platformus.Globalization
--- Version: beta4
+-- Version: beta5
 --
 
 -- Cultures
@@ -180,7 +180,7 @@ ALTER TABLE "Localizations" OWNER TO postgres;
 
 --
 -- Extension: Platformus.Routing
--- Version: beta4
+-- Version: beta5
 --
 
 -- Endpoints
@@ -233,7 +233,7 @@ ALTER TABLE "DataSources" OWNER TO postgres;
 
 --
 -- Extension: Platformus.Domain
--- Version: beta4
+-- Version: beta5
 --
 
 -- Classes
@@ -439,7 +439,7 @@ ALTER TABLE "SerializedObjects" OWNER TO postgres;
 
 --
 -- Extension: Platformus.Menus
--- Version: beta4
+-- Version: beta5
 --
 
 -- Menus
@@ -498,7 +498,7 @@ ALTER TABLE "SerializedMenus" OWNER TO postgres;
 
 --
 -- Extension: Platformus.Forms
--- Version: beta4
+-- Version: beta5
 --
 
 -- Forms
@@ -506,11 +506,16 @@ CREATE TABLE "Forms" (
     "Id" serial NOT NULL,
     "Code" text NOT NULL,
     "NameId" integer NOT NULL,
+    "SubmitButtonTitleId" integer NOT NULL,
 	"ProduceCompletedForms" boolean NOT NULL,
     "CSharpClassName" text NOT NULL,
 	"Parameters" text,
     CONSTRAINT "PK_Forms" PRIMARY KEY ("Id"),
-    CONSTRAINT "FK_Forms_Dictionaries" FOREIGN KEY ("NameId")
+    CONSTRAINT "FK_Forms_Dictionaries_NameId" FOREIGN KEY ("NameId")
+        REFERENCES public."Dictionaries" ("Id") MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION,
+	CONSTRAINT "FK_Forms_Dictionaries_SubmitButtonTitleId" FOREIGN KEY ("SubmitButtonTitleId")
         REFERENCES public."Dictionaries" ("Id") MATCH SIMPLE
         ON UPDATE NO ACTION
         ON DELETE NO ACTION
@@ -614,6 +619,7 @@ CREATE TABLE "SerializedForms" (
     "FormId" integer NOT NULL,
     "Code" text NOT NULL,
     "Name" text NOT NULL,
+	"SubmitButtonTitle" text NOT NULL,
     "SerializedFields" text,
     CONSTRAINT "PK_SerializedForms" PRIMARY KEY ("CultureId", "FormId"),
     CONSTRAINT "FK_SerializedForms_Cultures" FOREIGN KEY ("CultureId")
@@ -630,7 +636,7 @@ ALTER TABLE "SerializedForms" OWNER TO postgres;
 
 --
 -- Extension: Platformus.FileManager
--- Version: beta4
+-- Version: beta5
 --
 
 -- Files
@@ -645,7 +651,7 @@ ALTER TABLE "Files" OWNER TO postgres;
 
 --
 -- Extension: Platformus.ECommerce
--- Version: beta4
+-- Version: beta5
 --
 
 -- Catalogs

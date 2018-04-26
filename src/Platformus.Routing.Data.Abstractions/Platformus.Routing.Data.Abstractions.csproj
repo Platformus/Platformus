@@ -4,7 +4,7 @@
     <Authors>Dmitry Sikorsky</Authors>
     <Copyright>Copyright © 2017 Dmitry Sikorsky</Copyright>
     <Description>The Platformus.Routing extension component.</Description>
-    <VersionPrefix>1.0.0-beta4</VersionPrefix>
+    <VersionPrefix>1.0.0-beta5</VersionPrefix>
     <TargetFramework>netcoreapp2.0</TargetFramework>
     <AssemblyName>Platformus.Routing.Data.Abstractions</AssemblyName>
     <PackageId>Platformus.Routing.Data.Abstractions</PackageId>

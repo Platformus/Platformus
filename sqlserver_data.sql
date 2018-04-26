@@ -1,7 +1,7 @@
 BEGIN TRANSACTION;
 --
 -- Extension: Platformus.Security
--- Version: beta4
+-- Version: beta5
 --
 SET IDENTITY_INSERT [dbo].[Users] ON;
 INSERT INTO [dbo].[Users] ([Id], [Name], [Created]) VALUES (1, N'Administrator', N'2017-01-01 00:00:00.000');
@@ -63,7 +63,7 @@ INSERT INTO [dbo].[RolePermissions] ([RoleId], [PermissionId]) VALUES (3, 14);
 
 --
 -- Extension: Platformus.Configurations
--- Version: beta4
+-- Version: beta5
 --
 SET IDENTITY_INSERT [dbo].[Configurations] ON;
 INSERT INTO [dbo].[Configurations] ([Id], [Code], [Name]) VALUES (1, N'Email', N'Email');
@@ -82,7 +82,7 @@ SET IDENTITY_INSERT [dbo].[Variables] OFF;
 
 --
 -- Extension: Platformus.Globalization
--- Version: beta4
+-- Version: beta5
 --
 SET IDENTITY_INSERT [dbo].[Cultures] ON;
 INSERT INTO [dbo].[Cultures] ([Id], [Code], [Name], [IsNeutral], [IsFrontendDefault], [IsBackendDefault]) VALUES (1, N'__', N'Neutral', 1, 0, 0);
@@ -91,7 +91,7 @@ SET IDENTITY_INSERT [dbo].[Cultures] OFF;
 
 --
 -- Extension: Platformus.Domain
--- Version: beta4
+-- Version: beta5
 --
 SET IDENTITY_INSERT [dbo].[DataTypes] ON;
 INSERT INTO [dbo].[DataTypes] ([Id], [StorageDataType], [JavaScriptEditorClassName], [Name], [Position]) VALUES (1, N'string', N'singleLinePlainText', N'Single line plain text', 1);
@@ -116,7 +116,7 @@ SET IDENTITY_INSERT [dbo].[DataTypeParameters] OFF;
 
 --
 -- Extension: Platformus.Forms
--- Version: beta4
+-- Version: beta5
 --
 SET IDENTITY_INSERT [dbo].[FieldTypes] ON;
 INSERT INTO [dbo].[FieldTypes] ([Id], [Code], [Name], [Position]) VALUES (1, N'TextBox', N'Text box', 1);

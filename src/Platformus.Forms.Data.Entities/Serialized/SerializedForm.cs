@@ -33,6 +33,11 @@ namespace Platformus.Forms.Data.Entities
     public string Name { get; set; }
 
     /// <summary>
+    /// Gets or sets the submit button title of the form.
+    /// </summary>
+    public string SubmitButtonTitle { get; set; }
+
+    /// <summary>
     /// Gets or sets the fields serialized into a string.
     /// </summary>
     public string SerializedFields { get; set; }

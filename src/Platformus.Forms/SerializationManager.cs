@@ -36,6 +36,7 @@ namespace Platformus.Forms
 
           serializedForm.Code = temp.Code;
           serializedForm.Name = temp.Name;
+          serializedForm.SubmitButtonTitle = temp.SubmitButtonTitle;
           serializedForm.SerializedFields = temp.SerializedFields;
           this.requestHandler.Storage.GetRepository<ISerializedFormRepository>().Edit(serializedForm);
         }
@@ -57,6 +58,7 @@ namespace Platformus.Forms
       serializedForm.CultureId = culture.Id;
       serializedForm.Code = form.Code;
       serializedForm.Name = this.requestHandler.GetLocalizationValue(form.NameId, culture.Id);
+      serializedForm.SubmitButtonTitle = this.requestHandler.GetLocalizationValue(form.SubmitButtonTitleId, culture.Id);
 
       if (serializedFields.Count != 0)
         serializedForm.SerializedFields = this.SerializeObject(serializedFields);

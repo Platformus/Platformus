@@ -12,6 +12,7 @@
 <form class="form" method="post">
   <single-line-text-field asp-for="Code" />
   <multilingual-single-line-text-field asp-for="Name" asp-localizations="@Model.NameLocalizations" />
+  <multilingual-single-line-text-field asp-for="SubmitButtonTitle" asp-localizations="@Model.SubmitButtonTitleLocalizations" />
   <checkbox-field asp-for="ProduceCompletedForms" />
   <drop-down-list-field asp-for="CSharpClassName" asp-options="@Model.CSharpClassNameOptions" onchange="platformus.ui.formHandlerCSharpClassNameChanged();" />
   <div id="formHandlerParameterEditors"></div>

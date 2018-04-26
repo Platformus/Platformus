@@ -1,7 +1,7 @@
 BEGIN TRANSACTION;
 --
 -- Extension: Platformus.Security
--- Version: beta4
+-- Version: beta5
 --
 INSERT INTO "Users" VALUES (1,'Administrator','2017-01-01 00:00:00.0000000');
 INSERT INTO "CredentialTypes" VALUES (1,'Email','Email',1);
@@ -46,7 +46,7 @@ INSERT INTO "RolePermissions" VALUES (3,14);
 
 --
 -- Extension: Platformus.Configurations
--- Version: beta4
+-- Version: beta5
 --
 INSERT INTO "Configurations" VALUES (1,'Email','Email');
 INSERT INTO "Configurations" VALUES (2,'Globalization','Globalization');
@@ -60,14 +60,14 @@ INSERT INTO "Variables" VALUES (7,2,'SpecifyCultureInUrl','Specify culture in UR
 
 --
 -- Extension: Platformus.Globalization
--- Version: beta4
+-- Version: beta5
 --
 INSERT INTO "Cultures" VALUES (1,'__','Neutral',1,0,0);
 INSERT INTO "Cultures" VALUES (2,'en','English',0,1,1);
 
 --
 -- Extension: Platformus.Domain
--- Version: beta4
+-- Version: beta5
 --
 INSERT INTO "DataTypes" VALUES (1,'string','singleLinePlainText','Single line plain text',1);
 INSERT INTO "DataTypes" VALUES (2,'string','multilinePlainText','Multiline plain text',2);
@@ -87,7 +87,7 @@ INSERT INTO "DataTypeParameters" VALUES (7,8,'checkbox','IsRequired','Is require
 
 --
 -- Extension: Platformus.Forms
--- Version: beta4
+-- Version: beta5
 --
 INSERT INTO "FieldTypes" VALUES (1,'TextBox','Text box',1);
 INSERT INTO "FieldTypes" VALUES (2,'TextArea','Text area',2);

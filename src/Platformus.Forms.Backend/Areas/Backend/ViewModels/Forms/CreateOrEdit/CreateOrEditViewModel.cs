@@ -25,6 +25,13 @@ namespace Platformus.Forms.Backend.ViewModels.Forms
     public string Name { get; set; }
     public IEnumerable<Localization> NameLocalizations { get; set; }
 
+    [Multilingual]
+    [Display(Name = "Submit button title")]
+    [Required]
+    [StringLength(64)]
+    public string SubmitButtonTitle { get; set; }
+    public IEnumerable<Localization> SubmitButtonTitleLocalizations { get; set; }
+
     [Display(Name = "Produce completed forms")]
     [Required]
     public bool ProduceCompletedForms { get; set; }

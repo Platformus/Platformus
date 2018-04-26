@@ -27,6 +27,7 @@ namespace Platformus.Forms.Backend.ViewModels.Forms
         return new CreateOrEditViewModel()
         {
           NameLocalizations = this.GetLocalizations(),
+          SubmitButtonTitleLocalizations = this.GetLocalizations(),
           CSharpClassNameOptions = this.GetCSharpClassNameOptions(),
           FormHandlers = this.GetFormHandlers()
         };
@@ -38,6 +39,7 @@ namespace Platformus.Forms.Backend.ViewModels.Forms
         Id = form.Id,
         Code = form.Code,
         NameLocalizations = this.GetLocalizations(form.NameId),
+        SubmitButtonTitleLocalizations = this.GetLocalizations(form.SubmitButtonTitleId),
         ProduceCompletedForms = form.ProduceCompletedForms,
         CSharpClassName = form.CSharpClassName,
         CSharpClassNameOptions = this.GetCSharpClassNameOptions(),

@@ -1,7 +1,7 @@
 BEGIN TRANSACTION;
 --
 -- Extension: Platformus.Security
--- Version: beta4
+-- Version: beta5
 --
 
 -- Users
@@ -67,7 +67,7 @@ CREATE TABLE "RolePermissions" (
 
 --
 -- Extension: Platformus.Configurations
--- Version: beta4
+-- Version: beta5
 --
 
 -- Configurations
@@ -90,7 +90,7 @@ CREATE TABLE "Variables" (
 
 --
 -- Extension: Platformus.Globalization
--- Version: beta4
+-- Version: beta5
 --
 
 -- Cultures
@@ -120,7 +120,7 @@ CREATE TABLE "Localizations" (
 
 --
 -- Extension: Platformus.Routing
--- Version: beta4
+-- Version: beta5
 --
 
 -- Endpoints
@@ -156,7 +156,7 @@ CREATE TABLE "DataSources" (
 
 --
 -- Extension: Platformus.Domain
--- Version: beta4
+-- Version: beta5
 --
 
 -- Classes
@@ -276,7 +276,7 @@ CREATE TABLE "SerializedObjects" (
 
 --
 -- Extension: Platformus.Menus
--- Version: beta4
+-- Version: beta5
 --
 
 -- Menus
@@ -313,7 +313,7 @@ CREATE TABLE "SerializedMenus" (
 
 --
 -- Extension: Platformus.Forms
--- Version: beta4
+-- Version: beta5
 --
 
 -- Forms
@@ -321,10 +321,12 @@ CREATE TABLE "Forms" (
 	"Id" INTEGER NOT NULL CONSTRAINT "PK_Form" PRIMARY KEY AUTOINCREMENT,
 	"Code" TEXT NOT NULL,
 	"NameId" INTEGER NOT NULL,
+	"SubmitButtonTitleId" INTEGER NOT NULL,
 	"ProduceCompletedForms" INTEGER NOT NULL,
 	"CSharpClassName" TEXT NOT NULL,
 	"Parameters" TEXT,
-	CONSTRAINT "FK_Form_Dictionary_NameId" FOREIGN KEY ("NameId") REFERENCES "Dictionaries" ("Id")
+	CONSTRAINT "FK_Form_Dictionary_NameId" FOREIGN KEY ("NameId") REFERENCES "Dictionaries" ("Id"),
+	CONSTRAINT "FK_Form_Dictionary_SubmitButtonTitleId" FOREIGN KEY ("SubmitButtonTitleId") REFERENCES "Dictionaries" ("Id")
 );
 
 -- FieldTypes
@@ -384,6 +386,7 @@ CREATE TABLE "SerializedForms" (
 	"FormId" INTEGER NOT NULL,
 	"Code" TEXT NOT NULL,
 	"Name" TEXT NOT NULL,
+	"SubmitButtonTitle" TEXT NOT NULL,
 	"SerializedFields" TEXT,
 	CONSTRAINT "PK_SerializedForm" PRIMARY KEY("CultureId","FormId"),
 	CONSTRAINT "FK_SerializedForm_Culture_CultureId" FOREIGN KEY("CultureId") REFERENCES "Cultures"("Id"),
@@ -392,7 +395,7 @@ CREATE TABLE "SerializedForms" (
 
 --
 -- Extension: Platformus.FileManager
--- Version: beta4
+-- Version: beta5
 --
 
 -- Files
@@ -404,7 +407,7 @@ CREATE TABLE "Files" (
 
 --
 -- Extension: Platformus.ECommerce
--- Version: beta4
+-- Version: beta5
 --
 
 -- Catalogs

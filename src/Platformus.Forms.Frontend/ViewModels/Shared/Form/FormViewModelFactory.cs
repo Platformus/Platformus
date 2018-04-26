@@ -28,6 +28,7 @@ namespace Platformus.Forms.Frontend.ViewModels.Shared
       {
         Id = serializedForm.FormId,
         Name = serializedForm.Name,
+        SubmitButtonTitle = serializedForm.SubmitButtonTitle,
         Fields = serializedFields.Select(
           sf => new FieldViewModelFactory(this.RequestHandler).Create(sf)
         ).ToList(),
