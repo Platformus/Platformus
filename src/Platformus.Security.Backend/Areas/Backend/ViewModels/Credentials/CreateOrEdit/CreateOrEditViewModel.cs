@@ -27,7 +27,7 @@ namespace Platformus.Security.Backend.ViewModels.Credentials
     [StringLength(1024)]
     public string Secret { get; set; }
 
-    [Display(Name = "Apply MD5 hashing to secret")]
-    public bool ApplyMd5HashingToSecret { get; set; }
+    [Display(Name = "Apply PBKDF2 hashing to secret")]
+    public bool ApplyPbkdf2HashingToSecret { get; set; }
   }
 }

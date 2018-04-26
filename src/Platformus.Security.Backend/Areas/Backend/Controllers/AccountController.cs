@@ -97,6 +97,7 @@ namespace Platformus.Security.Backend.Controllers
     }
 
     [HttpGet]
+    [AllowAnonymous]
     public IActionResult SignOut()
     {
       new UserManager(this).SignOut();
@@ -104,6 +105,7 @@ namespace Platformus.Security.Backend.Controllers
     }
 
     [HttpGet]
+    [AllowAnonymous]
     public IActionResult AccessDenied()
     {
       return this.View();

@@ -2,7 +2,6 @@
 // Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information.
 
 using System;
-using System.Text;
 using Platformus.Barebone;
 using Platformus.Barebone.Backend.ViewModels;
 using Platformus.Security.Data.Abstractions;
@@ -31,10 +30,7 @@ namespace Platformus.Security.Backend.ViewModels.Credentials
 
       if (!string.IsNullOrEmpty(createOrEdit.Secret))
       {
-        if (createOrEdit.ApplyMd5HashingToSecret)
-          credential.Secret = createOrEdit.Secret;
-
-        else
+        if (createOrEdit.ApplyPbkdf2HashingToSecret)
         {
           byte[] salt = Pbkdf2Hasher.GenerateRandomSalt();
           string hash = Pbkdf2Hasher.ComputeHash(createOrEdit.Secret, salt);
@@ -42,6 +38,8 @@ namespace Platformus.Security.Backend.ViewModels.Credentials
           credential.Secret = hash;
           credential.Extra = Convert.ToBase64String(salt);
         }
+
+        else credential.Secret = createOrEdit.Secret;
       }
 
       return credential;
