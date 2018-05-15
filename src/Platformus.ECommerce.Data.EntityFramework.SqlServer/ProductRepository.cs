@@ -121,6 +121,7 @@ namespace Platformus.ECommerce.Data.EntityFramework.SqlServer
     {
       this.storageContext.Database.ExecuteSqlCommand(
         @"
+          DELETE FROM SerializedProducts WHERE ProductId = {0};
           CREATE TABLE #Dictionaries (Id INT PRIMARY KEY);
           INSERT INTO #Dictionaries SELECT NameId FROM Products WHERE Id = {0};
           DELETE FROM Products WHERE Id = {0};

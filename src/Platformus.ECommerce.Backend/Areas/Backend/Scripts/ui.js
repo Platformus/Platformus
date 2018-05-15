@@ -9,6 +9,38 @@
     platformus.productProviderParameterEditors.sync(cSharpClassName);
   };
 
+  platformus.ui.addAttribute = function () {
+    platformus.forms.attributeSelectorForm.show(
+      null,
+      function (attributeId) {
+        $.getJSON(
+          "/backend/ecommerce/getattribute",
+          { attributeId: attributeId },
+          function (attribute) {
+            var identity = "newAttribute" + ($(".table__row--new").length + 1);
+            var row = $("<tr>").addClass("table__row").addClass("table__row--new").attr("id", identity).appendTo($("#attributes tbody"));
+            var cell1 = $("<td>").addClass("table__cell").html(attribute.feature.name).appendTo(row);
+            var cell2 = $("<td>").addClass("table__cell").html(attribute.value).appendTo(row);
+
+            $("<input>").attr("name", identity).attr("type", "hidden").appendTo(cell1);
+          }
+        );
+      }
+    );
+  };
+
+  platformus.ui.removeAttribute = function (identity) {
+    if (identity.indexOf("newAttribute") == -1) {
+      var id = identity.replace("attribute", platformus.string.empty);
+      var removedAttributeIds = $("#RemovedAttributeIds").val();
+
+      removedAttributeIds += (removedAttributeIds.length == 0 ? platformus.string.empty : ",") + id;
+      $("#RemovedAttributeIds").val(removedAttributeIds);
+    }
+
+    $("#" + identity).remove();
+  };
+
   platformus.ui.photoUploadingStarted = function (checkIsFinished) {
     $("#photoUploader").hide();
 

@@ -4,6 +4,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using Microsoft.AspNetCore.Routing;
+using Newtonsoft.Json;
 using Platformus.Barebone;
 using Platformus.ECommerce.Data.Abstractions;
 using Platformus.ECommerce.Data.Entities;
@@ -18,32 +19,59 @@ namespace Platformus.ECommerce.Frontend.DataSources
     protected override dynamic GetData()
     {
       string url = string.Format("/{0}", this.requestHandler.HttpContext.GetRouteValue("url"));
-      Product product = this.requestHandler.Storage.GetRepository<IProductRepository>().WithUrl(url);
+      SerializedProduct serializedProduct = this.requestHandler.Storage.GetRepository<ISerializedProductRepository>().WithUrl(url);
 
-      if (product == null)
+      if (serializedProduct == null)
         throw new HttpException(404, "Not found.");
 
-      Photo coverPhoto = this.requestHandler.Storage.GetRepository<IPhotoRepository>().CoverByProductId(product.Id);
-      IEnumerable<Photo> photos = this.requestHandler.Storage.GetRepository<IPhotoRepository>().FilteredByProductId(product.Id).ToList();
+      IEnumerable<SerializedAttribute> serializedAttributes = JsonConvert.DeserializeObject<IEnumerable<SerializedAttribute>>(serializedProduct.SerializedAttributes);
+      IEnumerable<SerializedPhoto> serializedPhotos = JsonConvert.DeserializeObject<IEnumerable<SerializedPhoto>>(serializedProduct.SerializedPhotos);
+      SerializedPhoto serializedCoverPhoto = serializedPhotos.FirstOrDefault(sph => sph.IsCover);
 
       return new ExpandoObjectBuilder()
-        .AddProperty("Id", product.Id)
-        .AddProperty("Code", product.Code)
-        .AddProperty("Name", this.requestHandler.GetLocalizationValue(product.NameId))
-        .AddProperty("Description", this.requestHandler.GetLocalizationValue(product.DescriptionId))
-        .AddProperty("Price", product.Price)
-        .AddProperty("Title", this.requestHandler.GetLocalizationValue(product.TitleId))
-        .AddProperty("MetaDescription", this.requestHandler.GetLocalizationValue(product.MetaDescriptionId))
-        .AddProperty("MetaKeywords", this.requestHandler.GetLocalizationValue(product.MetaKeywordsId))
-        .AddProperty("CoverPhoto", this.CreatePhotoViewModel(coverPhoto))
-        .AddProperty("Photos", photos.Select(ph => this.CreatePhotoViewModel(ph)))
+        .AddProperty("Id", serializedProduct.ProductId)
+        .AddProperty("Code", serializedProduct.Code)
+        .AddProperty("Name", serializedProduct.Name)
+        .AddProperty("Description", serializedProduct.Description)
+        .AddProperty("Price", serializedProduct.Price)
+        .AddProperty("Title", serializedProduct.Title)
+        .AddProperty("MetaDescription", serializedProduct.MetaDescription)
+        .AddProperty("MetaKeywords", serializedProduct.MetaKeywords)
+        .AddProperty("Attributes", serializedAttributes.OrderBy(sa => sa.Feature.Position).Select(sa => this.CreateAttributeViewModel(sa)))
+        .AddProperty("CoverPhoto", this.CreatePhotoViewModel(serializedCoverPhoto))
+        .AddProperty("Photos", serializedPhotos.OrderBy(sph => sph.Position).Select(sph => this.CreatePhotoViewModel(sph)))
         .Build();
     }
 
-    private dynamic CreatePhotoViewModel(Photo photo)
+    private dynamic CreateAttributeViewModel(SerializedAttribute serializedAttribute)
     {
+      if (serializedAttribute == null)
+        return null;
+
       return new ExpandoObjectBuilder()
-        .AddProperty("Filename", photo.Filename)
+        .AddProperty("Feature", this.CreateFeatureViewModel(serializedAttribute.Feature))
+        .AddProperty("Value", serializedAttribute.Value)
+        .Build();
+    }
+
+    private dynamic CreateFeatureViewModel(SerializedFeature serializedFeature)
+    {
+      if (serializedFeature == null)
+        return null;
+
+      return new ExpandoObjectBuilder()
+        .AddProperty("Code", serializedFeature.Code)
+        .AddProperty("Name", serializedFeature.Name)
+        .Build();
+    }
+
+    private dynamic CreatePhotoViewModel(SerializedPhoto serializedPhoto)
+    {
+      if (serializedPhoto == null)
+        return null;
+
+      return new ExpandoObjectBuilder()
+        .AddProperty("Filename", serializedPhoto.Filename)
         .Build();
     }
   }

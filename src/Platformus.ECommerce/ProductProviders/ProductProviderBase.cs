@@ -17,14 +17,14 @@ namespace Platformus.ECommerce.ProductProviders
     public virtual IEnumerable<ProductProviderParameterGroup> ParameterGroups => new ProductProviderParameterGroup[] { };
     public virtual string Description => null;
 
-    public IEnumerable<Product> GetProducts(IRequestHandler requestHandler, Catalog catalog)
+    public IEnumerable<SerializedProduct> GetProducts(IRequestHandler requestHandler, Catalog catalog)
     {
       this.requestHandler = requestHandler;
       this.catalog = catalog;
       return this.GetProducts();
     }
 
-    protected abstract IEnumerable<Product> GetProducts();
+    protected abstract IEnumerable<SerializedProduct> GetProducts();
 
     protected bool HasParameter(string key)
     {

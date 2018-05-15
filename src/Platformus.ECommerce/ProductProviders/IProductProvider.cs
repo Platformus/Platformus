@@ -12,6 +12,6 @@ namespace Platformus.ECommerce.ProductProviders
     IEnumerable<ProductProviderParameterGroup> ParameterGroups { get; }
     string Description { get; }
 
-    IEnumerable<Product> GetProducts(IRequestHandler requestHandler, Catalog catalog);
+    IEnumerable<SerializedProduct> GetProducts(IRequestHandler requestHandler, Catalog catalog);
   }
 }

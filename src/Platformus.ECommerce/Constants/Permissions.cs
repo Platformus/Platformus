@@ -7,6 +7,7 @@ namespace Platformus.ECommerce
   {
     public const string BrowseCatalogs = "BrowseCatalogs";
     public const string BrowseCategories = "BrowseCategories";
+    public const string BrowseFeatures = "BrowseFeatures";
     public const string BrowseProducts = "BrowseProducts";
     public const string BrowseCarts = "BrowseCarts";
     public const string BrowseOrderStates = "BrowseOrderStates";

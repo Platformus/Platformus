@@ -7,6 +7,7 @@ namespace Platformus.ECommerce
   {
     public const string HasBrowseCatalogsPermission = "HasBrowseCatalogsPermission";
     public const string HasBrowseCategoriesPermission = "HasBrowseCategoriesPermission";
+    public const string HasBrowseFeaturesPermission = "HasBrowseFeaturesPermission";
     public const string HasBrowseProductsPermission = "HasBrowseProductsPermission";
     public const string HasBrowseCartsPermission = "HasBrowseCartsPermission";
     public const string HasBrowseOrderStatesPermission = "HasBrowseOrderStatesPermission";

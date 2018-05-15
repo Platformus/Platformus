@@ -45,10 +45,11 @@ namespace Platformus.ECommerce.Backend.ViewModels.Products
         NameLocalizations = this.GetLocalizations(product.NameId),
         DescriptionLocalizations = this.GetLocalizations(product.DescriptionId),
         Price = product.Price,
+        Attributes = this.GetAttributes(product),
+        Photos = this.GetPhotos(product),
         TitleLocalizations = this.GetLocalizations(product.TitleId),
         MetaDescriptionLocalizations = this.GetLocalizations(product.MetaDescriptionId),
-        MetaKeywordsLocalizations = this.GetLocalizations(product.MetaKeywordsId),
-        Photos = this.GetPhotos(product)
+        MetaKeywordsLocalizations = this.GetLocalizations(product.MetaKeywordsId)
       };
     }
 
@@ -56,6 +57,15 @@ namespace Platformus.ECommerce.Backend.ViewModels.Products
     {
       return this.RequestHandler.Storage.GetRepository<ICategoryRepository>().FilteredByCategoryId(null).ToList().Select(
         c => new Option(this.GetLocalizationValue(c.NameId), c.Id.ToString())
+      );
+    }
+
+    private IEnumerable<AttributeViewModel> GetAttributes(Product product)
+    {
+      return this.RequestHandler.Storage.GetRepository<IProductAttributeRepository>().FilteredByProductId(product.Id).ToList().Select(
+        pa => new AttributeViewModelFactory(this.RequestHandler).Create(
+          this.RequestHandler.Storage.GetRepository<IAttributeRepository>().WithKey(pa.AttributeId), true
+        )
       );
     }
 

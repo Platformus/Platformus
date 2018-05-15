@@ -20,7 +20,7 @@ namespace Platformus.Security.Data.EntityFramework.PostgreSql
         }
       );
 
-	  modelBuilder.Entity<CredentialType>(etb =>
+	    modelBuilder.Entity<CredentialType>(etb =>
         {
           etb.HasKey(e => e.Id);
           etb.Property(e => e.Id).ValueGeneratedOnAdd();
@@ -40,7 +40,7 @@ namespace Platformus.Security.Data.EntityFramework.PostgreSql
         }
       );
 
-	  modelBuilder.Entity<Role>(etb =>
+	    modelBuilder.Entity<Role>(etb =>
         {
           etb.HasKey(e => e.Id);
           etb.Property(e => e.Id).ValueGeneratedOnAdd();
@@ -50,7 +50,7 @@ namespace Platformus.Security.Data.EntityFramework.PostgreSql
         }
       );
 
-	  modelBuilder.Entity<UserRole>(etb =>
+	    modelBuilder.Entity<UserRole>(etb =>
         {
           etb.HasKey(e => new { e.UserId, e.RoleId });
           etb.ToTable("UserRoles");

@@ -6,6 +6,7 @@
       "Areas/Backend/Styles/photos.css",
       "Areas/Backend/Styles/category_selector_pop_up_form.css",
       "Areas/Backend/Styles/product_selector_pop_up_form.css",
+      "Areas/Backend/Styles/attribute_selector_pop_up_form.css",
       "Areas/Backend/Styles/ProductProviderParameterEditors/category_product_provider_parameter_editor.css"
     ]
   },
@@ -16,6 +17,7 @@
       "Areas/Backend/Scripts/Behaviors/photo_drag_and_drop_area_behavior.js",
       "Areas/Backend/Scripts/Forms/category_selector_form.js",
       "Areas/Backend/Scripts/Forms/product_selector_form.js",
+      "Areas/Backend/Scripts/Forms/attribute_selector_form.js",
       "Areas/Backend/Scripts/ProductProviderParameterEditors/product_provider_parameter_editors.js",
       "Areas/Backend/Scripts/ProductProviderParameterEditors/base_product_provider_parameter_editor.js",
       "Areas/Backend/Scripts/ProductProviderParameterEditors/text_box_product_provider_parameter_editor.js",

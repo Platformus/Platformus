@@ -132,6 +132,9 @@
   <data name="Ecommerce" xml:space="preserve">
     <value>Магазин</value>
   </data>
+  <data name="Features" xml:space="preserve">
+    <value>Властивості</value>
+  </data>
   <data name="Order states" xml:space="preserve">
     <value>Стани замовлень</value>
   </data>

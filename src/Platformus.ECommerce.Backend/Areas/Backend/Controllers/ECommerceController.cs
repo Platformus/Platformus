@@ -27,6 +27,11 @@ namespace Platformus.ECommerce.Backend.Controllers
       return this.PartialView("_ProductSelectorForm", new ProductSelectorFormViewModelFactory(this).Create(productId));
     }
 
+    public ActionResult AttributeSelectorForm(int? attributeId)
+    {
+      return this.PartialView("_AttributeSelectorForm", new AttributeSelectorFormViewModelFactory(this).Create(attributeId));
+    }
+
     public ActionResult GetCategoryName(int? categoryId)
     {
       if (categoryId == null)
@@ -35,6 +40,14 @@ namespace Platformus.ECommerce.Backend.Controllers
       Category category = this.Storage.GetRepository<ICategoryRepository>().WithKey((int)categoryId);
 
       return this.Content(string.Format("<div class=\"category-product-provider-parameter-editor__name\">{0}</div>", this.GetLocalizationValue(category.NameId)));
+    }
+
+    public ActionResult GetAttribute(int attributeId)
+    {
+      Attribute attribute = this.Storage.GetRepository<IAttributeRepository>().WithKey(attributeId);
+      Feature feature = this.Storage.GetRepository<IFeatureRepository>().WithKey(attribute.FeatureId);
+
+      return this.Json(new { id = attribute.Id, feature = new { id = feature.Id, name = this.GetLocalizationValue(feature.NameId) }, value = this.GetLocalizationValue(attribute.ValueId) });
     }
   }
 }

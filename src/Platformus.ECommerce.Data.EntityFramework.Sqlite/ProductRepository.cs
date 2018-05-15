@@ -121,6 +121,7 @@ namespace Platformus.ECommerce.Data.EntityFramework.Sqlite
     {
       this.storageContext.Database.ExecuteSqlCommand(
         @"
+          DELETE FROM SerializedProducts WHERE ProductId = {0};
           CREATE TEMP TABLE TempDictionaries (Id INT PRIMARY KEY);
           INSERT INTO TempDictionaries SELECT NameId FROM Products WHERE Id = {0};
           DELETE FROM Products WHERE Id = {0};

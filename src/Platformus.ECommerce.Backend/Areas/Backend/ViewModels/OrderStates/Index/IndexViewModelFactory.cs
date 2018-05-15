@@ -29,7 +29,7 @@ namespace Platformus.ECommerce.Backend.ViewModels.OrderStates
           orderBy, direction, skip, take, orderStateRepository.Count(filter),
           new[] {
             new GridColumnViewModelFactory(this.RequestHandler).Create(localizer["Code"], "Code"),
-            new GridColumnViewModelFactory(this.RequestHandler).Create(localizer["Name"], "Name"),
+            new GridColumnViewModelFactory(this.RequestHandler).Create(localizer["Name"]),
             new GridColumnViewModelFactory(this.RequestHandler).Create(localizer["Position"], "Position"),
             new GridColumnViewModelFactory(this.RequestHandler).CreateEmpty()
           },

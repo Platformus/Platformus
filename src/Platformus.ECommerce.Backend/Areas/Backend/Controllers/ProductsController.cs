@@ -54,6 +54,7 @@ namespace Platformus.ECommerce.Backend.Controllers
         else this.Storage.GetRepository<IProductRepository>().Edit(product);
 
         this.Storage.Save();
+        this.CreateOrEditAttributes(product, createOrEdit.RemovedAttributeIds);
         this.CreateOrEditPhotos(product, createOrEdit.RemovedPhotoIds);
 
         if (createOrEdit.Id == null)
@@ -80,6 +81,44 @@ namespace Platformus.ECommerce.Backend.Controllers
     private bool IsCodeUnique(string code)
     {
       return this.Storage.GetRepository<IProductRepository>().WithCode(code) == null;
+    }
+
+    private void CreateOrEditAttributes(Product product, string removedAttributeIds)
+    {
+      this.CreateAttributes(product);
+      this.RemoveAttributes(product, removedAttributeIds);
+    }
+
+    private void CreateAttributes(Product product)
+    {
+      foreach (string key in this.Request.Form.Keys)
+      {
+        if (key.StartsWith("newAttribute"))
+        {
+          ProductAttribute productAttribute = new ProductAttribute();
+
+          productAttribute.ProductId = product.Id;
+          productAttribute.AttributeId = int.Parse(key.Replace("newAttribute", string.Empty));
+          this.Storage.GetRepository<IProductAttributeRepository>().Create(productAttribute);
+        }
+      }
+
+      this.Storage.Save();
+    }
+
+    private void RemoveAttributes(Product product, string removedAttributeIds)
+    {
+      if (string.IsNullOrEmpty(removedAttributeIds))
+        return;
+
+      foreach (string removedAttributeId in removedAttributeIds.Split(','))
+      {
+        ProductAttribute productAttribute = this.Storage.GetRepository<IProductAttributeRepository>().WithKey(product.Id, int.Parse(removedAttributeId));
+
+        this.Storage.GetRepository<IProductAttributeRepository>().Delete(productAttribute);
+      }
+
+      this.Storage.Save();
     }
 
     private void CreateOrEditPhotos(Product product, string removedPhotoIds)
@@ -133,9 +172,9 @@ namespace Platformus.ECommerce.Backend.Controllers
       if (string.IsNullOrEmpty(removedPhotoIds))
         return;
 
-      foreach (string photoIdToRemove in removedPhotoIds.Split(','))
+      foreach (string removedPhotoId in removedPhotoIds.Split(','))
       {
-        Photo photo = this.Storage.GetRepository<IPhotoRepository>().WithKey(int.Parse(photoIdToRemove));
+        Photo photo = this.Storage.GetRepository<IPhotoRepository>().WithKey(int.Parse(removedPhotoId));
 
         try
         {

@@ -1,0 +1,20 @@
+﻿@* Copyright © 2018 Dmitry Sikorsky. All rights reserved. *@
+@* Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information. *@
+@model Platformus.ECommerce.Backend.ViewModels.Features.CreateOrEditViewModel
+@inject Microsoft.AspNetCore.Mvc.Localization.IViewLocalizer Localizer
+@{
+  this.ViewBag.Title = (this.Model.Id == null ? this.Localizer["Create Feature"].Value : this.Localizer["Edit Feature"].Value);
+  this.ViewBag.ActiveMenuItem = "features";
+}
+@section title {
+  @ViewBag.Title
+}
+<form class="form" method="post">
+  <single-line-text-field asp-for="Code" />
+  <multilingual-single-line-text-field asp-for="Name" asp-localizations="this.Model.NameLocalizations" />
+  <numeric-field asp-for="Position" />
+  <div class="form__buttons buttons">
+    <button class="buttons__button button button--positive" type="submit">@Localizer["Save"]</button>
+    <a class="buttons__button button button--neutral" href="@this.Context.Request.CombineUrl("/backend/features")">@Localizer["Cancel"]</a>
+  </div>
+</form>

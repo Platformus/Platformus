@@ -138,4 +138,16 @@
   <data name="SEO" xml:space="preserve">
     <value>SEO</value>
   </data>
+  <data name="Attributes" xml:space="preserve">
+    <value>Атрибуты</value>
+  </data>
+  <data name="Add attribute" xml:space="preserve">
+    <value>Добавить атрибут</value>
+  </data>
+  <data name="Feature" xml:space="preserve">
+    <value>Свойство</value>
+  </data>
+  <data name="Value" xml:space="preserve">
+    <value>Значение</value>
+  </data>
 </root>

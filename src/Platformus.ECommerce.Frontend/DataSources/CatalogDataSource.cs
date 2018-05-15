@@ -1,8 +1,10 @@
 ﻿// Copyright © 2017 Dmitry Sikorsky. All rights reserved.
 // Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information.
 
+using System.Collections.Generic;
 using System.Linq;
 using Microsoft.AspNetCore.Routing;
+using Newtonsoft.Json;
 using Platformus.Barebone;
 using Platformus.ECommerce.Data.Abstractions;
 using Platformus.ECommerce.Data.Entities;
@@ -32,33 +34,34 @@ namespace Platformus.ECommerce.Frontend.DataSources
       if (productProvider != null)
         expandoObjectBuilder.AddProperty(
           "Products",
-          productProvider.GetProducts(this.requestHandler, catalog).Select(p => this.CreateProductViewModel(p)).ToList()
+          productProvider.GetProducts(this.requestHandler, catalog).Select(sp => this.CreateProductViewModel(sp)).ToList()
         );
 
       return expandoObjectBuilder.Build();
     }
 
-    private dynamic CreateProductViewModel(Product product)
+    private dynamic CreateProductViewModel(SerializedProduct serializedProduct)
     {
-      Photo coverPhoto = this.requestHandler.Storage.GetRepository<IPhotoRepository>().CoverByProductId(product.Id);
+      IEnumerable<SerializedPhoto> serializedPhotos = JsonConvert.DeserializeObject<IEnumerable<SerializedPhoto>>(serializedProduct.SerializedPhotos);
+      SerializedPhoto serializedCoverPhoto = serializedPhotos.FirstOrDefault(sph => sph.IsCover);
 
       return new ExpandoObjectBuilder()
-        .AddProperty("Id", product.Id)
-        .AddProperty("Url", product.Url)
-        .AddProperty("Code", product.Code)
-        .AddProperty("Name", this.requestHandler.GetLocalizationValue(product.NameId))
-        .AddProperty("Price", product.Price)
-        .AddProperty("CoverPhoto", this.CreatePhotoViewModel(coverPhoto))
+        .AddProperty("Id", serializedProduct.ProductId)
+        .AddProperty("Url", serializedProduct.Url)
+        .AddProperty("Code", serializedProduct.Code)
+        .AddProperty("Name", serializedProduct.Name)
+        .AddProperty("Price", serializedProduct.Price)
+        .AddProperty("CoverPhoto", this.CreatePhotoViewModel(serializedCoverPhoto))
         .Build();
     }
 
-    private dynamic CreatePhotoViewModel(Photo photo)
+    private dynamic CreatePhotoViewModel(SerializedPhoto serializedPhoto)
     {
-      if (photo == null)
+      if (serializedPhoto == null)
         return null;
 
       return new ExpandoObjectBuilder()
-        .AddProperty("Filename", photo.Filename)
+        .AddProperty("Filename", serializedPhoto.Filename)
         .Build();
     }
   }

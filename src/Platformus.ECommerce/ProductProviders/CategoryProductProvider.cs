@@ -21,11 +21,11 @@ namespace Platformus.ECommerce.ProductProviders
 
     public override string Description => "Returns products of the current category.";
 
-    protected override IEnumerable<Product> GetProducts()
+    protected override IEnumerable<SerializedProduct> GetProducts()
     {
       int categoryId = this.GetIntParameterValue("CategoryId");
 
-      return this.requestHandler.Storage.GetRepository<IProductRepository>().FilteredByCategoryIdRange(categoryId, "code", "asc", 0, 100, null).ToList();
+      return this.requestHandler.Storage.GetRepository<ISerializedProductRepository>().FilteredByCategoryIdRange(categoryId, "code", "asc", 0, 100).ToList();
     }
   }
 }

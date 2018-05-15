@@ -695,6 +695,40 @@ CREATE TABLE "Categories" (
 
 ALTER TABLE "Categories" OWNER TO postgres;
 
+-- Features
+CREATE TABLE "Features" (
+    "Id" serial NOT NULL,
+	"Code" text NOT NULL,
+    "NameId" integer NOT NULL,
+    "Position" integer,
+	CONSTRAINT "PK_Features" PRIMARY KEY ("Id"),
+	CONSTRAINT "FK_Features_Dictionaries" FOREIGN KEY ("NameId")
+        REFERENCES public."Dictionaries" ("Id") MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION
+);
+
+ALTER TABLE "Features" OWNER TO postgres;
+
+-- Attributes
+CREATE TABLE "Attributes" (
+    "Id" serial NOT NULL,
+	"FeatureId" integer NOT NULL,
+    "ValueId" integer NOT NULL,
+    "Position" integer,
+	CONSTRAINT "PK_Attributes" PRIMARY KEY ("Id"),
+	CONSTRAINT "FK_Attributes_Features" FOREIGN KEY ("FeatureId")
+        REFERENCES public."Features" ("Id") MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION,
+	CONSTRAINT "FK_Attributes_Dictionaries" FOREIGN KEY ("ValueId")
+        REFERENCES public."Dictionaries" ("Id") MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION
+);
+
+ALTER TABLE "Attributes" OWNER TO postgres;
+
 -- Products
 CREATE TABLE "Products" (
     "Id" serial NOT NULL,
@@ -703,7 +737,7 @@ CREATE TABLE "Products" (
     "Code" text NOT NULL,
     "NameId" integer NOT NULL,
     "DescriptionId" integer NOT NULL,
-    "Price" numeric,
+    "Price" numeric NOT NULL,
 	"TitleId" integer NOT NULL,
 	"MetaDescriptionId" integer NOT NULL,
 	"MetaKeywordsId" integer NOT NULL,
@@ -735,6 +769,23 @@ CREATE TABLE "Products" (
 );
 
 ALTER TABLE "Products" OWNER TO postgres;
+
+-- ProductAttributes
+CREATE TABLE "ProductAttributes" (
+    "ProductId" integer NOT NULL,
+    "AttributeId" integer NOT NULL,
+    CONSTRAINT "PK_ProductAttributes" PRIMARY KEY ("ProductId", "AttributeId"),
+    CONSTRAINT "FK_ProductAttributes_Products" FOREIGN KEY ("ProductId")
+        REFERENCES public."Products" ("Id") MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION,
+    CONSTRAINT "FK_ProductAttributes_Attributes" FOREIGN KEY ("AttributeId")
+        REFERENCES public."Attributes" ("Id") MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION
+);
+
+ALTER TABLE "ProductAttributes" OWNER TO postgres;
 
 -- Photos
 CREATE TABLE "Photos" (
@@ -859,3 +910,35 @@ CREATE TABLE "Positions" (
 );
 
 ALTER TABLE "Positions" OWNER TO postgres;
+
+-- SerializedProducts
+CREATE TABLE "SerializedProducts" (
+    "CultureId" integer NOT NULL,
+    "ProductId" integer NOT NULL,
+    "CategoryId" integer NOT NULL,
+    "Url" text NOT NULL,
+	"Code" text NOT NULL,
+	"Name" text NOT NULL,
+	"Description" text,
+	"Price" numeric NOT NULL,
+	"Title" text,
+	"MetaDescription" text,
+	"MetaKeywords" text,
+    "SerializedAttributes" text,
+	"SerializedPhotos" text,
+    CONSTRAINT "PK_SerializedProducts" PRIMARY KEY ("CultureId", "ProductId"),
+    CONSTRAINT "FK_SerializedProducts_Cultures" FOREIGN KEY ("CultureId")
+        REFERENCES public."Cultures" ("Id") MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION,
+    CONSTRAINT "FK_SerializedProducts_Products" FOREIGN KEY ("ProductId")
+        REFERENCES public."Products" ("Id") MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION,
+    CONSTRAINT "FK_SerializedProducts_Categories" FOREIGN KEY ("CategoryId")
+        REFERENCES public."Categories" ("Id") MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION
+);
+
+ALTER TABLE "SerializedProducts" OWNER TO postgres;

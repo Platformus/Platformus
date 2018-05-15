@@ -45,6 +45,12 @@ namespace Platformus.ECommerce.Backend.ViewModels.Products
     [Required]
     public decimal Price { get; set; }
 
+    public IEnumerable<AttributeViewModel> Attributes { get; set; }
+    public string RemovedAttributeIds { get; set; }
+
+    public IEnumerable<PhotoViewModel> Photos { get; set; }
+    public string RemovedPhotoIds { get; set; }
+
     [Multilingual]
     [Display(Name = "Title")]
     [StringLength(128)]
@@ -62,8 +68,5 @@ namespace Platformus.ECommerce.Backend.ViewModels.Products
     [StringLength(256)]
     public string MetaKeywords { get; set; }
     public IEnumerable<Localization> MetaKeywordsLocalizations { get; set; }
-
-    public IEnumerable<PhotoViewModel> Photos { get; set; }
-    public string RemovedPhotoIds { get; set; }
   }
 }

@@ -433,6 +433,25 @@ CREATE TABLE "Categories" (
 	CONSTRAINT "FK_Category_Dictionary_NameId" FOREIGN KEY("NameId") REFERENCES "Dictionaries" ("Id")
 );
 
+-- Features
+CREATE TABLE "Features" (
+	"Id" INTEGER NOT NULL CONSTRAINT "PK_Feature" PRIMARY KEY AUTOINCREMENT,
+	"Code" TEXT NOT NULL,
+	"NameId" INTEGER NOT NULL,
+	"Position" INTEGER,
+	CONSTRAINT "FK_Feature_Dictionary_NameId" FOREIGN KEY("NameId") REFERENCES "Dictionaries" ("Id")
+);
+
+-- Attributes
+CREATE TABLE "Attributes" (
+	"Id" INTEGER NOT NULL CONSTRAINT "PK_Attribute" PRIMARY KEY AUTOINCREMENT,
+	"FeatureId" INTEGER NOT NULL,
+	"ValueId" INTEGER NOT NULL,
+	"Position" INTEGER,
+	CONSTRAINT "FK_Attribute_Feature_FeatureId" FOREIGN KEY("FeatureId") REFERENCES "Features" ("Id"),
+	CONSTRAINT "FK_Attribute_Dictionary_NameId" FOREIGN KEY("ValueId") REFERENCES "Dictionaries" ("Id")
+);
+
 -- Products
 CREATE TABLE "Products" (
 	"Id" INTEGER NOT NULL CONSTRAINT "PK_Product" PRIMARY KEY AUTOINCREMENT,
@@ -441,7 +460,7 @@ CREATE TABLE "Products" (
 	"Code" TEXT NOT NULL,
 	"NameId" INTEGER NOT NULL,
 	"DescriptionId" INTEGER NOT NULL,
-	"Price" REAL,
+	"Price" REAL NOT NULL,
 	"TitleId" INTEGER NOT NULL,
 	"MetaDescriptionId" INTEGER NOT NULL,
 	"MetaKeywordsId" INTEGER NOT NULL,
@@ -451,6 +470,15 @@ CREATE TABLE "Products" (
 	CONSTRAINT "FK_Product_Dictionary_TitleId" FOREIGN KEY("TitleId") REFERENCES "Dictionaries" ("Id"),
 	CONSTRAINT "FK_Product_Dictionary_MetaDescriptionId" FOREIGN KEY("MetaDescriptionId") REFERENCES "Dictionaries" ("Id"),
 	CONSTRAINT "FK_Product_Dictionary_MetaKeywordsId" FOREIGN KEY("MetaKeywordsId") REFERENCES "Dictionaries" ("Id")
+);
+
+-- ProductAttributes
+CREATE TABLE "ProductAttributes" (
+	"ProductId" INTEGER NOT NULL,
+	"AttributeId" INTEGER NOT NULL,
+	CONSTRAINT "PK_ProductAttribute" PRIMARY KEY ("ProductId", "AttributeId"),
+	CONSTRAINT "FK_ProductAttribute_Product_ProductId" FOREIGN KEY ("ProductId") REFERENCES "Products" ("Id"),
+	CONSTRAINT "FK_ProductAttribute_Attribute_AttributeId" FOREIGN KEY ("AttributeId") REFERENCES "Attributes" ("Id")
 );
 
 -- Photos
@@ -524,6 +552,27 @@ CREATE TABLE "Positions" (
 	"ProductId" INTEGER NOT NULL,
 	CONSTRAINT "FK_Position_Cart_CartId" FOREIGN KEY("CartId") REFERENCES "Carts" ("Id"),
 	CONSTRAINT "FK_Position_Product_ProductId" FOREIGN KEY("ProductId") REFERENCES "Products" ("Id")
+);
+
+-- SerializedProducts
+CREATE TABLE "SerializedProducts" (
+	"CultureId" INTEGER NOT NULL,
+	"ProductId" INTEGER NOT NULL,
+	"CategoryId" INTEGER NOT NULL,
+	"Url" TEXT NOT NULL,
+	"Code" TEXT NOT NULL,
+	"Name" TEXT NOT NULL,
+	"Description" TEXT,
+	"Price" REAL NOT NULL,
+	"Title" TEXT,
+	"MetaDescription" TEXT,
+	"MetaKeywords" TEXT,
+	"SerializedAttributes" TEXT,
+	"SerializedPhotos" TEXT,
+	CONSTRAINT "PK_SerializedProduct" PRIMARY KEY("CultureId","ProductId"),
+	CONSTRAINT "FK_SerializedProduct_Culture_CultureId" FOREIGN KEY("CultureId") REFERENCES "Cultures"("Id"),
+	CONSTRAINT "FK_SerializedProduct_Product_ProductId" FOREIGN KEY("ProductId") REFERENCES "Products"("Id"),
+	CONSTRAINT "FK_SerializedProduct_Category_CategoryId" FOREIGN KEY("CategoryId") REFERENCES "Categories"("Id")
 );
 
 COMMIT;

@@ -28,6 +28,23 @@ namespace Platformus.ECommerce.Data.EntityFramework.PostgreSql
         }
       );
 
+      modelBuilder.Entity<Feature>(etb =>
+        {
+          etb.HasKey(e => e.Id);
+          etb.Property(e => e.Id).ValueGeneratedOnAdd();
+          etb.Property(e => e.Code).IsRequired().HasMaxLength(32);
+          etb.ToTable("Features");
+        }
+      );
+
+      modelBuilder.Entity<Attribute>(etb =>
+        {
+          etb.HasKey(e => e.Id);
+          etb.Property(e => e.Id).ValueGeneratedOnAdd();
+          etb.ToTable("Attributes");
+        }
+      );
+
       modelBuilder.Entity<Product>(etb =>
         {
           etb.HasKey(e => e.Id);
@@ -35,6 +52,13 @@ namespace Platformus.ECommerce.Data.EntityFramework.PostgreSql
           etb.Property(e => e.Url).IsRequired().HasMaxLength(128);
           etb.Property(e => e.Code).IsRequired().HasMaxLength(32);
           etb.ToTable("Products");
+        }
+      );
+
+      modelBuilder.Entity<ProductAttribute>(etb =>
+        {
+          etb.HasKey(e => new { e.ProductId, e.AttributeId });
+          etb.ToTable("ProductAttributes");
         }
       );
 
@@ -102,6 +126,19 @@ namespace Platformus.ECommerce.Data.EntityFramework.PostgreSql
           etb.HasKey(e => e.Id);
           etb.Property(e => e.Id).ValueGeneratedOnAdd();
           etb.ToTable("Positions");
+        }
+      );
+
+      modelBuilder.Entity<SerializedProduct>(etb =>
+        {
+          etb.HasKey(e => new { e.CultureId, e.ProductId });
+          etb.Property(e => e.Url).IsRequired().HasMaxLength(128);
+          etb.Property(e => e.Code).IsRequired().HasMaxLength(32);
+          etb.Property(e => e.Name).IsRequired().HasMaxLength(64);
+          etb.Property(e => e.Title).HasMaxLength(128);
+          etb.Property(e => e.MetaDescription).HasMaxLength(512);
+          etb.Property(e => e.MetaKeywords).HasMaxLength(256);
+          etb.ToTable("SerializedProducts");
         }
       );
     }
