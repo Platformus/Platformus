@@ -24,9 +24,9 @@ namespace Platformus.ECommerce.Frontend.DataSources
       if (serializedProduct == null)
         throw new HttpException(404, "Not found.");
 
-      IEnumerable<SerializedAttribute> serializedAttributes = JsonConvert.DeserializeObject<IEnumerable<SerializedAttribute>>(serializedProduct.SerializedAttributes);
-      IEnumerable<SerializedPhoto> serializedPhotos = JsonConvert.DeserializeObject<IEnumerable<SerializedPhoto>>(serializedProduct.SerializedPhotos);
-      SerializedPhoto serializedCoverPhoto = serializedPhotos.FirstOrDefault(sph => sph.IsCover);
+      IEnumerable<SerializedProduct.Attribute> serializedAttributes = JsonConvert.DeserializeObject<IEnumerable<SerializedProduct.Attribute>>(serializedProduct.SerializedAttributes);
+      IEnumerable<SerializedProduct.Photo> serializedPhotos = JsonConvert.DeserializeObject<IEnumerable<SerializedProduct.Photo>>(serializedProduct.SerializedPhotos);
+      SerializedProduct.Photo serializedCoverPhoto = serializedPhotos.FirstOrDefault(sph => sph.IsCover);
 
       return new ExpandoObjectBuilder()
         .AddProperty("Id", serializedProduct.ProductId)
@@ -43,7 +43,7 @@ namespace Platformus.ECommerce.Frontend.DataSources
         .Build();
     }
 
-    private dynamic CreateAttributeViewModel(SerializedAttribute serializedAttribute)
+    private dynamic CreateAttributeViewModel(SerializedProduct.Attribute serializedAttribute)
     {
       if (serializedAttribute == null)
         return null;
@@ -54,7 +54,7 @@ namespace Platformus.ECommerce.Frontend.DataSources
         .Build();
     }
 
-    private dynamic CreateFeatureViewModel(SerializedFeature serializedFeature)
+    private dynamic CreateFeatureViewModel(SerializedProduct.Feature serializedFeature)
     {
       if (serializedFeature == null)
         return null;
@@ -65,7 +65,7 @@ namespace Platformus.ECommerce.Frontend.DataSources
         .Build();
     }
 
-    private dynamic CreatePhotoViewModel(SerializedPhoto serializedPhoto)
+    private dynamic CreatePhotoViewModel(SerializedProduct.Photo serializedPhoto)
     {
       if (serializedPhoto == null)
         return null;

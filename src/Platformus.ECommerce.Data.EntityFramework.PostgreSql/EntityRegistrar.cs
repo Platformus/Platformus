@@ -141,6 +141,14 @@ namespace Platformus.ECommerce.Data.EntityFramework.PostgreSql
           etb.ToTable("SerializedProducts");
         }
       );
+
+      modelBuilder.Entity<SerializedAttribute>(etb =>
+        {
+          etb.HasKey(e => new { e.CultureId, e.AttributeId });
+          etb.Property(e => e.Value).IsRequired().HasMaxLength(64);
+          etb.ToTable("SerializedAttributes");
+        }
+      );
     }
   }
 }

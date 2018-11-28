@@ -1,0 +1,36 @@
+﻿@* Copyright © 2018 Dmitry Sikorsky. All rights reserved. *@
+@* Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information. *@
+@model Platformus.ECommerce.Frontend.ViewModels.Shared.FilterViewModel
+<form class="filter @Model.AdditionalCssClass" asp-controller="Filter" asp-action="Index" method="post">
+  <input id="redirectUrl" name="redirectUrl" type="hidden" value="@Context.Request.Path" />
+  <div class="filter__features features">
+    @{ 
+      int[] attributeIds = new int[] { };
+
+      if (!string.IsNullOrEmpty(this.Context.Request.Query["attributeids"]))
+      {
+        attributeIds = this.Context.Request.Query["attributeids"].ToString().Split(',').Select(id => int.Parse(id)).ToArray();
+      }
+    }
+    @foreach (var feature in this.Model.Features)
+    {
+      <div class="features__feature">
+        <div class="feature__name">
+          @feature.Name
+        </div>
+        <div class="feature__attributes attributes">
+          @foreach (var attribute in feature.Attributes)
+          {
+            <div class="attributes__attribute">
+              <input id="attribute@(attribute.Id)" name="attribute@(attribute.Id)" type="checkbox" @(attributeIds.Contains(attribute.Id) ? "checked" : null) />
+              <label for="attribute@(attribute.Id)">@attribute.Value</label>
+            </div>
+          }
+        </div>
+      </div>
+    }
+  </div>
+  <div class="filter__buttons buttons">
+    <button class="buttons__button button" type="submit">Apply</button>
+  </div>
+</form>

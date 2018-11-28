@@ -13,5 +13,7 @@ namespace Platformus.ECommerce.ProductProviders
     string Description { get; }
 
     IEnumerable<SerializedProduct> GetProducts(IRequestHandler requestHandler, Catalog catalog);
+    IEnumerable<SerializedProduct> GetProducts(IRequestHandler requestHandler, Catalog catalog, int[] attributeIds);
+    IEnumerable<SerializedAttribute> GetAttributes(IRequestHandler requestHandler, Catalog catalog);
   }
 }

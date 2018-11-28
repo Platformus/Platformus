@@ -47,6 +47,19 @@ namespace Platformus.ECommerce.Data.EntityFramework.SqlServer
     }
 
     /// <summary>
+    /// Gets all the attributes filtered by the category identifier sorting by position (ascending).
+    /// </summary>
+    /// <param name="categoryId">The unique identifier of the category these attributes belongs to.</param>
+    /// <returns>Found attributes filtered by the category identifier.</returns>
+    public IEnumerable<Attribute> FilteredByCategoryId(int categoryId)
+    {
+      return this.dbSet.FromSql(
+        "SELECT * FROM Attributes WHERE Id IN (SELECT AttributeId FROM ProductAttributes WHERE ProductId IN (SELECT Id FROM Products WHERE CategoryId = {0}))",
+        categoryId
+      );
+    }
+
+    /// <summary>
     /// Gets the attributes filtered by the feature identifier using the given filtering, sorting, and paging.
     /// </summary>
     /// <param name="featureId">The unique identifier of the feature these attributes belongs to.</param>

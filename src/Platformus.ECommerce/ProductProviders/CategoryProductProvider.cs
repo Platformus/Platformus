@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Platformus.ECommerce.Data.Abstractions;
 using Platformus.ECommerce.Data.Entities;
+using Platformus.Globalization;
 
 namespace Platformus.ECommerce.ProductProviders
 {
@@ -25,7 +26,27 @@ namespace Platformus.ECommerce.ProductProviders
     {
       int categoryId = this.GetIntParameterValue("CategoryId");
 
-      return this.requestHandler.Storage.GetRepository<ISerializedProductRepository>().FilteredByCategoryIdRange(categoryId, "code", "asc", 0, 100).ToList();
+      return this.requestHandler.Storage.GetRepository<ISerializedProductRepository>().FilteredByCultureIdAndCategoryIdRange(
+        this.requestHandler.GetService<ICultureManager>().GetCurrentCulture().Id, categoryId, "code", "asc", 0, 100
+      ).ToList();
+    }
+
+    protected override IEnumerable<SerializedProduct> GetProducts(int[] attributeIds)
+    {
+      int categoryId = this.GetIntParameterValue("CategoryId");
+
+      return this.requestHandler.Storage.GetRepository<ISerializedProductRepository>().FilteredByCultureIdAndCategoryIdAndAttributeIdsRange(
+        this.requestHandler.GetService<ICultureManager>().GetCurrentCulture().Id, categoryId, attributeIds, "code", "asc", 0, 100
+      ).ToList();
+    }
+
+    protected override IEnumerable<SerializedAttribute> GetAttributes()
+    {
+      int categoryId = this.GetIntParameterValue("CategoryId");
+
+      return this.requestHandler.Storage.GetRepository<ISerializedAttributeRepository>().FilteredByCultureIdAndCategoryId(
+        this.requestHandler.GetService<ICultureManager>().GetCurrentCulture().Id, categoryId
+      );
     }
   }
 }

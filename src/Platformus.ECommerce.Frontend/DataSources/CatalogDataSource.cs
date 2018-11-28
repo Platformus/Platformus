@@ -32,18 +32,26 @@ namespace Platformus.ECommerce.Frontend.DataSources
       IProductProvider productProvider = StringActivator.CreateInstance<IProductProvider>(catalog.CSharpClassName);
 
       if (productProvider != null)
-        expandoObjectBuilder.AddProperty(
+      {
+        if (string.IsNullOrEmpty(this.requestHandler.HttpContext.Request.Query["attributeids"]))
+          expandoObjectBuilder.AddProperty(
+            "Products",
+            productProvider.GetProducts(this.requestHandler, catalog).Select(sp => this.CreateProductViewModel(sp)).ToList()
+          );
+
+        else expandoObjectBuilder.AddProperty(
           "Products",
-          productProvider.GetProducts(this.requestHandler, catalog).Select(sp => this.CreateProductViewModel(sp)).ToList()
+          productProvider.GetProducts(this.requestHandler, catalog, this.requestHandler.HttpContext.Request.Query["attributeids"].ToString().Split(',').Select(id => int.Parse(id)).ToArray()).Select(sp => this.CreateProductViewModel(sp)).ToList()
         );
+      }
 
       return expandoObjectBuilder.Build();
     }
 
     private dynamic CreateProductViewModel(SerializedProduct serializedProduct)
     {
-      IEnumerable<SerializedPhoto> serializedPhotos = JsonConvert.DeserializeObject<IEnumerable<SerializedPhoto>>(serializedProduct.SerializedPhotos);
-      SerializedPhoto serializedCoverPhoto = serializedPhotos.FirstOrDefault(sph => sph.IsCover);
+      IEnumerable<SerializedProduct.Photo> serializedPhotos = JsonConvert.DeserializeObject<IEnumerable<SerializedProduct.Photo>>(serializedProduct.SerializedPhotos);
+      SerializedProduct.Photo serializedCoverPhoto = serializedPhotos.FirstOrDefault(sph => sph.IsCover);
 
       return new ExpandoObjectBuilder()
         .AddProperty("Id", serializedProduct.ProductId)
@@ -55,7 +63,7 @@ namespace Platformus.ECommerce.Frontend.DataSources
         .Build();
     }
 
-    private dynamic CreatePhotoViewModel(SerializedPhoto serializedPhoto)
+    private dynamic CreatePhotoViewModel(SerializedProduct.Photo serializedPhoto)
     {
       if (serializedPhoto == null)
         return null;

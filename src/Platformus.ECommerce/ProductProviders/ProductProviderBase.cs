@@ -12,6 +12,7 @@ namespace Platformus.ECommerce.ProductProviders
   {
     protected IRequestHandler requestHandler;
     protected Catalog catalog;
+    protected int[] attributeIds;
     private Dictionary<string, string> parameterValuesByCodes;
 
     public virtual IEnumerable<ProductProviderParameterGroup> ParameterGroups => new ProductProviderParameterGroup[] { };
@@ -24,7 +25,24 @@ namespace Platformus.ECommerce.ProductProviders
       return this.GetProducts();
     }
 
+    public IEnumerable<SerializedProduct> GetProducts(IRequestHandler requestHandler, Catalog catalog, int[] attributeIds)
+    {
+      this.requestHandler = requestHandler;
+      this.catalog = catalog;
+      this.attributeIds = attributeIds;
+      return this.GetProducts(attributeIds);
+    }
+
+    public IEnumerable<SerializedAttribute> GetAttributes(IRequestHandler requestHandler, Catalog catalog)
+    {
+      this.requestHandler = requestHandler;
+      this.catalog = catalog;
+      return this.GetAttributes();
+    }
+
     protected abstract IEnumerable<SerializedProduct> GetProducts();
+    protected abstract IEnumerable<SerializedProduct> GetProducts(int[] attributeIds);
+    protected abstract IEnumerable<SerializedAttribute> GetAttributes();
 
     protected bool HasParameter(string key)
     {

@@ -14,6 +14,7 @@ namespace Platformus.ECommerce.Frontend.Actions
 
     public void Execute(IRouteBuilder routeBuilder, IServiceProvider serviceProvider)
     {
+      routeBuilder.MapRoute(name: "Filter", template: "{culture=en}/ecommerce/filter", defaults: new { controller = "Filter", action = "Index" });
       routeBuilder.MapRoute(name: "Cart", template: "{culture=en}/ecommerce/cart", defaults: new { controller = "Cart", action = "Index" });
       routeBuilder.MapRoute(name: "Add To Cart", template: "{culture=en}/ecommerce/cart/add", defaults: new { controller = "Cart", action = "Add" });
       routeBuilder.MapRoute(name: "Remove From Cart", template: "{culture=en}/ecommerce/cart/remove", defaults: new { controller = "Cart", action = "Remove" });

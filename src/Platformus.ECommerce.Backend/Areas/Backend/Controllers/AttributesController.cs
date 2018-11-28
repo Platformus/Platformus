@@ -2,11 +2,14 @@
 // Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information.
 
 using ExtCore.Data.Abstractions;
+using ExtCore.Events;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Platformus.Barebone;
 using Platformus.ECommerce.Backend.ViewModels.Attributes;
 using Platformus.ECommerce.Data.Abstractions;
 using Platformus.ECommerce.Data.Entities;
+using Platformus.ECommerce.Events;
 
 namespace Platformus.ECommerce.Backend.Controllers
 {
@@ -47,6 +50,12 @@ namespace Platformus.ECommerce.Backend.Controllers
         else this.Storage.GetRepository<IAttributeRepository>().Edit(attribute);
 
         this.Storage.Save();
+
+        if (createOrEdit.Id == null)
+          Event<IAttributeCreatedEventHandler, IRequestHandler, Attribute>.Broadcast(this, attribute);
+
+        else Event<IAttributeEditedEventHandler, IRequestHandler, Attribute>.Broadcast(this, attribute);
+
         return this.Redirect(this.Request.CombineUrl("/backend/attributes"));
       }
 

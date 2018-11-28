@@ -22,6 +22,13 @@ namespace Platformus.ECommerce
       );
     }
 
+    public static IViewComponentResult GetFilterViewComponentResultWithDefaultValue(this ICache cache, string additionalCssClass, Func<IViewComponentResult> defaultValueFunc)
+    {
+      return cache.GetWithDefaultValue(
+        ICacheExtensions.GetFilterViewComponentResultKey(additionalCssClass), defaultValueFunc
+      );
+    }
+
     public static void RemoveCatalogsViewComponentResult(this ICache cache)
     {
       cache.RemoveAll(k => k.StartsWith("catalogs-view-component"));
@@ -32,6 +39,11 @@ namespace Platformus.ECommerce
       cache.RemoveAll(k => k.StartsWith("cart-view-component"));
     }
 
+    public static void RemoveFilterViewComponentResult(this ICache cache)
+    {
+      cache.RemoveAll(k => k.StartsWith("filter-view-component"));
+    }
+
     private static string GetCatalogsViewComponentResultKey(string additionalCssClass)
     {
       return "catalogs-view-component" + (string.IsNullOrEmpty(additionalCssClass) ? null : ":" + additionalCssClass);
@@ -40,6 +52,11 @@ namespace Platformus.ECommerce
     private static string GetCartViewComponentResultKey(string additionalCssClass)
     {
       return "cart-view-component" + (string.IsNullOrEmpty(additionalCssClass) ? null : ":" + additionalCssClass);
+    }
+
+    private static string GetFilterViewComponentResultKey(string additionalCssClass)
+    {
+      return "filter-view-component" + (string.IsNullOrEmpty(additionalCssClass) ? null : ":" + additionalCssClass);
     }
   }
 }

@@ -7,13 +7,13 @@ using Platformus.ECommerce.Events;
 
 namespace Platformus.ECommerce.EventHandlers
 {
-  public class ObjectEditedEventHandler : IProductEditedEventHandler
+  public class ProductEditedEventHandler : IProductEditedEventHandler
   {
     public int Priority => 1000;
 
     public void HandleEvent(IRequestHandler requestHandler, Product product)
     {
-      new SerializationManager(requestHandler).SerializeProduct(product);
+      new ProductSerializationManager(requestHandler).SerializeProduct(product);
       requestHandler.GetService<ICache>().RemoveAll();
     }
   }

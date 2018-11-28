@@ -7,11 +7,11 @@ using Platformus.ECommerce.Events;
 
 namespace Platformus.ECommerce.EventHandlers
 {
-  public class ProductDeletedEventHandler : IProductDeletedEventHandler
+  public class AttributeDeletedEventHandler : IAttributeDeletedEventHandler
   {
     public int Priority => 1000;
 
-    public void HandleEvent(IRequestHandler requestHandler, Product product)
+    public void HandleEvent(IRequestHandler requestHandler, Attribute attribute)
     {
       requestHandler.GetService<ICache>().RemoveAll();
     }

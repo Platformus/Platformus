@@ -28,16 +28,31 @@ namespace Platformus.ECommerce.Data.Abstractions
     SerializedProduct WithUrl(string url);
 
     /// <summary>
-    /// Gets all the serialized products filtered by the category identifier using the given sorting and paging.
+    /// Gets all the serialized products filtered by the culture identifier and category identifier using the given sorting and paging.
     /// </summary>
+    /// <param name="cultureId">The unique identifier of the culture these serialized products belongs to.</param>
     /// <param name="categoryId">The unique identifier of the category these serialized products belongs to.</param>
     /// <param name="orderBy">The serialized product property name to sort by.</param>
     /// <param name="direction">The sorting direction.</param>
     /// <param name="skip">The number of serialized products that should be skipped.</param>
     /// <param name="take">The number of serialized products that should be taken.</param>
     /// <param name="filter">The filtering query.</param>
-    /// <returns>Found serialized products filtered by the category identifier using the given filtering, sorting, and paging.</returns>
-    IEnumerable<SerializedProduct> FilteredByCategoryIdRange(int categoryId, string orderBy, string direction, int skip, int take);
+    /// <returns>Found serialized products filtered by the culture identifier and category identifier using the given filtering, sorting, and paging.</returns>
+    IEnumerable<SerializedProduct> FilteredByCultureIdAndCategoryIdRange(int cultureId, int categoryId, string orderBy, string direction, int skip, int take);
+
+    /// <summary>
+    /// Gets all the serialized products filtered by the culture identifier, category identifier, and attribute identifiers using the given sorting and paging.
+    /// </summary>
+    /// <param name="cultureId">The unique identifier of the culture these serialized products belongs to.</param>
+    /// <param name="categoryId">The unique identifier of the category these serialized products belongs to.</param>
+    /// <param name="attributeIds">The unique identifier of the attributes these serialized products have.</param>
+    /// <param name="orderBy">The serialized product property name to sort by.</param>
+    /// <param name="direction">The sorting direction.</param>
+    /// <param name="skip">The number of serialized products that should be skipped.</param>
+    /// <param name="take">The number of serialized products that should be taken.</param>
+    /// <param name="filter">The filtering query.</param>
+    /// <returns>Found serialized products filtered by the culture identifier and category identifier using the given filtering, sorting, and paging.</returns>
+    IEnumerable<SerializedProduct> FilteredByCultureIdAndCategoryIdAndAttributeIdsRange(int cultureId, int categoryId, int[] attributeIds, string orderBy, string direction, int skip, int take);
 
     /// <summary>
     /// Creates the serialized product.

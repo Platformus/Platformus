@@ -17,8 +17,10 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Remove="Views\Shared\Components\Filter\Default.cshtml" />
     <None Remove="Views\Shared\Components\Cart\Default.cshtml" />
     <None Remove="Views\Shared\_Cart.cshtml" />
+    <None Remove="Views\Shared\_Filter.cshtml" />
     <None Remove="Views\Shared\_Position.cshtml" />
   </ItemGroup>
 

@@ -12,6 +12,27 @@ namespace Platformus.ECommerce.Data.Entities
   /// </summary>
   public class SerializedProduct : IEntity
   {
+    public class Attribute
+    {
+      public Feature Feature { get; set; }
+      public string Value { get; set; }
+      public int? Position { get; set; }
+    }
+
+    public class Feature
+    {
+      public string Code { get; set; }
+      public string Name { get; set; }
+      public int? Position { get; set; }
+    }
+
+    public class Photo
+    {
+      public string Filename { get; set; }
+      public bool IsCover { get; set; }
+      public int? Position { get; set; }
+    }
+
     /// <summary>
     /// Gets or sets the culture identifier this serialized product belongs to.
     /// </summary>

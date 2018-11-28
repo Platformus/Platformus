@@ -7,12 +7,13 @@ using Platformus.ECommerce.Events;
 
 namespace Platformus.ECommerce.EventHandlers
 {
-  public class ProductDeletedEventHandler : IProductDeletedEventHandler
+  public class AttributeCreatedEventHandler : IAttributeCreatedEventHandler
   {
     public int Priority => 1000;
 
-    public void HandleEvent(IRequestHandler requestHandler, Product product)
+    public void HandleEvent(IRequestHandler requestHandler, Attribute attribute)
     {
+      new AttributeSerializationManager(requestHandler).SerializeAttribute(attribute);
       requestHandler.GetService<ICache>().RemoveAll();
     }
   }

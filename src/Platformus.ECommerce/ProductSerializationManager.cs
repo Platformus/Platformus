@@ -11,11 +11,11 @@ using Platformus.Globalization.Data.Entities;
 
 namespace Platformus.ECommerce
 {
-  public class SerializationManager
+  public class ProductSerializationManager
   {
     public IRequestHandler requestHandler;
 
-    public SerializationManager(IRequestHandler requestHandler)
+    public ProductSerializationManager(IRequestHandler requestHandler)
     {
       this.requestHandler = requestHandler;
     }
@@ -53,7 +53,7 @@ namespace Platformus.ECommerce
 
     private SerializedProduct SerializeProduct(Culture culture, Product product)
     {
-      List<SerializedAttribute> serializedAttributes = new List<SerializedAttribute>();
+      List<SerializedProduct.Attribute> serializedAttributes = new List<SerializedProduct.Attribute>();
 
       foreach (ProductAttribute productAttribute in this.requestHandler.Storage.GetRepository<IProductAttributeRepository>().FilteredByProductId(product.Id))
       {
@@ -62,7 +62,7 @@ namespace Platformus.ECommerce
         serializedAttributes.Add(this.SerializeAttribute(culture, attribute));
       }
 
-      List<SerializedPhoto> serializedPhotos = new List<SerializedPhoto>();
+      List<SerializedProduct.Photo> serializedPhotos = new List<SerializedProduct.Photo>();
 
       foreach (Photo photo in this.requestHandler.Storage.GetRepository<IPhotoRepository>().FilteredByProductId(product.Id))
         serializedPhotos.Add(this.SerializePhoto(culture, photo));
@@ -90,10 +90,10 @@ namespace Platformus.ECommerce
       return serializedProduct;
     }
 
-    private SerializedAttribute SerializeAttribute(Culture culture, Attribute attribute)
+    private SerializedProduct.Attribute SerializeAttribute(Culture culture, Attribute attribute)
     {
       Feature feature = this.requestHandler.Storage.GetRepository<IFeatureRepository>().WithKey(attribute.FeatureId);
-      SerializedAttribute serializedAttribute = new SerializedAttribute();
+      SerializedProduct.Attribute serializedAttribute = new SerializedProduct.Attribute();
 
       serializedAttribute.Feature = this.SerializeFeature(culture, feature);
       serializedAttribute.Value = this.requestHandler.GetLocalizationValue(attribute.ValueId);
@@ -101,9 +101,9 @@ namespace Platformus.ECommerce
       return serializedAttribute;
     }
 
-    private SerializedFeature SerializeFeature(Culture culture, Feature feature)
+    private SerializedProduct.Feature SerializeFeature(Culture culture, Feature feature)
     {
-      SerializedFeature serializedFeature = new SerializedFeature();
+      SerializedProduct.Feature serializedFeature = new SerializedProduct.Feature();
 
       serializedFeature.Code = feature.Code;
       serializedFeature.Name = this.requestHandler.GetLocalizationValue(feature.NameId);
@@ -111,9 +111,9 @@ namespace Platformus.ECommerce
       return serializedFeature;
     }
 
-    private SerializedPhoto SerializePhoto(Culture culture, Photo photo)
+    private SerializedProduct.Photo SerializePhoto(Culture culture, Photo photo)
     {
-      SerializedPhoto serializedPhoto = new SerializedPhoto();
+      SerializedProduct.Photo serializedPhoto = new SerializedProduct.Photo();
 
       serializedPhoto.Filename = photo.Filename;
       serializedPhoto.IsCover = photo.IsCover;
