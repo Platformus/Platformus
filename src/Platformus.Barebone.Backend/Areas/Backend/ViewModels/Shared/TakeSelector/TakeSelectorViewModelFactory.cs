@@ -19,6 +19,7 @@ namespace Platformus.Barebone.Backend.ViewModels.Shared
 
       return new TakeSelectorViewModel()
       {
+        Take = take,
         TakeOptions = new Option[] {
           new Option(localizer["By 10"], "10"),
           new Option(localizer["By 25"], "25"),

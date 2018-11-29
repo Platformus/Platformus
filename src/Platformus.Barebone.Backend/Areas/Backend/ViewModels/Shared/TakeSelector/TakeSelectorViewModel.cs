@@ -8,7 +8,7 @@ namespace Platformus.Barebone.Backend.ViewModels.Shared
 {
   public class TakeSelectorViewModel : ViewModelBase
   {
-    public int? Take { get; set; }
+    public int Take { get; set; }
     public IEnumerable<Option> TakeOptions { get; set; }
   }
 }
