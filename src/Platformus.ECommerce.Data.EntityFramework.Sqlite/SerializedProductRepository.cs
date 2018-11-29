@@ -71,7 +71,7 @@ namespace Platformus.Domain.Data.EntityFramework.Sqlite
     {
       return this.dbSet.FromSql(
         "SELECT * FROM SerializedProducts WHERE CultureId = {0} AND CategoryId = {1} AND ProductId IN (SELECT ProductId FROM ProductAttributes WHERE AttributeId IN ({2})) ORDER BY " + orderBy + " " + direction + " LIMIT {4} OFFSET {3}",
-        cultureId, categoryId, string.Join(',', attributeIds), skip, take
+        cultureId, categoryId, string.Join(",", attributeIds), skip, take
       );
     }
 

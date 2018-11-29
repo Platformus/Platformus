@@ -5,7 +5,7 @@
     <Copyright>Copyright © 2017 Dmitry Sikorsky</Copyright>
     <Description>The Platformus.Routing extension component.</Description>
     <VersionPrefix>1.0.0-beta5</VersionPrefix>
-    <TargetFramework>netcoreapp2.0</TargetFramework>
+    <TargetFramework>netstandard2.0</TargetFramework>
     <AssemblyName>Platformus.Routing.Backend</AssemblyName>
     <PackageId>Platformus.Routing.Backend</PackageId>
     <PackageIconUrl>http://platformus.net/platformus_nuget_icon.png</PackageIconUrl>

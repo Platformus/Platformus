@@ -14,7 +14,6 @@ using SixLabors.ImageSharp.Formats.Jpeg;
 using SixLabors.ImageSharp.Formats.Png;
 using SixLabors.ImageSharp.PixelFormats;
 using SixLabors.ImageSharp.Processing;
-using SixLabors.ImageSharp.Processing.Transforms;
 
 namespace Platformus.Images.Controllers
 {
@@ -83,7 +82,7 @@ namespace Platformus.Images.Controllers
           return new LoadImageFromUrlResult(Image.Load(inputStream, out IImageFormat imageFormat), imageFormat);
       }
 
-      catch
+      catch (Exception e)
       {
         return null;
       }

@@ -2,6 +2,7 @@
 // Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information.
 
 using System.Collections.Generic;
+using System.Linq;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Routing;
 using Platformus.Barebone;
@@ -49,7 +50,7 @@ namespace Platformus.Domain.Frontend
     {
       ExpandoObjectBuilder expandoObjectBuilder = new ExpandoObjectBuilder();
 
-      foreach (DataSource dataSource in this.requestHandler.Storage.GetRepository<IDataSourceRepository>().FilteredByEndpointId(endpoint.Id))
+      foreach (DataSource dataSource in this.requestHandler.Storage.GetRepository<IDataSourceRepository>().FilteredByEndpointId(endpoint.Id).ToList())
         expandoObjectBuilder.AddProperty(dataSource.Code, this.CreateDataSourceViewModel(dataSource));
 
       return expandoObjectBuilder.Build();

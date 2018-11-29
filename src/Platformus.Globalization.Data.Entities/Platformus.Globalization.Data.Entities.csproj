@@ -5,7 +5,7 @@
     <Copyright>Copyright © 2015 Dmitry Sikorsky</Copyright>
     <Description>The Platformus.Globalization extension component.</Description>
     <VersionPrefix>1.0.0-beta5</VersionPrefix>
-    <TargetFramework>netcoreapp2.0</TargetFramework>
+    <TargetFramework>netstandard2.0</TargetFramework>
     <AssemblyName>Platformus.Globalization.Data.Entities</AssemblyName>
     <PackageId>Platformus.Globalization.Data.Entities</PackageId>
     <PackageIconUrl>http://platformus.net/platformus_nuget_icon.png</PackageIconUrl>
@@ -13,7 +13,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="ExtCore.Data.Entities.Abstractions" Version="3.2.0" />
+    <PackageReference Include="ExtCore.Data.Entities.Abstractions" Version="4.0.0-alpha2" />
   </ItemGroup>
 
 </Project>

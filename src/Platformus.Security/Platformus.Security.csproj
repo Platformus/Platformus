@@ -5,12 +5,17 @@
     <Copyright>Copyright © 2015 Dmitry Sikorsky</Copyright>
     <Description>The Platformus.Security extension component.</Description>
     <VersionPrefix>1.0.0-beta5</VersionPrefix>
-    <TargetFramework>netcoreapp2.0</TargetFramework>
+    <TargetFramework>netstandard2.0</TargetFramework>
     <AssemblyName>Platformus.Security</AssemblyName>
     <PackageId>Platformus.Security</PackageId>
     <PackageIconUrl>http://platformus.net/platformus_nuget_icon.png</PackageIconUrl>
     <PackageProjectUrl>http://platformus.net/</PackageProjectUrl>
   </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.Cookies" Version="2.1.2" />
+    <PackageReference Include="Microsoft.AspNetCore.Cryptography.KeyDerivation" Version="2.1.1" />
+  </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\Platformus.Barebone\Platformus.Barebone.csproj" />
