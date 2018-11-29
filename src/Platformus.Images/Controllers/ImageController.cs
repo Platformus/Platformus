@@ -71,8 +71,8 @@ namespace Platformus.Images.Controllers
 
     private async Task<LoadImageFromUrlResult> LoadImageFromUrlAsync(string url)
     {
-      if (!url.Contains("http://") && !url.Contains("http://"))
-        url = $"{this.Request.Scheme}://{this.Request.Host}" + url;
+      if (!Uri.IsWellFormedUriString(url, UriKind.Absolute))
+        url = $"{this.Request.Scheme}://{this.Request.Host}{url}";
 
       try
       {
