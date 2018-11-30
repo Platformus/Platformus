@@ -12,7 +12,7 @@
   <div class="form__field field">
     <label class="field__label label">@Localizer["Content"]</label>
     <div class="code-editor">
-      <div class="code-editor__widget" id="codeEditor">@Model.Content</div>
+      <div class="code-editor__widget" id="codeEditor" data-model="ace/mode/javascript">@Model.Content</div>
     </div>
     <input id="content" name="content" type="hidden" value="@Model.Content" />
   </div>

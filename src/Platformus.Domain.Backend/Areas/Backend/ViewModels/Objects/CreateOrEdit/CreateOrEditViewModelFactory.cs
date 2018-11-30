@@ -74,7 +74,7 @@ namespace Platformus.Domain.Backend.ViewModels.Objects
               propertyDataType = member.PropertyDataTypeId == null ? null : new
               {
                 javaScriptEditorClassName = this.RequestHandler.Storage.GetRepository<IDataTypeRepository>().WithKey((int)member.PropertyDataTypeId).JavaScriptEditorClassName,
-                dataTypeParameters = this.RequestHandler.Storage.GetRepository<IDataTypeParameterRepository>().FilteredByDataTypeId((int)member.PropertyDataTypeId).Select(
+                dataTypeParameters = this.RequestHandler.Storage.GetRepository<IDataTypeParameterRepository>().FilteredByDataTypeId((int)member.PropertyDataTypeId).ToList().Select(
                   dtp => new { code = dtp.Code, value = this.RequestHandler.Storage.GetRepository<IDataTypeParameterValueRepository>().WithDataTypeParameterIdAndMemberId(dtp.Id, member.Id)?.Value }
                 )
               },

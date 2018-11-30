@@ -20,7 +20,7 @@
   </div>
 </form>
 <script>
-  var membersByTabs = @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(this.Model.MembersByTabs));
+  var membersByTabs = @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(this.Model.MembersByTabs).Replace("<script>", "<scr\" + \"ipt>").Replace("</script>", "</scr\" + \"ipt>"));
 </script>
 <script>
   (function (platformus) {

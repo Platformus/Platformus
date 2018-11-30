@@ -25,6 +25,7 @@
       "Areas/Backend/Scripts/MemberEditors/boolean_flag_member_editor.js",
       "Areas/Backend/Scripts/MemberEditors/date_member_editor.js",
       "Areas/Backend/Scripts/MemberEditors/image_member_editor.js",
+      "Areas/Backend/Scripts/MemberEditors/source_code_member_editor.js",
       "Areas/Backend/Scripts/MemberEditors/relation_member_editor.js",
       "Areas/Backend/Scripts/DataTypeParameterEditors/base_data_type_parameter_editor.js",
       "Areas/Backend/Scripts/DataTypeParameterEditors/data_type_parameter_editors.js",

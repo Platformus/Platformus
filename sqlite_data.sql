@@ -76,15 +76,17 @@ INSERT INTO "DataTypes" VALUES (3,'string','html','Html',3);
 INSERT INTO "DataTypes" VALUES (4,'integer','integerNumber','Integer number',4);
 INSERT INTO "DataTypes" VALUES (5,'decimal','decimalNumber','Decimal number',5);
 INSERT INTO "DataTypes" VALUES (6,'integer','booleanFlag','Boolean flag',6);
-INSERT INTO "DataTypes" VALUES (7,'string','image','Image',7);
-INSERT INTO "DataTypes" VALUES (8,'datetime','date','Date',8);
+INSERT INTO "DataTypes" VALUES (7,'datetime','date','Date',7);
+INSERT INTO "DataTypes" VALUES (8,'string','image','Image',8);
+INSERT INTO "DataTypes" VALUES (9,'string','sourceCode','Source code',9);
 INSERT INTO "DataTypeParameters" VALUES (1,1,'checkbox','IsRequired','Is required');
 INSERT INTO "DataTypeParameters" VALUES (2,1,'numericTextBox','MaxLength','Max length');
 INSERT INTO "DataTypeParameters" VALUES (3,2,'checkbox','IsRequired','Is required');
 INSERT INTO "DataTypeParameters" VALUES (4,2,'numericTextBox','MaxLength','Max length');
-INSERT INTO "DataTypeParameters" VALUES (5,7,'numericTextBox','Width','Width');
-INSERT INTO "DataTypeParameters" VALUES (6,7,'numericTextBox','Height','Height');
-INSERT INTO "DataTypeParameters" VALUES (7,8,'checkbox','IsRequired','Is required');
+INSERT INTO "DataTypeParameters" VALUES (5,7,'checkbox','IsRequired','Is required');
+INSERT INTO "DataTypeParameters" VALUES (6,8,'numericTextBox','Width','Width');
+INSERT INTO "DataTypeParameters" VALUES (7,8,'numericTextBox','Height','Height');
+INSERT INTO "DataTypeParameters" VALUES (8,9,'textBox','Mode','Mode');
 
 --
 -- Extension: Platformus.Forms

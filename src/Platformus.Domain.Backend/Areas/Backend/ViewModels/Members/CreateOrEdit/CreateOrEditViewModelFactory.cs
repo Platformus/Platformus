@@ -102,7 +102,7 @@ namespace Platformus.Domain.Backend.ViewModels.Members
         {
           id = dt.Id,
           storageDataType = dt.StorageDataType,
-          dataTypeParameters = this.RequestHandler.Storage.GetRepository<IDataTypeParameterRepository>().FilteredByDataTypeId(dt.Id).Select(
+          dataTypeParameters = this.RequestHandler.Storage.GetRepository<IDataTypeParameterRepository>().FilteredByDataTypeId(dt.Id).ToList().Select(
             dtp => new
             {
               id = dtp.Id,
