@@ -47,10 +47,10 @@ namespace Platformus.Globalization.Backend.Controllers
     private Dictionary GetOrCreateDictionaryForProperty(IEntity entity, PropertyInfo propertyInfo)
     {
       PropertyInfo dictionaryIdPropertyInfo = entity.GetType().GetProperty(propertyInfo.Name + "Id");
-      int dictionaryId = (int)dictionaryIdPropertyInfo.GetValue(entity);
+      int? dictionaryId = (int?)dictionaryIdPropertyInfo.GetValue(entity);
       Dictionary dictionary = null;
 
-      if (dictionaryId == 0)
+      if (dictionaryId == null || dictionaryId == 0)
       {
         dictionary = new Dictionary();
         this.Storage.GetRepository<IDictionaryRepository>().Create(dictionary);
@@ -58,7 +58,7 @@ namespace Platformus.Globalization.Backend.Controllers
         dictionaryIdPropertyInfo.SetValue(entity, dictionary.Id);
       }
 
-      else dictionary = this.Storage.GetRepository<IDictionaryRepository>().WithKey(dictionaryId);
+      else dictionary = this.Storage.GetRepository<IDictionaryRepository>().WithKey((int)dictionaryId);
 
       return dictionary;
     }
