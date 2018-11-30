@@ -25,6 +25,7 @@ namespace Platformus.Forms
     {
       string smtpServer = this.configurationRoot["Email:SmtpServer"];
       string smtpPort = this.configurationRoot["Email:SmtpPort"];
+      string smtpUseSsl = this.configurationRoot["Email:SmtpUseSsl"];
       string smtpLogin = this.configurationRoot["Email:SmtpLogin"];
       string smtpPassword = this.configurationRoot["Email:SmtpPassword"];
       string smtpSenderEmail = this.configurationRoot["Email:SmtpSenderEmail"];
@@ -53,7 +54,7 @@ namespace Platformus.Forms
       {
         using (SmtpClient smtpClient = new SmtpClient())
         {
-          smtpClient.Connect(smtpServer, int.Parse(smtpPort), false);
+          smtpClient.Connect(smtpServer, int.Parse(smtpPort), string.Equals(smtpUseSsl, "yes", StringComparison.OrdinalIgnoreCase));
           smtpClient.AuthenticationMechanisms.Remove("XOAUTH2");
           smtpClient.Authenticate(smtpLogin, smtpPassword);
           smtpClient.Send(message);
