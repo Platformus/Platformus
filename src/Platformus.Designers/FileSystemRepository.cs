@@ -11,6 +11,9 @@ namespace Platformus.Designers
   {
     public static IEnumerable<DirectoryInfo> GetDirectories(string path)
     {
+      if (!Directory.Exists(path))
+        return new DirectoryInfo[] { };
+
       return Directory.GetDirectories(path).Select(p => new DirectoryInfo(p));
     }
 
@@ -42,6 +45,9 @@ namespace Platformus.Designers
 
     private static string[] GetFilteredFiles(string path, string searchPattern, string filter)
     {
+      if (!Directory.Exists(path))
+        return new string[] { };
+
       string[] paths = Directory.GetFiles(path, searchPattern);
 
       if (!string.IsNullOrEmpty(filter))

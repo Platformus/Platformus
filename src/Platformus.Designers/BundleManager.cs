@@ -29,7 +29,12 @@ namespace Platformus.Designers
         UglifyResult result = outputFile.EndsWith(".css") ? Uglify.Css(input) : outputFile.EndsWith(".js") ? Uglify.Js(input) : default(UglifyResult);
 
         if (!result.HasErrors)
-          File.WriteAllText(Path.Combine(PathManager.GetContentRootPath(requestHandler), outputFile), result.Code);
+        {
+          string outputFilepath = PathManager.Combine(PathManager.GetContentRootPath(requestHandler), outputFile);
+
+          PathManager.EnsureFilepathExists(outputFilepath);
+          File.WriteAllText(outputFilepath, result.Code);
+        }
       }
 
       catch { }
@@ -40,7 +45,7 @@ namespace Platformus.Designers
       StringBuilder result = new StringBuilder();
 
       foreach (string file in files)
-        result.AppendLine(File.ReadAllText(Path.Combine(PathManager.GetContentRootPath(requestHandler), file)));
+        result.AppendLine(File.ReadAllText(PathManager.Combine(PathManager.GetContentRootPath(requestHandler), file)));
 
       return result.ToString();
     }
