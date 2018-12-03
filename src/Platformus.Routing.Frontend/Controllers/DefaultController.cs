@@ -4,10 +4,12 @@
 using System.Linq;
 using ExtCore.Data.Abstractions;
 using ExtCore.Infrastructure;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Platformus.Routing.Frontend.Controllers
 {
+  [AllowAnonymous]
   public class DefaultController : Barebone.Frontend.Controllers.ControllerBase
   {
     public DefaultController(IStorage storage)
