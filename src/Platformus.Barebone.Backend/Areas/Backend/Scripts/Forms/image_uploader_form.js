@@ -2,7 +2,7 @@
 // Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information.
 
 (function (platformus) {
-  var _destinationImageBaseUrl = "/images/";
+  var _destinationBaseUrl = null;
   var _destinationWidth = null;
   var _destinationHeight = null;
   var _callback = null;
@@ -13,8 +13,6 @@
   var _mouseOverGrip = false;
   var _x = 0;
   var _y = 0;
-  var _width = 0;
-  var _height = 0;
   var _frameX = 0;
   var _frameY = 0;
   var _frameWidth = 0;
@@ -22,8 +20,8 @@
 
   platformus.forms = platformus.forms || {};
   platformus.forms.imageUploaderForm = {};
-  platformus.forms.imageUploaderForm.show = function (destinationImageBaseUrl, width, height, callback) {
-    _destinationImageBaseUrl = destinationImageBaseUrl;
+  platformus.forms.imageUploaderForm.show = function (destinationBaseUrl, width, height, callback) {
+    _destinationBaseUrl = destinationBaseUrl || "/images/";
     _destinationWidth = width;
     _destinationHeight = height;
     _callback = callback;
@@ -148,7 +146,7 @@
         sourceY: y,
         sourceWidth: width,
         sourceHeight: height,
-        destinationImageBaseUrl: _destinationImageBaseUrl,
+        destinationBaseUrl: _destinationBaseUrl,
         destinationWidth: _destinationWidth == null ? width : _destinationWidth,
         destinationHeight: _destinationHeight == null ? height : _destinationHeight
       },

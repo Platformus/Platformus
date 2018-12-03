@@ -5,9 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
-using System.Text;
 using Microsoft.AspNetCore.Authentication;
-using Microsoft.AspNetCore.Authentication.Cookies;
 using Platformus.Barebone;
 using Platformus.Security.Data.Abstractions;
 using Platformus.Security.Data.Entities;
@@ -230,19 +228,19 @@ namespace Platformus.Security
       return new ValidateResult(user: this.userRepository.WithKey(credential.UserId), success: true);
     }
 
-    public async void SignIn(User user, bool isPersistent = false)
+    public async void SignIn(User user, string authenticationScheme, bool isPersistent = false)
     {
-      ClaimsIdentity identity = new ClaimsIdentity(this.GetUserClaims(user), CookieAuthenticationDefaults.AuthenticationScheme);
+      ClaimsIdentity identity = new ClaimsIdentity(this.GetUserClaims(user), authenticationScheme);
       ClaimsPrincipal principal = new ClaimsPrincipal(identity);
 
       await this.requestHandler.HttpContext.SignInAsync(
-        CookieAuthenticationDefaults.AuthenticationScheme, principal, new AuthenticationProperties() { IsPersistent = isPersistent }
+        authenticationScheme, principal, new AuthenticationProperties() { IsPersistent = isPersistent }
       );
     }
 
-    public async void SignOut()
+    public async void SignOut(string authenticationScheme)
     {
-      await this.requestHandler.HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
+      await this.requestHandler.HttpContext.SignOutAsync(authenticationScheme);
     }
 
     public int GetCurrentUserId()

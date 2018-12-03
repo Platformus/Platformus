@@ -13,8 +13,8 @@ namespace Platformus.Security.Backend.Actions
 
     public void Execute(IServiceCollection serviceCollection, IServiceProvider serviceProvider)
     {
-      serviceCollection.AddAuthentication(BackendCookieAuthenticationDefaults.AuthenticationScheme)
-        .AddCookie(options =>
+      serviceCollection.AddAuthentication()
+        .AddCookie(BackendCookieAuthenticationDefaults.AuthenticationScheme, options =>
           {
             options.AccessDeniedPath = "/backend/account/accessdenied";
             options.LoginPath = "/backend/account/signin";

@@ -7,10 +7,11 @@ using Microsoft.AspNetCore.Razor.TagHelpers;
 
 namespace Platformus.Barebone.Backend
 {
-  [HtmlTargetElement("image-uploader-field", Attributes = ForAttributeName)]
+  [HtmlTargetElement("image-uploader-field", Attributes = ForAttributeName + "," + DestinationBaseUrlAttributeName + "," + WidthAttributeName + "," + HeightAttributeName)]
   public class ImageUploaderFieldTagHelper : TagHelper
   {
     private const string ForAttributeName = "asp-for";
+    private const string DestinationBaseUrlAttributeName = "asp-destination-base-url";
     private const string WidthAttributeName = "asp-width";
     private const string HeightAttributeName = "asp-height";
 
@@ -20,6 +21,9 @@ namespace Platformus.Barebone.Backend
 
     [HtmlAttributeName(ForAttributeName)] 
     public ModelExpression For { get; set; }
+
+    [HtmlAttributeName(DestinationBaseUrlAttributeName)]
+    public string DestinationBaseUrl { get; set; }
 
     [HtmlAttributeName(WidthAttributeName)]
     public int? Width { get; set; }
@@ -44,7 +48,7 @@ namespace Platformus.Barebone.Backend
       tb.AddCssClass("form__field field");
       tb.InnerHtml.Clear();
       tb.InnerHtml.AppendHtml(new FieldGenerator().GenerateLabel(this.For));
-      tb.InnerHtml.AppendHtml(new ImageUploaderGenerator().GenerateImageUploader(this.ViewContext, this.For, attributes, this.Width, this.Height, "field__image-uploader"));
+      tb.InnerHtml.AppendHtml(new ImageUploaderGenerator().GenerateImageUploader(this.ViewContext, this.For, attributes, this.DestinationBaseUrl, this.Width, this.Height, "field__image-uploader"));
       return tb;
     }
   }

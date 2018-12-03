@@ -30,7 +30,7 @@
   }
 
   function createImageUploader(member, localization) {
-    var imageUploader = $("<div>").addClass("image-uploader");
+    var imageUploader = $("<div>").addClass("image-uploader").attr("data-destination-base-url", "/images/objects/");
     var width = platformus.memberEditors.base.getDataTypeParameterValue(member, "Width", null);
     var height = platformus.memberEditors.base.getDataTypeParameterValue(member, "Height", null);
 

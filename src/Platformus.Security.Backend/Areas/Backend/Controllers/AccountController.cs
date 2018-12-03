@@ -82,7 +82,7 @@ namespace Platformus.Security.Backend.Controllers
 
         if (validateResult.Success)
         {
-          userManager.SignIn(validateResult.User, signIn.RememberMe);
+          userManager.SignIn(validateResult.User, BackendCookieAuthenticationDefaults.AuthenticationScheme, signIn.RememberMe);
 
           if (!string.IsNullOrEmpty(signIn.Next))
             return this.Redirect(signIn.Next);
@@ -100,7 +100,7 @@ namespace Platformus.Security.Backend.Controllers
     [AllowAnonymous]
     public IActionResult SignOut()
     {
-      new UserManager(this).SignOut();
+      new UserManager(this).SignOut(BackendCookieAuthenticationDefaults.AuthenticationScheme);
       return this.RedirectToAction("SignIn");
     }
 

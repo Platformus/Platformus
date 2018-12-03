@@ -9,7 +9,7 @@ namespace Platformus.Barebone.Backend
 {
   public class ImageUploaderGenerator : GeneratorBase
   {
-    public TagBuilder GenerateImageUploader(ViewContext viewContext, ModelExpression modelExpression, TagHelperAttributeList attributes, int? width, int? height, string additionalCssClass = null)
+    public TagBuilder GenerateImageUploader(ViewContext viewContext, ModelExpression modelExpression, TagHelperAttributeList attributes, string destinationBaseUrl, int? width, int? height, string additionalCssClass = null)
     {
       TagBuilder tb = new TagBuilder("div");
 
@@ -18,6 +18,9 @@ namespace Platformus.Barebone.Backend
 
       tb.AddCssClass("image-uploader");
       tb.MergeAttribute("id", this.GetIdentity(modelExpression));
+
+      if (!string.IsNullOrEmpty(destinationBaseUrl))
+        tb.MergeAttribute("data-destination-base-url", destinationBaseUrl);
 
       if (width != null && height != null)
       {

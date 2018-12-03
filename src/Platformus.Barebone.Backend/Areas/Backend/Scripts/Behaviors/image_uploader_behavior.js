@@ -21,7 +21,7 @@
     var image = imageUploader.find("img");
 
     new platformus.forms.imageUploaderForm.show(
-      "/images/objects/",
+      imageUploader.data("destinationBaseUrl"),
       imageUploader.data("width"),
       imageUploader.data("height"),
       function (imageUrl) {

@@ -4,12 +4,12 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Threading.Tasks;
 using ExtCore.Data.Abstractions;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Net.Http.Headers;
 using SixLabors.ImageSharp;
 using SixLabors.ImageSharp.Formats;
 using SixLabors.ImageSharp.Formats.Jpeg;
@@ -39,54 +39,44 @@ namespace Platformus.Barebone.Backend.Controllers
     [HttpPost]
     public async Task<IActionResult> Index(IList<IFormFile> files)
     {
-      string filename = string.Empty;
-
       foreach (IFormFile source in files)
-      {
-        filename = ContentDispositionHeaderValue.Parse(source.ContentDisposition).FileName.ToString().Trim('"');
-        filename = this.EnsureCorrectFilename(filename);
-
-        using (FileStream output = System.IO.File.Create(this.GetTempFilepath(filename)))
+        using (FileStream output = System.IO.File.Create(this.GetTempFilepath(source.FileName)))
           await source.CopyToAsync(output);
-      }
 
-      return this.Content("filename=" + filename);
+      return this.Content("filename=" + string.Join(",", files.Select(f => f.FileName)));
     }
 
     [HttpGet]
-    public ActionResult GetCroppedImageUrl(string sourceImageUrl, int sourceX, int sourceY, int sourceWidth, int sourceHeight, string destinationImageBaseUrl, int destinationWidth, int destinationHeight)
+    public ActionResult GetCroppedImageUrl(string sourceImageUrl, int sourceX, int sourceY, int sourceWidth, int sourceHeight, string destinationBaseUrl, int destinationWidth, int destinationHeight)
     {
       string filename = sourceImageUrl.Substring(sourceImageUrl.LastIndexOf("/") + 1);
+      string tempFilepath = this.GetTempFilepath(filename);
+      string destinationFilepath = this.GetFilepath(destinationBaseUrl, filename);
 
-      using (Image<Rgba32> image = this.LoadImageFromFile(this.GetTempFilepath(filename), out IImageFormat imageFormat))
+      using (Image<Rgba32> image = this.LoadImageFromFile(tempFilepath, out IImageFormat imageFormat))
       {
         if (image.Width == destinationWidth && image.Height == destinationHeight)
-          return this.Content(sourceImageUrl);
+          System.IO.File.Move(tempFilepath, destinationFilepath);
 
-        image.Mutate(
-          i => i.Crop(new Rectangle(sourceX, sourceY, sourceWidth, sourceHeight)).Resize(destinationWidth, destinationHeight)
-        );
-        
-        if (string.Equals(imageFormat.Name, "Jpeg", StringComparison.OrdinalIgnoreCase))
-          image.Save(this.GetFilepath(destinationImageBaseUrl, filename), new JpegEncoder() { Quality = 80 });
+        else
+        {
+          image.Mutate(
+            i => i.Crop(new Rectangle(sourceX, sourceY, sourceWidth, sourceHeight)).Resize(destinationWidth, destinationHeight)
+          );
 
-        else image.Save(this.GetFilepath(destinationImageBaseUrl, filename));
+          if (string.Equals(imageFormat.Name, "Jpeg", StringComparison.OrdinalIgnoreCase))
+            image.Save(destinationFilepath, new JpegEncoder() { Quality = 80 });
 
-        return this.Content(destinationImageBaseUrl + filename);
+          else image.Save(destinationFilepath);
+        }
+
+        return this.Content(destinationBaseUrl + filename);
       }
     }
 
     private Image<Rgba32> LoadImageFromFile(string filepath, out IImageFormat imageFormat)
     {
       return Image.Load(filepath, out imageFormat);
-    }
-
-    private string EnsureCorrectFilename(string filename)
-    {
-      if (filename.Contains(Path.DirectorySeparatorChar.ToString()))
-        filename = filename.Substring(filename.LastIndexOf(Path.DirectorySeparatorChar) + 1);
-
-      return filename;
     }
 
     private string GetTempFilepath(string filename)
