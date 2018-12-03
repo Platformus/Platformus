@@ -56,7 +56,12 @@ namespace Platformus.Barebone.Backend.Controllers
       using (Image<Rgba32> image = this.LoadImageFromFile(tempFilepath, out IImageFormat imageFormat))
       {
         if (image.Width == destinationWidth && image.Height == destinationHeight)
+        {
+          if (System.IO.File.Exists(destinationFilepath))
+            System.IO.File.Delete(destinationFilepath);
+
           System.IO.File.Move(tempFilepath, destinationFilepath);
+        }
 
         else
         {

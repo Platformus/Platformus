@@ -198,6 +198,10 @@ namespace Platformus.Domain.Backend.Controllers
       try
       {
         Directory.CreateDirectory(Path.GetDirectoryName(destinationImageFilepath));
+
+        if (System.IO.File.Exists(destinationImageFilepath))
+          System.IO.File.Delete(destinationImageFilepath);
+
         System.IO.File.Move(sourceImageFilepath, destinationImageFilepath);
       }
 
