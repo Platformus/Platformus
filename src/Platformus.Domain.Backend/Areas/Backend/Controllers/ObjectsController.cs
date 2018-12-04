@@ -186,6 +186,9 @@ namespace Platformus.Domain.Backend.Controllers
 
     private string MoveImageToValidObjectPath(int objectId, string imageUrl)
     {
+      if (string.IsNullOrEmpty(imageUrl))
+        return null;
+
       imageUrl = imageUrl.Replace('/', '\\');
 
       string sourceImageFilepath = this.hostingEnvironment.WebRootPath + imageUrl.Replace('\\', Path.DirectorySeparatorChar);
