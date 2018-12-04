@@ -8,6 +8,7 @@ namespace Platformus.Globalization.Frontend.ViewModels.Shared
   public class CulturesViewModel : ViewModelBase
   {
     public IEnumerable<CultureViewModel> Cultures { get; set; }
+    public string PartialViewName { get; set; }
     public string AdditionalCssClass { get; set; }
   }
 }

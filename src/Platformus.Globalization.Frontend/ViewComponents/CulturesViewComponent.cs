@@ -16,16 +16,16 @@ namespace Platformus.Globalization.Frontend.ViewComponents
     {
     }
 
-    public async Task<IViewComponentResult> InvokeAsync(string additionalCssClass)
+    public async Task<IViewComponentResult> InvokeAsync(string partialViewName = null, string additionalCssClass = null)
     {
       return this.GetService<ICache>().GetCulturesViewComponentResultWithDefaultValue(
-        additionalCssClass, () => this.GetViewComponentResult(additionalCssClass)
+        additionalCssClass, () => this.GetViewComponentResult(partialViewName, additionalCssClass)
       );
     }
 
-    private IViewComponentResult GetViewComponentResult(string additionalCssClass)
+    private IViewComponentResult GetViewComponentResult(string partialViewName = null, string additionalCssClass = null)
     {
-      return this.View(new CulturesViewModelFactory(this).Create(additionalCssClass));
+      return this.View(new CulturesViewModelFactory(this).Create(partialViewName, additionalCssClass));
     }
   }
 }

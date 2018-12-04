@@ -17,7 +17,7 @@ namespace Platformus.Menus.Frontend.ViewModels.Shared
     {
     }
 
-    public MenuViewModel Create(SerializedMenu serializedMenu, string additionalCssClass)
+    public MenuViewModel Create(SerializedMenu serializedMenu, string partialViewName, string additionalCssClass)
     {
       IEnumerable<SerializedMenuItem> serializedMenuItems = new SerializedMenuItem[] { };
 
@@ -29,6 +29,7 @@ namespace Platformus.Menus.Frontend.ViewModels.Shared
         MenuItems = serializedMenuItems.OrderBy(cmi => cmi.Position).Select(
           smi => new MenuItemViewModelFactory(this.RequestHandler).Create(smi)
         ).ToList(),
+        PartialViewName = partialViewName ?? "_Menu",
         AdditionalCssClass = additionalCssClass
       };
     }

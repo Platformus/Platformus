@@ -13,13 +13,14 @@ namespace Platformus.Globalization.Frontend.ViewModels.Shared
     {
     }
 
-    public CulturesViewModel Create(string additionalCssClass)
+    public CulturesViewModel Create(string partialViewName, string additionalCssClass)
     {
       return new CulturesViewModel()
       {
         Cultures = this.RequestHandler.GetService<ICultureManager>().GetNotNeutralCultures().Select(
           c => new CultureViewModelFactory(this.RequestHandler).Create(c)
         ).ToList(),
+        PartialViewName = partialViewName ?? "_Cultures",
         AdditionalCssClass = additionalCssClass
       };
     }

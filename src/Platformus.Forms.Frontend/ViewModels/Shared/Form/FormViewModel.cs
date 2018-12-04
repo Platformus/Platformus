@@ -12,6 +12,7 @@ namespace Platformus.Forms.Frontend.ViewModels.Shared
     public string Name { get; set; }
     public string SubmitButtonTitle { get; set; }
     public IEnumerable<FieldViewModel> Fields { get; set; }
+    public string PartialViewName { get; set; }
     public string AdditionalCssClass { get; set; }
   }
 }
