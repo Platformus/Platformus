@@ -93,7 +93,7 @@ namespace Platformus
     public string Key { get; set; }
     public string Value { get; set; }
     public ModelValidationState ValidationState { get; set; }
-    public IEnumerable<string> Errors { get; set; }
+    //public IEnumerable<string> Errors { get; set; }
   }
 
   public class NoCultureInfoResolver : DefaultContractResolver

@@ -128,10 +128,11 @@ namespace Platformus.Globalization.Backend.Controllers
 
     private ViewModelBase GetViewModelFromActionExecutingContext(ActionExecutingContext actionExecutingContext)
     {
-      if (!actionExecutingContext.ActionArguments.ContainsKey("createOrEdit"))
-        return null;
+      foreach (KeyValuePair<string, object> actionArgument in actionExecutingContext.ActionArguments)
+        if (actionArgument.Value is ViewModelBase)
+          return actionArgument.Value as ViewModelBase;
 
-      return actionExecutingContext.ActionArguments["createOrEdit"] as ViewModelBase;
+      return null;
     }
 
     private IEnumerable<PropertyInfo> GetMultilingualPropertiesFromViewModel(ViewModelBase viewModel)
