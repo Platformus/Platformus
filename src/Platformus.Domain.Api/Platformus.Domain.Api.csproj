@@ -13,8 +13,8 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="ExtCore.Data.Abstractions" Version="4.0.0-alpha2" />
-    <PackageReference Include="ExtCore.Infrastructure" Version="4.0.0-alpha2" />
+    <PackageReference Include="ExtCore.Data.Abstractions" Version="4.0.0-alpha3" />
+    <PackageReference Include="ExtCore.Infrastructure" Version="4.0.0-alpha3" />
   </ItemGroup>
 
   <ItemGroup>
