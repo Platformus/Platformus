@@ -1,11 +1,5 @@
 ﻿[
   {
-    "outputFileName": "wwwroot/areas/backend/css/platformus.file_manager.min.css",
-    "inputFiles": [
-      "Areas/Backend/Styles/file_selector_pop_up_form.css"
-    ]
-  },
-  {
     "outputFileName": "wwwroot/areas/backend/js/platformus.file_manager.min.js",
     "inputFiles": [
       "Areas/Backend/Scripts/ui.js",

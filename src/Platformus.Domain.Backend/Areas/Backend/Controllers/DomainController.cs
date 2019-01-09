@@ -36,22 +36,22 @@ namespace Platformus.Domain.Backend.Controllers
     public ActionResult GetClassName(int? classId)
     {
       if (classId == null)
-        return this.Content("<div class=\"class-parameter-editor__name\">Not selected</div>");
+        return this.Content("<div class=\"item-selector__key\">Not selected</div>");
 
       Class @class = this.Storage.GetRepository<IClassRepository>().WithKey((int)classId);
 
-      return this.Content(string.Format("<div class=\"class-parameter-editor__name\">{0}</div>", @class.Name));
+      return this.Content(string.Format("<div class=\"item-selector__key\">{0}</div>", @class.Name));
     }
 
     public ActionResult GetMemberName(int? memberId)
     {
       if (memberId == null)
-        return this.Content("<div class=\"class-parameter-editor__name\">Not selected</div>");
+        return this.Content("<div class=\"item-selector__key\">Not selected</div>");
 
       Member member = this.Storage.GetRepository<IMemberRepository>().WithKey((int)memberId);
       Class @class = this.Storage.GetRepository<IClassRepository>().WithKey(member.ClassId);
 
-      return this.Content(string.Format("<div class=\"member-parameter-editor__name\">{0} > {1}</div>", @class.Name, member.Name));
+      return this.Content(string.Format("<div class=\"item-selector__key\">{0} > {1}</div>", @class.Name, member.Name));
     }
 
     public ActionResult GetObjectDisplayValues(string objectIds)
@@ -65,7 +65,7 @@ namespace Platformus.Domain.Backend.Controllers
           Object @object = this.Storage.GetRepository<IObjectRepository>().WithKey(int.Parse(objectId));
 
           objectDisplayValues.AppendFormat(
-            "<div class=\"relation-member-editor__display-value\">{0}</div>",
+            "<div class=\"item-selector__key\">{0}</div>",
             string.Join(" ", new ObjectManager(this).GetDisplayProperties(@object))
           );
         }

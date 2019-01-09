@@ -10,7 +10,7 @@
   };
 
   function createField(parameter) {
-    var field = $("<div>").addClass("category-parameter-editor").addClass("form__field").addClass("field");
+    var field = $("<div>").addClass("item-selector").addClass("form__field").addClass("field");
 
     platformus.controls.label.create({ text: parameter.name }).appendTo(field);
     createInput(parameter).appendTo(field);
@@ -42,10 +42,10 @@
 
   function createNames(parameter) {
     var identity = "parameter" + parameter.code;
-    var names = $("<div>").addClass("category-parameter-editor__names").attr("id", identity + "Names");
+    var names = $("<div>").addClass("item-selector__keys").attr("id", identity + "Names");
 
     if (parameter.isRequired) {
-      names.addClass("category-parameter-editor__names--required");
+      names.addClass("item-selector__keys--required");
     }
 
     return names;

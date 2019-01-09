@@ -1,21 +1,21 @@
-﻿/* Copyright © 2017 Dmitry Sikorsky. All rights reserved. */
+﻿/* Copyright © 2019 Dmitry Sikorsky. All rights reserved. */
 /* Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information. */
 
-.member-parameter-editor {
+.item-selector {
 }
 
-.member-parameter-editor__names {
+.item-selector__keys {
   background: #f0f0f0;
   width: 450px;
   max-height: 300px;
   overflow: auto;
 }
 
-.member-parameter-editor__names--required {
+.item-selector__keys--required {
   border-right: 5px solid #ff4100;
 }
 
-.member-parameter-editor__name {
+.item-selector__key {
   display: block;
   padding: 5px 10px;
 }

@@ -14,7 +14,7 @@
   };
 
   function createField(member) {
-    var field = $("<div>").addClass("relation-member-editor").addClass("form__field").addClass("field");
+    var field = $("<div>").addClass("item-selector").addClass("form__field").addClass("field");
 
     platformus.controls.label.create({ text: member.name }).appendTo(field);
     createInput(member).appendTo(field);
@@ -38,7 +38,7 @@
   function createDisplayValues(member) {
     var identity = "relationMember" + member.id;
 
-    return $("<div>").addClass("relation-member-editor__display-values").attr("id", identity + "DisplayValues");
+    return $("<div>").addClass("item-selector__keys").attr("id", identity + "DisplayValues");
   }
 
   function createButtons(member) {

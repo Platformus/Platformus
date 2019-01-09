@@ -1,16 +1,5 @@
 ﻿[
   {
-    "outputFileName": "wwwroot/areas/backend/css/platformus.domain.min.css",
-    "inputFiles": [
-      "Areas/Backend/Styles/MemberEditors/relation_member_editor.css",
-      "Areas/Backend/Styles/class_selector_pop_up_form.css",
-      "Areas/Backend/Styles/member_selector_pop_up_form.css",
-      "Areas/Backend/Styles/object_selector_pop_up_form.css",
-      "Areas/Backend/Styles/ParameterEditors/class_parameter_editor.css",
-      "Areas/Backend/Styles/ParameterEditors/member_parameter_editor.css"
-    ]
-  },
-  {
     "outputFileName": "wwwroot/areas/backend/js/platformus.domain.min.js",
     "inputFiles": [
       "Areas/Backend/Scripts/ui.js",

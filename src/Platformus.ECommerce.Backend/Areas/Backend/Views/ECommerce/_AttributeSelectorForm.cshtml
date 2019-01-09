@@ -6,7 +6,7 @@
   @Localizer["Attribute Selector"]
 </div>
 <div class="pop-up-form__content">
-  <div class="attribute-selector-pop-up-form__attributes">
+  <div class="item-selector-pop-up-form__items">
     <table class="table">
       <tr class="table__row">
         @foreach (var gridColumn in this.Model.GridColumns)
@@ -16,9 +16,9 @@
       </tr>
       @foreach (var attribute in this.Model.Attributes)
       {
-        <tr class="table__row @(attribute.Id == this.Model.AttributeId ? "table__row--selected" : null)" data-attribute-id="@attribute.Id">
-          <td class="attribute-selector-pop-up-form__cell table__cell">@attribute.Feature.Name</td>
-          <td class="attribute-selector-pop-up-form__cell table__cell">@attribute.Value</td>
+        <tr class="table__row @(attribute.Id == this.Model.AttributeId ? "table__row--selected" : null)" data-item-value="@attribute.Id">
+          <td class="item-selector-pop-up-form__cell table__cell">@attribute.Feature.Name</td>
+          <td class="item-selector-pop-up-form__cell table__cell">@attribute.Value</td>
         </tr>
       }
     </table>

@@ -3,11 +3,7 @@
     "outputFileName": "wwwroot/areas/backend/css/platformus.ecommerce.min.css",
     "inputFiles": [
       "Areas/Backend/Styles/photo.css",
-      "Areas/Backend/Styles/photos.css",
-      "Areas/Backend/Styles/category_selector_pop_up_form.css",
-      "Areas/Backend/Styles/product_selector_pop_up_form.css",
-      "Areas/Backend/Styles/attribute_selector_pop_up_form.css",
-      "Areas/Backend/Styles/ParameterEditors/category_parameter_editor.css"
+      "Areas/Backend/Styles/photos.css"
     ]
   },
   {

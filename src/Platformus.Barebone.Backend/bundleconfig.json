@@ -10,8 +10,8 @@
       "Areas/Backend/Styles/text_box.css",
       "Areas/Backend/Styles/text_area.css",
       "Areas/Backend/Styles/checkbox.css",
-      "Areas/Backend/Styles/radio-button.css",
-      "Areas/Backend/Styles/radio-button-list.css",
+      "Areas/Backend/Styles/radio_button.css",
+      "Areas/Backend/Styles/radio_button_list.css",
       "Areas/Backend/Styles/drop_down_list.css",
       "Areas/Backend/Styles/file_uploader.css",
       "Areas/Backend/Styles/image_uploader.css",
@@ -21,6 +21,7 @@
       "Areas/Backend/Styles/field.css",
       "Areas/Backend/Styles/button.css",
       "Areas/Backend/Styles/buttons.css",
+      "Areas/Backend/Styles/item_selector.css",
       "Areas/Backend/Styles/form.css",
       "Areas/Backend/Styles/drag_and_drop_area.css",
       "Areas/Backend/Styles/menu.css",
@@ -33,6 +34,7 @@
       "Areas/Backend/Styles/master_detail.css",
       "Areas/Backend/Styles/pop_up_modal.css",
       "Areas/Backend/Styles/pop_up_form.css",
+      "Areas/Backend/Styles/item_selector_pop_up_form.css",
       "Areas/Backend/Styles/image_uploader_pop_up_form.css"
     ]
   },
@@ -72,6 +74,7 @@
       "Areas/Backend/Scripts/ParameterEditors/radio_button_list_parameter_editor.js",
       "Areas/Backend/Scripts/ParameterEditors/drop_down_list_parameter_editor.js",
       "Areas/Backend/Scripts/Forms/base_form.js",
+      "Areas/Backend/Scripts/Forms/base_item_selector_form.js",
       "Areas/Backend/Scripts/Forms/delete_form.js",
       "Areas/Backend/Scripts/Forms/image_uploader_form.js",
       "Areas/Backend/Scripts/global.js"
