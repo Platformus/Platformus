@@ -14,7 +14,7 @@
   <multilingual-single-line-text-field asp-for="Name" asp-localizations="@Model.NameLocalizations" />
   <drop-down-list-field asp-for="CSharpClassName" asp-options="@Model.CSharpClassNameOptions" />
   <numeric-field asp-for="Position" />
-  <div id="productProviderParameterEditors"></div>
+  <div id="parameterEditors"></div>
   <input id="parameters" name="parameters" type="hidden" value="@Model.Parameters" />
   <div class="form__buttons buttons">
     <button class="buttons__button button button--positive" type="submit">@Localizer["Save"]</button>

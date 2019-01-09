@@ -2,14 +2,7 @@
   {
     "outputFileName": "wwwroot/areas/backend/js/platformus.forms.min.js",
     "inputFiles": [
-      "Areas/Backend/Scripts/ui.js",
-      "Areas/Backend/Scripts/FormHandlerParameterEditors/form_handler_parameter_editors.js",
-      "Areas/Backend/Scripts/FormHandlerParameterEditors/base_form_handler_parameter_editor.js",
-      "Areas/Backend/Scripts/FormHandlerParameterEditors/text_box_form_handler_parameter_editor.js",
-      "Areas/Backend/Scripts/FormHandlerParameterEditors/numeric_text_box_form_handler_parameter_editor.js",
-      "Areas/Backend/Scripts/FormHandlerParameterEditors/checkbox_form_handler_parameter_editor.js",
-      "Areas/Backend/Scripts/FormHandlerParameterEditors/radio_button_list_form_handler_parameter_editor.js",
-      "Areas/Backend/Scripts/FormHandlerParameterEditors/drop_down_list_form_handler_parameter_editor.js"
+      "Areas/Backend/Scripts/ui.js"
     ],
     "minify": {
       "enabled": true,

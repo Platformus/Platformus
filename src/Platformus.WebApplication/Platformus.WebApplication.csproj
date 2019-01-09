@@ -13,9 +13,9 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="ExtCore.Data" Version="4.0.0-alpha3" />
-    <PackageReference Include="ExtCore.Data.EntityFramework" Version="4.0.0-alpha3" />
-    <PackageReference Include="ExtCore.WebApplication" Version="4.0.0-alpha3" />
+    <PackageReference Include="ExtCore.Data" Version="4.0.0" />
+    <PackageReference Include="ExtCore.Data.EntityFramework" Version="4.0.0" />
+    <PackageReference Include="ExtCore.WebApplication" Version="4.0.0" />
   </ItemGroup>
 
   <ItemGroup>

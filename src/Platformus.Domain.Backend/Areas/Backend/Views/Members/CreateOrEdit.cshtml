@@ -24,7 +24,8 @@
       <drop-down-list-field asp-for="PropertyDataTypeId" asp-options="@Model.PropertyDataTypeOptions" onchange="platformus.ui.propertyDataTypeIdChanged();" />
       <checkbox-field asp-for="IsPropertyLocalizable" />
       <checkbox-field asp-for="IsPropertyVisibleInList" />
-      <div id="dataTypeParameterEditors"></div>
+      <div id="parameterEditors"></div>
+      <input id="parameters" name="parameters" type="hidden" value="@Model.Parameters" />
     </div>
     <div id="tabPageRelation" class="tab-pages__tab-page">
       <drop-down-list-field asp-for="RelationClassId" asp-options="@Model.RelationClassOptions" onchange="platformus.ui.relationClassIdChanged();" />

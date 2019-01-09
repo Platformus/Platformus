@@ -28,7 +28,7 @@ namespace Platformus.ECommerce.Backend.ViewModels.ECommerce
           new GridColumnViewModelFactory(this.RequestHandler).Create(localizer["Feature"]),
           new GridColumnViewModelFactory(this.RequestHandler).Create(localizer["Value"])
         },
-        Attributes = this.RequestHandler.Storage.GetRepository<IAttributeRepository>().All().Select(
+        Attributes = this.RequestHandler.Storage.GetRepository<IAttributeRepository>().All().ToList().Select(
           a => new AttributeViewModelFactory(this.RequestHandler).Create(a, true)
         ),
         AttributeId = attributeId

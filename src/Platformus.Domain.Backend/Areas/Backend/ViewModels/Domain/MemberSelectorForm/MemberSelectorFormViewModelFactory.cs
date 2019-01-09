@@ -25,10 +25,10 @@ namespace Platformus.Domain.Backend.ViewModels.Domain
       Dictionary<ClassViewModel, IEnumerable<MemberViewModel>> membersByClasses = new Dictionary<ClassViewModel, IEnumerable<MemberViewModel>>();
       IStringLocalizer<MemberSelectorFormViewModelFactory> localizer = this.RequestHandler.GetService<IStringLocalizer<MemberSelectorFormViewModelFactory>>();
 
-      foreach (Class @class in this.RequestHandler.Storage.GetRepository<IClassRepository>().All())
+      foreach (Class @class in this.RequestHandler.Storage.GetRepository<IClassRepository>().All().ToList())
         membersByClasses.Add(
           new ClassViewModelFactory(this.RequestHandler).Create(@class),
-          this.RequestHandler.Storage.GetRepository<IMemberRepository>().FilteredByClassId(@class.Id).Select(
+          this.RequestHandler.Storage.GetRepository<IMemberRepository>().FilteredByClassId(@class.Id).ToList().Select(
             m => new MemberViewModelFactory(this.RequestHandler).Create(m)
           )
         );

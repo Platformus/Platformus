@@ -7,7 +7,7 @@
       "Areas/Backend/Styles/category_selector_pop_up_form.css",
       "Areas/Backend/Styles/product_selector_pop_up_form.css",
       "Areas/Backend/Styles/attribute_selector_pop_up_form.css",
-      "Areas/Backend/Styles/ProductProviderParameterEditors/category_product_provider_parameter_editor.css"
+      "Areas/Backend/Styles/ParameterEditors/category_parameter_editor.css"
     ]
   },
   {
@@ -18,14 +18,7 @@
       "Areas/Backend/Scripts/Forms/category_selector_form.js",
       "Areas/Backend/Scripts/Forms/product_selector_form.js",
       "Areas/Backend/Scripts/Forms/attribute_selector_form.js",
-      "Areas/Backend/Scripts/ProductProviderParameterEditors/product_provider_parameter_editors.js",
-      "Areas/Backend/Scripts/ProductProviderParameterEditors/base_product_provider_parameter_editor.js",
-      "Areas/Backend/Scripts/ProductProviderParameterEditors/text_box_product_provider_parameter_editor.js",
-      "Areas/Backend/Scripts/ProductProviderParameterEditors/numeric_text_box_product_provider_parameter_editor.js",
-      "Areas/Backend/Scripts/ProductProviderParameterEditors/checkbox_product_provider_parameter_editor.js",
-      "Areas/Backend/Scripts/ProductProviderParameterEditors/radio_button_list_product_provider_parameter_editor.js",
-      "Areas/Backend/Scripts/ProductProviderParameterEditors/drop_down_list_product_provider_parameter_editor.js",
-      "Areas/Backend/Scripts/ProductProviderParameterEditors/category_product_provider_parameter_editor.js"
+      "Areas/Backend/Scripts/ParameterEditors/category_parameter_editor.js"
     ],
     "minify": {
       "enabled": true,

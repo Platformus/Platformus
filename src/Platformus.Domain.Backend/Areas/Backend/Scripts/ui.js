@@ -23,7 +23,7 @@
       $("#isPropertyVisibleInList").show();
     }
 
-    platformus.dataTypeParameterEditors.sync(propertyDataTypeId);
+    platformus.parameterEditors.sync(getDataTypeById(propertyDataTypeId));
   };
 
   platformus.ui.relationClassIdChanged = function () {
@@ -72,5 +72,15 @@
 
   function getSelectedRelationClassId() {
     return $("#relationClassId").val();
+  }
+
+  function getDataTypeById(dataTypeId) {
+    for (var i = 0; i < dataTypes.length; i++) {
+      if (dataTypes[i].id == dataTypeId) {
+        return dataTypes[i];
+      }
+    }
+
+    return null;
   }
 })(window.platformus = window.platformus || {});

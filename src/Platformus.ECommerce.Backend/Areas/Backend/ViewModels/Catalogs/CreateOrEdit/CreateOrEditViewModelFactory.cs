@@ -59,11 +59,11 @@ namespace Platformus.ECommerce.Backend.ViewModels.Catalogs
       return ExtensionManager.GetInstances<IProductProvider>().Where(pp => !pp.GetType().GetTypeInfo().IsAbstract).Select(
         pp => new {
           cSharpClassName = pp.GetType().FullName,
-          productProviderParameterGroups = pp.ParameterGroups.Select(
+          parameterGroups = pp.ParameterGroups.Select(
             pppg => new
             {
               name = pppg.Name,
-              productProviderParameters = pppg.Parameters.Select(
+              parameters = pppg.Parameters.Select(
                 ppp => new
                 {
                   code = ppp.Code,

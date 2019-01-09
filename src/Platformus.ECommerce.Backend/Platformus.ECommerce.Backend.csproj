@@ -17,16 +17,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Remove="Areas\Backend\Views\Attributes\CreateOrEdit.cshtml" />
-    <None Remove="Areas\Backend\Views\Attributes\Index.cshtml" />
-    <None Remove="Areas\Backend\Views\ECommerce\_AttributeSelectorForm.cshtml" />
-    <None Remove="Areas\Backend\Views\Features\CreateOrEdit.cshtml" />
-    <None Remove="Areas\Backend\Views\Features\Index.cshtml" />
-    <None Remove="Areas\Backend\Views\Shared\_Attribute.cshtml" />
-    <None Remove="Areas\Backend\Views\Shared\_Feature.cshtml" />
-  </ItemGroup>
-
-  <ItemGroup>
     <ProjectReference Include="..\Platformus.Globalization.Backend\Platformus.Globalization.Backend.csproj" />
     <ProjectReference Include="..\Platformus.ECommerce\Platformus.ECommerce.csproj" />
   </ItemGroup>

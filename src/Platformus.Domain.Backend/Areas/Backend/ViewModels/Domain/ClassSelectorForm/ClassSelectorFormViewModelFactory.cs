@@ -28,7 +28,7 @@ namespace Platformus.Domain.Backend.ViewModels.Domain
           new GridColumnViewModelFactory(this.RequestHandler).Create(localizer["Parent Class"]),
           new GridColumnViewModelFactory(this.RequestHandler).Create(localizer["Name"])
         },
-        Classes = this.RequestHandler.Storage.GetRepository<IClassRepository>().All().Select(
+        Classes = this.RequestHandler.Storage.GetRepository<IClassRepository>().All().ToList().Select(
           c => new ClassViewModelFactory(this.RequestHandler).Create(c)
         ),
         ClassId = classId

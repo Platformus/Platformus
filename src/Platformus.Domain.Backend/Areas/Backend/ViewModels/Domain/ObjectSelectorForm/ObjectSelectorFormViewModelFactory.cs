@@ -26,7 +26,7 @@ namespace Platformus.Domain.Backend.ViewModels.Domain
           this.RequestHandler.Storage.GetRepository<IClassRepository>().WithKey(classId)
         ),
         GridColumns = this.GetGridColumns(classId),
-        Objects = this.RequestHandler.Storage.GetRepository<IObjectRepository>().FilteredByClassId(classId).Select(
+        Objects = this.RequestHandler.Storage.GetRepository<IObjectRepository>().FilteredByClassId(classId).ToList().Select(
           o => new ObjectViewModelFactory(this.RequestHandler).Create(o.Id)
         ),
         ObjectIds = string.IsNullOrEmpty(objectIds) ? new int[] { } : objectIds.Split(',').Select(objectId => int.Parse(objectId))
@@ -35,7 +35,7 @@ namespace Platformus.Domain.Backend.ViewModels.Domain
 
     private IEnumerable<GridColumnViewModel> GetGridColumns(int classId)
     {
-      return this.RequestHandler.Storage.GetRepository<IMemberRepository>().FilteredByClassIdPropertyVisibleInList((int)classId).Select(m => new GridColumnViewModelFactory(this.RequestHandler).Create(m.Name));
+      return this.RequestHandler.Storage.GetRepository<IMemberRepository>().FilteredByClassIdPropertyVisibleInList((int)classId).ToList().Select(m => new GridColumnViewModelFactory(this.RequestHandler).Create(m.Name));
     }
   }
 }

@@ -4,15 +4,11 @@
 (function (platformus) {
   platformus.ui = platformus.ui || {};
   platformus.ui.endpointCSharpClassNameChanged = function () {
-    var cSharpClassName = getSelectedEndpointCSharpClassName();
-
-    platformus.endpointParameterEditors.sync(cSharpClassName);
+    platformus.parameterEditors.sync(getEndpointByCSharpClassName(getSelectedEndpointCSharpClassName()));
   };
 
   platformus.ui.dataSourceCSharpClassNameChanged = function () {
-    var cSharpClassName = getSelectedDataSourceCSharpClassName();
-
-    platformus.dataSourceParameterEditors.sync(cSharpClassName);
+    platformus.parameterEditors.sync(getDataSourceByCSharpClassName(getSelectedDataSourceCSharpClassName()));
   };
 
   function getSelectedEndpointCSharpClassName() {
@@ -21,5 +17,25 @@
 
   function getSelectedDataSourceCSharpClassName() {
     return $("#cSharpClassName").val();
+  }
+
+  function getEndpointByCSharpClassName(cSharpClassName) {
+    for (var i = 0; i < endpoints.length; i++) {
+      if (endpoints[i].cSharpClassName === cSharpClassName) {
+        return endpoints[i];
+      }
+    }
+
+    return null;
+  }
+
+  function getDataSourceByCSharpClassName(cSharpClassName) {
+    for (var i = 0; i < dataSources.length; i++) {
+      if (dataSources[i].cSharpClassName === cSharpClassName) {
+        return dataSources[i];
+      }
+    }
+
+    return null;
   }
 })(window.platformus = window.platformus || {});

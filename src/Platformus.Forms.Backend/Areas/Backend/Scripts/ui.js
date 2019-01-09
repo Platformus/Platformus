@@ -4,12 +4,20 @@
 (function (platformus) {
   platformus.ui = platformus.ui || {};
   platformus.ui.formHandlerCSharpClassNameChanged = function () {
-    var cSharpClassName = getSelectedFormHandlerCSharpClassName();
-
-    platformus.formHandlerParameterEditors.sync(cSharpClassName);
+    platformus.parameterEditors.sync(getFormHandlerByCSharpClassName(getSelectedCSharpClassName()));
   };
 
-  function getSelectedFormHandlerCSharpClassName() {
+  function getSelectedCSharpClassName() {
     return $("#cSharpClassName").val();
+  }
+
+  function getFormHandlerByCSharpClassName(cSharpClassName) {
+    for (var i = 0; i < formHandlers.length; i++) {
+      if (formHandlers[i].cSharpClassName === cSharpClassName) {
+        return formHandlers[i];
+      }
+    }
+
+    return null;
   }
 })(window.platformus = window.platformus || {});

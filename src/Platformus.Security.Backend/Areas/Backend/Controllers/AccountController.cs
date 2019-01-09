@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 using Platformus.Barebone;
 using Platformus.Security.Backend.ViewModels.Account;
 using Platformus.Security.Data.Abstractions;
+using Platformus.Security.Services.Abstractions;
 
 namespace Platformus.Security.Backend.Controllers
 {
@@ -15,11 +16,13 @@ namespace Platformus.Security.Backend.Controllers
   public class AccountController : Barebone.Backend.Controllers.ControllerBase
   {
     private IEmailSender emailSender;
+    private IUserManager userManager;
 
-    public AccountController(IStorage storage, IEmailSender emailSender)
+    public AccountController(IStorage storage, IEmailSender emailSender, IUserManager userManager)
       : base(storage)
     {
       this.emailSender = emailSender;
+      this.userManager = userManager;
     }
 
     [HttpGet]
@@ -41,7 +44,7 @@ namespace Platformus.Security.Backend.Controllers
       {
         string newPassword = new Random().Next(10000000, 99999999).ToString();
 
-        UserManager.ChangeSecretResult changeSecretResult = new UserManager(this).ChangeSecret("Email", resetPassword.Email, newPassword);
+        ChangeSecretResult changeSecretResult = this.userManager.ChangeSecret("Email", resetPassword.Email, newPassword);
 
         if (changeSecretResult.Success)
         {
@@ -77,12 +80,11 @@ namespace Platformus.Security.Backend.Controllers
     {
       if (this.ModelState.IsValid)
       {
-        UserManager userManager = new UserManager(this);
-        UserManager.ValidateResult validateResult = userManager.Validate("Email", signIn.Email, signIn.Password);
+        ValidateResult validateResult = this.userManager.Validate("Email", signIn.Email, signIn.Password);
 
         if (validateResult.Success)
         {
-          userManager.SignIn(validateResult.User, BackendCookieAuthenticationDefaults.AuthenticationScheme, signIn.RememberMe);
+          this.userManager.SignIn(validateResult.User, BackendCookieAuthenticationDefaults.AuthenticationScheme, signIn.RememberMe);
 
           if (!string.IsNullOrEmpty(signIn.Next))
             return this.Redirect(signIn.Next);
@@ -100,7 +102,7 @@ namespace Platformus.Security.Backend.Controllers
     [AllowAnonymous]
     public IActionResult SignOut()
     {
-      new UserManager(this).SignOut(BackendCookieAuthenticationDefaults.AuthenticationScheme);
+      this.userManager.SignOut(BackendCookieAuthenticationDefaults.AuthenticationScheme);
       return this.RedirectToAction("SignIn");
     }
 

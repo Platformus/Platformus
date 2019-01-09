@@ -27,7 +27,7 @@ namespace Platformus.ECommerce.Backend.ViewModels.ECommerce
         GridColumns = new[] {
           new GridColumnViewModelFactory(this.RequestHandler).Create(localizer["Name"])
         },
-        Categories = this.RequestHandler.Storage.GetRepository<ICategoryRepository>().FilteredByCategoryId(null).Select(
+        Categories = this.RequestHandler.Storage.GetRepository<ICategoryRepository>().FilteredByCategoryId(null).ToList().Select(
           c => new CategoryViewModelFactory(this.RequestHandler).Create(c)
         ),
         CategoryId = categoryId

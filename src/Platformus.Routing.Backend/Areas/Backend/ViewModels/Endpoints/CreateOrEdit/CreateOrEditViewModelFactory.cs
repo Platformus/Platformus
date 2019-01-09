@@ -63,11 +63,11 @@ namespace Platformus.Routing.Backend.ViewModels.Endpoints
       return ExtensionManager.GetInstances<IEndpoint>().Where(e => !e.GetType().GetTypeInfo().IsAbstract).Select(
         e => new {
           cSharpClassName = e.GetType().FullName,
-          endpointParameterGroups = e.ParameterGroups.Select(
+          parameterGroups = e.ParameterGroups.Select(
             epg => new
             {
               name = epg.Name,
-              endpointParameters = epg.Parameters.Select(
+              parameters = epg.Parameters.Select(
                 ep => new
                 {
                   code = ep.Code,
@@ -89,7 +89,7 @@ namespace Platformus.Routing.Backend.ViewModels.Endpoints
 
     public IEnumerable<EndpointPermissionViewModel> GetEndpointPermissions(Endpoint endpoint = null)
     {
-      return this.RequestHandler.Storage.GetRepository<IPermissionRepository>().All().Select(
+      return this.RequestHandler.Storage.GetRepository<IPermissionRepository>().All().ToList().Select(
         p => new EndpointPermissionViewModelFactory(this.RequestHandler).Create(endpoint, p)
       );
     }

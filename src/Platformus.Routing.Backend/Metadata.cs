@@ -10,14 +10,6 @@ namespace Platformus.Routing.Backend.Metadata
 {
   public class Metadata : MetadataBase
   {
-    public override IEnumerable<StyleSheet> GetStyleSheets(IRequestHandler requestHandler)
-    {
-      return new StyleSheet[]
-      {
-        new StyleSheet("/wwwroot.areas.backend.css.platformus.routing.min.css", 2000)
-      };
-    }
-
     public override IEnumerable<Script> GetScripts(IRequestHandler requestHandler)
     {
       return new Script[]

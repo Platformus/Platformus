@@ -60,11 +60,11 @@ namespace Platformus.Forms.Backend.ViewModels.Forms
       return ExtensionManager.GetInstances<IFormHandler>().Where(fh => !fh.GetType().GetTypeInfo().IsAbstract).Select(
         fh => new {
           cSharpClassName = fh.GetType().FullName,
-          formHandlerParameterGroups = fh.ParameterGroups.Select(
+          parameterGroups = fh.ParameterGroups.Select(
             fhpg => new
             {
               name = fhpg.Name,
-              formHandlerParameters = fhpg.Parameters.Select(
+              parameters = fhpg.Parameters.Select(
                 fhp => new
                 {
                   code = fhp.Code,

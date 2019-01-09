@@ -4,9 +4,7 @@
 (function (platformus) {
   platformus.ui = platformus.ui || {};
   platformus.ui.catalogCSharpClassNameChanged = function () {
-    var cSharpClassName = getSelectedCatalogCSharpClassName();
-
-    platformus.productProviderParameterEditors.sync(cSharpClassName);
+    platformus.parameterEditors.sync(getProductProviderByCSharpClassName(getSelectedCatalogCSharpClassName()));
   };
 
   platformus.ui.addAttribute = function () {
@@ -113,6 +111,16 @@
 
   function getSelectedCatalogCSharpClassName() {
     return $("#cSharpClassName").val();
+  }
+
+  function getProductProviderByCSharpClassName(cSharpClassName) {
+    for (var i = 0; i < productProviders.length; i++) {
+      if (productProviders[i].cSharpClassName === cSharpClassName) {
+        return productProviders[i];
+      }
+    }
+
+    return null;
   }
 
   function createNewPhoto(filename) {

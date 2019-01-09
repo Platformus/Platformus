@@ -3,8 +3,8 @@
 
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using Platformus.Barebone;
-using Platformus.Barebone.Backend;
 using Platformus.Barebone.Primitives;
 using Platformus.Domain.Data.Abstractions;
 using Platformus.Domain.Data.Entities;
@@ -44,12 +44,13 @@ namespace Platformus.Domain.Backend.ViewModels.Members
         PropertyDataTypeOptions = this.GetPropertyDataTypeOptions(),
         IsPropertyLocalizable = member.IsPropertyLocalizable == true,
         IsPropertyVisibleInList = member.IsPropertyVisibleInList == true,
+        Parameters = this.GetParameters(member.Id),
         RelationClassId = member.RelationClassId,
         RelationClassOptions = this.GetRelationClassOptions(),
         IsRelationSingleParent = member.IsRelationSingleParent == true,
         MinRelatedObjectsNumber = member.MinRelatedObjectsNumber,
         MaxRelatedObjectsNumber = member.MaxRelatedObjectsNumber,
-        DataTypes = this.GetDataTypes(member.Id)
+        DataTypes = this.GetDataTypes()
       };
     }
 
@@ -95,23 +96,51 @@ namespace Platformus.Domain.Backend.ViewModels.Members
       return options;
     }
 
-    private IEnumerable<dynamic> GetDataTypes(int? memberId = null)
+    private string GetParameters(int? memberId)
+    {
+      if (memberId == null)
+        return null;
+
+      StringBuilder sb = new StringBuilder();
+
+      foreach (DataType dataType in this.RequestHandler.Storage.GetRepository<IDataTypeRepository>().All().ToList())
+      {
+        foreach (DataTypeParameter dataTypeParameter in this.RequestHandler.Storage.GetRepository<IDataTypeParameterRepository>().FilteredByDataTypeId(dataType.Id).ToList())
+        {
+          DataTypeParameterValue dataTypeParameterValue = this.RequestHandler.Storage.GetRepository<IDataTypeParameterValueRepository>().WithDataTypeParameterIdAndMemberId(dataTypeParameter.Id, (int)memberId);
+
+          if (dataTypeParameterValue != null)
+          {
+            if (sb.Length != 0)
+              sb.Append(';');
+
+            sb.Append($"{dataTypeParameter.Code}={dataTypeParameterValue.Value}");
+          }
+        }
+      }
+      
+
+      return sb.ToString();
+    }
+
+    private IEnumerable<dynamic> GetDataTypes()
     {
       return this.RequestHandler.Storage.GetRepository<IDataTypeRepository>().All().ToList().Select(
         dt => new
         {
           id = dt.Id,
-          storageDataType = dt.StorageDataType,
-          dataTypeParameters = this.RequestHandler.Storage.GetRepository<IDataTypeParameterRepository>().FilteredByDataTypeId(dt.Id).ToList().Select(
-            dtp => new
-            {
-              id = dtp.Id,
-              javaScriptEditorClassName = dtp.JavaScriptEditorClassName,
-              code = dtp.Code,
-              name = dtp.Name,
-              value = memberId == null ? null : this.RequestHandler.Storage.GetRepository<IDataTypeParameterValueRepository>().WithDataTypeParameterIdAndMemberId(dtp.Id, (int)memberId)?.Value
+          parameterGroups = new dynamic[] {
+            new {
+              parameters = this.RequestHandler.Storage.GetRepository<IDataTypeParameterRepository>().FilteredByDataTypeId(dt.Id).ToList().Select(
+                dtp => new
+                {
+                  code = dtp.Code,
+                  name = dtp.Name,
+                  javaScriptEditorClassName = dtp.JavaScriptEditorClassName
+                }
+              )
             }
-          )
+          }
         }
       );
     }

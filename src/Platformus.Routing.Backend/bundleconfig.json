@@ -1,31 +1,8 @@
 ﻿[
   {
-    "outputFileName": "wwwroot/areas/backend/css/platformus.routing.min.css",
-    "inputFiles": [
-      "Areas/Backend/Styles/DataSourceParameterEditors/class_data_source_parameter_editor.css",
-      "Areas/Backend/Styles/DataSourceParameterEditors/member_data_source_parameter_editor.css"
-    ]
-  },
-  {
     "outputFileName": "wwwroot/areas/backend/js/platformus.routing.min.js",
     "inputFiles": [
-      "Areas/Backend/Scripts/ui.js",
-      "Areas/Backend/Scripts/EndpointParameterEditors/endpoint_parameter_editors.js",
-      "Areas/Backend/Scripts/EndpointParameterEditors/base_endpoint_parameter_editor.js",
-      "Areas/Backend/Scripts/EndpointParameterEditors/text_box_endpoint_parameter_editor.js",
-      "Areas/Backend/Scripts/EndpointParameterEditors/numeric_text_box_endpoint_parameter_editor.js",
-      "Areas/Backend/Scripts/EndpointParameterEditors/checkbox_endpoint_parameter_editor.js",
-      "Areas/Backend/Scripts/EndpointParameterEditors/radio_button_list_endpoint_parameter_editor.js",
-      "Areas/Backend/Scripts/EndpointParameterEditors/drop_down_list_endpoint_parameter_editor.js",
-      "Areas/Backend/Scripts/DataSourceParameterEditors/data_source_parameter_editors.js",
-      "Areas/Backend/Scripts/DataSourceParameterEditors/base_data_source_parameter_editor.js",
-      "Areas/Backend/Scripts/DataSourceParameterEditors/text_box_data_source_parameter_editor.js",
-      "Areas/Backend/Scripts/DataSourceParameterEditors/numeric_text_box_data_source_parameter_editor.js",
-      "Areas/Backend/Scripts/DataSourceParameterEditors/checkbox_data_source_parameter_editor.js",
-      "Areas/Backend/Scripts/DataSourceParameterEditors/radio_button_list_data_source_parameter_editor.js",
-      "Areas/Backend/Scripts/DataSourceParameterEditors/drop_down_list_data_source_parameter_editor.js",
-      "Areas/Backend/Scripts/DataSourceParameterEditors/class_data_source_parameter_editor.js",
-      "Areas/Backend/Scripts/DataSourceParameterEditors/member_data_source_parameter_editor.js"
+      "Areas/Backend/Scripts/ui.js"
     ],
     "minify": {
       "enabled": true,

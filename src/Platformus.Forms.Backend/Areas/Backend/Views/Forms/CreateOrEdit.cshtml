@@ -15,7 +15,7 @@
   <multilingual-single-line-text-field asp-for="SubmitButtonTitle" asp-localizations="@Model.SubmitButtonTitleLocalizations" />
   <checkbox-field asp-for="ProduceCompletedForms" />
   <drop-down-list-field asp-for="CSharpClassName" asp-options="@Model.CSharpClassNameOptions" onchange="platformus.ui.formHandlerCSharpClassNameChanged();" />
-  <div id="formHandlerParameterEditors"></div>
+  <div id="parameterEditors"></div>
   <input id="parameters" name="parameters" type="hidden" value="@Model.Parameters" />
   <div class="form__buttons buttons">
     <button class="buttons__button button button--positive" type="submit">@Localizer["Save"]</button>

@@ -35,11 +35,11 @@ namespace Platformus.ECommerce.Backend.Controllers
     public ActionResult GetCategoryName(int? categoryId)
     {
       if (categoryId == null)
-        return this.Content("<div class=\"category-product-provider-parameter-editor__name\">Not selected</div>");
+        return this.Content("<div class=\"category-parameter-editor__name\">Not selected</div>");
 
       Category category = this.Storage.GetRepository<ICategoryRepository>().WithKey((int)categoryId);
 
-      return this.Content(string.Format("<div class=\"category-product-provider-parameter-editor__name\">{0}</div>", this.GetLocalizationValue(category.NameId)));
+      return this.Content(string.Format("<div class=\"category-parameter-editor__name\">{0}</div>", this.GetLocalizationValue(category.NameId)));
     }
 
     public ActionResult GetAttribute(int attributeId)

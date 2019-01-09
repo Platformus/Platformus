@@ -39,6 +39,7 @@ namespace Platformus.Domain.Backend.ViewModels.Members
 
     [Display(Name = "Is property visible in list")]
     public bool IsPropertyVisibleInList { get; set; }
+    public string Parameters { get; set; }
 
     [Display(Name = "Relation class")]
     public int? RelationClassId { get; set; }

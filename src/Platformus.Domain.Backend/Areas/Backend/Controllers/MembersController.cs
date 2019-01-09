@@ -1,6 +1,7 @@
 ﻿// Copyright © 2015 Dmitry Sikorsky. All rights reserved.
 // Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information.
 
+using System.Collections.Generic;
 using ExtCore.Data.Abstractions;
 using ExtCore.Events;
 using Microsoft.AspNetCore.Authorization;
@@ -51,7 +52,7 @@ namespace Platformus.Domain.Backend.Controllers
         else this.Storage.GetRepository<IMemberRepository>().Edit(member);
 
         this.Storage.Save();
-        this.CreateOrEditDataTypeParameterValues(member);
+        this.CreateOrEditDataTypeParameterValues(member, createOrEdit.Parameters);
 
         if (createOrEdit.Id == null)
           Event<IMemberCreatedEventHandler, IRequestHandler, Member>.Broadcast(this, member);
@@ -79,31 +80,32 @@ namespace Platformus.Domain.Backend.Controllers
       return this.Storage.GetRepository<IMemberRepository>().WithClassIdAndCodeInlcudingParent(classId, code) == null;
     }
 
-    private void CreateOrEditDataTypeParameterValues(Member member)
+    private void CreateOrEditDataTypeParameterValues(Member member, string parameters)
     {
+      if (member.PropertyDataTypeId == null || string.IsNullOrEmpty(parameters))
+        return;
+
+      IDataTypeParameterRepository dataTypeParameterRepository = this.Storage.GetRepository<IDataTypeParameterRepository>();
       IDataTypeParameterValueRepository dataTypeParameterValueRepository = this.Storage.GetRepository<IDataTypeParameterValueRepository>();
 
-      foreach (string key in this.Request.Form.Keys)
+      foreach (KeyValuePair<string, string> valueByCode in ParametersParser.Parse(parameters))
       {
-        if (key.StartsWith("dataTypeParameter"))
+        DataTypeParameter dataTypeParameter = dataTypeParameterRepository.WithDataTypeIdAndCode((int)member.PropertyDataTypeId, valueByCode.Key);
+        DataTypeParameterValue dataTypeParameterValue = dataTypeParameterValueRepository.WithDataTypeParameterIdAndMemberId(dataTypeParameter.Id, member.Id);
+
+        if (dataTypeParameterValue == null)
         {
-          int dataTypeParameterId = int.Parse(key.Replace("dataTypeParameter", string.Empty));
-          DataTypeParameterValue dataTypeParameterValue = dataTypeParameterValueRepository.WithDataTypeParameterIdAndMemberId(dataTypeParameterId, member.Id);
+          dataTypeParameterValue = new DataTypeParameterValue();
+          dataTypeParameterValue.DataTypeParameterId = dataTypeParameter.Id;
+          dataTypeParameterValue.MemberId = member.Id;
+          dataTypeParameterValue.Value = valueByCode.Value;
+          dataTypeParameterValueRepository.Create(dataTypeParameterValue);
+        }
 
-          if (dataTypeParameterValue == null)
-          {
-            dataTypeParameterValue = new DataTypeParameterValue();
-            dataTypeParameterValue.DataTypeParameterId = dataTypeParameterId;
-            dataTypeParameterValue.MemberId = member.Id;
-            dataTypeParameterValue.Value = this.Request.Form[key];
-            dataTypeParameterValueRepository.Create(dataTypeParameterValue);
-          }
-
-          else
-          {
-            dataTypeParameterValue.Value = this.Request.Form[key];
-            dataTypeParameterValueRepository.Edit(dataTypeParameterValue);
-          }
+        else
+        {
+          dataTypeParameterValue.Value = valueByCode.Value;
+          dataTypeParameterValueRepository.Edit(dataTypeParameterValue);
         }
       }
 
