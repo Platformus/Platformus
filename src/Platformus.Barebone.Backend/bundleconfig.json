@@ -73,6 +73,7 @@
       "Areas/Backend/Scripts/ParameterEditors/checkbox_parameter_editor.js",
       "Areas/Backend/Scripts/ParameterEditors/radio_button_list_parameter_editor.js",
       "Areas/Backend/Scripts/ParameterEditors/drop_down_list_parameter_editor.js",
+      "Areas/Backend/Scripts/ParameterEditors/base_item_selector_parameter_editor.js",
       "Areas/Backend/Scripts/Forms/base_form.js",
       "Areas/Backend/Scripts/Forms/base_item_selector_form.js",
       "Areas/Backend/Scripts/Forms/delete_form.js",

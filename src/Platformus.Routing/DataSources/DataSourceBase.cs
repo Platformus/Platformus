@@ -4,6 +4,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using Platformus.Barebone;
+using Platformus.Barebone.Parameters;
 using Platformus.Routing.Data.Entities;
 
 namespace Platformus.Routing.DataSources
@@ -14,7 +15,7 @@ namespace Platformus.Routing.DataSources
     protected DataSource dataSource;
     private Dictionary<string, string> parameterValuesByCodes;
 
-    public virtual IEnumerable<DataSourceParameterGroup> ParameterGroups => new DataSourceParameterGroup[] { };
+    public virtual IEnumerable<ParameterGroup> ParameterGroups => new ParameterGroup[] { };
     public virtual string Description => null;
 
     public dynamic GetData(IRequestHandler requestHandler, DataSource dataSource)

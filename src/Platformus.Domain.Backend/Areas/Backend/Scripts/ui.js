@@ -12,7 +12,7 @@
     }
 
     else {
-      if (getPropertyDataTypeStorageDataType(propertyDataTypeId) == "string") {
+      if (getDataTypeById(propertyDataTypeId).storageDataType === "string") {
         $("#isPropertyLocalizable").show();
       }
 
@@ -58,16 +58,6 @@
 
   function getSelectedPropertyDataTypeId() {
     return $("#propertyDataTypeId").val();
-  }
-
-  function getPropertyDataTypeStorageDataType(propertyDataTypeId) {
-    for (var i = 0; i < dataTypes.length; i++) {
-      if (dataTypes[i].id == propertyDataTypeId) {
-        return dataTypes[i].storageDataType;
-      }
-    }
-
-    return platformus.string.empty;
   }
 
   function getSelectedRelationClassId() {

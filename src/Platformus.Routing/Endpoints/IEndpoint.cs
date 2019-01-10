@@ -4,13 +4,14 @@
 using System.Collections.Generic;
 using Microsoft.AspNetCore.Mvc;
 using Platformus.Barebone;
+using Platformus.Barebone.Parameters;
 using Platformus.Routing.Data.Entities;
 
 namespace Platformus.Routing.Endpoints
 {
   public interface IEndpoint
   {
-    IEnumerable<EndpointParameterGroup> ParameterGroups { get; }
+    IEnumerable<ParameterGroup> ParameterGroups { get; }
     string Description { get; }
 
     IActionResult Invoke(IRequestHandler requestHandler, Endpoint endpoint, IEnumerable<KeyValuePair<string, string>> arguments);

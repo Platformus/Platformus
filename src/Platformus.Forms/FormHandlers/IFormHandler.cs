@@ -4,13 +4,14 @@
 using System.Collections.Generic;
 using Microsoft.AspNetCore.Mvc;
 using Platformus.Barebone;
+using Platformus.Barebone.Parameters;
 using Platformus.Forms.Data.Entities;
 
 namespace Platformus.Forms.FormHandlers
 {
   public interface IFormHandler
   {
-    IEnumerable<FormHandlerParameterGroup> ParameterGroups { get; }
+    IEnumerable<ParameterGroup> ParameterGroups { get; }
     string Description { get; }
 
     IActionResult Handle(IRequestHandler requestHandler, Form form, IDictionary<Field, string> valuesByFields, IDictionary<string, byte[]> attachmentsByFilenames, string formPageUrl);

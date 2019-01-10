@@ -8,6 +8,7 @@ using ExtCore.Data.Abstractions;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Platformus.Barebone;
+using Platformus.Barebone.Parameters;
 using Platformus.Configurations;
 using Platformus.Forms.Data.Entities;
 using Platformus.Forms.FormHandlers;
@@ -16,13 +17,13 @@ namespace Platformus.Forms.Frontend.FormHandlers
 {
   public class EmailFormHandler : FormHandlerBase
   {
-    public override IEnumerable<FormHandlerParameterGroup> ParameterGroups =>
-      new FormHandlerParameterGroup[]
+    public override IEnumerable<ParameterGroup> ParameterGroups =>
+      new ParameterGroup[]
       {
-        new FormHandlerParameterGroup(
+        new ParameterGroup(
           "General",
-          new FormHandlerParameter("RecipientEmails", "Recipient emails (separated by commas)", "textBox", null, true),
-          new FormHandlerParameter("RedirectUrl", "Redirect URL", "textBox")
+          new Parameter("RecipientEmails", "Recipient emails (separated by commas)", "textBox", null, true),
+          new Parameter("RedirectUrl", "Redirect URL", "textBox")
         )
       };
 

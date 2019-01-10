@@ -6,6 +6,7 @@ using System.Linq;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Routing;
 using Platformus.Barebone;
+using Platformus.Barebone.Parameters;
 using Platformus.Routing.Data.Abstractions;
 using Platformus.Routing.Data.Entities;
 using Platformus.Routing.DataSources;
@@ -15,13 +16,13 @@ namespace Platformus.Domain.Frontend
 {
   public class DefaultEndpoint : EndpointBase
   {
-    public override IEnumerable<EndpointParameterGroup> ParameterGroups =>
-      new EndpointParameterGroup[]
+    public override IEnumerable<ParameterGroup> ParameterGroups =>
+      new ParameterGroup[]
       {
-        new EndpointParameterGroup(
+        new ParameterGroup(
           "General",
-          new EndpointParameter("ViewName", "View name", "textBox", null, true),
-          new EndpointParameter("UseCaching", "Use caching", "checkbox")
+          new Parameter("ViewName", "View name", "textBox", null, true),
+          new Parameter("UseCaching", "Use caching", "checkbox")
         )
       };
 

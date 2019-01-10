@@ -1,25 +1,25 @@
-﻿// Copyright © 2018 Dmitry Sikorsky. All rights reserved.
+﻿// Copyright © 2019 Dmitry Sikorsky. All rights reserved.
 // Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information.
 
 (function (platformus) {
   platformus.parameterEditors = platformus.parameterEditors || [];
-  platformus.parameterEditors.category = {};
-  platformus.parameterEditors.category.create = function (container, parameter) {
-    createField(parameter).appendTo(container);
-    syncCategoryNames(parameter);
+  platformus.parameterEditors.baseItemSelector = {};
+  platformus.parameterEditors.baseItemSelector.create = function (container, parameter, form, keysUrl) {
+    createField(parameter, form, keysUrl).appendTo(container);
+    syncKeys(parameter, keysUrl);
   };
 
-  function createField(parameter) {
+  function createField(parameter, form, keysUrl) {
     var field = $("<div>").addClass("item-selector").addClass("form__field").addClass("field");
 
     platformus.controls.label.create({ text: parameter.name }).appendTo(field);
-    createInput(parameter).appendTo(field);
-    createNames(parameter).appendTo(field);
-    createButtons(parameter).appendTo(field);
+    createInput(parameter, keysUrl).appendTo(field);
+    createKeys(parameter).appendTo(field);
+    createButtons(parameter, form).appendTo(field);
     return field;
   }
 
-  function createInput(parameter) {
+  function createInput(parameter, keysUrl) {
     var identity = "parameter" + parameter.code;
     var input = $("<input>")
       .attr("id", identity)
@@ -27,8 +27,8 @@
       .attr("value", platformus.parameterEditors.base.getValue(parameter))
       .attr("data-parameter-code", parameter.code)
       .change(
-        function () {
-          syncCategoryNames(parameter);
+      function () {
+          syncKeys(parameter, keysUrl);
           platformus.parameterEditors.base.changed();
         }
       );
@@ -40,33 +40,33 @@
     return input;
   }
 
-  function createNames(parameter) {
+  function createKeys(parameter) {
     var identity = "parameter" + parameter.code;
-    var names = $("<div>").addClass("item-selector__keys").attr("id", identity + "Names");
+    var keys = $("<div>").addClass("item-selector__keys").attr("id", identity + "Keys");
 
     if (parameter.isRequired) {
-      names.addClass("item-selector__keys--required");
+      keys.addClass("item-selector__keys--required");
     }
 
-    return names;
+    return keys;
   }
 
-  function createButtons(parameter) {
+  function createButtons(parameter, form) {
     var buttons = $("<div>").addClass("form__buttons").addClass("form__buttons--minor").addClass("buttons");
 
-    createButton(parameter).appendTo(buttons);
+    createButton(parameter, form).appendTo(buttons);
     return buttons;
   }
 
-  function createButton(parameter) {
+  function createButton(parameter, form) {
     var identity = "parameter" + parameter.code;
 
     return $("<button>").addClass("buttons__button").addClass("buttons__button--minor").addClass("button").addClass("button--positive").addClass("button--minor").attr("type", "button").html("Select…").click(
       function () {
-        platformus.forms.categorySelectorForm.show(
+        form.show(
           $("#" + identity).val(),
-          function (categoryId) {
-            $("#" + identity).val(categoryId);
+          function (key) {
+            $("#" + identity).val(key);
             $("#" + identity).trigger("change");
           }
         );
@@ -74,13 +74,13 @@
     );
   }
 
-  function syncCategoryNames(parameter) {
+  function syncKeys(parameter, keysUrl) {
     var identity = "parameter" + parameter.code;
 
     $.get(
-      "/backend/ecommerce/getcategoryname?categoryid=" + $("#" + identity).val(),
+      keysUrl + $("#" + identity).val(),
       function (result) {
-        $("#" + identity + "Names").html(result);
+        $("#" + identity + "Keys").html(result);
       }
     );
   }

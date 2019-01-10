@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Microsoft.AspNetCore.Mvc;
 using Platformus.Barebone;
+using Platformus.Barebone.Parameters;
 using Platformus.Forms.Data.Entities;
 
 namespace Platformus.Forms.FormHandlers
@@ -18,7 +19,7 @@ namespace Platformus.Forms.FormHandlers
     protected string formPageUrl { get; set; }
     private Dictionary<string, string> parameterValuesByCodes;
 
-    public virtual IEnumerable<FormHandlerParameterGroup> ParameterGroups => new FormHandlerParameterGroup[] { };
+    public virtual IEnumerable<ParameterGroup> ParameterGroups => new ParameterGroup[] { };
     public virtual string Description => null;
 
     public IActionResult Handle(IRequestHandler requestHandler, Form form, IDictionary<Field, string> valuesByFields, IDictionary<string, byte[]> attachmentsByFilenames, string formPageUrl)

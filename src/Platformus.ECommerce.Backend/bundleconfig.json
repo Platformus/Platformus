@@ -14,7 +14,7 @@
       "Areas/Backend/Scripts/Forms/category_selector_form.js",
       "Areas/Backend/Scripts/Forms/product_selector_form.js",
       "Areas/Backend/Scripts/Forms/attribute_selector_form.js",
-      "Areas/Backend/Scripts/ParameterEditors/category_parameter_editor.js"
+      "Areas/Backend/Scripts/ParameterEditors/category_selector_parameter_editor.js"
     ],
     "minify": {
       "enabled": true,

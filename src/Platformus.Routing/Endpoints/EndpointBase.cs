@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Microsoft.AspNetCore.Mvc;
 using Platformus.Barebone;
+using Platformus.Barebone.Parameters;
 using Platformus.Routing.Data.Entities;
 
 namespace Platformus.Routing.Endpoints
@@ -16,7 +17,7 @@ namespace Platformus.Routing.Endpoints
     protected IEnumerable<KeyValuePair<string, string>> arguments;
     private Dictionary<string, string> parameterValuesByCodes;
 
-    public virtual IEnumerable<EndpointParameterGroup> ParameterGroups => new EndpointParameterGroup[] { };
+    public virtual IEnumerable<ParameterGroup> ParameterGroups => new ParameterGroup[] { };
     public virtual string Description => null;
 
     public IActionResult Invoke(IRequestHandler requestHandler, Endpoint endpoint, IEnumerable<KeyValuePair<string, string>> arguments)

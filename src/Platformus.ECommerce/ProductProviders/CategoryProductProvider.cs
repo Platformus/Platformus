@@ -3,6 +3,7 @@
 
 using System.Collections.Generic;
 using System.Linq;
+using Platformus.Barebone.Parameters;
 using Platformus.ECommerce.Data.Abstractions;
 using Platformus.ECommerce.Data.Entities;
 using Platformus.Globalization;
@@ -11,12 +12,12 @@ namespace Platformus.ECommerce.ProductProviders
 {
   public class CategoryProductProvider : ProductProviderBase
   {
-    public override IEnumerable<ProductProviderParameterGroup> ParameterGroups =>
-      new ProductProviderParameterGroup[]
+    public override IEnumerable<ParameterGroup> ParameterGroups =>
+      new ParameterGroup[]
       {
-        new ProductProviderParameterGroup(
+        new ParameterGroup(
           "General",
-          new ProductProviderParameter("CategoryId", "Category", "category", null, true)
+          new Parameter("CategoryId", "Category", "categorySelector", null, true)
         )
       };
 

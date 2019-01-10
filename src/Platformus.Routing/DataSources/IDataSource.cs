@@ -3,13 +3,14 @@
 
 using System.Collections.Generic;
 using Platformus.Barebone;
+using Platformus.Barebone.Parameters;
 using Platformus.Routing.Data.Entities;
 
 namespace Platformus.Routing.DataSources
 {
   public interface IDataSource
   {
-    IEnumerable<DataSourceParameterGroup> ParameterGroups { get; }
+    IEnumerable<ParameterGroup> ParameterGroups { get; }
     string Description { get; }
 
     dynamic GetData(IRequestHandler requestHandler, DataSource dataSource);

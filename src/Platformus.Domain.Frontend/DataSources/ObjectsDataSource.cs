@@ -3,33 +3,33 @@
 
 using System.Collections.Generic;
 using System.Linq;
+using Platformus.Barebone.Parameters;
 using Platformus.Barebone.Primitives;
 using Platformus.Domain.Data.Abstractions;
 using Platformus.Domain.Data.Entities;
 using Platformus.Globalization;
-using Platformus.Routing.DataSources;
 
 namespace Platformus.Domain.Frontend.DataSources
 {
   public class ObjectsDataSource : DataSourceBase
   {
-    public override IEnumerable<DataSourceParameterGroup> ParameterGroups =>
-      new DataSourceParameterGroup[]
+    public override IEnumerable<ParameterGroup> ParameterGroups =>
+      new ParameterGroup[]
       {
-        new DataSourceParameterGroup(
+        new ParameterGroup(
           "General",
-          new DataSourceParameter("ClassId", "Class of the objects to load", "class", null, true),
-          new DataSourceParameter("NestedXPaths", "Nested XPaths", "textBox")
+          new Parameter("ClassId", "Class of the objects to load", "classSelector", null, true),
+          new Parameter("NestedXPaths", "Nested XPaths", "textBox")
         ),
-        new DataSourceParameterGroup(
+        new ParameterGroup(
           "Filtering",
-          new DataSourceParameter("EnableFiltering", "Enable filtering", "checkbox"),
-          new DataSourceParameter("QueryUrlParameterName", "“Query” URL parameter name", "textBox", "q")
+          new Parameter("EnableFiltering", "Enable filtering", "checkbox"),
+          new Parameter("QueryUrlParameterName", "“Query” URL parameter name", "textBox", "q")
         ),
-        new DataSourceParameterGroup(
+        new ParameterGroup(
           "Sorting",
-          new DataSourceParameter("SortingMemberId", "Sorting member", "member"),
-          new DataSourceParameter(
+          new Parameter("SortingMemberId", "Sorting member", "memberSelector"),
+          new Parameter(
             "SortingDirection",
             "Sorting direction",
             new Option[]
@@ -42,12 +42,12 @@ namespace Platformus.Domain.Frontend.DataSources
             true
           )
         ),
-        new DataSourceParameterGroup(
+        new ParameterGroup(
           "Paging",
-          new DataSourceParameter("EnablePaging", "Enable paging", "checkbox"),
-          new DataSourceParameter("SkipUrlParameterName", "“Skip” URL parameter name", "textBox", "skip"),
-          new DataSourceParameter("TakeUrlParameterName", "“Take” URL parameter name", "textBox", "take"),
-          new DataSourceParameter("DefaultTake", "Default “Take” URL parameter value", "numericTextBox", "10")
+          new Parameter("EnablePaging", "Enable paging", "checkbox"),
+          new Parameter("SkipUrlParameterName", "“Skip” URL parameter name", "textBox", "skip"),
+          new Parameter("TakeUrlParameterName", "“Take” URL parameter name", "textBox", "take"),
+          new Parameter("DefaultTake", "Default “Take” URL parameter value", "numericTextBox", "10")
         )
       };
 

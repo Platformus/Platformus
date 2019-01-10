@@ -3,13 +3,14 @@
 
 using System.Collections.Generic;
 using Platformus.Barebone;
+using Platformus.Barebone.Parameters;
 using Platformus.ECommerce.Data.Entities;
 
 namespace Platformus.ECommerce.ProductProviders
 {
   public interface IProductProvider
   {
-    IEnumerable<ProductProviderParameterGroup> ParameterGroups { get; }
+    IEnumerable<ParameterGroup> ParameterGroups { get; }
     string Description { get; }
 
     IEnumerable<SerializedProduct> GetProducts(IRequestHandler requestHandler, Catalog catalog);

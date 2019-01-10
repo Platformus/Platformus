@@ -4,6 +4,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using Platformus.Barebone;
+using Platformus.Barebone.Parameters;
 using Platformus.ECommerce.Data.Entities;
 
 namespace Platformus.ECommerce.ProductProviders
@@ -15,7 +16,7 @@ namespace Platformus.ECommerce.ProductProviders
     protected int[] attributeIds;
     private Dictionary<string, string> parameterValuesByCodes;
 
-    public virtual IEnumerable<ProductProviderParameterGroup> ParameterGroups => new ProductProviderParameterGroup[] { };
+    public virtual IEnumerable<ParameterGroup> ParameterGroups => new ParameterGroup[] { };
     public virtual string Description => null;
 
     public IEnumerable<SerializedProduct> GetProducts(IRequestHandler requestHandler, Catalog catalog)
