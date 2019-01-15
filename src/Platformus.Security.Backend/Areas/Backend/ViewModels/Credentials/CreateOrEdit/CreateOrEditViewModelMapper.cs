@@ -6,7 +6,7 @@ using Platformus.Barebone;
 using Platformus.Barebone.Backend.ViewModels;
 using Platformus.Security.Data.Abstractions;
 using Platformus.Security.Data.Entities;
-using Platformus.Security.Services.Default;
+using Platformus.Security.Services.Defaults;
 
 namespace Platformus.Security.Backend.ViewModels.Credentials
 {

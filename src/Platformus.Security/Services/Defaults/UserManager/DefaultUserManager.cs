@@ -12,7 +12,7 @@ using Platformus.Security.Data.Abstractions;
 using Platformus.Security.Data.Entities;
 using Platformus.Security.Services.Abstractions;
 
-namespace Platformus.Security.Services.Default
+namespace Platformus.Security.Services.Defaults
 {
   public class DefaultUserManager : IUserManager
   {

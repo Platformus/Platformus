@@ -1,4 +1,4 @@
-﻿// Copyright © 2015 Dmitry Sikorsky. All rights reserved.
+﻿// Copyright © 2019 Dmitry Sikorsky. All rights reserved.
 // Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information.
 
 using System;
@@ -7,10 +7,10 @@ using ExtCore.Data.Abstractions;
 using MailKit.Net.Smtp;
 using Microsoft.Extensions.Configuration;
 using MimeKit;
-using Platformus.Barebone;
 using Platformus.Configurations;
+using Platformus.Messaging.Services.Abstractions;
 
-namespace Platformus.Forms
+namespace Platformus.Messaging.Services.Defaults
 {
   public class DefaultEmailSender : IEmailSender
   {

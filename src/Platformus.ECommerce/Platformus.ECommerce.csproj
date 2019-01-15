@@ -15,7 +15,6 @@
   <ItemGroup>
     <ProjectReference Include="..\Platformus.ECommerce.Data.Abstractions\Platformus.ECommerce.Data.Abstractions.csproj" />
     <ProjectReference Include="..\Platformus.Globalization\Platformus.Globalization.csproj" />
-    <ProjectReference Include="..\Platformus.Security\Platformus.Security.csproj" />
   </ItemGroup>
 
 </Project>

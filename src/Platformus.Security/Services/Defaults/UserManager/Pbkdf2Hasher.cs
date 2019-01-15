@@ -5,7 +5,7 @@ using System;
 using System.Security.Cryptography;
 using Microsoft.AspNetCore.Cryptography.KeyDerivation;
 
-namespace Platformus.Security.Services.Default
+namespace Platformus.Security.Services.Defaults
 {
   public static class Pbkdf2Hasher
   {

@@ -5,7 +5,7 @@ using System;
 using ExtCore.Data.Abstractions;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Platformus.Barebone;
+using Platformus.Messaging.Services.Abstractions;
 using Platformus.Security.Backend.ViewModels.Account;
 using Platformus.Security.Data.Abstractions;
 using Platformus.Security.Services.Abstractions;

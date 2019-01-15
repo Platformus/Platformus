@@ -5,7 +5,7 @@ using System;
 using ExtCore.Infrastructure.Actions;
 using Microsoft.Extensions.DependencyInjection;
 using Platformus.Security.Services.Abstractions;
-using Platformus.Security.Services.Default;
+using Platformus.Security.Services.Defaults;
 
 namespace Platformus.Security.Actions
 {

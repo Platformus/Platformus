@@ -17,7 +17,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Platformus.Barebone.Backend\Platformus.Barebone.Backend.csproj" />
     <ProjectReference Include="..\Platformus.Routing\Platformus.Routing.csproj" />
     <ProjectReference Include="..\Platformus.Security.Backend\Platformus.Security.Backend.csproj" />
   </ItemGroup>

@@ -17,9 +17,9 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Platformus.Configurations\Platformus.Configurations.csproj" />
     <ProjectReference Include="..\Platformus.Forms\Platformus.Forms.csproj" />
     <ProjectReference Include="..\Platformus.Globalization.Frontend\Platformus.Globalization.Frontend.csproj" />
+    <ProjectReference Include="..\Platformus.Messaging\Platformus.Messaging.csproj" />
   </ItemGroup>
 
 </Project>

@@ -13,7 +13,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Platformus.Barebone.Frontend\Platformus.Barebone.Frontend.csproj" />
     <ProjectReference Include="..\Platformus.Domain\Platformus.Domain.csproj" />
     <ProjectReference Include="..\Platformus.Globalization.Frontend\Platformus.Globalization.Frontend.csproj" />
     <ProjectReference Include="..\Platformus.Routing\Platformus.Routing.csproj" />

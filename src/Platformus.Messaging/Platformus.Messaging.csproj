@@ -2,19 +2,22 @@
 
   <PropertyGroup>
     <Authors>Dmitry Sikorsky</Authors>
-    <Copyright>Copyright © 2015 Dmitry Sikorsky</Copyright>
-    <Description>The Platformus.Globalization extension component.</Description>
+    <Copyright>Copyright © 2019 Dmitry Sikorsky</Copyright>
+    <Description>The Platformus.Messaging extension component.</Description>
     <VersionPrefix>1.0.0-beta5</VersionPrefix>
     <TargetFramework>netstandard2.0</TargetFramework>
-    <AssemblyName>Platformus.Globalization</AssemblyName>
-    <PackageId>Platformus.Globalization</PackageId>
+    <AssemblyName>Platformus.Messaging</AssemblyName>
+    <PackageId>Platformus.Messaging</PackageId>
     <PackageIconUrl>http://platformus.net/platformus_nuget_icon.png</PackageIconUrl>
     <PackageProjectUrl>http://platformus.net/</PackageProjectUrl>
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="MailKit" Version="2.1.2" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\Platformus.Configurations\Platformus.Configurations.csproj" />
-    <ProjectReference Include="..\Platformus.Globalization.Data.Abstractions\Platformus.Globalization.Data.Abstractions.csproj" />
   </ItemGroup>
 
 </Project>
