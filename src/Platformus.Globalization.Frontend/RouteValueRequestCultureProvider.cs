@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Localization;
 using Microsoft.Extensions.DependencyInjection;
 using Platformus.Barebone;
+using Platformus.Globalization.Services.Abstractions;
 
 namespace Platformus.Globalization.Frontend
 {

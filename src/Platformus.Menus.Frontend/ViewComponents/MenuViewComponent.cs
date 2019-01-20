@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 using ExtCore.Data.Abstractions;
 using Microsoft.AspNetCore.Mvc;
 using Platformus.Barebone.Frontend.ViewComponents;
-using Platformus.Globalization;
+using Platformus.Globalization.Services.Abstractions;
 using Platformus.Menus.Data.Abstractions;
 using Platformus.Menus.Data.Entities;
 using Platformus.Menus.Frontend.ViewModels.Shared;

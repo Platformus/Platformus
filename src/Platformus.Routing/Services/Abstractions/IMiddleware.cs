@@ -4,7 +4,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Platformus.Barebone;
 
-namespace Platformus.Routing.Frontend
+namespace Platformus.Routing.Services.Abstractions
 {
   public interface IMiddleware
   {

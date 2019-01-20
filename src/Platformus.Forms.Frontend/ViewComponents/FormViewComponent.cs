@@ -8,7 +8,7 @@ using Platformus.Barebone.Frontend.ViewComponents;
 using Platformus.Forms.Data.Abstractions;
 using Platformus.Forms.Data.Entities;
 using Platformus.Forms.Frontend.ViewModels.Shared;
-using Platformus.Globalization;
+using Platformus.Globalization.Services.Abstractions;
 
 namespace Platformus.Forms.Frontend.ViewComponents
 {

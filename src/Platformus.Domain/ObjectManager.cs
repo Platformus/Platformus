@@ -7,9 +7,9 @@ using System.Linq;
 using Platformus.Barebone;
 using Platformus.Domain.Data.Abstractions;
 using Platformus.Domain.Data.Entities;
-using Platformus.Globalization;
 using Platformus.Globalization.Data.Abstractions;
 using Platformus.Globalization.Data.Entities;
+using Platformus.Globalization.Services.Abstractions;
 
 namespace Platformus.Domain
 {

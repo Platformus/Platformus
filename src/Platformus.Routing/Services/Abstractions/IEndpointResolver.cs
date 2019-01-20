@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using Platformus.Barebone;
 using Platformus.Routing.Data.Entities;
 
-namespace Platformus.Routing.EndpointResolvers
+namespace Platformus.Routing.Services.Abstractions
 {
   public interface IEndpointResolver
   {

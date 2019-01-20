@@ -4,7 +4,7 @@
 using System.Collections.Generic;
 using Platformus.Globalization.Data.Entities;
 
-namespace Platformus.Globalization
+namespace Platformus.Globalization.Services.Abstractions
 {
   public interface ICultureManager
   {

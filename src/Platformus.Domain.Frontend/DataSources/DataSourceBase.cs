@@ -8,7 +8,8 @@ using Newtonsoft.Json;
 using Platformus.Barebone;
 using Platformus.Domain.Data.Abstractions;
 using Platformus.Domain.Data.Entities;
-using Platformus.Globalization;
+using Platformus.Domain.Services.Abstractions;
+using Platformus.Globalization.Services.Abstractions;
 
 namespace Platformus.Domain.Frontend.DataSources
 {

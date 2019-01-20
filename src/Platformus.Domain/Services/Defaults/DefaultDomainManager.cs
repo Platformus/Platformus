@@ -7,8 +7,9 @@ using System.Linq;
 using ExtCore.Data.Abstractions;
 using Platformus.Domain.Data.Abstractions;
 using Platformus.Domain.Data.Entities;
+using Platformus.Domain.Services.Abstractions;
 
-namespace Platformus.Domain
+namespace Platformus.Domain.Services.Defaults
 {
   public class DefaultDomainManager : IDomainManager
   {

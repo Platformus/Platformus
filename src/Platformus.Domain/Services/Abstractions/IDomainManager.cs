@@ -4,7 +4,7 @@
 using System.Collections.Generic;
 using Platformus.Domain.Data.Entities;
 
-namespace Platformus.Domain
+namespace Platformus.Domain.Services.Abstractions
 {
   public interface IDomainManager
   {

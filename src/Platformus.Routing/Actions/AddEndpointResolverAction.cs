@@ -4,7 +4,8 @@
 using System;
 using ExtCore.Infrastructure.Actions;
 using Microsoft.Extensions.DependencyInjection;
-using Platformus.Routing.EndpointResolvers;
+using Platformus.Routing.Services.Abstractions;
+using Platformus.Routing.Services.Defaults;
 
 namespace Platformus.Routing.Actions
 {

@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Routing;
 using Platformus.Barebone;
 using Platformus.Domain.Data.Abstractions;
 using Platformus.Domain.Data.Entities;
-using Platformus.Globalization;
+using Platformus.Globalization.Services.Abstractions;
 
 namespace Platformus.Domain.Frontend.DataSources
 {

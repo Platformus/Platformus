@@ -6,9 +6,10 @@ using ExtCore.Mvc.Infrastructure.Actions;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Routing;
 using Microsoft.Extensions.DependencyInjection;
-using Platformus.Configurations;
+using Platformus.Configurations.Services.Abstractions;
 using Platformus.Globalization;
 using Platformus.Globalization.Data.Entities;
+using Platformus.Globalization.Services.Abstractions;
 
 namespace Platformus.Routing.Frontend.Actions
 {

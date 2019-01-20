@@ -9,8 +9,8 @@ using Platformus.Barebone;
 using Platformus.Domain.Data.Abstractions;
 using Platformus.Domain.Data.Entities;
 using Platformus.Domain.Events;
-using Platformus.Globalization;
 using Platformus.Globalization.Data.Entities;
+using Platformus.Globalization.Services.Abstractions;
 
 namespace Platformus.Domain
 {

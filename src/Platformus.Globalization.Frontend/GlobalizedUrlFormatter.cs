@@ -3,7 +3,7 @@
 
 using System.Globalization;
 using Platformus.Barebone;
-using Platformus.Configurations;
+using Platformus.Configurations.Services.Abstractions;
 
 namespace Platformus.Globalization.Frontend
 {

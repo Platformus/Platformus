@@ -4,8 +4,9 @@
 using ExtCore.Data.Abstractions;
 using Platformus.Configurations.Data.Abstractions;
 using Platformus.Configurations.Data.Entities;
+using Platformus.Configurations.Services.Abstractions;
 
-namespace Platformus.Configurations
+namespace Platformus.Configurations.Services.Defaults
 {
   public class DefaultConfigurationManager : IConfigurationManager
   {

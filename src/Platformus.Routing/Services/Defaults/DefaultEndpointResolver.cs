@@ -7,8 +7,9 @@ using System.Text.RegularExpressions;
 using Platformus.Barebone;
 using Platformus.Routing.Data.Abstractions;
 using Platformus.Routing.Data.Entities;
+using Platformus.Routing.Services.Abstractions;
 
-namespace Platformus.Routing.EndpointResolvers
+namespace Platformus.Routing.Services.Defaults
 {
   public class DefaultEndpointResolver : IEndpointResolver
   {

@@ -4,6 +4,7 @@
 using Platformus.Barebone;
 using Platformus.Globalization.Data.Entities;
 using Platformus.Globalization.Events;
+using Platformus.Globalization.Services.Abstractions;
 
 namespace Platformus.Globalization.EventHandlers
 {

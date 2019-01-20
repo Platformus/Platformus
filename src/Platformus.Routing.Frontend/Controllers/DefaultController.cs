@@ -6,6 +6,7 @@ using ExtCore.Data.Abstractions;
 using ExtCore.Infrastructure;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Platformus.Routing.Services.Abstractions;
 
 namespace Platformus.Routing.Frontend.Controllers
 {

@@ -4,6 +4,7 @@
 using Platformus.Barebone;
 using Platformus.Configurations.Data.Entities;
 using Platformus.Configurations.Events;
+using Platformus.Configurations.Services.Abstractions;
 
 namespace Platformus.Configurations.EventHandlers
 {

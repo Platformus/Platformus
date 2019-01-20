@@ -7,13 +7,13 @@ using Microsoft.AspNetCore.Mvc;
 using Platformus.Barebone;
 using Platformus.Routing.Data.Abstractions;
 using Platformus.Routing.Data.Entities;
-using Platformus.Routing.EndpointResolvers;
 using Platformus.Routing.Endpoints;
+using Platformus.Routing.Services.Abstractions;
 using Platformus.Security;
 using Platformus.Security.Data.Abstractions;
 using Platformus.Security.Data.Entities;
 
-namespace Platformus.Routing.Frontend
+namespace Platformus.Routing.Services.Defaults
 {
   public class DefaultMiddleware : IMiddleware
   {
@@ -53,7 +53,7 @@ namespace Platformus.Routing.Frontend
 
     private bool HasRequiredClaims(IRequestHandler requestHandler, Endpoint endpoint)
     {
-      IEnumerable<EndpointPermission> endpointPermissions = requestHandler.Storage.GetRepository<IEndpointPermissionRepository>().FilteredByEndpointId(endpoint.Id);
+      IEnumerable<EndpointPermission> endpointPermissions = requestHandler.Storage.GetRepository<IEndpointPermissionRepository>().FilteredByEndpointId(endpoint.Id).ToList();
 
       if (endpointPermissions.Count() == 0 || requestHandler.HttpContext.User.HasClaim(PlatformusClaimTypes.Permission, Platformus.Security.Permissions.DoEverything))
         return true;

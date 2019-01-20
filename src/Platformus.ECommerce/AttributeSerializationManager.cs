@@ -5,8 +5,8 @@ using Newtonsoft.Json;
 using Platformus.Barebone;
 using Platformus.ECommerce.Data.Abstractions;
 using Platformus.ECommerce.Data.Entities;
-using Platformus.Globalization;
 using Platformus.Globalization.Data.Entities;
+using Platformus.Globalization.Services.Abstractions;
 
 namespace Platformus.ECommerce
 {

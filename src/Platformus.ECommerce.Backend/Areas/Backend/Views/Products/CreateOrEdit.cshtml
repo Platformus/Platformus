@@ -2,7 +2,7 @@
 @* Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information. *@
 @model Platformus.ECommerce.Backend.ViewModels.Products.CreateOrEditViewModel
 @inject Microsoft.AspNetCore.Mvc.Localization.IViewLocalizer Localizer
-@inject Platformus.Globalization.ICultureManager CultureManager
+@inject Platformus.Globalization.Services.Abstractions.ICultureManager CultureManager
 @{
   this.ViewBag.Title = (this.Model.Id == null ? this.Localizer["Create Product"].Value : this.Localizer["Edit Product"].Value);
   this.ViewBag.ActiveMenuItem = "products";

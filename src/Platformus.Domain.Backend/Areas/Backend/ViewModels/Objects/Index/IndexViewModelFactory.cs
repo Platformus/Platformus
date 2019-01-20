@@ -9,9 +9,9 @@ using Platformus.Barebone.Backend.ViewModels.Shared;
 using Platformus.Domain.Backend.ViewModels.Shared;
 using Platformus.Domain.Data.Abstractions;
 using Platformus.Domain.Data.Entities;
-using Platformus.Globalization;
 using Platformus.Globalization.Backend.ViewModels;
 using Platformus.Globalization.Data.Entities;
+using Platformus.Globalization.Services.Abstractions;
 
 namespace Platformus.Domain.Backend.ViewModels.Objects
 {

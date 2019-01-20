@@ -8,8 +8,9 @@ using System.Linq;
 using ExtCore.Data.Abstractions;
 using Platformus.Globalization.Data.Abstractions;
 using Platformus.Globalization.Data.Entities;
+using Platformus.Globalization.Services.Abstractions;
 
-namespace Platformus.Globalization
+namespace Platformus.Globalization.Services.Defaults
 {
   public class DefaultCultureManager : ICultureManager
   {

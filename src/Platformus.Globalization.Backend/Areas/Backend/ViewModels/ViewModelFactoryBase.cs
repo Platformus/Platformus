@@ -6,6 +6,7 @@ using System.Linq;
 using Platformus.Barebone;
 using Platformus.Globalization.Data.Abstractions;
 using Platformus.Globalization.Data.Entities;
+using Platformus.Globalization.Services.Abstractions;
 
 namespace Platformus.Globalization.Backend.ViewModels
 {

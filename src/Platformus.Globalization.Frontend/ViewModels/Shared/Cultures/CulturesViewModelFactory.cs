@@ -3,6 +3,7 @@
 
 using System.Linq;
 using Platformus.Barebone;
+using Platformus.Globalization.Services.Abstractions;
 
 namespace Platformus.Globalization.Frontend.ViewModels.Shared
 {
