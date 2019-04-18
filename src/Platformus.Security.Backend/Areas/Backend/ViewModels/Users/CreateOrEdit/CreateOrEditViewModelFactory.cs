@@ -38,7 +38,7 @@ namespace Platformus.Security.Backend.ViewModels.Users
 
     public IEnumerable<UserRoleViewModel> GetUserRoles(User user = null)
     {
-      return this.RequestHandler.Storage.GetRepository<IRoleRepository>().All().Select(
+      return this.RequestHandler.Storage.GetRepository<IRoleRepository>().All().ToList().Select(
         r => new UserRoleViewModelFactory(this.RequestHandler).Create(user, r)
       );
     }

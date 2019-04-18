@@ -91,21 +91,25 @@ namespace Platformus.Domain.Backend.Controllers
       foreach (KeyValuePair<string, string> valueByCode in ParametersParser.Parse(parameters))
       {
         DataTypeParameter dataTypeParameter = dataTypeParameterRepository.WithDataTypeIdAndCode((int)member.PropertyDataTypeId, valueByCode.Key);
-        DataTypeParameterValue dataTypeParameterValue = dataTypeParameterValueRepository.WithDataTypeParameterIdAndMemberId(dataTypeParameter.Id, member.Id);
 
-        if (dataTypeParameterValue == null)
+        if (dataTypeParameter != null)
         {
-          dataTypeParameterValue = new DataTypeParameterValue();
-          dataTypeParameterValue.DataTypeParameterId = dataTypeParameter.Id;
-          dataTypeParameterValue.MemberId = member.Id;
-          dataTypeParameterValue.Value = valueByCode.Value;
-          dataTypeParameterValueRepository.Create(dataTypeParameterValue);
-        }
+          DataTypeParameterValue dataTypeParameterValue = dataTypeParameterValueRepository.WithDataTypeParameterIdAndMemberId(dataTypeParameter.Id, member.Id);
 
-        else
-        {
-          dataTypeParameterValue.Value = valueByCode.Value;
-          dataTypeParameterValueRepository.Edit(dataTypeParameterValue);
+          if (dataTypeParameterValue == null)
+          {
+            dataTypeParameterValue = new DataTypeParameterValue();
+            dataTypeParameterValue.DataTypeParameterId = dataTypeParameter.Id;
+            dataTypeParameterValue.MemberId = member.Id;
+            dataTypeParameterValue.Value = valueByCode.Value;
+            dataTypeParameterValueRepository.Create(dataTypeParameterValue);
+          }
+
+          else
+          {
+            dataTypeParameterValue.Value = valueByCode.Value;
+            dataTypeParameterValueRepository.Edit(dataTypeParameterValue);
+          }
         }
       }
 
