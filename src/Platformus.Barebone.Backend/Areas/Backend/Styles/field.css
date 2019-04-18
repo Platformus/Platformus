@@ -27,8 +27,9 @@
 }
 
 .field__text-area {
-  width: 430px;
-  height: 290px;
+  box-sizing: border-box;
+  width: 100%;
+  height: 500px;
 }
 
 .field__text-area--multilingual {

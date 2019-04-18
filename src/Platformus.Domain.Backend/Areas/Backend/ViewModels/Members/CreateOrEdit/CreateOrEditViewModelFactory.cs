@@ -129,6 +129,7 @@ namespace Platformus.Domain.Backend.ViewModels.Members
         dt => new
         {
           id = dt.Id,
+          storageDataType = dt.StorageDataType,
           parameterGroups = new dynamic[] {
             new {
               parameters = this.RequestHandler.Storage.GetRepository<IDataTypeParameterRepository>().FilteredByDataTypeId(dt.Id).ToList().Select(
