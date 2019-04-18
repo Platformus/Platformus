@@ -1,6 +1,6 @@
 --
 -- Extension: Platformus.Security
--- Version: beta5
+-- Version: 1.0.0-beta6
 --
 
 -- Users
@@ -103,7 +103,7 @@ ALTER TABLE "RolePermissions" OWNER TO postgres;
 
 --
 -- Extension: Platformus.Configurations
--- Version: beta5
+-- Version: 1.0.0-beta6
 --
 
 -- Configurations
@@ -135,7 +135,7 @@ ALTER TABLE "Variables" OWNER TO postgres;
 
 --
 -- Extension: Platformus.Globalization
--- Version: beta5
+-- Version: 1.0.0-beta6
 --
 
 -- Cultures
@@ -180,7 +180,7 @@ ALTER TABLE "Localizations" OWNER TO postgres;
 
 --
 -- Extension: Platformus.Routing
--- Version: beta5
+-- Version: 1.0.0-beta6
 --
 
 -- Endpoints
@@ -233,7 +233,7 @@ ALTER TABLE "DataSources" OWNER TO postgres;
 
 --
 -- Extension: Platformus.Domain
--- Version: beta5
+-- Version: 1.0.0-beta6
 --
 
 -- Classes
@@ -439,7 +439,7 @@ ALTER TABLE "SerializedObjects" OWNER TO postgres;
 
 --
 -- Extension: Platformus.Menus
--- Version: beta5
+-- Version: 1.0.0-beta6
 --
 
 -- Menus
@@ -498,7 +498,7 @@ ALTER TABLE "SerializedMenus" OWNER TO postgres;
 
 --
 -- Extension: Platformus.Forms
--- Version: beta5
+-- Version: 1.0.0-beta6
 --
 
 -- Forms
@@ -636,7 +636,7 @@ ALTER TABLE "SerializedForms" OWNER TO postgres;
 
 --
 -- Extension: Platformus.FileManager
--- Version: beta5
+-- Version: 1.0.0-beta6
 --
 
 -- Files
@@ -651,7 +651,7 @@ ALTER TABLE "Files" OWNER TO postgres;
 
 --
 -- Extension: Platformus.ECommerce
--- Version: beta5
+-- Version: 1.0.0-beta6
 --
 
 -- Catalogs
