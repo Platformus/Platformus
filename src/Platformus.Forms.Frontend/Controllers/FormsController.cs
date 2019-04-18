@@ -4,6 +4,7 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using ExtCore.Data.Abstractions;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
@@ -45,7 +46,7 @@ namespace Platformus.Forms.Frontend.Controllers
     {
       IDictionary<Field, string> valuesByFields = new Dictionary<Field, string>();
 
-      foreach (Field field in this.Storage.GetRepository<IFieldRepository>().FilteredByFormId(form.Id))
+      foreach (Field field in this.Storage.GetRepository<IFieldRepository>().FilteredByFormId(form.Id).ToList())
       {
         FieldType fieldType = this.Storage.GetRepository<IFieldTypeRepository>().WithKey(field.FieldTypeId);
 
@@ -60,7 +61,7 @@ namespace Platformus.Forms.Frontend.Controllers
     {
       IDictionary<string, byte[]> attachmentsByFilenames = new Dictionary<string, byte[]>();
 
-      foreach (Field field in this.Storage.GetRepository<IFieldRepository>().FilteredByFormId(form.Id))
+      foreach (Field field in this.Storage.GetRepository<IFieldRepository>().FilteredByFormId(form.Id).ToList())
       {
         FieldType fieldType = this.Storage.GetRepository<IFieldTypeRepository>().WithKey(field.FieldTypeId);
 
