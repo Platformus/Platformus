@@ -37,7 +37,7 @@ namespace Platformus.Domain.Api.Controllers
       Params @params = new ParamsFactory(this).Create(filteringQuery, @class.Id, sortingMemberCode, sortingDirection, pagingSkip, pagingTake);
       IEnumerable<SerializedObject> serializedObjects = serializedObjectRepository.FilteredByCultureIdAndClassId(
         frontendDefaultCulture.Id, @class.Id, @params
-      );
+      ).ToList();
 
       ObjectDirector objectDirector = new ObjectDirector(this);
 

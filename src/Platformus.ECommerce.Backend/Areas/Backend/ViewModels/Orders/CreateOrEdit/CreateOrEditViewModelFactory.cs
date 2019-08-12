@@ -44,21 +44,21 @@ namespace Platformus.ECommerce.Backend.ViewModels.Orders
 
     private IEnumerable<Option> GetOrderStateOptions()
     {
-      return this.RequestHandler.Storage.GetRepository<IOrderStateRepository>().All().Select(
+      return this.RequestHandler.Storage.GetRepository<IOrderStateRepository>().All().ToList().Select(
         os => new Option(this.GetLocalizationValue(os.NameId), os.Id.ToString())
       );
     }
 
     private IEnumerable<Option> GetPaymentMethodOptions()
     {
-      return this.RequestHandler.Storage.GetRepository<IPaymentMethodRepository>().All().Select(
+      return this.RequestHandler.Storage.GetRepository<IPaymentMethodRepository>().All().ToList().Select(
         pm => new Option(this.GetLocalizationValue(pm.NameId), pm.Id.ToString())
       );
     }
 
     private IEnumerable<Option> GetDeliveryMethodOptions()
     {
-      return this.RequestHandler.Storage.GetRepository<IDeliveryMethodRepository>().All().Select(
+      return this.RequestHandler.Storage.GetRepository<IDeliveryMethodRepository>().All().ToList().Select(
         dm => new Option(this.GetLocalizationValue(dm.NameId), dm.Id.ToString())
       );
     }

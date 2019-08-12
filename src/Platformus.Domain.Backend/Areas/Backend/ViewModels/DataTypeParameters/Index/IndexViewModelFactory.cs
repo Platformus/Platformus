@@ -32,7 +32,7 @@ namespace Platformus.Domain.Backend.ViewModels.DataTypeParameters
             new GridColumnViewModelFactory(this.RequestHandler).Create(localizer["Name"], "Name"),
             new GridColumnViewModelFactory(this.RequestHandler).CreateEmpty()
           },
-          dataTypeParameterRepository.FilteredByDataTypeIdRange(dataTypeId, orderBy, direction, skip, take, filter).Select(dtp => new DataTypeParameterViewModelFactory(this.RequestHandler).Create(dtp)),
+          dataTypeParameterRepository.FilteredByDataTypeIdRange(dataTypeId, orderBy, direction, skip, take, filter).ToList().Select(dtp => new DataTypeParameterViewModelFactory(this.RequestHandler).Create(dtp)),
           "_DataTypeParameter"
         )
       };

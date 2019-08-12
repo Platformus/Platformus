@@ -22,7 +22,7 @@ namespace Platformus.Configurations.Backend.ViewModels.Shared
       {
         Id = configuration.Id,
         Name = configuration.Name,
-        Variables = this.RequestHandler.Storage.GetRepository<IVariableRepository>().FilteredByConfigurationId(configuration.Id).Select(
+        Variables = this.RequestHandler.Storage.GetRepository<IVariableRepository>().FilteredByConfigurationId(configuration.Id).ToList().Select(
           v => new VariableViewModelFactory(this.RequestHandler).Create(v)
         )
       };

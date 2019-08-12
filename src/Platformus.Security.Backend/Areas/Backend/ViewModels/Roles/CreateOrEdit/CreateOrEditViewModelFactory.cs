@@ -40,7 +40,7 @@ namespace Platformus.Security.Backend.ViewModels.Roles
 
     public IEnumerable<RolePermissionViewModel> GetRolePermissions(Role role = null)
     {
-      return this.RequestHandler.Storage.GetRepository<IPermissionRepository>().All().Select(
+      return this.RequestHandler.Storage.GetRepository<IPermissionRepository>().All().ToList().Select(
         p => new RolePermissionViewModelFactory(this.RequestHandler).Create(role, p)
       );
     }

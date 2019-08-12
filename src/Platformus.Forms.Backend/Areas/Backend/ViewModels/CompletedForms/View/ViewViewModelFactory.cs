@@ -24,7 +24,7 @@ namespace Platformus.Forms.Backend.ViewModels.CompletedForms
       return new ViewViewModel()
       {
         Id = completedForm.Id,
-        CompletedFields = this.RequestHandler.Storage.GetRepository<ICompletedFieldRepository>().FilteredByCompletedFormId(completedForm.Id).Select(
+        CompletedFields = this.RequestHandler.Storage.GetRepository<ICompletedFieldRepository>().FilteredByCompletedFormId(completedForm.Id).ToList().Select(
           cf => new CompletedFieldViewModelFactory(this.RequestHandler).Create(cf)
         )
       };

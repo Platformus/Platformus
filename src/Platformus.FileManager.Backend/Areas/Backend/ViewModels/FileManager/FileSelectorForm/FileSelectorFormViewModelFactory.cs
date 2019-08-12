@@ -20,7 +20,7 @@ namespace Platformus.FileManager.Backend.ViewModels.FileManager
     {
       return new FileSelectorFormViewModel()
       {
-        Files = this.RequestHandler.Storage.GetRepository<IFileRepository>().All().Select(
+        Files = this.RequestHandler.Storage.GetRepository<IFileRepository>().All().ToList().Select(
           f => new FileViewModelFactory(this.RequestHandler).Create(f)
         )
       };

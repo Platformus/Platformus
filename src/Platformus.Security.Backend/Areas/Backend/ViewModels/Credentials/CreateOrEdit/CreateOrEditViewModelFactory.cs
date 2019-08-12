@@ -39,7 +39,7 @@ namespace Platformus.Security.Backend.ViewModels.Credentials
 
     private IEnumerable<Option> GetCredentialTypeOptions()
     {
-      return this.RequestHandler.Storage.GetRepository<ICredentialTypeRepository>().All().Select(
+      return this.RequestHandler.Storage.GetRepository<ICredentialTypeRepository>().All().ToList().Select(
         ct => new Option(ct.Name, ct.Id.ToString())
       );
     }

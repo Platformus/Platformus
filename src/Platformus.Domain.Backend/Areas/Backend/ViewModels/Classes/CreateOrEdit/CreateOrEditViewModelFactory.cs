@@ -46,7 +46,7 @@ namespace Platformus.Domain.Backend.ViewModels.Classes
 
       options.Add(new Option("Parent class not specified", string.Empty));
       options.AddRange(
-        this.RequestHandler.Storage.GetRepository<IClassRepository>().Abstract().Select(
+        this.RequestHandler.Storage.GetRepository<IClassRepository>().Abstract().ToList().Select(
           c => new Option(c.Name, c.Id.ToString())
         )
       );

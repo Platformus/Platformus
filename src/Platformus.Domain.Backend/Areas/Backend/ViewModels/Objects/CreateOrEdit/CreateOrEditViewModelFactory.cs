@@ -142,7 +142,7 @@ namespace Platformus.Domain.Backend.ViewModels.Objects
       if (@object == null && objectId != null)
         return new dynamic[] { new { primaryId = objectId } };
 
-      return this.RequestHandler.Storage.GetRepository<IRelationRepository>().FilteredByMemberIdAndForeignId(member.Id, @object.Id).Select(
+      return this.RequestHandler.Storage.GetRepository<IRelationRepository>().FilteredByMemberIdAndForeignId(member.Id, @object.Id).ToList().Select(
         r => new { primaryId = r.PrimaryId }
       );
     }

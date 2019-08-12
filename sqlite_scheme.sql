@@ -1,7 +1,7 @@
 BEGIN TRANSACTION;
 --
 -- Extension: Platformus.Security
--- Version: 1.0.0-beta6
+-- Version: 1.0.0
 --
 
 -- Users
@@ -67,7 +67,7 @@ CREATE TABLE "RolePermissions" (
 
 --
 -- Extension: Platformus.Configurations
--- Version: 1.0.0-beta6
+-- Version: 1.0.0
 --
 
 -- Configurations
@@ -90,7 +90,7 @@ CREATE TABLE "Variables" (
 
 --
 -- Extension: Platformus.Globalization
--- Version: 1.0.0-beta6
+-- Version: 1.0.0
 --
 
 -- Cultures
@@ -120,7 +120,7 @@ CREATE TABLE "Localizations" (
 
 --
 -- Extension: Platformus.Routing
--- Version: 1.0.0-beta6
+-- Version: 1.0.0
 --
 
 -- Endpoints
@@ -156,7 +156,7 @@ CREATE TABLE "DataSources" (
 
 --
 -- Extension: Platformus.Domain
--- Version: 1.0.0-beta6
+-- Version: 1.0.0
 --
 
 -- Classes
@@ -276,7 +276,7 @@ CREATE TABLE "SerializedObjects" (
 
 --
 -- Extension: Platformus.Menus
--- Version: 1.0.0-beta6
+-- Version: 1.0.0
 --
 
 -- Menus
@@ -313,7 +313,7 @@ CREATE TABLE "SerializedMenus" (
 
 --
 -- Extension: Platformus.Forms
--- Version: 1.0.0-beta6
+-- Version: 1.0.0
 --
 
 -- Forms
@@ -395,7 +395,7 @@ CREATE TABLE "SerializedForms" (
 
 --
 -- Extension: Platformus.FileManager
--- Version: 1.0.0-beta6
+-- Version: 1.0.0
 --
 
 -- Files
@@ -407,7 +407,7 @@ CREATE TABLE "Files" (
 
 --
 -- Extension: Platformus.ECommerce
--- Version: 1.0.0-beta6
+-- Version: 1.0.0
 --
 
 -- Catalogs
