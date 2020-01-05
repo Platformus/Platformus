@@ -4,8 +4,8 @@
     <Authors>Dmitry Sikorsky</Authors>
     <Copyright>Copyright © 2015 Dmitry Sikorsky</Copyright>
     <Description>The Platformus.Security extension component.</Description>
-    <VersionPrefix>1.0.0</VersionPrefix>
-    <TargetFramework>netstandard2.0</TargetFramework>
+    <VersionPrefix>1.1.0-beta1</VersionPrefix>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
     <AssemblyName>Platformus.Security</AssemblyName>
     <PackageId>Platformus.Security</PackageId>
     <PackageIconUrl>http://platformus.net/platformus_nuget_icon.png</PackageIconUrl>

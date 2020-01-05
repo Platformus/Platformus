@@ -69,7 +69,7 @@ namespace Platformus.ECommerce.Data.EntityFramework.PostgreSql
     /// <param name="category">The category to delete.</param>
     public void Delete(Category category)
     {
-      this.storageContext.Database.ExecuteSqlCommand(
+      this.storageContext.Database.ExecuteSqlRaw(
         @"
           CREATE TEMP TABLE ""TempCategories"" (""Id"" INT PRIMARY KEY);
           WITH RECURSIVE ""X"" AS (

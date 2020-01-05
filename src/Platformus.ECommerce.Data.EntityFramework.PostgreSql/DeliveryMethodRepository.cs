@@ -35,7 +35,7 @@ namespace Platformus.ECommerce.Data.EntityFramework.PostgreSql
     /// <returns>Found delivery method with the given code.</returns>
     public DeliveryMethod WithCode(string code)
     {
-      return this.dbSet.FirstOrDefault(os => string.Equals(os.Code, code, StringComparison.OrdinalIgnoreCase));
+      return this.dbSet.FirstOrDefault(dm => dm.Code.ToLower() == code.ToLower());
     }
 
     /// <summary>
@@ -94,7 +94,7 @@ namespace Platformus.ECommerce.Data.EntityFramework.PostgreSql
     /// <param name="deliveryMethod">The delivery method to delete.</param>
     public void Delete(DeliveryMethod deliveryMethod)
     {
-      this.storageContext.Database.ExecuteSqlCommand(
+      this.storageContext.Database.ExecuteSqlRaw(
         @"
           CREATE TEMP TABLE ""TempDictionaries"" (""Id"" INT PRIMARY KEY);
           INSERT INTO ""TempDictionaries"" SELECT ""NameId"" FROM ""DeliveryMethods"" WHERE ""Id"" = {0};

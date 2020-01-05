@@ -13,7 +13,6 @@ using Microsoft.AspNetCore.Mvc;
 using SixLabors.ImageSharp;
 using SixLabors.ImageSharp.Formats;
 using SixLabors.ImageSharp.Formats.Jpeg;
-using SixLabors.ImageSharp.PixelFormats;
 using SixLabors.ImageSharp.Processing;
 using SixLabors.Primitives;
 
@@ -22,12 +21,12 @@ namespace Platformus.Barebone.Backend.Controllers
   [Area("Backend")]
   public class ImageUploaderController : ControllerBase
   {
-    private IHostingEnvironment hostingEnvironment;
+    private IWebHostEnvironment webHostEnvironment;
 
-    public ImageUploaderController(IStorage storage, IHostingEnvironment hostingEnvironment)
+    public ImageUploaderController(IStorage storage, IWebHostEnvironment webHostEnvironment)
       : base(storage)
     {
-      this.hostingEnvironment = hostingEnvironment;
+      this.webHostEnvironment = webHostEnvironment;
     }
 
     [HttpGet]
@@ -53,7 +52,7 @@ namespace Platformus.Barebone.Backend.Controllers
       string tempFilepath = this.GetTempFilepath(filename);
       string destinationFilepath = this.GetFilepath(destinationBaseUrl, filename);
 
-      using (Image<Rgba32> image = this.LoadImageFromFile(tempFilepath, out IImageFormat imageFormat))
+      using (Image image = this.LoadImageFromFile(tempFilepath, out IImageFormat imageFormat))
       {
         if (image.Width == destinationWidth && image.Height == destinationHeight)
         {
@@ -79,7 +78,7 @@ namespace Platformus.Barebone.Backend.Controllers
       }
     }
 
-    private Image<Rgba32> LoadImageFromFile(string filepath, out IImageFormat imageFormat)
+    private Image LoadImageFromFile(string filepath, out IImageFormat imageFormat)
     {
       return Image.Load(filepath, out imageFormat);
     }
@@ -93,7 +92,7 @@ namespace Platformus.Barebone.Backend.Controllers
     {
       basePath = basePath.Replace('/', '\\');
 
-      return this.hostingEnvironment.WebRootPath + basePath.Replace('\\', Path.DirectorySeparatorChar) + filename;
+      return this.webHostEnvironment.WebRootPath + basePath.Replace('\\', Path.DirectorySeparatorChar) + filename;
     }
 
     private string GetTempBasePath()

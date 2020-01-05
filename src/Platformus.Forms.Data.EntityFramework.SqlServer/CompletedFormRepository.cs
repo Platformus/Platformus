@@ -65,7 +65,7 @@ namespace Platformus.Forms.Data.EntityFramework.SqlServer
     /// <param name="completedForm">The completed form to delete.</param>
     public void Delete(CompletedForm completedForm)
     {
-      this.storageContext.Database.ExecuteSqlCommand(
+      this.storageContext.Database.ExecuteSqlRaw(
         @"
           DELETE FROM CompletedFields WHERE CompletedFormId = {0};
         ",

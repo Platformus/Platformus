@@ -4,8 +4,8 @@
     <Authors>Dmitry Sikorsky</Authors>
     <Copyright>Copyright © 2015 Dmitry Sikorsky</Copyright>
     <Description>The Platformus.FileManager extension component.</Description>
-    <VersionPrefix>1.0.0</VersionPrefix>
-    <TargetFramework>netstandard2.0</TargetFramework>
+    <VersionPrefix>1.1.0-beta1</VersionPrefix>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
     <AssemblyName>Platformus.FileManager.Data.EntityFramework.Sqlite</AssemblyName>
     <PackageId>Platformus.FileManager.Data.EntityFramework.Sqlite</PackageId>
     <PackageIconUrl>http://platformus.net/platformus_nuget_icon.png</PackageIconUrl>
@@ -13,7 +13,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="ExtCore.Data.EntityFramework.Sqlite" Version="4.0.0" />
+    <PackageReference Include="ExtCore.Data.EntityFramework.Sqlite" Version="5.1.0" />
   </ItemGroup>
 
   <ItemGroup>

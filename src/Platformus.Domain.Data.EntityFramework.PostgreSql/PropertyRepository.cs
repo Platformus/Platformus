@@ -80,7 +80,7 @@ namespace Platformus.Domain.Data.EntityFramework.PostgreSql
     /// <param name="property">The property to delete.</param>
     public void Delete(Property property)
     {
-      this.storageContext.Database.ExecuteSqlCommand(
+      this.storageContext.Database.ExecuteSqlRaw(
         @"
           CREATE TEMP TABLE ""TempDictionaries"" (""Id"" INT PRIMARY KEY);
           INSERT INTO ""TempDictionaries"" SELECT ""StringValueId"" FROM ""Properties"" WHERE ""Id"" = {0} AND ""StringValueId"" IS NOT NULL;

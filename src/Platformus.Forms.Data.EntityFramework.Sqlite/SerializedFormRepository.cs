@@ -35,7 +35,7 @@ namespace Platformus.Forms.Data.EntityFramework.Sqlite
     /// <returns>Found serialized form with the given culture identifier and form code.</returns>
     public SerializedForm WithCultureIdAndCode(int cultureId, string code)
     {
-      return this.dbSet.FirstOrDefault(sf => sf.CultureId == cultureId && string.Equals(sf.Code, code, StringComparison.OrdinalIgnoreCase));
+      return this.dbSet.FirstOrDefault(sf => sf.CultureId == cultureId && sf.Code.ToLower() == code.ToLower());
     }
 
     /// <summary>

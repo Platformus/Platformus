@@ -15,6 +15,7 @@ namespace Platformus.Domain.Data.EntityFramework.PostgreSql
         {
           etb.HasKey(e => e.Id);
           etb.Property(e => e.Id).ValueGeneratedOnAdd();
+          etb.HasOne(e => e.Parent).WithMany(e => e.Classes).HasForeignKey(e => e.ClassId);
           etb.Property(e => e.Code).IsRequired().HasMaxLength(32);
           etb.Property(e => e.Name).IsRequired().HasMaxLength(64);
           etb.Property(e => e.PluralizedName).IsRequired().HasMaxLength(64);

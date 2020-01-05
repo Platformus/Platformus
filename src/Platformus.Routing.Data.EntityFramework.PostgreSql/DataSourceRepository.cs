@@ -36,7 +36,7 @@ namespace Platformus.Routing.Data.EntityFramework.PostgreSql
     /// <returns>Found data source with the given endpoint identifier and code.</returns>
     public DataSource WithEndpointIdAndCode(int endpointId, string code)
     {
-      return this.dbSet.FirstOrDefault(ds => ds.EndpointId == endpointId && string.Equals(ds.Code, code, StringComparison.OrdinalIgnoreCase));
+      return this.dbSet.FirstOrDefault(ds => ds.EndpointId == endpointId && ds.Code.ToLower() == code.ToLower());
     }
 
     /// <summary>

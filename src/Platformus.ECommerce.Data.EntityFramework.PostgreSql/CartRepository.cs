@@ -35,7 +35,7 @@ namespace Platformus.ECommerce.Data.EntityFramework.PostgreSql
     /// <returns>Found cart with the given client-side identifier.</returns>
     public Cart WithClientSideId(string clientSideId)
     {
-      return this.dbSet.FirstOrDefault(c => string.Equals(c.ClientSideId, clientSideId, StringComparison.OrdinalIgnoreCase));
+      return this.dbSet.FirstOrDefault(c => c.ClientSideId.ToLower() == clientSideId.ToLower());
     }
 
     /// <summary>
@@ -95,7 +95,7 @@ namespace Platformus.ECommerce.Data.EntityFramework.PostgreSql
     /// <param name="cart">The cart to delete.</param>
     public void Delete(Cart cart)
     {
-      this.storageContext.Database.ExecuteSqlCommand(
+      this.storageContext.Database.ExecuteSqlRaw(
         @"
           DELETE FROM ""Positions"" WHERE ""CartId"" = {0};
           DELETE FROM ""Carts"" WHERE ""Id"" = {0};

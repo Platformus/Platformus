@@ -8,13 +8,13 @@ using Microsoft.AspNetCore.Routing;
 
 namespace Platformus.Forms.Frontend.Actions
 {
-  public class UseMvcAction : IUseMvcAction
+  public class UseEndpointsAction : IUseEndpointsAction
   {
     public int Priority => 1000;
 
-    public void Execute(IRouteBuilder routeBuilder, IServiceProvider serviceProvider)
+    public void Execute(IEndpointRouteBuilder endpointRouteBuilder, IServiceProvider serviceProvider)
     {
-      routeBuilder.MapRoute(name: "Forms", template: "{culture=en}/forms/send", defaults: new { controller = "Forms", action = "Send" });
+      endpointRouteBuilder.MapControllerRoute(name: "Forms", pattern: "{culture=en}/forms/send", defaults: new { controller = "Forms", action = "Send" });
     }
   }
 }

@@ -34,7 +34,7 @@ namespace Platformus.Menus.Data.EntityFramework.SqlServer
     /// <returns>Found menu with the given code.</returns>
     public Menu WithCode(string code)
     {
-      return this.dbSet.FirstOrDefault(m => string.Equals(m.Code, code, StringComparison.OrdinalIgnoreCase));
+      return this.dbSet.FirstOrDefault(m => m.Code.ToLower() == code.ToLower());
     }
 
     /// <summary>
@@ -79,7 +79,7 @@ namespace Platformus.Menus.Data.EntityFramework.SqlServer
     /// <param name="menu">The menu to delete.</param>
     public void Delete(Menu menu)
     {
-      this.storageContext.Database.ExecuteSqlCommand(
+      this.storageContext.Database.ExecuteSqlRaw(
         @"
           DELETE FROM SerializedMenus WHERE MenuId = {0};
           CREATE TABLE #MenuItems (Id INT PRIMARY KEY);

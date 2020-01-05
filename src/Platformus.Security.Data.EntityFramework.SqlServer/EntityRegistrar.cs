@@ -14,7 +14,7 @@ namespace Platformus.Security.Data.EntityFramework.SqlServer
       modelBuilder.Entity<User>(etb =>
         {
           etb.HasKey(e => e.Id);
-          etb.Property(e => e.Id).UseSqlServerIdentityColumn();
+          etb.Property(e => e.Id).UseIdentityColumn();
           etb.Property(e => e.Name).IsRequired().HasMaxLength(64);
           etb.ToTable("Users");
         }
@@ -23,7 +23,7 @@ namespace Platformus.Security.Data.EntityFramework.SqlServer
 	  modelBuilder.Entity<CredentialType>(etb =>
         {
           etb.HasKey(e => e.Id);
-          etb.Property(e => e.Id).UseSqlServerIdentityColumn();
+          etb.Property(e => e.Id).UseIdentityColumn();
           etb.Property(e => e.Code).IsRequired().HasMaxLength(32);
           etb.Property(e => e.Name).IsRequired().HasMaxLength(64);
           etb.ToTable("CredentialTypes");
@@ -33,7 +33,7 @@ namespace Platformus.Security.Data.EntityFramework.SqlServer
       modelBuilder.Entity<Credential>(etb =>
         {
           etb.HasKey(e => e.Id);
-          etb.Property(e => e.Id).UseSqlServerIdentityColumn();
+          etb.Property(e => e.Id).UseIdentityColumn();
           etb.Property(e => e.Identifier).IsRequired().HasMaxLength(64);
           etb.Property(e => e.Secret).HasMaxLength(1024);
           etb.ToTable("Credentials");
@@ -43,7 +43,7 @@ namespace Platformus.Security.Data.EntityFramework.SqlServer
 	  modelBuilder.Entity<Role>(etb =>
         {
           etb.HasKey(e => e.Id);
-          etb.Property(e => e.Id).UseSqlServerIdentityColumn();
+          etb.Property(e => e.Id).UseIdentityColumn();
           etb.Property(e => e.Code).IsRequired().HasMaxLength(32);
           etb.Property(e => e.Name).IsRequired().HasMaxLength(64);
           etb.ToTable("Roles");
@@ -60,7 +60,7 @@ namespace Platformus.Security.Data.EntityFramework.SqlServer
       modelBuilder.Entity<Permission>(etb =>
         {
           etb.HasKey(e => e.Id);
-          etb.Property(e => e.Id).UseSqlServerIdentityColumn();
+          etb.Property(e => e.Id).UseIdentityColumn();
           etb.Property(e => e.Code).IsRequired().HasMaxLength(32);
           etb.Property(e => e.Name).IsRequired().HasMaxLength(64);
           etb.ToTable("Permissions");

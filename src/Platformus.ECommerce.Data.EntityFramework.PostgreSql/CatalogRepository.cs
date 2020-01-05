@@ -34,7 +34,7 @@ namespace Platformus.ECommerce.Data.EntityFramework.PostgreSql
     /// <returns>Found catalog with the given URL.</returns>
     public Catalog WithUrl(string url)
     {
-      return this.dbSet.FirstOrDefault(c => string.Equals(c.Url, url, StringComparison.OrdinalIgnoreCase));
+      return this.dbSet.FirstOrDefault(c => c.Url.ToLower() == url.ToLower());
     }
 
     /// <summary>
@@ -80,7 +80,7 @@ namespace Platformus.ECommerce.Data.EntityFramework.PostgreSql
     /// <param name="catalog">The catalog to delete.</param>
     public void Delete(Catalog catalog)
     {
-      this.storageContext.Database.ExecuteSqlCommand(
+      this.storageContext.Database.ExecuteSqlRaw(
         @"
           CREATE TEMP TABLE ""TempCatalogs"" (""Id"" INT PRIMARY KEY);
           WITH RECURSIVE ""X"" AS (

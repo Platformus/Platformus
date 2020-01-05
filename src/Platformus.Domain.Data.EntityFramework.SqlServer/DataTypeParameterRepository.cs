@@ -36,7 +36,7 @@ namespace Platformus.Domain.Data.EntityFramework.SqlServer
     /// <returns>Found data type parameter with the given data type identifier and code.</returns>
     public DataTypeParameter WithDataTypeIdAndCode(int dataTypeId, string code)
     {
-      return this.dbSet.FirstOrDefault(dtp => dtp.DataTypeId == dataTypeId && string.Equals(dtp.Code, code, StringComparison.OrdinalIgnoreCase));
+      return this.dbSet.FirstOrDefault(dtp => dtp.DataTypeId == dataTypeId && dtp.Code.ToLower() == code.ToLower());
     }
 
     /// <summary>
@@ -97,7 +97,7 @@ namespace Platformus.Domain.Data.EntityFramework.SqlServer
     /// <param name="dataTypeParameter">The data type parameter to delete.</param>
     public void Delete(DataTypeParameter dataTypeParameter)
     {
-      this.storageContext.Database.ExecuteSqlCommand(
+      this.storageContext.Database.ExecuteSqlRaw(
         @"DELETE FROM DataTypeParameterValues WHERE DataTypeParameterId = {0};",
         dataTypeParameter.Id
       );

@@ -13,12 +13,14 @@ using Platformus.Globalization.Services.Abstractions;
 
 namespace Platformus.Routing.Frontend.Actions
 {
-  public class UseMvcAction : IUseMvcAction
+  public class UseEndpointsAction : IUseEndpointsAction
   {
     public int Priority => 10000;
 
-    public void Execute(IRouteBuilder routeBuilder, IServiceProvider serviceProvider)
+    public void Execute(IEndpointRouteBuilder endpointRouteBuilder, IServiceProvider serviceProvider)
     {
+      serviceProvider = serviceProvider.CreateScope().ServiceProvider;
+
       string template = string.Empty;
 
       if (this.MustSpecifyCultureInUrl(serviceProvider))
@@ -26,7 +28,7 @@ namespace Platformus.Routing.Frontend.Actions
 
       else template = "{*url}";
 
-      routeBuilder.MapRoute(name: "Default", template: template, defaults: new { controller = "Default", action = "Index" });
+      endpointRouteBuilder.MapControllerRoute(name: "Default", pattern: template, defaults: new { controller = "Default", action = "Index" });
     }
 
     private bool MustSpecifyCultureInUrl(IServiceProvider serviceProvider)

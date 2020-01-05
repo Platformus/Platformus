@@ -35,7 +35,7 @@ namespace Platformus.Menus.Data.EntityFramework.Sqlite
     /// <returns>Found serialized menu with the given culture identifier and menu code.</returns>
     public SerializedMenu WithCultureIdAndCode(int cultureId, string code)
     {
-      return this.dbSet.FirstOrDefault(sm => sm.CultureId == cultureId && string.Equals(sm.Code, code, StringComparison.OrdinalIgnoreCase));
+      return this.dbSet.FirstOrDefault(sm => sm.CultureId == cultureId && sm.Code.ToLower() == code.ToLower());
     }
 
     /// <summary>

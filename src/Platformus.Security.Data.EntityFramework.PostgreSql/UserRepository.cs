@@ -74,7 +74,7 @@ namespace Platformus.Security.Data.EntityFramework.PostgreSql
     /// <param name="user">The user to delete.</param>
     public void Delete(User user)
     {
-      this.storageContext.Database.ExecuteSqlCommand(
+      this.storageContext.Database.ExecuteSqlRaw(
         @"
           DELETE FROM ""UserRoles"" WHERE ""UserId"" = {0};
           DELETE FROM ""Credentials"" WHERE ""UserId"" = {0};

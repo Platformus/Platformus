@@ -35,7 +35,7 @@ namespace Platformus.ECommerce.Data.EntityFramework.PostgreSql
     /// <returns>Found payment method with the given code.</returns>
     public PaymentMethod WithCode(string code)
     {
-      return this.dbSet.FirstOrDefault(os => string.Equals(os.Code, code, StringComparison.OrdinalIgnoreCase));
+      return this.dbSet.FirstOrDefault(os => os.Code.ToLower() == code.ToLower());
     }
 
     /// <summary>
@@ -94,7 +94,7 @@ namespace Platformus.ECommerce.Data.EntityFramework.PostgreSql
     /// <param name="paymentMethod">The payment method to delete.</param>
     public void Delete(PaymentMethod paymentMethod)
     {
-      this.storageContext.Database.ExecuteSqlCommand(
+      this.storageContext.Database.ExecuteSqlRaw(
         @"
           CREATE TEMP TABLE ""TempDictionaries"" (""Id"" INT PRIMARY KEY);
           INSERT INTO ""TempDictionaries"" SELECT ""NameId"" FROM ""PaymentMethods"" WHERE ""Id"" = {0};

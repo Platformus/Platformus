@@ -79,7 +79,7 @@ namespace Platformus.Domain.Data.EntityFramework.SqlServer
     /// <param name="@object">The object to delete.</param>
     public void Delete(Object @object)
     {
-      this.storageContext.Database.ExecuteSqlCommand(
+      this.storageContext.Database.ExecuteSqlRaw(
         @"
           DELETE FROM SerializedObjects WHERE ObjectId = {0};
           CREATE TABLE #Dictionaries (Id INT PRIMARY KEY);

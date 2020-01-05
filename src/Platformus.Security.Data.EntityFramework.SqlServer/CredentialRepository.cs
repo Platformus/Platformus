@@ -36,7 +36,7 @@ namespace Platformus.Security.Data.EntityFramework.SqlServer
     /// <returns>Found credential with the given credential type identifier and user identifier.</returns>
     public Credential WithCredentialTypeIdAndIdentifier(int credentialTypeId, string identifier)
     {
-      return this.dbSet.FirstOrDefault(c => c.CredentialTypeId == credentialTypeId && string.Equals(c.Identifier, identifier, StringComparison.OrdinalIgnoreCase));
+      return this.dbSet.FirstOrDefault(c => c.CredentialTypeId == credentialTypeId && c.Identifier == identifier);
     }
 
     /// <summary>

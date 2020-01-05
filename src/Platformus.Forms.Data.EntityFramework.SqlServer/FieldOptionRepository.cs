@@ -69,7 +69,7 @@ namespace Platformus.Forms.Data.EntityFramework.SqlServer
     /// <param name="fieldOption">The field option to delete.</param>
     public void Delete(FieldOption fieldOption)
     {
-      this.storageContext.Database.ExecuteSqlCommand(
+      this.storageContext.Database.ExecuteSqlRaw(
         @"
           CREATE TABLE #Dictionaries (Id INT PRIMARY KEY);
           INSERT INTO #Dictionaries SELECT ValueId FROM FieldOptions WHERE Id = {0};

@@ -37,7 +37,7 @@ namespace Platformus.Domain.Data.EntityFramework.Sqlite
     /// <returns>Found serialized attributes filtered by the culture identifier and category identifier.</returns>
     public IEnumerable<SerializedAttribute> FilteredByCultureIdAndCategoryId(int cultureId, int categoryId)
     {
-      return this.dbSet.FromSql(
+      return this.dbSet.FromSqlRaw(
         "SELECT * FROM SerializedAttributes WHERE CultureId = {0} AND AttributeId IN (SELECT AttributeId FROM ProductAttributes WHERE ProductId IN (SELECT Id FROM Products WHERE CategoryId = {1}))",
         cultureId, categoryId
       );

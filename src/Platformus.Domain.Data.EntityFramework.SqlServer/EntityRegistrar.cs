@@ -14,7 +14,8 @@ namespace Platformus.Domain.Data.EntityFramework.SqlServer
       modelBuilder.Entity<Class>(etb =>
         {
           etb.HasKey(e => e.Id);
-          etb.Property(e => e.Id).UseSqlServerIdentityColumn();
+          etb.Property(e => e.Id).UseIdentityColumn();
+          etb.HasOne(e => e.Parent).WithMany(e => e.Classes).HasForeignKey(e => e.ClassId);
           etb.Property(e => e.Code).IsRequired().HasMaxLength(32);
           etb.Property(e => e.Name).IsRequired().HasMaxLength(64);
           etb.Property(e => e.PluralizedName).IsRequired().HasMaxLength(64);
@@ -26,7 +27,7 @@ namespace Platformus.Domain.Data.EntityFramework.SqlServer
       modelBuilder.Entity<Tab>(etb =>
         {
           etb.HasKey(e => e.Id);
-          etb.Property(e => e.Id).UseSqlServerIdentityColumn();
+          etb.Property(e => e.Id).UseIdentityColumn();
           etb.Property(e => e.Name).IsRequired().HasMaxLength(64);
           etb.ToTable("Tabs");
         }
@@ -35,7 +36,7 @@ namespace Platformus.Domain.Data.EntityFramework.SqlServer
       modelBuilder.Entity<DataType>(etb =>
         {
           etb.HasKey(e => e.Id);
-          etb.Property(e => e.Id).UseSqlServerIdentityColumn();
+          etb.Property(e => e.Id).UseIdentityColumn();
           etb.Property(e => e.StorageDataType).IsRequired().HasMaxLength(32);
           etb.Property(e => e.JavaScriptEditorClassName).IsRequired().HasMaxLength(128);
           etb.Property(e => e.Name).IsRequired().HasMaxLength(64);
@@ -66,7 +67,7 @@ namespace Platformus.Domain.Data.EntityFramework.SqlServer
       modelBuilder.Entity<Member>(etb =>
         {
           etb.HasKey(e => e.Id);
-          etb.Property(e => e.Id).UseSqlServerIdentityColumn();
+          etb.Property(e => e.Id).UseIdentityColumn();
           etb.Property(e => e.Code).IsRequired().HasMaxLength(32);
           etb.Property(e => e.Name).IsRequired().HasMaxLength(64);
           etb.ToTable("Members");
@@ -76,7 +77,7 @@ namespace Platformus.Domain.Data.EntityFramework.SqlServer
       modelBuilder.Entity<Object>(etb =>
         {
           etb.HasKey(e => e.Id);
-          etb.Property(e => e.Id).UseSqlServerIdentityColumn();
+          etb.Property(e => e.Id).UseIdentityColumn();
           etb.ToTable("Objects");
         }
       );
@@ -84,7 +85,7 @@ namespace Platformus.Domain.Data.EntityFramework.SqlServer
       modelBuilder.Entity<Property>(etb =>
         {
           etb.HasKey(e => e.Id);
-          etb.Property(e => e.Id).UseSqlServerIdentityColumn();
+          etb.Property(e => e.Id).UseIdentityColumn();
           etb.ToTable("Properties");
         }
       );
@@ -92,7 +93,7 @@ namespace Platformus.Domain.Data.EntityFramework.SqlServer
       modelBuilder.Entity<Relation>(etb =>
         {
           etb.HasKey(e => e.Id);
-          etb.Property(e => e.Id).UseSqlServerIdentityColumn();
+          etb.Property(e => e.Id).UseIdentityColumn();
           etb.HasOne(e => e.Primary).WithMany(e => e.PrimaryRelations).HasForeignKey(e => e.PrimaryId);
           etb.HasOne(e => e.Foreign).WithMany(e => e.ForeignRelations).HasForeignKey(e => e.ForeignId);
           etb.ToTable("Relations");

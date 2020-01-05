@@ -35,7 +35,7 @@ namespace Platformus.Security.Data.EntityFramework.PostgreSql
     /// <returns>Found permission with the given code.</returns>
     public Permission WithCode(string code)
     {
-      return this.dbSet.FirstOrDefault(p => string.Equals(p.Code, code, StringComparison.OrdinalIgnoreCase));
+      return this.dbSet.FirstOrDefault(p => p.Code.ToLower() == code.ToLower());
     }
 
     /// <summary>
@@ -94,7 +94,7 @@ namespace Platformus.Security.Data.EntityFramework.PostgreSql
     /// <param name="permission">The permission to delete.</param>
     public void Delete(Permission permission)
     {
-      this.storageContext.Database.ExecuteSqlCommand(
+      this.storageContext.Database.ExecuteSqlRaw(
         @"
           DELETE FROM ""RolePermissions"" WHERE ""PermissionId"" = {0};
         ",

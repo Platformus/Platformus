@@ -39,7 +39,7 @@ namespace Platformus.Domain.Data.EntityFramework.PostgreSql
     /// <returns>Found serialized object with the given culture identifier and URL object property value.</returns>
     public SerializedObject WithCultureIdAndUrlPropertyStringValue(int cultureId, string urlPropertyStringValue)
     {
-      return this.dbSet.FirstOrDefault(so => so.CultureId == cultureId && string.Equals(so.UrlPropertyStringValue, urlPropertyStringValue, StringComparison.OrdinalIgnoreCase));
+      return this.dbSet.FirstOrDefault(so => so.CultureId == cultureId && so.UrlPropertyStringValue.ToLower() == urlPropertyStringValue.ToLower());
     }
 
     /// <summary>
@@ -52,7 +52,7 @@ namespace Platformus.Domain.Data.EntityFramework.PostgreSql
     /// <returns>Found serialized objects.</returns>
     public IEnumerable<SerializedObject> FilteredByCultureIdAndClassId(int cultureId, int classId, Params @params)
     {
-      return this.dbSet.AsNoTracking().FromSql(
+      return this.dbSet.FromSqlRaw(
         this.GetSortedSelectQuerySql("\"SerializedObjects\".\"ClassId\" = {1}", @params),
         cultureId, classId
       );
@@ -69,7 +69,7 @@ namespace Platformus.Domain.Data.EntityFramework.PostgreSql
     /// <returns>Found serialized objects.</returns>
     public IEnumerable<SerializedObject> FilteredByCultureIdAndClassIdAndObjectId(int cultureId, int classId, int objectId, Params @params)
     {
-      return this.dbSet.AsNoTracking().FromSql(
+      return this.dbSet.FromSqlRaw(
         this.GetSortedSelectQuerySql("\"SerializedObjects\".\"ClassId\" = {1} AND \"SerializedObjects\".\"ObjectId\" IN (SELECT \"PrimaryId\" FROM \"Relations\" WHERE \"ForeignId\" = {2})", @params),
         cultureId, classId, objectId
       );
@@ -84,7 +84,7 @@ namespace Platformus.Domain.Data.EntityFramework.PostgreSql
     /// <returns>Found primary serialized objects.</returns>
     public IEnumerable<SerializedObject> Primary(int cultureId, int objectId)
     {
-      return this.dbSet.AsNoTracking().FromSql(
+      return this.dbSet.FromSqlRaw(
         this.GetUnsortedSelectQuerySql("\"ObjectId\" IN (SELECT \"PrimaryId\" FROM \"Relations\" WHERE \"ForeignId\" = {1})"),
         cultureId, objectId
       );
@@ -100,7 +100,7 @@ namespace Platformus.Domain.Data.EntityFramework.PostgreSql
     /// <returns>Found primary serialized objects.</returns>
     public IEnumerable<SerializedObject> Primary(int cultureId, int objectId, Params @params)
     {
-      return this.dbSet.AsNoTracking().FromSql(
+      return this.dbSet.FromSqlRaw(
         this.GetSortedSelectQuerySql("\"SerializedObjects\".\"ObjectId\" IN (SELECT \"PrimaryId\" FROM \"Relations\" WHERE \"ForeignId\" = {1})", @params),
         cultureId, objectId
       );
@@ -116,7 +116,7 @@ namespace Platformus.Domain.Data.EntityFramework.PostgreSql
     /// <returns>Found primary serialized objects.</returns>
     public IEnumerable<SerializedObject> Primary(int cultureId, int memberId, int objectId)
     {
-      return this.dbSet.AsNoTracking().FromSql(
+      return this.dbSet.FromSqlRaw(
         this.GetUnsortedSelectQuerySql("\"ObjectId\" IN (SELECT \"PrimaryId\" FROM \"Relations\" WHERE \"MemberId\" = {1} AND \"ForeignId\" = {2})"),
         cultureId, memberId, objectId
       );
@@ -133,7 +133,7 @@ namespace Platformus.Domain.Data.EntityFramework.PostgreSql
     /// <returns>Found primary serialized objects.</returns>
     public IEnumerable<SerializedObject> Primary(int cultureId, int memberId, int objectId, Params @params)
     {
-      return this.dbSet.AsNoTracking().FromSql(
+      return this.dbSet.FromSqlRaw(
         this.GetSortedSelectQuerySql("\"SerializedObjects\".\"ObjectId\" IN (SELECT \"PrimaryId\" FROM \"Relations\" WHERE \"MemberId\" = {1} AND \"ForeignId\" = {2})", @params),
         cultureId, memberId, objectId
       );
@@ -148,7 +148,7 @@ namespace Platformus.Domain.Data.EntityFramework.PostgreSql
     /// <returns>Found foreign serialized objects.</returns>
     public IEnumerable<SerializedObject> Foreign(int cultureId, int objectId)
     {
-      return this.dbSet.AsNoTracking().FromSql(
+      return this.dbSet.FromSqlRaw(
         this.GetUnsortedSelectQuerySql("\"ObjectId\" IN (SELECT \"PrimaryId\" FROM \"Relations\" WHERE \"ForeignId\" = {1})"),
         cultureId, objectId
       );
@@ -164,7 +164,7 @@ namespace Platformus.Domain.Data.EntityFramework.PostgreSql
     /// <returns>Found foreign serialized objects.</returns>
     public IEnumerable<SerializedObject> Foreign(int cultureId, int objectId, Params @params)
     {
-      return this.dbSet.AsNoTracking().FromSql(
+      return this.dbSet.FromSqlRaw(
         this.GetSortedSelectQuerySql("\"SerializedObjects\".\"ObjectId\" IN (SELECT \"PrimaryId\" FROM \"Relations\" WHERE \"ForeignId\" = {1})", @params),
         cultureId, objectId
       );
@@ -180,7 +180,7 @@ namespace Platformus.Domain.Data.EntityFramework.PostgreSql
     /// <returns>Found foreign serialized objects.</returns>
     public IEnumerable<SerializedObject> Foreign(int cultureId, int memberId, int objectId)
     {
-      return this.dbSet.AsNoTracking().FromSql(
+      return this.dbSet.FromSqlRaw(
         this.GetUnsortedSelectQuerySql("\"ObjectId\" IN (SELECT \"ForeignId\" FROM \"Relations\" WHERE \"MemberId\" = {1} AND \"PrimaryId\" = {2})"),
         cultureId, memberId, objectId
       );
@@ -197,7 +197,7 @@ namespace Platformus.Domain.Data.EntityFramework.PostgreSql
     /// <returns>Found foreign serialized objects.</returns>
     public IEnumerable<SerializedObject> Foreign(int cultureId, int memberId, int objectId, Params @params)
     {
-      return this.dbSet.AsNoTracking().FromSql(
+      return this.dbSet.FromSqlRaw(
         this.GetSortedSelectQuerySql("\"SerializedObjects\".\"ObjectId\" IN (SELECT \"ForeignId\" FROM \"Relations\" WHERE \"MemberId\" = {1} AND \"PrimaryId\" = {2})", @params),
         cultureId, memberId, objectId
       );

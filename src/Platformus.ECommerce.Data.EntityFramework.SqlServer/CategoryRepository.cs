@@ -69,7 +69,7 @@ namespace Platformus.ECommerce.Data.EntityFramework.SqlServer
     /// <param name="category">The category to delete.</param>
     public void Delete(Category category)
     {
-      this.storageContext.Database.ExecuteSqlCommand(
+      this.storageContext.Database.ExecuteSqlRaw(
         @"
           CREATE TABLE #Categories (Id INT PRIMARY KEY);
           WITH X AS (

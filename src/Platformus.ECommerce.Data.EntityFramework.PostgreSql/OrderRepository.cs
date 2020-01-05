@@ -74,7 +74,7 @@ namespace Platformus.ECommerce.Data.EntityFramework.PostgreSql
     /// <param name="order">The order to delete.</param>
     public void Delete(Order order)
     {
-      this.storageContext.Database.ExecuteSqlCommand(
+      this.storageContext.Database.ExecuteSqlRaw(
         @"
           DELETE FROM ""Positions"" WHERE ""OrderId"" = {0};
           DELETE FROM ""Orders"" WHERE ""Id"" = {0};

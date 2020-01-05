@@ -35,7 +35,7 @@ namespace Platformus.Forms.Data.EntityFramework.Sqlite
     /// <returns>Found field with the given form identifier and code.</returns>
     public Field WithFormIdAndCode(int formId, string code)
     {
-      return this.dbSet.FirstOrDefault(f => f.FormId == formId && string.Equals(f.Code, code, StringComparison.OrdinalIgnoreCase));
+      return this.dbSet.FirstOrDefault(f => f.FormId == formId && f.Code.ToLower() == code.ToLower());
     }
 
     /// <summary>
@@ -81,7 +81,7 @@ namespace Platformus.Forms.Data.EntityFramework.Sqlite
     /// <param name="field">The field to delete.</param>
     public void Delete(Field field)
     {
-      this.storageContext.Database.ExecuteSqlCommand(
+      this.storageContext.Database.ExecuteSqlRaw(
         @"
           CREATE TEMP TABLE TempDictionaries (Id INT PRIMARY KEY);
           INSERT INTO TempDictionaries SELECT ValueId FROM FieldOptions WHERE FieldId = {0};

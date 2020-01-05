@@ -35,7 +35,7 @@ namespace Platformus.Configurations.Data.EntityFramework.Sqlite
     /// <returns>Found variable with the given configuration identifier and code.</returns>
     public Variable WithConfigurationIdAndCode(int configurationId, string code)
     {
-      return this.dbSet.FirstOrDefault(v => v.ConfigurationId == configurationId && string.Equals(v.Code, code, StringComparison.OrdinalIgnoreCase));
+      return this.dbSet.FirstOrDefault(v => v.ConfigurationId == configurationId && v.Code.ToLower() == code.ToLower());
     }
 
     /// <summary>

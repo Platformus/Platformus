@@ -79,7 +79,7 @@ namespace Platformus.Menus.Data.EntityFramework.Sqlite
     /// <param name="menuItem">The menu item to delete.</param>
     public void Delete(MenuItem menuItem)
     {
-      this.storageContext.Database.ExecuteSqlCommand(
+      this.storageContext.Database.ExecuteSqlRaw(
         @"
           CREATE TEMP TABLE TempMenuItems (Id INT PRIMARY KEY);
           WITH X AS (

@@ -35,7 +35,7 @@ namespace Platformus.Security.Data.EntityFramework.PostgreSql
     /// <returns>Found role with the given code.</returns>
     public Role WithCode(string code)
     {
-      return this.dbSet.FirstOrDefault(r => string.Equals(r.Code, code, StringComparison.OrdinalIgnoreCase));
+      return this.dbSet.FirstOrDefault(r => r.Code.ToLower() == code.ToLower());
     }
 
     /// <summary>
@@ -94,7 +94,7 @@ namespace Platformus.Security.Data.EntityFramework.PostgreSql
     /// <param name="role">The role to delete.</param>
     public void Delete(Role role)
     {
-      this.storageContext.Database.ExecuteSqlCommand(
+      this.storageContext.Database.ExecuteSqlRaw(
         @"
           DELETE FROM ""RolePermissions"" WHERE ""RoleId"" = {0};
           DELETE FROM ""UserRoles"" WHERE ""RoleId"" = {0};

@@ -23,12 +23,12 @@ namespace Platformus.Domain.Backend.Controllers
   [Authorize(Policy = Policies.HasBrowseObjectsPermission)]
   public class ObjectsController : Platformus.Globalization.Backend.Controllers.ControllerBase
   {
-    public IHostingEnvironment hostingEnvironment;
+    public IWebHostEnvironment webHostEnvironment;
 
-    public ObjectsController(IStorage storage, IHostingEnvironment hostingEnvironment)
+    public ObjectsController(IStorage storage, IWebHostEnvironment webHostEnvironment)
       : base(storage)
     {
-      this.hostingEnvironment = hostingEnvironment;
+      this.webHostEnvironment = webHostEnvironment;
     }
 
     public IActionResult Index(int? classId, int? objectId, string orderBy = null, string direction = "asc", int skip = 0, int take = 10, string filter = null)
@@ -75,7 +75,7 @@ namespace Platformus.Domain.Backend.Controllers
     {
       try
       {
-        string imagesPath = Path.Combine(this.hostingEnvironment.WebRootPath, "images", "objects", id.ToString());
+        string imagesPath = Path.Combine(this.webHostEnvironment.WebRootPath, "images", "objects", id.ToString());
 
         Directory.Delete(imagesPath, true);
       }
@@ -191,9 +191,9 @@ namespace Platformus.Domain.Backend.Controllers
 
       imageUrl = imageUrl.Replace('/', '\\');
 
-      string sourceImageFilepath = this.hostingEnvironment.WebRootPath + imageUrl.Replace('\\', Path.DirectorySeparatorChar);
+      string sourceImageFilepath = this.webHostEnvironment.WebRootPath + imageUrl.Replace('\\', Path.DirectorySeparatorChar);
       string imageFilename = Path.GetFileName(sourceImageFilepath);
-      string destinationImageFilepath = Path.Combine(this.hostingEnvironment.WebRootPath, "images", "objects", objectId.ToString(), imageFilename);
+      string destinationImageFilepath = Path.Combine(this.webHostEnvironment.WebRootPath, "images", "objects", objectId.ToString(), imageFilename);
 
       if (sourceImageFilepath == destinationImageFilepath)
         return imageUrl;

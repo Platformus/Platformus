@@ -22,12 +22,12 @@ namespace Platformus.FileManager.Backend.Controllers
   [Authorize(Policy = Policies.HasBrowseFileManagerPermission)]
   public class FileManagerController : Barebone.Backend.Controllers.ControllerBase
   {
-    private IHostingEnvironment hostingEnvironment;
+    private IWebHostEnvironment webHostEnvironment;
 
-    public FileManagerController(IStorage storage, IHostingEnvironment hostingEnvironment)
+    public FileManagerController(IStorage storage, IWebHostEnvironment webHostEnvironment)
       : base(storage)
     {
-      this.hostingEnvironment = hostingEnvironment;
+      this.webHostEnvironment = webHostEnvironment;
     }
 
     public IActionResult Index(string orderBy = "name", string direction = "asc", int skip = 0, int take = 10, string filter = null)
@@ -91,7 +91,7 @@ namespace Platformus.FileManager.Backend.Controllers
 
     private string GetFilepath(string filename)
     {
-      return Path.Combine(this.hostingEnvironment.WebRootPath, "files", filename);
+      return Path.Combine(this.webHostEnvironment.WebRootPath, "files", filename);
     }
   }
 }

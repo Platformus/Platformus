@@ -34,7 +34,7 @@ namespace Platformus.Forms.Data.EntityFramework.PostgreSql
     /// <returns>Found form with the given code.</returns>
     public Form WithCode(string code)
     {
-      return this.dbSet.FirstOrDefault(f => string.Equals(f.Code, code, StringComparison.OrdinalIgnoreCase));
+      return this.dbSet.FirstOrDefault(f => f.Code.ToLower() == code.ToLower());
     }
 
     /// <summary>
@@ -79,7 +79,7 @@ namespace Platformus.Forms.Data.EntityFramework.PostgreSql
     /// <param name="form">The form to delete.</param>
     public void Delete(Form form)
     {
-      this.storageContext.Database.ExecuteSqlCommand(
+      this.storageContext.Database.ExecuteSqlRaw(
         @"
           DELETE FROM ""SerializedForms"" WHERE ""FormId"" = {0};
           CREATE TEMP TABLE ""TempDictionaries"" (""Id"" INT PRIMARY KEY);

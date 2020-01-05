@@ -83,7 +83,7 @@ namespace Platformus.Domain.Data.EntityFramework.Sqlite
     /// <param name="dataType">The data type to delete.</param>
     public void Delete(DataType dataType)
     {
-      this.storageContext.Database.ExecuteSqlCommand(
+      this.storageContext.Database.ExecuteSqlRaw(
         @"
           DELETE FROM DataTypeParameterValues WHERE DataTypeParameterId IN (SELECT Id FROM DataTypeParameters WHERE DataTypeId = {0});
           DELETE FROM DataTypeParameters WHERE DataTypeId = {0};

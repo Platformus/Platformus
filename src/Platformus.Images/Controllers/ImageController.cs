@@ -12,7 +12,6 @@ using SixLabors.ImageSharp;
 using SixLabors.ImageSharp.Formats;
 using SixLabors.ImageSharp.Formats.Jpeg;
 using SixLabors.ImageSharp.Formats.Png;
-using SixLabors.ImageSharp.PixelFormats;
 using SixLabors.ImageSharp.Processing;
 
 namespace Platformus.Images.Controllers
@@ -21,10 +20,10 @@ namespace Platformus.Images.Controllers
   {
     public class LoadImageFromUrlResult : IDisposable
     {
-      public Image<Rgba32> Image { get; set; }
+      public Image Image { get; set; }
       public IImageFormat ImageFormat { get; set; }
 
-      public LoadImageFromUrlResult(Image<Rgba32> image, IImageFormat imageFormat)
+      public LoadImageFromUrlResult(Image image, IImageFormat imageFormat)
       {
         this.Image = image;
         this.ImageFormat = imageFormat;
@@ -36,12 +35,12 @@ namespace Platformus.Images.Controllers
       }
     }
 
-    private IHostingEnvironment hostingEnvironment;
+    private IWebHostEnvironment webHostEnvironment;
 
-    public ImagesController(IStorage storage, IHostingEnvironment hostingEnvironment)
+    public ImagesController(IStorage storage, IWebHostEnvironment webHostEnvironment)
       : base(storage)
     {
-      this.hostingEnvironment = hostingEnvironment;
+      this.webHostEnvironment = webHostEnvironment;
     }
 
     [HttpGet]

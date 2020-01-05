@@ -36,7 +36,7 @@ namespace Platformus.Domain.Data.EntityFramework.SqlServer
     /// <returns>Found member with the given class identifier and code.</returns>
     public Member WithClassIdAndCode(int classId, string code)
     {
-      return this.dbSet.FirstOrDefault(m => m.ClassId == classId && string.Equals(m.Code, code, StringComparison.OrdinalIgnoreCase));
+      return this.dbSet.FirstOrDefault(m => m.ClassId == classId && m.Code.ToLower() == code.ToLower());
     }
 
     /// <summary>
@@ -47,10 +47,10 @@ namespace Platformus.Domain.Data.EntityFramework.SqlServer
     /// <returns>Found member with the given class identifier and code.</returns>
     public Member WithClassIdAndCodeInlcudingParent(int classId, string code)
     {
-      return this.dbSet.AsNoTracking().FromSql(
+      return this.dbSet.FromSqlRaw(
         "SELECT * FROM Members WHERE ClassId = {0} OR ClassId IN (SELECT ClassId FROM Classes WHERE Id = {0})",
         classId
-      ).FirstOrDefault(m => string.Equals(m.Code, code, StringComparison.OrdinalIgnoreCase));
+      ).FirstOrDefault(m => m.Code.ToLower() == code.ToLower());
     }
 
     /// <summary>
@@ -79,7 +79,7 @@ namespace Platformus.Domain.Data.EntityFramework.SqlServer
     /// <returns>Found members.</returns>
     public IEnumerable<Member> FilteredByClassIdInlcudingParent(int classId)
     {
-      return this.dbSet.AsNoTracking().FromSql(
+      return this.dbSet.FromSqlRaw(
         "SELECT * FROM Members WHERE ClassId = {0} OR ClassId IN (SELECT ClassId FROM Classes WHERE Id = {0}) ORDER BY Position",
         classId
       );
@@ -103,7 +103,7 @@ namespace Platformus.Domain.Data.EntityFramework.SqlServer
     /// <returns>Found members.</returns>
     public IEnumerable<Member> FilteredByClassIdInlcudingParentPropertyVisibleInList(int classId)
     {
-      return this.dbSet.AsNoTracking().FromSql(
+      return this.dbSet.FromSqlRaw(
         "SELECT * FROM Members WHERE (ClassId = {0} OR ClassId IN (SELECT ClassId FROM Classes WHERE Id = {0})) AND IsPropertyVisibleInList = {1} ORDER BY Position",
         classId, true
       );
@@ -167,7 +167,7 @@ namespace Platformus.Domain.Data.EntityFramework.SqlServer
     /// <param name="member">The member to delete.</param>
     public void Delete(Member member)
     {
-      this.storageContext.Database.ExecuteSqlCommand(
+      this.storageContext.Database.ExecuteSqlRaw(
         @"
           DELETE FROM DataTypeParameterValues WHERE MemberId = {0};
           CREATE TABLE #Dictionaries (Id INT PRIMARY KEY);

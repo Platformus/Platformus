@@ -21,6 +21,8 @@ namespace Platformus.Globalization.Backend.Actions
 
     public void Execute(IApplicationBuilder applicationBuilder, IServiceProvider serviceProvider)
     {
+      serviceProvider = serviceProvider.CreateScope().ServiceProvider;
+
       RequestLocalizationOptions requestLocalizationOptions = new RequestLocalizationOptions();
       IStorage storage = serviceProvider.GetService<IStorage>();
 

@@ -35,7 +35,7 @@ namespace Platformus.ECommerce.Data.EntityFramework.SqlServer
     /// <returns>Found order state with the given code.</returns>
     public OrderState WithCode(string code)
     {
-      return this.dbSet.FirstOrDefault(os => string.Equals(os.Code, code, StringComparison.OrdinalIgnoreCase));
+      return this.dbSet.FirstOrDefault(os => os.Code.ToLower() == code.ToLower());
     }
 
     /// <summary>
@@ -94,7 +94,7 @@ namespace Platformus.ECommerce.Data.EntityFramework.SqlServer
     /// <param name="orderState">The order state to delete.</param>
     public void Delete(OrderState orderState)
     {
-      this.storageContext.Database.ExecuteSqlCommand(
+      this.storageContext.Database.ExecuteSqlRaw(
         @"
           CREATE TABLE #Dictionaries (Id INT PRIMARY KEY);
           INSERT INTO #Dictionaries SELECT NameId FROM OrderStates WHERE Id = {0};

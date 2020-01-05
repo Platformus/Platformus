@@ -34,7 +34,7 @@ namespace Platformus.Security.Data.EntityFramework.SqlServer
     /// <returns>Found credential type with the given code.</returns>
     public CredentialType WithCode(string code)
     {
-      return this.dbSet.FirstOrDefault(ct => string.Equals(ct.Code, code, StringComparison.OrdinalIgnoreCase));
+      return this.dbSet.FirstOrDefault(ct => ct.Code.ToLower() == code.ToLower());
     }
 
     /// <summary>

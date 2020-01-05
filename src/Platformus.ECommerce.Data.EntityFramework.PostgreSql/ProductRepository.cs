@@ -35,7 +35,7 @@ namespace Platformus.ECommerce.Data.EntityFramework.PostgreSql
     /// <returns>Found product with the given URL.</returns>
     public Product WithUrl(string url)
     {
-      return this.dbSet.FirstOrDefault(p => string.Equals(p.Url, url, StringComparison.OrdinalIgnoreCase));
+      return this.dbSet.FirstOrDefault(p => p.Url.ToLower() == url.ToLower());
     }
 
     /// <summary>
@@ -45,7 +45,7 @@ namespace Platformus.ECommerce.Data.EntityFramework.PostgreSql
     /// <returns>Found product with the given code.</returns>
     public Product WithCode(string code)
     {
-      return this.dbSet.FirstOrDefault(p => string.Equals(p.Code, code, StringComparison.OrdinalIgnoreCase));
+      return this.dbSet.FirstOrDefault(p => p.Code.ToLower() == code.ToLower());
     }
 
     /// <summary>
@@ -119,7 +119,7 @@ namespace Platformus.ECommerce.Data.EntityFramework.PostgreSql
     /// <param name="product">The product to delete.</param>
     public void Delete(Product product)
     {
-      this.storageContext.Database.ExecuteSqlCommand(
+      this.storageContext.Database.ExecuteSqlRaw(
         @"
           DELETE FROM ""SerializedProducts"" WHERE ""ProductId"" = {0};
           CREATE TEMP TABLE ""TempDictionaries"" (""Id"" INT PRIMARY KEY);

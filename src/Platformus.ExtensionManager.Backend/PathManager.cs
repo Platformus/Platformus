@@ -15,9 +15,9 @@ namespace Platformus.ExtensionManager.Backend
     {
       if (string.IsNullOrEmpty(PathManager.contentRootPath))
       {
-        IHostingEnvironment hostingEnvironment = requestHandler.GetService<IHostingEnvironment>();
+        IWebHostEnvironment webHostEnvironment = requestHandler.GetService<IWebHostEnvironment>();
 
-        PathManager.contentRootPath = hostingEnvironment.ContentRootPath;
+        PathManager.contentRootPath = webHostEnvironment.ContentRootPath;
       }
 
       return PathManager.contentRootPath;

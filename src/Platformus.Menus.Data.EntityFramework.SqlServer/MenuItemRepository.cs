@@ -79,7 +79,7 @@ namespace Platformus.Menus.Data.EntityFramework.SqlServer
     /// <param name="menuItem">The menu item to delete.</param>
     public void Delete(MenuItem menuItem)
     {
-      this.storageContext.Database.ExecuteSqlCommand(
+      this.storageContext.Database.ExecuteSqlRaw(
         @"
           CREATE TABLE #MenuItems (Id INT PRIMARY KEY);
           WITH X AS (

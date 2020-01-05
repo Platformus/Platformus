@@ -53,7 +53,7 @@ namespace Platformus.ECommerce.Data.EntityFramework.Sqlite
     /// <returns>Found attributes filtered by the category identifier.</returns>
     public IEnumerable<Attribute> FilteredByCategoryId(int categoryId)
     {
-      return this.dbSet.FromSql(
+      return this.dbSet.FromSqlRaw(
         "SELECT * FROM Attributes WHERE Id IN (SELECT AttributeId FROM ProductAttributes WHERE ProductId IN (SELECT Id FROM Products WHERE CategoryId = {0}))",
         categoryId
       );

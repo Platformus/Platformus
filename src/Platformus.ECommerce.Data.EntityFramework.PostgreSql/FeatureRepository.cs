@@ -35,7 +35,7 @@ namespace Platformus.ECommerce.Data.EntityFramework.PostgreSql
     /// <returns>Found feature with the given code.</returns>
     public Feature WithCode(string code)
     {
-      return this.dbSet.FirstOrDefault(f => string.Equals(f.Code, code, StringComparison.OrdinalIgnoreCase));
+      return this.dbSet.FirstOrDefault(f => f.Code.ToLower() == code.ToLower());
     }
 
     /// <summary>
@@ -94,7 +94,7 @@ namespace Platformus.ECommerce.Data.EntityFramework.PostgreSql
     /// <param name="feature">The feature to delete.</param>
     public void Delete(Feature feature)
     {
-      this.storageContext.Database.ExecuteSqlCommand(
+      this.storageContext.Database.ExecuteSqlRaw(
         @"
           CREATE TEMP TABLE ""TempDictionaries"" (""Id"" INT PRIMARY KEY);
           INSERT INTO ""TempDictionaries"" SELECT ""NameId"" FROM ""Features"" WHERE ""Id"" = {0};

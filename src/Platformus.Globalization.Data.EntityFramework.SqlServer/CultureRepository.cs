@@ -35,7 +35,7 @@ namespace Platformus.Globalization.Data.EntityFramework.SqlServer
     /// <returns>Found culture with the given code.</returns>
     public Culture WithCode(string code)
     {
-      return this.dbSet.FirstOrDefault(c => string.Equals(c.Code, code, StringComparison.OrdinalIgnoreCase));
+      return this.dbSet.FirstOrDefault(c => c.Code.ToLower() == code.ToLower());
     }
 
     /// <summary>
@@ -121,7 +121,7 @@ namespace Platformus.Globalization.Data.EntityFramework.SqlServer
     /// <param name="culture">The culture to delete.</param>
     public void Delete(Culture culture)
     {
-      this.storageContext.Database.ExecuteSqlCommand(
+      this.storageContext.Database.ExecuteSqlRaw(
         @"
           DELETE FROM SerializedObjects WHERE CultureId = {0};
           DELETE FROM SerializedMenus WHERE CultureId = {0};

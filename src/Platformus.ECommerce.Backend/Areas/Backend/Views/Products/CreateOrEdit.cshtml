@@ -41,13 +41,13 @@
           </tr>
           @if (this.Model.Attributes != null)
           {
-            foreach (var attribute in this.Model.Attributes)
+            foreach (var attr in this.Model.Attributes)
             {
-              <tr id="attribute@(attribute.Id)" class="table__row">
-                <td class="table__cell">@attribute.Feature.Name</td>
-                <td class="table__cell">@attribute.Value</td>
+              <tr id="attribute@(attr.Id)" class="table__row">
+                <td class="table__cell">@attr.Feature.Name</td>
+                <td class="table__cell">@attr.Value</td>
                 <td class="table__cell table__buttons buttons">
-                  <a class="table__button buttons__button buttons__button--minor button button--negative button--minor button--delete" href="#" onclick="return platformus.ui.removeAttribute('attribute@(attribute.Id)');"></a>
+                  <a class="table__button buttons__button buttons__button--minor button button--negative button--minor button--delete" href="#" onclick="return platformus.ui.removeAttribute('attribute@(attr.Id)');"></a>
                 </td>
               </tr>
             }

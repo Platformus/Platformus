@@ -44,7 +44,7 @@ namespace Platformus.Domain.Data.EntityFramework.PostgreSql
     /// <returns>Found tabs.</returns>
     public IEnumerable<Tab> FilteredByClassIdInlcudingParent(int classId)
     {
-      return this.dbSet.AsNoTracking().FromSql(
+      return this.dbSet.FromSqlRaw(
         "SELECT * FROM \"Tabs\" WHERE \"ClassId\" = {0} OR \"ClassId\" IN (SELECT \"ClassId\" FROM \"Classes\" WHERE \"Id\" = {0}) ORDER BY \"Position\"",
         classId
       );
@@ -98,7 +98,7 @@ namespace Platformus.Domain.Data.EntityFramework.PostgreSql
     /// <param name="tab">The tab to delete.</param>
     public void Delete(Tab tab)
     {
-      this.storageContext.Database.ExecuteSqlCommand(
+      this.storageContext.Database.ExecuteSqlRaw(
         @"
           UPDATE ""Members"" SET ""TabId"" = NULL WHERE ""TabId"" = {0};
         ",

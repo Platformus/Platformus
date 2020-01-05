@@ -8,13 +8,13 @@ using Microsoft.AspNetCore.Routing;
 
 namespace Platformus.Images.Actions
 {
-  public class UseMvcAction : IUseMvcAction
+  public class UseEndpointsAction : IUseEndpointsAction
   {
     public int Priority => 1;
 
-    public void Execute(IRouteBuilder routeBuilder, IServiceProvider serviceProvider)
+    public void Execute(IEndpointRouteBuilder endpointRouteBuilder, IServiceProvider serviceProvider)
     {
-      routeBuilder.MapRoute(name: "Image Processor", template: "img", defaults: new { controller = "Images", action = "Index" });
+      endpointRouteBuilder.MapControllerRoute(name: "Image Processor", pattern: "img", defaults: new { controller = "Images", action = "Index" });
     }
   }
 }

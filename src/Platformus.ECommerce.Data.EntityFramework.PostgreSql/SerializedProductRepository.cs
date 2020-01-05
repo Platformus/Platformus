@@ -36,7 +36,7 @@ namespace Platformus.Domain.Data.EntityFramework.PostgreSql
     /// <returns>Found serialized product with the given URL.</returns>
     public SerializedProduct WithUrl(string url)
     {
-      return this.dbSet.FirstOrDefault(sp => string.Equals(sp.Url, url, StringComparison.OrdinalIgnoreCase));
+      return this.dbSet.FirstOrDefault(sp => sp.Url.ToLower() == url.ToLower());
     }
 
     /// <summary>
@@ -69,7 +69,7 @@ namespace Platformus.Domain.Data.EntityFramework.PostgreSql
     /// <returns>Found serialized products filtered by the culture identifier and category identifier using the given filtering, sorting, and paging.</returns>
     public IEnumerable<SerializedProduct> FilteredByCultureIdAndCategoryIdAndAttributeIdsRange(int cultureId, int categoryId, int[] attributeIds, string orderBy, string direction, int skip, int take)
     {
-      return this.dbSet.FromSql(
+      return this.dbSet.FromSqlRaw(
         "SELECT * FROM \"SerializedProducts\" WHERE \"CultureId\" = {0} AND \"CategoryId\" = {1} AND \"ProductId\" IN (SELECT \"ProductId\" FROM \"ProductAttributes\" WHERE \"AttributeId\" IN ({2})) ORDER BY \"" + orderBy + "\" " + direction + " LIMIT {4} OFFSET {3}",
         cultureId, categoryId, string.Join(",", attributeIds), skip, take
       );

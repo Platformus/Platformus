@@ -14,7 +14,7 @@ namespace Platformus.Routing.Data.EntityFramework.SqlServer
 	    modelBuilder.Entity<Endpoint>(etb =>
         {
           etb.HasKey(e => e.Id);
-          etb.Property(e => e.Id).UseSqlServerIdentityColumn();
+          etb.Property(e => e.Id).UseIdentityColumn();
           etb.Property(e => e.Name).IsRequired().HasMaxLength(64);
           etb.Property(e => e.UrlTemplate).HasMaxLength(128);
           etb.Property(e => e.SignInUrl).HasMaxLength(128);
@@ -34,7 +34,7 @@ namespace Platformus.Routing.Data.EntityFramework.SqlServer
       modelBuilder.Entity<DataSource>(etb =>
         {
           etb.HasKey(e => e.Id);
-          etb.Property(e => e.Id).UseSqlServerIdentityColumn();
+          etb.Property(e => e.Id).UseIdentityColumn();
           etb.Property(e => e.Code).IsRequired().HasMaxLength(32);
           etb.Property(e => e.CSharpClassName).IsRequired().HasMaxLength(128);
           etb.Property(e => e.Parameters).HasMaxLength(1024);

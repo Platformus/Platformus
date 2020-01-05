@@ -4,7 +4,7 @@
     <Authors>Dmitry Sikorsky</Authors>
     <Copyright>Copyright © 2015 Dmitry Sikorsky</Copyright>
     <Description>The Platformus.Configurations extension component.</Description>
-    <VersionPrefix>1.0.0</VersionPrefix>
+    <VersionPrefix>1.1.0-beta1</VersionPrefix>
     <TargetFramework>netstandard2.0</TargetFramework>
     <AssemblyName>Platformus.Configurations.Data.Entities</AssemblyName>
     <PackageId>Platformus.Configurations.Data.Entities</PackageId>
@@ -13,7 +13,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="ExtCore.Data.Entities.Abstractions" Version="4.0.0" />
+    <PackageReference Include="ExtCore.Data.Entities.Abstractions" Version="5.1.0" />
   </ItemGroup>
 
 </Project>

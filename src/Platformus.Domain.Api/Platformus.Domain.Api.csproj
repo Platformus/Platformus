@@ -4,8 +4,8 @@
     <Authors>Dmitry Sikorsky</Authors>
     <Copyright>Copyright © 2015 Dmitry Sikorsky</Copyright>
     <Description>The Platformus.Domain extension component.</Description>
-    <VersionPrefix>1.0.0</VersionPrefix>
-    <TargetFramework>netstandard2.0</TargetFramework>
+    <VersionPrefix>1.1.0-beta1</VersionPrefix>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
     <AssemblyName>Platformus.Domain.Api</AssemblyName>
     <PackageId>Platformus.Domain.Api</PackageId>
     <PackageIconUrl>http://platformus.net/platformus_nuget_icon.png</PackageIconUrl>
@@ -13,8 +13,8 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="ExtCore.Data.Abstractions" Version="4.0.0" />
-    <PackageReference Include="ExtCore.Infrastructure" Version="4.0.0" />
+    <PackageReference Include="ExtCore.Data.Abstractions" Version="5.1.0" />
+    <PackageReference Include="ExtCore.Infrastructure" Version="5.1.0" />
   </ItemGroup>
 
   <ItemGroup>

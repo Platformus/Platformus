@@ -4,8 +4,8 @@
     <Authors>Dmitry Sikorsky</Authors>
     <Copyright>Copyright © 2015 Dmitry Sikorsky</Copyright>
     <Description>The Platformus.Domain extension component.</Description>
-    <VersionPrefix>1.0.0</VersionPrefix>
-    <TargetFramework>netstandard2.0</TargetFramework>
+    <VersionPrefix>1.1.0-beta1</VersionPrefix>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
     <AssemblyName>Platformus.Domain.Data.EntityFramework.SqlServer</AssemblyName>
     <PackageId>Platformus.Domain.Data.EntityFramework.SqlServer</PackageId>
     <PackageIconUrl>http://platformus.net/platformus_nuget_icon.png</PackageIconUrl>
@@ -13,7 +13,8 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="ExtCore.Data.EntityFramework.SqlServer" Version="4.0.0" />
+    <PackageReference Include="System.Data.SqlClient" Version="4.6.1" />
+    <PackageReference Include="ExtCore.Data.EntityFramework.SqlServer" Version="5.1.0" />
   </ItemGroup>
 
   <ItemGroup>

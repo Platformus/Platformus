@@ -19,11 +19,11 @@
           @feature.Name
         </div>
         <div class="feature__attributes attributes">
-          @foreach (var attribute in feature.Attributes)
+          @foreach (var attr in feature.Attributes)
           {
             <div class="attributes__attribute">
-              <input id="attribute@(attribute.Id)" name="attribute@(attribute.Id)" type="checkbox" @(attributeIds.Contains(attribute.Id) ? "checked" : null) />
-              <label for="attribute@(attribute.Id)">@attribute.Value</label>
+              <input id="attribute@(attr.Id)" name="attribute@(attr.Id)" type="checkbox" @(attributeIds.Contains(attr.Id) ? "checked" : null) />
+              <label for="attribute@(attr.Id)">@attr.Value</label>
             </div>
           }
         </div>

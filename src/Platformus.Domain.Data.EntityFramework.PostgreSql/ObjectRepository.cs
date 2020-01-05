@@ -79,7 +79,7 @@ namespace Platformus.Domain.Data.EntityFramework.PostgreSql
     /// <param name="@object">The object to delete.</param>
     public void Delete(Object @object)
     {
-      this.storageContext.Database.ExecuteSqlCommand(
+      this.storageContext.Database.ExecuteSqlRaw(
         @"
           DELETE FROM ""SerializedObjects"" WHERE ""ObjectId"" = {0};
           CREATE TEMP TABLE ""TempDictionaries"" (""Id"" INT PRIMARY KEY);

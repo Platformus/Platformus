@@ -83,7 +83,7 @@ namespace Platformus.Routing.Data.EntityFramework.Sqlite
     /// <param name="endpoint">The endpoint to delete.</param>
     public void Delete(Endpoint endpoint)
     {
-      this.storageContext.Database.ExecuteSqlCommand(
+      this.storageContext.Database.ExecuteSqlRaw(
         @"
           DELETE FROM EndpointPermissions WHERE EndpointId = {0};
           DELETE FROM DataSources WHERE EndpointId = {0};

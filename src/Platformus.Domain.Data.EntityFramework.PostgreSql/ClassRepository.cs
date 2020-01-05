@@ -35,7 +35,7 @@ namespace Platformus.Domain.Data.EntityFramework.PostgreSql
     /// <returns>Found class with the given code.</returns>
     public Class WithCode(string code)
     {
-      return this.dbSet.FirstOrDefault(c => string.Equals(c.Code, code, StringComparison.OrdinalIgnoreCase));
+      return this.dbSet.FirstOrDefault(c => c.Code.ToLower() == code.ToLower());
     }
 
     /// <summary>
@@ -69,9 +69,9 @@ namespace Platformus.Domain.Data.EntityFramework.PostgreSql
     public IEnumerable<Class> FilteredByClassId(int? classId)
     {
       if (classId == null)
-        return this.dbSet.AsNoTracking().FromSql("SELECT * FROM \"Classes\" WHERE \"Id\" NOT IN (SELECT \"RelationClassId\" FROM \"Members\" WHERE \"IsRelationSingleParent\" IS NOT NULL) AND \"ClassId\" IS NULL AND \"IsAbstract\" = {0} ORDER BY \"Name\"", false);
+        return this.dbSet.FromSqlRaw("SELECT * FROM \"Classes\" WHERE \"Id\" NOT IN (SELECT \"RelationClassId\" FROM \"Members\" WHERE \"IsRelationSingleParent\" IS NOT NULL) AND \"ClassId\" IS NULL AND \"IsAbstract\" = {0} ORDER BY \"Name\"", false);
 
-      return this.dbSet.AsNoTracking().FromSql("SELECT * FROM \"Classes\" WHERE \"Id\" NOT IN (SELECT \"RelationClassId\" FROM \"Members\" WHERE \"IsRelationSingleParent\" IS NOT NULL) AND \"ClassId\" = {0} AND \"IsAbstract\" = {1} ORDER BY \"Name\"", classId, false);
+      return this.dbSet.FromSqlRaw("SELECT * FROM \"Classes\" WHERE \"Id\" NOT IN (SELECT \"RelationClassId\" FROM \"Members\" WHERE \"IsRelationSingleParent\" IS NOT NULL) AND \"ClassId\" = {0} AND \"IsAbstract\" = {1} ORDER BY \"Name\"", classId, false);
     }
 
     /// <summary>
@@ -125,7 +125,7 @@ namespace Platformus.Domain.Data.EntityFramework.PostgreSql
     /// <param name="@class">The class to delete.</param>
     public void Delete(Class @class)
     {
-      this.storageContext.Database.ExecuteSqlCommand(
+      this.storageContext.Database.ExecuteSqlRaw(
         @"
           DELETE FROM ""SerializedObjects"" WHERE ""ObjectId"" IN (SELECT ""Id"" FROM ""Objects"" WHERE ""ClassId"" = {0});
           CREATE TEMP TABLE ""TempDictionaries"" (""Id"" INT PRIMARY KEY);

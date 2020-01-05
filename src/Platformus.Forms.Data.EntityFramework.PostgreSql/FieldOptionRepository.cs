@@ -69,7 +69,7 @@ namespace Platformus.Forms.Data.EntityFramework.PostgreSql
     /// <param name="fieldOption">The field option to delete.</param>
     public void Delete(FieldOption fieldOption)
     {
-      this.storageContext.Database.ExecuteSqlCommand(
+      this.storageContext.Database.ExecuteSqlRaw(
         @"
           CREATE TEMP TABLE ""TempDictionaries"" (""Id"" INT PRIMARY KEY);
           INSERT INTO ""TempDictionaries"" SELECT ""ValueId"" FROM ""FieldOptions"" WHERE ""Id"" = {0};

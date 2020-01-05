@@ -16,12 +16,12 @@ namespace Platformus.Barebone.Backend.Controllers
   [Area("Backend")]
   public class PhotoUploaderController : ControllerBase
   {
-    private IHostingEnvironment hostingEnvironment;
+    private IWebHostEnvironment webHostEnvironment;
 
-    public PhotoUploaderController(IStorage storage, IHostingEnvironment hostingEnvironment)
+    public PhotoUploaderController(IStorage storage, IWebHostEnvironment webHostEnvironment)
       : base(storage)
     {
-      this.hostingEnvironment = hostingEnvironment;
+      this.webHostEnvironment = webHostEnvironment;
     }
 
     [HttpGet]
@@ -70,7 +70,7 @@ namespace Platformus.Barebone.Backend.Controllers
     {
       basePath = basePath.Replace('/', '\\');
 
-      return this.hostingEnvironment.WebRootPath + basePath.Replace('\\', Path.DirectorySeparatorChar) + filename;
+      return this.webHostEnvironment.WebRootPath + basePath.Replace('\\', Path.DirectorySeparatorChar) + filename;
     }
 
     private string GetTempBasePath()

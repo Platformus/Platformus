@@ -18,12 +18,12 @@ namespace Platformus.ExtensionManager.Backend.Controllers
   [Authorize(Policy = Policies.HasBrowseExtensionManagerPermission)]
   public class ExtensionManagerController : Platformus.Barebone.Backend.Controllers.ControllerBase
   {
-    private IHostingEnvironment hostingEnvironment;
+    private IWebHostEnvironment webHostEnvironment;
 
-    public ExtensionManagerController(IStorage storage, IHostingEnvironment hostingEnvironment)
+    public ExtensionManagerController(IStorage storage, IWebHostEnvironment webHostEnvironment)
       : base(storage)
     {
-      this.hostingEnvironment = hostingEnvironment;
+      this.webHostEnvironment = webHostEnvironment;
     }
 
     public ActionResult Index(string orderBy = "filename", string direction = "asc", int skip = 0, int take = 10, string filter = null)
@@ -71,7 +71,7 @@ namespace Platformus.ExtensionManager.Backend.Controllers
 
     private string GetFilepath(string filename)
     {
-      return Path.Combine(this.hostingEnvironment.WebRootPath, "temp", filename);
+      return Path.Combine(this.webHostEnvironment.WebRootPath, "temp", filename);
     }
   }
 }

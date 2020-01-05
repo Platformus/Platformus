@@ -34,7 +34,7 @@ namespace Platformus.Configurations.Data.EntityFramework.PostgreSql
     /// <returns>Found configuration with the given code.</returns>
     public Configuration WithCode(string code)
     {
-      return this.dbSet.FirstOrDefault(c => string.Equals(c.Code, code, StringComparison.OrdinalIgnoreCase));
+      return this.dbSet.FirstOrDefault(c => c.Code.ToLower() == code.ToLower());
     }
 
     /// <summary>
@@ -79,7 +79,7 @@ namespace Platformus.Configurations.Data.EntityFramework.PostgreSql
     /// <param name="configuration">The configuration to delete.</param>
     public void Delete(Configuration configuration)
     {
-      this.storageContext.Database.ExecuteSqlCommand(
+      this.storageContext.Database.ExecuteSqlRaw(
         @"
           DELETE FROM ""Variables"" WHERE ""ConfigurationId"" = {0};
         ",

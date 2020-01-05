@@ -4,8 +4,8 @@
     <Authors>Dmitry Sikorsky</Authors>
     <Copyright>Copyright © 2015 Dmitry Sikorsky</Copyright>
     <Description>Free, open source and cross-platform CMS based on ASP.NET Core and ExtCore framework.</Description>
-    <VersionPrefix>1.0.0</VersionPrefix>
-    <TargetFramework>netstandard2.0</TargetFramework>
+    <VersionPrefix>1.1.0-beta1</VersionPrefix>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
     <AssemblyName>Platformus.WebApplication</AssemblyName>
     <PackageId>Platformus.WebApplication</PackageId>
     <PackageIconUrl>http://platformus.net/platformus_nuget_icon.png</PackageIconUrl>
@@ -13,9 +13,9 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="ExtCore.Data" Version="4.0.0" />
-    <PackageReference Include="ExtCore.Data.EntityFramework" Version="4.0.0" />
-    <PackageReference Include="ExtCore.WebApplication" Version="4.0.0" />
+    <PackageReference Include="ExtCore.Data" Version="5.1.0" />
+    <PackageReference Include="ExtCore.Data.EntityFramework" Version="5.1.0" />
+    <PackageReference Include="ExtCore.WebApplication" Version="5.1.0" />
   </ItemGroup>
 
   <ItemGroup>
