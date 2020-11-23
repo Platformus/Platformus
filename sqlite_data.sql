@@ -1,7 +1,7 @@
 BEGIN TRANSACTION;
 --
--- Extension: Platformus.Security
--- Version: 1.1.0-beta1
+-- Extension: Platformus.Core
+-- Version: 2.0.0-alpha1
 --
 INSERT INTO "Users" VALUES (1,'Administrator','2017-01-01 00:00:00.0000000');
 INSERT INTO "CredentialTypes" VALUES (1,'Email','Email',1);
@@ -11,43 +11,37 @@ INSERT INTO "Roles" VALUES (2,'ApplicationOwner','Application owner',200);
 INSERT INTO "Roles" VALUES (3,'ContentManager','Content manager',300);
 INSERT INTO "UserRoles" VALUES (1,1);
 INSERT INTO "UserRoles" VALUES (1,2);
-INSERT INTO "Permissions" VALUES (1,'BrowseBackend','Browse backend',1);
-INSERT INTO "Permissions" VALUES (2,'DoEverything','Do everything',100);
-INSERT INTO "Permissions" VALUES (3,'BrowsePermissions','Browse permissions',200);
-INSERT INTO "Permissions" VALUES (4,'BrowseRoles','Browse roles',210);
-INSERT INTO "Permissions" VALUES (5,'BrowseUsers','Browse users',220);
-INSERT INTO "Permissions" VALUES (6,'BrowseConfigurations','Browse configurations',300);
-INSERT INTO "Permissions" VALUES (7,'BrowseCultures','Browse cultures',400);
-INSERT INTO "Permissions" VALUES (8,'BrowseEndpoints','Browse endpoints',500);
-INSERT INTO "Permissions" VALUES (9,'BrowseObjects','Browse objects',600);
-INSERT INTO "Permissions" VALUES (10,'BrowseDataTypes','Browse data types',610);
-INSERT INTO "Permissions" VALUES (11,'BrowseClasses','Browse classes',620);
-INSERT INTO "Permissions" VALUES (12,'BrowseMenus','Browse menus',700);
-INSERT INTO "Permissions" VALUES (13,'BrowseForms','Browse forms',800);
-INSERT INTO "Permissions" VALUES (14,'BrowseFileManager','Browse file manager',900);
-INSERT INTO "Permissions" VALUES (15,'BrowseViews','Browse views',1000);
-INSERT INTO "Permissions" VALUES (16,'BrowseStyles','Browse styles',1010);
-INSERT INTO "Permissions" VALUES (17,'BrowseScripts','Browse scripts',1020);
-INSERT INTO "Permissions" VALUES (18,'BrowseBundles','Browse bundles',1030);
-INSERT INTO "Permissions" VALUES (19,'BrowseCatalogs','Browse catalogs',1100);
-INSERT INTO "Permissions" VALUES (20,'BrowseCategories','Browse categories',1110);
-INSERT INTO "Permissions" VALUES (21,'BrowseProducts','Browse products',1120);
-INSERT INTO "Permissions" VALUES (22,'BrowseCarts','Browse carts',1130);
-INSERT INTO "Permissions" VALUES (23,'BrowseOrderStates','Browse order states',1140);
-INSERT INTO "Permissions" VALUES (24,'BrowsePaymentMethods','Browse payment methods',1150);
-INSERT INTO "Permissions" VALUES (25,'BrowseDeliveryMethods','Browse delivery methods',1160);
-INSERT INTO "Permissions" VALUES (26,'BrowseOrders','Browse orders',1170);
+INSERT INTO "Permissions" VALUES (2,'DoAnything','Do anything',100);
+INSERT INTO "Permissions" VALUES (3,'ManagePermissions','Manage permissions',200);
+INSERT INTO "Permissions" VALUES (4,'ManageRoles','Manage roles',210);
+INSERT INTO "Permissions" VALUES (5,'ManageUsers','Manage users',220);
+INSERT INTO "Permissions" VALUES (6,'ManageConfigurations','Manage configurations',300);
+INSERT INTO "Permissions" VALUES (7,'ManageCultures','Manage cultures',400);
+INSERT INTO "Permissions" VALUES (8,'ManageEndpoints','Manage endpoints',500);
+INSERT INTO "Permissions" VALUES (9,'ManageObjects','Manage objects',600);
+INSERT INTO "Permissions" VALUES (10,'ManageDataTypes','Manage data types',610);
+INSERT INTO "Permissions" VALUES (11,'ManageClasses','Manage classes',620);
+INSERT INTO "Permissions" VALUES (12,'ManageMenus','Manage menus',700);
+INSERT INTO "Permissions" VALUES (13,'ManageForms','Manage forms',800);
+INSERT INTO "Permissions" VALUES (14,'ManageFileManager','Manage file manager',900);
+INSERT INTO "Permissions" VALUES (15,'ManageViews','Manage views',1000);
+INSERT INTO "Permissions" VALUES (16,'ManageStyles','Manage styles',1010);
+INSERT INTO "Permissions" VALUES (17,'ManageScripts','Manage scripts',1020);
+INSERT INTO "Permissions" VALUES (18,'ManageBundles','Manage bundles',1030);
+INSERT INTO "Permissions" VALUES (19,'ManageCatalogs','Manage catalogs',1100);
+INSERT INTO "Permissions" VALUES (20,'ManageCategories','Manage categories',1110);
+INSERT INTO "Permissions" VALUES (21,'ManageProducts','Manage products',1120);
+INSERT INTO "Permissions" VALUES (22,'ManageCarts','Manage carts',1130);
+INSERT INTO "Permissions" VALUES (23,'ManageOrderStates','Manage order states',1140);
+INSERT INTO "Permissions" VALUES (24,'ManagePaymentMethods','Manage payment methods',1150);
+INSERT INTO "Permissions" VALUES (25,'ManageDeliveryMethods','Manage delivery methods',1160);
+INSERT INTO "Permissions" VALUES (26,'ManageOrders','Manage orders',1170);
 INSERT INTO "RolePermissions" VALUES (1,1);
 INSERT INTO "RolePermissions" VALUES (2,2);
 INSERT INTO "RolePermissions" VALUES (3,9);
 INSERT INTO "RolePermissions" VALUES (3,12);
 INSERT INTO "RolePermissions" VALUES (3,13);
 INSERT INTO "RolePermissions" VALUES (3,14);
-
---
--- Extension: Platformus.Configurations
--- Version: 1.1.0-beta1
---
 INSERT INTO "Configurations" VALUES (1,'Email','Email');
 INSERT INTO "Configurations" VALUES (2,'Globalization','Globalization');
 INSERT INTO "Variables" VALUES (1,1,'SmtpServer','SMTP server','test',1);
@@ -58,17 +52,12 @@ INSERT INTO "Variables" VALUES (5,1,'SmtpPassword','SMTP password','test',5);
 INSERT INTO "Variables" VALUES (6,1,'SmtpSenderEmail','SMTP sender email','test',6);
 INSERT INTO "Variables" VALUES (7,1,'SmtpSenderName','SMTP sender name','test',7);
 INSERT INTO "Variables" VALUES (8,2,'SpecifyCultureInUrl','Specify culture in URL','yes',1);
-
---
--- Extension: Platformus.Globalization
--- Version: 1.1.0-beta1
---
 INSERT INTO "Cultures" VALUES (1,'__','Neutral',1,0,0);
 INSERT INTO "Cultures" VALUES (2,'en','English',0,1,1);
 
 --
--- Extension: Platformus.Domain
--- Version: 1.1.0-beta1
+-- Extension: Platformus.Website
+-- Version: 2.0.0-alpha1
 --
 INSERT INTO "DataTypes" VALUES (1,'string','singleLinePlainText','Single line plain text',1);
 INSERT INTO "DataTypes" VALUES (2,'string','multilinePlainText','Multiline plain text',2);
@@ -88,10 +77,6 @@ INSERT INTO "DataTypeParameters" VALUES (6,8,'numericTextBox','Width','Width');
 INSERT INTO "DataTypeParameters" VALUES (7,8,'numericTextBox','Height','Height');
 INSERT INTO "DataTypeParameters" VALUES (8,9,'textBox','Mode','Mode');
 
---
--- Extension: Platformus.Forms
--- Version: 1.1.0-beta1
---
 INSERT INTO "FieldTypes" VALUES (1,'TextBox','Text box',1);
 INSERT INTO "FieldTypes" VALUES (2,'TextArea','Text area',2);
 INSERT INTO "FieldTypes" VALUES (3,'Checkbox','Checkbox',3);

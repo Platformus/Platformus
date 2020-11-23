@@ -1,6 +1,6 @@
 --
--- Extension: Platformus.Security
--- Version: 1.1.0-beta1
+-- Extension: Platformus.Core
+-- Version: 2.0.0-alpha1
 --
 
 -- Users
@@ -101,11 +101,6 @@ CREATE TABLE "RolePermissions" (
 
 ALTER TABLE "RolePermissions" OWNER TO postgres;
 
---
--- Extension: Platformus.Configurations
--- Version: 1.1.0-beta1
---
-
 -- Configurations
 CREATE TABLE "Configurations" (
     "Id" serial NOT NULL,
@@ -132,11 +127,6 @@ CREATE TABLE "Variables" (
 );
 
 ALTER TABLE "Variables" OWNER TO postgres;
-
---
--- Extension: Platformus.Globalization
--- Version: 1.1.0-beta1
---
 
 -- Cultures
 CREATE TABLE "Cultures" (
@@ -179,8 +169,8 @@ CREATE TABLE "Localizations" (
 ALTER TABLE "Localizations" OWNER TO postgres;
 
 --
--- Extension: Platformus.Routing
--- Version: 1.1.0-beta1
+-- Extension: Platformus.Website
+-- Version: 2.0.0-alpha1
 --
 
 -- Endpoints
@@ -230,11 +220,6 @@ CREATE TABLE "DataSources" (
 );
 
 ALTER TABLE "DataSources" OWNER TO postgres;
-
---
--- Extension: Platformus.Domain
--- Version: 1.1.0-beta1
---
 
 -- Classes
 CREATE TABLE "Classes" (
@@ -413,35 +398,6 @@ CREATE TABLE "Relations" (
 
 ALTER TABLE "Relations" OWNER TO postgres;
 
--- SerializedObjects
-CREATE TABLE "SerializedObjects" (
-    "CultureId" integer NOT NULL,
-    "ObjectId" integer NOT NULL,
-    "ClassId" integer NOT NULL,
-    "UrlPropertyStringValue" text,
-    "SerializedProperties" text,
-    CONSTRAINT "PK_SerializedObjects" PRIMARY KEY ("CultureId", "ObjectId"),
-    CONSTRAINT "FK_SerializedObjects_Cultures" FOREIGN KEY ("CultureId")
-        REFERENCES public."Cultures" ("Id") MATCH SIMPLE
-        ON UPDATE NO ACTION
-        ON DELETE NO ACTION,
-    CONSTRAINT "FK_SerializedObjects_Objects" FOREIGN KEY ("ObjectId")
-        REFERENCES public."Objects" ("Id") MATCH SIMPLE
-        ON UPDATE NO ACTION
-        ON DELETE NO ACTION,
-    CONSTRAINT "FK_SerializedObjects_Classes" FOREIGN KEY ("ClassId")
-        REFERENCES public."Classes" ("Id") MATCH SIMPLE
-        ON UPDATE NO ACTION
-        ON DELETE NO ACTION
-);
-
-ALTER TABLE "SerializedObjects" OWNER TO postgres;
-
---
--- Extension: Platformus.Menus
--- Version: 1.1.0-beta1
---
-
 -- Menus
 CREATE TABLE "Menus" (
     "Id" serial NOT NULL,
@@ -476,30 +432,6 @@ CREATE TABLE "MenuItems" (
 );
 
 ALTER TABLE "MenuItems" OWNER TO postgres;
-
--- SerializedMenus
-CREATE TABLE "SerializedMenus" (
-    "CultureId" integer NOT NULL,
-    "MenuId" integer NOT NULL,
-    "Code" text NOT NULL,
-    "SerializedMenuItems" text,
-    CONSTRAINT "PK_SerializedMenus" PRIMARY KEY ("CultureId", "MenuId"),
-    CONSTRAINT "FK_SerializedMenus_Cultures" FOREIGN KEY ("CultureId")
-        REFERENCES public."Cultures" ("Id") MATCH SIMPLE
-        ON UPDATE NO ACTION
-        ON DELETE NO ACTION,
-    CONSTRAINT "FK_SerializedMenus_Menus" FOREIGN KEY ("MenuId")
-        REFERENCES public."Menus" ("Id") MATCH SIMPLE
-        ON UPDATE NO ACTION
-        ON DELETE NO ACTION
-);
-
-ALTER TABLE "SerializedMenus" OWNER TO postgres;
-
---
--- Extension: Platformus.Forms
--- Version: 1.1.0-beta1
---
 
 -- Forms
 CREATE TABLE "Forms" (
@@ -613,32 +545,6 @@ CREATE TABLE "CompletedFields" (
 
 ALTER TABLE "CompletedFields" OWNER TO postgres;
 
--- SerializedForms
-CREATE TABLE "SerializedForms" (
-    "CultureId" integer NOT NULL,
-    "FormId" integer NOT NULL,
-    "Code" text NOT NULL,
-    "Name" text NOT NULL,
-	"SubmitButtonTitle" text NOT NULL,
-    "SerializedFields" text,
-    CONSTRAINT "PK_SerializedForms" PRIMARY KEY ("CultureId", "FormId"),
-    CONSTRAINT "FK_SerializedForms_Cultures" FOREIGN KEY ("CultureId")
-        REFERENCES public."Cultures" ("Id") MATCH SIMPLE
-        ON UPDATE NO ACTION
-        ON DELETE NO ACTION,
-    CONSTRAINT "FK_SerializedForms_Forms" FOREIGN KEY ("FormId")
-        REFERENCES public."Forms" ("Id") MATCH SIMPLE
-        ON UPDATE NO ACTION
-        ON DELETE NO ACTION
-);
-
-ALTER TABLE "SerializedForms" OWNER TO postgres;
-
---
--- Extension: Platformus.FileManager
--- Version: 1.1.0-beta1
---
-
 -- Files
 CREATE TABLE "Files" (
     "Id" serial NOT NULL,
@@ -651,7 +557,7 @@ ALTER TABLE "Files" OWNER TO postgres;
 
 --
 -- Extension: Platformus.ECommerce
--- Version: 1.1.0-beta1
+-- Version: 2.0.0-alpha1
 --
 
 -- Catalogs
@@ -910,35 +816,3 @@ CREATE TABLE "Positions" (
 );
 
 ALTER TABLE "Positions" OWNER TO postgres;
-
--- SerializedProducts
-CREATE TABLE "SerializedProducts" (
-    "CultureId" integer NOT NULL,
-    "ProductId" integer NOT NULL,
-    "CategoryId" integer NOT NULL,
-    "Url" text NOT NULL,
-	"Code" text NOT NULL,
-	"Name" text NOT NULL,
-	"Description" text,
-	"Price" numeric NOT NULL,
-	"Title" text,
-	"MetaDescription" text,
-	"MetaKeywords" text,
-    "SerializedAttributes" text,
-	"SerializedPhotos" text,
-    CONSTRAINT "PK_SerializedProducts" PRIMARY KEY ("CultureId", "ProductId"),
-    CONSTRAINT "FK_SerializedProducts_Cultures" FOREIGN KEY ("CultureId")
-        REFERENCES public."Cultures" ("Id") MATCH SIMPLE
-        ON UPDATE NO ACTION
-        ON DELETE NO ACTION,
-    CONSTRAINT "FK_SerializedProducts_Products" FOREIGN KEY ("ProductId")
-        REFERENCES public."Products" ("Id") MATCH SIMPLE
-        ON UPDATE NO ACTION
-        ON DELETE NO ACTION,
-    CONSTRAINT "FK_SerializedProducts_Categories" FOREIGN KEY ("CategoryId")
-        REFERENCES public."Categories" ("Id") MATCH SIMPLE
-        ON UPDATE NO ACTION
-        ON DELETE NO ACTION
-);
-
-ALTER TABLE "SerializedProducts" OWNER TO postgres;

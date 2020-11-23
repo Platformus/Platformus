@@ -1,7 +1,7 @@
 BEGIN TRANSACTION;
 --
--- Extension: Platformus.Security
--- Version: 1.1.0-beta1
+-- Extension: Platformus.Core
+-- Version: 2.0.0-alpha1
 --
 
 -- Users
@@ -27,8 +27,8 @@ CREATE TABLE "Credentials" (
 	"Identifier" TEXT NOT NULL,
 	"Secret" TEXT,
 	"Extra" TEXT,
-	CONSTRAINT "FK_Credential_User_UserId" FOREIGN KEY ("UserId") REFERENCES "Users" ("Id"),
-	CONSTRAINT "FK_Credential_CredentialType_CredentialTypeId" FOREIGN KEY ("CredentialTypeId") REFERENCES "CredentialTypes" ("Id")
+	CONSTRAINT "FK_Credential_User_UserId" FOREIGN KEY ("UserId") REFERENCES "Users" ("Id") ON DELETE CASCADE,
+	CONSTRAINT "FK_Credential_CredentialType_CredentialTypeId" FOREIGN KEY ("CredentialTypeId") REFERENCES "CredentialTypes" ("Id") ON DELETE CASCADE
 );
 
 -- Roles
@@ -44,8 +44,8 @@ CREATE TABLE "UserRoles" (
 	"UserId" INTEGER NOT NULL,
 	"RoleId" INTEGER NOT NULL,
 	CONSTRAINT "PK_UserRole" PRIMARY KEY ("UserId", "RoleId"),
-	CONSTRAINT "FK_UserRole_User_UserId" FOREIGN KEY ("UserId") REFERENCES "Users" ("Id"),
-	CONSTRAINT "FK_UserRole_Role_RoleId" FOREIGN KEY ("RoleId") REFERENCES "Roles" ("Id")
+	CONSTRAINT "FK_UserRole_User_UserId" FOREIGN KEY ("UserId") REFERENCES "Users" ("Id") ON DELETE CASCADE,
+	CONSTRAINT "FK_UserRole_Role_RoleId" FOREIGN KEY ("RoleId") REFERENCES "Roles" ("Id") ON DELETE CASCADE
 );
 
 -- Permissions
@@ -61,14 +61,9 @@ CREATE TABLE "RolePermissions" (
 	"RoleId" INTEGER NOT NULL,
 	"PermissionId" INTEGER NOT NULL,
 	CONSTRAINT "PK_RolePermission" PRIMARY KEY ("RoleId", "PermissionId"),
-	CONSTRAINT "FK_RolePermission_Role_RoleId" FOREIGN KEY ("RoleId") REFERENCES "Roles" ("Id"),
-	CONSTRAINT "FK_RolePermission_Permission_PermissionId" FOREIGN KEY ("PermissionId") REFERENCES "Permissions" ("Id")
+	CONSTRAINT "FK_RolePermission_Role_RoleId" FOREIGN KEY ("RoleId") REFERENCES "Roles" ("Id") ON DELETE CASCADE,
+	CONSTRAINT "FK_RolePermission_Permission_PermissionId" FOREIGN KEY ("PermissionId") REFERENCES "Permissions" ("Id") ON DELETE CASCADE
 );
-
---
--- Extension: Platformus.Configurations
--- Version: 1.1.0-beta1
---
 
 -- Configurations
 CREATE TABLE "Configurations" (
@@ -85,13 +80,8 @@ CREATE TABLE "Variables" (
 	"Name" TEXT NOT NULL,
 	"Value" TEXT NOT NULL,
 	"Position" INTEGER,
-	CONSTRAINT "FK_Variable_Configuration_ConfigurationId" FOREIGN KEY("ConfigurationId") REFERENCES "Configurations" ("Id")
+	CONSTRAINT "FK_Variable_Configuration_ConfigurationId" FOREIGN KEY("ConfigurationId") REFERENCES "Configurations" ("Id") ON DELETE CASCADE
 );
-
---
--- Extension: Platformus.Globalization
--- Version: 1.1.0-beta1
---
 
 -- Cultures
 CREATE TABLE "Cultures" (
@@ -114,13 +104,13 @@ CREATE TABLE "Localizations" (
 	"DictionaryId" INTEGER NOT NULL,
 	"CultureId" INTEGER NOT NULL,
 	"Value" TEXT,
-	CONSTRAINT "FK_Localization_Dictionary_DictionaryId" FOREIGN KEY ("DictionaryId") REFERENCES "Dictionaries" ("Id"),
-	CONSTRAINT "FK_Localization_Culture_CultureId" FOREIGN KEY ("CultureId") REFERENCES "Cultures" ("Id")
+	CONSTRAINT "FK_Localization_Dictionary_DictionaryId" FOREIGN KEY ("DictionaryId") REFERENCES "Dictionaries" ("Id") ON DELETE CASCADE,
+	CONSTRAINT "FK_Localization_Culture_CultureId" FOREIGN KEY ("CultureId") REFERENCES "Cultures" ("Id") ON DELETE CASCADE
 );
 
 --
--- Extension: Platformus.Routing
--- Version: 1.1.0-beta1
+-- Extension: Platformus.Website
+-- Version: 2.0.0-alpha1
 --
 
 -- Endpoints
@@ -151,13 +141,8 @@ CREATE TABLE "DataSources" (
 	"Code" TEXT NOT NULL,
 	"CSharpClassName" TEXT NOT NULL,
 	"Parameters" TEXT,
-	CONSTRAINT "FK_DataSource_Endpoint_EndpointId" FOREIGN KEY("EndpointId") REFERENCES "Endpoints"("Id")
+	CONSTRAINT "FK_DataSource_Endpoint_EndpointId" FOREIGN KEY("EndpointId") REFERENCES "Endpoints"("Id") ON DELETE CASCADE
 );
-
---
--- Extension: Platformus.Domain
--- Version: 1.1.0-beta1
---
 
 -- Classes
 CREATE TABLE "Classes" (
@@ -167,7 +152,7 @@ CREATE TABLE "Classes" (
 	"Name" TEXT NOT NULL,
 	"PluralizedName" TEXT NOT NULL,
 	"IsAbstract" INTEGER NOT NULL,
-	CONSTRAINT "FK_Class_Class_ClassId" FOREIGN KEY("ClassId") REFERENCES "Classes" ("Id")
+	CONSTRAINT "FK_Class_Class_ClassId" FOREIGN KEY("ClassId") REFERENCES "Classes" ("Id") ON DELETE SET NULL
 );
 
 -- Tabs
@@ -176,7 +161,7 @@ CREATE TABLE "Tabs" (
 	"ClassId" INTEGER NOT NULL,
 	"Name" TEXT NOT NULL,
 	"Position" INTEGER,
-	CONSTRAINT "FK_Tab_Class_ClassId" FOREIGN KEY("ClassId") REFERENCES "Classes" ("Id")
+	CONSTRAINT "FK_Tab_Class_ClassId" FOREIGN KEY("ClassId") REFERENCES "Classes" ("Id") ON DELETE CASCADE
 );
 
 -- DataTypes
@@ -195,7 +180,7 @@ CREATE TABLE "DataTypeParameters" (
 	"JavaScriptEditorClassName" TEXT NOT NULL,
 	"Code" TEXT NOT NULL,
 	"Name" TEXT NOT NULL,
-	CONSTRAINT "FK_DataTypeParameter_DataType_DataTypeId" FOREIGN KEY("DataTypeId") REFERENCES "DataTypes" ("Id")
+	CONSTRAINT "FK_DataTypeParameter_DataType_DataTypeId" FOREIGN KEY("DataTypeId") REFERENCES "DataTypes" ("Id") ON DELETE CASCADE
 );
 
 -- Members
@@ -213,10 +198,10 @@ CREATE TABLE "Members" (
 	"IsRelationSingleParent" INTEGER,
   "MinRelatedObjectsNumber" INTEGER,
   "MaxRelatedObjectsNumber" INTEGER,
-	CONSTRAINT "FK_Member_Class_ClassId" FOREIGN KEY("ClassId") REFERENCES "Classes" ("Id"),
-	CONSTRAINT "FK_Member_Tab_TabId" FOREIGN KEY("TabId") REFERENCES "Tabs" ("Id"),
-	CONSTRAINT "FK_Member_DataType_PropertyDataTypeId" FOREIGN KEY("PropertyDataTypeId") REFERENCES "DataTypes" ("Id"),
-	CONSTRAINT "FK_Member_Class_RelationClassId" FOREIGN KEY("RelationClassId") REFERENCES "Classes" ("Id")
+		CONSTRAINT "FK_Member_Class_ClassId" FOREIGN KEY("ClassId") REFERENCES "Classes" ("Id") ON DELETE CASCADE,
+	CONSTRAINT "FK_Member_Tab_TabId" FOREIGN KEY("TabId") REFERENCES "Tabs" ("Id") ON DELETE SET NULL,
+	CONSTRAINT "FK_Member_DataType_PropertyDataTypeId" FOREIGN KEY("PropertyDataTypeId") REFERENCES "DataTypes" ("Id") ON DELETE SET NULL,
+	CONSTRAINT "FK_Member_Class_RelationClassId" FOREIGN KEY("RelationClassId") REFERENCES "Classes" ("Id") ON DELETE SET NULL
 );
 
 -- DataTypeParameterValues
@@ -225,15 +210,15 @@ CREATE TABLE "DataTypeParameterValues" (
 	"DataTypeParameterId" INT NOT NULL,
 	"MemberId" INT NOT NULL,
 	"Value" TEXT NOT NULL,
-	CONSTRAINT "FK_DataTypeParameterValue_DataTypeParameter_DataTypeParameterId" FOREIGN KEY("DataTypeParameterId") REFERENCES "DataTypeParameters" ("Id"),
-	CONSTRAINT "FK_DataTypeParameterValue_Member_MemberId" FOREIGN KEY("MemberId") REFERENCES "Members" ("Id")
+	CONSTRAINT "FK_DataTypeParameterValue_DataTypeParameter_DataTypeParameterId" FOREIGN KEY("DataTypeParameterId") REFERENCES "DataTypeParameters" ("Id") ON DELETE CASCADE,
+	CONSTRAINT "FK_DataTypeParameterValue_Member_MemberId" FOREIGN KEY("MemberId") REFERENCES "Members" ("Id") ON DELETE CASCADE
 );
 
 -- Objects
 CREATE TABLE "Objects" (
 	"Id" INTEGER NOT NULL CONSTRAINT "PK_Object" PRIMARY KEY AUTOINCREMENT,
 	"ClassId" INTEGER NOT NULL,
-	CONSTRAINT "FK_Object_Class_ClassId" FOREIGN KEY("ClassId") REFERENCES "Classes" ("Id")
+	CONSTRAINT "FK_Object_Class_ClassId" FOREIGN KEY("ClassId") REFERENCES "Classes" ("Id") ON DELETE CASCADE
 );
 
 -- Properties
@@ -245,8 +230,8 @@ CREATE TABLE "Properties" (
 	"DecimalValue" REAL,
 	"StringValueId" INTEGER,
 	"DateTimeValue" TEXT,
-	CONSTRAINT "FK_Property_Object_ObjectId" FOREIGN KEY("ObjectId") REFERENCES "Objects"("Id"),
-	CONSTRAINT "FK_Property_Member_MemberId" FOREIGN KEY("MemberId") REFERENCES "Members"("Id"),
+	CONSTRAINT "FK_Property_Object_ObjectId" FOREIGN KEY("ObjectId") REFERENCES "Objects"("Id") ON DELETE CASCADE,
+	CONSTRAINT "FK_Property_Member_MemberId" FOREIGN KEY("MemberId") REFERENCES "Members"("Id") ON DELETE CASCADE,
 	CONSTRAINT "FK_Property_Dictionary_StringValueId" FOREIGN KEY("StringValueId") REFERENCES "Dictionaries"("Id")
 );
 
@@ -256,28 +241,10 @@ CREATE TABLE "Relations" (
 	"MemberId" INTEGER NOT NULL,
 	"PrimaryId" INTEGER NOT NULL,
 	"ForeignId" INTEGER NOT NULL,
-	CONSTRAINT "FK_Relation_Member_MemberId" FOREIGN KEY ("MemberId") REFERENCES "Members" ("Id"),
-	CONSTRAINT "FK_Relation_Object_PrimaryId" FOREIGN KEY ("PrimaryId") REFERENCES "Objects" ("Id"),
-	CONSTRAINT "FK_Relation_Object_ForeignId" FOREIGN KEY ("ForeignId") REFERENCES "Objects" ("Id")
+	CONSTRAINT "FK_Relation_Member_MemberId" FOREIGN KEY ("MemberId") REFERENCES "Members" ("Id") ON DELETE CASCADE,
+	CONSTRAINT "FK_Relation_Object_PrimaryId" FOREIGN KEY ("PrimaryId") REFERENCES "Objects" ("Id") ON DELETE CASCADE,
+	CONSTRAINT "FK_Relation_Object_ForeignId" FOREIGN KEY ("ForeignId") REFERENCES "Objects" ("Id") ON DELETE CASCADE
 );
-
--- SerializedObjects
-CREATE TABLE "SerializedObjects" (
-	"CultureId" INTEGER NOT NULL,
-	"ObjectId" INTEGER NOT NULL,
-	"ClassId" INTEGER NOT NULL,
-	"UrlPropertyStringValue" TEXT,
-	"SerializedProperties" TEXT,
-	CONSTRAINT "PK_SerializedObject" PRIMARY KEY("CultureId","ObjectId"),
-	CONSTRAINT "FK_SerializedObject_Culture_CultureId" FOREIGN KEY("CultureId") REFERENCES "Cultures"("Id"),
-	CONSTRAINT "FK_SerializedObject_Object_ObjectId" FOREIGN KEY("ObjectId") REFERENCES "Objects"("Id"),
-	CONSTRAINT "FK_SerializedObject_Class_ClassId" FOREIGN KEY("ClassId") REFERENCES "Classes"("Id")
-);
-
---
--- Extension: Platformus.Menus
--- Version: 1.1.0-beta1
---
 
 -- Menus
 CREATE TABLE "Menus" (
@@ -295,26 +262,10 @@ CREATE TABLE "MenuItems" (
 	"NameId" INTEGER NOT NULL,
 	"Url" TEXT,
 	"Position" INTEGER,
-	CONSTRAINT "FK_MenuItem_Menu_MenuId" FOREIGN KEY("MenuId") REFERENCES "Menus" ("Id"),
-	CONSTRAINT "FK_MenuItem_MenuItem_MenuItemId" FOREIGN KEY("MenuItemId") REFERENCES "MenuItems" ("Id"),
+	CONSTRAINT "FK_MenuItem_Menu_MenuId" FOREIGN KEY("MenuId") REFERENCES "Menus" ("Id") ON DELETE CASCADE,
+	CONSTRAINT "FK_MenuItem_MenuItem_MenuItemId" FOREIGN KEY("MenuItemId") REFERENCES "MenuItems" ("Id") ON DELETE CASCADE,
 	CONSTRAINT "FK_MenuItem_Dictionary_NameId" FOREIGN KEY("NameId") REFERENCES "Dictionaries" ("Id")
 );
-
--- SerializedMenus
-CREATE TABLE "SerializedMenus" (
-	"CultureId" INTEGER NOT NULL,
-	"MenuId" INTEGER NOT NULL,
-	"Code" TEXT NOT NULL,
-	"SerializedMenuItems" TEXT,
-	CONSTRAINT "PK_SerializedMenu" PRIMARY KEY("CultureId","MenuId"),
-	CONSTRAINT "FK_SerializedMenu_Culture_CultureId" FOREIGN KEY("CultureId") REFERENCES "Cultures"("Id"),
-	CONSTRAINT "FK_SerializedMenu_Menu_MenuId" FOREIGN KEY("MenuId") REFERENCES "Menus"("Id")
-);
-
---
--- Extension: Platformus.Forms
--- Version: 1.1.0-beta1
---
 
 -- Forms
 CREATE TABLE "Forms" (
@@ -347,8 +298,8 @@ CREATE TABLE "Fields" (
 	"IsRequired" INTEGER NOT NULL,
 	"MaxLength" INTEGER,
 	"Position" INTEGER,
-	CONSTRAINT "FK_Field_Form_FormId" FOREIGN KEY ("FormId") REFERENCES "Forms" ("Id"),
-	CONSTRAINT "FK_Field_FieldType_FieldTypeId" FOREIGN KEY ("FieldTypeId") REFERENCES "FieldTypes" ("Id"),
+	CONSTRAINT "FK_Field_Form_FormId" FOREIGN KEY ("FormId") REFERENCES "Forms" ("Id") ON DELETE CASCADE,
+	CONSTRAINT "FK_Field_FieldType_FieldTypeId" FOREIGN KEY ("FieldTypeId") REFERENCES "FieldTypes" ("Id") ON DELETE CASCADE,
 	CONSTRAINT "FK_Field_Dictionary_NameId" FOREIGN KEY ("NameId") REFERENCES "Dictionaries" ("Id")
 );
 
@@ -358,7 +309,7 @@ CREATE TABLE "FieldOptions" (
 	"FieldId" INTEGER NOT NULL,
 	"ValueId" INTEGER NOT NULL,
 	"Position" INTEGER,
-	CONSTRAINT "FK_FieldOption_Field_FieldId" FOREIGN KEY ("FieldId") REFERENCES "Fields" ("Id"),
+	CONSTRAINT "FK_FieldOption_Field_FieldId" FOREIGN KEY ("FieldId") REFERENCES "Fields" ("Id") ON DELETE CASCADE,
 	CONSTRAINT "FK_FieldOption_Dictionary_ValueId" FOREIGN KEY ("ValueId") REFERENCES "Dictionaries" ("Id")
 );
 
@@ -376,27 +327,9 @@ CREATE TABLE "CompletedFields" (
 	"CompletedFormId" INTEGER NOT NULL,
 	"FieldId" INTEGER NOT NULL,
 	"Value" TEXT,
-	CONSTRAINT "FK_CompletedField_CompletedForm_CompletedFormId" FOREIGN KEY ("CompletedFormId") REFERENCES "CompletedForms" ("Id")
+	CONSTRAINT "FK_CompletedField_CompletedForm_CompletedFormId" FOREIGN KEY ("CompletedFormId") REFERENCES "CompletedForms" ("Id") ON DELETE CASCADE,
 	CONSTRAINT "FK_CompletedField_Field_FieldId" FOREIGN KEY ("FieldId") REFERENCES "Fields" ("Id")
 );
-
--- SerializedForms
-CREATE TABLE "SerializedForms" (
-	"CultureId" INTEGER NOT NULL,
-	"FormId" INTEGER NOT NULL,
-	"Code" TEXT NOT NULL,
-	"Name" TEXT NOT NULL,
-	"SubmitButtonTitle" TEXT NOT NULL,
-	"SerializedFields" TEXT,
-	CONSTRAINT "PK_SerializedForm" PRIMARY KEY("CultureId","FormId"),
-	CONSTRAINT "FK_SerializedForm_Culture_CultureId" FOREIGN KEY("CultureId") REFERENCES "Cultures"("Id"),
-	CONSTRAINT "FK_SerializedForm_Form_FormId" FOREIGN KEY("FormId") REFERENCES "Forms"("Id")
-);
-
---
--- Extension: Platformus.FileManager
--- Version: 1.1.0-beta1
---
 
 -- Files
 CREATE TABLE "Files" (
@@ -407,7 +340,7 @@ CREATE TABLE "Files" (
 
 --
 -- Extension: Platformus.ECommerce
--- Version: 1.1.0-beta1
+-- Version: 2.0.0-alpha1
 --
 
 -- Catalogs
@@ -552,27 +485,6 @@ CREATE TABLE "Positions" (
 	"ProductId" INTEGER NOT NULL,
 	CONSTRAINT "FK_Position_Cart_CartId" FOREIGN KEY("CartId") REFERENCES "Carts" ("Id"),
 	CONSTRAINT "FK_Position_Product_ProductId" FOREIGN KEY("ProductId") REFERENCES "Products" ("Id")
-);
-
--- SerializedProducts
-CREATE TABLE "SerializedProducts" (
-	"CultureId" INTEGER NOT NULL,
-	"ProductId" INTEGER NOT NULL,
-	"CategoryId" INTEGER NOT NULL,
-	"Url" TEXT NOT NULL,
-	"Code" TEXT NOT NULL,
-	"Name" TEXT NOT NULL,
-	"Description" TEXT,
-	"Price" REAL NOT NULL,
-	"Title" TEXT,
-	"MetaDescription" TEXT,
-	"MetaKeywords" TEXT,
-	"SerializedAttributes" TEXT,
-	"SerializedPhotos" TEXT,
-	CONSTRAINT "PK_SerializedProduct" PRIMARY KEY("CultureId","ProductId"),
-	CONSTRAINT "FK_SerializedProduct_Culture_CultureId" FOREIGN KEY("CultureId") REFERENCES "Cultures"("Id"),
-	CONSTRAINT "FK_SerializedProduct_Product_ProductId" FOREIGN KEY("ProductId") REFERENCES "Products"("Id"),
-	CONSTRAINT "FK_SerializedProduct_Category_CategoryId" FOREIGN KEY("CategoryId") REFERENCES "Categories"("Id")
 );
 
 COMMIT;

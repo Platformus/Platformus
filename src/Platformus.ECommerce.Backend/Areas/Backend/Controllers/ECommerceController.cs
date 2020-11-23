@@ -10,7 +10,7 @@ using Platformus.ECommerce.Data.Entities;
 namespace Platformus.ECommerce.Backend.Controllers
 {
   [Area("Backend")]
-  public class ECommerceController : Platformus.Globalization.Backend.Controllers.ControllerBase
+  public class ECommerceController : Platformus.Core.Backend.Controllers.ControllerBase
   {
     public ECommerceController(IStorage storage)
       : base(storage)

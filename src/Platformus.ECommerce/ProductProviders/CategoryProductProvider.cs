@@ -3,10 +3,10 @@
 
 using System.Collections.Generic;
 using System.Linq;
-using Platformus.Barebone.Parameters;
+using Platformus.Core.Parameters;
 using Platformus.ECommerce.Data.Abstractions;
 using Platformus.ECommerce.Data.Entities;
-using Platformus.Globalization.Services.Abstractions;
+using Platformus.Core.Services.Abstractions;
 
 namespace Platformus.ECommerce.ProductProviders
 {

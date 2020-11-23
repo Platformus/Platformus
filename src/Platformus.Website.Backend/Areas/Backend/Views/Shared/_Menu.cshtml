@@ -1,0 +1,22 @@
+﻿@* Copyright © 2020 Dmitry Sikorsky. All rights reserved. *@
+@* Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information. *@
+@model Platformus.Website.Backend.ViewModels.Shared.MenuViewModel
+@inject Microsoft.AspNetCore.Mvc.Localization.IViewLocalizer Localizer
+<div class="tree__node">
+  <div class="tree__node-header">
+    <div class="tree__buttons tree__buttons--node-header buttons">
+      <a class="buttons__button buttons__button--minor button button--positive button--minor" href="/backend/menus/edit/@Model.Id">@Localizer["Edit"]</a>
+      <a class="buttons__button buttons__button--minor button button--negative button--minor button--delete" href="#" onclick="return platformus.forms.deleteForm.show('/backend/menus/delete/@Model.Id');"></a>
+    </div>
+    @Model.Name
+  </div>
+  <div class="tree__node-content">
+    @foreach (var menuItem in this.Model.MenuItems)
+    {
+      @Html.Partial("_MenuItem", menuItem)
+    }
+    <div class="tree__buttons buttons">
+      <a class="buttons__button buttons__button--minor button button--positive button--minor" href="/backend/menuitems/create?menu.id=@Model.Id">@Localizer["Create menu item"]</a>
+    </div>
+  </div>
+</div>

@@ -4,7 +4,7 @@
 using System.Threading.Tasks;
 using ExtCore.Data.Abstractions;
 using Microsoft.AspNetCore.Mvc;
-using Platformus.Barebone.Frontend.ViewComponents;
+using Platformus.Core.Frontend.ViewComponents;
 using Platformus.ECommerce.Frontend.ViewModels.Shared;
 
 namespace Platformus.ECommerce.Frontend.ViewComponents

@@ -12,7 +12,7 @@ namespace Platformus.ECommerce.Backend.Controllers
 {
   [Area("Backend")]
   [Authorize(Policy = Policies.HasBrowseFeaturesPermission)]
-  public class FeaturesController : Platformus.Globalization.Backend.Controllers.ControllerBase
+  public class FeaturesController : Platformus.Core.Backend.Controllers.ControllerBase
   {
     public FeaturesController(IStorage storage)
       : base(storage)

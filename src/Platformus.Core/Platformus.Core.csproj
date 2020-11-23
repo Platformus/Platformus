@@ -1,0 +1,30 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <Authors>Dmitry Sikorsky</Authors>
+    <Copyright>Copyright © 2015 Dmitry Sikorsky</Copyright>
+    <Description>The Platformus.Core extension component.</Description>
+    <VersionPrefix>2.0.0-beta1</VersionPrefix>
+    <TargetFramework>net5.0</TargetFramework>
+    <AssemblyName>Platformus.Core</AssemblyName>
+    <PackageId>Platformus.Core</PackageId>
+    <PackageIconUrl>http://platformus.net/platformus_nuget_icon.png</PackageIconUrl>
+    <PackageProjectUrl>http://platformus.net/</PackageProjectUrl>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="ExtCore.Events" Version="6.0.0-beta1" />
+    <PackageReference Include="ExtCore.Mvc" Version="6.0.0-beta1" />
+    <PackageReference Include="Magicalizer.Data.Repositories.Abstractions" Version="1.0.0-alpha2" />
+    <PackageReference Include="MailKit" Version="2.1.2" />
+    <PackageReference Include="Newtonsoft.Json" Version="12.0.3" />
+    <PackageReference Include="NUglify" Version="1.5.13" />
+    <PackageReference Include="SixLabors.ImageSharp" Version="1.0.0-beta0007" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Platformus.Core.Data.Abstractions\Platformus.Core.Data.Abstractions.csproj" />
+    <ProjectReference Include="..\Platformus.Core.Data.Entities\Platformus.Core.Data.Entities.csproj" />
+  </ItemGroup>
+
+</Project>

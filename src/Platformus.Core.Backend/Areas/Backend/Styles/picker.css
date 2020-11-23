@@ -1,0 +1,29 @@
+﻿/* Copyright © 2020 Dmitry Sikorsky. All rights reserved. */
+/* Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information. */
+
+.picker {
+  display: none;
+  position: absolute;
+}
+
+.picker__arrow {
+  background: url(/wwwroot.areas.backend.images.picker.png) no-repeat;
+  position: absolute;
+  left: -5px;
+  top: 10px;
+  width: 5px;
+  height: 10px;
+}
+
+@media
+only screen and (-webkit-min-device-pixel-ratio: 2),
+only screen and (   min--moz-device-pixel-ratio: 2),
+only screen and (     -o-min-device-pixel-ratio: 2/1),
+only screen and (        min-device-pixel-ratio: 2),
+only screen and (                min-resolution: 192dpi),
+only screen and (                min-resolution: 2dppx) {
+  .picker__arrow {
+    background-image: url(/wwwroot.areas.backend.images.picker@2x.png);
+    background-size: 5px 10px;
+  }
+}

@@ -11,7 +11,7 @@ namespace Platformus.ECommerce.Backend.Controllers
 {
   [Area("Backend")]
   [Authorize(Policy = Policies.HasBrowseCartsPermission)]
-  public class PositionsController : Platformus.Globalization.Backend.Controllers.ControllerBase
+  public class PositionsController : Platformus.Core.Backend.Controllers.ControllerBase
   {
     public PositionsController(IStorage storage)
       : base(storage)

@@ -1,0 +1,25 @@
+﻿@* Copyright © 2020 Dmitry Sikorsky. All rights reserved. *@
+@* Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information. *@
+@model Platformus.Website.Backend.ViewModels.Shared.FieldViewModel
+@inject Microsoft.AspNetCore.Mvc.Localization.IViewLocalizer Localizer
+<div class="tree__node">
+  <div class="tree__node-header">
+    <div class="tree__buttons tree__buttons--node-header buttons">
+      <a class="buttons__button buttons__button--minor button button--positive button--minor" href="/backend/fields/edit/@Model.Id">@Localizer["Edit"]</a>
+      <a class="buttons__button buttons__button--minor button button--negative button--minor button--delete" href="#" onclick="return platformus.forms.deleteForm.show('/backend/fields/delete/@Model.Id');"></a>
+    </div>
+    @Model.Name <span class="marker marker--neutral">@Model.FieldType.Name</span>
+  </div>
+  @if (this.Model.FieldType.Code == "RadioButtonList" || this.Model.FieldType.Code == "DropDownList")
+  {
+    <div class="tree__node-content">
+      @foreach (var fieldOption in this.Model.FieldOptions)
+      {
+      @Html.Partial("_FieldOption", fieldOption)
+      }
+      <div class="tree__buttons buttons">
+        <a class="buttons__button buttons__button--minor button button--positive button--minor" href="/backend/fieldoptions/create?field.id=@Model.Id">@Localizer["Create field option"]</a>
+      </div>
+    </div>
+  }
+</div>

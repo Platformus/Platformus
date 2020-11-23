@@ -5,12 +5,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using ExtCore.Infrastructure;
-using Platformus.Barebone;
-using Platformus.Barebone.Primitives;
+using Platformus.Core;
+using Platformus.Core.Primitives;
 using Platformus.ECommerce.Data.Abstractions;
 using Platformus.ECommerce.Data.Entities;
 using Platformus.ECommerce.ProductProviders;
-using Platformus.Globalization.Backend.ViewModels;
+using Platformus.Core.Backend.ViewModels;
 
 namespace Platformus.ECommerce.Backend.ViewModels.Catalogs
 {

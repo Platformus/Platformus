@@ -1,0 +1,43 @@
+﻿/* Copyright © 2020 Dmitry Sikorsky. All rights reserved. */
+/* Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information. */
+
+.file-uploader {
+  position: relative;
+}
+
+.file-uploader__filename {
+  background-color: #f0f0f0;
+  box-sizing: border-box;
+  padding: 5px 10px;
+  width: 100%;
+}
+
+.file-uploader__filename:hover {
+  background-color: #f5f5f5;
+}
+
+.file-uploader__filename--not-selected {
+  color: #ccc;
+  font-style: italic;
+}
+
+.file-uploader__filename--size {
+  color: #ccc;
+  font-style: italic;
+}
+
+.file-uploader__browse-button {
+  text-align: center;
+  width: 80px;
+  height: 20px;
+  overflow: hidden;
+}
+
+.file-uploader__browse-input {
+  cursor: pointer;
+  font-size: 150px;
+  opacity: 0;
+  margin: -100px 0 0 -500px;
+  width: 1000px;
+  height: 100px;
+}

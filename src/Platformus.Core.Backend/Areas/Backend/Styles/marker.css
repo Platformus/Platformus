@@ -1,0 +1,24 @@
+﻿/* Copyright © 2020 Dmitry Sikorsky. All rights reserved. */
+/* Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information. */
+
+.marker {
+  display: inline-block;
+  padding: 0 3px;
+}
+
+.marker--highlighted {
+  background-color: #ffff96;
+}
+
+.marker--positive {
+  background-color: rgba(135, 185, 25, 0.15);
+}
+
+.marker--negative {
+  background-color: rgba(255, 65, 0, 0.15);
+}
+
+.marker--neutral {
+  background-color: rgba(240, 240, 240, 0.5);
+  color: #ccc;
+}

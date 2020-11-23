@@ -4,8 +4,8 @@
     <Authors>Dmitry Sikorsky</Authors>
     <Copyright>Copyright © 2015 Dmitry Sikorsky</Copyright>
     <Description>Free, open source and cross-platform CMS based on ASP.NET Core and ExtCore framework.</Description>
-    <VersionPrefix>1.1.0</VersionPrefix>
-    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <VersionPrefix>2.0.0-beta1</VersionPrefix>
+    <TargetFramework>net5.0</TargetFramework>
     <AssemblyName>Platformus.WebApplication</AssemblyName>
     <PackageId>Platformus.WebApplication</PackageId>
     <PackageIconUrl>http://platformus.net/platformus_nuget_icon.png</PackageIconUrl>
@@ -13,15 +13,14 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="ExtCore.Data" Version="5.1.0" />
-    <PackageReference Include="ExtCore.Data.EntityFramework" Version="5.1.0" />
-    <PackageReference Include="ExtCore.WebApplication" Version="5.1.0" />
+    <PackageReference Include="ExtCore.Data" Version="6.0.0-beta1" />
+    <PackageReference Include="ExtCore.Data.EntityFramework" Version="6.0.0-beta1" />
+    <PackageReference Include="ExtCore.WebApplication" Version="6.0.0-beta1" />
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Platformus.Barebone.Backend\Platformus.Barebone.Backend.csproj" />
-    <ProjectReference Include="..\Platformus.Barebone.Data.Extensions\Platformus.Barebone.Data.Extensions.csproj" />
-    <ProjectReference Include="..\Platformus.Barebone.Frontend\Platformus.Barebone.Frontend.csproj" />
+    <ProjectReference Include="..\Platformus.Core.Backend\Platformus.Core.Backend.csproj" />
+    <ProjectReference Include="..\Platformus.Core.Frontend\Platformus.Core.Frontend.csproj" />
   </ItemGroup>
 
 </Project>

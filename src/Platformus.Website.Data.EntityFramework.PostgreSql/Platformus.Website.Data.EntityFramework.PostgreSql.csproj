@@ -1,0 +1,23 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <Authors>Dmitry Sikorsky</Authors>
+    <Copyright>Copyright © 2015 Dmitry Sikorsky</Copyright>
+    <Description>The Platformus.Website extension component.</Description>
+    <VersionPrefix>2.0.0-beta1</VersionPrefix>
+    <TargetFramework>net5.0</TargetFramework>
+    <AssemblyName>Platformus.Website.Data.EntityFramework.PostgreSql</AssemblyName>
+    <PackageId>Platformus.Website.Data.EntityFramework.PostgreSql</PackageId>
+    <PackageIconUrl>http://platformus.net/platformus_nuget_icon.png</PackageIconUrl>
+    <PackageProjectUrl>http://platformus.net/</PackageProjectUrl>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="ExtCore.Data.EntityFramework.PostgreSql" Version="6.0.0-beta1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Platformus.Website.Data.Abstractions\Platformus.Website.Data.Abstractions.csproj" />
+  </ItemGroup>
+
+</Project>

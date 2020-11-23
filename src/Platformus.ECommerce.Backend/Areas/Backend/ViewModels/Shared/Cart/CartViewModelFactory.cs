@@ -3,10 +3,10 @@
 
 using System.Collections.Generic;
 using System.Linq;
-using Platformus.Barebone;
+using Platformus.Core;
 using Platformus.ECommerce.Data.Abstractions;
 using Platformus.ECommerce.Data.Entities;
-using Platformus.Globalization.Backend.ViewModels;
+using Platformus.Core.Backend.ViewModels;
 
 namespace Platformus.ECommerce.Backend.ViewModels.Shared
 {

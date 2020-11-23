@@ -2,9 +2,9 @@
 // Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information.
 
 using System.Linq;
-using Platformus.Barebone;
+using Platformus.Core;
 using Platformus.ECommerce.Data.Abstractions;
-using Platformus.Globalization.Frontend.ViewModels;
+using Platformus.Core.Frontend.ViewModels;
 
 namespace Platformus.ECommerce.Frontend.ViewModels.Shared
 {

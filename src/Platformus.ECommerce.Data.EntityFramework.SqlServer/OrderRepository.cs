@@ -6,7 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using ExtCore.Data.EntityFramework;
 using Microsoft.EntityFrameworkCore;
-using Platformus.Barebone.Data.Extensions;
+using Platformus.Core.Data.Extensions;
 using Platformus.ECommerce.Data.Abstractions;
 using Platformus.ECommerce.Data.Entities;
 

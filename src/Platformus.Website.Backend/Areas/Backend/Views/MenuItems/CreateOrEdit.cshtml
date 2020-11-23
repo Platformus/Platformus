@@ -1,0 +1,20 @@
+﻿@* Copyright © 2020 Dmitry Sikorsky. All rights reserved. *@
+@* Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information. *@
+@model Platformus.Website.Backend.ViewModels.MenuItems.CreateOrEditViewModel
+@inject Microsoft.AspNetCore.Mvc.Localization.IViewLocalizer Localizer
+@{
+  this.ViewBag.Title = (this.Model.Id == null ? this.Localizer["Create Menu Item"].Value : this.Localizer["Edit Menu Item"].Value);
+  this.ViewBag.ActiveMenuItem = "menus";
+}
+@section title {
+  @ViewBag.Title
+}
+<form class="form" method="post">
+  <multilingual-single-line-text-field asp-for="Name" asp-localizations="@Model.NameLocalizations" />
+  <single-line-text-field asp-for="Url" />
+  <numeric-field asp-for="Position" />
+  <div class="form__buttons buttons">
+    <button class="buttons__button button button--positive" type="submit">@Localizer["Save"]</button>
+    <a class="buttons__button button button--neutral" href="/backend/menus">@Localizer["Cancel"]</a>
+  </div>
+</form>

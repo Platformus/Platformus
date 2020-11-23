@@ -5,11 +5,11 @@ using System.Collections.Generic;
 using System.Linq;
 using Microsoft.AspNetCore.Routing;
 using Newtonsoft.Json;
-using Platformus.Barebone;
+using Platformus.Core;
 using Platformus.ECommerce.Data.Abstractions;
 using Platformus.ECommerce.Data.Entities;
 using Platformus.ECommerce.ProductProviders;
-using Platformus.Globalization.Frontend.ViewModels;
+using Platformus.Core.Frontend.ViewModels;
 
 namespace Platformus.ECommerce.Frontend.ViewModels.Shared
 {

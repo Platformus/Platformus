@@ -1,0 +1,25 @@
+﻿@* Copyright © 2020 Dmitry Sikorsky. All rights reserved. *@
+@* Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information. *@
+@model Platformus.Core.Backend.ViewModels.Shared.VariableViewModel
+@inject Microsoft.AspNetCore.Mvc.Localization.IViewLocalizer Localizer
+<div class="tree__node">
+  <div class="tree__node-header">
+    @Model.Name =
+    @if (this.Model.Value == "yes")
+    {
+      <span class="marker marker--positive">@Model.Value</span>
+    }
+    else if (this.Model.Value == "no")
+    {
+      <span class="marker marker--negative">@Model.Value</span>
+    }
+    else
+    {
+      @Model.Value
+    }
+    <div class="tree__buttons tree__buttons--node-header buttons">
+      <a class="buttons__button buttons__button--minor button button--positive button--minor" href="/backend/variables/edit/@Model.Id">@Localizer["Edit"]</a>
+      <a class="buttons__button buttons__button--minor button button--negative button--minor button--delete" href="#" onclick="return platformus.forms.deleteForm.show('/backend/variables/delete/@Model.Id');"></a>
+    </div>
+  </div>
+</div>

@@ -5,7 +5,7 @@ using ExtCore.Data.Abstractions;
 using ExtCore.Events;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Platformus.Barebone;
+using Platformus.Core;
 using Platformus.ECommerce.Backend.ViewModels.Carts;
 using Platformus.ECommerce.Data.Abstractions;
 using Platformus.ECommerce.Data.Entities;
@@ -15,7 +15,7 @@ namespace Platformus.ECommerce.Backend.Controllers
 {
   [Area("Backend")]
   [Authorize(Policy = Policies.HasBrowseCartsPermission)]
-  public class CartsController : Platformus.Globalization.Backend.Controllers.ControllerBase
+  public class CartsController : Platformus.Core.Backend.Controllers.ControllerBase
   {
     public CartsController(IStorage storage)
       : base(storage)

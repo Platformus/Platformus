@@ -12,7 +12,7 @@ namespace Platformus.ECommerce.Backend.Controllers
 {
   [Area("Backend")]
   [Authorize(Policy = Policies.HasBrowseDeliveryMethodsPermission)]
-  public class DeliveryMethodsController : Platformus.Globalization.Backend.Controllers.ControllerBase
+  public class DeliveryMethodsController : Platformus.Core.Backend.Controllers.ControllerBase
   {
     public DeliveryMethodsController(IStorage storage)
       : base(storage)

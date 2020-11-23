@@ -4,8 +4,8 @@
     <Authors>Dmitry Sikorsky</Authors>
     <Copyright>Copyright © 2018 Dmitry Sikorsky</Copyright>
     <Description>The Platformus.ECommerce extension component.</Description>
-    <VersionPrefix>1.1.0</VersionPrefix>
-    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <VersionPrefix>2.0.0-beta1</VersionPrefix>
+    <TargetFramework>net5.0</TargetFramework>
     <AssemblyName>Platformus.ECommerce.Api</AssemblyName>
     <PackageId>Platformus.ECommerce.Api</PackageId>
     <PackageIconUrl>http://platformus.net/platformus_nuget_icon.png</PackageIconUrl>

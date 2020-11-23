@@ -1,0 +1,59 @@
+﻿// Copyright © 2020 Dmitry Sikorsky. All rights reserved.
+// Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information.
+
+using System.Collections.Generic;
+using System.Linq;
+using System.Text.RegularExpressions;
+using System.Threading.Tasks;
+using Magicalizer.Data.Repositories.Abstractions;
+using Microsoft.AspNetCore.Http;
+using Microsoft.Extensions.DependencyInjection;
+using Platformus.Core.Extensions;
+using Platformus.Website.Filters;
+using Platformus.Website.Frontend.Services.Abstractions;
+
+namespace Platformus.Website.Frontend.Services.Defaults
+{
+  public class DefaultEndpointResolver : IEndpointResolver
+  {
+    public async Task<Data.Entities.Endpoint> ResolveAsync(HttpContext httpContext)
+    {
+      IEnumerable<Data.Entities.Endpoint> endpoints = await this.GetEndpointsAsync(httpContext);
+
+      foreach (Data.Entities.Endpoint endpoint in endpoints)
+        if (this.IsMatch(endpoint.UrlTemplate, httpContext.Request.GetUrl().Substring(1)))
+          return endpoint;
+
+      return null;
+    }
+
+    public async Task<IEnumerable<Data.Entities.Endpoint>> GetEndpointsAsync(HttpContext httpContext)
+    {
+      ICache cache = httpContext.GetCache();
+
+      return await cache.GetWithDefaultValueAsync<IEnumerable<Data.Entities.Endpoint>>(
+        "endpoints",
+        async () => await httpContext.GetStorage().GetRepository<int, Data.Entities.Endpoint, EndpointFilter>().GetAllAsync(
+          sorting: "+position", inclusions: new Inclusion<Data.Entities.Endpoint>(e => e.DataSources)
+        ),
+        new CacheEntryOptions(priority: CacheEntryPriority.NeverRemove)
+      );
+    }
+
+    private bool IsMatch(string urlTemplate, string url)
+    {
+      if (urlTemplate == "{*url}" || urlTemplate == url)
+        return true;
+
+      if (string.IsNullOrEmpty(urlTemplate) || string.IsNullOrEmpty(url))
+        return false;
+
+      return urlTemplate.Count(ch => ch == '/') == url.Count(ch => ch == '/') && Regex.IsMatch(url, this.GetRegexFromUrlTemplate(urlTemplate));
+    }
+
+    private string GetRegexFromUrlTemplate(string urlTemplate)
+    {
+      return Regex.Replace(urlTemplate, "{.+?}", "(.+)");
+    }
+  }
+}

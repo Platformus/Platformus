@@ -12,7 +12,7 @@ namespace Platformus.ECommerce.Backend.Controllers
 {
   [Area("Backend")]
   [Authorize(Policy = Policies.HasBrowsePaymentMethodsPermission)]
-  public class PaymentMethodsController : Platformus.Globalization.Backend.Controllers.ControllerBase
+  public class PaymentMethodsController : Platformus.Core.Backend.Controllers.ControllerBase
   {
     public PaymentMethodsController(IStorage storage)
       : base(storage)

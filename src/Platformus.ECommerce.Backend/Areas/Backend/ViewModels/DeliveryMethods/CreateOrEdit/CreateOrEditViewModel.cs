@@ -3,9 +3,9 @@
 
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using Platformus.Barebone.Primitives;
-using Platformus.Globalization.Backend;
-using Platformus.Globalization.Backend.ViewModels;
+using Platformus.Core.Primitives;
+using Platformus.Core.Backend;
+using Platformus.Core.Backend.ViewModels;
 
 namespace Platformus.ECommerce.Backend.ViewModels.DeliveryMethods
 {

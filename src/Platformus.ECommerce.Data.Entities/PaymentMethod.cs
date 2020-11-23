@@ -3,7 +3,7 @@
 
 using System.Collections.Generic;
 using ExtCore.Data.Entities.Abstractions;
-using Platformus.Globalization.Data.Entities;
+using Platformus.Core.Data.Entities;
 
 namespace Platformus.ECommerce.Data.Entities
 {

@@ -1,0 +1,54 @@
+﻿@* Copyright © 2020 Dmitry Sikorsky. All rights reserved. *@
+@* Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information. *@
+@model Platformus.Website.Backend.ViewModels.Objects.IndexViewModel
+@inject Microsoft.AspNetCore.Mvc.Localization.IViewLocalizer Localizer
+@{
+  if (this.Model.Class == null)
+  {
+    this.ViewBag.Title = this.Localizer["Objects"];
+  }
+  else
+  {
+    this.ViewBag.Title = this.Model.Class.PluralizedName;
+  }
+  this.ViewBag.ActiveMenuItem = "objects";
+  this.ViewBag.HasSecondaryMaster = true;
+}
+@if (this.Model.Class != null)
+{
+  @section title {
+    @ViewBag.Title <span class="master-detail__detail-header-counter">@Model.Grid.Pager.Total</span>
+  }
+  @Html.Partial("_Grid", this.Model.Grid)
+  <div class="master-detail__detail-buttons buttons">
+    <a class="buttons__button button button--positive" href="@this.Context.Request.CombineUrl("/backend/objects/create")">@Localizer["Create"] @Model.Class.Name.ToLower()</a>
+  </div>
+}
+@section side
+{
+  <div class="master-detail__master master-detail__master--secondary">
+    <div class="master-detail__master-header master-detail__master-header--secondary">
+      @Localizer["Objects"]
+    </div>
+    <div class="master-detail__master-content">
+      <div class="menu" data-code="classes">
+        @foreach (var abstractClass in this.Model.ClassesByAbstractClasses.Keys)
+        {
+          <div class="menu__group" data-code="class-@(abstractClass.Id)">
+            <div class="menu__group-header">
+              @abstractClass.PluralizedName
+            </div>
+            <div class="menu__group-content">
+              @foreach (var @class in this.Model.ClassesByAbstractClasses[abstractClass])
+              {
+                <a class="master-detail__master-menu-item--secondary @(this.Model.Class != null && this.Model.Class.Id == @class.Id ? "master-detail__master-menu-item--secondary-active" : null) menu__item" href="/backend/objects?class.id=@(@class.Id)">
+                  @(@class.PluralizedName)
+                </a>
+              }
+            </div>
+          </div>
+        }
+      </div>
+    </div>
+  </div>
+}

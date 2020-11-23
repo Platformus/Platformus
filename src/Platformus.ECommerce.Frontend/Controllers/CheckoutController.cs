@@ -5,17 +5,17 @@ using ExtCore.Data.Abstractions;
 using ExtCore.Events;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Platformus.Barebone;
+using Platformus.Core;
 using Platformus.ECommerce.Data.Abstractions;
 using Platformus.ECommerce.Data.Entities;
 using Platformus.ECommerce.Events;
 using Platformus.ECommerce.Frontend.ViewModels.Checkout;
-using Platformus.Globalization.Frontend;
+using Platformus.Core.Frontend;
 
 namespace Platformus.ECommerce.Frontend.Controllers
 {
   [AllowAnonymous]
-  public class CheckoutController : Platformus.Barebone.Frontend.Controllers.ControllerBase
+  public class CheckoutController : Platformus.Core.Frontend.Controllers.ControllerBase
   {
     public CheckoutController(IStorage storage)
       : base(storage)

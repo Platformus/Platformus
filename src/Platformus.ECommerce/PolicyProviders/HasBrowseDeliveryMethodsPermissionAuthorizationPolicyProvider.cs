@@ -2,11 +2,11 @@
 // Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information.
 
 using Microsoft.AspNetCore.Authorization;
-using Platformus.Security;
+using Platformus.Core;
 
 namespace Platformus.ECommerce
 {
-  public class HasBrowseDeliveryMethodsPermissionAuthorizationPolicyProvider : Platformus.Security.IAuthorizationPolicyProvider
+  public class HasBrowseDeliveryMethodsPermissionAuthorizationPolicyProvider : Platformus.Core.IAuthorizationPolicyProvider
   {
     public string Name => Policies.HasBrowseDeliveryMethodsPermission;
 
@@ -16,7 +16,7 @@ namespace Platformus.ECommerce
 
       authorizationPolicyBuilder.RequireAssertion(context =>
         {
-          return context.User.HasClaim(PlatformusClaimTypes.Permission, Permissions.BrowseDeliveryMethods) || context.User.HasClaim(PlatformusClaimTypes.Permission, Platformus.Security.Permissions.DoEverything);
+          return context.User.HasClaim(PlatformusClaimTypes.Permission, Permissions.BrowseDeliveryMethods) || context.User.HasClaim(PlatformusClaimTypes.Permission, Platformus.Core.Permissions.DoEverything);
         }
       );
 

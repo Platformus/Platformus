@@ -2,11 +2,11 @@
 // Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information.
 
 using Newtonsoft.Json;
-using Platformus.Barebone;
+using Platformus.Core;
 using Platformus.ECommerce.Data.Abstractions;
 using Platformus.ECommerce.Data.Entities;
-using Platformus.Globalization.Data.Entities;
-using Platformus.Globalization.Services.Abstractions;
+using Platformus.Core.Data.Entities;
+using Platformus.Core.Services.Abstractions;
 
 namespace Platformus.ECommerce
 {

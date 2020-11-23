@@ -1,0 +1,47 @@
+﻿@* Copyright © 2020 Dmitry Sikorsky. All rights reserved. *@
+@* Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information. *@
+@model Platformus.Website.Backend.ViewModels.Endpoints.CreateOrEditViewModel
+@inject Microsoft.AspNetCore.Mvc.Localization.IViewLocalizer Localizer
+@{
+  this.ViewBag.Title = (this.Model.Id == null ? this.Localizer["Create Endpoint"].Value : this.Localizer["Edit Endpoint"].Value);
+  this.ViewBag.ActiveMenuItem = "endpoints";
+}
+@section title {
+  @ViewBag.Title
+}
+<form class="form" method="post">
+  <div class="tabs">
+    <div class="tabs__tab" data-tab-page-id="General">@Localizer["General"]</div>
+    <div class="tabs__tab" data-tab-page-id="Permissions">@Localizer["Permissions"]</div>
+  </div>
+  <div class="tab-pages">
+    <div id="tabPageGeneral" class="tab-pages__tab-page">
+      <single-line-text-field asp-for="Name" />
+      <single-line-text-field asp-for="UrlTemplate" />
+      <numeric-field asp-for="Position" />
+      <checkbox-field asp-for="DisallowAnonymous" />
+      <single-line-text-field asp-for="SignInUrl" />
+      <drop-down-list-field asp-for="CSharpClassName" asp-options="@Model.CSharpClassNameOptions" />
+      <div id="parameterEditors"></div>
+      <input id="parameters" name="parameters" type="hidden" value="@Model.Parameters" />
+    </div>
+    <div id="tabPagePermissions" class="tab-pages__tab-page">
+      @foreach (var endpointPermission in this.Model.EndpointPermissions)
+      {
+        <div class="form__field form__field--separated field">
+          <unbound-check-box asp-identity="permission@(endpointPermission.Permission.Id)" asp-text="@endpointPermission.Permission.Name" asp-checked="@endpointPermission.IsAssigned" />
+        </div>
+      }
+    </div>
+  </div>
+  <div class="form__buttons buttons">
+    <button class="buttons__button button button--positive" type="submit">@Localizer["Save"]</button>
+    <a class="buttons__button button button--neutral" href="@this.Context.Request.CombineUrl("/backend/endpoints")">@Localizer["Cancel"]</a>
+  </div>
+</form>
+<script>
+  var endpoints = @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(this.Model.Endpoints));
+</script>
+@section startUpScript {
+  platformus.ui.endpointCSharpClassNameChanged();
+}

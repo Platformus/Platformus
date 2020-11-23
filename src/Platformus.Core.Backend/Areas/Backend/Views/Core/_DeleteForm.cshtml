@@ -1,0 +1,13 @@
+﻿@* Copyright © 2020 Dmitry Sikorsky. All rights reserved. *@
+@* Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information. *@
+@model Platformus.Core.Backend.ViewModels.Core.DeleteFormViewModel
+@inject Microsoft.AspNetCore.Mvc.Localization.IViewLocalizer Localizer
+<div class="pop-up-form__header">
+  @Localizer["Are you sure to delete?"]
+</div>
+<div class="pop-up-form__content">
+  <div class="pop-up-form__buttons buttons">
+    <a class="buttons__button button button--negative" href="@Model.TargetUrl">@Localizer["Yes, I am"]</a>
+    <a class="buttons__button button button--neutral" href="#" onclick="return platformus.forms.deleteForm.hideAndRemove();">@Localizer["Cancel"]</a>
+  </div>
+</div>

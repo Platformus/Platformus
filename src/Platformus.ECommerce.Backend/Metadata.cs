@@ -3,8 +3,8 @@
 
 using System.Collections.Generic;
 using Microsoft.Extensions.Localization;
-using Platformus.Barebone;
-using Platformus.Barebone.Backend.Metadata;
+using Platformus.Core;
+using Platformus.Core.Backend.Metadata;
 
 namespace Platformus.ECommerce.Backend.Metadata
 {

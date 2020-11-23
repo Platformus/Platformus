@@ -3,7 +3,7 @@
 
 using System;
 using Platformus.ECommerce.Backend.ViewModels.Shared;
-using Platformus.Globalization.Backend.ViewModels;
+using Platformus.Core.Backend.ViewModels;
 
 namespace Platformus.ECommerce.Backend.ViewModels.Orders
 {

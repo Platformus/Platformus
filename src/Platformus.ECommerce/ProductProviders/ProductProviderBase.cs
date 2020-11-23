@@ -3,8 +3,8 @@
 
 using System.Collections.Generic;
 using System.Linq;
-using Platformus.Barebone;
-using Platformus.Barebone.Parameters;
+using Platformus.Core;
+using Platformus.Core.Parameters;
 using Platformus.ECommerce.Data.Entities;
 
 namespace Platformus.ECommerce.ProductProviders

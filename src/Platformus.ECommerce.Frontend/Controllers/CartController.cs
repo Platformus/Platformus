@@ -9,7 +9,7 @@ using Platformus.ECommerce.Frontend.ViewModels.Cart;
 namespace Platformus.ECommerce.Frontend.Controllers
 {
   [AllowAnonymous]
-  public class CartController : Platformus.Barebone.Frontend.Controllers.ControllerBase
+  public class CartController : Platformus.Core.Frontend.Controllers.ControllerBase
   {
     public CartController(IStorage storage)
       : base(storage)

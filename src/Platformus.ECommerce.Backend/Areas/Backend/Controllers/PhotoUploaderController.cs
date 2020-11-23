@@ -11,7 +11,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
-namespace Platformus.Barebone.Backend.Controllers
+namespace Platformus.Core.Backend.Controllers
 {
   [Area("Backend")]
   public class PhotoUploaderController : ControllerBase

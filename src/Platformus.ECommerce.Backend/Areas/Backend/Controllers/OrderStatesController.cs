@@ -12,7 +12,7 @@ namespace Platformus.ECommerce.Backend.Controllers
 {
   [Area("Backend")]
   [Authorize(Policy = Policies.HasBrowseOrderStatesPermission)]
-  public class OrderStatesController : Platformus.Globalization.Backend.Controllers.ControllerBase
+  public class OrderStatesController : Platformus.Core.Backend.Controllers.ControllerBase
   {
     public OrderStatesController(IStorage storage)
       : base(storage)

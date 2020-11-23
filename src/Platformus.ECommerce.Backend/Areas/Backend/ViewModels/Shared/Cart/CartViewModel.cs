@@ -3,7 +3,7 @@
 
 using System;
 using System.Collections.Generic;
-using Platformus.Globalization.Backend.ViewModels;
+using Platformus.Core.Backend.ViewModels;
 
 namespace Platformus.ECommerce.Backend.ViewModels.Shared
 {

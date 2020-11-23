@@ -1,0 +1,126 @@
+﻿/* Copyright © 2020 Dmitry Sikorsky. All rights reserved. */
+/* Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information. */
+
+.table {
+  border-collapse: collapse;
+  display: table;
+  width: 100%;
+}
+
+.table__row {
+  display: table-row;
+}
+
+.table__cell {
+  font-weight: normal;
+  text-align: left;
+  vertical-align: top;
+  display: table-cell;
+  padding: 5px 10px;
+}
+
+.table__row:hover .table__cell {
+  background-color: #ffff96;
+}
+
+.table__cell--ordered-by {
+  background-color: #f0f0f0;
+}
+
+.table__row:hover .table__cell--ordered-by {
+  background-color: #ffff96;
+}
+
+.table__cell--header {
+  background-color: #f0f0f0;
+}
+
+.table__row:hover .table__cell--header {
+  background-color: #f0f0f0;
+}
+
+.table__cell--header-ordered-by {
+  background-color: #323232;
+}
+
+.table__row:hover .table__cell--header-ordered-by {
+  background-color: #323232;
+}
+
+.table__cell--header-ordered-by-asc {
+  background-image: url(/wwwroot.areas.backend.images.ordered_by_asc.png);
+  background-position: right;
+  background-repeat: no-repeat;
+}
+
+.table__cell--header-ordered-by-desc {
+  background-image: url(/wwwroot.areas.backend.images.ordered_by_desc.png);
+  background-position: right;
+  background-repeat: no-repeat;
+}
+
+.table__row--selected .table__cell {
+  background-color: #0096fa;
+  color: #fff;
+}
+
+.table__row--selected:hover .table__cell {
+  background-color: #5abeff;
+  color: #fff;
+}
+
+.table__cell--no-width {
+  white-space: nowrap;
+  width: 0;
+}
+
+.table__order-by {
+}
+
+.table__order-by--ordered-by {
+  color: #fff;
+}
+
+.table__order-by--ordered-by:hover {
+  color: #fff;
+}
+
+.table__image {
+  display: block;
+  max-width: 100px;
+  max-height: 100px;
+}
+
+.table__secondary {
+  font-size: 10px;
+}
+
+.table__buttons {
+  padding: 5px;
+}
+
+.table__button {
+  visibility: hidden;
+}
+
+.table__row:hover .table__button {
+  visibility: visible;
+}
+
+@media
+only screen and (-webkit-min-device-pixel-ratio: 2),
+only screen and (   min--moz-device-pixel-ratio: 2),
+only screen and (     -o-min-device-pixel-ratio: 2/1),
+only screen and (        min-device-pixel-ratio: 2),
+only screen and (                min-resolution: 192dpi),
+only screen and (                min-resolution: 2dppx) {
+  .table__cell--header-ordered-by-asc {
+    background-image: url(/wwwroot.areas.backend.images.ordered_by_asc@2x.png);
+    background-size: 20px 5px;
+  }
+
+  .table__cell--header-ordered-by-desc {
+    background-image: url(/wwwroot.areas.backend.images.ordered_by_desc@2x.png);
+    background-size: 20px 5px;
+  }
+}

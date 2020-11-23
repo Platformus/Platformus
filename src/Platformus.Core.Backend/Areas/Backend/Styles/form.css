@@ -1,0 +1,31 @@
+﻿/* Copyright © 2020 Dmitry Sikorsky. All rights reserved. */
+/* Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information. */
+
+.form {
+}
+
+.form__title {
+  margin-top: 20px;
+}
+
+.form__field {
+  margin-top: 10px;
+}
+
+.form__field--separated {
+  margin-top: 20px;
+}
+
+.form__buttons {
+  margin-top: 20px;
+}
+
+.form__buttons--minor {
+  margin-top: 5px;
+}
+
+.form__description {
+  color: #ccc;
+  font-style: italic;
+  margin-top: 10px;
+}

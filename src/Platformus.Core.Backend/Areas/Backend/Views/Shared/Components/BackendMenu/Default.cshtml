@@ -1,0 +1,9 @@
+﻿@* Copyright © 2020 Dmitry Sikorsky. All rights reserved. *@
+@* Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information. *@
+@model IEnumerable<Platformus.Core.Backend.Metadata.MenuGroup>
+<div class="menu" data-code="main">
+  @foreach (var menuGroup in this.Model)
+  {
+    @Html.Partial("_BackendMenuGroup", menuGroup)
+  }
+</div>

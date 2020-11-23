@@ -4,8 +4,8 @@
     <Authors>Dmitry Sikorsky</Authors>
     <Copyright>Copyright © 2015 Dmitry Sikorsky</Copyright>
     <Description>The Platformus.ECommerce extension component.</Description>
-    <VersionPrefix>1.1.0</VersionPrefix>
-    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <VersionPrefix>2.0.0-beta1</VersionPrefix>
+    <TargetFramework>net5.0</TargetFramework>
     <AssemblyName>Platformus.ECommerce</AssemblyName>
     <PackageId>Platformus.ECommerce</PackageId>
     <PackageIconUrl>http://platformus.net/platformus_nuget_icon.png</PackageIconUrl>
@@ -14,7 +14,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Platformus.ECommerce.Data.Abstractions\Platformus.ECommerce.Data.Abstractions.csproj" />
-    <ProjectReference Include="..\Platformus.Globalization\Platformus.Globalization.csproj" />
   </ItemGroup>
 
 </Project>

@@ -1,0 +1,73 @@
+﻿/* Copyright © 2020 Dmitry Sikorsky. All rights reserved. */
+/* Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information. */
+
+.image-uploader-pop-up-form {
+  width: 800px;
+}
+
+.image-uploader-pop-up-form__image-uploader {
+  display: block;
+}
+
+.image-uploader-pop-up-form__drag-and-drop-area {
+  box-sizing: border-box;
+  padding: 250px 0 0;
+  height: 600px;
+}
+
+.image-uploader-pop-up-form__image-uploading-indicator {
+  background: #f0f0f0;
+  display: none;
+  width: 800px;
+  height: 600px;
+}
+
+.image-uploader-pop-up-form__image-uploading-indicator-description {
+  color: #ccc;
+  font-style: italic;
+  text-align: center;
+  line-height: 600px;
+}
+
+.image-uploader-pop-up-form__image-cropper {
+  background: #f0f0f0;
+  display: none;
+  position: relative;
+  width: 800px;
+  height: 600px;
+}
+
+.image-uploader-pop-up-form__image-cropper-image {
+  max-width: 800px;
+  max-height: 600px;
+}
+
+.image-uploader-pop-up-form__image-cropper-shader {
+  background: #000;
+  opacity: 0.75;
+  filter: alpha(opacity = 75);
+  position: absolute;
+  left: 0;
+  top: 0;
+}
+
+.image-uploader-pop-up-form__image-cropper-frame {
+  border: 1px solid #0096fa;
+  cursor: move;
+  position: absolute;
+  left: -1px;
+  top: -1px;
+  overflow: hidden;
+}
+
+.image-uploader-pop-up-form__image-cropper-image-fragment {
+  position: absolute;
+}
+
+.image-uploader-pop-up-form__image-cropper-grip {
+  background: #0096fa;
+  cursor: se-resize;
+  position: absolute;
+  width: 11px;
+  height: 11px;
+}

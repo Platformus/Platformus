@@ -9,7 +9,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace Platformus.ECommerce.Frontend.Controllers
 {
   [AllowAnonymous]
-  public class FilterController : Platformus.Barebone.Frontend.Controllers.ControllerBase
+  public class FilterController : Platformus.Core.Frontend.Controllers.ControllerBase
   {
     public FilterController(IStorage storage)
       : base(storage)

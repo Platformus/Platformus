@@ -1,0 +1,14 @@
+﻿@* Copyright © 2020 Dmitry Sikorsky. All rights reserved. *@
+@* Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information. *@
+@model Platformus.Website.Frontend.ViewModels.Shared.FieldViewModel
+@{
+  int index = 0;
+}
+@foreach (var fieldOption in this.Model.FieldOptions)
+{
+  index++;
+  <span class="field__radio-button">
+    <input id="field@(this.Model.Code)Option@(index)" name="field@(this.Model.Code)" type="radio" value="@fieldOption.Value" data-field-code="@Model.Code" />
+    <label for="field@(this.Model.Code)Option@(index)">@fieldOption.Value</label>
+  </span>
+}
