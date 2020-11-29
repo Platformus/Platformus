@@ -1,60 +1,87 @@
-﻿// Copyright © 2017 Dmitry Sikorsky. All rights reserved.
+﻿// Copyright © 2020 Dmitry Sikorsky. All rights reserved.
 // Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information.
 
-using ExtCore.Data.Abstractions;
+using System.Threading.Tasks;
 using ExtCore.Events;
+using Magicalizer.Data.Repositories.Abstractions;
+using Magicalizer.Filters.Abstractions;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Platformus.Core;
 using Platformus.ECommerce.Backend.ViewModels.Categories;
-using Platformus.ECommerce.Data.Abstractions;
 using Platformus.ECommerce.Data.Entities;
 using Platformus.ECommerce.Events;
+using Platformus.ECommerce.Filters;
 
 namespace Platformus.ECommerce.Backend.Controllers
 {
   [Area("Backend")]
-  [Authorize(Policy = Policies.HasBrowseCategoriesPermission)]
-  public class CategoriesController : Platformus.Core.Backend.Controllers.ControllerBase
+  [Authorize(Policy = Policies.HasManageCategoriesPermission)]
+  public class CategoriesController : Core.Backend.Controllers.ControllerBase
   {
+    private IRepository<int, Category, CategoryFilter> Repository
+    {
+      get => this.Storage.GetRepository<int, Category, CategoryFilter>();
+    }
+
     public CategoriesController(IStorage storage)
       : base(storage)
     {
     }
 
-    public IActionResult Index()
+    public async Task<IActionResult> IndexAsync()
     {
-      return this.View(new IndexViewModelFactory(this).Create());
+      return this.View(new IndexViewModelFactory().Create(
+        this.HttpContext,
+        await this.Repository.GetAllAsync(
+          new CategoryFilter() { Owner = new CategoryFilter { Id = new IntegerFilter() { IsNull = true } } },
+          inclusions: new Inclusion<Category>[] {
+            new Inclusion<Category>(c => c.Name.Localizations),
+            new Inclusion<Category>("Categories.Name.Localizations"),
+            new Inclusion<Category>("Categories.Categories.Name.Localizations"),
+            new Inclusion<Category>("Categories.Categories.Categories.Name.Localizations")
+          }
+        )
+      ));
     }
 
     [HttpGet]
     [ImportModelStateFromTempData]
-    public IActionResult CreateOrEdit(int? id)
+    public async Task<IActionResult> CreateOrEditAsync(int? id)
     {
-      return this.View(new CreateOrEditViewModelFactory(this).Create(id));
+      return this.View(new CreateOrEditViewModelFactory().Create(
+        this.HttpContext, id == null ? null : await this.Repository.GetByIdAsync(
+          (int)id,
+          new Inclusion<Category>(c => c.Name.Localizations)
+        )
+      ));
     }
 
     [HttpPost]
     [ExportModelStateToTempData]
-    public IActionResult CreateOrEdit(CreateOrEditViewModel createOrEdit)
+    public async Task<IActionResult> CreateOrEditAsync([FromQuery]CategoryFilter filter, CreateOrEditViewModel createOrEdit)
     {
       if (this.ModelState.IsValid)
       {
-        Category category = new CreateOrEditViewModelMapper(this).Map(createOrEdit);
+        Category category = new CreateOrEditViewModelMapper().Map(
+          filter,
+          createOrEdit.Id == null ? new Category() : await this.Repository.GetByIdAsync((int)createOrEdit.Id),
+          createOrEdit
+        );
 
-        this.CreateOrEditEntityLocalizations(category);
-
-        if (createOrEdit.Id == null)
-          this.Storage.GetRepository<ICategoryRepository>().Create(category);
-
-        else this.Storage.GetRepository<ICategoryRepository>().Edit(category);
-
-        this.Storage.Save();
+        await this.CreateOrEditEntityLocalizationsAsync(category);
 
         if (createOrEdit.Id == null)
-          Event<ICategoryCreatedEventHandler, IRequestHandler, Category>.Broadcast(this, category);
+          this.Repository.Create(category);
 
-        else Event<ICategoryEditedEventHandler, IRequestHandler, Category>.Broadcast(this, category);
+        else this.Repository.Edit(category);
+
+        await this.Storage.SaveAsync();
+
+        if (createOrEdit.Id == null)
+          Event<ICategoryCreatedEventHandler, HttpContext, Category>.Broadcast(this.HttpContext, category);
+
+        else Event<ICategoryEditedEventHandler, HttpContext, Category>.Broadcast(this.HttpContext, category);
 
         return this.RedirectToAction("Index");
       }
@@ -62,13 +89,13 @@ namespace Platformus.ECommerce.Backend.Controllers
       return this.CreateRedirectToSelfResult();
     }
 
-    public ActionResult Delete(int id)
+    public async Task<IActionResult> DeleteAsync(int id)
     {
-      Category category = this.Storage.GetRepository<ICategoryRepository>().WithKey(id);
+      Category category = await this.Repository.GetByIdAsync(id);
 
-      this.Storage.GetRepository<ICategoryRepository>().Delete(category);
-      this.Storage.Save();
-      Event<ICategoryDeletedEventHandler, IRequestHandler, Category>.Broadcast(this, category);
+      this.Repository.Delete(category.Id);
+      await this.Storage.SaveAsync();
+      Event<ICategoryDeletedEventHandler, HttpContext, Category>.Broadcast(this.HttpContext, category);
       return this.RedirectToAction("Index");
     }
   }

@@ -19,7 +19,7 @@ namespace Platformus.Website.Frontend.ViewModels.Shared
         SubmitButtonTitle = form.SubmitButtonTitle.GetLocalizationValue(httpContext),
         Fields = form.Fields.Select(
           f => new FieldViewModelFactory().Create(httpContext, f)
-        ).ToList(),
+        ),
         PartialViewName = partialViewName ?? "_Form",
         AdditionalCssClass = additionalCssClass
       };

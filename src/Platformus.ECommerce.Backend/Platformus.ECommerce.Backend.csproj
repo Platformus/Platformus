@@ -22,6 +22,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Platformus.Core.Backend\Platformus.Core.Backend.csproj" />
     <ProjectReference Include="..\Platformus.ECommerce\Platformus.ECommerce.csproj" />
   </ItemGroup>
 

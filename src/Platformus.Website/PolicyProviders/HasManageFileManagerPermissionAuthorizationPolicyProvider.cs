@@ -6,7 +6,7 @@ using Platformus.Core;
 
 namespace Platformus.Website
 {
-  public class HasManageFileManagerPermissionAuthorizationPolicyProvider : Platformus.Core.IAuthorizationPolicyProvider
+  public class HasManageFileManagerPermissionAuthorizationPolicyProvider : Core.IAuthorizationPolicyProvider
   {
     public string Name => Policies.HasManageFileManagerPermission;
 
@@ -16,7 +16,7 @@ namespace Platformus.Website
 
       authorizationPolicyBuilder.RequireAssertion(context =>
         {
-          return context.User.HasClaim(PlatformusClaimTypes.Permission, Permissions.ManageFileManager) || context.User.HasClaim(PlatformusClaimTypes.Permission, Platformus.Core.Permissions.DoAnything);
+          return context.User.HasClaim(PlatformusClaimTypes.Permission, Permissions.ManageFileManager) || context.User.HasClaim(PlatformusClaimTypes.Permission, Core.Permissions.DoAnything);
         }
       );
 

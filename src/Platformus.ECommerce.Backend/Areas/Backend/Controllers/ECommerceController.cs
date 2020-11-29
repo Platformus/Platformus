@@ -1,53 +1,68 @@
-﻿// Copyright © 2018 Dmitry Sikorsky. All rights reserved.
+﻿// Copyright © 2020 Dmitry Sikorsky. All rights reserved.
 // Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information.
 
-using ExtCore.Data.Abstractions;
+using System.Threading.Tasks;
+using Magicalizer.Data.Repositories.Abstractions;
 using Microsoft.AspNetCore.Mvc;
 using Platformus.ECommerce.Backend.ViewModels.ECommerce;
-using Platformus.ECommerce.Data.Abstractions;
+using Platformus.ECommerce.Backend.ViewModels.Shared;
 using Platformus.ECommerce.Data.Entities;
+using Platformus.ECommerce.Filters;
 
 namespace Platformus.ECommerce.Backend.Controllers
 {
   [Area("Backend")]
-  public class ECommerceController : Platformus.Core.Backend.Controllers.ControllerBase
+  public class ECommerceController : Core.Backend.Controllers.ControllerBase
   {
     public ECommerceController(IStorage storage)
       : base(storage)
     {
     }
 
-    public ActionResult CategorySelectorForm(int? categoryId)
+    public async Task<IActionResult> CategorySelectorFormAsync(int? categoryId)
     {
-      return this.PartialView("_CategorySelectorForm", new CategorySelectorFormViewModelFactory(this).Create(categoryId));
+      return this.PartialView("_CategorySelectorForm", new CategorySelectorFormViewModelFactory().Create(
+        this.HttpContext,
+        await this.Storage.GetRepository<int, Category, CategoryFilter>().GetAllAsync(
+          inclusions: new Inclusion<Category>(c => c.Name.Localizations)
+        ),
+        categoryId
+      ));
     }
 
-    public ActionResult ProductSelectorForm(int? productId)
+    public async Task<IActionResult> CategoryAsync(int id)
     {
-      return this.PartialView("_ProductSelectorForm", new ProductSelectorFormViewModelFactory(this).Create(productId));
+      Category category = await this.Storage.GetRepository<int, Category, CategoryFilter>().GetByIdAsync(
+        id,
+        new Inclusion<Category>(c => c.Name.Localizations)
+      );
+
+      return this.Json(new CategoryViewModelFactory().Create(this.HttpContext, category));
     }
 
-    public ActionResult AttributeSelectorForm(int? attributeId)
+    public async Task<IActionResult> ProductSelectorFormAsync(int? productId)
     {
-      return this.PartialView("_AttributeSelectorForm", new AttributeSelectorFormViewModelFactory(this).Create(attributeId));
+      return this.PartialView("_ProductSelectorForm", new ProductSelectorFormViewModelFactory().Create(
+        this.HttpContext,
+        await this.Storage.GetRepository<int, Product, ProductFilter>().GetAllAsync(
+          inclusions: new Inclusion<Product>[]
+          {
+            new Inclusion<Product>(c => c.Category.Name.Localizations),
+            new Inclusion<Product>(c => c.Name.Localizations)
+          }
+        ),
+        productId
+      ));
     }
 
-    public ActionResult GetCategoryName(int? categoryId)
+    public async Task<IActionResult> ProductAsync(int id)
     {
-      if (categoryId == null)
-        return this.Content("<div class=\"item-selector__key\">Not selected</div>");
+      Product product = await this.Storage.GetRepository<int, Product, ProductFilter>().GetByIdAsync(
+        id,
+        new Inclusion<Product>(p => p.Name.Localizations)
+      );
 
-      Category category = this.Storage.GetRepository<ICategoryRepository>().WithKey((int)categoryId);
-
-      return this.Content(string.Format("<div class=\"item-selector__key\">{0}</div>", this.GetLocalizationValue(category.NameId)));
-    }
-
-    public ActionResult GetAttribute(int attributeId)
-    {
-      Attribute attribute = this.Storage.GetRepository<IAttributeRepository>().WithKey(attributeId);
-      Feature feature = this.Storage.GetRepository<IFeatureRepository>().WithKey(attribute.FeatureId);
-
-      return this.Json(new { id = attribute.Id, feature = new { id = feature.Id, name = this.GetLocalizationValue(feature.NameId) }, value = this.GetLocalizationValue(attribute.ValueId) });
+      return this.Json(new ProductViewModelFactory().Create(this.HttpContext, product));
     }
   }
 }

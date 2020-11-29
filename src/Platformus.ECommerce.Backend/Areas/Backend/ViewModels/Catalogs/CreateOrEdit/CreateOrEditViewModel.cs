@@ -1,18 +1,17 @@
-﻿// Copyright © 2017 Dmitry Sikorsky. All rights reserved.
+﻿// Copyright © 2020 Dmitry Sikorsky. All rights reserved.
 // Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information.
 
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using Platformus.Core.Primitives;
 using Platformus.Core.Backend;
 using Platformus.Core.Backend.ViewModels;
+using Platformus.Core.Primitives;
 
 namespace Platformus.ECommerce.Backend.ViewModels.Catalogs
 {
   public class CreateOrEditViewModel : ViewModelBase
   {
     public int? Id { get; set; }
-    public int? CatalogId { get; set; }
 
     [Display(Name = "URL")]
     [Required]

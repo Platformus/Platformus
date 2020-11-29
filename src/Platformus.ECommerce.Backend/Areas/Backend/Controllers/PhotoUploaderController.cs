@@ -1,4 +1,4 @@
-﻿// Copyright © 2018 Dmitry Sikorsky. All rights reserved.
+﻿// Copyright © 2020 Dmitry Sikorsky. All rights reserved.
 // Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information.
 
 using System.Collections.Generic;
@@ -6,7 +6,7 @@ using System.IO;
 using System.Net.Http.Headers;
 using System.Text;
 using System.Threading.Tasks;
-using ExtCore.Data.Abstractions;
+using Magicalizer.Data.Repositories.Abstractions;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -31,7 +31,7 @@ namespace Platformus.Core.Backend.Controllers
     }
 
     [HttpPost]
-    public async Task<IActionResult> Index(IList<IFormFile> files)
+    public async Task<IActionResult> IndexAsync(IList<IFormFile> files)
     {
       StringBuilder filenames = new StringBuilder();
 

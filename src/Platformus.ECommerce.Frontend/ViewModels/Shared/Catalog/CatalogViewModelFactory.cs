@@ -1,34 +1,26 @@
-﻿// Copyright © 2018 Dmitry Sikorsky. All rights reserved.
+﻿// Copyright © 2020 Dmitry Sikorsky. All rights reserved.
 // Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information.
 
-using System.Collections.Generic;
+using System;
 using System.Linq;
-using Platformus.Core;
-using Platformus.ECommerce.Data.Abstractions;
-using Platformus.ECommerce.Data.Entities;
+using Microsoft.AspNetCore.Http;
 using Platformus.Core.Frontend;
 using Platformus.Core.Frontend.ViewModels;
+using Platformus.ECommerce.Data.Entities;
 
 namespace Platformus.ECommerce.Frontend.ViewModels.Shared
 {
   public class CatalogViewModelFactory : ViewModelFactoryBase
   {
-    public CatalogViewModelFactory(IRequestHandler requestHandler)
-      : base(requestHandler)
+    public CatalogViewModel Create(HttpContext httpContext, Catalog catalog)
     {
-    }
-
-    public CatalogViewModel Create(Catalog catalog)
-    {
-      IEnumerable<Catalog> catalogs = this.RequestHandler.Storage.GetRepository<ICatalogRepository>().FilteredByCatalogId(catalog.Id).ToList();
-
       return new CatalogViewModel()
       {
-        Url = GlobalizedUrlFormatter.Format(this.RequestHandler, catalog.Url),
-        Name = this.RequestHandler.GetLocalizationValue(catalog.NameId),
-        Catalogs = catalogs.Select(
-          c => new CatalogViewModelFactory(this.RequestHandler).Create(c)
-        ).ToList()
+        Url = GlobalizedUrlFormatter.Format(httpContext, catalog.Url),
+        Name = catalog.Name.GetLocalizationValue(httpContext),
+        Catalogs = catalog.Catalogs == null ? Array.Empty<CatalogViewModel>() : catalog.Catalogs.OrderBy(c => c.Position).Select(
+          c => new CatalogViewModelFactory().Create(httpContext, c)
+        ).ToArray()
       };
     }
   }

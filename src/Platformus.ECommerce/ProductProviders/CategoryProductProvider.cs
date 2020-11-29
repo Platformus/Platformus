@@ -1,18 +1,21 @@
-﻿// Copyright © 2018 Dmitry Sikorsky. All rights reserved.
+﻿// Copyright © 2020 Dmitry Sikorsky. All rights reserved.
 // Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information.
 
 using System.Collections.Generic;
-using System.Linq;
+using System.Threading.Tasks;
+using Magicalizer.Data.Repositories.Abstractions;
+using Magicalizer.Filters.Abstractions;
+using Microsoft.AspNetCore.Http;
+using Platformus.Core.Extensions;
 using Platformus.Core.Parameters;
-using Platformus.ECommerce.Data.Abstractions;
 using Platformus.ECommerce.Data.Entities;
-using Platformus.Core.Services.Abstractions;
+using Platformus.ECommerce.Filters;
 
 namespace Platformus.ECommerce.ProductProviders
 {
-  public class CategoryProductProvider : ProductProviderBase
+  public class CategoryProductProvider : IProductProvider
   {
-    public override IEnumerable<ParameterGroup> ParameterGroups =>
+    public IEnumerable<ParameterGroup> ParameterGroups =>
       new ParameterGroup[]
       {
         new ParameterGroup(
@@ -21,32 +24,19 @@ namespace Platformus.ECommerce.ProductProviders
         )
       };
 
-    public override string Description => "Returns products of the current category.";
+    public string Description => "Returns products of the current category.";
 
-    protected override IEnumerable<SerializedProduct> GetProducts()
+    public async Task<IEnumerable<Product>> GetProductsAsync(HttpContext httpContext, Catalog catalog)
     {
-      int categoryId = this.GetIntParameterValue("CategoryId");
+      int categoryId = new ParametersParser(catalog.Parameters).GetIntParameterValue("CategoryId");
 
-      return this.requestHandler.Storage.GetRepository<ISerializedProductRepository>().FilteredByCultureIdAndCategoryIdRange(
-        this.requestHandler.GetService<ICultureManager>().GetCurrentCulture().Id, categoryId, "code", "asc", 0, 100
-      ).ToList();
-    }
-
-    protected override IEnumerable<SerializedProduct> GetProducts(int[] attributeIds)
-    {
-      int categoryId = this.GetIntParameterValue("CategoryId");
-
-      return this.requestHandler.Storage.GetRepository<ISerializedProductRepository>().FilteredByCultureIdAndCategoryIdAndAttributeIdsRange(
-        this.requestHandler.GetService<ICultureManager>().GetCurrentCulture().Id, categoryId, attributeIds, "code", "asc", 0, 100
-      ).ToList();
-    }
-
-    protected override IEnumerable<SerializedAttribute> GetAttributes()
-    {
-      int categoryId = this.GetIntParameterValue("CategoryId");
-
-      return this.requestHandler.Storage.GetRepository<ISerializedAttributeRepository>().FilteredByCultureIdAndCategoryId(
-        this.requestHandler.GetService<ICultureManager>().GetCurrentCulture().Id, categoryId
+      return await httpContext.GetStorage().GetRepository<int, Product, ProductFilter>().GetAllAsync(
+        new ProductFilter() { Category = new CategoryFilter() { Id = new IntegerFilter(equals: categoryId) } },
+        inclusions: new Inclusion<Product>[]
+        {
+          new Inclusion<Product>(p => p.Name.Localizations),
+          new Inclusion<Product>(p => p.Photos)
+        }
       );
     }
   }

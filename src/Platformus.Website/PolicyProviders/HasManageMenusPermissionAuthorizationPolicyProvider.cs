@@ -6,7 +6,7 @@ using Platformus.Core;
 
 namespace Platformus.Website
 {
-  public class HasManageMenusPermissionAuthorizationPolicyProvider : Platformus.Core.IAuthorizationPolicyProvider
+  public class HasManageMenusPermissionAuthorizationPolicyProvider : Core.IAuthorizationPolicyProvider
   {
     public string Name => Policies.HasManageMenusPermission;
 
@@ -16,7 +16,7 @@ namespace Platformus.Website
 
       authorizationPolicyBuilder.RequireAssertion(context =>
         {
-          return context.User.HasClaim(PlatformusClaimTypes.Permission, Permissions.ManageMenus) || context.User.HasClaim(PlatformusClaimTypes.Permission, Platformus.Core.Permissions.DoAnything);
+          return context.User.HasClaim(PlatformusClaimTypes.Permission, Permissions.ManageMenus) || context.User.HasClaim(PlatformusClaimTypes.Permission, Core.Permissions.DoAnything);
         }
       );
 

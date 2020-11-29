@@ -1,78 +1,60 @@
-﻿// Copyright © 2017 Dmitry Sikorsky. All rights reserved.
+﻿// Copyright © 2020 Dmitry Sikorsky. All rights reserved.
 // Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information.
 
 using System.Collections.Generic;
 using System.Linq;
-using Platformus.Core;
-using Platformus.Core.Primitives;
-using Platformus.ECommerce.Backend.ViewModels.Shared;
-using Platformus.ECommerce.Data.Abstractions;
-using Platformus.ECommerce.Data.Entities;
+using System.Threading.Tasks;
+using Magicalizer.Data.Repositories.Abstractions;
+using Microsoft.AspNetCore.Http;
 using Platformus.Core.Backend.ViewModels;
+using Platformus.Core.Extensions;
+using Platformus.Core.Primitives;
+using Platformus.ECommerce.Data.Entities;
+using Platformus.ECommerce.Filters;
 
 namespace Platformus.ECommerce.Backend.ViewModels.Products
 {
   public class CreateOrEditViewModelFactory : ViewModelFactoryBase
   {
-    public CreateOrEditViewModelFactory(IRequestHandler requestHandler)
-      : base(requestHandler)
+    public async Task<CreateOrEditViewModel> CreateAsync(HttpContext httpContext, Product product)
     {
-    }
-
-    public CreateOrEditViewModel Create(int? id)
-    {
-      if (id == null)
+      if (product == null)
         return new CreateOrEditViewModel()
         {
-          CategoryOptions = this.GetCategoryOptions(),
+          CategoryOptions = await this.GetCategoryOptionsAsync(httpContext),
           Url = "/",
-          NameLocalizations = this.GetLocalizations(),
-          DescriptionLocalizations = this.GetLocalizations(),
-          TitleLocalizations = this.GetLocalizations(),
-          MetaDescriptionLocalizations = this.GetLocalizations(),
-          MetaKeywordsLocalizations = this.GetLocalizations()
+          NameLocalizations = this.GetLocalizations(httpContext),
+          DescriptionLocalizations = this.GetLocalizations(httpContext),
+          TitleLocalizations = this.GetLocalizations(httpContext),
+          MetaDescriptionLocalizations = this.GetLocalizations(httpContext),
+          MetaKeywordsLocalizations = this.GetLocalizations(httpContext)
         };
-
-      Product product = this.RequestHandler.Storage.GetRepository<IProductRepository>().WithKey((int)id);
 
       return new CreateOrEditViewModel()
       {
         Id = product.Id,
         CategoryId = product.CategoryId,
-        CategoryOptions = this.GetCategoryOptions(),
+        CategoryOptions = await this.GetCategoryOptionsAsync(httpContext),
         Url = product.Url,
         Code = product.Code,
-        NameLocalizations = this.GetLocalizations(product.NameId),
-        DescriptionLocalizations = this.GetLocalizations(product.DescriptionId),
+        NameLocalizations = this.GetLocalizations(httpContext, product.Name),
+        DescriptionLocalizations = this.GetLocalizations(httpContext, product.Description),
         Price = product.Price,
-        Attributes = this.GetAttributes(product),
-        Photos = this.GetPhotos(product),
-        TitleLocalizations = this.GetLocalizations(product.TitleId),
-        MetaDescriptionLocalizations = this.GetLocalizations(product.MetaDescriptionId),
-        MetaKeywordsLocalizations = this.GetLocalizations(product.MetaKeywordsId)
+        Photo1Filename = product.Photos.FirstOrDefault(p => p.Position == 1)?.Filename,
+        Photo2Filename = product.Photos.FirstOrDefault(p => p.Position == 2)?.Filename,
+        Photo3Filename = product.Photos.FirstOrDefault(p => p.Position == 3)?.Filename,
+        Photo4Filename = product.Photos.FirstOrDefault(p => p.Position == 4)?.Filename,
+        Photo5Filename = product.Photos.FirstOrDefault(p => p.Position == 5)?.Filename,
+        TitleLocalizations = this.GetLocalizations(httpContext, product.Title),
+        MetaDescriptionLocalizations = this.GetLocalizations(httpContext, product.MetaDescription),
+        MetaKeywordsLocalizations = this.GetLocalizations(httpContext, product.MetaKeywords)
       };
     }
 
-    private IEnumerable<Option> GetCategoryOptions()
+    private async Task<IEnumerable<Option>> GetCategoryOptionsAsync(HttpContext httpContext)
     {
-      return this.RequestHandler.Storage.GetRepository<ICategoryRepository>().FilteredByCategoryId(null).ToList().Select(
-        c => new Option(this.GetLocalizationValue(c.NameId), c.Id.ToString())
-      );
-    }
-
-    private IEnumerable<AttributeViewModel> GetAttributes(Product product)
-    {
-      return this.RequestHandler.Storage.GetRepository<IProductAttributeRepository>().FilteredByProductId(product.Id).ToList().Select(
-        pa => new AttributeViewModelFactory(this.RequestHandler).Create(
-          this.RequestHandler.Storage.GetRepository<IAttributeRepository>().WithKey(pa.AttributeId), true
-        )
-      );
-    }
-
-    private IEnumerable<PhotoViewModel> GetPhotos(Product product)
-    {
-      return this.RequestHandler.Storage.GetRepository<IPhotoRepository>().FilteredByProductId(product.Id).ToList().Select(
-        ph => new PhotoViewModelFactory(this.RequestHandler).Create(ph)
+      return (await httpContext.GetStorage().GetRepository<int, Category, CategoryFilter>().GetAllAsync(inclusions: new Inclusion<Category>(c => c.Name.Localizations))).Select(
+        c => new Option(c.Name.GetLocalizationValue(httpContext), c.Id.ToString())
       );
     }
   }

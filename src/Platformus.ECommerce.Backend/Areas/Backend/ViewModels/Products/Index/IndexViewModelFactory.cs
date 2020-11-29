@@ -1,40 +1,37 @@
-﻿// Copyright © 2017 Dmitry Sikorsky. All rights reserved.
+﻿// Copyright © 2020 Dmitry Sikorsky. All rights reserved.
 // Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information.
 
+using System.Collections.Generic;
 using System.Linq;
+using Microsoft.AspNetCore.Http;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Localization;
-using Platformus.Core;
+using Platformus.Core.Backend.ViewModels;
 using Platformus.Core.Backend.ViewModels.Shared;
 using Platformus.ECommerce.Backend.ViewModels.Shared;
-using Platformus.ECommerce.Data.Abstractions;
-using Platformus.Core.Backend.ViewModels;
+using Platformus.ECommerce.Data.Entities;
+using Platformus.ECommerce.Filters;
 
 namespace Platformus.ECommerce.Backend.ViewModels.Products
 {
   public class IndexViewModelFactory : ViewModelFactoryBase
   {
-    public IndexViewModelFactory(IRequestHandler requestHandler)
-      : base(requestHandler)
+    public IndexViewModel Create(HttpContext httpContext, ProductFilter filter, IEnumerable<Product> products, string orderBy, int skip, int take, int total)
     {
-    }
-
-    public IndexViewModel Create(string orderBy, string direction, int skip, int take, string filter)
-    {
-      IProductRepository productRepository = this.RequestHandler.Storage.GetRepository<IProductRepository>();
-      IStringLocalizer<IndexViewModelFactory> localizer = this.RequestHandler.GetService<IStringLocalizer<IndexViewModelFactory>>();
+      IStringLocalizer<IndexViewModelFactory> localizer = httpContext.RequestServices.GetService<IStringLocalizer<IndexViewModelFactory>>();
 
       return new IndexViewModel()
       {
-        Grid = new GridViewModelFactory(this.RequestHandler).Create(
-          orderBy, direction, skip, take, productRepository.Count(filter),
+        Grid = new GridViewModelFactory().Create(
+          httpContext, "Name.Contains", orderBy, skip, take, total,
           new[] {
-            new GridColumnViewModelFactory(this.RequestHandler).Create(localizer["Category"]),
-            new GridColumnViewModelFactory(this.RequestHandler).Create(localizer["Code"], "Code"),
-            new GridColumnViewModelFactory(this.RequestHandler).Create(localizer["Name"], "Name"),
-            new GridColumnViewModelFactory(this.RequestHandler).Create(localizer["Price"], "Price"),
-            new GridColumnViewModelFactory(this.RequestHandler).CreateEmpty()
+            new GridColumnViewModelFactory().Create(localizer["Category"]),
+            new GridColumnViewModelFactory().Create(localizer["Code"], "Code"),
+            new GridColumnViewModelFactory().Create(localizer["Name"], "Name"),
+            new GridColumnViewModelFactory().Create(localizer["Price"], "Price"),
+            new GridColumnViewModelFactory().CreateEmpty()
           },
-          productRepository.Range(orderBy, direction, skip, take, filter).ToList().Select(p => new ProductViewModelFactory(this.RequestHandler).Create(p)),
+          products.Select(p => new ProductViewModelFactory().Create(httpContext, p)),
           "_Product"
         )
       };

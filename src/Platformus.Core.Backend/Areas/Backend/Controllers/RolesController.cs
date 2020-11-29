@@ -57,7 +57,7 @@ namespace Platformus.Core.Backend.Controllers
       if (this.ModelState.IsValid)
       {
         Role role = new CreateOrEditViewModelMapper().Map(
-          createOrEdit.Id == null ? new Role() : await this.Repository.GetByIdAsync((int)createOrEdit.Id),
+          createOrEdit.Id == null ? new Role() : await this.Repository.GetByIdAsync((int)createOrEdit.Id, new Inclusion<Role>(r => r.RolePermissions)),
           createOrEdit
         );
 
@@ -103,8 +103,9 @@ namespace Platformus.Core.Backend.Controllers
 
     private async Task DeleteRolePermissionsAsync(Role role)
     {
-      foreach (RolePermission rolePermission in this.Storage.GetRepository<IRolePermissionRepository>().FilteredByRoleId(role.Id))
-        this.Storage.GetRepository<IRolePermissionRepository>().Delete(rolePermission);
+      if (role.RolePermissions != null)
+        foreach (RolePermission rolePermission in role.RolePermissions)
+          this.Storage.GetRepository<IRolePermissionRepository>().Delete(rolePermission);
 
       await this.Storage.SaveAsync();
     }

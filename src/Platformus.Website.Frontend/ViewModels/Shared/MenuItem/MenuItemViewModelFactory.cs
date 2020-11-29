@@ -18,9 +18,9 @@ namespace Platformus.Website.Frontend.ViewModels.Shared
       {
         Name = menuItem.Name.GetLocalizationValue(httpContext),
         Url = GlobalizedUrlFormatter.Format(httpContext, menuItem.Url),
-        MenuItems = menuItem.MenuItems == null ? Array.Empty<MenuItemViewModel>() : menuItem.MenuItems.OrderBy(cmi => cmi.Position).Select(
+        MenuItems = menuItem.MenuItems == null ? Array.Empty<MenuItemViewModel>() : menuItem.MenuItems.OrderBy(mi => mi.Position).Select(
           mi => new MenuItemViewModelFactory().Create(httpContext, mi)
-        ).ToArray()
+        )
       };
     }
   }

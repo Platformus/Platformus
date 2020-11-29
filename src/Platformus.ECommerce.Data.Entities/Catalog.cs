@@ -1,8 +1,8 @@
-﻿// Copyright © 2017 Dmitry Sikorsky. All rights reserved.
+﻿// Copyright © 2020 Dmitry Sikorsky. All rights reserved.
 // Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information.
 
 using System.Collections.Generic;
-using ExtCore.Data.Entities.Abstractions;
+using Magicalizer.Data.Entities.Abstractions;
 using Platformus.Core.Data.Entities;
 
 namespace Platformus.ECommerce.Data.Entities
@@ -10,7 +10,7 @@ namespace Platformus.ECommerce.Data.Entities
   /// <summary>
   /// Represents a catalog.
   /// </summary>
-  public class Catalog : IEntity
+  public class Catalog : IEntity<int>
   {
     /// <summary>
     /// Gets or sets the unique identifier of the catalog.
@@ -48,7 +48,7 @@ namespace Platformus.ECommerce.Data.Entities
     /// </summary>
     public int? Position { get; set; }
 
-    public virtual Catalog Parent { get; set; }
+    public virtual Catalog Owner { get; set; }
     public virtual Dictionary Name { get; set; }
     public virtual ICollection<Catalog> Catalogs { get; set; }
   }

@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace Platformus.Core
 {
-  public class HasManageConfigurationsPermissionAuthorizationPolicyProvider : Platformus.Core.IAuthorizationPolicyProvider
+  public class HasManageConfigurationsPermissionAuthorizationPolicyProvider : IAuthorizationPolicyProvider
   {
     public string Name => Policies.HasManageConfigurationsPermission;
 

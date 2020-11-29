@@ -1,28 +1,18 @@
-﻿// Copyright © 2017 Dmitry Sikorsky. All rights reserved.
+﻿// Copyright © 2020 Dmitry Sikorsky. All rights reserved.
 // Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information.
 
-using Platformus.Core;
-using Platformus.ECommerce.Data.Abstractions;
-using Platformus.ECommerce.Data.Entities;
 using Platformus.Core.Backend.ViewModels;
+using Platformus.ECommerce.Data.Entities;
+using Platformus.ECommerce.Filters;
 
 namespace Platformus.ECommerce.Backend.ViewModels.Categories
 {
   public class CreateOrEditViewModelMapper : ViewModelMapperBase
   {
-    public CreateOrEditViewModelMapper(IRequestHandler requestHandler)
-      : base(requestHandler)
+    public Category Map(CategoryFilter filter, Category category, CreateOrEditViewModel createOrEdit)
     {
-    }
-
-    public Category Map(CreateOrEditViewModel createOrEdit)
-    {
-      Category category = new Category();
-
-      if (createOrEdit.Id != null)
-        category = this.RequestHandler.Storage.GetRepository<ICategoryRepository>().WithKey((int)createOrEdit.Id);
-
-      else category.CategoryId = createOrEdit.CategoryId;
+      if (category.Id == 0)
+        category.CategoryId = filter?.Owner?.Id?.Equals;
 
       category.Position = createOrEdit.Position;
       return category;

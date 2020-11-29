@@ -1,27 +1,22 @@
-﻿// Copyright © 2018 Dmitry Sikorsky. All rights reserved.
+﻿// Copyright © 2020 Dmitry Sikorsky. All rights reserved.
 // Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information.
 
+using System.Collections.Generic;
 using System.Linq;
-using Platformus.Core;
-using Platformus.ECommerce.Data.Abstractions;
+using Microsoft.AspNetCore.Http;
 using Platformus.Core.Frontend.ViewModels;
+using Platformus.ECommerce.Data.Entities;
 
 namespace Platformus.ECommerce.Frontend.ViewModels.Shared
 {
   public class CatalogsViewModelFactory : ViewModelFactoryBase
   {
-    public CatalogsViewModelFactory(IRequestHandler requestHandler)
-      : base(requestHandler)
-    {
-    }
-
-    public CatalogsViewModel Create(string additionalCssClass)
+    public CatalogsViewModel Create(HttpContext httpContext, IEnumerable<Catalog> catalogs, string partialViewName, string additionalCssClass)
     {
       return new CatalogsViewModel()
       {
-        Catalogs = this.RequestHandler.Storage.GetRepository<ICatalogRepository>().FilteredByCatalogId(null).ToList().Select(
-          c => new CatalogViewModelFactory(this.RequestHandler).Create(c)
-        ).ToList(),
+        Catalogs = catalogs.Select(c => new CatalogViewModelFactory().Create(httpContext, c)),
+        PartialViewName = partialViewName ?? "_Catalogs",
         AdditionalCssClass = additionalCssClass
       };
     }

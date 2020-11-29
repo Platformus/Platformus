@@ -1,14 +1,14 @@
-﻿// Copyright © 2017 Dmitry Sikorsky. All rights reserved.
+﻿// Copyright © 2020 Dmitry Sikorsky. All rights reserved.
 // Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information.
 
-using ExtCore.Data.Entities.Abstractions;
+using Magicalizer.Data.Entities.Abstractions;
 
 namespace Platformus.ECommerce.Data.Entities
 {
   /// <summary>
   /// Represents a photo.
   /// </summary>
-  public class Photo : IEntity
+  public class Photo : IEntity<int>
   {
     /// <summary>
     /// Gets or sets the unique identifier of the photo.

@@ -1,4 +1,4 @@
-﻿@* Copyright © 2018 Dmitry Sikorsky. All rights reserved. *@
+﻿@* Copyright © 2020 Dmitry Sikorsky. All rights reserved. *@
 @* Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information. *@
 @model Platformus.ECommerce.Backend.ViewModels.ECommerce.ProductSelectorFormViewModel
 @inject Microsoft.AspNetCore.Mvc.Localization.IViewLocalizer Localizer
@@ -11,7 +11,7 @@
       <tr class="table__row">
         @foreach (var gridColumn in this.Model.GridColumns)
         {
-          <th class="table__cell table__cell--header">@gridColumn.Name</th>
+          <th class="table__cell table__cell--header">@gridColumn.DisplayName</th>
         }
       </tr>
       @foreach (var product in this.Model.Products)

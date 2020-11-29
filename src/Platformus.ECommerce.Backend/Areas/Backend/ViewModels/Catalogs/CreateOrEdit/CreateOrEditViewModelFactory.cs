@@ -1,44 +1,36 @@
-﻿// Copyright © 2017 Dmitry Sikorsky. All rights reserved.
+﻿// Copyright © 2020 Dmitry Sikorsky. All rights reserved.
 // Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information.
 
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using ExtCore.Infrastructure;
-using Platformus.Core;
+using Microsoft.AspNetCore.Http;
+using Platformus.Core.Backend.ViewModels;
 using Platformus.Core.Primitives;
-using Platformus.ECommerce.Data.Abstractions;
 using Platformus.ECommerce.Data.Entities;
 using Platformus.ECommerce.ProductProviders;
-using Platformus.Core.Backend.ViewModels;
 
 namespace Platformus.ECommerce.Backend.ViewModels.Catalogs
 {
   public class CreateOrEditViewModelFactory : ViewModelFactoryBase
   {
-    public CreateOrEditViewModelFactory(IRequestHandler requestHandler)
-      : base(requestHandler)
+    public CreateOrEditViewModel Create(HttpContext httpContext, Catalog catalog)
     {
-    }
-
-    public CreateOrEditViewModel Create(int? id)
-    {
-      if (id == null)
+      if (catalog == null)
         return new CreateOrEditViewModel()
         {
           Url = "/",
-          NameLocalizations = this.GetLocalizations(),
+          NameLocalizations = this.GetLocalizations(httpContext),
           CSharpClassNameOptions = this.GetCSharpClassNameOptions(),
           ProductProviders = this.GetProductProviders()
         };
-
-      Catalog catalog = this.RequestHandler.Storage.GetRepository<ICatalogRepository>().WithKey((int)id);
 
       return new CreateOrEditViewModel()
       {
         Id = catalog.Id,
         Url = catalog.Url,
-        NameLocalizations = this.GetLocalizations(catalog.NameId),
+        NameLocalizations = this.GetLocalizations(httpContext, catalog.Name),
         CSharpClassName = catalog.CSharpClassName,
         CSharpClassNameOptions = this.GetCSharpClassNameOptions(),
         Parameters = catalog.Parameters,

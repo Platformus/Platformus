@@ -6,7 +6,7 @@ using Platformus.Core;
 
 namespace Platformus.Website
 {
-  public class HasManageObjectsPermissionAuthorizationPolicyProvider : Platformus.Core.IAuthorizationPolicyProvider
+  public class HasManageObjectsPermissionAuthorizationPolicyProvider : Core.IAuthorizationPolicyProvider
   {
     public string Name => Policies.HasManageObjectsPermission;
 
@@ -16,7 +16,7 @@ namespace Platformus.Website
 
       authorizationPolicyBuilder.RequireAssertion(context =>
         {
-          return context.User.HasClaim(PlatformusClaimTypes.Permission, Permissions.ManageObjects) || context.User.HasClaim(PlatformusClaimTypes.Permission, Platformus.Core.Permissions.DoAnything);
+          return context.User.HasClaim(PlatformusClaimTypes.Permission, Permissions.ManageObjects) || context.User.HasClaim(PlatformusClaimTypes.Permission, Core.Permissions.DoAnything);
         }
       );
 

@@ -31,7 +31,7 @@ namespace Platformus.Website.Backend.Controllers
       ));
     }
 
-    public async Task<IActionResult> Class(int id)
+    public async Task<IActionResult> ClassAsync(int id)
     {
       return this.Json(await this.Storage.GetRepository<int, Class, ClassFilter>().GetByIdAsync(id));
     }
@@ -47,7 +47,7 @@ namespace Platformus.Website.Backend.Controllers
       ));
     }
 
-    public async Task<IActionResult> Member(int id)
+    public async Task<IActionResult> MemberAsync(int id)
     {
       return this.Json(await this.Storage.GetRepository<int, Member, MemberFilter>().GetByIdAsync(
         id,
@@ -72,7 +72,7 @@ namespace Platformus.Website.Backend.Controllers
       ));
     }
 
-    public async Task<IActionResult> DisplayableObjects(string ids)
+    public async Task<IActionResult> DisplayableObjectsAsync(string ids)
     {
       List<dynamic> objects = new List<dynamic>();
       IRepository<int, Object, ObjectFilter> repository = this.Storage.GetRepository<int, Object, ObjectFilter>();

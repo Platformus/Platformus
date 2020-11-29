@@ -54,7 +54,7 @@ namespace Platformus.Core.Backend.Controllers
       if (this.ModelState.IsValid)
       {
         User user = new CreateOrEditViewModelMapper().Map(
-          createOrEdit.Id == null ? new User() : await this.Repository.GetByIdAsync((int)createOrEdit.Id),
+          createOrEdit.Id == null ? new User() : await this.Repository.GetByIdAsync((int)createOrEdit.Id, new Inclusion<User>(u => u.UserRoles)),
           createOrEdit
         );
 
@@ -95,8 +95,9 @@ namespace Platformus.Core.Backend.Controllers
 
     private async Task DeleteUserRolesAsync(User user)
     {
-      foreach (UserRole userRole in this.Storage.GetRepository<IUserRoleRepository>().FilteredByUserId(user.Id))
-        this.Storage.GetRepository<IUserRoleRepository>().Delete(userRole);
+      if (user.UserRoles != null)
+        foreach (UserRole userRole in user.UserRoles)
+          this.Storage.GetRepository<IUserRoleRepository>().Delete(userRole);
 
       await this.Storage.SaveAsync();
     }

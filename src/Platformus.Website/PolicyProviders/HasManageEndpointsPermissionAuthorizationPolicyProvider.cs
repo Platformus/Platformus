@@ -6,7 +6,7 @@ using Platformus.Core;
 
 namespace Platformus.Website
 {
-  public class HasManageEndpointsPermissionAuthorizationPolicyProvider : Platformus.Core.IAuthorizationPolicyProvider
+  public class HasManageEndpointsPermissionAuthorizationPolicyProvider : Core.IAuthorizationPolicyProvider
   {
     public string Name => Policies.HasManageEndpointsPermission;
 
@@ -16,7 +16,7 @@ namespace Platformus.Website
 
       authorizationPolicyBuilder.RequireAssertion(context =>
         {
-          return context.User.HasClaim(PlatformusClaimTypes.Permission, Permissions.ManageEndpoints) || context.User.HasClaim(PlatformusClaimTypes.Permission, Platformus.Core.Permissions.DoAnything);
+          return context.User.HasClaim(PlatformusClaimTypes.Permission, Permissions.ManageEndpoints) || context.User.HasClaim(PlatformusClaimTypes.Permission, Core.Permissions.DoAnything);
         }
       );
 

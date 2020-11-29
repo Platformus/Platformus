@@ -16,7 +16,7 @@ namespace Platformus.Website.Frontend.ViewModels.Shared
       {
         MenuItems = menu.MenuItems.OrderBy(mi => mi.Position).Select(
           mi => new MenuItemViewModelFactory().Create(httpContext, mi)
-        ).ToList(),
+        ),
         PartialViewName = partialViewName ?? "_Menu",
         AdditionalCssClass = additionalCssClass
       };

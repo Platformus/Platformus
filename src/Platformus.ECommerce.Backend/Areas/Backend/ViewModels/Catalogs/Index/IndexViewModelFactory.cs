@@ -1,28 +1,22 @@
-﻿// Copyright © 2017 Dmitry Sikorsky. All rights reserved.
+﻿// Copyright © 2020 Dmitry Sikorsky. All rights reserved.
 // Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information.
 
+using System.Collections.Generic;
 using System.Linq;
-using Platformus.Core;
-using Platformus.ECommerce.Backend.ViewModels.Shared;
-using Platformus.ECommerce.Data.Abstractions;
+using Microsoft.AspNetCore.Http;
 using Platformus.Core.Backend.ViewModels;
+using Platformus.ECommerce.Backend.ViewModels.Shared;
+using Platformus.ECommerce.Data.Entities;
 
 namespace Platformus.ECommerce.Backend.ViewModels.Catalogs
 {
   public class IndexViewModelFactory : ViewModelFactoryBase
   {
-    public IndexViewModelFactory(IRequestHandler requestHandler)
-      : base(requestHandler)
-    {
-    }
-
-    public IndexViewModel Create()
+    public IndexViewModel Create(HttpContext httpContext, IEnumerable<Catalog> catalogs)
     {
       return new IndexViewModel()
       {
-        Catalogs = this.RequestHandler.Storage.GetRepository<ICatalogRepository>().FilteredByCatalogId(null).ToList().Select(
-          c => new CatalogViewModelFactory(this.RequestHandler).Create(c)
-        )
+        Catalogs = catalogs.Select(c => new CatalogViewModelFactory().Create(httpContext, c))
       };
     }
   }

@@ -1,36 +1,31 @@
-﻿// Copyright © 2018 Dmitry Sikorsky. All rights reserved.
+﻿// Copyright © 2020 Dmitry Sikorsky. All rights reserved.
 // Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information.
 
+using System.Collections.Generic;
 using System.Linq;
+using Microsoft.AspNetCore.Http;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Localization;
-using Platformus.Core;
+using Platformus.Core.Backend.ViewModels;
 using Platformus.Core.Backend.ViewModels.Shared;
 using Platformus.ECommerce.Backend.ViewModels.Shared;
-using Platformus.ECommerce.Data.Abstractions;
-using Platformus.Core.Backend.ViewModels;
+using Platformus.ECommerce.Data.Entities;
 
 namespace Platformus.ECommerce.Backend.ViewModels.ECommerce
 {
   public class ProductSelectorFormViewModelFactory : ViewModelFactoryBase
   {
-    public ProductSelectorFormViewModelFactory(IRequestHandler requestHandler)
-      : base(requestHandler)
+    public ProductSelectorFormViewModel Create(HttpContext httpContext, IEnumerable<Product> products, int? productId)
     {
-    }
-
-    public ProductSelectorFormViewModel Create(int? productId)
-    {
-      IStringLocalizer<ProductSelectorFormViewModelFactory> localizer = this.RequestHandler.GetService<IStringLocalizer<ProductSelectorFormViewModelFactory>>();
+      IStringLocalizer<ProductSelectorFormViewModelFactory> localizer = httpContext.RequestServices.GetService<IStringLocalizer<ProductSelectorFormViewModelFactory>>();
 
       return new ProductSelectorFormViewModel()
       {
         GridColumns = new[] {
-          new GridColumnViewModelFactory(this.RequestHandler).Create(localizer["Category"]),
-          new GridColumnViewModelFactory(this.RequestHandler).Create(localizer["Name"])
+          new GridColumnViewModelFactory().Create(localizer["Category"]),
+          new GridColumnViewModelFactory().Create(localizer["Name"])
         },
-        Products = this.RequestHandler.Storage.GetRepository<IProductRepository>().All().ToList().Select(
-          p => new ProductViewModelFactory(this.RequestHandler).Create(p)
-        ),
+        Products = products.Select(p => new ProductViewModelFactory().Create(httpContext, p)),
         ProductId = productId
       };
     }

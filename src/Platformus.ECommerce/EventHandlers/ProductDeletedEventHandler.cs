@@ -1,7 +1,7 @@
-﻿// Copyright © 2018 Dmitry Sikorsky. All rights reserved.
+﻿// Copyright © 2020 Dmitry Sikorsky. All rights reserved.
 // Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information.
 
-using Platformus.Core;
+using Microsoft.AspNetCore.Http;
 using Platformus.ECommerce.Data.Entities;
 using Platformus.ECommerce.Events;
 
@@ -11,9 +11,8 @@ namespace Platformus.ECommerce.EventHandlers
   {
     public int Priority => 1000;
 
-    public void HandleEvent(IRequestHandler requestHandler, Product product)
+    public void HandleEvent(HttpContext httpContext, Product product)
     {
-      requestHandler.GetService<ICache>().RemoveAll();
     }
   }
 }

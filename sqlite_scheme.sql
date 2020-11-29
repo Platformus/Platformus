@@ -1,7 +1,7 @@
 BEGIN TRANSACTION;
 --
 -- Extension: Platformus.Core
--- Version: 2.0.0-alpha1
+-- Version: 2.0.0-alpha2
 --
 
 -- Users
@@ -110,7 +110,7 @@ CREATE TABLE "Localizations" (
 
 --
 -- Extension: Platformus.Website
--- Version: 2.0.0-alpha1
+-- Version: 2.0.0-alpha2
 --
 
 -- Endpoints
@@ -340,7 +340,7 @@ CREATE TABLE "Files" (
 
 --
 -- Extension: Platformus.ECommerce
--- Version: 2.0.0-alpha1
+-- Version: 2.0.0-alpha2
 --
 
 -- Catalogs
@@ -352,7 +352,7 @@ CREATE TABLE "Catalogs" (
 	"CSharpClassName" TEXT NOT NULL,
   "Parameters" TEXT,
 	"Position" INTEGER,
-	CONSTRAINT "FK_Catalog_Catalog_CatalogId" FOREIGN KEY("CatalogId") REFERENCES "Catalogs" ("Id"),
+	CONSTRAINT "FK_Catalog_Catalog_CatalogId" FOREIGN KEY("CatalogId") REFERENCES "Catalogs" ("Id") ON DELETE CASCADE,
 	CONSTRAINT "FK_Catalog_Dictionary_NameId" FOREIGN KEY("NameId") REFERENCES "Dictionaries" ("Id")
 );
 
@@ -362,27 +362,8 @@ CREATE TABLE "Categories" (
 	"CategoryId" INTEGER,
 	"NameId" INTEGER NOT NULL,
 	"Position" INTEGER,
-	CONSTRAINT "FK_Category_Category_CategoryId" FOREIGN KEY("CategoryId") REFERENCES "Categories" ("Id"),
+	CONSTRAINT "FK_Category_Category_CategoryId" FOREIGN KEY("CategoryId") REFERENCES "Categories" ("Id") ON DELETE CASCADE,
 	CONSTRAINT "FK_Category_Dictionary_NameId" FOREIGN KEY("NameId") REFERENCES "Dictionaries" ("Id")
-);
-
--- Features
-CREATE TABLE "Features" (
-	"Id" INTEGER NOT NULL CONSTRAINT "PK_Feature" PRIMARY KEY AUTOINCREMENT,
-	"Code" TEXT NOT NULL,
-	"NameId" INTEGER NOT NULL,
-	"Position" INTEGER,
-	CONSTRAINT "FK_Feature_Dictionary_NameId" FOREIGN KEY("NameId") REFERENCES "Dictionaries" ("Id")
-);
-
--- Attributes
-CREATE TABLE "Attributes" (
-	"Id" INTEGER NOT NULL CONSTRAINT "PK_Attribute" PRIMARY KEY AUTOINCREMENT,
-	"FeatureId" INTEGER NOT NULL,
-	"ValueId" INTEGER NOT NULL,
-	"Position" INTEGER,
-	CONSTRAINT "FK_Attribute_Feature_FeatureId" FOREIGN KEY("FeatureId") REFERENCES "Features" ("Id"),
-	CONSTRAINT "FK_Attribute_Dictionary_NameId" FOREIGN KEY("ValueId") REFERENCES "Dictionaries" ("Id")
 );
 
 -- Products
@@ -397,21 +378,12 @@ CREATE TABLE "Products" (
 	"TitleId" INTEGER NOT NULL,
 	"MetaDescriptionId" INTEGER NOT NULL,
 	"MetaKeywordsId" INTEGER NOT NULL,
-	CONSTRAINT "FK_Product_Category_CategoryId" FOREIGN KEY("CategoryId") REFERENCES "Categories" ("Id"),
+	CONSTRAINT "FK_Product_Category_CategoryId" FOREIGN KEY("CategoryId") REFERENCES "Categories" ("Id") ON DELETE CASCADE,
 	CONSTRAINT "FK_Product_Dictionary_NameId" FOREIGN KEY("NameId") REFERENCES "Dictionaries" ("Id"),
 	CONSTRAINT "FK_Product_Dictionary_DescriptionId" FOREIGN KEY("DescriptionId") REFERENCES "Dictionaries" ("Id"),
 	CONSTRAINT "FK_Product_Dictionary_TitleId" FOREIGN KEY("TitleId") REFERENCES "Dictionaries" ("Id"),
 	CONSTRAINT "FK_Product_Dictionary_MetaDescriptionId" FOREIGN KEY("MetaDescriptionId") REFERENCES "Dictionaries" ("Id"),
 	CONSTRAINT "FK_Product_Dictionary_MetaKeywordsId" FOREIGN KEY("MetaKeywordsId") REFERENCES "Dictionaries" ("Id")
-);
-
--- ProductAttributes
-CREATE TABLE "ProductAttributes" (
-	"ProductId" INTEGER NOT NULL,
-	"AttributeId" INTEGER NOT NULL,
-	CONSTRAINT "PK_ProductAttribute" PRIMARY KEY ("ProductId", "AttributeId"),
-	CONSTRAINT "FK_ProductAttribute_Product_ProductId" FOREIGN KEY ("ProductId") REFERENCES "Products" ("Id"),
-	CONSTRAINT "FK_ProductAttribute_Attribute_AttributeId" FOREIGN KEY ("AttributeId") REFERENCES "Attributes" ("Id")
 );
 
 -- Photos
@@ -421,70 +393,7 @@ CREATE TABLE "Photos" (
 	"Filename" TEXT NOT NULL,
 	"IsCover" INTEGER NOT NULL,
 	"Position" INTEGER,
-	CONSTRAINT "FK_Photo_Product_ProductId" FOREIGN KEY("ProductId") REFERENCES "Products" ("Id")
-);
-
--- OrderStates
-CREATE TABLE "OrderStates" (
-	"Id" INTEGER NOT NULL CONSTRAINT "PK_OrderState" PRIMARY KEY AUTOINCREMENT,
-	"Code" TEXT NOT NULL,
-	"NameId" INTEGER NOT NULL,
-	"Position" INTEGER,
-	CONSTRAINT "FK_OrderState_Dictionary_NameId" FOREIGN KEY("NameId") REFERENCES "Dictionaries" ("Id")
-);
-
--- PaymentMethods
-CREATE TABLE "PaymentMethods" (
-	"Id" INTEGER NOT NULL CONSTRAINT "PK_PaymentMethod" PRIMARY KEY AUTOINCREMENT,
-	"Code" TEXT NOT NULL,
-	"NameId" INTEGER NOT NULL,
-	"Position" INTEGER,
-	CONSTRAINT "FK_PaymentMethod_Dictionary_NameId" FOREIGN KEY("NameId") REFERENCES "Dictionaries" ("Id")
-);
-
--- DeliveryMethods
-CREATE TABLE "DeliveryMethods" (
-	"Id" INTEGER NOT NULL CONSTRAINT "PK_DeliveryMethod" PRIMARY KEY AUTOINCREMENT,
-	"Code" TEXT NOT NULL,
-	"NameId" INTEGER NOT NULL,
-	"Position" INTEGER,
-	CONSTRAINT "FK_DeliveryMethod_Dictionary_NameId" FOREIGN KEY("NameId") REFERENCES "Dictionaries" ("Id")
-);
-
--- Orders
-CREATE TABLE "Orders" (
-	"Id" INTEGER NOT NULL CONSTRAINT "PK_Order" PRIMARY KEY AUTOINCREMENT,
-	"OrderStateId" INTEGER NOT NULL,
-	"PaymentMethodId" INTEGER NOT NULL,
-	"DeliveryMethodId" INTEGER NOT NULL,
-	"CustomerFirstName" TEXT NOT NULL,
-	"CustomerLastName" TEXT,
-	"CustomerPhone" TEXT NOT NULL,
-	"CustomerEmail" TEXT,
-	"CustomerAddress" TEXT,
-	"Note" TEXT,
-	"Created" TEXT NOT NULL,
-	CONSTRAINT "FK_Order_OrderState_OrderStateId" FOREIGN KEY("OrderStateId") REFERENCES "OrderStates" ("Id"),
-	CONSTRAINT "FK_Order_PaymentMethod_PaymentMethodId" FOREIGN KEY("PaymentMethodId") REFERENCES "PaymentMethods" ("Id"),
-	CONSTRAINT "FK_Order_DeliveryMethod_DeliveryMethodId" FOREIGN KEY("DeliveryMethodId") REFERENCES "DeliveryMethods" ("Id")
-);
-
--- Carts
-CREATE TABLE "Carts" (
-	"Id" INTEGER NOT NULL CONSTRAINT "PK_Cart" PRIMARY KEY AUTOINCREMENT,
-	"OrderId" INTEGER,
-	"ClientSideId" TEXT NOT NULL,
-	"Created" TEXT NOT NULL,
-	CONSTRAINT "FK_Cart_Order_OrderId" FOREIGN KEY("OrderId") REFERENCES "Orders" ("Id")
-);
-
--- Positions
-CREATE TABLE "Positions" (
-	"Id" INTEGER NOT NULL CONSTRAINT "PK_Position" PRIMARY KEY AUTOINCREMENT,
-	"CartId" INTEGER NOT NULL,
-	"ProductId" INTEGER NOT NULL,
-	CONSTRAINT "FK_Position_Cart_CartId" FOREIGN KEY("CartId") REFERENCES "Carts" ("Id"),
-	CONSTRAINT "FK_Position_Product_ProductId" FOREIGN KEY("ProductId") REFERENCES "Products" ("Id")
+	CONSTRAINT "FK_Photo_Product_ProductId" FOREIGN KEY("ProductId") REFERENCES "Products" ("Id") ON DELETE CASCADE
 );
 
 COMMIT;

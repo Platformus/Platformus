@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace Platformus.Core
 {
-  public class HasManageCulturesPermissionAuthorizationPolicyProvider : Platformus.Core.IAuthorizationPolicyProvider
+  public class HasManageCulturesPermissionAuthorizationPolicyProvider : IAuthorizationPolicyProvider
   {
     public string Name => Policies.HasManageCulturesPermission;
 

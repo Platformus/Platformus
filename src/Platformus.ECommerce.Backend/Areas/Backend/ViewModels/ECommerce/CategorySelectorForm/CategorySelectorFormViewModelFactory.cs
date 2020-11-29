@@ -1,35 +1,30 @@
-﻿// Copyright © 2018 Dmitry Sikorsky. All rights reserved.
+﻿// Copyright © 2020 Dmitry Sikorsky. All rights reserved.
 // Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information.
 
+using System.Collections.Generic;
 using System.Linq;
+using Microsoft.AspNetCore.Http;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Localization;
-using Platformus.Core;
+using Platformus.Core.Backend.ViewModels;
 using Platformus.Core.Backend.ViewModels.Shared;
 using Platformus.ECommerce.Backend.ViewModels.Shared;
-using Platformus.ECommerce.Data.Abstractions;
-using Platformus.Core.Backend.ViewModels;
+using Platformus.ECommerce.Data.Entities;
 
 namespace Platformus.ECommerce.Backend.ViewModels.ECommerce
 {
   public class CategorySelectorFormViewModelFactory : ViewModelFactoryBase
   {
-    public CategorySelectorFormViewModelFactory(IRequestHandler requestHandler)
-      : base(requestHandler)
+    public CategorySelectorFormViewModel Create(HttpContext httpContext, IEnumerable<Category> categories, int? categoryId)
     {
-    }
-
-    public CategorySelectorFormViewModel Create(int? categoryId)
-    {
-      IStringLocalizer<CategorySelectorFormViewModelFactory> localizer = this.RequestHandler.GetService<IStringLocalizer<CategorySelectorFormViewModelFactory>>();
+      IStringLocalizer<CategorySelectorFormViewModelFactory> localizer = httpContext.RequestServices.GetService<IStringLocalizer<CategorySelectorFormViewModelFactory>>();
 
       return new CategorySelectorFormViewModel()
       {
         GridColumns = new[] {
-          new GridColumnViewModelFactory(this.RequestHandler).Create(localizer["Name"])
+          new GridColumnViewModelFactory().Create(localizer["Name"])
         },
-        Categories = this.RequestHandler.Storage.GetRepository<ICategoryRepository>().FilteredByCategoryId(null).ToList().Select(
-          c => new CategoryViewModelFactory(this.RequestHandler).Create(c)
-        ),
+        Categories = categories.Select(c => new CategoryViewModelFactory().Create(httpContext, c)),
         CategoryId = categoryId
       };
     }

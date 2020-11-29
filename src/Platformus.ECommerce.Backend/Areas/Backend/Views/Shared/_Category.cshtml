@@ -1,4 +1,4 @@
-﻿@* Copyright © 2017 Dmitry Sikorsky. All rights reserved. *@
+﻿@* Copyright © 2020 Dmitry Sikorsky. All rights reserved. *@
 @* Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information. *@
 @model Platformus.ECommerce.Backend.ViewModels.Shared.CategoryViewModel
 @inject Microsoft.AspNetCore.Mvc.Localization.IViewLocalizer Localizer
@@ -16,7 +16,7 @@
       @Html.Partial("_Category", category)
     }
     <div class="tree__buttons buttons">
-      <a class="buttons__button buttons__button--minor button button--positive button--minor" href="/backend/categories/create?categoryid=@Model.Id">@Localizer["Create category"]</a>
+      <a class="buttons__button buttons__button--minor button button--positive button--minor" href="/backend/categories/create?owner.id.equals=@Model.Id">@Localizer["Create category"]</a>
     </div>
   </div>
 </div>

@@ -22,7 +22,7 @@ namespace Platformus.Website.Frontend.ViewModels.Shared
         MaxLength = field.MaxLength,
         FieldOptions = field.FieldOptions.Select(
           fo => new FieldOptionViewModelFactory().Create(httpContext, fo)
-        ).ToList()
+        )
       };
     }
   }

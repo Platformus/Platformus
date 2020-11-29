@@ -13,7 +13,8 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Platformus.ECommerce.Data.Abstractions\Platformus.ECommerce.Data.Abstractions.csproj" />
+    <ProjectReference Include="..\Platformus.Core\Platformus.Core.csproj" />
+    <ProjectReference Include="..\Platformus.ECommerce.Data.Entities\Platformus.ECommerce.Data.Entities.csproj" />
   </ItemGroup>
 
 </Project>

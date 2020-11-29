@@ -1,66 +1,92 @@
-﻿// Copyright © 2017 Dmitry Sikorsky. All rights reserved.
+﻿// Copyright © 2020 Dmitry Sikorsky. All rights reserved.
 // Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information.
 
-using System;
-using ExtCore.Data.Abstractions;
+using System.Threading.Tasks;
 using ExtCore.Events;
+using Magicalizer.Data.Repositories.Abstractions;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Platformus.Core;
 using Platformus.ECommerce.Backend.ViewModels.Products;
-using Platformus.ECommerce.Data.Abstractions;
 using Platformus.ECommerce.Data.Entities;
 using Platformus.ECommerce.Events;
+using Platformus.ECommerce.Filters;
 
 namespace Platformus.ECommerce.Backend.Controllers
 {
   [Area("Backend")]
-  [Authorize(Policy = Policies.HasBrowseProductsPermission)]
-  public class ProductsController : Platformus.Core.Backend.Controllers.ControllerBase
+  [Authorize(Policy = Policies.HasManageProductsPermission)]
+  public class ProductsController : Core.Backend.Controllers.ControllerBase
   {
+    private IRepository<int, Product, ProductFilter> Repository
+    {
+      get => this.Storage.GetRepository<int, Product, ProductFilter>();
+    }
+
     public ProductsController(IStorage storage)
       : base(storage)
     {
     }
 
-    public IActionResult Index(string orderBy = "code", string direction = "asc", int skip = 0, int take = 10, string filter = null)
+    public async Task<IActionResult> IndexAsync([FromQuery]ProductFilter filter = null, string orderBy = "+code", int skip = 0, int take = 10)
     {
-      return this.View(new IndexViewModelFactory(this).Create(orderBy, direction, skip, take, filter));
+      return this.View(new IndexViewModelFactory().Create(
+        this.HttpContext, filter,
+        await this.Repository.GetAllAsync(
+          filter, orderBy, skip, take,
+          new Inclusion<Product>(p => p.Category.Name.Localizations),
+          new Inclusion<Product>(p => p.Name.Localizations)
+        ),
+        orderBy, skip, take, await this.Repository.CountAsync(filter)
+      ));
     }
 
     [HttpGet]
     [ImportModelStateFromTempData]
-    public IActionResult CreateOrEdit(int? id)
+    public async Task<IActionResult> CreateOrEditAsync(int? id)
     {
-      return this.View(new CreateOrEditViewModelFactory(this).Create(id));
+      return this.View(await new CreateOrEditViewModelFactory().CreateAsync(
+        this.HttpContext, id == null ? null : await this.Repository.GetByIdAsync(
+          (int)id,
+          new Inclusion<Product>(p => p.Category.Name.Localizations),
+          new Inclusion<Product>(p => p.Name.Localizations),
+          new Inclusion<Product>(p => p.Description.Localizations),
+          new Inclusion<Product>(p => p.Title.Localizations),
+          new Inclusion<Product>(p => p.MetaDescription.Localizations),
+          new Inclusion<Product>(p => p.MetaKeywords.Localizations),
+          new Inclusion<Product>(p => p.Photos)
+        )
+      ));
     }
 
     [HttpPost]
     [ExportModelStateToTempData]
-    public IActionResult CreateOrEdit(CreateOrEditViewModel createOrEdit)
+    public async Task<IActionResult> CreateOrEditAsync(CreateOrEditViewModel createOrEdit)
     {
-      if (createOrEdit.Id == null && !this.IsCodeUnique(createOrEdit.Code))
+      if (createOrEdit.Id == null && !await this.IsCodeUniqueAsync(createOrEdit.Code))
         this.ModelState.AddModelError("code", string.Empty);
 
       if (this.ModelState.IsValid)
       {
-        Product product = new CreateOrEditViewModelMapper(this).Map(createOrEdit);
+        Product product = new CreateOrEditViewModelMapper().Map(
+          createOrEdit.Id == null ? new Product() : await this.Repository.GetByIdAsync((int)createOrEdit.Id, new Inclusion<Product>(p => p.Photos)),
+          createOrEdit
+        );
 
-        this.CreateOrEditEntityLocalizations(product);
-
-        if (createOrEdit.Id == null)
-          this.Storage.GetRepository<IProductRepository>().Create(product);
-
-        else this.Storage.GetRepository<IProductRepository>().Edit(product);
-
-        this.Storage.Save();
-        this.CreateOrEditAttributes(product, createOrEdit.RemovedAttributeIds);
-        this.CreateOrEditPhotos(product, createOrEdit.RemovedPhotoIds);
+        await this.CreateOrEditEntityLocalizationsAsync(product);
 
         if (createOrEdit.Id == null)
-          Event<IProductCreatedEventHandler, IRequestHandler, Product>.Broadcast(this, product);
+          this.Repository.Create(product);
 
-        else Event<IProductEditedEventHandler, IRequestHandler, Product>.Broadcast(this, product);
+        else this.Repository.Edit(product);
+
+        await this.Storage.SaveAsync();
+        await this.CreateOrEditPhotosAsync(product, createOrEdit);
+
+        if (createOrEdit.Id == null)
+          Event<IProductCreatedEventHandler, HttpContext, Product>.Broadcast(this.HttpContext, product);
+
+        else Event<IProductEditedEventHandler, HttpContext, Product>.Broadcast(this.HttpContext, product);
 
         return this.Redirect(this.Request.CombineUrl("/backend/products"));
       }
@@ -68,145 +94,90 @@ namespace Platformus.ECommerce.Backend.Controllers
       return this.CreateRedirectToSelfResult();
     }
 
-    public ActionResult Delete(int id)
+    public async Task<ActionResult> DeleteAsync(int id)
     {
-      Product product = this.Storage.GetRepository<IProductRepository>().WithKey(id);
+      Product product = await this.Repository.GetByIdAsync(id);
 
-      this.Storage.GetRepository<IProductRepository>().Delete(product);
-      this.Storage.Save();
-      Event<IProductCreatedEventHandler, IRequestHandler, Product>.Broadcast(this, product);
+      this.Repository.Delete(product.Id);
+      await this.Storage.SaveAsync();
+      Event<IProductCreatedEventHandler, HttpContext, Product>.Broadcast(this.HttpContext, product);
       return this.RedirectToAction("Index");
     }
 
-    private bool IsCodeUnique(string code)
+    private async Task<bool> IsCodeUniqueAsync(string code)
     {
-      return this.Storage.GetRepository<IProductRepository>().WithCode(code) == null;
+      return await this.Repository.CountAsync(new ProductFilter() { Code = code }) == 0;
     }
 
-    private void CreateOrEditAttributes(Product product, string removedAttributeIds)
+    private async Task CreateOrEditPhotosAsync(Product product, CreateOrEditViewModel createOrEdit)
     {
-      this.CreateAttributes(product);
-      this.RemoveAttributes(product, removedAttributeIds);
+      await this.DeletePhotosAsync(product);
+      await this.CreatePhotosAsync(product, createOrEdit);
     }
 
-    private void CreateAttributes(Product product)
+    private async Task DeletePhotosAsync(Product product)
     {
-      foreach (string key in this.Request.Form.Keys)
+      if (product.Photos != null)
+        foreach (Photo photo in product.Photos)
+          this.Storage.GetRepository<int, Photo, PhotoFilter>().Delete(photo.Id);
+
+      await this.Storage.SaveAsync();
+    }
+
+    private async Task CreatePhotosAsync(Product product, CreateOrEditViewModel createOrEdit)
+    {
+      if (!string.IsNullOrEmpty(createOrEdit.Photo1Filename))
       {
-        if (key.StartsWith("newAttribute"))
-        {
-          ProductAttribute productAttribute = new ProductAttribute();
+        Photo photo = new Photo();
 
-          productAttribute.ProductId = product.Id;
-          productAttribute.AttributeId = int.Parse(key.Replace("newAttribute", string.Empty));
-          this.Storage.GetRepository<IProductAttributeRepository>().Create(productAttribute);
-        }
+        photo.ProductId = product.Id;
+        photo.Filename = createOrEdit.Photo1Filename;
+        photo.IsCover = true;
+        photo.Position = 1;
+        this.Storage.GetRepository<int, Photo, PhotoFilter>().Create(photo);
       }
 
-      this.Storage.Save();
-    }
-
-    private void RemoveAttributes(Product product, string removedAttributeIds)
-    {
-      if (string.IsNullOrEmpty(removedAttributeIds))
-        return;
-
-      foreach (string removedAttributeId in removedAttributeIds.Split(','))
+      if (!string.IsNullOrEmpty(createOrEdit.Photo2Filename))
       {
-        ProductAttribute productAttribute = this.Storage.GetRepository<IProductAttributeRepository>().WithKey(product.Id, int.Parse(removedAttributeId));
+        Photo photo = new Photo();
 
-        this.Storage.GetRepository<IProductAttributeRepository>().Delete(productAttribute);
+        photo.ProductId = product.Id;
+        photo.Filename = createOrEdit.Photo2Filename;
+        photo.Position = 2;
+        this.Storage.GetRepository<int, Photo, PhotoFilter>().Create(photo);
       }
 
-      this.Storage.Save();
-    }
-
-    private void CreateOrEditPhotos(Product product, string removedPhotoIds)
-    {
-      this.CreatePhotos(product);
-      this.EditPhotos(product);
-      this.RemovePhotos(product, removedPhotoIds);
-    }
-
-    // TODO: refactor this method
-    private void CreatePhotos(Product product)
-    {
-      foreach (string key in this.Request.Form.Keys)
+      if (!string.IsNullOrEmpty(createOrEdit.Photo3Filename))
       {
-        if (key.StartsWith("newPhoto"))
-        {
-          Photo photo = new Photo();
+        Photo photo = new Photo();
 
-          photo.ProductId = product.Id;
-          photo.Filename = this.Request.Form[key];
-          photo.IsCover = this.GetPhotoIsCover("_" + key.Replace("Filename", string.Empty) + "IsCover");
-          photo.Position = this.GetPhotoPosition("_" + key.Replace("Filename", string.Empty) + "Position");
-          this.Storage.GetRepository<IPhotoRepository>().Create(photo);
-        }
+        photo.ProductId = product.Id;
+        photo.Filename = createOrEdit.Photo3Filename;
+        photo.Position = 3;
+        this.Storage.GetRepository<int, Photo, PhotoFilter>().Create(photo);
       }
 
-      this.Storage.Save();
-    }
-
-    // TODO: refactor this method
-    private void EditPhotos(Product product)
-    {
-      foreach (string key in this.Request.Form.Keys)
+      if (!string.IsNullOrEmpty(createOrEdit.Photo4Filename))
       {
-        if (key.StartsWith("_photo") && key.EndsWith("IsCover"))
-        {
-          int photoId = int.Parse(key.Replace("_photo", string.Empty).Replace("IsCover", string.Empty));
-          Photo photo = this.Storage.GetRepository<IPhotoRepository>().WithKey(photoId);
+        Photo photo = new Photo();
 
-          photo.IsCover = this.GetPhotoIsCover("_photo" + photoId + "IsCover");
-          photo.Position = this.GetPhotoPosition("_photo" + photoId + "Position");
-          this.Storage.GetRepository<IPhotoRepository>().Edit(photo);
-        }
+        photo.ProductId = product.Id;
+        photo.Filename = createOrEdit.Photo4Filename;
+        photo.Position = 4;
+        this.Storage.GetRepository<int, Photo, PhotoFilter>().Create(photo);
       }
 
-      this.Storage.Save();
-    }
-
-    private void RemovePhotos(Product product, string removedPhotoIds)
-    {
-      if (string.IsNullOrEmpty(removedPhotoIds))
-        return;
-
-      foreach (string removedPhotoId in removedPhotoIds.Split(','))
+      if (!string.IsNullOrEmpty(createOrEdit.Photo5Filename))
       {
-        Photo photo = this.Storage.GetRepository<IPhotoRepository>().WithKey(int.Parse(removedPhotoId));
+        Photo photo = new Photo();
 
-        try
-        {
-          //System.IO.File.Delete();
-        }
-
-        catch { }
-
-        this.Storage.GetRepository<IPhotoRepository>().Delete(photo);
+        photo.ProductId = product.Id;
+        photo.Filename = createOrEdit.Photo5Filename;
+        photo.Position = 5;
+        this.Storage.GetRepository<int, Photo, PhotoFilter>().Create(photo);
       }
 
-      this.Storage.Save();
-    }
-
-    private bool GetPhotoIsCover(string key)
-    {
-      return string.Equals(this.Request.Form[key], true.ToString(), StringComparison.OrdinalIgnoreCase);
-    }
-
-    private int? GetPhotoPosition(string key)
-    {
-      string value = this.Request.Form[key];
-
-      if (string.IsNullOrEmpty(value))
-        return null;
-
-      int result = 0;
-
-      if (!int.TryParse(value, out result))
-        return null;
-
-      return result;
+      await this.Storage.SaveAsync();
     }
   }
 }

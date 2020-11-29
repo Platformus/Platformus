@@ -1,62 +1,23 @@
-﻿// Copyright © 2018 Dmitry Sikorsky. All rights reserved.
+﻿// Copyright © 2020 Dmitry Sikorsky. All rights reserved.
 // Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information.
 
 using System;
-using Microsoft.AspNetCore.Mvc;
+using System.Collections.Generic;
+using System.Threading.Tasks;
+using Platformus.ECommerce.Data.Entities;
 
 namespace Platformus.ECommerce
 {
   public static class ICacheExtensions
   {
-    public static IViewComponentResult GetCatalogsViewComponentResultWithDefaultValue(this ICache cache, string additionalCssClass, Func<IViewComponentResult> defaultValueFunc)
+    public async static Task<IEnumerable<Catalog>> GetCatalogsWithDefaultValue(this ICache cache, Func<Task<IEnumerable<Catalog>>> defaultValueFunc)
     {
-      return cache.GetWithDefaultValue(
-        ICacheExtensions.GetCatalogsViewComponentResultKey(additionalCssClass), defaultValueFunc
-      );
+      return await cache.GetWithDefaultValueAsync<IEnumerable<Catalog>>("catalogs", defaultValueFunc);
     }
 
-    public static IViewComponentResult GetCartViewComponentResultWithDefaultValue(this ICache cache, string additionalCssClass, Func<IViewComponentResult> defaultValueFunc)
+    public static void RemoveMenus(this ICache cache)
     {
-      return cache.GetWithDefaultValue(
-        ICacheExtensions.GetCartViewComponentResultKey(additionalCssClass), defaultValueFunc
-      );
-    }
-
-    public static IViewComponentResult GetFilterViewComponentResultWithDefaultValue(this ICache cache, string additionalCssClass, Func<IViewComponentResult> defaultValueFunc)
-    {
-      return cache.GetWithDefaultValue(
-        ICacheExtensions.GetFilterViewComponentResultKey(additionalCssClass), defaultValueFunc
-      );
-    }
-
-    public static void RemoveCatalogsViewComponentResult(this ICache cache)
-    {
-      cache.RemoveAll(k => k.StartsWith("catalogs-view-component"));
-    }
-
-    public static void RemoveCartViewComponentResult(this ICache cache)
-    {
-      cache.RemoveAll(k => k.StartsWith("cart-view-component"));
-    }
-
-    public static void RemoveFilterViewComponentResult(this ICache cache)
-    {
-      cache.RemoveAll(k => k.StartsWith("filter-view-component"));
-    }
-
-    private static string GetCatalogsViewComponentResultKey(string additionalCssClass)
-    {
-      return "catalogs-view-component" + (string.IsNullOrEmpty(additionalCssClass) ? null : ":" + additionalCssClass);
-    }
-
-    private static string GetCartViewComponentResultKey(string additionalCssClass)
-    {
-      return "cart-view-component" + (string.IsNullOrEmpty(additionalCssClass) ? null : ":" + additionalCssClass);
-    }
-
-    private static string GetFilterViewComponentResultKey(string additionalCssClass)
-    {
-      return "filter-view-component" + (string.IsNullOrEmpty(additionalCssClass) ? null : ":" + additionalCssClass);
+      cache.RemoveAll(k => k == "catalogs");
     }
   }
 }

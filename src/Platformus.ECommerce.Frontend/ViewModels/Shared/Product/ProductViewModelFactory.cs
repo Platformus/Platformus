@@ -1,30 +1,24 @@
-﻿// Copyright © 2018 Dmitry Sikorsky. All rights reserved.
+﻿// Copyright © 2020 Dmitry Sikorsky. All rights reserved.
 // Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information.
 
-using Platformus.Core;
-using Platformus.ECommerce.Data.Abstractions;
-using Platformus.ECommerce.Data.Entities;
+using System.Linq;
+using Microsoft.AspNetCore.Http;
 using Platformus.Core.Frontend.ViewModels;
+using Platformus.ECommerce.Data.Entities;
 
 namespace Platformus.ECommerce.Frontend.ViewModels.Shared
 {
   public class ProductViewModelFactory : ViewModelFactoryBase
   {
-    public ProductViewModelFactory(IRequestHandler requestHandler)
-      : base(requestHandler)
+    public ProductViewModel Create(HttpContext httpContext, Product product)
     {
-    }
-
-    public ProductViewModel Create(Product product)
-    {
-      Photo photo = this.RequestHandler.Storage.GetRepository<IPhotoRepository>().CoverByProductId(product.Id);
+      Photo cover = product.Photos.FirstOrDefault(p => p.IsCover);
 
       return new ProductViewModel()
       {
-        Id = product.Id,
-        Name = this.RequestHandler.GetLocalizationValue(product.NameId),
-        Price = product.Price,
-        Photo = new PhotoViewModelFactory(this.RequestHandler).Create(photo)
+        Url = product.Url,
+        Name = product.Name.GetLocalizationValue(httpContext),
+        Cover = cover == null ? null : new PhotoViewModelFactory().Create(cover)
       };
     }
   }

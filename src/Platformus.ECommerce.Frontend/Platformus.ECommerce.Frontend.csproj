@@ -14,8 +14,8 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Platformus.Core.Frontend\Platformus.Core.Frontend.csproj" />
     <ProjectReference Include="..\Platformus.ECommerce\Platformus.ECommerce.csproj" />
-    <ProjectReference Include="..\Platformus.Routing\Platformus.Routing.csproj" />
   </ItemGroup>
 
 </Project>

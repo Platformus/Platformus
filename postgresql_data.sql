@@ -1,7 +1,7 @@
 BEGIN TRANSACTION;
 --
 -- Extension: Platformus.Core
--- Version: 2.0.0-alpha1
+-- Version: 2.0.0-alpha2
 --
 INSERT INTO public."Users" ("Id","Name","Created") VALUES (1,'Administrator','2017-01-01 00:00:00.000000');
 ALTER SEQUENCE "Users_Id_seq" RESTART WITH 2;
@@ -65,7 +65,7 @@ ALTER SEQUENCE "Cultures_Id_seq" RESTART WITH 3;
 
 --
 -- Extension: Platformus.Website
--- Version: 2.0.0-alpha1
+-- Version: 2.0.0-alpha2
 --
 INSERT INTO public."DataTypes" ("Id","StorageDataType","JavaScriptEditorClassName","Name","Position") VALUES (1,'string','singleLinePlainText','Single line plain text',1);
 INSERT INTO public."DataTypes" ("Id","StorageDataType","JavaScriptEditorClassName","Name","Position") VALUES (2,'string','multilinePlainText','Multiline plain text',2);

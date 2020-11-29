@@ -12,4 +12,8 @@
     <PackageProjectUrl>http://platformus.net/</PackageProjectUrl>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\Platformus.Core.Data.Entities\Platformus.Core.Data.Entities.csproj" />
+  </ItemGroup>
+
 </Project>

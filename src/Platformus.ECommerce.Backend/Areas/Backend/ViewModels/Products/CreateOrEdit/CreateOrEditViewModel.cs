@@ -1,12 +1,12 @@
-﻿// Copyright © 2017 Dmitry Sikorsky. All rights reserved.
+﻿// Copyright © 2020 Dmitry Sikorsky. All rights reserved.
 // Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information.
 
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using Platformus.Core.Primitives;
-using Platformus.ECommerce.Backend.ViewModels.Shared;
 using Platformus.Core.Backend;
 using Platformus.Core.Backend.ViewModels;
+using Platformus.Core.Primitives;
+using Platformus.ECommerce.Backend.ViewModels.Shared;
 
 namespace Platformus.ECommerce.Backend.ViewModels.Products
 {
@@ -45,11 +45,20 @@ namespace Platformus.ECommerce.Backend.ViewModels.Products
     [Required]
     public decimal Price { get; set; }
 
-    public IEnumerable<AttributeViewModel> Attributes { get; set; }
-    public string RemovedAttributeIds { get; set; }
+    [Display(Name = "Photo 1 (cover)")]
+    public string Photo1Filename { get; set; }
 
-    public IEnumerable<PhotoViewModel> Photos { get; set; }
-    public string RemovedPhotoIds { get; set; }
+    [Display(Name = "Photo 2")]
+    public string Photo2Filename { get; set; }
+
+    [Display(Name = "Photo 3")]
+    public string Photo3Filename { get; set; }
+
+    [Display(Name = "Photo 4")]
+    public string Photo4Filename { get; set; }
+
+    [Display(Name = "Photo 5")]
+    public string Photo5Filename { get; set; }
 
     [Multilingual]
     [Display(Name = "Title")]
