@@ -15,8 +15,12 @@ namespace Platformus.ECommerce.Frontend.ViewModels.ECommerce
     {
       return new ProductPageViewModel()
       {
+        Id = product.Id,
+        Category = product.Category == null ? null : new CategoryViewModelFactory().Create(httpContext, product.Category),
+        Url = product.Url,
         Name = product.Name.GetLocalizationValue(httpContext),
         Description = product.Description.GetLocalizationValue(httpContext),
+        Price = product.Price,
         Title = product.Title.GetLocalizationValue(httpContext),
         MetaDescription = product.MetaDescription.GetLocalizationValue(httpContext),
         MetaKeywords = product.MetaKeywords.GetLocalizationValue(httpContext),

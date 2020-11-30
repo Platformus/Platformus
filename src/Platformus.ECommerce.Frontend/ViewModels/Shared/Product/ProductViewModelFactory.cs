@@ -16,8 +16,10 @@ namespace Platformus.ECommerce.Frontend.ViewModels.Shared
 
       return new ProductViewModel()
       {
+        Id = product.Id,
         Url = product.Url,
         Name = product.Name.GetLocalizationValue(httpContext),
+        Price = product.Price,
         Cover = cover == null ? null : new PhotoViewModelFactory().Create(cover)
       };
     }

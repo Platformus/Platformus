@@ -1,7 +1,7 @@
 BEGIN TRANSACTION;
 --
 -- Extension: Platformus.Core
--- Version: 2.0.0-alpha2
+-- Version: 2.0.0-alpha3
 --
 
 -- Users
@@ -110,7 +110,7 @@ CREATE TABLE "Localizations" (
 
 --
 -- Extension: Platformus.Website
--- Version: 2.0.0-alpha2
+-- Version: 2.0.0-alpha3
 --
 
 -- Endpoints
@@ -340,7 +340,7 @@ CREATE TABLE "Files" (
 
 --
 -- Extension: Platformus.ECommerce
--- Version: 2.0.0-alpha2
+-- Version: 2.0.0-alpha3
 --
 
 -- Catalogs

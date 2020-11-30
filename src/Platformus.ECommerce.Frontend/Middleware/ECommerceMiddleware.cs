@@ -63,6 +63,7 @@ namespace Platformus.ECommerce.Frontend.Middleware
         new ProductFilter() { Url = httpContext.Request.GetUrl() },
         inclusions: new Inclusion<Product>[]
         {
+          new Inclusion<Product>(p => p.Category.Name.Localizations),
           new Inclusion<Product>(p => p.Name.Localizations),
           new Inclusion<Product>(p => p.Description.Localizations),
           new Inclusion<Product>(p => p.Title.Localizations),
