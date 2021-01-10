@@ -14,6 +14,7 @@ using Platformus.Core.Filters;
 using Platformus.Core.Primitives;
 using Platformus.Website.Backend.ViewModels.Shared;
 using Platformus.Website.Endpoints;
+using Platformus.Website.ResponseCaches;
 
 namespace Platformus.Website.Backend.ViewModels.Endpoints
 {
@@ -24,6 +25,7 @@ namespace Platformus.Website.Backend.ViewModels.Endpoints
       if (endpoint == null)
         return new CreateOrEditViewModel()
         {
+          ResponseCacheCSharpClassNameOptions = this.GetResponseCacheCSharpClassNameOptions(),
           CSharpClassNameOptions = this.GetCSharpClassNameOptions(),
           Endpoints = this.GetEndpoints(),
           EndpointPermissions = await this.GetEndpointPermissionsAsync(httpContext)
@@ -37,12 +39,28 @@ namespace Platformus.Website.Backend.ViewModels.Endpoints
         Position = endpoint.Position,
         DisallowAnonymous = endpoint.DisallowAnonymous,
         SignInUrl = endpoint.SignInUrl,
+        ResponseCacheCSharpClassName = endpoint.ResponseCacheCSharpClassName,
+        ResponseCacheCSharpClassNameOptions = this.GetResponseCacheCSharpClassNameOptions(),
         CSharpClassName = endpoint.CSharpClassName,
         CSharpClassNameOptions = this.GetCSharpClassNameOptions(),
         Parameters = endpoint.Parameters,
         Endpoints = this.GetEndpoints(),
         EndpointPermissions = await this.GetEndpointPermissionsAsync(httpContext, endpoint)
       };
+    }
+
+    private IEnumerable<Option> GetResponseCacheCSharpClassNameOptions()
+    {
+      List<Option> options = new List<Option>();
+
+      options.Add(new Option("Response cache C# class name not specified", string.Empty));
+      options.AddRange(
+        ExtensionManager.GetImplementations<IResponseCache>().Where(t => !t.GetTypeInfo().IsAbstract).Select(
+          t => new Option(t.FullName)
+        )
+      );
+
+      return options;
     }
 
     private IEnumerable<Option> GetCSharpClassNameOptions()
@@ -84,7 +102,7 @@ namespace Platformus.Website.Backend.ViewModels.Endpoints
     public async Task<IEnumerable<EndpointPermissionViewModel>> GetEndpointPermissionsAsync(HttpContext httpContext, Data.Entities.Endpoint endpoint = null)
     {
       return (await httpContext.GetStorage().GetRepository<int, Permission, PermissionFilter>().GetAllAsync()).Select(
-        p => new EndpointPermissionViewModelFactory().Create(p, null)
+        p => new EndpointPermissionViewModelFactory().Create(p, endpoint != null && endpoint.EndpointPermissions.Any(ep => ep.PermissionId == p.Id))
       );
     }
   }

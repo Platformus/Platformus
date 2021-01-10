@@ -43,7 +43,7 @@ namespace Platformus.Website.Backend.Controllers
     public async Task<IActionResult> CreateOrEditAsync(int? id)
     {
       return this.View(await new CreateOrEditViewModelFactory().CreateAsync(
-        this.HttpContext, id == null? null : await this.Repository.GetByIdAsync((int)id)
+        this.HttpContext, id == null? null : await this.Repository.GetByIdAsync((int)id, new Inclusion<Data.Entities.Endpoint>(e => e.EndpointPermissions))
       ));
     }
 

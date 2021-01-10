@@ -44,6 +44,11 @@ namespace Platformus.Website.Data.Entities
     public string SignInUrl { get; set; }
 
     /// <summary>
+    /// Gets or sets the name (including namespace) of the optional response cache C# class.
+    /// </summary>
+    public string ResponseCacheCSharpClassName { get; set; }
+
+    /// <summary>
     /// Gets or sets the name (including namespace) of the C# class which will be instantiated each time
     /// request comes.
     /// </summary>
@@ -54,6 +59,7 @@ namespace Platformus.Website.Data.Entities
     /// </summary>
     public string Parameters { get; set; }
 
+    public virtual ICollection<EndpointPermission> EndpointPermissions { get; set; }
     public virtual ICollection<DataSource> DataSources { get; set; }
   }
 }

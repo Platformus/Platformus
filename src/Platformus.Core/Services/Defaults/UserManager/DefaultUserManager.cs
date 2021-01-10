@@ -7,6 +7,7 @@ using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using Magicalizer.Data.Repositories.Abstractions;
+using Magicalizer.Filters.Abstractions;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Http;
 using Platformus.Core.Data.Abstractions;
@@ -127,7 +128,7 @@ namespace Platformus.Core.Services.Defaults
 
     public async Task<ChangeSecretResult> ChangeSecretAsync(string credentialTypeCode, string identifier, string secret)
     {
-      Credential credential = (await this.credentialRepository.GetAllAsync(new CredentialFilter() { CredentialType = new CredentialTypeFilter() { Code = credentialTypeCode }, Identifier = identifier })).FirstOrDefault();
+      Credential credential = (await this.credentialRepository.GetAllAsync(new CredentialFilter() { CredentialType = new CredentialTypeFilter() { Code = credentialTypeCode }, Identifier = new StringFilter(equals: identifier) })).FirstOrDefault();
 
       if (credential == null)
         return new ChangeSecretResult(success: false, error: ChangeSecretResultError.CredentialNotFound);
@@ -149,7 +150,7 @@ namespace Platformus.Core.Services.Defaults
 
     public async Task<ValidateResult> ValidateAsync(string credentialTypeCode, string identifier, string secret)
     {
-      Credential credential = (await this.credentialRepository.GetAllAsync(new CredentialFilter() { CredentialType = new CredentialTypeFilter() { Code = credentialTypeCode }, Identifier = identifier }, inclusions: new Inclusion<Credential>(c => c.User))).FirstOrDefault();
+      Credential credential = (await this.credentialRepository.GetAllAsync(new CredentialFilter() { CredentialType = new CredentialTypeFilter() { Code = credentialTypeCode }, Identifier = new StringFilter(equals: identifier) }, inclusions: new Inclusion<Credential>(c => c.User))).FirstOrDefault();
 
       if (credential == null)
         return new ValidateResult(success: false, error: ValidateResultError.CredentialNotFound);

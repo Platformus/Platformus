@@ -8,7 +8,7 @@ namespace Platformus.Core.Filters
   public class UserFilter : IFilter
   {
     public int? Id { get; set; }
-    public string Name { get; set; }
+    public StringFilter Name { get; set; }
     public DateTimeFilter Created { get; set; }
 
     [FilterShortcut("Credentials[]")]

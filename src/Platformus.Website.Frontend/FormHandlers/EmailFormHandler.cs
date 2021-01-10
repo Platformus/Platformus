@@ -23,8 +23,8 @@ namespace Platformus.Website.Frontend.FormHandlers
       {
         new ParameterGroup(
           "General",
-          new Parameter("RecipientEmails", "Recipient emails (separated by commas)", "textBox", null, true),
-          new Parameter("RedirectUrl", "Redirect URL", "textBox")
+          new Parameter("RecipientEmails", "Recipient emails (separated by commas)", Core.JavaScriptEditorClassNames.TextBox, null, true),
+          new Parameter("RedirectUrl", "Redirect URL", Core.JavaScriptEditorClassNames.TextBox)
         )
       };
 

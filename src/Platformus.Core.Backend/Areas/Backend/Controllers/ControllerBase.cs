@@ -8,6 +8,7 @@ using System.Reflection;
 using System.Threading.Tasks;
 using ExtCore.Data.Entities.Abstractions;
 using Magicalizer.Data.Repositories.Abstractions;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc.Filters;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Platformus.Core.Backend.ViewModels;
@@ -17,6 +18,7 @@ using Platformus.Core.Filters;
 
 namespace Platformus.Core.Backend.Controllers
 {
+  [Authorize(AuthenticationSchemes = BackendCookieAuthenticationDefaults.AuthenticationScheme)]
   public abstract class ControllerBase : Core.Controllers.ControllerBase
   {
     private IRepository<int, Dictionary, DictionaryFilter> DictionaryRepository

@@ -21,6 +21,7 @@
       <numeric-field asp-for="Position" />
       <checkbox-field asp-for="DisallowAnonymous" />
       <single-line-text-field asp-for="SignInUrl" />
+      <drop-down-list-field asp-for="ResponseCacheCSharpClassName" asp-options="@Model.ResponseCacheCSharpClassNameOptions" />
       <drop-down-list-field asp-for="CSharpClassName" asp-options="@Model.CSharpClassNameOptions" />
       <div id="parameterEditors"></div>
       <input id="parameters" name="parameters" type="hidden" value="@Model.Parameters" />

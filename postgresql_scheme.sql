@@ -1,6 +1,6 @@
 --
 -- Extension: Platformus.Core
--- Version: 2.0.0-alpha3
+-- Version: 2.0.0-alpha4
 --
 
 -- Users
@@ -36,11 +36,11 @@ CREATE TABLE "Credentials" (
     CONSTRAINT "FK_Credentials_Users" FOREIGN KEY ("UserId")
         REFERENCES public."Users" ("Id") MATCH SIMPLE
         ON UPDATE NO ACTION
-        ON DELETE NO ACTION,
+        ON DELETE CASCADE,
     CONSTRAINT "FK_Credentials_CredentialTypes" FOREIGN KEY ("CredentialTypeId")
         REFERENCES public."CredentialTypes" ("Id") MATCH SIMPLE
         ON UPDATE NO ACTION
-        ON DELETE NO ACTION
+        ON DELETE CASCADE
 );
 
 ALTER TABLE "Credentials" OWNER TO postgres;
@@ -64,11 +64,11 @@ CREATE TABLE "UserRoles" (
     CONSTRAINT "FK_UserRoles_Users" FOREIGN KEY ("UserId")
         REFERENCES public."Users" ("Id") MATCH SIMPLE
         ON UPDATE NO ACTION
-        ON DELETE NO ACTION,
+        ON DELETE CASCADE,
     CONSTRAINT "FK_UserRoles_Roles" FOREIGN KEY ("RoleId")
         REFERENCES public."Roles" ("Id") MATCH SIMPLE
         ON UPDATE NO ACTION
-        ON DELETE NO ACTION
+        ON DELETE CASCADE
 );
 
 ALTER TABLE "UserRoles" OWNER TO postgres;
@@ -92,11 +92,11 @@ CREATE TABLE "RolePermissions" (
     CONSTRAINT "FK_RolePermissions_Roles" FOREIGN KEY ("RoleId")
         REFERENCES public."Roles" ("Id") MATCH SIMPLE
         ON UPDATE NO ACTION
-        ON DELETE NO ACTION,
+        ON DELETE CASCADE,
     CONSTRAINT "FK_RolePermissions_Permissions" FOREIGN KEY ("PermissionId")
         REFERENCES public."Permissions" ("Id") MATCH SIMPLE
         ON UPDATE NO ACTION
-        ON DELETE NO ACTION
+        ON DELETE CASCADE
 );
 
 ALTER TABLE "RolePermissions" OWNER TO postgres;
@@ -106,7 +106,7 @@ CREATE TABLE "Configurations" (
     "Id" serial NOT NULL,
     "Code" text NOT NULL,
     "Name" text NOT NULL,
-	CONSTRAINT "PK_Configurations" PRIMARY KEY ("Id")
+	  CONSTRAINT "PK_Configurations" PRIMARY KEY ("Id")
 );
 
 ALTER TABLE "Configurations" OWNER TO postgres;
@@ -123,7 +123,7 @@ CREATE TABLE "Variables" (
     CONSTRAINT "FK_Variables_Configurations" FOREIGN KEY ("ConfigurationId")
         REFERENCES public."Configurations" ("Id") MATCH SIMPLE
         ON UPDATE NO ACTION
-        ON DELETE NO ACTION
+        ON DELETE CASCADE
 );
 
 ALTER TABLE "Variables" OWNER TO postgres;
@@ -159,18 +159,18 @@ CREATE TABLE "Localizations" (
     CONSTRAINT "FK_Localizations_Dictionaries" FOREIGN KEY ("DictionaryId")
         REFERENCES public."Dictionaries" ("Id") MATCH SIMPLE
         ON UPDATE NO ACTION
-        ON DELETE NO ACTION,
+        ON DELETE CASCADE,
     CONSTRAINT "FK_Localizations_Cultures" FOREIGN KEY ("CultureId")
         REFERENCES public."Cultures" ("Id") MATCH SIMPLE
         ON UPDATE NO ACTION
-        ON DELETE NO ACTION
+        ON DELETE CASCADE
 );
 
 ALTER TABLE "Localizations" OWNER TO postgres;
 
 --
 -- Extension: Platformus.Website
--- Version: 2.0.0-alpha3
+-- Version: 2.0.0-alpha4
 --
 
 -- Endpoints
@@ -178,9 +178,10 @@ CREATE TABLE "Endpoints" (
     "Id" serial NOT NULL,
     "Name" text NOT NULL,
     "UrlTemplate" text,
-	"Position" integer,
-	"DisallowAnonymous" boolean NOT NULL,
-	"SignInUrl" text,
+    "Position" integer,
+    "DisallowAnonymous" boolean NOT NULL,
+    "SignInUrl" text,
+    "ResponseCacheCSharpClassName" text,
     "CSharpClassName" text NOT NULL,
     "Parameters" text,
     CONSTRAINT "PK_Endpoints" PRIMARY KEY ("Id")
@@ -196,11 +197,11 @@ CREATE TABLE "EndpointPermissions" (
     CONSTRAINT "FK_EndpointPermissions_Roles" FOREIGN KEY ("EndpointId")
         REFERENCES public."Endpoints" ("Id") MATCH SIMPLE
         ON UPDATE NO ACTION
-        ON DELETE NO ACTION,
+        ON DELETE CASCADE,
     CONSTRAINT "FK_RolePermissions_Permissions" FOREIGN KEY ("PermissionId")
         REFERENCES public."Permissions" ("Id") MATCH SIMPLE
         ON UPDATE NO ACTION
-        ON DELETE NO ACTION
+        ON DELETE CASCADE
 );
 
 ALTER TABLE "EndpointPermissions" OWNER TO postgres;
@@ -216,7 +217,7 @@ CREATE TABLE "DataSources" (
     CONSTRAINT "FK_DataSources_Endpoints" FOREIGN KEY ("EndpointId")
         REFERENCES public."Endpoints" ("Id") MATCH SIMPLE
         ON UPDATE NO ACTION
-        ON DELETE NO ACTION
+        ON DELETE CASCADE
 );
 
 ALTER TABLE "DataSources" OWNER TO postgres;
@@ -233,7 +234,7 @@ CREATE TABLE "Classes" (
     CONSTRAINT "FK_Classes_Classes" FOREIGN KEY ("ClassId")
         REFERENCES public."Classes" ("Id") MATCH SIMPLE
         ON UPDATE NO ACTION
-        ON DELETE NO ACTION
+        ON DELETE SET NULL
 );
 
 ALTER TABLE "Classes" OWNER TO postgres;
@@ -248,7 +249,7 @@ CREATE TABLE "Tabs" (
     CONSTRAINT "FK_Tabs_Classes" FOREIGN KEY ("ClassId")
         REFERENCES public."Classes" ("Id") MATCH SIMPLE
         ON UPDATE NO ACTION
-        ON DELETE NO ACTION
+        ON DELETE CASCADE
 );
 
 ALTER TABLE "Tabs" OWNER TO postgres;
@@ -276,7 +277,7 @@ CREATE TABLE "DataTypeParameters" (
     CONSTRAINT "FK_DataTypeParameters_DataTypes_DataTypeId" FOREIGN KEY ("DataTypeId")
         REFERENCES public."DataTypes" ("Id") MATCH SIMPLE
         ON UPDATE NO ACTION
-        ON DELETE NO ACTION
+        ON DELETE CASCADE
 );
 
 ALTER TABLE "DataTypeParameters" OWNER TO postgres;
@@ -300,19 +301,19 @@ CREATE TABLE "Members" (
     CONSTRAINT "FK_Members_Classes_ClassId" FOREIGN KEY ("ClassId")
         REFERENCES public."Classes" ("Id") MATCH SIMPLE
         ON UPDATE NO ACTION
-        ON DELETE NO ACTION,
+        ON DELETE CASCADE,
     CONSTRAINT "FK_Members_Tabs" FOREIGN KEY ("TabId")
         REFERENCES public."Tabs" ("Id") MATCH SIMPLE
         ON UPDATE NO ACTION
-        ON DELETE NO ACTION,
+        ON DELETE SET NULL,
     CONSTRAINT "FK_Members_DataTypes" FOREIGN KEY ("PropertyDataTypeId")
         REFERENCES public."DataTypes" ("Id") MATCH SIMPLE
         ON UPDATE NO ACTION
-        ON DELETE NO ACTION,
+        ON DELETE SET NULL,
     CONSTRAINT "FK_Members_Classes_RelationClassId" FOREIGN KEY ("RelationClassId")
         REFERENCES public."Classes" ("Id") MATCH SIMPLE
         ON UPDATE NO ACTION
-        ON DELETE NO ACTION
+        ON DELETE SET NULL
 );
 
 ALTER TABLE "Members" OWNER TO postgres;
@@ -327,11 +328,11 @@ CREATE TABLE "DataTypeParameterValues" (
 	CONSTRAINT "FK_DataTypeParameterValues_DataTypeParameters_DataTypeParameterId" FOREIGN KEY ("DataTypeParameterId")
         REFERENCES public."DataTypeParameters" ("Id") MATCH SIMPLE
         ON UPDATE NO ACTION
-        ON DELETE NO ACTION,
+        ON DELETE CASCADE,
     CONSTRAINT "FK_DataTypeParameterValues_Members_MemberId" FOREIGN KEY ("MemberId")
         REFERENCES public."Members" ("Id") MATCH SIMPLE
         ON UPDATE NO ACTION
-        ON DELETE NO ACTION
+        ON DELETE CASCADE
 );
 
 ALTER TABLE "DataTypeParameterValues" OWNER TO postgres;
@@ -344,7 +345,7 @@ CREATE TABLE "Objects" (
     CONSTRAINT "FK_Objects_Classes" FOREIGN KEY ("ClassId")
         REFERENCES public."Classes" ("Id") MATCH SIMPLE
         ON UPDATE NO ACTION
-        ON DELETE NO ACTION
+        ON DELETE CASCADE
 );
 
 ALTER TABLE "Objects" OWNER TO postgres;
@@ -362,11 +363,11 @@ CREATE TABLE "Properties" (
     CONSTRAINT "FK_Properties_Objects" FOREIGN KEY ("ObjectId")
         REFERENCES public."Objects" ("Id") MATCH SIMPLE
         ON UPDATE NO ACTION
-        ON DELETE NO ACTION,
+        ON DELETE CASCADE,
     CONSTRAINT "FK_Properties_Members" FOREIGN KEY ("MemberId")
         REFERENCES public."Members" ("Id") MATCH SIMPLE
         ON UPDATE NO ACTION
-        ON DELETE NO ACTION,
+        ON DELETE CASCADE,
     CONSTRAINT "FK_Properties_Dictionaries" FOREIGN KEY ("StringValueId")
         REFERENCES public."Dictionaries" ("Id") MATCH SIMPLE
         ON UPDATE NO ACTION
@@ -385,15 +386,15 @@ CREATE TABLE "Relations" (
     CONSTRAINT "FK_Relations_Members" FOREIGN KEY ("MemberId")
         REFERENCES public."Members" ("Id") MATCH SIMPLE
         ON UPDATE NO ACTION
-        ON DELETE NO ACTION,
+        ON DELETE CASCADE,
     CONSTRAINT "FK_Relations_Objects_PrimaryId" FOREIGN KEY ("PrimaryId")
         REFERENCES public."Objects" ("Id") MATCH SIMPLE
         ON UPDATE NO ACTION
-        ON DELETE NO ACTION,
+        ON DELETE CASCADE,
     CONSTRAINT "FK_Relations_Objects_ForeignId" FOREIGN KEY ("ForeignId")
         REFERENCES public."Objects" ("Id") MATCH SIMPLE
         ON UPDATE NO ACTION
-        ON DELETE NO ACTION
+        ON DELETE CASCADE
 );
 
 ALTER TABLE "Relations" OWNER TO postgres;
@@ -403,7 +404,11 @@ CREATE TABLE "Menus" (
     "Id" serial NOT NULL,
     "Code" text NOT NULL,
     "NameId" integer NOT NULL,
-    CONSTRAINT "PK_Menus" PRIMARY KEY ("Id")
+    CONSTRAINT "PK_Menus" PRIMARY KEY ("Id"),
+    CONSTRAINT "FK_Menus_Dictionaries" FOREIGN KEY ("NameId")
+        REFERENCES public."Dictionaries" ("Id") MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION
 );
 
 ALTER TABLE "Menus" OWNER TO postgres;
@@ -420,11 +425,11 @@ CREATE TABLE "MenuItems" (
     CONSTRAINT "FK_MenuItems_Menus" FOREIGN KEY ("MenuId")
         REFERENCES public."Menus" ("Id") MATCH SIMPLE
         ON UPDATE NO ACTION
-        ON DELETE NO ACTION,
+        ON DELETE CASCADE,
     CONSTRAINT "FK_MenuItems_MenuItems" FOREIGN KEY ("MenuItemId")
         REFERENCES public."MenuItems" ("Id") MATCH SIMPLE
         ON UPDATE NO ACTION
-        ON DELETE NO ACTION,
+        ON DELETE CASCADE,
     CONSTRAINT "FK_MenuItems_Dictionaries" FOREIGN KEY ("NameId")
         REFERENCES public."Dictionaries" ("Id") MATCH SIMPLE
         ON UPDATE NO ACTION
@@ -461,6 +466,7 @@ CREATE TABLE "FieldTypes" (
     "Code" text NOT NULL,
     "Name" text NOT NULL,
     "Position" integer,
+    "ValidatorCSharpClassName" text,
     CONSTRAINT "PK_FieldTypes" PRIMARY KEY ("Id")
 );
 
@@ -480,11 +486,11 @@ CREATE TABLE "Fields" (
     CONSTRAINT "FK_Fields_Forms" FOREIGN KEY ("FormId")
         REFERENCES public."Forms" ("Id") MATCH SIMPLE
         ON UPDATE NO ACTION
-        ON DELETE NO ACTION,
+        ON DELETE CASCADE,
     CONSTRAINT "FK_Fields_FieldTypes" FOREIGN KEY ("FieldTypeId")
         REFERENCES public."FieldTypes" ("Id") MATCH SIMPLE
         ON UPDATE NO ACTION
-        ON DELETE NO ACTION,
+        ON DELETE CASCADE,
     CONSTRAINT "FK_Fields_Dictionaries" FOREIGN KEY ("NameId")
         REFERENCES public."Dictionaries" ("Id") MATCH SIMPLE
         ON UPDATE NO ACTION
@@ -503,7 +509,7 @@ CREATE TABLE "FieldOptions" (
     CONSTRAINT "FK_FieldOptions_Fields" FOREIGN KEY ("FieldId")
         REFERENCES public."Fields" ("Id") MATCH SIMPLE
         ON UPDATE NO ACTION
-        ON DELETE NO ACTION,
+        ON DELETE CASCADE,
     CONSTRAINT "FK_FieldOptions_Dictionaries" FOREIGN KEY ("ValueId")
         REFERENCES public."Dictionaries" ("Id") MATCH SIMPLE
         ON UPDATE NO ACTION
@@ -521,7 +527,7 @@ CREATE TABLE "CompletedForms" (
     CONSTRAINT "FK_CompletedForms_Forms" FOREIGN KEY ("FormId")
         REFERENCES public."Forms" ("Id") MATCH SIMPLE
         ON UPDATE NO ACTION
-        ON DELETE NO ACTION
+        ON DELETE CASCADE
 );
 
 ALTER TABLE "CompletedForms" OWNER TO postgres;
@@ -536,11 +542,11 @@ CREATE TABLE "CompletedFields" (
     CONSTRAINT "FK_CompletedFields_CompletedForms" FOREIGN KEY ("CompletedFormId")
         REFERENCES public."CompletedForms" ("Id") MATCH SIMPLE
         ON UPDATE NO ACTION
-        ON DELETE NO ACTION,
+        ON DELETE CASCADE,
     CONSTRAINT "FK_CompletedFields_Fields" FOREIGN KEY ("FieldId")
         REFERENCES public."Fields" ("Id") MATCH SIMPLE
         ON UPDATE NO ACTION
-        ON DELETE NO ACTION
+        ON DELETE CASCADE
 );
 
 ALTER TABLE "CompletedFields" OWNER TO postgres;
@@ -557,7 +563,7 @@ ALTER TABLE "Files" OWNER TO postgres;
 
 --
 -- Extension: Platformus.ECommerce
--- Version: 2.0.0-alpha3
+-- Version: 2.0.0-alpha4
 --
 
 -- Catalogs
@@ -573,7 +579,7 @@ CREATE TABLE "Catalogs" (
     CONSTRAINT "FK_Catalogs_Catalogs" FOREIGN KEY ("CatalogId")
         REFERENCES public."Catalogs" ("Id") MATCH SIMPLE
         ON UPDATE NO ACTION
-        ON DELETE NO ACTION,
+        ON DELETE CASCADE,
     CONSTRAINT "FK_Catalogs_Dictionaries" FOREIGN KEY ("NameId")
         REFERENCES public."Dictionaries" ("Id") MATCH SIMPLE
         ON UPDATE NO ACTION
@@ -592,7 +598,7 @@ CREATE TABLE "Categories" (
     CONSTRAINT "FK_Categories_Categories" FOREIGN KEY ("CategoryId")
         REFERENCES public."Categories" ("Id") MATCH SIMPLE
         ON UPDATE NO ACTION
-        ON DELETE NO ACTION,
+        ON DELETE CASCADE,
     CONSTRAINT "FK_Categories_Dictionaries" FOREIGN KEY ("NameId")
         REFERENCES public."Dictionaries" ("Id") MATCH SIMPLE
         ON UPDATE NO ACTION
@@ -610,31 +616,31 @@ CREATE TABLE "Products" (
     "NameId" integer NOT NULL,
     "DescriptionId" integer NOT NULL,
     "Price" numeric NOT NULL,
-	"TitleId" integer NOT NULL,
-	"MetaDescriptionId" integer NOT NULL,
-	"MetaKeywordsId" integer NOT NULL,
-	CONSTRAINT "PK_Products" PRIMARY KEY ("Id"),
+    "TitleId" integer NOT NULL,
+    "MetaDescriptionId" integer NOT NULL,
+	  "MetaKeywordsId" integer NOT NULL,
+	  CONSTRAINT "PK_Products" PRIMARY KEY ("Id"),
     CONSTRAINT "FK_Products_Categories" FOREIGN KEY ("CategoryId")
         REFERENCES public."Categories" ("Id") MATCH SIMPLE
         ON UPDATE NO ACTION
-        ON DELETE NO ACTION,
-	CONSTRAINT "FK_Products_Dictionaries_NameId" FOREIGN KEY ("NameId")
+        ON DELETE CASCADE,
+	  CONSTRAINT "FK_Products_Dictionaries_NameId" FOREIGN KEY ("NameId")
         REFERENCES public."Dictionaries" ("Id") MATCH SIMPLE
         ON UPDATE NO ACTION
         ON DELETE NO ACTION,
-	CONSTRAINT "FK_Products_Dictionaries_DescriptionId" FOREIGN KEY ("DescriptionId")
+	  CONSTRAINT "FK_Products_Dictionaries_DescriptionId" FOREIGN KEY ("DescriptionId")
         REFERENCES public."Dictionaries" ("Id") MATCH SIMPLE
         ON UPDATE NO ACTION
         ON DELETE NO ACTION,
-	CONSTRAINT "FK_Products_Dictionaries_TitleId" FOREIGN KEY ("TitleId")
+	  CONSTRAINT "FK_Products_Dictionaries_TitleId" FOREIGN KEY ("TitleId")
         REFERENCES public."Dictionaries" ("Id") MATCH SIMPLE
         ON UPDATE NO ACTION
         ON DELETE NO ACTION,
-	CONSTRAINT "FK_Products_Dictionaries_MetaDescriptionId" FOREIGN KEY ("MetaDescriptionId")
+	  CONSTRAINT "FK_Products_Dictionaries_MetaDescriptionId" FOREIGN KEY ("MetaDescriptionId")
         REFERENCES public."Dictionaries" ("Id") MATCH SIMPLE
         ON UPDATE NO ACTION
         ON DELETE NO ACTION,
-	CONSTRAINT "FK_Products_Dictionaries_MetaKeywordsId" FOREIGN KEY ("MetaKeywordsId")
+	  CONSTRAINT "FK_Products_Dictionaries_MetaKeywordsId" FOREIGN KEY ("MetaKeywordsId")
         REFERENCES public."Dictionaries" ("Id") MATCH SIMPLE
         ON UPDATE NO ACTION
         ON DELETE NO ACTION
@@ -653,7 +659,7 @@ CREATE TABLE "Photos" (
     CONSTRAINT "FK_Photos_Products" FOREIGN KEY ("ProductId")
         REFERENCES public."Products" ("Id") MATCH SIMPLE
         ON UPDATE NO ACTION
-        ON DELETE NO ACTION
+        ON DELETE CASCADE
 );
 
 ALTER TABLE "Photos" OWNER TO postgres;

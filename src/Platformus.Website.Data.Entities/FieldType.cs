@@ -30,5 +30,10 @@ namespace Platformus.Website.Data.Entities
     /// Gets or sets the field type position. Position is used to sort the field types (smallest to largest).
     /// </summary>
     public int? Position { get; set; }
+
+    /// <summary>
+    /// Gets or sets the name (including namespace) of the optional validator C# class.
+    /// </summary>
+    public string ValidatorCSharpClassName { get; set; }
   }
 }

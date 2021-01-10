@@ -6,7 +6,6 @@ using System.IO;
 using System.Net.Http;
 using System.Threading.Tasks;
 using Magicalizer.Data.Repositories.Abstractions;
-using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using SixLabors.ImageSharp;
 using SixLabors.ImageSharp.Formats;
@@ -35,12 +34,9 @@ namespace Platformus.Images.Controllers
       }
     }
 
-    private IWebHostEnvironment webHostEnvironment;
-
-    public ImagesController(IStorage storage, IWebHostEnvironment webHostEnvironment)
+    public ImagesController(IStorage storage)
       : base(storage)
     {
-      this.webHostEnvironment = webHostEnvironment;
     }
 
     [HttpGet]

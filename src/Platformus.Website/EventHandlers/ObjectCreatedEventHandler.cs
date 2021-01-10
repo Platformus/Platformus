@@ -15,6 +15,7 @@ namespace Platformus.Website.EventHandlers
     public void HandleEvent(HttpContext httpContext, Object @object)
     {
       httpContext.GetCache().RemoveAll();
+      ResponseCacheManager.RemoveAll(httpContext);
     }
   }
 }

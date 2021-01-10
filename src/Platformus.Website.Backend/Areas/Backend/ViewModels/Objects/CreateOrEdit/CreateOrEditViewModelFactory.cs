@@ -24,6 +24,7 @@ namespace Platformus.Website.Backend.ViewModels.Objects
         (int)filter.Class.Id,
         new Inclusion<Class>(c => c.Tabs),
         new Inclusion<Class>(c => c.Parent.Tabs),
+        new Inclusion<Class>("Members.Tab"),
         new Inclusion<Class>("Members.PropertyDataType.DataTypeParameters.DataTypeParameterValues"),
         new Inclusion<Class>("Members.RelationClass"),
         new Inclusion<Class>("Parent.Members.PropertyDataType.DataTypeParameters.DataTypeParameterValues"),

@@ -22,8 +22,7 @@ namespace Platformus.Website.Frontend
       {
         new ParameterGroup(
           "General",
-          new Parameter("ViewName", "View name", "textBox", null, true),
-          new Parameter("UseCaching", "Use caching", "checkbox")
+          new Parameter("ViewName", "View name", Core.JavaScriptEditorClassNames.TextBox, null, true)
         )
       };
 

@@ -4,18 +4,17 @@
 using Platformus.Core.Backend.ViewModels;
 using Platformus.Core.Backend.ViewModels.Shared;
 using Platformus.Core.Data.Entities;
-using Platformus.Website.Data.Entities;
 
 namespace Platformus.Website.Backend.ViewModels.Shared
 {
   public class EndpointPermissionViewModelFactory : ViewModelFactoryBase
   {
-    public EndpointPermissionViewModel Create(Permission permission, EndpointPermission endpointPermission)
+    public EndpointPermissionViewModel Create(Permission permission, bool isAssigned)
     {
       return new EndpointPermissionViewModel()
       {
         Permission = new PermissionViewModelFactory().Create(permission),
-        IsAssigned = endpointPermission != null
+        IsAssigned = isAssigned
       };
     }
   }

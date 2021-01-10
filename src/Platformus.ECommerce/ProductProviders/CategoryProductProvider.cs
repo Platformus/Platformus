@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Magicalizer.Data.Repositories.Abstractions;
 using Magicalizer.Filters.Abstractions;
 using Microsoft.AspNetCore.Http;
+using Platformus.Core;
 using Platformus.Core.Extensions;
 using Platformus.Core.Parameters;
 using Platformus.ECommerce.Data.Entities;
@@ -20,7 +21,7 @@ namespace Platformus.ECommerce.ProductProviders
       {
         new ParameterGroup(
           "General",
-          new Parameter("CategoryId", "Category", "categorySelector", null, true)
+          new Parameter("CategoryId", "Category", JavaScriptEditorClassNames.CategorySelector, null, true)
         )
       };
 

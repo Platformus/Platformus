@@ -1,7 +1,7 @@
 BEGIN TRANSACTION;
 --
 -- Extension: Platformus.Core
--- Version: 2.0.0-alpha3
+-- Version: 2.0.0-alpha4
 --
 
 -- Users
@@ -110,7 +110,7 @@ CREATE TABLE "Localizations" (
 
 --
 -- Extension: Platformus.Website
--- Version: 2.0.0-alpha3
+-- Version: 2.0.0-alpha4
 --
 
 -- Endpoints
@@ -121,6 +121,7 @@ CREATE TABLE "Endpoints" (
 	"Position" INTEGER,
 	"DisallowAnonymous" INTEGER NOT NULL,
 	"SignInUrl" TEXT,
+  "ResponseCacheCSharpClassName" TEXT,
 	"CSharpClassName" TEXT NOT NULL,
 	"Parameters" TEXT
 );
@@ -130,8 +131,8 @@ CREATE TABLE "EndpointPermissions" (
 	"EndpointId" INTEGER NOT NULL,
 	"PermissionId" INTEGER NOT NULL,
 	CONSTRAINT "PK_EndpointPermission" PRIMARY KEY ("EndpointId", "PermissionId"),
-	CONSTRAINT "FK_EndpointPermission_Endpoint_EndpointId" FOREIGN KEY ("EndpointId") REFERENCES "Endpoints" ("Id"),
-	CONSTRAINT "FK_EndpointPermission_Permission_PermissionId" FOREIGN KEY ("PermissionId") REFERENCES "Permissions" ("Id")
+	CONSTRAINT "FK_EndpointPermission_Endpoint_EndpointId" FOREIGN KEY ("EndpointId") REFERENCES "Endpoints" ("Id") ON DELETE CASCADE,
+	CONSTRAINT "FK_EndpointPermission_Permission_PermissionId" FOREIGN KEY ("PermissionId") REFERENCES "Permissions" ("Id") ON DELETE CASCADE
 );
 
 -- DataSources
@@ -198,7 +199,7 @@ CREATE TABLE "Members" (
 	"IsRelationSingleParent" INTEGER,
   "MinRelatedObjectsNumber" INTEGER,
   "MaxRelatedObjectsNumber" INTEGER,
-		CONSTRAINT "FK_Member_Class_ClassId" FOREIGN KEY("ClassId") REFERENCES "Classes" ("Id") ON DELETE CASCADE,
+	CONSTRAINT "FK_Member_Class_ClassId" FOREIGN KEY("ClassId") REFERENCES "Classes" ("Id") ON DELETE CASCADE,
 	CONSTRAINT "FK_Member_Tab_TabId" FOREIGN KEY("TabId") REFERENCES "Tabs" ("Id") ON DELETE SET NULL,
 	CONSTRAINT "FK_Member_DataType_PropertyDataTypeId" FOREIGN KEY("PropertyDataTypeId") REFERENCES "DataTypes" ("Id") ON DELETE SET NULL,
 	CONSTRAINT "FK_Member_Class_RelationClassId" FOREIGN KEY("RelationClassId") REFERENCES "Classes" ("Id") ON DELETE SET NULL
@@ -285,7 +286,8 @@ CREATE TABLE "FieldTypes" (
 	"Id" INTEGER NOT NULL CONSTRAINT "PK_FieldType" PRIMARY KEY AUTOINCREMENT,
 	"Code" TEXT NOT NULL,
 	"Name" TEXT NOT NULL,
-	"Position" INTEGER
+	"Position" INTEGER,
+  "ValidatorCSharpClassName" TEXT,
 );
 
 -- Fields
@@ -318,7 +320,7 @@ CREATE TABLE "CompletedForms" (
 	"Id" INTEGER NOT NULL CONSTRAINT "PK_CompletedForm" PRIMARY KEY AUTOINCREMENT,
 	"FormId" INTEGER NOT NULL,
 	"Created" TEXT NOT NULL,
-	CONSTRAINT "FK_CompletedForm_Form_FormId" FOREIGN KEY ("FormId") REFERENCES "Forms" ("Id")
+	CONSTRAINT "FK_CompletedForm_Form_FormId" FOREIGN KEY ("FormId") REFERENCES "Forms" ("Id") ON DELETE CASCADE
 );
 
 -- CompletedFields
@@ -328,7 +330,7 @@ CREATE TABLE "CompletedFields" (
 	"FieldId" INTEGER NOT NULL,
 	"Value" TEXT,
 	CONSTRAINT "FK_CompletedField_CompletedForm_CompletedFormId" FOREIGN KEY ("CompletedFormId") REFERENCES "CompletedForms" ("Id") ON DELETE CASCADE,
-	CONSTRAINT "FK_CompletedField_Field_FieldId" FOREIGN KEY ("FieldId") REFERENCES "Fields" ("Id")
+	CONSTRAINT "FK_CompletedField_Field_FieldId" FOREIGN KEY ("FieldId") REFERENCES "Fields" ("Id") ON DELETE CASCADE
 );
 
 -- Files
@@ -340,7 +342,7 @@ CREATE TABLE "Files" (
 
 --
 -- Extension: Platformus.ECommerce
--- Version: 2.0.0-alpha3
+-- Version: 2.0.0-alpha4
 --
 
 -- Catalogs

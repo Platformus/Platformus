@@ -6,6 +6,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Magicalizer.Data.Repositories.Abstractions;
 using Microsoft.AspNetCore.Http;
+using Platformus.Core;
 using Platformus.Core.Extensions;
 using Platformus.Core.Parameters;
 using Platformus.Website.Data.Entities;
@@ -20,7 +21,7 @@ namespace Platformus.Website.Frontend.DataSources
       {
         new ParameterGroup(
           "General",
-          new Parameter("ClassId", "Class of the objects to load", "classSelector", null, true)
+          new Parameter("ClassId", "Class of the objects to load", JavaScriptEditorClassNames.ClassSelector, null, true)
         ),
       };
 

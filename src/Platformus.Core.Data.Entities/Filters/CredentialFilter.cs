@@ -10,7 +10,7 @@ namespace Platformus.Core.Filters
     public int? Id { get; set; }
     public UserFilter User { get; set; }
     public CredentialTypeFilter CredentialType { get; set; }
-    public string Identifier { get; set; }
+    public StringFilter Identifier { get; set; }
     public string Secret { get; set; }
     public string Extra { get; set; }
   }

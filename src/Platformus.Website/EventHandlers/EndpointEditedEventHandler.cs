@@ -14,6 +14,7 @@ namespace Platformus.Website.EventHandlers
     public void HandleEvent(HttpContext httpContext, Data.Entities.Endpoint oldEndpoint, Data.Entities.Endpoint newEndpoint)
     {
       httpContext.GetCache().RemoveAll();
+      ResponseCacheManager.RemoveAll(httpContext);
     }
   }
 }

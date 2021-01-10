@@ -7,7 +7,6 @@ using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using Magicalizer.Data.Repositories.Abstractions;
 using Microsoft.AspNetCore.Http;
-using Microsoft.Extensions.DependencyInjection;
 using Platformus.Core.Extensions;
 using Platformus.Website.Filters;
 using Platformus.Website.Frontend.Services.Abstractions;
@@ -18,6 +17,9 @@ namespace Platformus.Website.Frontend.Services.Defaults
   {
     public async Task<Data.Entities.Endpoint> ResolveAsync(HttpContext httpContext)
     {
+      if (httpContext.Request.Path.StartsWithSegments(new PathString("/backend")))
+        return null;
+
       IEnumerable<Data.Entities.Endpoint> endpoints = await this.GetEndpointsAsync(httpContext);
 
       foreach (Data.Entities.Endpoint endpoint in endpoints)
@@ -31,10 +33,14 @@ namespace Platformus.Website.Frontend.Services.Defaults
     {
       ICache cache = httpContext.GetCache();
 
-      return await cache.GetWithDefaultValueAsync<IEnumerable<Data.Entities.Endpoint>>(
+      return await cache.GetWithDefaultValueAsync(
         "endpoints",
         async () => await httpContext.GetStorage().GetRepository<int, Data.Entities.Endpoint, EndpointFilter>().GetAllAsync(
-          sorting: "+position", inclusions: new Inclusion<Data.Entities.Endpoint>(e => e.DataSources)
+          sorting: "+position",
+          inclusions: new Inclusion<Data.Entities.Endpoint>[] {
+            new Inclusion<Data.Entities.Endpoint>("EndpointPermissions.Permission"),
+            new Inclusion<Data.Entities.Endpoint>(e => e.DataSources)
+          }
         ),
         new CacheEntryOptions(priority: CacheEntryPriority.NeverRemove)
       );

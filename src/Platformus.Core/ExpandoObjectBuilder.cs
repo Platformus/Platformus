@@ -15,11 +15,6 @@ namespace Platformus.Core
       this.expandoObject = new ExpandoObject();
     }
 
-    public ExpandoObjectBuilder(ExpandoObject expandoObject)
-    {
-      this.expandoObject = expandoObject;
-    }
-
     public ExpandoObjectBuilder AddProperty(string key, dynamic value)
     {
       (this.expandoObject as IDictionary<string, dynamic>).Add(key, value);

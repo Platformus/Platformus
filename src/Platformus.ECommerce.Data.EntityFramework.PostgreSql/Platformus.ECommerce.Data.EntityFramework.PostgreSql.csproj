@@ -4,7 +4,7 @@
     <Authors>Dmitry Sikorsky</Authors>
     <Copyright>Copyright © 2015 Dmitry Sikorsky</Copyright>
     <Description>The Platformus.ECommerce extension component.</Description>
-    <VersionPrefix>2.0.0-alpha3</VersionPrefix>
+    <VersionPrefix>2.0.0-alpha4</VersionPrefix>
     <TargetFramework>net5.0</TargetFramework>
     <AssemblyName>Platformus.ECommerce.Data.EntityFramework.PostgreSql</AssemblyName>
     <PackageId>Platformus.ECommerce.Data.EntityFramework.PostgreSql</PackageId>
@@ -13,7 +13,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="ExtCore.Data.EntityFramework.PostgreSql" Version="6.0.0-beta1" />
+    <PackageReference Include="ExtCore.Data.EntityFramework.PostgreSql" Version="6.0.0" />
   </ItemGroup>
 
   <ItemGroup>

@@ -27,7 +27,7 @@ namespace Platformus.Core.Backend.Controllers
     [HttpGet]
     [ImportModelStateFromTempData]
     [AllowAnonymous]
-    public async Task<IActionResult> ResetPassword()
+    public IActionResult ResetPassword()
     {
       return this.View();
     }
@@ -57,7 +57,7 @@ namespace Platformus.Core.Backend.Controllers
 
     [HttpGet]
     [AllowAnonymous]
-    public async Task<IActionResult> PasswordSent()
+    public IActionResult PasswordSent()
     {
       return this.View();
     }
@@ -65,7 +65,7 @@ namespace Platformus.Core.Backend.Controllers
     [HttpGet]
     [ImportModelStateFromTempData]
     [AllowAnonymous]
-    public async Task<IActionResult> SignIn()
+    public IActionResult SignIn()
     {
       return this.View();
     }
@@ -97,7 +97,7 @@ namespace Platformus.Core.Backend.Controllers
 
     [HttpGet]
     [AllowAnonymous]
-    public async Task<IActionResult> SignOut()
+    public async Task<IActionResult> SignOutAsync()
     {
       await this.userManager.SignOutAsync(BackendCookieAuthenticationDefaults.AuthenticationScheme);
       return this.RedirectToAction("SignIn");
@@ -105,7 +105,7 @@ namespace Platformus.Core.Backend.Controllers
 
     [HttpGet]
     [AllowAnonymous]
-    public async Task<IActionResult> AccessDenied()
+    public IActionResult AccessDenied()
     {
       return this.View();
     }

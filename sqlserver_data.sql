@@ -1,7 +1,7 @@
 BEGIN TRANSACTION;
 --
 -- Extension: Platformus.Core
--- Version: 2.0.0-alpha3
+-- Version: 2.0.0-alpha4
 --
 SET IDENTITY_INSERT [dbo].[Users] ON;
 INSERT INTO [dbo].[Users] ([Id], [Name], [Created]) VALUES (1, N'Administrator', N'2017-01-01 00:00:00.000');
@@ -16,8 +16,8 @@ INSERT INTO [dbo].[Credentials] ([Id], [UserId], [CredentialTypeId], [Identifier
 SET IDENTITY_INSERT [dbo].[Credentials] OFF;
 
 SET IDENTITY_INSERT [dbo].[Roles] ON;
-INSERT INTO [dbo].[Roles] ([Id], [Code], [Name], [Position]) VALUES (1, N'Administrator', N'Administrator', 100);
-INSERT INTO [dbo].[Roles] ([Id], [Code], [Name], [Position]) VALUES (2, N'ApplicationOwner', N'Application owner', 200);
+INSERT INTO [dbo].[Roles] ([Id], [Code], [Name], [Position]) VALUES (1, N'Developer', N'Developer', 100);
+INSERT INTO [dbo].[Roles] ([Id], [Code], [Name], [Position]) VALUES (2, N'Administrator', N'Administrator', 200);
 INSERT INTO [dbo].[Roles] ([Id], [Code], [Name], [Position]) VALUES (3, N'ContentManager', N'Content manager', 300);
 SET IDENTITY_INSERT [dbo].[Roles] OFF;
 
@@ -25,39 +25,30 @@ INSERT INTO [UserRoles] ([UserId], [RoleId]) VALUES (1, 1);
 INSERT INTO [UserRoles] ([UserId], [RoleId]) VALUES (1, 2);
 
 SET IDENTITY_INSERT [dbo].[Permissions] ON;
-INSERT INTO [dbo].[Permissions] ([Id], [Code], [Name], [Position]) VALUES (2, N'DoAnything', N'Do anything',100);
-INSERT INTO [dbo].[Permissions] ([Id], [Code], [Name], [Position]) VALUES (3, N'ManagePermissions', N'Manage permissions',200);
-INSERT INTO [dbo].[Permissions] ([Id], [Code], [Name], [Position]) VALUES (4, N'ManageRoles', N'Manage roles',210);
-INSERT INTO [dbo].[Permissions] ([Id], [Code], [Name], [Position]) VALUES (5, N'ManageUsers', N'Manage users',220);
-INSERT INTO [dbo].[Permissions] ([Id], [Code], [Name], [Position]) VALUES (6, N'ManageConfigurations', N'Manage configurations',300);
-INSERT INTO [dbo].[Permissions] ([Id], [Code], [Name], [Position]) VALUES (7, N'ManageCultures', N'Manage cultures',400);
-INSERT INTO [dbo].[Permissions] ([Id], [Code], [Name], [Position]) VALUES (8, N'ManageEndpoints', N'Manage endpoints',500);
-INSERT INTO [dbo].[Permissions] ([Id], [Code], [Name], [Position]) VALUES (9, N'ManageObjects', N'Manage objects',600);
-INSERT INTO [dbo].[Permissions] ([Id], [Code], [Name], [Position]) VALUES (10, N'ManageDataTypes', N'Manage data types',610);
-INSERT INTO [dbo].[Permissions] ([Id], [Code], [Name], [Position]) VALUES (11, N'ManageClasses', N'Manage classes',620);
-INSERT INTO [dbo].[Permissions] ([Id], [Code], [Name], [Position]) VALUES (12, N'ManageMenus', N'Manage menus',700);
-INSERT INTO [dbo].[Permissions] ([Id], [Code], [Name], [Position]) VALUES (13, N'ManageForms', N'Manage forms',800);
-INSERT INTO [dbo].[Permissions] ([Id], [Code], [Name], [Position]) VALUES (14, N'ManageFileManager', N'Manage file manager',900);
-INSERT INTO [dbo].[Permissions] ([Id], [Code], [Name], [Position]) VALUES (15, N'ManageViews', N'Manage views',1000);
-INSERT INTO [dbo].[Permissions] ([Id], [Code], [Name], [Position]) VALUES (16, N'ManageStyles', N'Manage styles',1010);
-INSERT INTO [dbo].[Permissions] ([Id], [Code], [Name], [Position]) VALUES (17, N'ManageScripts', N'Manage scripts',1020);
-INSERT INTO [dbo].[Permissions] ([Id], [Code], [Name], [Position]) VALUES (18, N'ManageBundles', N'Manage bundles',1030);
-INSERT INTO [dbo].[Permissions] ([Id], [Code], [Name], [Position]) VALUES (19, N'ManageCatalogs', N'Manage catalogs',1100);
-INSERT INTO [dbo].[Permissions] ([Id], [Code], [Name], [Position]) VALUES (20, N'ManageCategories', N'Manage categories',1110);
-INSERT INTO [dbo].[Permissions] ([Id], [Code], [Name], [Position]) VALUES (21, N'ManageProducts', N'Manage products',1120);
-INSERT INTO [dbo].[Permissions] ([Id], [Code], [Name], [Position]) VALUES (22, N'ManageCarts', N'Manage carts',1130);
-INSERT INTO [dbo].[Permissions] ([Id], [Code], [Name], [Position]) VALUES (23, N'ManageOrderStates', N'Manage order states',1140);
-INSERT INTO [dbo].[Permissions] ([Id], [Code], [Name], [Position]) VALUES (24, N'ManagePaymentMethods', N'Manage payment methods',1150);
-INSERT INTO [dbo].[Permissions] ([Id], [Code], [Name], [Position]) VALUES (25, N'ManageDeliveryMethods', N'Manage delivery methods',1160);
-INSERT INTO [dbo].[Permissions] ([Id], [Code], [Name], [Position]) VALUES (26, N'ManageOrders', N'Manage orders',1170);
+INSERT INTO [dbo].[Permissions] ([Id], [Code], [Name], [Position]) VALUES (1, N'DoAnything', N'Do anything',100);
+INSERT INTO [dbo].[Permissions] ([Id], [Code], [Name], [Position]) VALUES (2, N'ManagePermissions', N'Manage permissions',200);
+INSERT INTO [dbo].[Permissions] ([Id], [Code], [Name], [Position]) VALUES (3, N'ManageRoles', N'Manage roles',300);
+INSERT INTO [dbo].[Permissions] ([Id], [Code], [Name], [Position]) VALUES (4, N'ManageUsers', N'Manage users',400);
+INSERT INTO [dbo].[Permissions] ([Id], [Code], [Name], [Position]) VALUES (5, N'ManageConfigurations', N'Manage configurations',500);
+INSERT INTO [dbo].[Permissions] ([Id], [Code], [Name], [Position]) VALUES (6, N'ManageCultures', N'Manage cultures',600);
+INSERT INTO [dbo].[Permissions] ([Id], [Code], [Name], [Position]) VALUES (7, N'ManageEndpoints', N'Manage endpoints',700);
+INSERT INTO [dbo].[Permissions] ([Id], [Code], [Name], [Position]) VALUES (8, N'ManageObjects', N'Manage objects',800);
+INSERT INTO [dbo].[Permissions] ([Id], [Code], [Name], [Position]) VALUES (9, N'ManageDataTypes', N'Manage data types',900);
+INSERT INTO [dbo].[Permissions] ([Id], [Code], [Name], [Position]) VALUES (10, N'ManageClasses', N'Manage classes',1000);
+INSERT INTO [dbo].[Permissions] ([Id], [Code], [Name], [Position]) VALUES (11, N'ManageMenus', N'Manage menus',1100);
+INSERT INTO [dbo].[Permissions] ([Id], [Code], [Name], [Position]) VALUES (12, N'ManageForms', N'Manage forms',1200);
+INSERT INTO [dbo].[Permissions] ([Id], [Code], [Name], [Position]) VALUES (13, N'ManageFileManager', N'Manage file manager',1300);
+INSERT INTO [dbo].[Permissions] ([Id], [Code], [Name], [Position]) VALUES (14, N'ManageCatalogs', N'Manage catalogs',1400);
+INSERT INTO [dbo].[Permissions] ([Id], [Code], [Name], [Position]) VALUES (15, N'ManageCategories', N'Manage categories',1500);
+INSERT INTO [dbo].[Permissions] ([Id], [Code], [Name], [Position]) VALUES (16, N'ManageProducts', N'Manage products',1600);
 SET IDENTITY_INSERT [dbo].[Permissions] OFF;
 
 INSERT INTO [dbo].[RolePermissions] ([RoleId], [PermissionId]) VALUES (1, 1);
-INSERT INTO [dbo].[RolePermissions] ([RoleId], [PermissionId]) VALUES (2, 2);
-INSERT INTO [dbo].[RolePermissions] ([RoleId], [PermissionId]) VALUES (3, 9);
+INSERT INTO [dbo].[RolePermissions] ([RoleId], [PermissionId]) VALUES (2, 1);
+INSERT INTO [dbo].[RolePermissions] ([RoleId], [PermissionId]) VALUES (3, 8);
+INSERT INTO [dbo].[RolePermissions] ([RoleId], [PermissionId]) VALUES (3, 11);
 INSERT INTO [dbo].[RolePermissions] ([RoleId], [PermissionId]) VALUES (3, 12);
 INSERT INTO [dbo].[RolePermissions] ([RoleId], [PermissionId]) VALUES (3, 13);
-INSERT INTO [dbo].[RolePermissions] ([RoleId], [PermissionId]) VALUES (3, 14);
 
 SET IDENTITY_INSERT [dbo].[Configurations] ON;
 INSERT INTO [dbo].[Configurations] ([Id], [Code], [Name]) VALUES (1, N'Email', N'Email');
@@ -82,7 +73,7 @@ SET IDENTITY_INSERT [dbo].[Cultures] OFF;
 
 --
 -- Extension: Platformus.Website
--- Version: 2.0.0-alpha3
+-- Version: 2.0.0-alpha4
 --
 SET IDENTITY_INSERT [dbo].[DataTypes] ON;
 INSERT INTO [dbo].[DataTypes] ([Id], [StorageDataType], [JavaScriptEditorClassName], [Name], [Position]) VALUES (1, N'string', N'singleLinePlainText', N'Single line plain text', 1);
@@ -108,12 +99,13 @@ INSERT INTO [dbo].[DataTypeParameters] ([Id], [DataTypeId], [JavaScriptEditorCla
 SET IDENTITY_INSERT [dbo].[DataTypeParameters] OFF;
 
 SET IDENTITY_INSERT [dbo].[FieldTypes] ON;
-INSERT INTO [dbo].[FieldTypes] ([Id], [Code], [Name], [Position]) VALUES (1, N'TextBox', N'Text box', 1);
-INSERT INTO [dbo].[FieldTypes] ([Id], [Code], [Name], [Position]) VALUES (2, N'TextArea', N'Text area', 2);
-INSERT INTO [dbo].[FieldTypes] ([Id], [Code], [Name], [Position]) VALUES (3, N'Checkbox', N'Checkbox', 3);
-INSERT INTO [dbo].[FieldTypes] ([Id], [Code], [Name], [Position]) VALUES (4, N'RadioButtonList', N'Radio button list', 4);
-INSERT INTO [dbo].[FieldTypes] ([Id], [Code], [Name], [Position]) VALUES (5, N'DropDownList', N'Drop down list', 5);
-INSERT INTO [dbo].[FieldTypes] ([Id], [Code], [Name], [Position]) VALUES (6, N'FileUpload', N'File upload', 6);
+INSERT INTO [dbo].[FieldTypes] ([Id], [Code], [Name], [Position], [ValidatorCSharpClassName]) VALUES (1, N'TextBox', N'Text box', 1, NULL);
+INSERT INTO [dbo].[FieldTypes] ([Id], [Code], [Name], [Position], [ValidatorCSharpClassName]) VALUES (2, N'TextArea', N'Text area', 2, NULL);
+INSERT INTO [dbo].[FieldTypes] ([Id], [Code], [Name], [Position], [ValidatorCSharpClassName]) VALUES (3, N'Checkbox', N'Checkbox', 3, NULL);
+INSERT INTO [dbo].[FieldTypes] ([Id], [Code], [Name], [Position], [ValidatorCSharpClassName]) VALUES (4, N'RadioButtonList', N'Radio button list', 4, NULL);
+INSERT INTO [dbo].[FieldTypes] ([Id], [Code], [Name], [Position], [ValidatorCSharpClassName]) VALUES (5, N'DropDownList', N'Drop down list', 5, NULL);
+INSERT INTO [dbo].[FieldTypes] ([Id], [Code], [Name], [Position], [ValidatorCSharpClassName]) VALUES (6, N'FileUpload', N'File upload', 6, NULL);
+INSERT INTO [dbo].[FieldTypes] ([Id], [Code], [Name], [Position], [ValidatorCSharpClassName]) VALUES (7, N'ReCAPTCHA', N'ReCAPTCHA', 7, N'Platformus.Website.Frontend.FormHandlers.ReCaptchaFieldValidator');
 SET IDENTITY_INSERT [dbo].[FieldTypes] OFF;
 
 COMMIT;

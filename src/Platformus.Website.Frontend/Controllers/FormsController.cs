@@ -33,6 +33,12 @@ namespace Platformus.Website.Frontend.Controllers
       );
 
       IDictionary<Field, string> valuesByFields = this.GetValuesByFields(form);
+
+      foreach (Field field in valuesByFields.Keys)
+        if (!string.IsNullOrEmpty(field.FieldType.ValidatorCSharpClassName))
+          if (!await this.CreateFieldValidatorInstance(field.FieldType).ValidateAsync(this.HttpContext, form, field, valuesByFields[field]))
+            return this.BadRequest();
+
       IDictionary<string, byte[]> attachmentsByFilenames = this.GetAttachmentsByFilenames(form);
 
       if (form.ProduceCompletedForms)
@@ -55,6 +61,11 @@ namespace Platformus.Website.Frontend.Controllers
           valuesByFields.Add(field, this.Request.Form[string.Format("field{0}", field.Code)]);
 
       return valuesByFields;
+    }
+
+    private IFieldValidator CreateFieldValidatorInstance(FieldType fieldType)
+    {
+      return StringActivator.CreateInstance<IFieldValidator>(fieldType.ValidatorCSharpClassName);
     }
 
     private IDictionary<string, byte[]> GetAttachmentsByFilenames(Form form)

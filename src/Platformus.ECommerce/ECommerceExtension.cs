@@ -1,4 +1,4 @@
-﻿// Copyright © 2015 Dmitry Sikorsky. All rights reserved.
+﻿// Copyright © 2020 Dmitry Sikorsky. All rights reserved.
 // Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information.
 
 using ExtCore.Infrastructure;
@@ -23,7 +23,7 @@ namespace Platformus.ECommerce
     /// <summary>
     /// Gets the version of the extension.
     /// </summary>
-    public override string Version => "2.0.0-beta1";
+    public override string Version => "2.0.0-alpha4";
 
     /// <summary>
     /// Gets the authors of the extension (separated by commas).

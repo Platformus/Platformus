@@ -27,7 +27,7 @@ namespace Platformus.Core.Backend.Metadata
         new Script("//ajax.aspnetcdn.com/ajax/jquery.validate/1.14.0/jquery.validate.min.js", 200),
         new Script("//ajax.aspnetcdn.com/ajax/jquery.validation.unobtrusive/3.2.6/jquery.validate.unobtrusive.min.js", 300),
         new Script("//cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js", 400),
-        new Script("//cdn.tinymce.com/4/tinymce.min.js", 500),
+        new Script("//cdnjs.cloudflare.com/ajax/libs/tinymce/4.9.2/tinymce.min.js", 500),
         new Script("//cdnjs.cloudflare.com/ajax/libs/moment.js/2.17.1/moment-with-locales.min.js", 600),
         new Script("/wwwroot.areas.backend.js.platformus.core.min.js", 1000)
       };

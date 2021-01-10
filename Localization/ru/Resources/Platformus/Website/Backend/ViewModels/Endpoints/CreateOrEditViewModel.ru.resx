@@ -129,6 +129,9 @@
   <data name="Position" xml:space="preserve">
     <value>Позиция</value>
   </data>
+  <data name="Response cache C# class name" xml:space="preserve">
+    <value>Название C#-класса кэша ответов</value>
+  </data>
   <data name="Sign in URL" xml:space="preserve">
     <value>URL входа</value>
   </data>

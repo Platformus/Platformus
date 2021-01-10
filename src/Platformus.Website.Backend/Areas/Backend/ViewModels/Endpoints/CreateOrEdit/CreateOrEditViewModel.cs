@@ -33,6 +33,11 @@ namespace Platformus.Website.Backend.ViewModels.Endpoints
     [StringLength(128)]
     public string SignInUrl { get; set; }
 
+    [Display(Name = "Response cache C# class name")]
+    [StringLength(128)]
+    public string ResponseCacheCSharpClassName { get; set; }
+    public IEnumerable<Option> ResponseCacheCSharpClassNameOptions { get; set; }
+
     [Display(Name = "C# class name")]
     [Required]
     [StringLength(128)]
