@@ -27,6 +27,7 @@
     }
 
     textBox.val(value + 1);
+    textBox.change();
     return false;
   }
 
@@ -43,6 +44,7 @@
     }
 
     textBox.val(value - 1);
+    textBox.change();
     return false;
   }
 })(window.platformus = window.platformus || {});

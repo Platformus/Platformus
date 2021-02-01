@@ -1,0 +1,64 @@
+﻿@* Copyright © 2020 Dmitry Sikorsky. All rights reserved. *@
+@* Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information. *@
+@model Platformus.ECommerce.Backend.ViewModels.Orders.CreateOrEditViewModel
+@inject Microsoft.AspNetCore.Mvc.Localization.IViewLocalizer Localizer
+@{
+  this.ViewBag.Title = (this.Model.Id == null ? this.Localizer["Create Order"].Value : this.Localizer["Edit Order"].Value);
+  this.ViewBag.ActiveMenuItem = "orders";
+}
+@section title {
+  @ViewBag.Title
+}
+<form class="form" method="post">
+  <drop-down-list-field asp-for="OrderStateId" asp-options="@Model.OrderStateOptions" />
+  <drop-down-list-field asp-for="DeliveryMethodId" asp-options="@Model.DeliveryMethodOptions" />
+  <drop-down-list-field asp-for="PaymentMethodId" asp-options="@Model.PaymentMethodOptions" />
+  <single-line-text-field asp-for="CustomerFirstName" />
+  <single-line-text-field asp-for="CustomerLastName" />
+  <single-line-text-field asp-for="CustomerPhone" />
+  <single-line-text-field asp-for="CustomerEmail" />
+  <single-line-text-field asp-for="CustomerAddress" />
+  <multiline-text-field asp-for="Note" asp-height="small" />
+  <h2 class="form__title">
+    @Localizer["Positions"]
+  </h2>
+  <table class="table">
+    <colgroup>
+      <col>
+      <col>
+      <col>
+    </colgroup>
+    <tbody>
+      <tr class="table__row">
+        <th class="table__cell table__cell--header">@Localizer["Category"]</th>
+        <th class="table__cell table__cell--header">@Localizer["Product"]</th>
+        <th class="table__cell table__cell--header">@Localizer["Price"]</th>
+        <th class="table__cell table__cell--header">@Localizer["Quantity"]</th>
+        <th class="table__cell table__cell--header">@Localizer["Subtotal"]</th>
+        <th class="table__cell table__cell--header table__cell--no-width">&nbsp;</th>
+      </tr>
+      @if (this.Model.Positions != null)
+      {
+        @for (int i = 0; i != this.Model.Positions.Count(); i++)
+        {
+          var position = this.Model.Positions.ElementAt(i);
+
+          position.Index = i;
+          @Html.Partial("_Position", position)
+        }
+      }
+      <tr id="totalRow" class="table__row">
+        <td class="table__cell table__cell--header" colspan="4">@Localizer["Total"]</td>
+        <th class="table__cell table__cell--header" id="total">@Model.Total.ToString("0.00")</th>
+        <th class="table__cell table__cell--header">&nbsp;</th>
+      </tr>
+    </tbody>
+  </table>
+  <div class="master-detail__detail-buttons master-detail__detail-buttons--minor buttons">
+    <button class="buttons__button buttons__button--minor button button--positive button--minor" type="button" onclick="platformus.ui.addPosition();">@Localizer["Add position"]</button>
+  </div>
+  <div class="form__buttons buttons">
+    <button class="buttons__button button button--positive" type="submit">@Localizer["Save"]</button>
+    <a class="buttons__button button button--neutral" href="@this.Context.Request.CombineUrl("/backend/orders")">@Localizer["Cancel"]</a>
+  </div>
+</form>

@@ -1,7 +1,7 @@
 BEGIN TRANSACTION;
 --
 -- Extension: Platformus.Core
--- Version: 2.0.0-alpha4
+-- Version: 2.0.0-alpha5
 --
 
 -- Users
@@ -110,7 +110,7 @@ CREATE TABLE "Localizations" (
 
 --
 -- Extension: Platformus.Website
--- Version: 2.0.0-alpha4
+-- Version: 2.0.0-alpha5
 --
 
 -- Endpoints
@@ -342,7 +342,7 @@ CREATE TABLE "Files" (
 
 --
 -- Extension: Platformus.ECommerce
--- Version: 2.0.0-alpha4
+-- Version: 2.0.0-alpha5
 --
 
 -- Catalogs
@@ -396,6 +396,72 @@ CREATE TABLE "Photos" (
 	"IsCover" INTEGER NOT NULL,
 	"Position" INTEGER,
 	CONSTRAINT "FK_Photo_Product_ProductId" FOREIGN KEY("ProductId") REFERENCES "Products" ("Id") ON DELETE CASCADE
+);
+
+-- OrderStates
+CREATE TABLE "OrderStates" (
+	"Id" INTEGER NOT NULL CONSTRAINT "PK_OrderState" PRIMARY KEY AUTOINCREMENT,
+	"Code" TEXT NOT NULL,
+	"NameId" INTEGER NOT NULL,
+	"Position" INTEGER,
+	CONSTRAINT "FK_OrderState_Dictionary_NameId" FOREIGN KEY("NameId") REFERENCES "Dictionaries" ("Id")
+);
+
+-- PaymentMethods
+CREATE TABLE "PaymentMethods" (
+	"Id" INTEGER NOT NULL CONSTRAINT "PK_PaymentMethod" PRIMARY KEY AUTOINCREMENT,
+	"Code" TEXT NOT NULL,
+	"NameId" INTEGER NOT NULL,
+	"Position" INTEGER,
+	CONSTRAINT "FK_PaymentMethod_Dictionary_NameId" FOREIGN KEY("NameId") REFERENCES "Dictionaries" ("Id")
+);
+
+-- DeliveryMethods
+CREATE TABLE "DeliveryMethods" (
+	"Id" INTEGER NOT NULL CONSTRAINT "PK_DeliveryMethod" PRIMARY KEY AUTOINCREMENT,
+	"Code" TEXT NOT NULL,
+	"NameId" INTEGER NOT NULL,
+	"Position" INTEGER,
+	CONSTRAINT "FK_DeliveryMethod_Dictionary_NameId" FOREIGN KEY("NameId") REFERENCES "Dictionaries" ("Id")
+);
+
+-- Carts
+CREATE TABLE "Carts" (
+	"Id" INTEGER NOT NULL CONSTRAINT "PK_Cart" PRIMARY KEY AUTOINCREMENT,
+	"ClientSideId" TEXT NOT NULL,
+	"Created" TEXT NOT NULL
+);
+
+-- Orders
+CREATE TABLE "Orders" (
+	"Id" INTEGER NOT NULL CONSTRAINT "PK_Order" PRIMARY KEY AUTOINCREMENT,
+	"OrderStateId" INTEGER NOT NULL,
+	"PaymentMethodId" INTEGER NOT NULL,
+	"DeliveryMethodId" INTEGER NOT NULL,
+	"CustomerFirstName" TEXT NOT NULL,
+	"CustomerLastName" TEXT,
+	"CustomerPhone" TEXT NOT NULL,
+	"CustomerEmail" TEXT,
+	"CustomerAddress" TEXT,
+	"Note" TEXT,
+	"Created" TEXT NOT NULL,
+	CONSTRAINT "FK_Order_OrderState_OrderStateId" FOREIGN KEY("OrderStateId") REFERENCES "OrderStates" ("Id") ON DELETE CASCADE,
+	CONSTRAINT "FK_Order_PaymentMethod_PaymentMethodId" FOREIGN KEY("PaymentMethodId") REFERENCES "PaymentMethods" ("Id") ON DELETE CASCADE,
+	CONSTRAINT "FK_Order_DeliveryMethod_DeliveryMethodId" FOREIGN KEY("DeliveryMethodId") REFERENCES "DeliveryMethods" ("Id") ON DELETE CASCADE
+);
+
+-- Positions
+CREATE TABLE "Positions" (
+	"Id" INTEGER NOT NULL CONSTRAINT "PK_Position" PRIMARY KEY AUTOINCREMENT,
+	"CartId" INTEGER,
+  "OrderId" INTEGER,
+	"ProductId" INTEGER NOT NULL,
+  "Price" REAL NOT NULL,
+  "Quantity" REAL NOT NULL,
+  "Subtotal" REAL NOT NULL,
+	CONSTRAINT "FK_Position_Cart_CartId" FOREIGN KEY("CartId") REFERENCES "Carts" ("Id") ON DELETE CASCADE,
+  CONSTRAINT "FK_Position_Order_OrderId" FOREIGN KEY("OrderId") REFERENCES "Orders" ("Id") ON DELETE CASCADE,
+	CONSTRAINT "FK_Position_Product_ProductId" FOREIGN KEY("ProductId") REFERENCES "Products" ("Id") ON DELETE CASCADE
 );
 
 COMMIT;

@@ -15,7 +15,6 @@ namespace Platformus.ECommerce.Backend.ViewModels.Shared
       {
         Id = product.Id,
         Category = new CategoryViewModelFactory().Create(httpContext, product.Category),
-        Code = product.Code,
         Name = product.Name.GetLocalizationValue(httpContext),
         Price = product.Price
       };

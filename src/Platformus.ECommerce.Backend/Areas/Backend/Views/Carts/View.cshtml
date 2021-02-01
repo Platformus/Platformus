@@ -1,0 +1,51 @@
+﻿@* Copyright © 2020 Dmitry Sikorsky. All rights reserved. *@
+@* Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information. *@
+@model Platformus.ECommerce.Backend.ViewModels.Carts.ViewViewModel
+@inject Microsoft.AspNetCore.Mvc.Localization.IViewLocalizer Localizer
+@{
+  this.ViewBag.Title = this.Localizer["View Cart"].Value;
+  this.ViewBag.ActiveMenuItem = "carts";
+}
+@section title {
+  @ViewBag.Title
+}
+<div class="form">
+  <h2 class="form__title">
+    @Localizer["Positions"]
+  </h2>
+  <table class="table">
+    <colgroup>
+      <col>
+      <col>
+      <col>
+    </colgroup>
+    <tbody>
+      <tr class="table__row">
+        <th class="table__cell table__cell--header">@Localizer["Category"]</th>
+        <th class="table__cell table__cell--header">@Localizer["Product"]</th>
+        <th class="table__cell table__cell--header">@Localizer["Price"]</th>
+        <th class="table__cell table__cell--header">@Localizer["Quantity"]</th>
+        <th class="table__cell table__cell--header">@Localizer["Subtotal"]</th>
+        <th class="table__cell table__cell--header table__cell--no-width">&nbsp;</th>
+      </tr>
+      @if (this.Model.Positions != null)
+      {
+        @for (int i = 0; i != this.Model.Positions.Count(); i++)
+        {
+          var position = this.Model.Positions.ElementAt(i);
+
+          position.Index = i;
+          @Html.Partial("_Position", position)
+        }
+      }
+      <tr id="totalRow" class="table__row">
+        <td class="table__cell table__cell--header" colspan="4">@Localizer["Total"]</td>
+        <th class="table__cell table__cell--header" id="total">@Model.Total.ToString("0.00")</th>
+        <th class="table__cell table__cell--header">&nbsp;</th>
+      </tr>
+    </tbody>
+  </table>
+  <div class="form__buttons buttons">
+    <a class="buttons__button button button--neutral" href="@this.Context.Request.CombineUrl("/backend/carts")">@Localizer["Back"]</a>
+  </div>
+</div>

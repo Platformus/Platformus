@@ -10,7 +10,6 @@
     "outputFileName": "wwwroot/areas/backend/js/platformus.ecommerce.min.js",
     "inputFiles": [
       "Areas/Backend/Scripts/ui.js",
-      "Areas/Backend/Scripts/Behaviors/photo_drag_and_drop_area_behavior.js",
       "Areas/Backend/Scripts/Forms/category_selector_form.js",
       "Areas/Backend/Scripts/Forms/product_selector_form.js",
       "Areas/Backend/Scripts/ParameterEditors/category_selector_parameter_editor.js"

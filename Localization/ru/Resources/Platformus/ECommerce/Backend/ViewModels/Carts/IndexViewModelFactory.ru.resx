@@ -117,11 +117,11 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="#" xml:space="preserve">
+    <value>№</value>
+  </data>
   <data name="Created" xml:space="preserve">
     <value>Дата и время создания</value>
-  </data>
-  <data name="Identifier" xml:space="preserve">
-    <value>Идентификатор</value>
   </data>
   <data name="Total" xml:space="preserve">
     <value>Итого</value>

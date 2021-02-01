@@ -59,6 +59,7 @@ namespace Platformus.ECommerce.Backend.Controllers
     {
       Product product = await this.Storage.GetRepository<int, Product, ProductFilter>().GetByIdAsync(
         id,
+        new Inclusion<Product>(p => p.Category.Name.Localizations),
         new Inclusion<Product>(p => p.Name.Localizations)
       );
 

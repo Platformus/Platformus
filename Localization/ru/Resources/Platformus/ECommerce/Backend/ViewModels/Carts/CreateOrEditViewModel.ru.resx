@@ -117,7 +117,7 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="Client-side identifier" xml:space="preserve">
-    <value>Идентификатор на стороне клиента</value>
+  <data name="String1" xml:space="preserve">
+    <value />
   </data>
 </root>

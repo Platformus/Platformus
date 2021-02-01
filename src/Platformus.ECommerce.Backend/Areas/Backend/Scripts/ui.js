@@ -7,112 +7,159 @@
     platformus.parameterEditors.sync(getProductProviderByCSharpClassName(getSelectedCatalogCSharpClassName()));
   };
 
-  platformus.ui.addPhoto = function () {
-    var field = $("<div>").addClass("form__field").addClass("field");
-    var imageUploader = $("<div>").addClass("")
+  platformus.ui.addPosition = function () {
+    platformus.forms.productSelectorForm.show(
+      null,
+      function (productId) {
+        $.getJSON(
+          "/backend/ecommerce/product",
+          { id: productId },
+          function (product) {
+            createPositionTableRow(product).insertBefore($("#totalRow"));
+            updateTotal();
+          }
+        );
+      }
+    );
   };
 
-  //platformus.ui.addAttribute = function () {
-  //  platformus.forms.attributeSelectorForm.show(
-  //    null,
-  //    function (attributeId) {
-  //      $.getJSON(
-  //        "/backend/ecommerce/getattribute",
-  //        { attributeId: attributeId },
-  //        function (attribute) {
-  //          var identity = "newAttribute" + ($(".table__row--new").length + 1);
-  //          var row = $("<tr>").addClass("table__row").addClass("table__row--new").attr("id", identity).appendTo($("#attributes tbody"));
-  //          var cell1 = $("<td>").addClass("table__cell").html(attribute.feature.name).appendTo(row);
-  //          var cell2 = $("<td>").addClass("table__cell").html(attribute.value).appendTo(row);
+  platformus.ui.onQuantityChange = function (index) {
+    updateSubtotal(index);
+  }
 
-  //          $("<input>").attr("name", identity).attr("type", "hidden").appendTo(cell1);
-  //        }
-  //      );
-  //    }
-  //  );
-  //};
+  platformus.ui.removePosition = function (button) {
+    $(button).parent().parent().remove();
+    updateTotal();
+    return false;
+  };
 
-  //platformus.ui.removeAttribute = function (identity) {
-  //  if (identity.indexOf("newAttribute") == -1) {
-  //    var id = identity.replace("attribute", platformus.string.empty);
-  //    var removedAttributeIds = $("#RemovedAttributeIds").val();
+  function createPositionTableRow(product) {
+    var index = getMaxPositionIndex() + 1;
+    var row = createTableRow(index).insertBefore($("#totalRow"));
 
-  //    removedAttributeIds += (removedAttributeIds.length == 0 ? platformus.string.empty : ",") + id;
-  //    $("#RemovedAttributeIds").val(removedAttributeIds);
-  //  }
+    createCategoryTableCell(product).appendTo(row);
+    createProductTableCell(product, index).appendTo(row);
+    createPriceTableCell(product, index).appendTo(row);
+    createQuantityTableCell(product, index).appendTo(row);
+    createSubtotalTableCell(product, index).appendTo(row);
+    createRemovePositionTableCell(product).appendTo(row);
+    return row;
+  }
 
-  //  $("#" + identity).remove();
-  //};
+  function getMaxPositionIndex() {
+    var maxIndex = -1;
 
-  //platformus.ui.photoUploadingStarted = function (checkIsFinished) {
-  //  $("#photoUploader").hide();
+    $(".table__row[data-index]").each(function () {
+      var index = parseInt($(this).data("index"));
 
-  //  if (checkIsFinished) {
-  //    setTimeout(function () { platformus.ui.isPhotoUploadingFinished(); }, 100);
-  //  }
-  //};
+      if (index > maxIndex) {
+        maxIndex = index;
+      }
+    });
 
-  //platformus.ui.photoUploadingFinished = function (filenames) {
-  //  $("#photoUploader").attr("src", "/backend/photouploader").show();
+    return maxIndex;
+  }
 
-  //  $(filenames.split(',')).each(
-  //    function (index, filename) {
-  //      createNewPhoto(filename).appendTo($("#photos"));
-  //    }
-  //  );
-  //};
+  function createCategoryTableCell(product) {
+    return createTableCell().html(product.category.name);
+  }
 
-  //platformus.ui.isPhotoUploadingFinished = function () {
-  //  var value = document.getElementById("photoUploader").contentWindow.document.body.innerHTML;
+  function createProductTableCell(product, index) {
+    var cell = createTableCell().html(product.name);
 
-  //  value = value.replace(/<(?:.|\n)*?>/gm, "");
+    $("<input>").attr("type", "hidden").attr("name", "positions[" + index + "].product.id").val(product.id).appendTo(cell);
+    return cell;
+  }
 
-  //  if (value.indexOf("filenames=") != -1) {
-  //    var filenames = value.replace("filenames=", platformus.string.empty);
+  function createPriceTableCell(product, index) {
+    var cell = createTableCell().html(product.price);
 
-  //    platformus.ui.photoUploadingFinished(filenames);
-  //  }
+    $("<input>").attr("type", "hidden").attr("name", "positions[" + index + "].price").val(product.price).appendTo(cell);
+    return cell;
+  }
 
-  //  else if (value.indexOf("error=") != -1) {
-  //    var error = value.replace("error=", platformus.string.empty);
+  function createQuantityTableCell(product, index) {
+    var cell = createTableCell().addClass("table__cell--controls");
 
-  //    platformus.ui.photoUploadingErrorOccurred(error);
-  //  }
+    platformus.controls.numericTextBox.create(
+      {
+        identity: "positions[" + index + "].quantity",
+        value: "1"
+      }
+    )
+      .addClass("table__text-box--numeric")
+      .change(function () { updateSubtotal(index) })
+      .appendTo(cell);
 
-  //  else {
-  //    setTimeout(function () { platformus.ui.isPhotoUploadingFinished(); }, 100);
-  //  }
-  //}
+    platformus.controls.numericTextBox.createNumericButtons()
+      .addClass("table__numeric-buttons")
+      .appendTo(cell);
 
-  //platformus.ui.photoUploadingErrorOccurred = function (textStatus) {
-  //  alert(textStatus);
-  //};
+    return cell;
+  }
 
-  //platformus.ui.removePhoto = function (identity) {
-  //  if (identity.indexOf("newPhoto") == -1) {
-  //    var id = identity.replace("photo", platformus.string.empty);
-  //    var removedPhotoIds = $("#RemovedPhotoIds").val();
+  function createSubtotalTableCell(product, index) {
+    return createTableCell()
+      .attr("data-subtotal", true)
+      .html(product.price);
+  }
 
-  //    removedPhotoIds += (removedPhotoIds.length == 0 ? platformus.string.empty : ",") + id;
-  //    $("#RemovedPhotoIds").val(removedPhotoIds);
-  //  }
+  function createRemovePositionTableCell(product) {
+    var cell = createTableCell().addClass("table__buttons buttons");
 
-  //  $("#" + identity).remove();
-  //};
+    createRemoveButton().appendTo(cell);
+    return cell;
+  }
 
-  //platformus.ui.addProductToCart = function (cartId) {
-  //  platformus.forms.productSelectorForm.show(
-  //    null,
-  //    function (productId) {
-  //      $.post(
-  //        "/backend/positions/create?cartid=" + cartId + "&productid=" + productId,
-  //        function () {
-  //          location.reload();
-  //        }
-  //      );
-  //    }
-  //  );
-  //};
+  function createTableRow(index) {
+    return $("<tr>").addClass("table__row").attr("data-index", index);
+  }
+
+  function createTableCell() {
+    return $("<td>").addClass("table__cell");
+  }
+
+  function createRemoveButton() {
+    return $("<button>")
+      .addClass("table__button")
+      .addClass("buttons__button")
+      .addClass("buttons__button--minor")
+      .addClass("button")
+      .addClass("button--negative")
+      .addClass("button--minor")
+      .addClass("button--delete")
+      .attr("type", "button")
+      .click(
+        function () {
+          $(this).parent().parent().remove();
+          updateTotal();
+        }
+      );
+  }
+
+  function updateSubtotal(index) {
+    $(".table__row[data-index='" + index + "']").find(".table__cell[data-subtotal]").html(getSubtotal(index));
+    updateTotal();
+  }
+
+  function updateTotal() {
+    var total = 0.0;
+
+    $(".table__row[data-index]").each(function () {
+      var index = parseInt($(this).data("index"));
+      
+      total += getSubtotal(index);
+    });
+
+    $("#total").html(parseFloat(total));
+  }
+
+  function getSubtotal(index) {
+    var price = parseFloat($("input[name='positions[" + index + "].price']").val());
+    var quantity = parseFloat($("input[name='positions[" + index + "].quantity']").val());
+
+    return price * quantity;
+  }
 
   function getSelectedCatalogCSharpClassName() {
     return $("#cSharpClassName").val();
@@ -127,71 +174,4 @@
 
     return null;
   }
-
-  //function createNewPhoto(filename) {
-  //  var identity = "newPhoto" + ($(".photo--new").length + 1);
-  //  var photo = $("<div>").addClass("photos__photo").addClass("photo").addClass("photo--new").attr("id", identity);
-
-  //  $("<div>").addClass("photo__thumbnail").css("background-image", "url(/images/temp/" + filename + ")").appendTo(photo);
-
-  //  var form = $("<div>").addClass("photo__form form").appendTo(photo);
-
-  //  createIsCoverCheckboxField(identity).appendTo(form);
-  //  createPositionNumericTextBoxField(identity).appendTo(form);
-  //  createButtons(identity).appendTo(form);
-
-  //  $("<input>").attr("id", identity + "Filename").attr("name", identity + "Filename").attr("type", "hidden").val(filename).appendTo(form);
-  //  return photo;
-  //}
-
-  //function createIsCoverCheckboxField(identity) {
-  //  var field = $("<div>").addClass("form__field form__field--separated field");
-
-  //  platformus.controls.checkbox.create(
-  //    {
-  //      identity: "_" + identity + "IsCover",
-  //      text: "Is cover",
-  //      value: 0
-  //    }
-  //  ).appendTo(field);
-  //  return field;
-  //}
-
-  //function createPositionNumericTextBoxField(identity) {
-  //  var field = $("<div>").addClass("form__field").addClass("field");
-
-  //  platformus.controls.label.create({ text: "Position" }).appendTo(field);
-  //  platformus.controls.numericTextBox.create(
-  //    {
-  //      identity: "_" + identity + "Position",
-  //      value: "0"
-  //    }
-  //  ).appendTo(field);
-
-  //  platformus.controls.numericTextBox.createNumericButtons().appendTo(field);
-  //  return field;
-  //}
-
-  //function createButtons(identity) {
-  //  var buttons = $("<div>").addClass("form__buttons").addClass("form__buttons--minor").addClass("buttons");
-
-  //  createRemoveButton(identity).appendTo(buttons);
-  //  return buttons;
-  //}
-
-  //function createRemoveButton(identity) {
-  //  return $("<button>")
-  //    .addClass("buttons__button")
-  //    .addClass("buttons__button--minor")
-  //    .addClass("button")
-  //    .addClass("button--negative")
-  //    .addClass("button--minor")
-  //    .attr("type", "button")
-  //    .html("Remove")
-  //    .click(
-  //      function () {
-  //        platformus.ui.removePhoto(identity);
-  //      }
-  //    );
-  //}
 })(window.platformus = window.platformus || {});

@@ -4,7 +4,7 @@
     <Authors>Dmitry Sikorsky</Authors>
     <Copyright>Copyright © 2015 Dmitry Sikorsky</Copyright>
     <Description>The Platformus.ECommerce extension component.</Description>
-    <VersionPrefix>2.0.0-alpha4</VersionPrefix>
+    <VersionPrefix>2.0.0-alpha5</VersionPrefix>
     <TargetFramework>net5.0</TargetFramework>
     <AddRazorSupportForMvc>true</AddRazorSupportForMvc>
     <AssemblyName>Platformus.ECommerce.Frontend</AssemblyName>

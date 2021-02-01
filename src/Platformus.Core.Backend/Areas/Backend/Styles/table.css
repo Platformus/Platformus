@@ -69,6 +69,10 @@
   color: #fff;
 }
 
+.table__cell--controls {
+  padding: 0;
+}
+
 .table__cell--no-width {
   white-space: nowrap;
   width: 0;
@@ -93,6 +97,14 @@
 
 .table__secondary {
   font-size: 10px;
+}
+
+.table__text-box--numeric {
+  width: 100px;
+}
+
+.table__numeric-buttons {
+  left: 120px;
 }
 
 .table__buttons {

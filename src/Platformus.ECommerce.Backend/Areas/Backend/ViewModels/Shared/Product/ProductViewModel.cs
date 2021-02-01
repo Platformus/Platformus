@@ -9,7 +9,6 @@ namespace Platformus.ECommerce.Backend.ViewModels.Shared
   {
     public int Id { get; set; }
     public CategoryViewModel Category { get; set; }
-    public string Code { get; set; }
     public string Name { get; set; }
     public decimal Price { get; set; }
   }

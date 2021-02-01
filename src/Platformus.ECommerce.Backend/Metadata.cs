@@ -41,6 +41,18 @@ namespace Platformus.ECommerce.Backend.Metadata
             new MenuItem("/backend/catalogs", localizer["Catalogs"], 1000, new string[] { Permissions.ManageCatalogs }),
             new MenuItem("/backend/categories", localizer["Categories"], 2000, new string[] { Permissions.ManageCategories }),
             new MenuItem("/backend/products", localizer["Products"], 3000, new string[] { Permissions.ManageProducts }),
+            new MenuItem("/backend/carts", localizer["Carts"], 4000, new string[] { Permissions.ManageCarts }),
+            new MenuItem("/backend/orders", localizer["Orders"], 5000, new string[] { Permissions.ManageOrders }),
+          }
+        ),
+        new MenuGroup(
+          localizer["Administration"],
+          3000,
+          new MenuItem[]
+          {
+            new MenuItem("/backend/orderstates", localizer["Order states"], 3000, new string[] { Permissions.ManageOrderStates }),
+            new MenuItem("/backend/deliverymethods", localizer["Delivery methods"], 4000, new string[] { Permissions.ManageDeliveryMethods }),
+            new MenuItem("/backend/paymentmethods", localizer["Payment methods"], 5000, new string[] { Permissions.ManagePaymentMethods }),
           }
         )
       };

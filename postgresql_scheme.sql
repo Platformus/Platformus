@@ -1,6 +1,6 @@
 --
 -- Extension: Platformus.Core
--- Version: 2.0.0-alpha4
+-- Version: 2.0.0-alpha5
 --
 
 -- Users
@@ -170,7 +170,7 @@ ALTER TABLE "Localizations" OWNER TO postgres;
 
 --
 -- Extension: Platformus.Website
--- Version: 2.0.0-alpha4
+-- Version: 2.0.0-alpha5
 --
 
 -- Endpoints
@@ -563,7 +563,7 @@ ALTER TABLE "Files" OWNER TO postgres;
 
 --
 -- Extension: Platformus.ECommerce
--- Version: 2.0.0-alpha4
+-- Version: 2.0.0-alpha5
 --
 
 -- Catalogs
@@ -652,7 +652,7 @@ ALTER TABLE "Products" OWNER TO postgres;
 CREATE TABLE "Photos" (
     "Id" serial NOT NULL,
     "ProductId" integer NOT NULL,
-	"Filename" text NOT NULL,
+	  "Filename" text NOT NULL,
     "IsCover" boolean NOT NULL,
     "Position" integer,
 	CONSTRAINT "PK_Photos" PRIMARY KEY ("Id"),
@@ -663,3 +663,114 @@ CREATE TABLE "Photos" (
 );
 
 ALTER TABLE "Photos" OWNER TO postgres;
+
+-- OrderStates
+CREATE TABLE "OrderStates" (
+    "Id" serial NOT NULL,
+	  "Code" text NOT NULL,
+    "NameId" integer NOT NULL,
+    "Position" integer,
+	CONSTRAINT "PK_OrderStates" PRIMARY KEY ("Id"),
+	CONSTRAINT "FK_OrderStates_Dictionaries" FOREIGN KEY ("NameId")
+        REFERENCES public."Dictionaries" ("Id") MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION
+);
+
+ALTER TABLE "OrderStates" OWNER TO postgres;
+
+-- PaymentMethods
+CREATE TABLE "PaymentMethods" (
+    "Id" serial NOT NULL,
+	"Code" text NOT NULL,
+    "NameId" integer NOT NULL,
+    "Position" integer,
+	CONSTRAINT "PK_PaymentMethods" PRIMARY KEY ("Id"),
+	CONSTRAINT "FK_PaymentMethods_Dictionaries" FOREIGN KEY ("NameId")
+        REFERENCES public."Dictionaries" ("Id") MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION
+);
+
+ALTER TABLE "PaymentMethods" OWNER TO postgres;
+
+-- DeliveryMethods
+CREATE TABLE "DeliveryMethods" (
+    "Id" serial NOT NULL,
+    "Code" text NOT NULL,
+    "NameId" integer NOT NULL,
+    "Position" integer,
+	CONSTRAINT "PK_DeliveryMethods" PRIMARY KEY ("Id"),
+	CONSTRAINT "FK_DeliveryMethods_Dictionaries" FOREIGN KEY ("NameId")
+        REFERENCES public."Dictionaries" ("Id") MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION
+);
+
+ALTER TABLE "DeliveryMethods" OWNER TO postgres;
+
+-- Carts
+CREATE TABLE "Carts" (
+    "Id" serial NOT NULL,
+    "ClientSideId" text NOT NULL,
+    "Created" timestamp NOT NULL,
+    CONSTRAINT "PK_Carts" PRIMARY KEY ("Id")
+);
+
+ALTER TABLE "Carts" OWNER TO postgres;
+
+-- Orders
+CREATE TABLE "Orders" (
+    "Id" serial NOT NULL,
+    "OrderStateId" integer NOT NULL,
+    "PaymentMethodId" integer NOT NULL,
+    "DeliveryMethodId" integer NOT NULL,
+    "CustomerFirstName" text NOT NULL,
+    "CustomerLastName" text,
+    "CustomerPhone" text NOT NULL,
+    "CustomerEmail" text,
+    "CustomerAddress" text,
+    "Note" text,
+    "Created" timestamp NOT NULL,
+    CONSTRAINT "PK_Orders" PRIMARY KEY ("Id"),
+    CONSTRAINT "FK_Orders_OrderStates" FOREIGN KEY ("OrderStateId")
+          REFERENCES public."OrderStates" ("Id") MATCH SIMPLE
+          ON UPDATE NO ACTION
+          ON DELETE CASCADE,
+    CONSTRAINT "FK_Orders_PaymentMethods" FOREIGN KEY ("PaymentMethodId")
+          REFERENCES public."PaymentMethods" ("Id") MATCH SIMPLE
+          ON UPDATE NO ACTION
+          ON DELETE CASCADE,
+    CONSTRAINT "FK_Orders_DeliveryMethods" FOREIGN KEY ("DeliveryMethodId")
+          REFERENCES public."DeliveryMethods" ("Id") MATCH SIMPLE
+          ON UPDATE NO ACTION
+          ON DELETE CASCADE
+);
+
+ALTER TABLE "Orders" OWNER TO postgres;
+
+-- Positions
+CREATE TABLE "Positions" (
+    "Id" serial NOT NULL,
+    "CartId" integer,
+    "OrderId" integer,
+    "ProductId" integer NOT NULL,
+    "Price" numeric NOT NULL,
+    "Quantity" numeric NOT NULL,
+    "Subtotal" numeric NOT NULL,
+    CONSTRAINT "PK_Positions" PRIMARY KEY ("Id"),
+    CONSTRAINT "FK_Positions_Carts" FOREIGN KEY ("CartId")
+        REFERENCES public."Carts" ("Id") MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE CASCADE,
+    CONSTRAINT "FK_Positions_Orders" FOREIGN KEY ("OrderId")
+        REFERENCES public."Orders" ("Id") MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE CASCADE,
+    CONSTRAINT "FK_Positions_Products" FOREIGN KEY ("ProductId")
+        REFERENCES public."Products" ("Id") MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE CASCADE
+);
+
+ALTER TABLE "Positions" OWNER TO postgres;

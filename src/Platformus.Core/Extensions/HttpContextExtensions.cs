@@ -36,6 +36,13 @@ namespace Platformus.Core.Extensions
       return httpContext.RequestServices.GetService<ICultureManager>();
     }
 
+    public static async Task<string> CreateLocalizedOrderBy(this HttpContext httpContext, string propertyName)
+    {
+      ICultureManager cultureManager = httpContext.GetCultureManager();
+
+      return $"{propertyName}.Localizations.First(l=>l.Culture.Code=\"{(await cultureManager.GetCurrentCultureAsync()).Code}\").Value";
+    }
+
     public static IUserManager GetUserManager(this HttpContext httpContext)
     {
       return httpContext.RequestServices.GetService<IUserManager>();

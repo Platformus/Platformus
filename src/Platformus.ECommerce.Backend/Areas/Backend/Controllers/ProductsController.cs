@@ -7,6 +7,7 @@ using Magicalizer.Data.Repositories.Abstractions;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Platformus.Core.Extensions;
 using Platformus.ECommerce.Backend.ViewModels.Products;
 using Platformus.ECommerce.Data.Entities;
 using Platformus.ECommerce.Events;
@@ -28,9 +29,12 @@ namespace Platformus.ECommerce.Backend.Controllers
     {
     }
 
-    public async Task<IActionResult> IndexAsync([FromQuery]ProductFilter filter = null, string orderBy = "+code", int skip = 0, int take = 10)
+    public async Task<IActionResult> IndexAsync([FromQuery]ProductFilter filter = null, string orderBy = null, int skip = 0, int take = 10)
     {
-      return this.View(new IndexViewModelFactory().Create(
+      if (string.IsNullOrEmpty(orderBy))
+        orderBy = "+" + await this.HttpContext.CreateLocalizedOrderBy("Name");
+
+      return this.View(await new IndexViewModelFactory().CreateAsync(
         this.HttpContext, filter,
         await this.Repository.GetAllAsync(
           filter, orderBy, skip, take,

@@ -29,6 +29,7 @@
         var value = descriptor.takeFromUrl ? parameters[descriptor.name] : descriptor.value;
 
         if (value != null) {
+          value = encodeURIComponent(value);
           result += (platformus.string.isNullOrEmpty(result) ? "?" : "&") + descriptor.name + "=" + value;
         }
       }
@@ -39,6 +40,7 @@
         var value = parameters[parameter];
 
         if (!platformus.string.isNullOrEmpty(value)) {
+          value = encodeURIComponent(value);
           result += (platformus.string.isNullOrEmpty(result) ? "?" : "&") + parameter + "=" + value;
         }
       }

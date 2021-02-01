@@ -32,6 +32,10 @@
   height: 500px;
 }
 
+.field__text-area--small {
+  height: 100px;
+}
+
 .field__text-area--multilingual {
 }
 

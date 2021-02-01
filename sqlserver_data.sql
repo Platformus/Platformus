@@ -1,7 +1,7 @@
 BEGIN TRANSACTION;
 --
 -- Extension: Platformus.Core
--- Version: 2.0.0-alpha4
+-- Version: 2.0.0-alpha5
 --
 SET IDENTITY_INSERT [dbo].[Users] ON;
 INSERT INTO [dbo].[Users] ([Id], [Name], [Created]) VALUES (1, N'Administrator', N'2017-01-01 00:00:00.000');
@@ -41,6 +41,11 @@ INSERT INTO [dbo].[Permissions] ([Id], [Code], [Name], [Position]) VALUES (13, N
 INSERT INTO [dbo].[Permissions] ([Id], [Code], [Name], [Position]) VALUES (14, N'ManageCatalogs', N'Manage catalogs',1400);
 INSERT INTO [dbo].[Permissions] ([Id], [Code], [Name], [Position]) VALUES (15, N'ManageCategories', N'Manage categories',1500);
 INSERT INTO [dbo].[Permissions] ([Id], [Code], [Name], [Position]) VALUES (16, N'ManageProducts', N'Manage products',1600);
+INSERT INTO [dbo].[Permissions] ([Id], [Code], [Name], [Position]) VALUES (17, N'ManageOrderStates', N'Manage order states',1700);
+INSERT INTO [dbo].[Permissions] ([Id], [Code], [Name], [Position]) VALUES (18, N'ManagePaymentMethods', N'Manage payment methods',1800);
+INSERT INTO [dbo].[Permissions] ([Id], [Code], [Name], [Position]) VALUES (19, N'ManageDeliveryMethods', N'Manage delivery methods',1900);
+INSERT INTO [dbo].[Permissions] ([Id], [Code], [Name], [Position]) VALUES (20, N'ManageCarts', N'Manage carts',2000);
+INSERT INTO [dbo].[Permissions] ([Id], [Code], [Name], [Position]) VALUES (21, N'ManageOrders', N'Manage orders',2100);
 SET IDENTITY_INSERT [dbo].[Permissions] OFF;
 
 INSERT INTO [dbo].[RolePermissions] ([RoleId], [PermissionId]) VALUES (1, 1);
@@ -73,7 +78,7 @@ SET IDENTITY_INSERT [dbo].[Cultures] OFF;
 
 --
 -- Extension: Platformus.Website
--- Version: 2.0.0-alpha4
+-- Version: 2.0.0-alpha5
 --
 SET IDENTITY_INSERT [dbo].[DataTypes] ON;
 INSERT INTO [dbo].[DataTypes] ([Id], [StorageDataType], [JavaScriptEditorClassName], [Name], [Position]) VALUES (1, N'string', N'singleLinePlainText', N'Single line plain text', 1);

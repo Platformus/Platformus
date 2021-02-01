@@ -117,6 +117,9 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="#" xml:space="preserve">
+    <value>№</value>
+  </data>
   <data name="Created" xml:space="preserve">
     <value>Дата та час створення</value>
   </data>
@@ -125,9 +128,6 @@
   </data>
   <data name="Delivery method" xml:space="preserve">
     <value>Метод доставки</value>
-  </data>
-  <data name="Identifier" xml:space="preserve">
-    <value>Ідентифікатор</value>
   </data>
   <data name="Order state" xml:space="preserve">
     <value>Стан замовлення</value>

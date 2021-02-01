@@ -2,6 +2,7 @@
 // Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information.
 
 using Magicalizer.Filters.Abstractions;
+using Platformus.Core.Filters;
 
 namespace Platformus.ECommerce.Filters
 {
@@ -10,6 +11,8 @@ namespace Platformus.ECommerce.Filters
     public IntegerFilter Id { get; set; }
     public CatalogFilter Owner { get; set; }
     public string Url { get; set; }
-    public StringFilter Name { get; set; }
+
+    [FilterShortcut("Name.Localizations[]")]
+    public LocalizationFilter Name { get; set; }
   }
 }

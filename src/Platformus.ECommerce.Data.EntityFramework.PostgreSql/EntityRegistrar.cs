@@ -46,6 +46,63 @@ namespace Platformus.ECommerce.Data.EntityFramework.PostgreSql
           etb.ToTable("Photos");
         }
       );
+
+      modelBuilder.Entity<OrderState>(etb =>
+        {
+          etb.HasKey(e => e.Id);
+          etb.Property(e => e.Id).ValueGeneratedOnAdd();
+          etb.Property(e => e.Code).IsRequired().HasMaxLength(32);
+          etb.ToTable("OrderStates");
+        }
+      );
+
+      modelBuilder.Entity<PaymentMethod>(etb =>
+        {
+          etb.HasKey(e => e.Id);
+          etb.Property(e => e.Id).ValueGeneratedOnAdd();
+          etb.Property(e => e.Code).IsRequired().HasMaxLength(32);
+          etb.ToTable("PaymentMethods");
+        }
+      );
+
+      modelBuilder.Entity<DeliveryMethod>(etb =>
+        {
+          etb.HasKey(e => e.Id);
+          etb.Property(e => e.Id).ValueGeneratedOnAdd();
+          etb.Property(e => e.Code).IsRequired().HasMaxLength(32);
+          etb.ToTable("DeliveryMethods");
+        }
+      );
+
+      modelBuilder.Entity<Position>(etb =>
+        {
+          etb.HasKey(e => e.Id);
+          etb.Property(e => e.Id).ValueGeneratedOnAdd();
+          etb.ToTable("Positions");
+        }
+      );
+
+      modelBuilder.Entity<Cart>(etb =>
+        {
+          etb.HasKey(e => e.Id);
+          etb.Property(e => e.Id).ValueGeneratedOnAdd();
+          etb.ToTable("Carts");
+        }
+      );
+
+      modelBuilder.Entity<Order>(etb =>
+        {
+          etb.HasKey(e => e.Id);
+          etb.Property(e => e.Id).ValueGeneratedOnAdd();
+          etb.Property(e => e.CustomerFirstName).IsRequired().HasMaxLength(64);
+          etb.Property(e => e.CustomerLastName).HasMaxLength(64);
+          etb.Property(e => e.CustomerPhone).IsRequired().HasMaxLength(32);
+          etb.Property(e => e.CustomerEmail).HasMaxLength(64);
+          etb.Property(e => e.CustomerAddress).HasMaxLength(128);
+          etb.Property(e => e.Note).HasMaxLength(1024);
+          etb.ToTable("Orders");
+        }
+      );
     }
   }
 }

@@ -117,8 +117,14 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="Add position" xml:space="preserve">
+    <value>Добавить позицию</value>
+  </data>
   <data name="Cancel" xml:space="preserve">
     <value>Отмена</value>
+  </data>
+  <data name="Category" xml:space="preserve">
+    <value>Категория</value>
   </data>
   <data name="Create Order" xml:space="preserve">
     <value>Добавление заказа</value>
@@ -126,7 +132,28 @@
   <data name="Edit Order" xml:space="preserve">
     <value>Редактирование заказа</value>
   </data>
+  <data name="Name" xml:space="preserve">
+    <value>Название</value>
+  </data>
+  <data name="Positions" xml:space="preserve">
+    <value>Позиции</value>
+  </data>
+  <data name="Price" xml:space="preserve">
+    <value>Цена</value>
+  </data>
+  <data name="Product" xml:space="preserve">
+    <value>Товар</value>
+  </data>
+  <data name="Quantity" xml:space="preserve">
+    <value>Количество</value>
+  </data>
   <data name="Save" xml:space="preserve">
     <value>Сохранить</value>
+  </data>
+  <data name="Subtotal" xml:space="preserve">
+    <value>Сумма</value>
+  </data>
+  <data name="Total" xml:space="preserve">
+    <value>Итого</value>
   </data>
 </root>

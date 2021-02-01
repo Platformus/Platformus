@@ -120,7 +120,4 @@
   <data name="Carts" xml:space="preserve">
     <value>Корзины</value>
   </data>
-  <data name="Create cart" xml:space="preserve">
-    <value>Добавить корзину</value>
-  </data>
 </root>
