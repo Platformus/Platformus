@@ -287,7 +287,7 @@ CREATE TABLE "FieldTypes" (
 	"Code" TEXT NOT NULL,
 	"Name" TEXT NOT NULL,
 	"Position" INTEGER,
-  "ValidatorCSharpClassName" TEXT,
+  "ValidatorCSharpClassName" TEXT
 );
 
 -- Fields
