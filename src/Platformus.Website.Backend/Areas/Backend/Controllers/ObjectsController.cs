@@ -175,16 +175,16 @@ namespace Platformus.Website.Backend.Controllers
         {
           string memberIdAndCultureCode = key.Replace("propertyMember", string.Empty);
           string memberId = memberIdAndCultureCode.Remove(memberIdAndCultureCode.Length - 2);
-          string cultureCode = memberIdAndCultureCode.Substring(memberIdAndCultureCode.Length - 2);
+          string cultureId = memberIdAndCultureCode.Substring(memberIdAndCultureCode.Length - 2);
 
-          await this.CreatePropertyAsync(@class, @object, int.Parse(memberId), cultureCode, this.Request.Form[key]);
+          await this.CreatePropertyAsync(@class, @object, int.Parse(memberId), cultureId, this.Request.Form[key]);
         }
       }
 
       await this.Storage.SaveAsync();
     }
 
-    private async Task CreatePropertyAsync(Class @class, Object @object, int memberId, string cultureCode, string value)
+    private async Task CreatePropertyAsync(Class @class, Object @object, int memberId, string cultureId, string value)
     {
       Member member = @class.GetMembers().FirstOrDefault(m => m.Id == memberId);
       Property property = @object.Properties?.FirstOrDefault(p => p.MemberId == memberId) ?? new Property();
@@ -212,7 +212,7 @@ namespace Platformus.Website.Backend.Controllers
         Localization localization = new Localization();
 
         localization.DictionaryId = (int)property.StringValueId;
-        localization.CultureId = (await this.HttpContext.GetCultureManager().GetCultureAsync(cultureCode)).Id;
+        localization.CultureId = (await this.HttpContext.GetCultureManager().GetCultureAsync(cultureId)).Id;
         localization.Value = value;
         this.Storage.GetRepository<int, Localization, LocalizationFilter>().Create(localization);
       }

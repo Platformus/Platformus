@@ -45,7 +45,7 @@
   };
 
   platformus.memberEditors.base.createFlag = function (localization) {
-    return $("<div>").addClass("field__culture-flag").html(localization.culture.code);
+    return $("<div>").addClass("field__culture-flag").html(localization.culture.id);
   };
 
   platformus.memberEditors.base.createMultilingualSeparator = function () {
@@ -53,6 +53,6 @@
   };
 
   platformus.memberEditors.base.getIdentity = function (member, localization) {
-    return "propertyMember" + member.id + (localization == null ? "__" : localization.culture.code);
+    return "propertyMember" + member.id + (localization == null ? "__" : localization.culture.id);
   };
 })(window.platformus = window.platformus || {});

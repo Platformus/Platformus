@@ -1,7 +1,7 @@
 BEGIN TRANSACTION;
 --
 -- Extension: Platformus.Core
--- Version: 2.0.0-alpha5
+-- Version: 2.0.0-alpha6
 --
 
 -- Users
@@ -85,8 +85,7 @@ CREATE TABLE "Variables" (
 
 -- Cultures
 CREATE TABLE "Cultures" (
-	"Id" INTEGER NOT NULL CONSTRAINT "PK_Culture" PRIMARY KEY AUTOINCREMENT,
-	"Code" TEXT NOT NULL,
+	"Id" TEXT NOT NULL CONSTRAINT "PK_Culture" PRIMARY KEY,
 	"Name" TEXT NOT NULL,
 	"IsNeutral" INTEGER NOT NULL,
 	"IsFrontendDefault" INTEGER NOT NULL,
@@ -102,7 +101,7 @@ CREATE TABLE "Dictionaries" (
 CREATE TABLE "Localizations" (
 	"Id" INTEGER NOT NULL CONSTRAINT "PK_Localization" PRIMARY KEY AUTOINCREMENT,
 	"DictionaryId" INTEGER NOT NULL,
-	"CultureId" INTEGER NOT NULL,
+	"CultureId" TEXT NOT NULL,
 	"Value" TEXT,
 	CONSTRAINT "FK_Localization_Dictionary_DictionaryId" FOREIGN KEY ("DictionaryId") REFERENCES "Dictionaries" ("Id") ON DELETE CASCADE,
 	CONSTRAINT "FK_Localization_Culture_CultureId" FOREIGN KEY ("CultureId") REFERENCES "Cultures" ("Id") ON DELETE CASCADE
@@ -110,7 +109,7 @@ CREATE TABLE "Localizations" (
 
 --
 -- Extension: Platformus.Website
--- Version: 2.0.0-alpha5
+-- Version: 2.0.0-alpha6
 --
 
 -- Endpoints
@@ -342,7 +341,7 @@ CREATE TABLE "Files" (
 
 --
 -- Extension: Platformus.ECommerce
--- Version: 2.0.0-alpha5
+-- Version: 2.0.0-alpha6
 --
 
 -- Catalogs

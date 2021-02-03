@@ -47,6 +47,6 @@
 @section startUpScript {
   @foreach (var culture in await this.CultureManager.GetNotNeutralCulturesAsync())
   {
-    @:platformus.ui.initializeTinyMce("description@(culture.Code)");
+    @:platformus.ui.initializeTinyMce("description@(culture.Id)");
   }
 }

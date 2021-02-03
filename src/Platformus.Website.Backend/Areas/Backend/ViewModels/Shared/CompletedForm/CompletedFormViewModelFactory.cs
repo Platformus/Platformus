@@ -9,12 +9,12 @@ namespace Platformus.Website.Backend.ViewModels.Shared
 {
   public class CompletedFormViewModelFactory : ViewModelFactoryBase
   {
-    public CompletedFormViewModel Create(HttpContext httpContext, CompletedForm completedForm)
+    public CompletedFormViewModel Create(CompletedForm completedForm)
     {
       return new CompletedFormViewModel()
       {
         Id = completedForm.Id,
-        Form = new FormViewModelFactory().Create(httpContext, completedForm.Form),
+        Form = new FormViewModelFactory().Create(completedForm.Form),
         Created = completedForm.Created
       };
     }

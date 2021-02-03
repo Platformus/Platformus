@@ -7,12 +7,10 @@ namespace Platformus.Core.Backend.ViewModels.Cultures
 {
   public class CreateOrEditViewModel : ViewModelBase
   {
-    public int? Id { get; set; }
-
-    [Display(Name = "Code")]
+    [Display(Name = "Two letter country code (ISO 3166)")]
     [Required]
     [StringLength(32)]
-    public string Code { get; set; }
+    public string Id { get; set; }
 
     [Display(Name = "Name")]
     [Required]

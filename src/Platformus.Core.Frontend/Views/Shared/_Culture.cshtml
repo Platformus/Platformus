@@ -4,26 +4,26 @@
 @inject Platformus.Core.Services.Abstractions.ICultureManager CultureManager
 @{
   string url = this.Context.Request.Path;
-  string cultureCode = System.Globalization.CultureInfo.CurrentCulture.TwoLetterISOLanguageName;
+  string cultureId = System.Globalization.CultureInfo.CurrentCulture.TwoLetterISOLanguageName;
 
-  if (url.StartsWith($"/{cultureCode}/", StringComparison.OrdinalIgnoreCase))
+  if (url.StartsWith($"/{cultureId}/"))
   {
-    url = url.Replace($"/{cultureCode}/", $"/{this.Model.Code}/");
+    url = url.Replace($"/{cultureId}/", $"/{this.Model.Id}/");
   }
 
   else
   {
-    url = $"/{this.Model.Code}/";
+    url = $"/{this.Model.Id}/";
   }
 
-  if (string.Equals(url, $"/{CultureManager.GetFrontendDefaultCultureAsync().Result.Code}/", StringComparison.OrdinalIgnoreCase))
+  if (url == $"/{CultureManager.GetFrontendDefaultCultureAsync().Result.Id}/")
   {
     url = "/";
   }
 
   url += this.Context.Request.QueryString;
 
-  bool isActive = string.Equals(this.Model.Code, cultureCode, StringComparison.OrdinalIgnoreCase);
+  bool isActive = this.Model.Id == cultureId;
 }
 <div class="cultures__culture @(isActive ? "cultures__culture--active" : null)">
   <a class="cultures__culture-name @(isActive ? "cultures__culture-name--active" : null)" href="@url">@Model.Name</a>

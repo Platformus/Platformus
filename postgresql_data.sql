@@ -1,8 +1,10 @@
 BEGIN TRANSACTION;
+
 --
 -- Extension: Platformus.Core
--- Version: 2.0.0-alpha5
+-- Version: 2.0.0-alpha6
 --
+
 INSERT INTO public."Users" ("Id","Name","Created") VALUES (1,'Administrator','2017-01-01 00:00:00.000000');
 ALTER SEQUENCE "Users_Id_seq" RESTART WITH 2;
 INSERT INTO public."CredentialTypes" ("Id","Code","Name","Position") VALUES (1,'Email','Email',1);
@@ -55,14 +57,14 @@ INSERT INTO public."Variables" ("Id","ConfigurationId","Code","Name","Value","Po
 INSERT INTO public."Variables" ("Id","ConfigurationId","Code","Name","Value","Position") VALUES (7,1,'SmtpSenderName','SMTP sender name','test',7);
 INSERT INTO public."Variables" ("Id","ConfigurationId","Code","Name","Value","Position") VALUES (8,2,'SpecifyCultureInUrl','Specify culture in URL','yes',1);
 ALTER SEQUENCE "Variables_Id_seq" RESTART WITH 8;
-INSERT INTO public."Cultures" ("Id","Code","Name","IsNeutral","IsFrontendDefault","IsBackendDefault") VALUES (1,'__','Neutral',TRUE,FALSE,FALSE);
-INSERT INTO public."Cultures" ("Id","Code","Name","IsNeutral","IsFrontendDefault","IsBackendDefault") VALUES (2,'en','English',FALSE,TRUE,TRUE);
-ALTER SEQUENCE "Cultures_Id_seq" RESTART WITH 3;
+INSERT INTO public."Cultures" ("Id","Name","IsNeutral","IsFrontendDefault","IsBackendDefault") VALUES ('__','Neutral',TRUE,FALSE,FALSE);
+INSERT INTO public."Cultures" ("Id","Name","IsNeutral","IsFrontendDefault","IsBackendDefault") VALUES ('en','English',FALSE,TRUE,TRUE);
 
 --
 -- Extension: Platformus.Website
--- Version: 2.0.0-alpha5
+-- Version: 2.0.0-alpha6
 --
+
 INSERT INTO public."DataTypes" ("Id","StorageDataType","JavaScriptEditorClassName","Name","Position") VALUES (1,'string','singleLinePlainText','Single line plain text',1);
 INSERT INTO public."DataTypes" ("Id","StorageDataType","JavaScriptEditorClassName","Name","Position") VALUES (2,'string','multilinePlainText','Multiline plain text',2);
 INSERT INTO public."DataTypes" ("Id","StorageDataType","JavaScriptEditorClassName","Name","Position") VALUES (3,'string','html','Html',3);

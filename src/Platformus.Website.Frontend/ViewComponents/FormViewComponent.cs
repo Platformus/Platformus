@@ -40,7 +40,7 @@ namespace Platformus.Website.Frontend.ViewComponents
       if (form == null)
         return this.Content($"There is no form with code “{code}” defined.");
 
-      return this.View(new FormViewModelFactory().Create(this.HttpContext, form, partialViewName, additionalCssClass));
+      return this.View(new FormViewModelFactory().Create(form, partialViewName, additionalCssClass));
     }
   }
 }

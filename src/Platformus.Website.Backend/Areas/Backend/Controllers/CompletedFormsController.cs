@@ -37,7 +37,7 @@ namespace Platformus.Website.Backend.Controllers
     public async Task<IActionResult> ViewAsync(int id)
     {
       return this.View(new ViewViewModelFactory().Create(
-        this.HttpContext, await this.Repository.GetByIdAsync(id, new Inclusion<CompletedForm>("CompletedFields"))
+        await this.Repository.GetByIdAsync(id, new Inclusion<CompletedForm>("CompletedFields"))
       ));
     }
 

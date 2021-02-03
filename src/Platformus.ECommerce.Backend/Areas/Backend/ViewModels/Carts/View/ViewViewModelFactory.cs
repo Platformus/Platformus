@@ -2,7 +2,6 @@
 // Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information.
 
 using System.Linq;
-using Microsoft.AspNetCore.Http;
 using Platformus.Core.Backend.ViewModels;
 using Platformus.ECommerce.Backend.ViewModels.Shared;
 using Platformus.ECommerce.Data.Entities;
@@ -11,12 +10,12 @@ namespace Platformus.ECommerce.Backend.ViewModels.Carts
 {
   public class ViewViewModelFactory : ViewModelFactoryBase
   {
-    public ViewViewModel Create(HttpContext httpContext, Cart cart)
+    public ViewViewModel Create(Cart cart)
     {
       return new ViewViewModel()
       {
         Id = cart.Id,
-        Positions = cart.Positions.Select(p => new PositionViewModelFactory().Create(httpContext, p)),
+        Positions = cart.Positions.Select(p => new PositionViewModelFactory().Create( p)),
         Total = cart.GetTotal()
       };
     }

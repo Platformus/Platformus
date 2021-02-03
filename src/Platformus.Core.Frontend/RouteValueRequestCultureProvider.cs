@@ -15,18 +15,18 @@ namespace Platformus.Core.Frontend
   {
     public override async Task<ProviderCultureResult> DetermineProviderCultureResult(HttpContext httpContext)
     {
-      string cultureCode = await this.GetDefaultCultureCodeAsync(httpContext);
+      string cultureId = await this.GetDefaultCultureCodeAsync(httpContext);
       string url = httpContext.Request.Path;
 
       if (url.Length >= 4 && url[0] == '/' && url[3] == '/')
       {
-        cultureCode = httpContext.Request.Path.Value.Substring(1, 2);
+        cultureId = httpContext.Request.Path.Value.Substring(1, 2);
 
-        if (!await this.CheckCultureAsync(httpContext, cultureCode))
+        if (!await this.CheckCultureAsync(httpContext, cultureId))
           throw new HttpException(HttpStatusCode.NotFound);
       }
 
-      ProviderCultureResult requestCulture = new ProviderCultureResult(cultureCode);
+      ProviderCultureResult requestCulture = new ProviderCultureResult(cultureId);
 
       return requestCulture;
     }
@@ -36,19 +36,19 @@ namespace Platformus.Core.Frontend
       Data.Entities.Culture frontendDefaultCulture = await httpContext.GetCultureManager().GetFrontendDefaultCultureAsync();
 
       if (frontendDefaultCulture == null)
-        return DefaultCulture.Code;
+        return DefaultCulture.Id;
 
-      return frontendDefaultCulture.Code;
+      return frontendDefaultCulture.Id;
     }
 
-    private async Task<bool> CheckCultureAsync(HttpContext httpContext, string cultureCode)
+    private async Task<bool> CheckCultureAsync(HttpContext httpContext, string cultureId)
     {
       ICultureManager cultureManager = httpContext.GetCultureManager();
 
       if ((await cultureManager.GetNotNeutralCulturesAsync()).Count() == 0)
-        return cultureCode == DefaultCulture.Code;
+        return cultureId == DefaultCulture.Id;
 
-      return (await cultureManager.GetNotNeutralCulturesAsync()).Any(c => c.Code == cultureCode);
+      return (await cultureManager.GetNotNeutralCulturesAsync()).Any(c => c.Id == cultureId);
     }
   }
 }

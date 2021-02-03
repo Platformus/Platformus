@@ -2,7 +2,6 @@
 // Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information.
 
 using System.Linq;
-using Microsoft.AspNetCore.Http;
 using Platformus.Core.Frontend.ViewModels;
 using Platformus.ECommerce.Data.Entities;
 
@@ -10,7 +9,7 @@ namespace Platformus.ECommerce.Frontend.ViewModels.Shared
 {
   public class ProductViewModelFactory : ViewModelFactoryBase
   {
-    public ProductViewModel Create(HttpContext httpContext, Product product)
+    public ProductViewModel Create(Product product)
     {
       Photo cover = product.Photos.FirstOrDefault(p => p.IsCover);
 
@@ -18,7 +17,7 @@ namespace Platformus.ECommerce.Frontend.ViewModels.Shared
       {
         Id = product.Id,
         Url = product.Url,
-        Name = product.Name.GetLocalizationValue(httpContext),
+        Name = product.Name.GetLocalizationValue(),
         Price = product.Price,
         Cover = cover == null ? null : new PhotoViewModelFactory().Create(cover)
       };

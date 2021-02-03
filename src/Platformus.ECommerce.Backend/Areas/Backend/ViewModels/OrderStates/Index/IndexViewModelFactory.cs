@@ -3,7 +3,6 @@
 
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Localization;
@@ -18,7 +17,7 @@ namespace Platformus.ECommerce.Backend.ViewModels.OrderStates
 {
   public class IndexViewModelFactory : ViewModelFactoryBase
   {
-    public async Task<IndexViewModel> CreateAsync(HttpContext httpContext, OrderStateFilter filter, IEnumerable<OrderState> orderStates, string orderBy, int skip, int take, int total)
+    public IndexViewModel Create(HttpContext httpContext, OrderStateFilter filter, IEnumerable<OrderState> orderStates, string orderBy, int skip, int take, int total)
     {
       IStringLocalizer<IndexViewModelFactory> localizer = httpContext.RequestServices.GetService<IStringLocalizer<IndexViewModelFactory>>();
 
@@ -27,11 +26,11 @@ namespace Platformus.ECommerce.Backend.ViewModels.OrderStates
         Grid = new GridViewModelFactory().Create(
           httpContext, "Name.Value.Contains", orderBy, skip, take, total,
           new[] {
-            new GridColumnViewModelFactory().Create(localizer["Name"], await httpContext.CreateLocalizedOrderBy("Name")),
+            new GridColumnViewModelFactory().Create(localizer["Name"], httpContext.CreateLocalizedOrderBy("Name")),
             new GridColumnViewModelFactory().Create(localizer["Position"], "Position"),
             new GridColumnViewModelFactory().CreateEmpty()
           },
-          orderStates.Select(os => new OrderStateViewModelFactory().Create(httpContext, os)),
+          orderStates.Select(os => new OrderStateViewModelFactory().Create(os)),
           "_OrderState"
         )
       };

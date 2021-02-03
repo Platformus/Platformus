@@ -1,4 +1,4 @@
-# Platformus 2.0.0-alpha5
+# Platformus 2.0.0-alpha6
 
 [![Join the chat at https://gitter.im/Platformus/Platformus](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/Platformus/Platformus?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
@@ -6,9 +6,8 @@
 
 ## Introduction
 
-Platformus is free, open source and cross-platform CMS based on ASP.NET Core and
-[ExtCore framework](https://github.com/ExtCore/ExtCore). It is built using the best and the most
-modern tools and languages (Visual Studio 2019, C# etc). Join our team!
+[Platformus](https://github.com/Platformus/Platformus) is free, open source and cross-platform developer-friendly CMS
+based on ASP.NET Core and [ExtCore framework](https://github.com/ExtCore/ExtCore). Join our team!
 
 ### Few Facts About Platformus
 
@@ -56,6 +55,7 @@ Please take a look at our samles on GitHub:
 * [Platformus-Sample-Personal-Website ](https://github.com/Platformus/Platformus-Sample-Personal-Website );
 * [Platformus-Sample-Personal-Blog ](https://github.com/Platformus/Platformus-Sample-Personal-Blog );
 * [Platformus-Sample-Ecommerce ](https://github.com/Platformus/Platformus-Sample-Ecommerce ).
+* [Platformus-Sample-Mobile-App-Admin-Panel ](https://github.com/Platformus/Platformus-Sample-Mobile-App-Admin-Panel ).
 
 These samples contain everything you need to run Platformus-based web application from Visual Studio 2019, including SQLite
 database with the test data (and SQL scripts for other DB types).

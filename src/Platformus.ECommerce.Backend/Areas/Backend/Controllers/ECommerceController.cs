@@ -37,7 +37,7 @@ namespace Platformus.ECommerce.Backend.Controllers
         new Inclusion<Category>(c => c.Name.Localizations)
       );
 
-      return this.Json(new CategoryViewModelFactory().Create(this.HttpContext, category));
+      return this.Json(new CategoryViewModelFactory().Create(category));
     }
 
     public async Task<IActionResult> ProductSelectorFormAsync(int? productId)
@@ -63,7 +63,7 @@ namespace Platformus.ECommerce.Backend.Controllers
         new Inclusion<Product>(p => p.Name.Localizations)
       );
 
-      return this.Json(new ProductViewModelFactory().Create(this.HttpContext, product));
+      return this.Json(new ProductViewModelFactory().Create(product));
     }
   }
 }

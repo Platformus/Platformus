@@ -53,7 +53,7 @@ namespace Platformus.Core.Backend
 
       foreach (Localization localization in this.Localizations)
       {
-        if (localization.Culture.Code != "__")
+        if (localization.Culture.Id != NeutralCulture.Id)
         {
           tb.InnerHtml.AppendHtml(fieldGenerator.GenerateCulture(localization));
           tb.InnerHtml.AppendHtml(new TextAreaGenerator().GenerateTextArea(this.ViewContext, this.For, attributes, localization, "field__text-area field__text-area--multilingual" + (this.Height == "small" ? " field__text-area--small" : null)));

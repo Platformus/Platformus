@@ -20,7 +20,7 @@
       for (var i = 0; i < member.property.stringValue.localizations.length; i++) {
         var localization = member.property.stringValue.localizations[i];
 
-        if (localization.culture.code == "__") {
+        if (localization.culture.id == "__") {
           createImageUploader(member, localization).appendTo(field);
         }
       }

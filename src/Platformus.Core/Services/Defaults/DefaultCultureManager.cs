@@ -1,7 +1,6 @@
 ﻿// Copyright © 2020 Dmitry Sikorsky. All rights reserved.
 // Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information.
 
-using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
@@ -24,14 +23,9 @@ namespace Platformus.Core.Services.Defaults
       this.storage = storage;
     }
 
-    public async Task<Culture> GetCultureAsync(int id)
+    public async Task<Culture> GetCultureAsync(string id)
     {
-      return this.GetCachedCulturesAsync().Result.FirstOrDefault(c => c.Id == id);
-    }
-
-    public async Task<Culture> GetCultureAsync(string code)
-    {
-      return this.GetCachedCulturesAsync().Result.FirstOrDefault(c => string.Equals(c.Code, code, StringComparison.OrdinalIgnoreCase));
+      return (await this.GetCachedCulturesAsync()).FirstOrDefault(c => c.Id == id);
     }
 
     public async Task<Culture> GetNeutralCultureAsync()
@@ -41,23 +35,23 @@ namespace Platformus.Core.Services.Defaults
 
     public async Task<Culture> GetFrontendDefaultCultureAsync()
     {
-      return this.GetCachedCulturesAsync().Result.FirstOrDefault(c => c.IsFrontendDefault);
+      return (await this.GetCachedCulturesAsync()).FirstOrDefault(c => c.IsFrontendDefault);
     }
 
     public async Task<Culture> GetBackendDefaultCultureAsync()
     {
-      return this.GetCachedCulturesAsync().Result.FirstOrDefault(c => c.IsBackendDefault);
+      return (await this.GetCachedCulturesAsync()).FirstOrDefault(c => c.IsBackendDefault);
     }
 
     public async Task<Culture> GetCurrentCultureAsync()
     {
-      Culture currentCulture = this.GetCachedCulturesAsync().Result.FirstOrDefault(
-        c => string.Equals(c.Code, CultureInfo.CurrentCulture.TwoLetterISOLanguageName, StringComparison.OrdinalIgnoreCase)
+      Culture currentCulture = (await this.GetCachedCulturesAsync()).FirstOrDefault(
+        c => c.Id == CultureInfo.CurrentCulture.TwoLetterISOLanguageName
       );
 
       if (currentCulture == null)
         currentCulture = this.GetCachedCulturesAsync().Result.FirstOrDefault(
-          c => string.Equals(c.Code, DefaultCulture.Code, StringComparison.OrdinalIgnoreCase)
+          c => c.Id == DefaultCulture.Id
         );
 
       return currentCulture;

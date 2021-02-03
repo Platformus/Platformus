@@ -24,7 +24,7 @@ namespace Platformus.ECommerce.Backend.ViewModels.ECommerce
         GridColumns = new[] {
           new GridColumnViewModelFactory().Create(localizer["Name"])
         },
-        Categories = categories.Select(c => new CategoryViewModelFactory().Create(httpContext, c)),
+        Categories = categories.Select(c => new CategoryViewModelFactory().Create(c)),
         CategoryId = categoryId
       };
     }

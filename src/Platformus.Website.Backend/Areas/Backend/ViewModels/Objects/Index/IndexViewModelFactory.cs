@@ -36,7 +36,7 @@ namespace Platformus.Website.Backend.ViewModels.Objects
         Grid = @class == null ? null : new GridViewModelFactory().Create(
           httpContext, null, orderBy, skip, take, total,
           this.GetGridColumns(@class),
-          objects.Select(o => new ObjectViewModelFactory().Create(httpContext, o, @class.GetVisibleInListMembers())),
+          objects.Select(o => new ObjectViewModelFactory().Create(o, @class.GetVisibleInListMembers())),
           "_Object"
         )
       };

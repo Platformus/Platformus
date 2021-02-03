@@ -23,6 +23,7 @@ namespace Platformus.Core.Backend.ViewModels.Cultures
         Grid = new GridViewModelFactory().Create(
           httpContext, "Name.Contains", orderBy, skip, take, total,
           new[] {
+            new GridColumnViewModelFactory().Create(localizer["Two letter country code (ISO 3166)"], "Id"),
             new GridColumnViewModelFactory().Create(localizer["Name"], "Name"),
             new GridColumnViewModelFactory().CreateEmpty()
           },

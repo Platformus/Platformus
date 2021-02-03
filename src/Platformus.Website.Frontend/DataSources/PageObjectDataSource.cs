@@ -34,7 +34,7 @@ namespace Platformus.Website.Frontend.DataSources
       if (@object == null)
         return null;
 
-      return this.CreateViewModel(httpContext, @object);
+      return this.CreateViewModel(@object);
     }
   }
 }

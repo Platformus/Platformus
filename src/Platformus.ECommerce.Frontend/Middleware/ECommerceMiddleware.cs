@@ -76,7 +76,7 @@ namespace Platformus.ECommerce.Frontend.Middleware
       if (product == null)
         return null;
 
-      ProductPageViewModel productPageViewModel = new ProductPageViewModelFactory().Create(httpContext, product);
+      ProductPageViewModel productPageViewModel = new ProductPageViewModelFactory().Create(product);
 
       return new ViewResult()
       {

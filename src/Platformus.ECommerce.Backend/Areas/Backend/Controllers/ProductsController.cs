@@ -32,9 +32,9 @@ namespace Platformus.ECommerce.Backend.Controllers
     public async Task<IActionResult> IndexAsync([FromQuery]ProductFilter filter = null, string orderBy = null, int skip = 0, int take = 10)
     {
       if (string.IsNullOrEmpty(orderBy))
-        orderBy = "+" + await this.HttpContext.CreateLocalizedOrderBy("Name");
+        orderBy = "+" + this.HttpContext.CreateLocalizedOrderBy("Name");
 
-      return this.View(await new IndexViewModelFactory().CreateAsync(
+      return this.View(new IndexViewModelFactory().Create(
         this.HttpContext, filter,
         await this.Repository.GetAllAsync(
           filter, orderBy, skip, take,

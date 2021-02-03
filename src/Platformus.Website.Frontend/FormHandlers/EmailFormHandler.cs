@@ -35,7 +35,7 @@ namespace Platformus.Website.Frontend.FormHandlers
       StringBuilder body = new StringBuilder();
 
       foreach (KeyValuePair<Field, string> valueByField in valuesByFields)
-        body.AppendFormat("<p>{0}: {1}</p>", valueByField.Key.Name.GetLocalizationValue(httpContext), valueByField.Value);
+        body.AppendFormat("<p>{0}: {1}</p>", valueByField.Key.Name.GetLocalizationValue(), valueByField.Value);
 
       ParametersParser parametersParser = new ParametersParser(form.Parameters);
       IEmailSender emailSender = httpContext.RequestServices.GetService<IEmailSender>();
@@ -48,7 +48,7 @@ namespace Platformus.Website.Frontend.FormHandlers
           foreach (string recipientEmail in recipientEmails.Split(','))
             await emailSender.SendEmailAsync(
               recipientEmail,
-              string.Format("{0} form data", form.Name.GetLocalizationValue(httpContext)),
+              string.Format("{0} form data", form.Name.GetLocalizationValue()),
               body.ToString(),
               attachmentsByFilenames
             );

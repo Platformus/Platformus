@@ -12,7 +12,6 @@ namespace Platformus.Core.Backend.ViewModels.Shared
       return new CultureViewModel()
       {
         Id = culture.Id,
-        Code = culture.Code,
         Name = culture.Name
       };
     }

@@ -54,7 +54,7 @@ namespace Platformus.ECommerce.Backend.ViewModels.Products
     private async Task<IEnumerable<Option>> GetCategoryOptionsAsync(HttpContext httpContext)
     {
       return (await httpContext.GetStorage().GetRepository<int, Category, CategoryFilter>().GetAllAsync(inclusions: new Inclusion<Category>(c => c.Name.Localizations))).Select(
-        c => new Option(c.Name.GetLocalizationValue(httpContext), c.Id.ToString())
+        c => new Option(c.Name.GetLocalizationValue(), c.Id.ToString())
       );
     }
   }

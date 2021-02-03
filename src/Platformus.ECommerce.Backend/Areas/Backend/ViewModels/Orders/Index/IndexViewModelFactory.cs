@@ -34,7 +34,7 @@ namespace Platformus.ECommerce.Backend.ViewModels.Orders
             new GridColumnViewModelFactory().Create(localizer["Created"], "Created"),
             new GridColumnViewModelFactory().CreateEmpty()
           },
-          orders.Select(o => new OrderViewModelFactory().Create(httpContext, o)),
+          orders.Select(o => new OrderViewModelFactory().Create(o)),
           "_Order"
         )
       };

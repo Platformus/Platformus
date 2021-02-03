@@ -3,7 +3,6 @@
 
 using System.Collections.Generic;
 using System.Linq;
-using Microsoft.AspNetCore.Http;
 using Platformus.Core.Backend.ViewModels;
 using Platformus.Website.Backend.ViewModels.Shared;
 using Platformus.Website.Data.Entities;
@@ -12,11 +11,11 @@ namespace Platformus.Website.Backend.ViewModels.Menus
 {
   public class IndexViewModelFactory : ViewModelFactoryBase
   {
-    public IndexViewModel Create(HttpContext httpContext, IEnumerable<Menu> menus)
+    public IndexViewModel Create(IEnumerable<Menu> menus)
     {
       return new IndexViewModel()
       {
-        Menus = menus.Select(m => new MenuViewModelFactory().Create(httpContext, m))
+        Menus = menus.Select(m => new MenuViewModelFactory().Create(m))
       };
     }
   }

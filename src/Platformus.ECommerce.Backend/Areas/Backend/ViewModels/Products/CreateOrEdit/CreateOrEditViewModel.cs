@@ -6,7 +6,6 @@ using System.ComponentModel.DataAnnotations;
 using Platformus.Core.Backend;
 using Platformus.Core.Backend.ViewModels;
 using Platformus.Core.Primitives;
-using Platformus.ECommerce.Backend.ViewModels.Shared;
 
 namespace Platformus.ECommerce.Backend.ViewModels.Products
 {

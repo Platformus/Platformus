@@ -3,8 +3,8 @@
 
 namespace Platformus.Core
 {
-  public static class DefaultCulture
+  public static class NeutralCulture
   {
-    public const string Id = "en";
+    public const string Id = "__";
   }
 }

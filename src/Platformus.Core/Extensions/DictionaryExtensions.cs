@@ -1,29 +1,29 @@
 ﻿// Copyright © 2020 Dmitry Sikorsky. All rights reserved.
 // Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information.
 
+using System.Globalization;
 using System.Linq;
-using Microsoft.AspNetCore.Http;
+using Platformus.Core;
 using Platformus.Core.Data.Entities;
-using Platformus.Core.Extensions;
 
 namespace Platformus
 {
   public static class DictionaryExtensions
   {
-    public static string GetLocalizationValue(this Dictionary dictionary, HttpContext httpContext)
+    public static string GetLocalizationValue(this Dictionary dictionary)
     {
       if (dictionary.Localizations == null)
         return string.Empty;
 
-      return dictionary.Localizations.FirstOrDefault(l => l.CultureId == httpContext.GetCultureManager().GetCurrentCultureAsync().Result.Id)?.Value;
+      return dictionary.Localizations.FirstOrDefault(l => l.CultureId == CultureInfo.CurrentCulture.TwoLetterISOLanguageName)?.Value;
     }
 
-    public static string GetNeutralLocalizationValue(this Dictionary dictionary, HttpContext httpContext)
+    public static string GetNeutralLocalizationValue(this Dictionary dictionary)
     {
       if (dictionary.Localizations == null)
         return string.Empty;
 
-      return dictionary.Localizations.FirstOrDefault(l => l.CultureId == httpContext.GetCultureManager().GetNeutralCultureAsync().Result.Id)?.Value;
+      return dictionary.Localizations.FirstOrDefault(l => l.CultureId == NeutralCulture.Id)?.Value;
     }
   }
 }

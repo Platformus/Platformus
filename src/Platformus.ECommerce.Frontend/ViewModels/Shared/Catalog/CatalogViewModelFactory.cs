@@ -17,7 +17,7 @@ namespace Platformus.ECommerce.Frontend.ViewModels.Shared
       return new CatalogViewModel()
       {
         Url = GlobalizedUrlFormatter.Format(httpContext, catalog.Url),
-        Name = catalog.Name.GetLocalizationValue(httpContext),
+        Name = catalog.Name.GetLocalizationValue(),
         Catalogs = catalog.Catalogs == null ? Array.Empty<CatalogViewModel>() : catalog.Catalogs.OrderBy(c => c.Position).Select(
           c => new CatalogViewModelFactory().Create(httpContext, c)
         ).ToArray()

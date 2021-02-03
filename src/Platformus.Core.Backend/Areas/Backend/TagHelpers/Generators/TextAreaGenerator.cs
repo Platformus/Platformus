@@ -26,7 +26,7 @@ namespace Platformus.Core.Backend
       tb.MergeAttribute("name", this.GetIdentity(modelExpression, localization));
 
       if (localization != null)
-        tb.MergeAttribute("data-culture", localization.Culture.Code);
+        tb.MergeAttribute("data-culture", localization.Culture.Id);
 
       this.MergeRequiredAttribute(tb, modelExpression, "text-area--required");
       this.MergeStringLengthAttribute(tb, modelExpression);

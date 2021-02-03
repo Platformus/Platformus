@@ -9,8 +9,7 @@ namespace Platformus.Core.Services.Abstractions
 {
   public interface ICultureManager
   {
-    Task<Culture> GetCultureAsync(int id);
-    Task<Culture> GetCultureAsync(string code);
+    Task<Culture> GetCultureAsync(string id);
     Task<Culture> GetNeutralCultureAsync();
     Task<Culture> GetFrontendDefaultCultureAsync();
     Task<Culture> GetBackendDefaultCultureAsync();

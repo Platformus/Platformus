@@ -3,7 +3,6 @@
 
 using System;
 using System.Linq;
-using Microsoft.AspNetCore.Http;
 using Platformus.Core.Frontend.ViewModels;
 using Platformus.ECommerce.Data.Entities;
 
@@ -11,13 +10,13 @@ namespace Platformus.ECommerce.Frontend.ViewModels.Shared
 {
   public class CategoryViewModelFactory : ViewModelFactoryBase
   {
-    public CategoryViewModel Create(HttpContext httpContext, Category category)
+    public CategoryViewModel Create(Category category)
     {
       return new CategoryViewModel()
       {
-        Name = category.Name.GetLocalizationValue(httpContext),
+        Name = category.Name.GetLocalizationValue(),
         Categories = category.Categories == null ? Array.Empty<CategoryViewModel>() : category.Categories.OrderBy(c => c.Position).Select(
-          c => new CategoryViewModelFactory().Create(httpContext, c)
+          c => new CategoryViewModelFactory().Create(c)
         ).ToArray()
       };
     }

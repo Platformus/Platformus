@@ -18,9 +18,9 @@ namespace Platformus.Core.Backend.Controllers
   [Authorize(Policy = Policies.HasManageCulturesPermission)]
   public class CulturesController : ControllerBase
   {
-    private IRepository<int, Culture, CultureFilter> Repository
+    private IRepository<string, Culture, CultureFilter> Repository
     {
-      get => this.Storage.GetRepository<int, Culture, CultureFilter>();
+      get => this.Storage.GetRepository<string, Culture, CultureFilter>();
     }
 
     public CulturesController(IStorage storage)
@@ -39,35 +39,35 @@ namespace Platformus.Core.Backend.Controllers
 
     [HttpGet]
     [ImportModelStateFromTempData]
-    public async Task<IActionResult> CreateOrEditAsync(int? id)
+    public async Task<IActionResult> CreateOrEditAsync(string id)
     {
       return this.View(new CreateOrEditViewModelFactory().Create(
-        id  == null ? null : await this.Repository.GetByIdAsync((int)id)
+        string.IsNullOrEmpty(id) ? null : await this.Repository.GetByIdAsync(id)
       ));
     }
 
     [HttpPost]
     [ExportModelStateToTempData]
-    public async Task<IActionResult> CreateOrEditAsync(CreateOrEditViewModel createOrEdit)
+    public async Task<IActionResult> CreateOrEditAsync([FromQuery]string id, CreateOrEditViewModel createOrEdit)
     {
-      if (createOrEdit.Id == null && !await this.IsCodeUniqueAsync(createOrEdit.Code))
+      if (string.IsNullOrEmpty(id) && !await this.IsIdUniqueAsync(createOrEdit.Id))
         this.ModelState.AddModelError("code", string.Empty);
 
       if (this.ModelState.IsValid)
       {
         Culture culture = new CreateOrEditViewModelMapper().Map(
-          createOrEdit.Id == null ? new Culture() : await this.Repository.GetByIdAsync((int)createOrEdit.Id),
+          string.IsNullOrEmpty(id) ? new Culture() : await this.Repository.GetByIdAsync(createOrEdit.Id),
           createOrEdit
         );
 
-        if (createOrEdit.Id == null)
+        if (string.IsNullOrEmpty(id))
           this.Repository.Create(culture);
 
         else this.Repository.Edit(culture);
 
         await this.Storage.SaveAsync();
 
-        if (createOrEdit.Id == null)
+        if (string.IsNullOrEmpty(id))
           Event<ICultureCreatedEventHandler, HttpContext, Culture>.Broadcast(this.HttpContext, culture);
 
         else Event<ICultureEditedEventHandler, HttpContext, Culture>.Broadcast(this.HttpContext, culture);
@@ -78,7 +78,7 @@ namespace Platformus.Core.Backend.Controllers
       return this.CreateRedirectToSelfResult();
     }
 
-    public async Task<IActionResult> DeleteAsync(int id)
+    public async Task<IActionResult> DeleteAsync(string id)
     {
       Culture culture = await this.Repository.GetByIdAsync(id);
 
@@ -88,9 +88,9 @@ namespace Platformus.Core.Backend.Controllers
       return this.RedirectToAction("Index");
     }
 
-    private async Task<bool> IsCodeUniqueAsync(string code)
+    private async Task<bool> IsIdUniqueAsync(string id)
     {
-      return await this.Repository.CountAsync(new CultureFilter() { Code = code }) == 0;
+      return await this.Repository.CountAsync(new CultureFilter() { Id = id }) == 0;
     }
   }
 }

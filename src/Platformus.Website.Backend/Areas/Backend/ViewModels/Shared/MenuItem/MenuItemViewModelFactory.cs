@@ -3,7 +3,6 @@
 
 using System;
 using System.Linq;
-using Microsoft.AspNetCore.Http;
 using Platformus.Core.Backend.ViewModels;
 using Platformus.Website.Data.Entities;
 
@@ -11,14 +10,14 @@ namespace Platformus.Website.Backend.ViewModels.Shared
 {
   public class MenuItemViewModelFactory : ViewModelFactoryBase
   {
-    public MenuItemViewModel Create(HttpContext httpContext, MenuItem menuItem)
+    public MenuItemViewModel Create(MenuItem menuItem)
     {
       return new MenuItemViewModel()
       {
         Id = menuItem.Id,
-        Name = menuItem.Name.GetLocalizationValue(httpContext),
+        Name = menuItem.Name.GetLocalizationValue(),
         MenuItems = menuItem.MenuItems == null ? Array.Empty<MenuItemViewModel>() : menuItem.MenuItems.Select(
-          mi => new MenuItemViewModelFactory().Create(httpContext, mi)
+          mi => new MenuItemViewModelFactory().Create(mi)
         )
       };
     }

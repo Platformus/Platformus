@@ -21,11 +21,11 @@ namespace Platformus.Core.Backend.ViewModels
 
         if (dictionary == null)
           localization = new Primitives.Localization(
-            new Primitives.Culture(culture.Code)
+            new Primitives.Culture(culture.Id)
           );
 
         else localization = new Primitives.Localization(
-          new Primitives.Culture(culture.Code),
+          new Primitives.Culture(culture.Id),
           dictionary.Localizations.FirstOrDefault(l => l.CultureId == culture.Id)?.Value
         );
 

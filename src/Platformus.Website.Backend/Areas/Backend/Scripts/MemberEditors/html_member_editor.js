@@ -19,7 +19,7 @@
       for (var i = 0; i < member.property.stringValue.localizations.length; i++) {
         var localization = member.property.stringValue.localizations[i];
 
-        if (localization.culture.code != "__") {
+        if (localization.culture.id != "__") {
           platformus.memberEditors.base.createCulture(localization).appendTo(field);
           createTextArea(member, localization).appendTo(field);
           platformus.ui.initializeTinyMce(platformus.memberEditors.base.getIdentity(member, localization));
@@ -35,7 +35,7 @@
       for (var i = 0; i < member.property.stringValue.localizations.length; i++) {
         var localization = member.property.stringValue.localizations[i];
 
-        if (localization.culture.code == "__") {
+        if (localization.culture.id == "__") {
           createTextArea(member, localization).appendTo(field);
           platformus.ui.initializeTinyMce(platformus.memberEditors.base.getIdentity(member, localization));
         }
@@ -50,12 +50,12 @@
       {
         identity: platformus.memberEditors.base.getIdentity(member, localization),
         value: localization.value,
-        isMultilingual: localization.culture.code != "__",
+        isMultilingual: localization.culture.id != "__",
         validation: {
           isRequired: platformus.memberEditors.base.getIsRequiredDataTypeParameterValue(member),
           maxLength: platformus.memberEditors.base.getMaxLengthDataTypeParameterValue(member)
         }
       }
-    ).attr("data-culture", localization.culture.code);
+    ).attr("data-culture", localization.culture.id);
   }
 })(window.platformus = window.platformus || {});

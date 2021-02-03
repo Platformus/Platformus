@@ -31,7 +31,7 @@ namespace Platformus.Website.Backend.ViewModels.Website
       {
         Class = new ClassViewModelFactory().Create(@class),
         GridColumns = this.GetGridColumns(@class),
-        Objects = objects.Select(o => new ObjectViewModelFactory().Create(httpContext, o, @class.GetVisibleInListMembers())),
+        Objects = objects.Select(o => new ObjectViewModelFactory().Create(o, @class.GetVisibleInListMembers())),
         ObjectIds = string.IsNullOrEmpty(objectIds) ? new int[] { } : objectIds.Split(',').Select(objectId => int.Parse(objectId))
       };
     }

@@ -27,20 +27,20 @@ namespace Platformus.Core.Frontend.Actions
       Culture frontendDefaultCulture = cultureManager.GetFrontendDefaultCultureAsync().Result;
 
       if (frontendDefaultCulture == null)
-        requestLocalizationOptions.DefaultRequestCulture = new RequestCulture(DefaultCulture.Code);
+        requestLocalizationOptions.DefaultRequestCulture = new RequestCulture(DefaultCulture.Id);
 
-      else requestLocalizationOptions.DefaultRequestCulture = new RequestCulture(frontendDefaultCulture.Code);
+      else requestLocalizationOptions.DefaultRequestCulture = new RequestCulture(frontendDefaultCulture.Id);
 
       if (cultureManager.GetNotNeutralCulturesAsync().Result.Count() == 0)
       {
         requestLocalizationOptions.SupportedCultures = requestLocalizationOptions.SupportedUICultures =
-          new CultureInfo[] { new CultureInfo(DefaultCulture.Code) }.ToList();
+          new CultureInfo[] { new CultureInfo(DefaultCulture.Id) }.ToList();
       }
 
       else
       {
         requestLocalizationOptions.SupportedCultures = requestLocalizationOptions.SupportedUICultures =
-          cultureManager.GetNotNeutralCulturesAsync().Result.Select(c => new CultureInfo(c.Code)).ToList();
+          cultureManager.GetNotNeutralCulturesAsync().Result.Select(c => new CultureInfo(c.Id)).ToList();
       }
 
       if (serviceProvider.GetService<IConfigurationManager>()["Globalization", "SpecifyCultureInUrl"] == "yes")

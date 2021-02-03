@@ -1,8 +1,10 @@
 BEGIN TRANSACTION;
+
 --
 -- Extension: Platformus.Core
--- Version: 2.0.0-alpha5
+-- Version: 2.0.0-alpha6
 --
+
 INSERT INTO "Users" VALUES (1,'Administrator','2017-01-01 00:00:00.0000000');
 INSERT INTO "CredentialTypes" VALUES (1,'Email','Email',1);
 INSERT INTO "Credentials" VALUES (1,1,1,'admin@platformus.net','8lE3xN2Ijiv/Y/aIGwaZLrbcqrt/1jDmzPTdudKbVD0=','0O/ZGwhScZRGbsmiUEckOg==');
@@ -48,13 +50,14 @@ INSERT INTO "Variables" VALUES (5,1,'SmtpPassword','SMTP password','test',5);
 INSERT INTO "Variables" VALUES (6,1,'SmtpSenderEmail','SMTP sender email','test',6);
 INSERT INTO "Variables" VALUES (7,1,'SmtpSenderName','SMTP sender name','test',7);
 INSERT INTO "Variables" VALUES (8,2,'SpecifyCultureInUrl','Specify culture in URL','yes',1);
-INSERT INTO "Cultures" VALUES (1,'__','Neutral',1,0,0);
-INSERT INTO "Cultures" VALUES (2,'en','English',0,1,1);
+INSERT INTO "Cultures" VALUES ('__','Neutral',1,0,0);
+INSERT INTO "Cultures" VALUES ('en','English',0,1,1);
 
 --
 -- Extension: Platformus.Website
--- Version: 2.0.0-alpha5
+-- Version: 2.0.0-alpha6
 --
+
 INSERT INTO "DataTypes" VALUES (1,'string','singleLinePlainText','Single line plain text',1);
 INSERT INTO "DataTypes" VALUES (2,'string','multilinePlainText','Multiline plain text',2);
 INSERT INTO "DataTypes" VALUES (3,'string','html','Html',3);

@@ -20,7 +20,7 @@
       for (var i = 0; i < member.property.stringValue.localizations.length; i++) {
         var localization = member.property.stringValue.localizations[i];
 
-        if (localization.culture.code == "__") {
+        if (localization.culture.id == "__") {
           createCodeEditor(member, localization).appendTo(field);
         }
       }
@@ -35,7 +35,7 @@
     var codeEditor = $("<div>").addClass("code-editor");
 
     $("<div>").addClass("code-editor__widget").attr("id", identity).attr("data-mode", mode).html($("<div>").text(localization.value).html()).appendTo(codeEditor);
-    $("<input>").attr("name", identity).attr("type", "hidden").attr("data-culture", localization.culture.code).val(localization.value).appendTo(codeEditor);
+    $("<input>").attr("name", identity).attr("type", "hidden").attr("data-culture", localization.culture.id).val(localization.value).appendTo(codeEditor);
     return codeEditor;
   }
 })(window.platformus = window.platformus || {});

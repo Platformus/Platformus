@@ -9,18 +9,12 @@ namespace Platformus.Core.Data.Entities
   /// <summary>
   /// Represents a culture. The culture is the central unit in the Platformus globalization mechanism.
   /// </summary>
-  public class Culture : IEntity<int>
+  public class Culture : IEntity<string>
   {
     /// <summary>
-    /// Gets or sets the unique identifier of the culture.
+    /// Gets or sets the unique identifier of the culture. Only standard two letter culture codes are allowed.
     /// </summary>
-    public int Id { get; set; }
-
-    /// <summary>
-    /// Gets or sets the unique code of the culture. It is set by the user and might be used for the culture retrieval.
-    /// Only standard two letter culture codes are allowed.
-    /// </summary>
-    public string Code { get; set; }
+    public string Id { get; set; }
 
     /// <summary>
     /// Gets or sets the culture name.

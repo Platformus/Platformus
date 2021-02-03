@@ -30,7 +30,7 @@ namespace Platformus.ECommerce.Backend.Controllers
 
     public async Task<IActionResult> IndexAsync([FromQuery]PaymentMethodFilter filter = null, string orderBy = "+position", int skip = 0, int take = 10)
     {
-      return this.View(await new IndexViewModelFactory().CreateAsync(
+      return this.View(new IndexViewModelFactory().Create(
         this.HttpContext, filter,
         await this.Repository.GetAllAsync(
           filter, orderBy, skip, take,

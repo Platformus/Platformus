@@ -36,7 +36,7 @@ namespace Platformus.Core.Backend
 
       tb.AddCssClass("field__culture-flag");
       tb.InnerHtml.Clear();
-      tb.InnerHtml.AppendHtml(localization.Culture.Code);
+      tb.InnerHtml.AppendHtml(localization.Culture.Id);
       return tb;
     }
 

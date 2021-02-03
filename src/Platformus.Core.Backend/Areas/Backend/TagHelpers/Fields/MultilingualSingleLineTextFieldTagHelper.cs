@@ -49,7 +49,7 @@ namespace Platformus.Core.Backend
       
       foreach (Localization localization in this.Localizations)
       {
-        if (localization.Culture.Code != "__")
+        if (localization.Culture.Id != NeutralCulture.Id)
         {
           tb.InnerHtml.AppendHtml(fieldGenerator.GenerateCulture(localization));
           tb.InnerHtml.AppendHtml(new TextBoxGenerator().GenerateTextBox(this.ViewContext, this.For, attributes, localization, "text", "field__text-box field__text-box--multilingual"));

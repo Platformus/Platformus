@@ -1,7 +1,7 @@
 BEGIN TRANSACTION;
 --
 -- Extension: Platformus.Core
--- Version: 2.0.0-alpha5
+-- Version: 2.0.0-alpha6
 --
 SET IDENTITY_INSERT [dbo].[Users] ON;
 INSERT INTO [dbo].[Users] ([Id], [Name], [Created]) VALUES (1, N'Administrator', N'2017-01-01 00:00:00.000');
@@ -71,14 +71,12 @@ INSERT INTO [dbo].[Variables] ([Id], [ConfigurationId], [Code], [Name], [Value],
 INSERT INTO [dbo].[Variables] ([Id], [ConfigurationId], [Code], [Name], [Value], [Position]) VALUES (8, 2, N'SpecifyCultureInUrl', N'Specify culture in URL', N'yes', 6);
 SET IDENTITY_INSERT [dbo].[Variables] OFF;
 
-SET IDENTITY_INSERT [dbo].[Cultures] ON;
-INSERT INTO [dbo].[Cultures] ([Id], [Code], [Name], [IsNeutral], [IsFrontendDefault], [IsBackendDefault]) VALUES (1, N'__', N'Neutral', 1, 0, 0);
-INSERT INTO [dbo].[Cultures] ([Id], [Code], [Name], [IsNeutral], [IsFrontendDefault], [IsBackendDefault]) VALUES (2, N'en', N'English', 0, 1, 1);
-SET IDENTITY_INSERT [dbo].[Cultures] OFF;
+INSERT INTO [dbo].[Cultures] ([Id], [Name], [IsNeutral], [IsFrontendDefault], [IsBackendDefault]) VALUES (N'__', N'Neutral', 1, 0, 0);
+INSERT INTO [dbo].[Cultures] ([Id], [Name], [IsNeutral], [IsFrontendDefault], [IsBackendDefault]) VALUES (N'en', N'English', 0, 1, 1);
 
 --
 -- Extension: Platformus.Website
--- Version: 2.0.0-alpha5
+-- Version: 2.0.0-alpha6
 --
 SET IDENTITY_INSERT [dbo].[DataTypes] ON;
 INSERT INTO [dbo].[DataTypes] ([Id], [StorageDataType], [JavaScriptEditorClassName], [Name], [Position]) VALUES (1, N'string', N'singleLinePlainText', N'Single line plain text', 1);

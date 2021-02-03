@@ -23,7 +23,7 @@ namespace Platformus.Core.Backend
       else identity = identity.Remove(1).ToLower() + identity.Substring(1);
 
       if (localization != null)
-        identity += localization.Culture.Code;
+        identity += localization.Culture.Id;
 
       return identity;
     }

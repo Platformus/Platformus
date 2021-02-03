@@ -19,7 +19,7 @@ namespace Platformus.ECommerce.Frontend.ViewModels.ECommerce
     {
       return new CatalogPageViewModel()
       {
-        Name = catalog.Name.GetLocalizationValue(httpContext),
+        Name = catalog.Name.GetLocalizationValue(),
         Products = await this.GetProductsAsync(httpContext, catalog)
       };
     }
@@ -29,7 +29,7 @@ namespace Platformus.ECommerce.Frontend.ViewModels.ECommerce
       IProductProvider productProvider = StringActivator.CreateInstance<IProductProvider>(catalog.CSharpClassName);
 
       return (await productProvider.GetProductsAsync(httpContext, catalog)).Select(
-        p => new ProductViewModelFactory().Create(httpContext, p)
+        p => new ProductViewModelFactory().Create(p)
       );
     }
   }

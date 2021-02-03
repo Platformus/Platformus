@@ -87,7 +87,7 @@ namespace Platformus.Website.Backend.Controllers
             new Inclusion<Object>("Properties.StringValue.Localizations")
           );
 
-          objects.Add(@object.ToDisplayable(HttpContext));
+          objects.Add(@object.ToDisplayable());
         }
       }
 

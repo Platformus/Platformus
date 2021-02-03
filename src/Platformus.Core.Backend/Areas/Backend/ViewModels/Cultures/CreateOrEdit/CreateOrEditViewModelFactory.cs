@@ -17,7 +17,6 @@ namespace Platformus.Core.Backend.ViewModels.Cultures
       return new CreateOrEditViewModel()
       {
         Id = culture.Id,
-        Code = culture.Code,
         Name = culture.Name,
         IsFrontendDefault = culture.IsFrontendDefault,
         IsBackendDefault = culture.IsBackendDefault

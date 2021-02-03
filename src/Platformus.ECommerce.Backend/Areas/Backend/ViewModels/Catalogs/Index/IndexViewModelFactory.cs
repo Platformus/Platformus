@@ -3,7 +3,6 @@
 
 using System.Collections.Generic;
 using System.Linq;
-using Microsoft.AspNetCore.Http;
 using Platformus.Core.Backend.ViewModels;
 using Platformus.ECommerce.Backend.ViewModels.Shared;
 using Platformus.ECommerce.Data.Entities;
@@ -12,11 +11,11 @@ namespace Platformus.ECommerce.Backend.ViewModels.Catalogs
 {
   public class IndexViewModelFactory : ViewModelFactoryBase
   {
-    public IndexViewModel Create(HttpContext httpContext, IEnumerable<Catalog> catalogs)
+    public IndexViewModel Create(IEnumerable<Catalog> catalogs)
     {
       return new IndexViewModel()
       {
-        Catalogs = catalogs.Select(c => new CatalogViewModelFactory().Create(httpContext, c))
+        Catalogs = catalogs.Select(c => new CatalogViewModelFactory().Create(c))
       };
     }
   }

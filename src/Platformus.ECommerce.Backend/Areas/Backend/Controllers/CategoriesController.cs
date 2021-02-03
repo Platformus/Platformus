@@ -32,7 +32,6 @@ namespace Platformus.ECommerce.Backend.Controllers
     public async Task<IActionResult> IndexAsync()
     {
       return this.View(new IndexViewModelFactory().Create(
-        this.HttpContext,
         await this.Repository.GetAllAsync(
           new CategoryFilter() { Owner = new CategoryFilter { Id = new IntegerFilter() { IsNull = true } } },
           inclusions: new Inclusion<Category>[] {

@@ -24,7 +24,7 @@ namespace Platformus.Core.Data.Entities
     /// <summary>
     /// Gets or sets the culture identifier this localization belongs to.
     /// </summary>
-    public int CultureId { get; set; }
+    public string CultureId { get; set; }
 
     /// <summary>
     /// Gets or sets the localization value.

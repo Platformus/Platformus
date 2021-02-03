@@ -44,7 +44,6 @@ namespace Platformus.ECommerce.Backend.Controllers
     public async Task<IActionResult> ViewAsync(int id)
     {
       return this.View(new ViewViewModelFactory().Create(
-        this.HttpContext,
         await this.Repository.GetByIdAsync(
           id,
           new Inclusion<Cart>("Positions.Product.Category.Name.Localizations"),

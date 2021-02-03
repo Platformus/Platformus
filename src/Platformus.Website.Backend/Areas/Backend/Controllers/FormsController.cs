@@ -31,7 +31,6 @@ namespace Platformus.Website.Backend.Controllers
     public async Task<IActionResult> IndexAsync()
     {
       return this.View(new IndexViewModelFactory().Create(
-        this.HttpContext,
         await this.Repository.GetAllAsync(
           inclusions: new Inclusion<Form>[] {
             new Inclusion<Form>(m => m.Name.Localizations),

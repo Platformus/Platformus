@@ -6,7 +6,6 @@ using System.Linq;
 using System.Threading.Tasks;
 using Magicalizer.Data.Repositories.Abstractions;
 using Microsoft.AspNetCore.Http;
-using Platformus.Core;
 using Platformus.Core.Extensions;
 using Platformus.Core.Parameters;
 using Platformus.Website.Data.Entities;
@@ -38,7 +37,7 @@ namespace Platformus.Website.Frontend.DataSources
         }
       );
 
-      return objects.Select(o => this.CreateViewModel(httpContext, o));
+      return objects.Select(o => this.CreateViewModel(o));
     }
   }
 }

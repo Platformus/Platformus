@@ -5,11 +5,11 @@ namespace Platformus.Core.Primitives
 {
   public class Culture
   {
-    public string Code { get; set; }
+    public string Id { get; set; }
 
-    public Culture(string code)
+    public Culture(string id)
     {
-      this.Code = code;
+      this.Id = id;
     }
   }
 }

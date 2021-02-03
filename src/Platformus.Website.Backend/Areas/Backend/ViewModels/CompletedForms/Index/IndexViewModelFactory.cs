@@ -30,7 +30,7 @@ namespace Platformus.Website.Backend.ViewModels.CompletedForms
             new GridColumnViewModelFactory().Create(localizer["Created"], "created"),
             new GridColumnViewModelFactory().CreateEmpty()
           },
-          completedForms.Select(cf => new CompletedFormViewModelFactory().Create(httpContext, cf)),
+          completedForms.Select(cf => new CompletedFormViewModelFactory().Create(cf)),
           "_CompletedForm"
         )
       };

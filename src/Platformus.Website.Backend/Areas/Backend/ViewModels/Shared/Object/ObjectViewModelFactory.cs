@@ -3,7 +3,6 @@
 
 using System.Collections.Generic;
 using System.Linq;
-using Microsoft.AspNetCore.Http;
 using Platformus.Core.Backend.ViewModels;
 using Platformus.Website.Data.Entities;
 
@@ -11,7 +10,7 @@ namespace Platformus.Website.Backend.ViewModels.Shared
 {
   public class ObjectViewModelFactory : ViewModelFactoryBase
   {
-    public ObjectViewModel Create(HttpContext httpContext, Object @object, IEnumerable<Member> members)
+    public ObjectViewModel Create(Object @object, IEnumerable<Member> members)
     {
       Dictionary<MemberViewModel, object> propertiesByMembers = new Dictionary<MemberViewModel, object>();
       
@@ -23,7 +22,7 @@ namespace Platformus.Website.Backend.ViewModels.Shared
         {
           Property property = @object.Properties.FirstOrDefault(p => p.MemberId == member.Id);
 
-          propertiesByMembers.Add(memberViewModel, property.GetValue(httpContext));
+          propertiesByMembers.Add(memberViewModel, property.GetValue());
         }
 
         else if (member.RelationClass != null)

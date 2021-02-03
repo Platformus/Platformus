@@ -100,7 +100,7 @@ namespace Platformus.Website.Backend.ViewModels.Objects
           localizations = httpContext.GetCultureManager().GetCulturesAsync().Result.Select(
             c => new
             {
-              culture = new { code = c.Code },
+              culture = new { id = c.Id },
               value = property?.StringValue == null ? null : property.StringValue.Localizations.FirstOrDefault(l => l.CultureId == c.Id)?.Value
             }
           )

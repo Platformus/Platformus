@@ -15,7 +15,6 @@ using Platformus.Core.Backend.ViewModels;
 using Platformus.Core.Data.Entities;
 using Platformus.Core.Extensions;
 using Platformus.Core.Filters;
-using Platformus.Core.Services.Abstractions;
 
 namespace Platformus.Core.Backend.Controllers
 {
@@ -95,7 +94,7 @@ namespace Platformus.Core.Backend.Controllers
         localization.DictionaryId = dictionary.Id;
         localization.CultureId = culture.Id;
 
-        string identity = propertyInfo.Name + culture.Code;
+        string identity = propertyInfo.Name + culture.Id;
         string value = this.Request.Form[identity];
 
         localization.Value = value;
@@ -122,7 +121,7 @@ namespace Platformus.Core.Backend.Controllers
 
           foreach (Culture culture in this.HttpContext.GetCultureManager().GetNotNeutralCulturesAsync().Result)
           {
-            string identity = propertyInfo.Name + culture.Code;
+            string identity = propertyInfo.Name + culture.Id;
             string value = this.Request.Form[identity];
 
             this.ModelState.SetModelValue(identity, value, value);

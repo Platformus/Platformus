@@ -7,8 +7,7 @@ namespace Platformus.Core.Filters
 {
   public class CultureFilter : IFilter
   {
-    public int? Id { get; set; }
-    public string Code { get; set; }
+    public string Id { get; set; }
     public StringFilter Name { get; set; }
     public bool IsNeutral { get; set; }
     public bool IsFrontendDefault { get; set; }

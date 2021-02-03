@@ -1,6 +1,6 @@
 --
 -- Extension: Platformus.Core
--- Version: 2.0.0-alpha5
+-- Version: 2.0.0-alpha6
 --
 
 -- Users
@@ -130,8 +130,7 @@ ALTER TABLE "Variables" OWNER TO postgres;
 
 -- Cultures
 CREATE TABLE "Cultures" (
-    "Id" serial NOT NULL,
-    "Code" text NOT NULL,
+    "Id" text NOT NULL,
     "Name" text NOT NULL,
     "IsNeutral" boolean NOT NULL,
     "IsFrontendDefault" boolean NOT NULL,
@@ -153,7 +152,7 @@ ALTER TABLE "Dictionaries" OWNER TO postgres;
 CREATE TABLE "Localizations" (
     "Id" serial NOT NULL,
     "DictionaryId" integer NOT NULL,
-    "CultureId" integer NOT NULL,
+    "CultureId" text NOT NULL,
     "Value" text,
     CONSTRAINT "PK_Localizations" PRIMARY KEY ("Id"),
     CONSTRAINT "FK_Localizations_Dictionaries" FOREIGN KEY ("DictionaryId")
@@ -170,7 +169,7 @@ ALTER TABLE "Localizations" OWNER TO postgres;
 
 --
 -- Extension: Platformus.Website
--- Version: 2.0.0-alpha5
+-- Version: 2.0.0-alpha6
 --
 
 -- Endpoints
@@ -563,7 +562,7 @@ ALTER TABLE "Files" OWNER TO postgres;
 
 --
 -- Extension: Platformus.ECommerce
--- Version: 2.0.0-alpha5
+-- Version: 2.0.0-alpha6
 --
 
 -- Catalogs

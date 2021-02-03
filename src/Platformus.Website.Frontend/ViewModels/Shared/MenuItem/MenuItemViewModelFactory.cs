@@ -16,7 +16,7 @@ namespace Platformus.Website.Frontend.ViewModels.Shared
     {
       return new MenuItemViewModel()
       {
-        Name = menuItem.Name.GetLocalizationValue(httpContext),
+        Name = menuItem.Name.GetLocalizationValue(),
         Url = GlobalizedUrlFormatter.Format(httpContext, menuItem.Url),
         MenuItems = menuItem.MenuItems == null ? Array.Empty<MenuItemViewModel>() : menuItem.MenuItems.OrderBy(mi => mi.Position).Select(
           mi => new MenuItemViewModelFactory().Create(httpContext, mi)

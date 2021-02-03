@@ -98,8 +98,7 @@ namespace Platformus.Core.Data.EntityFramework.Sqlite
       modelBuilder.Entity<Culture>(etb =>
         {
           etb.HasKey(e => e.Id);
-          etb.Property(e => e.Id).ValueGeneratedOnAdd();
-          etb.Property(e => e.Code).IsRequired().HasMaxLength(32);
+          etb.Property(e => e.Id).IsRequired().HasMaxLength(2);
           etb.Property(e => e.Name).IsRequired().HasMaxLength(64);
           etb.ToTable("Cultures");
         }

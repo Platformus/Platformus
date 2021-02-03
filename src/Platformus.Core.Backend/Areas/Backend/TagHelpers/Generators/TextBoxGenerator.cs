@@ -34,7 +34,7 @@ namespace Platformus.Core.Backend
         tb.MergeAttribute("value", value);
 
       if (localization != null)
-        tb.MergeAttribute("data-culture", localization.Culture.Code);
+        tb.MergeAttribute("data-culture", localization.Culture.Id);
 
       this.MergeRequiredAttribute(tb, modelExpression, "text-box--required");
       this.MergeStringLengthAttribute(tb, modelExpression);

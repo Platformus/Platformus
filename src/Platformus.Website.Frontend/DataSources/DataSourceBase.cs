@@ -18,7 +18,7 @@ namespace Platformus.Website.Frontend.DataSources
 
     public abstract Task<dynamic> GetDataAsync(HttpContext httpContext, DataSource dataSource);
 
-    protected dynamic CreateViewModel(HttpContext httpContext, Object @object)
+    protected dynamic CreateViewModel(Object @object)
     {
       ExpandoObjectBuilder expandoObjectBuilder = new ExpandoObjectBuilder();
 
@@ -26,7 +26,7 @@ namespace Platformus.Website.Frontend.DataSources
       expandoObjectBuilder.AddProperty("ClassId", @object.ClassId);
 
       foreach (Property property in @object.Properties)
-        expandoObjectBuilder.AddProperty(property.Member.Code, property.GetValue(httpContext));
+        expandoObjectBuilder.AddProperty(property.Member.Code, property.GetValue());
 
       return expandoObjectBuilder.Build();
     }

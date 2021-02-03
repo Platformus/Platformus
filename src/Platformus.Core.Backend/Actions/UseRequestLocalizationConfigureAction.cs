@@ -28,9 +28,9 @@ namespace Platformus.Core.Backend.Actions
 
       if (storage == null)
       {
-        requestLocalizationOptions.DefaultRequestCulture = new RequestCulture(DefaultCulture.Code);
+        requestLocalizationOptions.DefaultRequestCulture = new RequestCulture(DefaultCulture.Id);
         requestLocalizationOptions.SupportedCultures = requestLocalizationOptions.SupportedUICultures =
-          new CultureInfo[] { new CultureInfo(DefaultCulture.Code) }.ToList();
+          new CultureInfo[] { new CultureInfo(DefaultCulture.Id) }.ToList();
       }
 
       else
@@ -39,16 +39,16 @@ namespace Platformus.Core.Backend.Actions
 
         if (backendDefaultCulture == null)
         {
-          requestLocalizationOptions.DefaultRequestCulture = new RequestCulture(DefaultCulture.Code);
+          requestLocalizationOptions.DefaultRequestCulture = new RequestCulture(DefaultCulture.Id);
           requestLocalizationOptions.SupportedCultures = requestLocalizationOptions.SupportedUICultures =
-            new CultureInfo[] { new CultureInfo(DefaultCulture.Code) }.ToList();
+            new CultureInfo[] { new CultureInfo(DefaultCulture.Id) }.ToList();
         }
 
         else
         {
-          requestLocalizationOptions.DefaultRequestCulture = new RequestCulture(backendDefaultCulture.Code);
+          requestLocalizationOptions.DefaultRequestCulture = new RequestCulture(backendDefaultCulture.Id);
           requestLocalizationOptions.SupportedCultures = requestLocalizationOptions.SupportedUICultures =
-            new CultureInfo[] { new CultureInfo(backendDefaultCulture.Code) }.ToList();
+            new CultureInfo[] { new CultureInfo(backendDefaultCulture.Id) }.ToList();
         }
       }
 
