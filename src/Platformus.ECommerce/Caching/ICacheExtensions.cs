@@ -10,14 +10,14 @@ namespace Platformus.ECommerce
 {
   public static class ICacheExtensions
   {
-    public async static Task<IEnumerable<Catalog>> GetCatalogsWithDefaultValue(this ICache cache, Func<Task<IEnumerable<Catalog>>> defaultValueFunc)
+    public async static Task<IEnumerable<Category>> GetCategoriesWithDefaultValue(this ICache cache, Func<Task<IEnumerable<Category>>> defaultValueFunc)
     {
-      return await cache.GetWithDefaultValueAsync<IEnumerable<Catalog>>("catalogs", defaultValueFunc);
+      return await cache.GetWithDefaultValueAsync<IEnumerable<Category>>("categories", defaultValueFunc);
     }
 
     public static void RemoveMenus(this ICache cache)
     {
-      cache.RemoveAll(k => k == "catalogs");
+      cache.RemoveAll(k => k == "categories");
     }
   }
 }

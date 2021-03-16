@@ -1,7 +1,7 @@
 BEGIN TRANSACTION;
 --
 -- Extension: Platformus.Core
--- Version: 2.0.0-alpha6
+-- Version: 2.0.0-beta1
 --
 
 -- Users
@@ -109,7 +109,7 @@ CREATE TABLE "Localizations" (
 
 --
 -- Extension: Platformus.Website
--- Version: 2.0.0-alpha6
+-- Version: 2.0.0-beta1
 --
 
 -- Endpoints
@@ -341,7 +341,7 @@ CREATE TABLE "Files" (
 
 --
 -- Extension: Platformus.ECommerce
--- Version: 2.0.0-alpha6
+-- Version: 2.0.0-beta1
 --
 
 -- Catalogs
@@ -375,6 +375,7 @@ CREATE TABLE "Products" (
 	"Code" TEXT NOT NULL,
 	"NameId" INTEGER NOT NULL,
 	"DescriptionId" INTEGER NOT NULL,
+  "UnitsId" INTEGER NOT NULL,
 	"Price" REAL NOT NULL,
 	"TitleId" INTEGER NOT NULL,
 	"MetaDescriptionId" INTEGER NOT NULL,
@@ -382,6 +383,7 @@ CREATE TABLE "Products" (
 	CONSTRAINT "FK_Product_Category_CategoryId" FOREIGN KEY("CategoryId") REFERENCES "Categories" ("Id") ON DELETE CASCADE,
 	CONSTRAINT "FK_Product_Dictionary_NameId" FOREIGN KEY("NameId") REFERENCES "Dictionaries" ("Id"),
 	CONSTRAINT "FK_Product_Dictionary_DescriptionId" FOREIGN KEY("DescriptionId") REFERENCES "Dictionaries" ("Id"),
+  CONSTRAINT "FK_Product_Dictionary_UnitsId" FOREIGN KEY("UnitsId") REFERENCES "Dictionaries" ("Id"),
 	CONSTRAINT "FK_Product_Dictionary_TitleId" FOREIGN KEY("TitleId") REFERENCES "Dictionaries" ("Id"),
 	CONSTRAINT "FK_Product_Dictionary_MetaDescriptionId" FOREIGN KEY("MetaDescriptionId") REFERENCES "Dictionaries" ("Id"),
 	CONSTRAINT "FK_Product_Dictionary_MetaKeywordsId" FOREIGN KEY("MetaKeywordsId") REFERENCES "Dictionaries" ("Id")

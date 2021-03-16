@@ -39,7 +39,8 @@ namespace Platformus.ECommerce.Backend.Controllers
         await this.Repository.GetAllAsync(
           filter, orderBy, skip, take,
           new Inclusion<Product>(p => p.Category.Name.Localizations),
-          new Inclusion<Product>(p => p.Name.Localizations)
+          new Inclusion<Product>(p => p.Name.Localizations),
+          new Inclusion<Product>(p => p.Units.Localizations)
         ),
         orderBy, skip, take, await this.Repository.CountAsync(filter)
       ));
@@ -55,6 +56,7 @@ namespace Platformus.ECommerce.Backend.Controllers
           new Inclusion<Product>(p => p.Category.Name.Localizations),
           new Inclusion<Product>(p => p.Name.Localizations),
           new Inclusion<Product>(p => p.Description.Localizations),
+          new Inclusion<Product>(p => p.Units.Localizations),
           new Inclusion<Product>(p => p.Title.Localizations),
           new Inclusion<Product>(p => p.MetaDescription.Localizations),
           new Inclusion<Product>(p => p.MetaKeywords.Localizations),

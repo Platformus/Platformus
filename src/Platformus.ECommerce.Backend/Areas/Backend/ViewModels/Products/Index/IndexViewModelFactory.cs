@@ -28,6 +28,7 @@ namespace Platformus.ECommerce.Backend.ViewModels.Products
           new[] {
             new GridColumnViewModelFactory().Create(localizer["Category"]),
             new GridColumnViewModelFactory().Create(localizer["Name"], httpContext.CreateLocalizedOrderBy("Name")),
+            new GridColumnViewModelFactory().Create(localizer["Units"], httpContext.CreateLocalizedOrderBy("Units")),
             new GridColumnViewModelFactory().Create(localizer["Price"], "Price"),
             new GridColumnViewModelFactory().CreateEmpty()
           },

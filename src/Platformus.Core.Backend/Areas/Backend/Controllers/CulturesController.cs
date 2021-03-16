@@ -48,7 +48,7 @@ namespace Platformus.Core.Backend.Controllers
 
     [HttpPost]
     [ExportModelStateToTempData]
-    public async Task<IActionResult> CreateOrEditAsync([FromQuery]string id, CreateOrEditViewModel createOrEdit)
+    public async Task<IActionResult> CreateOrEditAsync([FromRoute]string id, CreateOrEditViewModel createOrEdit)
     {
       if (string.IsNullOrEmpty(id) && !await this.IsIdUniqueAsync(createOrEdit.Id))
         this.ModelState.AddModelError("code", string.Empty);

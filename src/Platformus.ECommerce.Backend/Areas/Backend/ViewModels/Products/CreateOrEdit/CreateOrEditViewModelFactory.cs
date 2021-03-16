@@ -25,6 +25,7 @@ namespace Platformus.ECommerce.Backend.ViewModels.Products
           Url = "/",
           NameLocalizations = this.GetLocalizations(httpContext),
           DescriptionLocalizations = this.GetLocalizations(httpContext),
+          UnitsLocalizations = this.GetLocalizations(httpContext),
           TitleLocalizations = this.GetLocalizations(httpContext),
           MetaDescriptionLocalizations = this.GetLocalizations(httpContext),
           MetaKeywordsLocalizations = this.GetLocalizations(httpContext)
@@ -39,6 +40,7 @@ namespace Platformus.ECommerce.Backend.ViewModels.Products
         Code = product.Code,
         NameLocalizations = this.GetLocalizations(httpContext, product.Name),
         DescriptionLocalizations = this.GetLocalizations(httpContext, product.Description),
+        UnitsLocalizations = this.GetLocalizations(httpContext, product.Units),
         Price = product.Price,
         Photo1Filename = product.Photos.FirstOrDefault(p => p.Position == 1)?.Filename,
         Photo2Filename = product.Photos.FirstOrDefault(p => p.Position == 2)?.Filename,

@@ -14,7 +14,6 @@ using SixLabors.ImageSharp;
 using SixLabors.ImageSharp.Formats;
 using SixLabors.ImageSharp.Formats.Jpeg;
 using SixLabors.ImageSharp.Processing;
-using SixLabors.Primitives;
 
 namespace Platformus.Core.Backend.Controllers
 {

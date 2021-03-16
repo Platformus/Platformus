@@ -1,6 +1,6 @@
 --
 -- Extension: Platformus.Core
--- Version: 2.0.0-alpha6
+-- Version: 2.0.0-beta1
 --
 
 -- Users
@@ -169,7 +169,7 @@ ALTER TABLE "Localizations" OWNER TO postgres;
 
 --
 -- Extension: Platformus.Website
--- Version: 2.0.0-alpha6
+-- Version: 2.0.0-beta1
 --
 
 -- Endpoints
@@ -562,7 +562,7 @@ ALTER TABLE "Files" OWNER TO postgres;
 
 --
 -- Extension: Platformus.ECommerce
--- Version: 2.0.0-alpha6
+-- Version: 2.0.0-beta1
 --
 
 -- Catalogs
@@ -614,6 +614,7 @@ CREATE TABLE "Products" (
     "Code" text NOT NULL,
     "NameId" integer NOT NULL,
     "DescriptionId" integer NOT NULL,
+    "UnitsId" integer NOT NULL,
     "Price" numeric NOT NULL,
     "TitleId" integer NOT NULL,
     "MetaDescriptionId" integer NOT NULL,
@@ -628,6 +629,10 @@ CREATE TABLE "Products" (
         ON UPDATE NO ACTION
         ON DELETE NO ACTION,
 	  CONSTRAINT "FK_Products_Dictionaries_DescriptionId" FOREIGN KEY ("DescriptionId")
+        REFERENCES public."Dictionaries" ("Id") MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION,
+    CONSTRAINT "FK_Products_Dictionaries_UnitsId" FOREIGN KEY ("UnitsId")
         REFERENCES public."Dictionaries" ("Id") MATCH SIMPLE
         ON UPDATE NO ACTION
         ON DELETE NO ACTION,

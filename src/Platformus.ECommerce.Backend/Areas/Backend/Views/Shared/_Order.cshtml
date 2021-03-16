@@ -11,7 +11,7 @@
     <div>@Model.CustomerFirstName @Model.CustomerLastName</div>
     <div>@Model.CustomerPhone</div>
   </td>
-  <td class="table__cell">@Model.Total.ToString()</td>
+  <td class="table__cell">@Model.Total.ToString("0.00")</td>
   <td class="table__cell">@Model.Created</td>
   <td class="table__cell table__buttons buttons">
     <a class="table__button buttons__button buttons__button--minor button button--positive button--minor" href="@(this.Context.Request.CombineUrl("/backend/orders/edit/" + this.Model.Id))">@Localizer["Edit"]</a>

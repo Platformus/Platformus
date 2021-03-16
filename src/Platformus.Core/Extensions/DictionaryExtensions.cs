@@ -12,7 +12,7 @@ namespace Platformus
   {
     public static string GetLocalizationValue(this Dictionary dictionary)
     {
-      if (dictionary.Localizations == null)
+      if (dictionary?.Localizations == null)
         return string.Empty;
 
       return dictionary.Localizations.FirstOrDefault(l => l.CultureId == CultureInfo.CurrentCulture.TwoLetterISOLanguageName)?.Value;
@@ -20,7 +20,7 @@ namespace Platformus
 
     public static string GetNeutralLocalizationValue(this Dictionary dictionary)
     {
-      if (dictionary.Localizations == null)
+      if (dictionary?.Localizations == null)
         return string.Empty;
 
       return dictionary.Localizations.FirstOrDefault(l => l.CultureId == NeutralCulture.Id)?.Value;

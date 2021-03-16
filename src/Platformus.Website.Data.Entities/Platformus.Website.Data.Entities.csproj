@@ -4,7 +4,7 @@
     <Authors>Dmitry Sikorsky</Authors>
     <Copyright>Copyright © 2015 Dmitry Sikorsky</Copyright>
     <Description>The Platformus.Website extension component.</Description>
-    <VersionPrefix>2.0.0-alpha6</VersionPrefix>
+    <VersionPrefix>2.0.0-beta1</VersionPrefix>
     <TargetFramework>netstandard2.0</TargetFramework>
     <AssemblyName>Platformus.Website.Data.Entities</AssemblyName>
     <PackageId>Platformus.Website.Data.Entities</PackageId>
@@ -13,8 +13,8 @@
   </PropertyGroup>
   
   <ItemGroup>
-    <PackageReference Include="Magicalizer.Data.Entities.Abstractions" Version="1.0.0-alpha3" />
-    <PackageReference Include="Magicalizer.Filters.Abstractions" Version="1.0.0-alpha3" />
+    <PackageReference Include="Magicalizer.Data.Entities.Abstractions" Version="1.0.0-alpha4" />
+    <PackageReference Include="Magicalizer.Filters.Abstractions" Version="1.0.0-alpha4" />
   </ItemGroup>
 
   <ItemGroup>

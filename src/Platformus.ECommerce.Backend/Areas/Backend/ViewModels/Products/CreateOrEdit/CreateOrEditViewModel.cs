@@ -40,6 +40,13 @@ namespace Platformus.ECommerce.Backend.ViewModels.Products
     public string Description { get; set; }
     public IEnumerable<Localization> DescriptionLocalizations { get; set; }
 
+    [Multilingual]
+    [Display(Name = "Units")]
+    [Required]
+    [StringLength(32)]
+    public string Units { get; set; }
+    public IEnumerable<Localization> UnitsLocalizations { get; set; }
+
     [Display(Name = "Price")]
     [Required]
     public decimal Price { get; set; }

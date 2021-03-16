@@ -1,22 +1,12 @@
 ﻿@* Copyright © 2020 Dmitry Sikorsky. All rights reserved. *@
 @* Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information. *@
 @model Platformus.ECommerce.Frontend.ViewModels.Shared.CatalogViewModel
-@using Microsoft.AspNetCore.Http.Extensions
-@{
-  string url = this.ViewContext.HttpContext.Request.GetEncodedPathAndQuery();
-  bool isActive = string.Equals(this.Model.Url, url, StringComparison.OrdinalIgnoreCase);
-  string levelSuffix = this.Model.Level == 1 ? null : "-level-" + this.Model.Level;
-}
-<div class="menu__item@(levelSuffix) @(isActive ? "menu__item--active" + levelSuffix : null)">
-  <a class="menu__item-name@(levelSuffix) @(isActive ? "menu__item-name--active" + levelSuffix : null)" href="@Model.Url">@Model.Name</a>
-  @if (this.Model.Catalogs.Count() != 0)
-  {
-    <div class="menu__items-level-@(this.Model.Level + 1)">
-      @foreach (var menuItem in this.Model.Catalogs)
-      {
-        menuItem.Level = this.Model.Level + 1;
-        @Html.Partial("_Catalog", menuItem)
-      }
-    </div>
-  }
+<div class="catalog @Model.AdditionalCssClass">
+  <div class="catalog__categories">
+    @foreach (var category in this.Model.Categories)
+    {
+      category.Level = 1;
+      @Html.Partial("_Category", category)
+    }
+  </div>
 </div>

@@ -4,7 +4,7 @@
     <Authors>Dmitry Sikorsky</Authors>
     <Copyright>Copyright © 2018 Dmitry Sikorsky</Copyright>
     <Description>The Platformus.Images extension component.</Description>
-    <VersionPrefix>2.0.0-alpha6</VersionPrefix>
+    <VersionPrefix>2.0.0-beta1</VersionPrefix>
     <TargetFramework>net5.0</TargetFramework>
     <AssemblyName>Platformus.Images</AssemblyName>
     <PackageId>Platformus.Images</PackageId>

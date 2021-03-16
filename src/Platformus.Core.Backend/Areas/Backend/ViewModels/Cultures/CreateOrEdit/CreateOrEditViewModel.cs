@@ -9,7 +9,7 @@ namespace Platformus.Core.Backend.ViewModels.Cultures
   {
     [Display(Name = "Two letter country code (ISO 3166)")]
     [Required]
-    [StringLength(32)]
+    [StringLength(2)]
     public string Id { get; set; }
 
     [Display(Name = "Name")]

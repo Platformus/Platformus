@@ -1,0 +1,22 @@
+﻿@* Copyright © 2020 Dmitry Sikorsky. All rights reserved. *@
+@* Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information. *@
+@model Platformus.ECommerce.Frontend.ViewModels.Shared.CategoryViewModel
+@using Microsoft.AspNetCore.Http.Extensions
+@{
+  string url = this.ViewContext.HttpContext.Request.GetEncodedPathAndQuery();
+  bool isActive = string.Equals(this.Model.Url, url, StringComparison.OrdinalIgnoreCase);
+  string levelSuffix = this.Model.Level == 1 ? null : "-level-" + this.Model.Level;
+}
+<div class="catalog__category@(levelSuffix) @(isActive ? "catalog__category--active" + levelSuffix : null)">
+  <a class="catalog__category-name@(levelSuffix) @(isActive ? "catalog__category-name--active" + levelSuffix : null)" href="@Model.Url">@Model.Name</a>
+  @if (this.Model.Categories.Count() != 0)
+  {
+    <div class="catalog__categories-level-@(this.Model.Level + 1)">
+      @foreach (var catalogItem in this.Model.Categories)
+      {
+        catalogItem.Level = this.Model.Level + 1;
+        @Html.Partial("_Catalog", catalogItem)
+      }
+    </div>
+  }
+</div>

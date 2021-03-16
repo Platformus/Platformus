@@ -8,9 +8,8 @@ namespace Platformus.ECommerce.Frontend.ViewModels.Shared
 {
   public class CatalogViewModel : ViewModelBase
   {
-    public string Url { get; set; }
-    public string Name { get; set; }
-    public int Level { get; set; }
-    public IEnumerable<CatalogViewModel> Catalogs { get; set; }
+    public IEnumerable<CategoryViewModel> Categories { get; set; }
+    public string PartialViewName { get; set; }
+    public string AdditionalCssClass { get; set; }
   }
 }

@@ -2,7 +2,7 @@ BEGIN TRANSACTION;
 
 --
 -- Extension: Platformus.Core
--- Version: 2.0.0-alpha6
+-- Version: 2.0.0-beta1
 --
 
 INSERT INTO public."Users" ("Id","Name","Created") VALUES (1,'Administrator','2017-01-01 00:00:00.000000');
@@ -30,14 +30,13 @@ INSERT INTO public."Permissions" ("Id","Code","Name","Position") VALUES (10,'Man
 INSERT INTO public."Permissions" ("Id","Code","Name","Position") VALUES (11,'ManageMenus','Manage menus',1100);
 INSERT INTO public."Permissions" ("Id","Code","Name","Position") VALUES (12,'ManageForms','Manage forms',1200);
 INSERT INTO public."Permissions" ("Id","Code","Name","Position") VALUES (13,'ManageFileManager','Manage file manager',1300);
-INSERT INTO public."Permissions" ("Id","Code","Name","Position") VALUES (14,'ManageCatalogs','Manage catalogs',1400);
-INSERT INTO public."Permissions" ("Id","Code","Name","Position") VALUES (15,'ManageCategories','Manage categories',1500);
-INSERT INTO public."Permissions" ("Id","Code","Name","Position") VALUES (16,'ManageProducts','Manage products',1600);
-INSERT INTO public."Permissions" ("Id","Code","Name","Position") VALUES (17,'ManageOrderStates','Manage order states',1700);
-INSERT INTO public."Permissions" ("Id","Code","Name","Position") VALUES (18,'ManagePaymentMethods','Manage payment methods',1800);
-INSERT INTO public."Permissions" ("Id","Code","Name","Position") VALUES (19,'ManageDeliveryMethods','Manage delivery methods',1900);
-INSERT INTO public."Permissions" ("Id","Code","Name","Position") VALUES (20,'ManageCarts','Manage carts',2000);
-INSERT INTO public."Permissions" ("Id","Code","Name","Position") VALUES (21,'ManageOrders','Manage orders',2100);
+INSERT INTO public."Permissions" ("Id","Code","Name","Position") VALUES (14,'ManageCategories','Manage categories',1400);
+INSERT INTO public."Permissions" ("Id","Code","Name","Position") VALUES (15,'ManageProducts','Manage products',1500);
+INSERT INTO public."Permissions" ("Id","Code","Name","Position") VALUES (16,'ManageOrderStates','Manage order states',1600);
+INSERT INTO public."Permissions" ("Id","Code","Name","Position") VALUES (17,'ManagePaymentMethods','Manage payment methods',1700);
+INSERT INTO public."Permissions" ("Id","Code","Name","Position") VALUES (18,'ManageDeliveryMethods','Manage delivery methods',1800);
+INSERT INTO public."Permissions" ("Id","Code","Name","Position") VALUES (19,'ManageCarts','Manage carts',1900);
+INSERT INTO public."Permissions" ("Id","Code","Name","Position") VALUES (20,'ManageOrders','Manage orders',2000);
 ALTER SEQUENCE "Permissions_Id_seq" RESTART WITH 27;
 INSERT INTO public."RolePermissions" ("RoleId","PermissionId") VALUES (1,1);
 INSERT INTO public."RolePermissions" ("RoleId","PermissionId") VALUES (2,1);
@@ -62,7 +61,7 @@ INSERT INTO public."Cultures" ("Id","Name","IsNeutral","IsFrontendDefault","IsBa
 
 --
 -- Extension: Platformus.Website
--- Version: 2.0.0-alpha6
+-- Version: 2.0.0-beta1
 --
 
 INSERT INTO public."DataTypes" ("Id","StorageDataType","JavaScriptEditorClassName","Name","Position") VALUES (1,'string','singleLinePlainText','Single line plain text',1);

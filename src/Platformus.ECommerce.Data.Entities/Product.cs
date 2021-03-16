@@ -43,6 +43,11 @@ namespace Platformus.ECommerce.Data.Entities
     public int DescriptionId { get; set; }
 
     /// <summary>
+    /// Gets or sets the dictionary identifier this product is related to. It is used to store the localizable product units.
+    /// </summary>
+    public int UnitsId { get; set; }
+
+    /// <summary>
     /// Gets or sets the product price.
     /// </summary>
     public decimal Price { get; set; }
@@ -65,6 +70,7 @@ namespace Platformus.ECommerce.Data.Entities
     public virtual Category Category { get; set; }
     public virtual Dictionary Name { get; set; }
     public virtual Dictionary Description { get; set; }
+    public virtual Dictionary Units { get; set; }
     public virtual Dictionary Title { get; set; }
     public virtual Dictionary MetaDescription { get; set; }
     public virtual Dictionary MetaKeywords { get; set; }

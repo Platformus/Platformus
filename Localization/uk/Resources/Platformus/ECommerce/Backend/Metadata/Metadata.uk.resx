@@ -123,9 +123,6 @@
   <data name="Carts" xml:space="preserve">
     <value>Кошики</value>
   </data>
-  <data name="Catalogs" xml:space="preserve">
-    <value>Каталоги</value>
-  </data>
   <data name="Categories" xml:space="preserve">
     <value>Категорії</value>
   </data>

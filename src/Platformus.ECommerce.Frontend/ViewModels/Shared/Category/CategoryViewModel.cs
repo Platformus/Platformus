@@ -8,6 +8,8 @@ namespace Platformus.ECommerce.Frontend.ViewModels.Shared
 {
   public class CategoryViewModel : ViewModelBase
   {
+    public int Id { get; set; }
+    public CategoryViewModel Category { get; set; }
     public string Url { get; set; }
     public string Name { get; set; }
     public int Level { get; set; }

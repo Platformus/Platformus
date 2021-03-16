@@ -123,4 +123,7 @@
   <data name="Cultures" xml:space="preserve">
     <value>Культури</value>
   </data>
+  <data name="Two letter country code (ISO 3166)" xml:space="preserve">
+    <value>Двобуквенний код країни (ISO 3166)</value>
+  </data>
 </root>

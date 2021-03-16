@@ -1,5 +1,4 @@
-﻿using System.IO;
-using System.Linq;
+﻿using System.Linq;
 using System.Threading.Tasks;
 using Magicalizer.Data.Repositories.Abstractions;
 using Microsoft.AspNetCore.Http;
@@ -32,27 +31,27 @@ namespace Platformus.ECommerce.Frontend.Middleware
       if (actionResult != null)
         await httpContext.ExecuteResultAsync(actionResult);
 
-      await this.next(httpContext);
+      else await this.next(httpContext);
     }
 
     private async Task<IActionResult> GetCatalogActionResultAsync(HttpContext httpContext)
     {
-      Catalog catalog = (await httpContext.GetStorage().GetRepository<int, Catalog, CatalogFilter>().GetAllAsync(
-        new CatalogFilter() { Url = httpContext.Request.GetUrl() },
-        inclusions: new Inclusion<Catalog>[]
+      Category category = (await httpContext.GetStorage().GetRepository<int, Category, CategoryFilter>().GetAllAsync(
+        new CategoryFilter() { Url = httpContext.Request.GetUrl() },
+        inclusions: new Inclusion<Category>[]
         {
-          new Inclusion<Catalog>(c => c.Name.Localizations)
+          new Inclusion<Category>(c => c.Name.Localizations)
         }
       )).FirstOrDefault();
 
-      if (catalog == null)
+      if (category == null)
         return null;
 
-      CatalogPageViewModel catalogPageViewModel = await new CatalogPageViewModelFactory().CreateAsync(httpContext, catalog);
+      CategoryPageViewModel catalogPageViewModel = await new CategoryPageViewModelFactory().CreateAsync(httpContext, category);
 
       return new ViewResult()
       {
-        ViewName = "CatalogPage",
+        ViewName = "CategoryPage",
         ViewData = new ViewDataDictionary(new EmptyModelMetadataProvider(), new ModelStateDictionary()) { Model = catalogPageViewModel }
       };
     }
@@ -66,6 +65,7 @@ namespace Platformus.ECommerce.Frontend.Middleware
           new Inclusion<Product>(p => p.Category.Name.Localizations),
           new Inclusion<Product>(p => p.Name.Localizations),
           new Inclusion<Product>(p => p.Description.Localizations),
+          new Inclusion<Product>(p => p.Units.Localizations),
           new Inclusion<Product>(p => p.Title.Localizations),
           new Inclusion<Product>(p => p.MetaDescription.Localizations),
           new Inclusion<Product>(p => p.MetaKeywords.Localizations),
@@ -76,34 +76,13 @@ namespace Platformus.ECommerce.Frontend.Middleware
       if (product == null)
         return null;
 
-      ProductPageViewModel productPageViewModel = new ProductPageViewModelFactory().Create(product);
+      ProductPageViewModel productPageViewModel = new ProductPageViewModelFactory().Create(httpContext, product);
 
       return new ViewResult()
       {
         ViewName = "ProductPage",
         ViewData = new ViewDataDictionary(new EmptyModelMetadataProvider(), new ModelStateDictionary()) { Model = productPageViewModel }
       };
-    }
-
-    private async Task<byte[]> GetResponseBodyAsync(HttpContext httpContext, IActionResult actionResult)
-    {
-      Stream responseBody = httpContext.Response.Body;
-
-      using (MemoryStream buffer = new MemoryStream())
-      {
-        try
-        {
-          httpContext.Response.Body = buffer;
-          await httpContext.ExecuteResultAsync(actionResult);
-        }
-
-        finally
-        {
-          httpContext.Response.Body = responseBody;
-        }
-
-        return buffer.ToArray();
-      }
     }
   }
 }

@@ -23,9 +23,25 @@ namespace Platformus.ECommerce.Data.Entities
     public int? CategoryId { get; set; }
 
     /// <summary>
+    /// Gets or sets the unique URL of the category.
+    /// </summary>
+    public string Url { get; set; }
+
+    /// <summary>
     /// Gets or sets the dictionary identifier this category is related to. It is used to store the localizable category name.
     /// </summary>
     public int NameId { get; set; }
+
+    /// <summary>
+    /// Gets or sets the name (including namespace) of the C# class which will be instantiated each time
+    /// when the category content is requested by a user.
+    /// </summary>
+    public string CSharpClassName { get; set; }
+
+    /// <summary>
+    /// Gets or sets the parameters (key=value pairs separated by commas) for the C# class instances.
+    /// </summary>
+    public string Parameters { get; set; }
 
     /// <summary>
     /// Gets or sets the category position. Position is used to sort the categories inside the parent category (smallest to largest).

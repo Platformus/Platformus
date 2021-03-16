@@ -14,6 +14,6 @@ namespace Platformus.ECommerce.ProductProviders
     IEnumerable<ParameterGroup> ParameterGroups { get; }
     string Description { get; }
 
-    Task<IEnumerable<Product>> GetProductsAsync(HttpContext httpContext, Catalog catalog);
+    Task<IEnumerable<Product>> GetProductsAsync(HttpContext httpContext, Category category);
   }
 }

@@ -5,7 +5,6 @@ namespace Platformus.ECommerce
 {
   public static class Policies
   {
-    public const string HasManageCatalogsPermission = "HasManageCatalogsPermission";
     public const string HasManageCategoriesPermission = "HasManageCategoriesPermission";
     public const string HasManageProductsPermission = "HasManageProductsPermission";
     public const string HasManageCartsPermission = "HasManageCartsPermission";

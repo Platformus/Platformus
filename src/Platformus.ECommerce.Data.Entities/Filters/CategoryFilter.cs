@@ -10,6 +10,7 @@ namespace Platformus.ECommerce.Filters
   {
     public IntegerFilter Id { get; set; }
     public CategoryFilter Owner { get; set; }
+    public string Url { get; set; }
 
     [FilterShortcut("Name.Localizations[]")]
     public LocalizationFilter Name { get; set; }

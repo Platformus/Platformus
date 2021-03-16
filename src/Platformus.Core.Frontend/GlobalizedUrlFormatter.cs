@@ -4,6 +4,8 @@
 using System.Globalization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
+using Platformus.Core.Data.Entities;
+using Platformus.Core.Extensions;
 using Platformus.Core.Services.Abstractions;
 
 namespace Platformus.Core.Frontend
@@ -14,10 +16,15 @@ namespace Platformus.Core.Frontend
     {
       bool specifyCultureInUrl = httpContext.RequestServices.GetService<IConfigurationManager>()["Globalization", "SpecifyCultureInUrl"] == "yes";
 
-      if (specifyCultureInUrl)
-        return string.Format("/{0}{1}", CultureInfo.CurrentCulture.TwoLetterISOLanguageName, url);
+      if (!specifyCultureInUrl)
+        return url;
 
-      return url;
+      Culture defaultCulture = httpContext.GetCultureManager().GetFrontendDefaultCultureAsync().Result;
+
+      if (defaultCulture.Id == CultureInfo.CurrentCulture.TwoLetterISOLanguageName && url == "/")
+        return url;
+
+      return string.Format("/{0}{1}", CultureInfo.CurrentCulture.TwoLetterISOLanguageName, url);
     }
   }
 }

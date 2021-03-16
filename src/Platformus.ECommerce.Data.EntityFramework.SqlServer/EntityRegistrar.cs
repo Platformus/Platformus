@@ -11,15 +11,6 @@ namespace Platformus.ECommerce.Data.EntityFramework.SqlServer
   {
     public void RegisterEntities(ModelBuilder modelBuilder)
     {
-      modelBuilder.Entity<Catalog>(etb =>
-        {
-          etb.HasKey(e => e.Id);
-          etb.Property(e => e.Id).ValueGeneratedOnAdd();
-          etb.Property(e => e.Url).IsRequired().HasMaxLength(128);
-          etb.ToTable("Catalogs");
-        }
-      );
-
       modelBuilder.Entity<Category>(etb =>
         {
           etb.HasKey(e => e.Id);

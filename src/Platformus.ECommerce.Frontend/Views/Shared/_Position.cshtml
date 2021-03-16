@@ -1,0 +1,16 @@
+﻿@* Copyright © 2020 Dmitry Sikorsky. All rights reserved. *@
+@* Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information. *@
+@model Platformus.ECommerce.Frontend.ViewModels.Shared.PositionViewModel
+@using Platformus.Core.Frontend
+<div class="cart__position position">
+  <img class="position__product-cover" src="/images/products/@Model.Product.Cover.Filename" alt="@Model.Product.Name" />
+  <div class="position__details">
+    <div class="position__product-name">
+      <a href="@GlobalizedUrlFormatter.Format(this.ViewContext.HttpContext, this.Model.Product.Url)">@Model.Product.Name</a>
+    </div>
+    <div class="position__quantity-and-price">
+      @Model.Quantity.ToString("0.00") × @Model.Price.ToString("0.00")
+    </div>
+  </div>
+  <div class="position__remove" onclick="return removeFromCart(@Model.Id);">×</div>
+</div>

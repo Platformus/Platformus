@@ -2,8 +2,6 @@
   {
     "outputFileName": "wwwroot/areas/backend/css/platformus.ecommerce.min.css",
     "inputFiles": [
-      "Areas/Backend/Styles/photo.css",
-      "Areas/Backend/Styles/photos.css"
     ]
   },
   {
