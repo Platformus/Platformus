@@ -1,6 +1,6 @@
 --
 -- Extension: Platformus.Core
--- Version: 2.0.0-beta1
+-- Version: 2.0.0
 --
 
 -- Users
@@ -169,7 +169,7 @@ ALTER TABLE "Localizations" OWNER TO postgres;
 
 --
 -- Extension: Platformus.Website
--- Version: 2.0.0-beta1
+-- Version: 2.0.0
 --
 
 -- Endpoints
@@ -562,36 +562,17 @@ ALTER TABLE "Files" OWNER TO postgres;
 
 --
 -- Extension: Platformus.ECommerce
--- Version: 2.0.0-beta1
+-- Version: 2.0.0
 --
-
--- Catalogs
-CREATE TABLE "Catalogs" (
-    "Id" serial NOT NULL,
-    "CatalogId" integer,
-	"Url" text NOT NULL,
-    "NameId" integer NOT NULL,
-	"CSharpClassName" text NOT NULL,
-	"Parameters" text,
-    "Position" integer,
-    CONSTRAINT "PK_Catalogs" PRIMARY KEY ("Id"),
-    CONSTRAINT "FK_Catalogs_Catalogs" FOREIGN KEY ("CatalogId")
-        REFERENCES public."Catalogs" ("Id") MATCH SIMPLE
-        ON UPDATE NO ACTION
-        ON DELETE CASCADE,
-    CONSTRAINT "FK_Catalogs_Dictionaries" FOREIGN KEY ("NameId")
-        REFERENCES public."Dictionaries" ("Id") MATCH SIMPLE
-        ON UPDATE NO ACTION
-        ON DELETE NO ACTION
-);
-
-ALTER TABLE "Catalogs" OWNER TO postgres;
 
 -- Categories
 CREATE TABLE "Categories" (
     "Id" serial NOT NULL,
     "CategoryId" integer,
+    "Url" text NOT NULL,
     "NameId" integer NOT NULL,
+    "CSharpClassName" text NOT NULL,
+    "Parameters" text,
     "Position" integer,
     CONSTRAINT "PK_Categories" PRIMARY KEY ("Id"),
     CONSTRAINT "FK_Categories_Categories" FOREIGN KEY ("CategoryId")

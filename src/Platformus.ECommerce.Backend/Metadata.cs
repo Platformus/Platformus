@@ -11,14 +11,6 @@ namespace Platformus.ECommerce.Backend.Metadata
 {
   public class Metadata : MetadataBase
   {
-    public override IEnumerable<StyleSheet> GetStyleSheets(HttpContext httpContext)
-    {
-      return new StyleSheet[]
-      {
-        new StyleSheet("/wwwroot.areas.backend.css.platformus.ecommerce.min.css", 3000),
-      };
-    }
-
     public override IEnumerable<Script> GetScripts(HttpContext httpContext)
     {
       return new Script[]

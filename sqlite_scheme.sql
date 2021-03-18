@@ -1,7 +1,7 @@
 BEGIN TRANSACTION;
 --
 -- Extension: Platformus.Core
--- Version: 2.0.0-beta1
+-- Version: 2.0.0
 --
 
 -- Users
@@ -109,7 +109,7 @@ CREATE TABLE "Localizations" (
 
 --
 -- Extension: Platformus.Website
--- Version: 2.0.0-beta1
+-- Version: 2.0.0
 --
 
 -- Endpoints
@@ -341,27 +341,17 @@ CREATE TABLE "Files" (
 
 --
 -- Extension: Platformus.ECommerce
--- Version: 2.0.0-beta1
+-- Version: 2.0.0
 --
-
--- Catalogs
-CREATE TABLE "Catalogs" (
-	"Id" INTEGER NOT NULL CONSTRAINT "PK_Catalog" PRIMARY KEY AUTOINCREMENT,
-	"CatalogId" INTEGER,
-	"Url" TEXT,
-	"NameId" INTEGER NOT NULL,
-	"CSharpClassName" TEXT NOT NULL,
-  "Parameters" TEXT,
-	"Position" INTEGER,
-	CONSTRAINT "FK_Catalog_Catalog_CatalogId" FOREIGN KEY("CatalogId") REFERENCES "Catalogs" ("Id") ON DELETE CASCADE,
-	CONSTRAINT "FK_Catalog_Dictionary_NameId" FOREIGN KEY("NameId") REFERENCES "Dictionaries" ("Id")
-);
 
 -- Categories
 CREATE TABLE "Categories" (
 	"Id" INTEGER NOT NULL CONSTRAINT "PK_Category" PRIMARY KEY AUTOINCREMENT,
 	"CategoryId" INTEGER,
+  "Url" TEXT,
 	"NameId" INTEGER NOT NULL,
+  "CSharpClassName" TEXT NOT NULL,
+  "Parameters" TEXT,
 	"Position" INTEGER,
 	CONSTRAINT "FK_Category_Category_CategoryId" FOREIGN KEY("CategoryId") REFERENCES "Categories" ("Id") ON DELETE CASCADE,
 	CONSTRAINT "FK_Category_Dictionary_NameId" FOREIGN KEY("NameId") REFERENCES "Dictionaries" ("Id")

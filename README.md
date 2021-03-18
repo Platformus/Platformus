@@ -1,73 +1,64 @@
-# Platformus 2.0.0-beta1
+# Platformus 2.0.0
 
 [![Join the chat at https://gitter.im/Platformus/Platformus](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/Platformus/Platformus?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
-![Platformus logotype](http://platformus.net/platformus_github_icon.png)
+![Platformus logotype](platformus_github_icon.png)
 
 ## Introduction
 
-[Platformus](https://github.com/Platformus/Platformus) is free, open source and cross-platform developer-friendly CMS
-based on ASP.NET Core and [ExtCore framework](https://github.com/ExtCore/ExtCore). Join our team!
+[Platformus](https://github.com/Platformus/Platformus) is free, open source, and cross-platform developer-friendly CMS
+based on ASP.NET Core, [ExtCore framework](https://github.com/ExtCore/ExtCore),
+and [Magicalizer](https://github.com/Magicalizer/Magicalizer).
 
-### Few Facts About Platformus
+It consists of 3 extensions: Core, Website, and ECommerce.
 
-1. It is free and open source.
-2. It runs on Windows, Mac and Linux.
-3. It is completely modular and extendable. Using the features of the underlying
-[ExtCore framework](https://github.com/ExtCore/ExtCore) you can easily create your own extensions
-to extend its functionality.
-4. It is multicultural and multilingual.
-5. It is fast, flexible and easy to use. You can describe even complicated entities and their relationships
-without writing any code!
+### Core
 
-### Basic Concepts
+Provides such basic things like users, credentials, roles, permission, configurations, and cultures.
+Contains default extendable backend UI. Can be used as a base for the mobile application admin panels etc.
 
-With the full set of the extensions Platformus is object-oriented CMS and object is the central unit of its
-data model. Objects can be standalone and embedded. While standalone object can be accessed via URL (using
-some specified view), embedded object can only be used as the part of others.
+### Website
 
-Each object consists of properties and relations and is described by its class. Classes describe properties and
-relations of the objects with the members. Each member has code, name, data type (for properties) or class (for
-relations). In addition, with the data sources, classes describe which objects are to be loaded together with
-the object.
+Adds the object-oriented data model (classes, members, objects, properties, and relations to create, edit,
+and display content without writing code), menus, forms, and file manager. Completely enough for creating simple websites.
 
-For example, let’s say we have Developer class and Team class. Also, we can have Contact class too. Each
-developer should have first name and last name properties and one relation to the object of class Team and one
-or many relations to the objects of class Contact.
+### ECommerce
 
-### Backend Screenshots
+Implements standard ecommerce features like categories, products, photos, carts, and orders in a very basic way.
+Can be used as a starting point for ecommerce projects.
 
-![List of objects](http://platformus.net/files/list_of_objects.png)
-*List of objects*
 
-![Edit object](http://platformus.net/files/edit_object.png)
-*Edit object*
+### Backend UI Screenshots
 
-![List menus](http://platformus.net/files/list_menus.png)
-*List menus*
+![Objects Page](objects_page.png)
+*Objects Page*
+
+![Edit Object Page](edit_object_page.png)
+*Edit Object Page*
+
+![Menus Page](menus_page.png)
+*Menus Page*
 
 ## Getting Started
 
 ### Samples
 
-Please take a look at our samles on GitHub:
+There are few samples:
 
 * [Platformus-Sample-Personal-Website ](https://github.com/Platformus/Platformus-Sample-Personal-Website );
 * [Platformus-Sample-Personal-Blog ](https://github.com/Platformus/Platformus-Sample-Personal-Blog );
-* [Platformus-Sample-Ecommerce ](https://github.com/Platformus/Platformus-Sample-Ecommerce ).
+* [Platformus-Sample-Ecommerce ](https://github.com/Platformus/Platformus-Sample-Ecommerce );
 * [Platformus-Sample-Mobile-App-Admin-Panel ](https://github.com/Platformus/Platformus-Sample-Mobile-App-Admin-Panel ).
 
-These samples contain everything you need to run Platformus-based web application from Visual Studio 2019, including SQLite
-database with the test data (and SQL scripts for other DB types).
+These samples contain everything you need to build and run Platformus-based web application, including SQLite
+database with the test data (and SQL scripts for other supported DB types).
 
 ### Tutorials
 
-We have written [several tutorials](http://docs.platformus.net/en/latest/getting_started/index.html)
+Documentation contains [several tutorials](http://docs.platformus.net/en/latest/getting_started/index.html)
 to help you start developing your Platformus-based web applications.
 
 ## Links
-
-Live demo: http://demo.platformus.net/
 
 Website: http://platformus.net/
 
