@@ -2,7 +2,7 @@ BEGIN TRANSACTION;
 
 --
 -- Extension: Platformus.Core
--- Version: 2.0.0-beta1
+-- Version: 2.0.0
 --
 
 INSERT INTO "Users" VALUES (1,'Administrator','2017-01-01 00:00:00.0000000');
@@ -54,7 +54,7 @@ INSERT INTO "Cultures" VALUES ('en','English',0,1,1);
 
 --
 -- Extension: Platformus.Website
--- Version: 2.0.0-beta1
+-- Version: 2.0.0
 --
 
 INSERT INTO "DataTypes" VALUES (1,'string','singleLinePlainText','Single line plain text',1);

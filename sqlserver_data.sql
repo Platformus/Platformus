@@ -1,7 +1,7 @@
 BEGIN TRANSACTION;
 --
 -- Extension: Platformus.Core
--- Version: 2.0.0-beta1
+-- Version: 2.0.0
 --
 SET IDENTITY_INSERT [dbo].[Users] ON;
 INSERT INTO [dbo].[Users] ([Id], [Name], [Created]) VALUES (1, N'Administrator', N'2017-01-01 00:00:00.000');
@@ -75,7 +75,7 @@ INSERT INTO [dbo].[Cultures] ([Id], [Name], [IsNeutral], [IsFrontendDefault], [I
 
 --
 -- Extension: Platformus.Website
--- Version: 2.0.0-beta1
+-- Version: 2.0.0
 --
 SET IDENTITY_INSERT [dbo].[DataTypes] ON;
 INSERT INTO [dbo].[DataTypes] ([Id], [StorageDataType], [JavaScriptEditorClassName], [Name], [Position]) VALUES (1, N'string', N'singleLinePlainText', N'Single line plain text', 1);
