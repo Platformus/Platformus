@@ -23,27 +23,9 @@ INSERT INTO public."Permissions" ("Id","Code","Name","Position") VALUES (3,'Mana
 INSERT INTO public."Permissions" ("Id","Code","Name","Position") VALUES (4,'ManageUsers','Manage users',400);
 INSERT INTO public."Permissions" ("Id","Code","Name","Position") VALUES (5,'ManageConfigurations','Manage configurations',500);
 INSERT INTO public."Permissions" ("Id","Code","Name","Position") VALUES (6,'ManageCultures','Manage cultures',600);
-INSERT INTO public."Permissions" ("Id","Code","Name","Position") VALUES (7,'ManageEndpoints','Manage endpoints',700);
-INSERT INTO public."Permissions" ("Id","Code","Name","Position") VALUES (8,'ManageObjects','Manage objects',800);
-INSERT INTO public."Permissions" ("Id","Code","Name","Position") VALUES (9,'ManageDataTypes','Manage data types',900);
-INSERT INTO public."Permissions" ("Id","Code","Name","Position") VALUES (10,'ManageClasses','Manage classes',1000);
-INSERT INTO public."Permissions" ("Id","Code","Name","Position") VALUES (11,'ManageMenus','Manage menus',1100);
-INSERT INTO public."Permissions" ("Id","Code","Name","Position") VALUES (12,'ManageForms','Manage forms',1200);
-INSERT INTO public."Permissions" ("Id","Code","Name","Position") VALUES (13,'ManageFileManager','Manage file manager',1300);
-INSERT INTO public."Permissions" ("Id","Code","Name","Position") VALUES (14,'ManageCategories','Manage categories',1400);
-INSERT INTO public."Permissions" ("Id","Code","Name","Position") VALUES (15,'ManageProducts','Manage products',1500);
-INSERT INTO public."Permissions" ("Id","Code","Name","Position") VALUES (16,'ManageOrderStates','Manage order states',1600);
-INSERT INTO public."Permissions" ("Id","Code","Name","Position") VALUES (17,'ManagePaymentMethods','Manage payment methods',1700);
-INSERT INTO public."Permissions" ("Id","Code","Name","Position") VALUES (18,'ManageDeliveryMethods','Manage delivery methods',1800);
-INSERT INTO public."Permissions" ("Id","Code","Name","Position") VALUES (19,'ManageCarts','Manage carts',1900);
-INSERT INTO public."Permissions" ("Id","Code","Name","Position") VALUES (20,'ManageOrders','Manage orders',2000);
 ALTER SEQUENCE "Permissions_Id_seq" RESTART WITH 27;
 INSERT INTO public."RolePermissions" ("RoleId","PermissionId") VALUES (1,1);
 INSERT INTO public."RolePermissions" ("RoleId","PermissionId") VALUES (2,1);
-INSERT INTO public."RolePermissions" ("RoleId","PermissionId") VALUES (3,8);
-INSERT INTO public."RolePermissions" ("RoleId","PermissionId") VALUES (3,11);
-INSERT INTO public."RolePermissions" ("RoleId","PermissionId") VALUES (3,12);
-INSERT INTO public."RolePermissions" ("RoleId","PermissionId") VALUES (3,13);
 INSERT INTO public."Configurations" ("Id","Code","Name") VALUES (1,'Email','Email');
 INSERT INTO public."Configurations" ("Id","Code","Name") VALUES (2,'Globalization','Globalization');
 ALTER SEQUENCE "Configurations_Id_seq" RESTART WITH 3;
@@ -64,6 +46,17 @@ INSERT INTO public."Cultures" ("Id","Name","IsNeutral","IsFrontendDefault","IsBa
 -- Version: 2.0.0
 --
 
+INSERT INTO public."Permissions" ("Id","Code","Name","Position") VALUES (7,'ManageEndpoints','Manage endpoints',700);
+INSERT INTO public."Permissions" ("Id","Code","Name","Position") VALUES (8,'ManageObjects','Manage objects',800);
+INSERT INTO public."Permissions" ("Id","Code","Name","Position") VALUES (9,'ManageDataTypes','Manage data types',900);
+INSERT INTO public."Permissions" ("Id","Code","Name","Position") VALUES (10,'ManageClasses','Manage classes',1000);
+INSERT INTO public."Permissions" ("Id","Code","Name","Position") VALUES (11,'ManageMenus','Manage menus',1100);
+INSERT INTO public."Permissions" ("Id","Code","Name","Position") VALUES (12,'ManageForms','Manage forms',1200);
+INSERT INTO public."Permissions" ("Id","Code","Name","Position") VALUES (13,'ManageFileManager','Manage file manager',1300);
+INSERT INTO public."RolePermissions" ("RoleId","PermissionId") VALUES (3,8);
+INSERT INTO public."RolePermissions" ("RoleId","PermissionId") VALUES (3,11);
+INSERT INTO public."RolePermissions" ("RoleId","PermissionId") VALUES (3,12);
+INSERT INTO public."RolePermissions" ("RoleId","PermissionId") VALUES (3,13);
 INSERT INTO public."DataTypes" ("Id","StorageDataType","JavaScriptEditorClassName","Name","Position") VALUES (1,'string','singleLinePlainText','Single line plain text',1);
 INSERT INTO public."DataTypes" ("Id","StorageDataType","JavaScriptEditorClassName","Name","Position") VALUES (2,'string','multilinePlainText','Multiline plain text',2);
 INSERT INTO public."DataTypes" ("Id","StorageDataType","JavaScriptEditorClassName","Name","Position") VALUES (3,'string','html','Html',3);
@@ -91,5 +84,18 @@ INSERT INTO public."FieldTypes" ("Id","Code","Name","Position","ValidatorCSharpC
 INSERT INTO public."FieldTypes" ("Id","Code","Name","Position","ValidatorCSharpClassName") VALUES (6,'FileUpload','File upload',6,NULL);
 INSERT INTO public."FieldTypes" ("Id","Code","Name","Position","ValidatorCSharpClassName") VALUES (7,'ReCAPTCHA','ReCAPTCHA',7,'Platformus.Website.Frontend.FormHandlers.ReCaptchaFieldValidator');
 ALTER SEQUENCE "FieldTypes_Id_seq" RESTART WITH 8;
+
+--
+-- Extension: Platformus.ECommerce
+-- Version: 2.0.0
+--
+
+INSERT INTO public."Permissions" ("Id","Code","Name","Position") VALUES (14,'ManageCategories','Manage categories',1400);
+INSERT INTO public."Permissions" ("Id","Code","Name","Position") VALUES (15,'ManageProducts','Manage products',1500);
+INSERT INTO public."Permissions" ("Id","Code","Name","Position") VALUES (16,'ManageOrderStates','Manage order states',1600);
+INSERT INTO public."Permissions" ("Id","Code","Name","Position") VALUES (17,'ManagePaymentMethods','Manage payment methods',1700);
+INSERT INTO public."Permissions" ("Id","Code","Name","Position") VALUES (18,'ManageDeliveryMethods','Manage delivery methods',1800);
+INSERT INTO public."Permissions" ("Id","Code","Name","Position") VALUES (19,'ManageCarts','Manage carts',1900);
+INSERT INTO public."Permissions" ("Id","Code","Name","Position") VALUES (20,'ManageOrders','Manage orders',2000);
 
 COMMIT;

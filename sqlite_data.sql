@@ -19,26 +19,8 @@ INSERT INTO "Permissions" VALUES (3,'ManageRoles','Manage roles',300);
 INSERT INTO "Permissions" VALUES (4,'ManageUsers','Manage users',400);
 INSERT INTO "Permissions" VALUES (5,'ManageConfigurations','Manage configurations',500);
 INSERT INTO "Permissions" VALUES (6,'ManageCultures','Manage cultures',600);
-INSERT INTO "Permissions" VALUES (7,'ManageEndpoints','Manage endpoints',700);
-INSERT INTO "Permissions" VALUES (8,'ManageObjects','Manage objects',800);
-INSERT INTO "Permissions" VALUES (9,'ManageDataTypes','Manage data types',900);
-INSERT INTO "Permissions" VALUES (10,'ManageClasses','Manage classes',1000);
-INSERT INTO "Permissions" VALUES (11,'ManageMenus','Manage menus',1100);
-INSERT INTO "Permissions" VALUES (12,'ManageForms','Manage forms',1200);
-INSERT INTO "Permissions" VALUES (13,'ManageFileManager','Manage file manager',1300);
-INSERT INTO "Permissions" VALUES (14,'ManageCategories','Manage categories',1400);
-INSERT INTO "Permissions" VALUES (15,'ManageProducts','Manage products',1500);
-INSERT INTO "Permissions" VALUES (16,'ManageOrderStates','Manage order states',1600);
-INSERT INTO "Permissions" VALUES (17,'ManagePaymentMethods','Manage payment methods',1700);
-INSERT INTO "Permissions" VALUES (18,'ManageDeliveryMethods','Manage delivery methods',1800);
-INSERT INTO "Permissions" VALUES (19,'ManageCarts','Manage carts',1900);
-INSERT INTO "Permissions" VALUES (20,'ManageOrders','Manage orders',2000);
 INSERT INTO "RolePermissions" VALUES (1,1);
 INSERT INTO "RolePermissions" VALUES (2,1);
-INSERT INTO "RolePermissions" VALUES (3,8);
-INSERT INTO "RolePermissions" VALUES (3,11);
-INSERT INTO "RolePermissions" VALUES (3,12);
-INSERT INTO "RolePermissions" VALUES (3,13);
 INSERT INTO "Configurations" VALUES (1,'Email','Email');
 INSERT INTO "Configurations" VALUES (2,'Globalization','Globalization');
 INSERT INTO "Variables" VALUES (1,1,'SmtpServer','SMTP server','test',1);
@@ -57,6 +39,17 @@ INSERT INTO "Cultures" VALUES ('en','English',0,1,1);
 -- Version: 2.0.0
 --
 
+INSERT INTO "Permissions" VALUES (7,'ManageEndpoints','Manage endpoints',700);
+INSERT INTO "Permissions" VALUES (8,'ManageObjects','Manage objects',800);
+INSERT INTO "Permissions" VALUES (9,'ManageDataTypes','Manage data types',900);
+INSERT INTO "Permissions" VALUES (10,'ManageClasses','Manage classes',1000);
+INSERT INTO "Permissions" VALUES (11,'ManageMenus','Manage menus',1100);
+INSERT INTO "Permissions" VALUES (12,'ManageForms','Manage forms',1200);
+INSERT INTO "Permissions" VALUES (13,'ManageFileManager','Manage file manager',1300);
+INSERT INTO "RolePermissions" VALUES (3,8);
+INSERT INTO "RolePermissions" VALUES (3,11);
+INSERT INTO "RolePermissions" VALUES (3,12);
+INSERT INTO "RolePermissions" VALUES (3,13);
 INSERT INTO "DataTypes" VALUES (1,'string','singleLinePlainText','Single line plain text',1);
 INSERT INTO "DataTypes" VALUES (2,'string','multilinePlainText','Multiline plain text',2);
 INSERT INTO "DataTypes" VALUES (3,'string','html','Html',3);
@@ -81,5 +74,18 @@ INSERT INTO "FieldTypes" VALUES (4,'RadioButtonList','Radio button list',4,NULL)
 INSERT INTO "FieldTypes" VALUES (5,'DropDownList','Drop down list',5,NULL);
 INSERT INTO "FieldTypes" VALUES (6,'FileUpload','File upload',6,NULL);
 INSERT INTO "FieldTypes" VALUES (7,'ReCAPTCHA','ReCAPTCHA',7,'Platformus.Website.Frontend.FormHandlers.ReCaptchaFieldValidator');
+
+--
+-- Extension: Platformus.ECommerce
+-- Version: 2.0.0
+--
+
+INSERT INTO "Permissions" VALUES (14,'ManageCategories','Manage categories',1400);
+INSERT INTO "Permissions" VALUES (15,'ManageProducts','Manage products',1500);
+INSERT INTO "Permissions" VALUES (16,'ManageOrderStates','Manage order states',1600);
+INSERT INTO "Permissions" VALUES (17,'ManagePaymentMethods','Manage payment methods',1700);
+INSERT INTO "Permissions" VALUES (18,'ManageDeliveryMethods','Manage delivery methods',1800);
+INSERT INTO "Permissions" VALUES (19,'ManageCarts','Manage carts',1900);
+INSERT INTO "Permissions" VALUES (20,'ManageOrders','Manage orders',2000);
 
 COMMIT;
