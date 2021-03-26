@@ -30,7 +30,7 @@ namespace Platformus.Website.Frontend.FormHandlers
 
     public string Description => "Sends the form data to the specific email address.";
 
-    public async Task<IActionResult> HandleAsync(HttpContext httpContext, Form form, IDictionary<Field, string> valuesByFields, IDictionary<string, byte[]> attachmentsByFilenames)
+    public async Task<IActionResult> HandleAsync(HttpContext httpContext, string origin, Form form, IDictionary<Field, string> valuesByFields, IDictionary<string, byte[]> attachmentsByFilenames)
     {
       StringBuilder body = new StringBuilder();
 

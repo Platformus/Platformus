@@ -49,10 +49,13 @@ namespace Platformus.Website.Backend.Controllers
 
     public async Task<IActionResult> MemberAsync(int id)
     {
-      return this.Json(await this.Storage.GetRepository<int, Member, MemberFilter>().GetByIdAsync(
+      Member member = await this.Storage.GetRepository<int, Member, MemberFilter>().GetByIdAsync(
         id,
         new Inclusion<Member>(m => m.Class)
-      ));
+      );
+
+      member.Class.Members = null;
+      return this.Json(member);
     }
 
     public async Task<IActionResult> ObjectSelectorFormAsync([FromQuery]ObjectFilter filter, string objectIds)

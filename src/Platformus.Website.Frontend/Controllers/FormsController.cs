@@ -23,7 +23,7 @@ namespace Platformus.Website.Frontend.Controllers
     }
 
     [HttpPost]
-    public async Task<IActionResult> SendAsync(int formId)
+    public async Task<IActionResult> SendAsync(int formId, string origin)
     {
       Form form = await this.Storage.GetRepository<int, Form, FormFilter>().GetByIdAsync(
         formId,
@@ -47,7 +47,7 @@ namespace Platformus.Website.Frontend.Controllers
       IFormHandler formHandler = StringActivator.CreateInstance<IFormHandler>(form.CSharpClassName);
 
       if (formHandler != null)
-        return await formHandler.HandleAsync(this.HttpContext, form, valuesByFields, attachmentsByFilenames);
+        return await formHandler.HandleAsync(this.HttpContext, origin, form, valuesByFields, attachmentsByFilenames);
 
       return this.NotFound();
     }

@@ -15,6 +15,6 @@ namespace Platformus.Website.FormHandlers
     IEnumerable<ParameterGroup> ParameterGroups { get; }
     string Description { get; }
 
-    Task<IActionResult> HandleAsync(HttpContext httpContext, Form form, IDictionary<Field, string> valuesByFields, IDictionary<string, byte[]> attachmentsByFilenames);
+    Task<IActionResult> HandleAsync(HttpContext httpContext, string origin, Form form, IDictionary<Field, string> valuesByFields, IDictionary<string, byte[]> attachmentsByFilenames);
   }
 }

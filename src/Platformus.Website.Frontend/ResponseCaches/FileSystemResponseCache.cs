@@ -36,10 +36,11 @@ namespace Platformus.Website.Frontend
       string path = Path.Combine(webHostEnvironment.ContentRootPath, cache);
 
       // TODO: handle parallel requests
-      await Task.Factory.StartNew(() => {
-        foreach (string filepath in Directory.EnumerateFiles(path))
-          File.Delete(filepath);
-      });
+      if (Directory.Exists(path))
+        await Task.Factory.StartNew(() => {
+          foreach (string filepath in Directory.EnumerateFiles(path))
+            File.Delete(filepath);
+        });
     }
 
     private string GenerateUniqueKeyForUrl(string url)

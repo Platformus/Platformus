@@ -43,23 +43,38 @@ namespace Platformus.Website.Frontend.DataSources
 
     public override async Task<dynamic> GetDataAsync(HttpContext httpContext, DataSource dataSource)
     {
-      ObjectFilter objectFilter;
+      ParametersParser parametersParser = new ParametersParser(dataSource.Parameters);
+      Inclusion<Object>[] inclusions = null;
+
+      if (parametersParser.GetStringParameterValue("RelationType") == "Primary")
+        inclusions = new Inclusion<Object>[] {
+          new Inclusion<Object>("Properties.Member"),
+          new Inclusion<Object>("Properties.StringValue.Localizations"),
+          new Inclusion<Object>("ForeignRelations.Primary.Properties.Member"),
+          new Inclusion<Object>("ForeignRelations.Primary.Properties.StringValue.Localizations")
+        };
+
+      else inclusions = new Inclusion<Object>[] {
+        new Inclusion<Object>("Properties.Member"),
+        new Inclusion<Object>("Properties.StringValue.Localizations"),
+        new Inclusion<Object>("PrimaryRelations.Foreign.Properties.Member"),
+        new Inclusion<Object>("PrimaryRelations.Foreign.Properties.StringValue.Localizations")
+      };
+
+      Object @object = (await httpContext.GetStorage().GetRepository<int, Object, ObjectFilter>().GetAllAsync(
+        new ObjectFilter() { StringValue = new LocalizationFilter() { Value = new StringFilter() { Equals = httpContext.Request.GetUrl() } } },
+        inclusions: inclusions
+      )).FirstOrDefault();
+
+      if (@object == null)
+        return null;
+
+      int relationMemberId = parametersParser.GetIntParameterValue("RelationMemberId");
 
       if (new ParametersParser(dataSource.Parameters).GetStringParameterValue("RelationType") == "Primary")
-        objectFilter = new ObjectFilter() { Primary = new ObjectFilter() { StringValue = new LocalizationFilter() { Value = new StringFilter() { Equals = httpContext.Request.GetUrl() } } } };
+        return @object.ForeignRelations.Where(r => r.MemberId == relationMemberId).Select(r => this.CreateViewModel(r.Primary));
 
-      else objectFilter = new ObjectFilter() { Foreign = new ObjectFilter() { StringValue = new LocalizationFilter() { Value = new StringFilter() { Equals = httpContext.Request.GetUrl() } } } };
-
-      IEnumerable <Object> objects = await httpContext.GetStorage().GetRepository<int, Object, ObjectFilter>().GetAllAsync(
-        objectFilter,
-        inclusions: new Inclusion<Object>[]
-        {
-          new Inclusion<Object>("Properties.Member"),
-          new Inclusion<Object>("Properties.StringValue.Localizations")
-        }
-      );
-
-      return objects.Select(o => this.CreateViewModel(o));
+      return @object.PrimaryRelations.Where(r => r.MemberId == relationMemberId).Select(r => this.CreateViewModel(r.Foreign));
     }
   }
 }

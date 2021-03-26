@@ -16,7 +16,7 @@ namespace Platformus.Website.Backend.ViewModels.Shared
         Name = member.Name,
         Position = member.Position,
         PropertyDataType = member.PropertyDataType == null ? null : new DataTypeViewModelFactory().Create(member.PropertyDataType),
-        RelationClass = member.RelationClassId == null ? null : new ClassViewModelFactory().Create(member.RelationClass)
+        RelationClass = member.RelationClass == null ? null : new ClassViewModelFactory().Create(member.RelationClass)
       };
     }
   }
