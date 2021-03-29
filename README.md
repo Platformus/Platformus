@@ -65,3 +65,5 @@ Website: http://platformus.net/
 Docs: http://docs.platformus.net/
 
 Author: http://sikorsky.pro/
+
+Patreon: https://www.patreon.com/dmitry_sikorsky (you can support this project)
