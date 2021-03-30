@@ -14,7 +14,7 @@ It consists of 3 extensions: Core, Website, and ECommerce.
 
 ### Core
 
-Provides such basic things like users, credentials, roles, permission, configurations, and cultures.
+Provides such basic things like users, credentials, roles, permissions, configurations, and cultures.
 Contains default extendable backend UI. Can be used as a base for the mobile application admin panels etc.
 
 ### Website
