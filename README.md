@@ -10,7 +10,7 @@
 based on ASP.NET Core, [ExtCore framework](https://github.com/ExtCore/ExtCore),
 and [Magicalizer](https://github.com/Magicalizer/Magicalizer).
 
-It consists of 3 extensions: Core, Website, and ECommerce.
+It consists of 4 extensions: Core, Website, ECommerce, and Images.
 
 ### Core
 
@@ -27,6 +27,9 @@ and display content without writing code), menus, forms, and file manager. Compl
 Implements standard ecommerce features like categories, products, photos, carts, and orders in a very basic way.
 Can be used as a starting point for ecommerce projects.
 
+### Images
+
+Provides basic image processing (cropping and resizing).
 
 ### Backend UI Screenshots
 
