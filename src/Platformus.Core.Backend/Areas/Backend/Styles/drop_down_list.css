@@ -34,8 +34,11 @@
   background-color: #323232;
   color: #fff;
   text-decoration: none;
+  text-overflow: ellipsis;
+  white-space: nowrap;
   display: block;
   padding: 5px 10px;
+  overflow: hidden;
 }
 
 .drop-down-list__item:hover {
@@ -46,6 +49,7 @@
 .drop-down-list__item--selected {
   background: transparent url(/wwwroot.areas.backend.images.drop_down_list.png) right no-repeat;
   color: #323232;
+  padding-right: 30px;
 }
 
 .drop-down-list__item--selected:hover {

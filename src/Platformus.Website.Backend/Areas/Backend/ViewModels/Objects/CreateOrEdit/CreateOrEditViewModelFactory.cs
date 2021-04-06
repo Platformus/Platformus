@@ -6,7 +6,6 @@ using System.Linq;
 using System.Threading.Tasks;
 using Magicalizer.Data.Repositories.Abstractions;
 using Microsoft.AspNetCore.Http;
-using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Localization;
 using Platformus.Core.Backend.ViewModels;
 using Platformus.Core.Extensions;
@@ -27,6 +26,7 @@ namespace Platformus.Website.Backend.ViewModels.Objects
         new Inclusion<Class>("Members.Tab"),
         new Inclusion<Class>("Members.PropertyDataType.DataTypeParameters.DataTypeParameterValues"),
         new Inclusion<Class>("Members.RelationClass"),
+        new Inclusion<Class>("Parent.Members.Tab"),
         new Inclusion<Class>("Parent.Members.PropertyDataType.DataTypeParameters.DataTypeParameterValues"),
         new Inclusion<Class>("Parent.Members.RelationClass")
       );
@@ -49,7 +49,7 @@ namespace Platformus.Website.Backend.ViewModels.Objects
     private List<dynamic> GetMembersByTabs(HttpContext httpContext, Class @class, Object @object = null)
     {
       List<dynamic> membersByTabs = new List<dynamic>();
-      IStringLocalizer<CreateOrEditViewModelFactory> localizer = httpContext.RequestServices.GetService<IStringLocalizer<CreateOrEditViewModelFactory>>();
+      IStringLocalizer<CreateOrEditViewModelFactory> localizer = httpContext.GetStringLocalizer<CreateOrEditViewModelFactory>();
 
       membersByTabs.Add(new { id = 0, name = localizer["General"].Value, members = this.GetMembersByTab(httpContext, @class, null, @object) });
 

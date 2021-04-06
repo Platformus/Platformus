@@ -40,6 +40,10 @@ input, textarea, button {
   line-height: 20px;
 }
 
+:focus {
+  outline: 1px dashed #0096fa;
+}
+
 ::-moz-focus-inner { 
 	border: 0;
 	padding: 0;

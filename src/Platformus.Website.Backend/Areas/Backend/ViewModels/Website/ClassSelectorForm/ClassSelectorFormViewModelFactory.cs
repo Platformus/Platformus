@@ -4,10 +4,10 @@
 using System.Collections.Generic;
 using System.Linq;
 using Microsoft.AspNetCore.Http;
-using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Localization;
 using Platformus.Core.Backend.ViewModels;
 using Platformus.Core.Backend.ViewModels.Shared;
+using Platformus.Core.Extensions;
 using Platformus.Website.Backend.ViewModels.Shared;
 using Platformus.Website.Data.Entities;
 
@@ -17,7 +17,7 @@ namespace Platformus.Website.Backend.ViewModels.Website
   {
     public ClassSelectorFormViewModel Create(HttpContext httpContext, IEnumerable<Class> classes, int? classId)
     {
-      IStringLocalizer<ClassSelectorFormViewModelFactory> localizer = httpContext.RequestServices.GetService<IStringLocalizer<ClassSelectorFormViewModelFactory>>();
+      IStringLocalizer<ClassSelectorFormViewModelFactory> localizer = httpContext.GetStringLocalizer<ClassSelectorFormViewModelFactory>();
 
       return new ClassSelectorFormViewModel()
       {

@@ -7,7 +7,7 @@
   this.ViewBag.ActiveMenuItem = "forms";
 }
 @section title {
-  @ViewBag.Title <span class="master-detail__detail-header-counter">@Model.Grid.Pager.Total</span>
+  @ViewBag.Title
 }
 @Html.Partial("_Grid", this.Model.Grid)
 <div class="master-detail__detail-buttons buttons">

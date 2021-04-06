@@ -1,7 +1,22 @@
 ﻿@* Copyright © 2020 Dmitry Sikorsky. All rights reserved. *@
 @* Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information. *@
 @model Platformus.Core.Backend.ViewModels.Shared.FilterViewModel
-@inject Microsoft.AspNetCore.Mvc.Localization.IViewLocalizer Localizer
-<div class="grid__header-filter">
-  <input class="text-box" id="filter" type="text" placeholder="@Localizer["Filter"]" value="@Model.Value" data-filtering-property="@Model.FilteringProperty?.ToLower()" />
-</div>
+@if (this.Model.Options == null)
+{
+  <input class="grid__filter text-box" type="text" placeholder="@Model.Title" value="@Model.Value" data-filtering-property="@Model.FilteringProperty?.ToLower()" />
+}
+else
+{
+  var selectedOption = this.Model.Options.FirstOrDefault(o => o.Value == this.Model.Value) ?? this.Model.Options.First();
+  
+  <div class="grid__filter drop-down-list" data-filtering-property="@Model.FilteringProperty?.ToLower()">
+    <a class="drop-down-list__item drop-down-list__item--selected" href="#" tabindex="0">@selectedOption.Text</a>
+    <div class="drop-down-list__items" style="display: none;">
+      @foreach (var option in this.Model.Options)
+	    {
+        <a class="drop-down-list__item" data-value="@option.Value" href="#">@option.Text</a>
+	    }
+    </div>
+    <input name="value" type="hidden" value="@selectedOption.Value">
+  </div>
+}

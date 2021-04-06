@@ -32,7 +32,7 @@ namespace Platformus.ECommerce.Backend.Controllers
 
     public async Task<IActionResult> IndexAsync([FromQuery]OrderFilter filter = null, string orderBy = "-created", int skip = 0, int take = 10)
     {
-      return this.View(new IndexViewModelFactory().Create(
+      return this.View(await new IndexViewModelFactory().CreateAsync(
         this.HttpContext, filter,
         await this.Repository.GetAllAsync(
           filter, orderBy, skip, take,

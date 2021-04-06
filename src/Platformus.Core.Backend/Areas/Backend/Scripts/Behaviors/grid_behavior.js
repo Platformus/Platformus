@@ -11,7 +11,7 @@
 
   function defineHandlers() {
     $(document.body).on("change", "#take", takeChangeHandler);
-    $(document.body).on("keyup", "#filter", filterKeyUpHandler);
+    $(document.body).on("change", "[data-filtering-property]", filterChangeHandler);
   }
 
   function takeChangeHandler() {
@@ -26,19 +26,17 @@
     );
   }
 
-  function filterKeyUpHandler(e) {
-    if (e.keyCode == 13) {
-      var value = $(this).val();
+  function filterChangeHandler(e) {
+    var value = $(this).val();
 
-      location.href = platformus.url.combine(
-        [
-          { name: $(this).data("filteringProperty"), value: platformus.string.isNullOrEmpty(value) ? null : value, skip: platformus.string.isNullOrEmpty(value) },
-          { name: "orderby", takeFromUrl: true },
-          { name: "direction", takeFromUrl: true },
-          { name: "skip", skip: true },
-          { name: "take", skip: true }
-        ]
-      );
-    }
+    location.href = platformus.url.combine(
+      [
+        { name: $(this).data("filteringProperty"), value: platformus.string.isNullOrEmpty(value) ? null : value, skip: platformus.string.isNullOrEmpty(value) },
+        { name: "orderby", takeFromUrl: true },
+        { name: "direction", takeFromUrl: true },
+        { name: "skip", skip: true },
+        { name: "take", skip: true }
+      ]
+    );
   }
 })(window.platformus = window.platformus || {});

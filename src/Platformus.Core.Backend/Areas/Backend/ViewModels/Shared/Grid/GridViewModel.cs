@@ -13,7 +13,7 @@ namespace Platformus.Core.Backend.ViewModels.Shared
 
   public class GridViewModel : ViewModelBase
   {
-    public FilterViewModel Filter { get; set; }
+    public IEnumerable<FilterViewModel> Filters { get; set; }
     public string SortingName { get; set; }
     public SortingDirection? SortingDirection { get; set; }
     public PagerViewModel Pager { get; set; }

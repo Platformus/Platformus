@@ -2,27 +2,21 @@
 /* Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information. */
 
 .buttons {
-}
-
-.buttons::after {
-  content: '';
-  display: block;
-  clear: both;
+  display: flex;
 }
 
 .buttons__button {
-  float: left;
-  margin-right: 1px;
+  margin-left: 1px;
 }
 
-.buttons__button:last-child {
+.buttons__button:first-child {
   margin: 0;
 }
 
 .buttons__button--minor {
-  margin-right: 5px;
+  margin-left: 5px;
 }
 
-.buttons__button--minor:last-child {
+.buttons__button--minor:first-child {
   margin: 0;
 }

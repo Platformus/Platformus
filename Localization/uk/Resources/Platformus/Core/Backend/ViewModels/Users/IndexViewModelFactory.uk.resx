@@ -120,6 +120,9 @@
   <data name="Created" xml:space="preserve">
     <value>Дата та час створення</value>
   </data>
+  <data name="Credential identifier" xml:space="preserve">
+    <value>Ідентифікатор посвідчення</value>
+  </data>
   <data name="Credentials" xml:space="preserve">
     <value>Посвідчення</value>
   </data>

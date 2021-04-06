@@ -4,10 +4,10 @@
 using System.Collections.Generic;
 using System.Linq;
 using Microsoft.AspNetCore.Http;
-using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Localization;
 using Platformus.Core.Backend.ViewModels;
 using Platformus.Core.Backend.ViewModels.Shared;
+using Platformus.Core.Extensions;
 using Platformus.Website.Backend.ViewModels.Shared;
 using Platformus.Website.Filters;
 
@@ -17,12 +17,17 @@ namespace Platformus.Website.Backend.ViewModels.Endpoints
   {
     public IndexViewModel Create(HttpContext httpContext, EndpointFilter filter, IEnumerable<Data.Entities.Endpoint> endpoints, string orderBy, int skip, int take, int total)
     {
-      IStringLocalizer<IndexViewModelFactory> localizer = httpContext.RequestServices.GetService<IStringLocalizer<IndexViewModelFactory>>();
+      IStringLocalizer<IndexViewModelFactory> localizer = httpContext.GetStringLocalizer<IndexViewModelFactory>();
 
       return new IndexViewModel()
       {
         Grid = new GridViewModelFactory().Create(
-          httpContext, "Name.Contains", orderBy, skip, take, total,
+          httpContext,
+          new[] {
+            new FilterViewModelFactory().Create(httpContext, "Name.Contains", localizer["Name"]),
+            new FilterViewModelFactory().Create(httpContext, "UrlTemplate.Contains", localizer["URL template"])
+          },
+          orderBy, skip, take, total,
           new[] {
             new GridColumnViewModelFactory().Create(localizer["Name"], "Name"),
             new GridColumnViewModelFactory().Create(localizer["URL template"], "UrlTemplate"),

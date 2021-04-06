@@ -4,7 +4,7 @@
 @{
   int maxPagesCount = 5;
 }
-<div class="grid__header-pager pager">
+<div class="grid__range-control pager">
   @if (this.Model.Skip > 0)
   {
     <a class="pager__page pager__page--first" href="@this.Context.Request.CombineUrl(
@@ -22,20 +22,15 @@
       new Url.Descriptor(name: "take", value: this.Model.Take)
     )" title="Previous page"></a>
   }
-  else
-  {
-    <div class="pager__page pager__page--first pager__page--disabled"></div>
-    <div class="pager__page pager__page--previous pager__page--disabled"></div>
-  }
   @if (this.Model.Skip - maxPagesCount * this.Model.Take > 0)
   {
-    <div class="pager__page pager__page--skipped pager__page--disabled"></div>
+    <div class="pager__page pager__page--skipped"></div>
   }
   @for (int i = 0; i * this.Model.Take < this.Model.Total; i++)
   {
     if (this.Model.Skip == i * this.Model.Take)
     {
-      <div class="pager__page pager__page--current pager__page--disabled">@(i + 1)<div class="pager__page-arrow"></div></div>
+      <div class="pager__page pager__page--current">@(i + 1)</div>
     }
     else if (i * this.Model.Take >= this.Model.Skip - maxPagesCount * this.Model.Take && i * this.Model.Take <= this.Model.Skip + maxPagesCount * this.Model.Take)
     {
@@ -50,11 +45,11 @@
   }
   @if (this.Model.Total == 0)
   {
-    <div class="pager__page pager__page--current pager__page--disabled">1<div class="pager__page-arrow-placeholder"><div class="pager__page-arrow"></div></div></div>
+    <div class="pager__page pager__page--current">1<div class="pager__page-arrow-placeholder"><div class="pager__page-arrow"></div></div></div>
   }
   @if (this.Model.Skip + maxPagesCount * this.Model.Take < this.Model.Total)
   {
-    <div class="pager__page pager__page--skipped pager__page--disabled"></div>
+    <div class="pager__page pager__page--skipped"></div>
   }
   @if (this.Model.Skip + this.Model.Take < this.Model.Total)
   {
@@ -72,10 +67,5 @@
       new Url.Descriptor(name: "skip", value: this.Model.Total - (this.Model.Total % this.Model.Take == 0 ? this.Model.Take : this.Model.Total % this.Model.Take)),
       new Url.Descriptor(name: "take", value: this.Model.Take)
     )" title="Last page"></a>
-  }
-  else
-  {
-    <div class="pager__page pager__page--next pager__page--disabled"></div>
-    <div class="pager__page pager__page--last pager__page--disabled"></div>
   }
 </div>

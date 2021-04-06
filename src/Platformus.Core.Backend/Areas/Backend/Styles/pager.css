@@ -2,12 +2,7 @@
 /* Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information. */
 
 .pager {
-}
-
-.pager::after {
-  content: '';
-  display: block;
-  clear: both;
+  display: flex;
 }
 
 .pager__page {
@@ -16,23 +11,19 @@
   background-repeat: no-repeat;
   box-sizing: border-box;
   text-align: center;
-  float: left;
-  margin-right: 1px;
+  display: block;
+  margin-left: 1px;
   padding: 5px 10px;
   min-width: 30px;
   height: 30px;
 }
 
-.pager__page:hover {
-  background-position: center;
-}
-
-.pager__page:focus {
-  background-position: center;
-}
-
-.pager__page:last-child {
+.pager__page:first-child {
   margin: 0;
+}
+
+.pager__page:hover, .pager__page:focus {
+  background-position: center bottom;
 }
 
 .pager__page--first {
@@ -58,28 +49,6 @@
 .pager__page--current {
   background: #323232;
   color: #fff;
-  position: relative;
-}
-
-.pager__page-arrow {
-  background: url(/wwwroot.areas.backend.images.current_page.png) center no-repeat;
-  position: absolute;
-  left: 0;
-  top: 30px;
-  width: 100%;
-  height: 5px;
-}
-
-.pager__page--disabled {
-  background-position: center bottom;
-}
-
-.pager__page--disabled:hover {
-  background-position: center bottom;
-}
-
-.pager__page--disabled:focus {
-  background-position: center bottom;
 }
 
 @media
@@ -91,31 +60,26 @@ only screen and (                min-resolution: 192dpi),
 only screen and (                min-resolution: 2dppx) {
   .pager__page--first {
     background-image: url(/wwwroot.areas.backend.images.first_page@2x.png);
-    background-size: 30px 90px;
+    background-size: 30px 60px;
   }
 
   .pager__page--previous {
     background-image: url(/wwwroot.areas.backend.images.previous_page@2x.png);
-    background-size: 30px 90px;
+    background-size: 30px 60px;
   }
 
   .pager__page--skipped {
     background-image: url(/wwwroot.areas.backend.images.skipped_pages@2x.png);
-    background-size: 30px 30px;
+    background-size: 30px;
   }
 
   .pager__page--next {
     background-image: url(/wwwroot.areas.backend.images.next_page@2x.png);
-    background-size: 30px 90px;
+    background-size: 30px 60px;
   }
 
   .pager__page--last {
     background-image: url(/wwwroot.areas.backend.images.last_page@2x.png);
-    background-size: 30px 90px;
-  }
-
-  .pager__page-arrow {
-    background-image: url(/wwwroot.areas.backend.images.current_page@2x.png);
-    background-size: 10px 5px;
+    background-size: 30px 60px;
   }
 }

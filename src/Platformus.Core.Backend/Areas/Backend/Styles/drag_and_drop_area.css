@@ -18,13 +18,12 @@
 
 .drag-and-drop-area__buttons {
   text-align: center;
+  display: block;
   margin-top: 20px;
 }
 
 .drag-and-drop-area__browse-button {
   text-align: center;
-  float: none;
-  display: inline-block;
   width: 250px;
   height: 20px;
   overflow: hidden;

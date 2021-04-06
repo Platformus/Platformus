@@ -1,40 +1,67 @@
 ﻿@* Copyright © 2020 Dmitry Sikorsky. All rights reserved. *@
 @* Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information. *@
 @model Platformus.Core.Backend.ViewModels.Shared.GridViewModel
+@inject Microsoft.AspNetCore.Mvc.Localization.IViewLocalizer Localizer
 <div class="grid">
-  <div class="grid__header">
-    @Html.Partial("_Pager", this.Model.Pager)
-    @Html.Partial("_TakeSelector", this.Model.TakeSelector)
-    @if (this.Model.Filter != null)
-    {
-      @Html.Partial("_Filter", this.Model.Filter)
-    }
-  </div>
-  <div class="grid__content">
-    <table class="table">
-      <colgroup>
-        @foreach (var item in this.Model.GridColumns)
-        {
-          if (item.SortingName == this.Model.SortingName)
-          {
-            <col class="table__cell--ordered-by" />
-          }
-          else
-          {
-            <col />
-          }
-        }
-      </colgroup>
-      <tr class="table__row">
-        @foreach (var item in this.Model.GridColumns)
-        {
-          @Html.Partial("_GridColumn", item)
-        }
-      </tr>
-      @foreach (var item in this.Model.Items)
+  @if (this.Model.Filters != null)
+  {
+    <div class="grid__row grid__filters">
+      @foreach (var filter in this.Model.Filters)
       {
-        @Html.Partial(this.Model.TemplateName, item)
+        <partial name="_Filter" for="@filter" />
       }
-    </table>
-  </div>
+    </div>
+  }
+  @if (this.Model.Pager.Total != 0)
+  {
+    <div class="grid__row grid__range-controls">
+      @if (this.Model.Pager.Total > this.Model.Pager.Take)
+      {
+        <partial name="_Pager" for="Pager" />
+      }
+      <partial name="_PagerCurrentState" for="Pager" />
+      <partial name="_TakeSelector" for="TakeSelector" />
+    </div>
+  }
+  <table class="grid__row grid__table table">
+    <colgroup>
+      @foreach (var item in this.Model.GridColumns)
+      {
+        if (item.SortingName == this.Model.SortingName)
+        {
+          <col class="table__cell--ordered-by" />
+        }
+        else
+        {
+          <col />
+        }
+      }
+    </colgroup>
+    <tr class="table__row">
+      @foreach (var item in this.Model.GridColumns)
+      {
+        @Html.Partial("_GridColumn", item)
+      }
+    </tr>
+    @if (this.Model.Pager.Total == 0)
+    {
+      <tr class="table__row">
+        <td class="table__cell" colspan="@Model.GridColumns.Count()">
+          @Localizer["No records"]
+        </td>
+      </tr>
+    }
+    @foreach (var item in this.Model.Items)
+    {
+      @Html.Partial(this.Model.TemplateName, item)
+    }
+  </table>
+  @if (this.Model.Pager.Total > this.Model.Pager.Take)
+  {
+    <div class="grid__row grid__range-controls">
+      <partial name="_Pager" for="Pager" />
+      <partial name="_PagerCurrentState" for="Pager" />
+      <partial name="_TakeSelector" for="TakeSelector" />
+    </div>
+  }
 </div>

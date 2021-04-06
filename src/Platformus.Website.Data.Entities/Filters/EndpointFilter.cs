@@ -9,5 +9,6 @@ namespace Platformus.Website.Filters
   {
     public int? Id { get; set; }
     public StringFilter Name { get; set; }
+    public StringFilter UrlTemplate { get; set; }
   }
 }

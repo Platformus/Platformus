@@ -2,8 +2,8 @@
 // Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information.
 
 using Microsoft.AspNetCore.Http;
-using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Localization;
+using Platformus.Core.Extensions;
 using Platformus.Core.Primitives;
 
 namespace Platformus.Core.Backend.ViewModels.Shared
@@ -12,7 +12,7 @@ namespace Platformus.Core.Backend.ViewModels.Shared
   {
     public TakeSelectorViewModel Create(HttpContext httpContext, int take)
     {
-      IStringLocalizer<TakeSelectorViewModelFactory> localizer = httpContext.RequestServices.GetService<IStringLocalizer<TakeSelectorViewModelFactory>>();
+      IStringLocalizer<TakeSelectorViewModelFactory> localizer = httpContext.GetStringLocalizer<TakeSelectorViewModelFactory>();
 
       return new TakeSelectorViewModel()
       {

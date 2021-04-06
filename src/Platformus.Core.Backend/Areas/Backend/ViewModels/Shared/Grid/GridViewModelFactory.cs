@@ -9,11 +9,21 @@ namespace Platformus.Core.Backend.ViewModels.Shared
 {
   public class GridViewModelFactory : ViewModelFactoryBase
   {
-    public GridViewModel Create(HttpContext httpContext, string filteringProperty, string sorting, int skip, int take, int total, IEnumerable<GridColumnViewModel> gridColumns, IEnumerable<ViewModelBase> items, string templateName)
+    public GridViewModel Create(HttpContext httpContext, string sorting, int skip, int take, int total, IEnumerable<GridColumnViewModel> gridColumns, IEnumerable<ViewModelBase> items, string templateName)
+    {
+      return this.Create(httpContext, default(FilterViewModel), sorting, skip, take, total, gridColumns, items, templateName);
+    }
+
+    public GridViewModel Create(HttpContext httpContext, FilterViewModel filter, string sorting, int skip, int take, int total, IEnumerable<GridColumnViewModel> gridColumns, IEnumerable<ViewModelBase> items, string templateName)
+    {
+      return this.Create(httpContext, filter == null ? null : new[] { filter }, sorting, skip, take, total, gridColumns, items, templateName);
+    }
+
+    public GridViewModel Create(HttpContext httpContext, IEnumerable<FilterViewModel> filters, string sorting, int skip, int take, int total, IEnumerable<GridColumnViewModel> gridColumns, IEnumerable<ViewModelBase> items, string templateName)
     {
       GridViewModel grid = new GridViewModel()
       {
-        Filter = string.IsNullOrEmpty(filteringProperty) ? null : new FilterViewModelFactory().Create(httpContext, filteringProperty),
+        Filters = filters,
         SortingName = string.IsNullOrEmpty(sorting) ? null : this.GetSortingName(sorting),
         SortingDirection = string.IsNullOrEmpty(sorting) ? (SortingDirection?)null: this.GetSortingDirection(sorting),
         Pager = new PagerViewModelFactory().Create(skip, take, total),

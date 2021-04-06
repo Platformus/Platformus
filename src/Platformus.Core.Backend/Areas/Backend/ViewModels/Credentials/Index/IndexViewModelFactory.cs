@@ -4,10 +4,10 @@
 using System.Collections.Generic;
 using System.Linq;
 using Microsoft.AspNetCore.Http;
-using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Localization;
 using Platformus.Core.Backend.ViewModels.Shared;
 using Platformus.Core.Data.Entities;
+using Platformus.Core.Extensions;
 using Platformus.Core.Filters;
 
 namespace Platformus.Core.Backend.ViewModels.Credentials
@@ -16,13 +16,15 @@ namespace Platformus.Core.Backend.ViewModels.Credentials
   {
     public IndexViewModel Create(HttpContext httpContext, CredentialFilter filter, IEnumerable<Credential> credentials, string orderBy, int skip, int take, int total)
     {
-      IStringLocalizer<IndexViewModelFactory> localizer = httpContext.RequestServices.GetService<IStringLocalizer<IndexViewModelFactory>>();
+      IStringLocalizer<IndexViewModelFactory> localizer = httpContext.GetStringLocalizer<IndexViewModelFactory>();
 
       return new IndexViewModel()
       {
         Filter = filter,
         Grid = new GridViewModelFactory().Create(
-          httpContext, "Identifier.Contains", orderBy, skip, take, total,
+          httpContext,
+          new FilterViewModelFactory().Create(httpContext, "Identifier.Contains", localizer["Identifier"]),
+          orderBy, skip, take, total,
           new[] {
             new GridColumnViewModelFactory().Create(localizer["Credential Type"]),
             new GridColumnViewModelFactory().Create(localizer["Identifier"], "Identifier"),

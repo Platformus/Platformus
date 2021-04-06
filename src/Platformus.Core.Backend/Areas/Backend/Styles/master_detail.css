@@ -105,11 +105,6 @@
   padding: 0 20px;
 }
 
-.master-detail__detail-header-counter {
-  color: #ccc;
-  font-style: italic;
-}
-
 .master-detail__detail-content {
   padding: 0 20px 20px;
 }

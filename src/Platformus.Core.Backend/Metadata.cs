@@ -3,8 +3,8 @@
 
 using System.Collections.Generic;
 using Microsoft.AspNetCore.Http;
-using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Localization;
+using Platformus.Core.Extensions;
 
 namespace Platformus.Core.Backend.Metadata
 {
@@ -35,7 +35,7 @@ namespace Platformus.Core.Backend.Metadata
 
     public override IEnumerable<MenuGroup> GetMenuGroups(HttpContext httpContext)
     {
-      IStringLocalizer<Metadata> localizer = httpContext.RequestServices.GetService<IStringLocalizer<Metadata>>();
+      IStringLocalizer<Metadata> localizer = httpContext.GetStringLocalizer<Metadata>();
 
       return new MenuGroup[]
       {

@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Mvc.Abstractions;
 using Microsoft.AspNetCore.Mvc.Infrastructure;
 using Microsoft.AspNetCore.Routing;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Localization;
 using Platformus.Core.Services.Abstractions;
 
 namespace Platformus.Core.Extensions
@@ -16,6 +17,11 @@ namespace Platformus.Core.Extensions
   {
     private static readonly RouteData EmptyRouteData = new RouteData();
     private static readonly ActionDescriptor EmptyActionDescriptor = new ActionDescriptor();
+
+    public static IStringLocalizer<T> GetStringLocalizer<T>(this HttpContext httpContext)
+    {
+      return httpContext.RequestServices.GetService<IStringLocalizer<T>>();
+    }
 
     public static IStorage GetStorage(this HttpContext httpContext)
     {

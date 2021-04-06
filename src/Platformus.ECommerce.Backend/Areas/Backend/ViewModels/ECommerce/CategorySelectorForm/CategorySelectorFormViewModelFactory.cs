@@ -4,10 +4,10 @@
 using System.Collections.Generic;
 using System.Linq;
 using Microsoft.AspNetCore.Http;
-using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Localization;
 using Platformus.Core.Backend.ViewModels;
 using Platformus.Core.Backend.ViewModels.Shared;
+using Platformus.Core.Extensions;
 using Platformus.ECommerce.Backend.ViewModels.Shared;
 using Platformus.ECommerce.Data.Entities;
 
@@ -17,7 +17,7 @@ namespace Platformus.ECommerce.Backend.ViewModels.ECommerce
   {
     public CategorySelectorFormViewModel Create(HttpContext httpContext, IEnumerable<Category> categories, int? categoryId)
     {
-      IStringLocalizer<CategorySelectorFormViewModelFactory> localizer = httpContext.RequestServices.GetService<IStringLocalizer<CategorySelectorFormViewModelFactory>>();
+      IStringLocalizer<CategorySelectorFormViewModelFactory> localizer = httpContext.GetStringLocalizer<CategorySelectorFormViewModelFactory>();
 
       return new CategorySelectorFormViewModel()
       {

@@ -6,7 +6,6 @@ using System.Linq;
 using System.Threading.Tasks;
 using Magicalizer.Data.Repositories.Abstractions;
 using Microsoft.AspNetCore.Http;
-using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Localization;
 using Platformus.Core.Backend.ViewModels;
 using Platformus.Core.Backend.ViewModels.Shared;
@@ -34,7 +33,7 @@ namespace Platformus.Website.Backend.ViewModels.Objects
         Class = @class == null ? null : new ClassViewModelFactory().Create(@class),
         ClassesByAbstractClasses = await this.GetClassesByAbstractClassesAsync(httpContext),
         Grid = @class == null ? null : new GridViewModelFactory().Create(
-          httpContext, null, orderBy, skip, take, total,
+          httpContext, orderBy, skip, take, total,
           this.GetGridColumns(@class),
           objects.Select(o => new ObjectViewModelFactory().Create(o, @class.GetVisibleInListMembers())),
           "_Object"
@@ -57,7 +56,7 @@ namespace Platformus.Website.Backend.ViewModels.Objects
 
       if (classes.Count() != 0)
       {
-        IStringLocalizer<IndexViewModelFactory> localizer = httpContext.RequestServices.GetService<IStringLocalizer<IndexViewModelFactory>>();
+        IStringLocalizer<IndexViewModelFactory> localizer = httpContext.GetStringLocalizer<IndexViewModelFactory>();
 
         abstractClasses.Add(new Class() { PluralizedName = localizer["Others"], Classes = classes });
       }

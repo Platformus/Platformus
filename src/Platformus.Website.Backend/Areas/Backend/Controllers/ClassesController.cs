@@ -30,9 +30,9 @@ namespace Platformus.Website.Backend.Controllers
 
     public async Task<IActionResult> IndexAsync([FromQuery]ClassFilter filter = null, string orderBy = "+name", int skip = 0, int take = 10)
     {
-      return this.View(new IndexViewModelFactory().Create(
+      return this.View(await new IndexViewModelFactory().CreateAsync(
         this.HttpContext, filter,
-        await this.Repository.GetAllAsync(filter, orderBy, skip, take),
+        await this.Repository.GetAllAsync(filter, orderBy, skip, take, new Inclusion<Class>(c => c.Parent)),
         orderBy, skip, take, await this.Repository.CountAsync(filter)
       ));
     }

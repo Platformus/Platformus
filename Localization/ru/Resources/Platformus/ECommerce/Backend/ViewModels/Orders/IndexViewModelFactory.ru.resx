@@ -120,11 +120,23 @@
   <data name="#" xml:space="preserve">
     <value>№</value>
   </data>
+  <data name="All delivery methods" xml:space="preserve">
+    <value>Все методы оплаты</value>
+  </data>
+  <data name="All order states" xml:space="preserve">
+    <value>Все состояния заказов</value>
+  </data>
+  <data name="All payment methods" xml:space="preserve">
+    <value>Все методы доставки</value>
+  </data>
   <data name="Created" xml:space="preserve">
     <value>Дата и время создания</value>
   </data>
   <data name="Customer" xml:space="preserve">
     <value>Покупатель</value>
+  </data>
+  <data name="Customer phone" xml:space="preserve">
+    <value>Телефон покупателя</value>
   </data>
   <data name="Delivery method" xml:space="preserve">
     <value>Метод доставки</value>

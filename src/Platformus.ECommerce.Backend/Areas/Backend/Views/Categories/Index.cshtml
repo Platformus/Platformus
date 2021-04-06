@@ -7,7 +7,7 @@
   this.ViewBag.ActiveMenuItem = "categories";
 }
 @section title {
-  @ViewBag.Title <span class="master-detail__detail-header-counter">@Model.Categories.Count()</span>
+  @ViewBag.Title
 }
 <div class="tree">
   @foreach (var category in this.Model.Categories)

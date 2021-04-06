@@ -120,11 +120,23 @@
   <data name="#" xml:space="preserve">
     <value>№</value>
   </data>
+  <data name="All delivery methods" xml:space="preserve">
+    <value>Усі методи доставки</value>
+  </data>
+  <data name="All order states" xml:space="preserve">
+    <value>Усі стани замовлень</value>
+  </data>
+  <data name="All payment methods" xml:space="preserve">
+    <value>Усі методи оплати</value>
+  </data>
   <data name="Created" xml:space="preserve">
     <value>Дата та час створення</value>
   </data>
   <data name="Customer" xml:space="preserve">
     <value>Покупець</value>
+  </data>
+  <data name="Customer phone" xml:space="preserve">
+    <value>Телефон покупця</value>
   </data>
   <data name="Delivery method" xml:space="preserve">
     <value>Метод доставки</value>

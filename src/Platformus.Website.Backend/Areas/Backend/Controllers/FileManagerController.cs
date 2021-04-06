@@ -11,7 +11,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Net.Http.Headers;
-using Platformus.Website.Backend.ViewModels.Website;
+using Platformus.Website.Backend.ViewModels.FileManager;
 using Platformus.Website.Events;
 using Platformus.Website.Filters;
 

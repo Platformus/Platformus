@@ -4,7 +4,7 @@
 using Platformus.Core.Backend.ViewModels;
 using Platformus.Core.Backend.ViewModels.Shared;
 
-namespace Platformus.Website.Backend.ViewModels.Website
+namespace Platformus.Website.Backend.ViewModels.FileManager
 {
   public class IndexViewModel : ViewModelBase
   {

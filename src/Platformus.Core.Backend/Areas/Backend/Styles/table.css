@@ -3,19 +3,15 @@
 
 .table {
   border-collapse: collapse;
-  display: table;
-  width: 100%;
 }
 
 .table__row {
-  display: table-row;
 }
 
 .table__cell {
   font-weight: normal;
   text-align: left;
   vertical-align: top;
-  display: table-cell;
   padding: 5px 10px;
 }
 

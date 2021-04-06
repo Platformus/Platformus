@@ -77,8 +77,14 @@ namespace Platformus.Core.Backend
 
     protected void MergeOtherAttribute(TagBuilder tb, TagHelperAttributeList attributes)
     {
+      // TODO: review this code
       foreach (TagHelperAttribute attribute in attributes)
-        tb.MergeAttribute(attribute.Name, attribute.Value?.ToString());
+      {
+        if (attribute.Name == "class" && !string.IsNullOrEmpty(attribute.Value?.ToString()))
+          tb.Attributes["class"] += " " + attribute.Value;
+
+        else tb.MergeAttribute(attribute.Name, attribute.Value?.ToString());
+      }
     }
 
     protected RequiredAttribute GetRequiredAttribute(ModelExpression modelExpression)

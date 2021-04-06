@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
+using Microsoft.Extensions.Localization;
 using Platformus.Core.Backend.ViewModels;
 using Platformus.Core.Extensions;
 using Platformus.Core.Primitives;
@@ -37,9 +38,10 @@ namespace Platformus.Website.Backend.ViewModels.Classes
 
     private async Task<IEnumerable<Option>> GetClassOptionsAsync(HttpContext httpContext)
     {
+      IStringLocalizer<CreateOrEditViewModelFactory> localizer = httpContext.GetStringLocalizer<CreateOrEditViewModelFactory>();
       List<Option> options = new List<Option>();
 
-      options.Add(new Option("Parent class not specified", string.Empty));
+      options.Add(new Option(localizer["Parent class not specified"], string.Empty));
       options.AddRange(
         (await httpContext.GetStorage().GetRepository<int, Class, ClassFilter>().GetAllAsync(new ClassFilter() { IsAbstract = true })).Select(
           c => new Option(c.Name, c.Id.ToString())

@@ -3,18 +3,12 @@
 
 .tabs {
   border-bottom: 5px solid #323232;
-}
-
-.tabs::after {
-  content: '';
-  display: block;
-  clear: both;
+  display: flex;
 }
 
 .tabs__tab {
   background: #f0f0f0;
   cursor: pointer;
-  float: left;
   padding: 5px 10px;
 }
 

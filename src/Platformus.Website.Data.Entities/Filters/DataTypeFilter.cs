@@ -8,6 +8,7 @@ namespace Platformus.Website.Filters
   public class DataTypeFilter : IFilter
   {
     public int? Id { get; set; }
+    public string StorageDataType { get; set; }
     public StringFilter Name { get; set; }
   }
 }
