@@ -101,7 +101,7 @@ namespace Platformus.Website.Backend.Controllers
 
     private async Task<bool> IsCodeUniqueAsync(string code)
     {
-      return await this.Repository.CountAsync(new FormFilter() { Code = code }) == 0;
+      return await this.Repository.CountAsync(new FormFilter(code: code)) == 0;
     }
   }
 }

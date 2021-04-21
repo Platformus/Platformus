@@ -10,6 +10,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Platformus.Core;
 using Platformus.Website.Data.Entities;
+using Platformus.Website.FieldValidators;
 using Platformus.Website.Filters;
 using Platformus.Website.FormHandlers;
 
@@ -36,7 +37,7 @@ namespace Platformus.Website.Frontend.Controllers
 
       foreach (Field field in valuesByFields.Keys)
         if (!string.IsNullOrEmpty(field.FieldType.ValidatorCSharpClassName))
-          if (!await this.CreateFieldValidatorInstance(field.FieldType).ValidateAsync(this.HttpContext, form, field, valuesByFields[field]))
+          if (!await this.CreateFieldValidator(field.FieldType).ValidateAsync(this.HttpContext, form, field, valuesByFields[field]))
             return this.BadRequest();
 
       IDictionary<string, byte[]> attachmentsByFilenames = this.GetAttachmentsByFilenames(form);
@@ -44,7 +45,7 @@ namespace Platformus.Website.Frontend.Controllers
       if (form.ProduceCompletedForms)
         await this.ProduceCompletedForms(form, valuesByFields, attachmentsByFilenames);
 
-      IFormHandler formHandler = StringActivator.CreateInstance<IFormHandler>(form.CSharpClassName);
+      IFormHandler formHandler = StringActivator.CreateInstance<IFormHandler>(form.FormHandlerCSharpClassName);
 
       if (formHandler != null)
         return await formHandler.HandleAsync(this.HttpContext, origin, form, valuesByFields, attachmentsByFilenames);
@@ -63,7 +64,7 @@ namespace Platformus.Website.Frontend.Controllers
       return valuesByFields;
     }
 
-    private IFieldValidator CreateFieldValidatorInstance(FieldType fieldType)
+    private IFieldValidator CreateFieldValidator(FieldType fieldType)
     {
       return StringActivator.CreateInstance<IFieldValidator>(fieldType.ValidatorCSharpClassName);
     }

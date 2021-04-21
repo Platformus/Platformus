@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Platformus.Core;
 using Platformus.Core.Extensions;
-using Platformus.Website.Endpoints;
+using Platformus.Website.RequestProcessors;
 using Platformus.Website.Frontend.Services.Abstractions;
 using Platformus.Website.ResponseCaches;
 
@@ -32,7 +32,7 @@ namespace Platformus.Website.Frontend.Middleware
           byte[] responseBody;
           Func<Task<byte[]>> defaultValueFunc = async () =>
           {
-            IActionResult actionResult = await this.CreateEndpointInstance(endpoint).InvokeAsync(httpContext, endpoint);
+            IActionResult actionResult = await this.CreateRequestProcessor(endpoint).ProcessAsync(httpContext, endpoint);
 
             if (actionResult == null)
               return null;
@@ -45,7 +45,7 @@ namespace Platformus.Website.Frontend.Middleware
 
           else
           {
-            responseBody = await this.CreateResponseCacheInstance(endpoint).GetWithDefaultValueAsync(
+            responseBody = await this.CreateResponseCache(endpoint).GetWithDefaultValueAsync(
               httpContext,
               defaultValueFunc
             );
@@ -62,14 +62,14 @@ namespace Platformus.Website.Frontend.Middleware
       await this.next(httpContext);
     }
 
-    private IResponseCache CreateResponseCacheInstance(Data.Entities.Endpoint endpoint)
+    private IRequestProcessor CreateRequestProcessor(Data.Entities.Endpoint endpoint)
     {
-      return StringActivator.CreateInstance<IResponseCache>(endpoint.ResponseCacheCSharpClassName);
+      return StringActivator.CreateInstance<IRequestProcessor>(endpoint.RequestProcessorCSharpClassName);
     }
 
-    private IEndpoint CreateEndpointInstance(Data.Entities.Endpoint endpoint)
+    private IResponseCache CreateResponseCache(Data.Entities.Endpoint endpoint)
     {
-      return StringActivator.CreateInstance<IEndpoint>(endpoint.CSharpClassName);
+      return StringActivator.CreateInstance<IResponseCache>(endpoint.ResponseCacheCSharpClassName);
     }
 
     private async Task<byte[]> GetResponseBodyAsync(HttpContext httpContext, IActionResult actionResult)

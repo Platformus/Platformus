@@ -33,7 +33,7 @@ namespace Platformus.ECommerce.Backend.Controllers
     {
       return this.View(new IndexViewModelFactory().Create(
         await this.Repository.GetAllAsync(
-          new CategoryFilter() { Owner = new CategoryFilter { Id = new IntegerFilter() { IsNull = true } } },
+          new CategoryFilter(owner: new CategoryFilter(id: new IntegerFilter(isNull: true))),
           inclusions: new Inclusion<Category>[] {
             new Inclusion<Category>(c => c.Name.Localizations),
             new Inclusion<Category>("Categories.Name.Localizations"),
@@ -51,7 +51,11 @@ namespace Platformus.ECommerce.Backend.Controllers
       return this.View(new CreateOrEditViewModelFactory().Create(
         this.HttpContext, id == null ? null : await this.Repository.GetByIdAsync(
           (int)id,
-          new Inclusion<Category>(c => c.Name.Localizations)
+          new Inclusion<Category>(c => c.Name.Localizations),
+          new Inclusion<Category>(p => p.Description.Localizations),
+          new Inclusion<Category>(p => p.Title.Localizations),
+          new Inclusion<Category>(p => p.MetaDescription.Localizations),
+          new Inclusion<Category>(p => p.MetaKeywords.Localizations)
         )
       ));
     }

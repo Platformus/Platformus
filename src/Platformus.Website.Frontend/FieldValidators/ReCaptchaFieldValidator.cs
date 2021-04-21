@@ -8,9 +8,9 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
 using Newtonsoft.Json;
 using Platformus.Website.Data.Entities;
-using Platformus.Website.FormHandlers;
+using Platformus.Website.FieldValidators;
 
-namespace Platformus.Website.Frontend.FormHandlers
+namespace Platformus.Website.Frontend.FieldValidators
 {
   public class VerificationResult
   {

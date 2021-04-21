@@ -43,7 +43,7 @@ namespace Platformus.Website.Backend.ViewModels.Classes
 
       options.Add(new Option(localizer["Parent class not specified"], string.Empty));
       options.AddRange(
-        (await httpContext.GetStorage().GetRepository<int, Class, ClassFilter>().GetAllAsync(new ClassFilter() { IsAbstract = true })).Select(
+        (await httpContext.GetStorage().GetRepository<int, Class, ClassFilter>().GetAllAsync(new ClassFilter(isAbstract: true))).Select(
           c => new Option(c.Name, c.Id.ToString())
         )
       );

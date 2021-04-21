@@ -40,15 +40,15 @@ namespace Platformus.Website.Data.Entities
     public bool ProduceCompletedForms { get; set; }
 
     /// <summary>
-    /// Gets or sets the name (including namespace) of the C# class which will be instantiated each time
+    /// Gets or sets the name (including namespace) of the form handler C# class which will be instantiated each time
     /// when the form is filled by the user to process user input.
     /// </summary>
-    public string CSharpClassName { get; set; }
+    public string FormHandlerCSharpClassName { get; set; }
 
     /// <summary>
-    /// Gets or sets the parameters (key=value pairs separated by commas) for the C# class instances.
+    /// Gets or sets the parameters (key=value pairs separated by commas) for the form handler C# class instances.
     /// </summary>
-    public string Parameters { get; set; }
+    public string FormHandlerParameters { get; set; }
 
     public virtual Dictionary Name { get; set; }
     public virtual Dictionary SubmitButtonTitle { get; set; }

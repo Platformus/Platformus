@@ -10,5 +10,14 @@ namespace Platformus.Core.Filters
     public int? Id { get; set; }
     public string Code { get; set; }
     public StringFilter Name { get; set; }
+
+    public RoleFilter() { }
+
+    public RoleFilter(int? id = null, string code = null, StringFilter name = null)
+    {
+      Id = id;
+      Code = code;
+      Name = name;
+    }
   }
 }

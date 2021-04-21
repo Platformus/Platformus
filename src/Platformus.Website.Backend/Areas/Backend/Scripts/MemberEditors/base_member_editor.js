@@ -37,15 +37,39 @@
     return parseInt(value);
   };
 
-  platformus.memberEditors.base.createCulture = function (localization) {
-    var culture = $("<div>").addClass("field__culture");
+  platformus.memberEditors.base.getMinValueDataTypeParameterValue = function (member) {
+    var value = platformus.memberEditors.base.getDataTypeParameterValue(member, "MinValue", null);
 
-    platformus.memberEditors.base.createFlag(localization).appendTo(culture);
+    if (value == null)
+      return null;
+
+    return parseInt(value);
+  };
+
+  platformus.memberEditors.base.getMaxValueDataTypeParameterValue = function (member) {
+    var value = platformus.memberEditors.base.getDataTypeParameterValue(member, "MaxValue", null);
+
+    if (value == null)
+      return null;
+
+    return parseInt(value);
+  };
+
+  platformus.memberEditors.base.createCulture = function (localization, isFullscreen) {
+    var culture = $("<div>").addClass("field__culture culture");
+
+    if (isFullscreen) {
+      culture.addClass("field__culture--fullscreen");
+    }
+
+    platformus.memberEditors.base.createFlag(localization, isFullscreen).appendTo(culture);
     return culture;
   };
 
   platformus.memberEditors.base.createFlag = function (localization) {
-    return $("<div>").addClass("field__culture-flag").html(localization.culture.id);
+    return $("<div>")
+      .addClass("culture__flag")
+      .html(localization.culture.id);
   };
 
   platformus.memberEditors.base.createMultilingualSeparator = function () {

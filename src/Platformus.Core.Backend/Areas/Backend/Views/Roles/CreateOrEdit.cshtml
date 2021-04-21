@@ -23,7 +23,7 @@
     <div id="tabPagePermissions" class="tab-pages__tab-page">
       @foreach (var rolePermission in this.Model.RolePermissions)
       {
-        <div class="form__field form__field--separated field">
+        <div class="form__field @(rolePermission.Permission.Id == this.Model.RolePermissions.First().Permission.Id ? "form__field--separated" : null) field">
           <unbound-check-box asp-identity="permission@(rolePermission.Permission.Id)" asp-text="@rolePermission.Permission.Name" asp-checked="@rolePermission.IsAssigned" />
         </div>
       }

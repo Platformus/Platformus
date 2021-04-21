@@ -33,23 +33,47 @@ namespace Platformus.ECommerce.Data.Entities
     public int NameId { get; set; }
 
     /// <summary>
-    /// Gets or sets the name (including namespace) of the C# class which will be instantiated each time
-    /// when the category content is requested by a user.
+    /// Gets or sets the dictionary identifier this category is related to. It is used to store the localizable category description.
     /// </summary>
-    public string CSharpClassName { get; set; }
-
-    /// <summary>
-    /// Gets or sets the parameters (key=value pairs separated by commas) for the C# class instances.
-    /// </summary>
-    public string Parameters { get; set; }
+    public int DescriptionId { get; set; }
 
     /// <summary>
     /// Gets or sets the category position. Position is used to sort the categories inside the parent category (smallest to largest).
     /// </summary>
     public int? Position { get; set; }
 
+    /// <summary>
+    /// Gets or sets the dictionary identifier this category is related to. It is used to store the localizable category title.
+    /// </summary>
+    public int TitleId { get; set; }
+
+    /// <summary>
+    /// Gets or sets the dictionary identifier this category is related to. It is used to store the localizable category META description.
+    /// </summary>
+    public int MetaDescriptionId { get; set; }
+
+    /// <summary>
+    /// Gets or sets the dictionary identifier this category is related to. It is used to store the localizable category META keywords.
+    /// </summary>
+    public int MetaKeywordsId { get; set; }
+
+    /// <summary>
+    /// Gets or sets the name (including namespace) of the product provider C# class which will be instantiated each time
+    /// when the category content is requested by a user.
+    /// </summary>
+    public string ProductProviderCSharpClassName { get; set; }
+
+    /// <summary>
+    /// Gets or sets the parameters (key=value pairs separated by commas) for the product provider C# class instances.
+    /// </summary>
+    public string ProductProviderParameters { get; set; }
+
     public virtual Category Owner { get; set; }
     public virtual Dictionary Name { get; set; }
+    public virtual Dictionary Description { get; set; }
+    public virtual Dictionary Title { get; set; }
+    public virtual Dictionary MetaDescription { get; set; }
+    public virtual Dictionary MetaKeywords { get; set; }
     public virtual ICollection<Category> Categories { get; set; }
   }
 }

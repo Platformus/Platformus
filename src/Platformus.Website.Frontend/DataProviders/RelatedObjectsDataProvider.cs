@@ -1,4 +1,4 @@
-﻿// Copyright © 2020 Dmitry Sikorsky. All rights reserved.
+﻿// Copyright © 2021 Dmitry Sikorsky. All rights reserved.
 // Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information.
 
 using System.Collections.Generic;
@@ -14,9 +14,9 @@ using Platformus.Core.Primitives;
 using Platformus.Website.Data.Entities;
 using Platformus.Website.Filters;
 
-namespace Platformus.Website.Frontend.DataSources
+namespace Platformus.Website.Frontend.DataProviders
 {
-  public class RelatedObjectsDataSource : DataSourceBase
+  public class RelatedObjectsDataProvider : DataProviderBase
   {
     public override IEnumerable<ParameterGroup> ParameterGroups =>
       new ParameterGroup[]
@@ -43,7 +43,7 @@ namespace Platformus.Website.Frontend.DataSources
 
     public override async Task<dynamic> GetDataAsync(HttpContext httpContext, DataSource dataSource)
     {
-      ParametersParser parametersParser = new ParametersParser(dataSource.Parameters);
+      ParametersParser parametersParser = new ParametersParser(dataSource.DataProviderParameters);
       Inclusion<Object>[] inclusions = null;
 
       if (parametersParser.GetStringParameterValue("RelationType") == "Primary")
@@ -62,7 +62,7 @@ namespace Platformus.Website.Frontend.DataSources
       };
 
       Object @object = (await httpContext.GetStorage().GetRepository<int, Object, ObjectFilter>().GetAllAsync(
-        new ObjectFilter() { StringValue = new LocalizationFilter() { Value = new StringFilter() { Equals = httpContext.Request.GetUrl() } } },
+        new ObjectFilter(stringValue: new LocalizationFilter(value: new StringFilter(equals: httpContext.Request.GetUrl()))),
         inclusions: inclusions
       )).FirstOrDefault();
 
@@ -71,7 +71,7 @@ namespace Platformus.Website.Frontend.DataSources
 
       int relationMemberId = parametersParser.GetIntParameterValue("RelationMemberId");
 
-      if (new ParametersParser(dataSource.Parameters).GetStringParameterValue("RelationType") == "Primary")
+      if (new ParametersParser(dataSource.DataProviderParameters).GetStringParameterValue("RelationType") == "Primary")
         return @object.ForeignRelations.Where(r => r.MemberId == relationMemberId).Select(r => this.CreateViewModel(r.Primary));
 
       return @object.PrimaryRelations.Where(r => r.MemberId == relationMemberId).Select(r => this.CreateViewModel(r.Foreign));

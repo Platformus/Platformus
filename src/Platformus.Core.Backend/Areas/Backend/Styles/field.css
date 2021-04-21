@@ -13,17 +13,16 @@
 }
 
 .field__text-box {
-  width: 430px;
+  box-sizing: border-box;
+  width: 450px;
 }
 
 .field__text-box--multilingual {
   padding-right: 30px;
-  width: 410px;
 }
 
 .field__text-box--numeric {
   padding-right: 40px;
-  width: 400px;
 }
 
 .field__text-area {
@@ -48,25 +47,11 @@
 }
 
 .field__culture {
-  position: relative;
-  left: 450px;
-  width: 0;
-  z-index: 10;
+  width: 450px;
 }
 
-.field__culture-flag {
-  background-color: #323232;
-  color: #fff;
-  cursor: default;
-  font-size: 8px;
-  line-height: 16px;
-  text-align: center;
-  text-transform: uppercase;
-  position: absolute;
-  left: -23px;
-  top: 7px;
-  width: 16px;
-  height: 16px;
+.field__culture--fullscreen {
+  width: 100%;
 }
 
 .field__multilingual-separator {
@@ -100,6 +85,10 @@
 .field__numeric-button--down {
   background: #f0f0f0 url(/wwwroot.areas.backend.images.down.png) center 4px no-repeat;
   top: 15px;
+}
+
+.field__validation-error {
+  display: block;
 }
 
 @media

@@ -10,5 +10,14 @@ namespace Platformus.ECommerce.Filters
     public int? Id { get; set; }
     public ProductFilter Product { get; set; }
     public bool? IsCover { get; set; }
+
+    public PhotoFilter() { }
+
+    public PhotoFilter(int? id = null, ProductFilter product = null, bool? isCover = null)
+    {
+      Id = id;
+      Product = product;
+      IsCover = isCover;
+    }
   }
 }

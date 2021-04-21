@@ -112,7 +112,7 @@ namespace Platformus.ECommerce.Backend.Controllers
 
     private async Task<bool> IsCodeUniqueAsync(string code)
     {
-      return await this.Repository.CountAsync(new ProductFilter() { Code = code }) == 0;
+      return await this.Repository.CountAsync(new ProductFilter(code: code)) == 0;
     }
 
     private async Task CreateOrEditPhotosAsync(Product product, CreateOrEditViewModel createOrEdit)

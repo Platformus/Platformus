@@ -129,8 +129,14 @@
   <data name="General" xml:space="preserve">
     <value>Основне</value>
   </data>
-  <data name="Permissions" xml:space="preserve">
-    <value>Дозволи</value>
+  <data name="Request processing" xml:space="preserve">
+    <value>Обробка запитів</value>
+  </data>
+  <data name="Required permissions" xml:space="preserve">
+    <value>Необхідні дозволи</value>
+  </data>
+  <data name="Response caching" xml:space="preserve">
+    <value>Кешування відповідей</value>
   </data>
   <data name="Save" xml:space="preserve">
     <value>Зберегти</value>

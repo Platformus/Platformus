@@ -20,7 +20,7 @@
         var localization = member.property.stringValue.localizations[i];
 
         if (localization.culture.id != "__") {
-          platformus.memberEditors.base.createCulture(localization).appendTo(field);
+          platformus.memberEditors.base.createCulture(localization, true).appendTo(field);
           createTextArea(member, localization).appendTo(field);
           platformus.ui.initializeTinyMce(platformus.memberEditors.base.getIdentity(member, localization));
 

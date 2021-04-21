@@ -22,7 +22,7 @@
   margin: 0;
 }
 
-.pager__page:hover, .pager__page:focus {
+.pager__page:hover {
   background-position: center bottom;
 }
 

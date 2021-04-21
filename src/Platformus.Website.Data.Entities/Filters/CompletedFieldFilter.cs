@@ -11,5 +11,15 @@ namespace Platformus.Website.Filters
     public CompletedFormFilter CompletedForm { get; set; }
     public FieldFilter Field { get; set; }
     public StringFilter Value { get; set; }
+
+    public CompletedFieldFilter() { }
+
+    public CompletedFieldFilter(int? id = null, CompletedFormFilter completedForm = null, FieldFilter field = null, StringFilter value = null)
+    {
+      Id = id;
+      CompletedForm = completedForm;
+      Field = field;
+      Value = value;
+    }
   }
 }

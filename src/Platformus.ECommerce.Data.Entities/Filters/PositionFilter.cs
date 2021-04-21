@@ -14,5 +14,18 @@ namespace Platformus.ECommerce.Filters
     public DecimalFilter Price { get; set; }
     public DecimalFilter Quantity { get; set; }
     public DecimalFilter Subtotal { get; set; }
+
+    public PositionFilter() { }
+
+    public PositionFilter(int? id = null, CartFilter cart = null, OrderFilter order = null, ProductFilter product = null, DecimalFilter price = null, DecimalFilter quantity = null, DecimalFilter subtotal = null)
+    {
+      Id = id;
+      Cart = cart;
+      Order = order;
+      Product = product;
+      Price = price;
+      Quantity = quantity;
+      Subtotal = subtotal;
+    }
   }
 }

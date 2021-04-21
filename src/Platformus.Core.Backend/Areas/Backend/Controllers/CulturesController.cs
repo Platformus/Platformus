@@ -90,7 +90,7 @@ namespace Platformus.Core.Backend.Controllers
 
     private async Task<bool> IsIdUniqueAsync(string id)
     {
-      return await this.Repository.CountAsync(new CultureFilter() { Id = id }) == 0;
+      return await this.Repository.CountAsync(new CultureFilter(id: id)) == 0;
     }
   }
 }

@@ -18,13 +18,13 @@ namespace Platformus.Website.Backend.ViewModels.DataSources
     [StringLength(32)]
     public string Code { get; set; }
 
-    [Display(Name = "C# class name")]
+    [Display(Name = "Data provider C# class name")]
     [Required]
     [StringLength(128)]
-    public string CSharpClassName { get; set; }
-    public IEnumerable<Option> CSharpClassNameOptions { get; set; }
+    public string DataProviderCSharpClassName { get; set; }
+    public IEnumerable<Option> DataProviderCSharpClassNameOptions { get; set; }
 
-    public string Parameters { get; set; }
-    public IEnumerable<dynamic> DataSources { get; set; }
+    public string DataProviderParameters { get; set; }
+    public IEnumerable<dynamic> DataProviders { get; set; }
   }
 }

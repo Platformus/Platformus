@@ -22,7 +22,7 @@ namespace Platformus.Website.Backend.ViewModels.Forms
         {
           NameLocalizations = this.GetLocalizations(httpContext),
           SubmitButtonTitleLocalizations = this.GetLocalizations(httpContext),
-          CSharpClassNameOptions = this.GetCSharpClassNameOptions(),
+          FormHandlerCSharpClassNameOptions = this.GetFormHandlerCSharpClassNameOptions(),
           FormHandlers = this.GetFormHandlers()
         };
 
@@ -33,14 +33,14 @@ namespace Platformus.Website.Backend.ViewModels.Forms
         NameLocalizations = this.GetLocalizations(httpContext, form.Name),
         SubmitButtonTitleLocalizations = this.GetLocalizations(httpContext, form.SubmitButtonTitle),
         ProduceCompletedForms = form.ProduceCompletedForms,
-        CSharpClassName = form.CSharpClassName,
-        CSharpClassNameOptions = this.GetCSharpClassNameOptions(),
-        Parameters = form.Parameters,
+        FormHandlerCSharpClassName = form.FormHandlerCSharpClassName,
+        FormHandlerCSharpClassNameOptions = this.GetFormHandlerCSharpClassNameOptions(),
+        FormHandlerParameters = form.FormHandlerParameters,
         FormHandlers = this.GetFormHandlers()
       };
     }
 
-    private IEnumerable<Option> GetCSharpClassNameOptions()
+    private IEnumerable<Option> GetFormHandlerCSharpClassNameOptions()
     {
       return ExtensionManager.GetImplementations<IFormHandler>().Where(t => !t.GetTypeInfo().IsAbstract).Select(
         t => new Option(t.FullName)

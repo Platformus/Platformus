@@ -27,7 +27,7 @@ namespace Platformus.ECommerce.Frontend.ViewComponents
     {
       IEnumerable<Category> categories = await this.cache.GetCategoriesWithDefaultValue(
         async () => await this.Storage.GetRepository<int, Category, CategoryFilter>().GetAllAsync(
-          new CategoryFilter() { Owner = new CategoryFilter() { Id = new IntegerFilter(isNull: true) } },
+          new CategoryFilter(owner: new CategoryFilter(id: new IntegerFilter(isNull: true))),
           inclusions: new Inclusion<Category>[] {
             new Inclusion<Category>("Name.Localizations"),
             new Inclusion<Category>("Categories.Name.Localizations"),

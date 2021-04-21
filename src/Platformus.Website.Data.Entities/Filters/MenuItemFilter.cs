@@ -15,5 +15,16 @@ namespace Platformus.Website.Filters
     [FilterShortcut("Name.Localizations[]")]
     public LocalizationFilter Name { get; set; }
     public StringFilter Url { get; set; }
+
+    public MenuItemFilter() { }
+
+    public MenuItemFilter(int? id = null, MenuFilter menu = null, MenuItemFilter menuItem = null, LocalizationFilter name = null, StringFilter url = null)
+    {
+      Id = id;
+      Menu = menu;
+      MenuItem = menuItem;
+      Name = name;
+      Url = url;
+    }
   }
 }

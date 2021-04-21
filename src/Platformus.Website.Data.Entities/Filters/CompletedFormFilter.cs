@@ -10,5 +10,14 @@ namespace Platformus.Website.Filters
     public int? Id { get; set; }
     public FormFilter Form { get; set; }
     public DateTimeFilter Created { get; set; }
+
+    public CompletedFormFilter() { }
+
+    public CompletedFormFilter(int? id = null, FormFilter form = null, DateTimeFilter created = null)
+    {
+      Id = id;
+      Form = form;
+      Created = created;
+    }
   }
 }

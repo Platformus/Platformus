@@ -97,7 +97,7 @@ namespace Platformus.ECommerce.Backend.Controllers
 
     private async Task<bool> IsCodeUniqueAsync(string code)
     {
-      return await this.Repository.CountAsync(new OrderStateFilter() { Code = code }) == 0;
+      return await this.Repository.CountAsync(new OrderStateFilter(code: code)) == 0;
     }
   }
 }

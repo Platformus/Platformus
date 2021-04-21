@@ -11,6 +11,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Net.Http.Headers;
+using Platformus.Core.Services.Abstractions;
 using Platformus.Website.Backend.ViewModels.FileManager;
 using Platformus.Website.Events;
 using Platformus.Website.Filters;
@@ -22,16 +23,18 @@ namespace Platformus.Website.Backend.Controllers
   public class FileManagerController : Core.Backend.Controllers.ControllerBase
   {
     private IWebHostEnvironment webHostEnvironment;
+    private IFilenameSanitizer filenameSanitizer;
 
     private IRepository<int, Data.Entities.File, FileFilter> Repository
     {
       get => this.Storage.GetRepository<int, Data.Entities.File, FileFilter>();
     }
 
-    public FileManagerController(IStorage storage, IWebHostEnvironment webHostEnvironment)
+    public FileManagerController(IStorage storage, IWebHostEnvironment webHostEnvironment, IFilenameSanitizer filenameSanitizer)
       : base(storage)
     {
       this.webHostEnvironment = webHostEnvironment;
+      this.filenameSanitizer = filenameSanitizer;
     }
 
     public async Task<IActionResult> IndexAsync([FromQuery]FileFilter filter = null, string orderBy = "+name", int skip = 0, int take = 10)
@@ -50,7 +53,8 @@ namespace Platformus.Website.Backend.Controllers
       {
         string filename = ContentDispositionHeaderValue.Parse(source.ContentDisposition).FileName.ToString().Trim('"');
 
-        filename = this.EnsureCorrectFilename(filename);
+        filename = Path.GetFileName(filename);
+        filename = this.filenameSanitizer.SanitizeFilename(filename);
 
         using (FileStream output = System.IO.File.Create(this.GetFilepath(filename)))
           await source.CopyToAsync(output);
@@ -82,14 +86,6 @@ namespace Platformus.Website.Backend.Controllers
       await this.Storage.SaveAsync();
       Event<IFileDeletedEventHandler, HttpContext, Data.Entities.File>.Broadcast(this.HttpContext, file);
       return this.RedirectToAction("Index");
-    }
-
-    private string EnsureCorrectFilename(string filename)
-    {
-      if (filename.Contains(Path.DirectorySeparatorChar.ToString()))
-        filename = filename.Substring(filename.LastIndexOf(Path.DirectorySeparatorChar) + 1);
-
-      return filename;
     }
 
     private string GetFilepath(string filename)

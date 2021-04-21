@@ -16,5 +16,20 @@ namespace Platformus.Website.Filters
     public bool? IsPropertyVisibleInList { get; set; }
     public ClassFilter RelationClass { get; set; }
     public bool? IsRelationSingleParent { get; set; }
+
+    public MemberFilter() { }
+
+    public MemberFilter(int? id = null, ClassFilter @class = null, TabFilter tab = null, string code = null, StringFilter name = null, DataTypeFilter propertyDataType = null, bool? isPropertyVisibleInList = null, ClassFilter relationClass = null, bool? isRelationSingleParent = null)
+    {
+      Id = id;
+      Class = @class;
+      Tab = tab;
+      Code = code;
+      Name = name;
+      PropertyDataType = propertyDataType;
+      IsPropertyVisibleInList = isPropertyVisibleInList;
+      RelationClass = relationClass;
+      IsRelationSingleParent = isRelationSingleParent;
+    }
   }
 }

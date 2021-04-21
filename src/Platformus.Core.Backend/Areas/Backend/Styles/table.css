@@ -37,6 +37,8 @@
 
 .table__cell--header-ordered-by {
   background-color: #323232;
+  background-position: right;
+  background-repeat: no-repeat;
 }
 
 .table__row:hover .table__cell--header-ordered-by {
@@ -45,14 +47,10 @@
 
 .table__cell--header-ordered-by-asc {
   background-image: url(/wwwroot.areas.backend.images.ordered_by_asc.png);
-  background-position: right;
-  background-repeat: no-repeat;
 }
 
 .table__cell--header-ordered-by-desc {
   background-image: url(/wwwroot.areas.backend.images.ordered_by_desc.png);
-  background-position: right;
-  background-repeat: no-repeat;
 }
 
 .table__row--selected .table__cell {
@@ -72,6 +70,11 @@
 .table__cell--no-width {
   white-space: nowrap;
   width: 0;
+}
+
+.table__cell--no-records {
+  color: #ccc;
+  font-style: italic;
 }
 
 .table__order-by {

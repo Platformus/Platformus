@@ -97,7 +97,7 @@ namespace Platformus.Website.Backend.Controllers
     {
       filter.Code = code;
       return await this.Repository.CountAsync(filter) == 0 &&
-        await this.Repository.CountAsync(new MemberFilter() { Class = new ClassFilter() { Parent = new ClassFilter { Id = filter.Class.Id } }, Code = code }) == 0;
+        await this.Repository.CountAsync(new MemberFilter(@class: new ClassFilter(parent: new ClassFilter(id: filter.Class.Id)), code: code)) == 0;
     }
 
     private async Task CreateOrEditDataTypeParameterValuesAsync(Member member, string parameters)
@@ -110,7 +110,7 @@ namespace Platformus.Website.Backend.Controllers
 
       foreach (KeyValuePair<string, string> valueByCode in new ParametersParser(parameters).ParsedParameters)
       {
-        DataTypeParameter dataTypeParameter = (await dataTypeParameterRepository.GetAllAsync(new DataTypeParameterFilter() { DataType = new DataTypeFilter() { Id = (int)member.PropertyDataTypeId }, Code = valueByCode.Key }, inclusions: new Inclusion<DataTypeParameter>(dtp => dtp.DataTypeParameterValues))).FirstOrDefault();
+        DataTypeParameter dataTypeParameter = (await dataTypeParameterRepository.GetAllAsync(new DataTypeParameterFilter(dataType: new DataTypeFilter(id: (int)member.PropertyDataTypeId), code: valueByCode.Key), inclusions: new Inclusion<DataTypeParameter>(dtp => dtp.DataTypeParameterValues))).FirstOrDefault();
 
         if (dataTypeParameter != null)
         {

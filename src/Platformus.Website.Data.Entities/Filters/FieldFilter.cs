@@ -15,5 +15,16 @@ namespace Platformus.Website.Filters
 
     [FilterShortcut("Name.Localizations[]")]
     public LocalizationFilter Name { get; set; }
+
+    public FieldFilter() { }
+
+    public FieldFilter(int? id = null, FormFilter form = null, FieldTypeFilter fieldType = null, string code = null, LocalizationFilter name = null)
+    {
+      Id = id;
+      Form = form;
+      FieldType = fieldType;
+      Code = code;
+      Name = name;
+    }
   }
 }

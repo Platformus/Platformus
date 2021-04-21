@@ -1,4 +1,4 @@
-﻿// Copyright © 2020 Dmitry Sikorsky. All rights reserved.
+﻿// Copyright © 2021 Dmitry Sikorsky. All rights reserved.
 // Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information.
 
 using System.Collections.Generic;
@@ -11,9 +11,9 @@ using Platformus.Core.Parameters;
 using Platformus.Website.Data.Entities;
 using Platformus.Website.Filters;
 
-namespace Platformus.Website.Frontend.DataSources
+namespace Platformus.Website.Frontend.DataProviders
 {
-  public class ObjectsDataSource : DataSourceBase
+  public class ObjectsDataProvider : DataProviderBase
   {
     public override IEnumerable<ParameterGroup> ParameterGroups =>
       new ParameterGroup[]
@@ -29,7 +29,7 @@ namespace Platformus.Website.Frontend.DataSources
     public override async Task<dynamic> GetDataAsync(HttpContext httpContext, DataSource dataSource)
     {
       IEnumerable<Object> objects = await httpContext.GetStorage().GetRepository<int, Object, ObjectFilter>().GetAllAsync(
-        new ObjectFilter() { Class = new ClassFilter() { Id = new ParametersParser(dataSource.Parameters).GetIntParameterValue("ClassId") } },
+        new ObjectFilter(@class: new ClassFilter(id: new ParametersParser(dataSource.DataProviderParameters).GetIntParameterValue("ClassId"))),
         inclusions: new Inclusion<Object>[]
         {
           new Inclusion<Object>("Properties.Member"),

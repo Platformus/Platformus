@@ -21,7 +21,7 @@ namespace Platformus.ECommerce.ProductProviders
     public async Task<IEnumerable<Product>> GetProductsAsync(HttpContext httpContext, Category category)
     {
       return await httpContext.GetStorage().GetRepository<int, Product, ProductFilter>().GetAllAsync(
-        new ProductFilter() { Category = new CategoryFilter() { Id = new IntegerFilter(equals: category.Id) } },
+        new ProductFilter(category: new CategoryFilter(id: new IntegerFilter(equals: category.Id))),
         inclusions: new Inclusion<Product>[]
         {
           new Inclusion<Product>(p => p.Name.Localizations),

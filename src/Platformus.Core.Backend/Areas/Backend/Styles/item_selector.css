@@ -12,7 +12,7 @@
 }
 
 .item-selector__keys--required {
-  border-right: 5px solid #ff4100;
+  box-shadow: 5px 0 0 #ff4100;
 }
 
 .item-selector__key {

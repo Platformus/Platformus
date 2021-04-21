@@ -13,5 +13,14 @@ namespace Platformus.Website.Filters
 
     [FilterShortcut("Name.Localizations[]")]
     public LocalizationFilter Name { get; set; }
+
+    public MenuFilter() { }
+
+    public MenuFilter(int? id = null, string code = null, LocalizationFilter name = null)
+    {
+      Id = id;
+      Code = code;
+      Name = name;
+    }
   }
 }

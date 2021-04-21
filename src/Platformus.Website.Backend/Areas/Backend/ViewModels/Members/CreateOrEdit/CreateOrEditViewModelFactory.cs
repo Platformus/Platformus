@@ -56,7 +56,7 @@ namespace Platformus.Website.Backend.ViewModels.Members
 
       options.Add(new Option("Tab not specified", string.Empty));
       options.AddRange(
-        (await httpContext.GetStorage().GetRepository<int, Tab, TabFilter>().GetAllAsync(new TabFilter() { Class = new ClassFilter() { Id = classId } })).Select(
+        (await httpContext.GetStorage().GetRepository<int, Tab, TabFilter>().GetAllAsync(new TabFilter(@class: new ClassFilter(id: classId)))).Select(
           t => new Option(t.Name, t.Id.ToString())
         )
       );

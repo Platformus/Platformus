@@ -25,7 +25,7 @@ namespace Platformus.Core.Services.Defaults
           async () =>
           {
             Variable variable = (await this.storage.GetRepository<int, Variable, VariableFilter>().GetAllAsync(
-              new VariableFilter() { Configuration = new ConfigurationFilter() { Code = configurationCode }, Code = variableCode }
+              new VariableFilter(configuration: new ConfigurationFilter(code: configurationCode), code: variableCode)
             )).FirstOrDefault();
 
             if (variable == null)

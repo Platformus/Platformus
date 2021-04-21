@@ -11,17 +11,17 @@
 }
 <form class="form" method="post">
   <single-line-text-field asp-for="Code" />
-  <drop-down-list-field asp-for="CSharpClassName" asp-options="@Model.CSharpClassNameOptions" onchange="platformus.ui.dataSourceCSharpClassNameChanged();" />
+  <drop-down-list-field asp-for="DataProviderCSharpClassName" asp-options="@Model.DataProviderCSharpClassNameOptions" onchange="platformus.ui.dataProviderCSharpClassNameChanged();" />
   <div id="parameterEditors"></div>
-  <input id="parameters" name="parameters" type="hidden" value="@Model.Parameters" />
+  <input id="parameters" name="dataProviderParameters" type="hidden" value="@Model.DataProviderParameters" />
   <div class="form__buttons buttons">
     <button class="buttons__button button button--positive" type="submit">@Localizer["Save"]</button>
     <a class="buttons__button button button--neutral" href="@this.Context.Request.CombineUrl("/backend/datasources")">@Localizer["Cancel"]</a>
   </div>
 </form>
 <script>
-  var dataSources = @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(this.Model.DataSources));
+  var dataProviders = @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(this.Model.DataProviders));
 </script>
 @section startUpScript {
-  platformus.ui.dataSourceCSharpClassNameChanged();
+  platformus.ui.dataProviderCSharpClassNameChanged();
 }

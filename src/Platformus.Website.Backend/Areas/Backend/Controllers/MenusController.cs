@@ -100,7 +100,7 @@ namespace Platformus.Website.Backend.Controllers
 
     private async Task<bool> IsCodeUniqueAsync(string code)
     {
-      return await this.Repository.CountAsync(new MenuFilter() { Code = code }) == 0;
+      return await this.Repository.CountAsync(new MenuFilter(code: code)) == 0;
     }
   }
 }

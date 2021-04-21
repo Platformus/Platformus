@@ -69,7 +69,7 @@ namespace Platformus.ECommerce.Frontend.Controllers
         if (this.HttpContext.GetCartManager().TryGetClientSideId(out Guid clientSideId))
         {
           Cart cart = (await this.CartRepository.GetAllAsync(
-            new CartFilter() { ClientSideId = clientSideId },
+            new CartFilter(clientSideId: clientSideId),
             inclusions: new Inclusion<Cart>[] {
               new Inclusion<Cart>(c => c.Positions)
             }

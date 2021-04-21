@@ -18,7 +18,8 @@
         value: member.property.integerValue,
         validation: {
           isRequired: platformus.memberEditors.base.getIsRequiredDataTypeParameterValue(member),
-          maxLength: platformus.memberEditors.base.getMaxLengthDataTypeParameterValue(member)
+          minValue: platformus.memberEditors.base.getMinValueDataTypeParameterValue(member),
+          maxValue: platformus.memberEditors.base.getMaxValueDataTypeParameterValue(member)
         }
       }
     ).appendTo(field);

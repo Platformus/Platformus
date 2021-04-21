@@ -27,7 +27,7 @@ namespace Platformus.Website.Frontend.ViewComponents
       Menu menu = await this.cache.GetMenuWithDefaultValue(
         code,
         async () => (await this.Storage.GetRepository<int, Menu, MenuFilter>().GetAllAsync(
-          new MenuFilter() { Code = code },
+          new MenuFilter(code: code),
           inclusions: new Inclusion<Menu>[] {
             new Inclusion<Menu>("MenuItems.Name.Localizations"),
             new Inclusion<Menu>("MenuItems.MenuItems.Name.Localizations"),

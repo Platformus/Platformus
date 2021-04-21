@@ -2,8 +2,14 @@
 /* Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information. */
 
 .radio-button-list {
+  display: flex;
+  padding-top: 5px;
 }
 
 .radio-button-list__radio-button {
-  margin-top: 10px;
+  margin-left: 20px;
+}
+
+.radio-button-list__radio-button:first-child {
+  margin: 0;
 }

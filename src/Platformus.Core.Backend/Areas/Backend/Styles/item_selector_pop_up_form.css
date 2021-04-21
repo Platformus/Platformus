@@ -10,6 +10,10 @@
   overflow: auto;
 }
 
+.item-selector-pop-up-form__table {
+  width: 100%;
+}
+
 .item-selector-pop-up-form__cell {
   cursor: pointer;
 }

@@ -22,5 +22,17 @@ namespace Platformus.Website.Filters
 
     [FilterShortcut("PrimaryRelations[].Foreign")]
     public ObjectFilter Foreign { get; set; }
+
+    public ObjectFilter() { }
+
+    public ObjectFilter(int? id = null, ClassFilter @class = null, PropertyFilter property = null, LocalizationFilter stringValue = null, ObjectFilter primary = null, ObjectFilter foreign = null)
+    {
+      Id = id;
+      Class = @class;
+      Property = property;
+      StringValue = stringValue;
+      Primary = primary;
+      Foreign = foreign;
+    }
   }
 }

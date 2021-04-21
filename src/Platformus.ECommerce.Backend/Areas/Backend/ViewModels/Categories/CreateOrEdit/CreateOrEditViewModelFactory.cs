@@ -21,7 +21,11 @@ namespace Platformus.ECommerce.Backend.ViewModels.Categories
         return new CreateOrEditViewModel()
         {
           NameLocalizations = this.GetLocalizations(httpContext),
-          CSharpClassNameOptions = this.GetCSharpClassNameOptions(),
+          DescriptionLocalizations = this.GetLocalizations(httpContext),
+          TitleLocalizations = this.GetLocalizations(httpContext),
+          MetaDescriptionLocalizations = this.GetLocalizations(httpContext),
+          MetaKeywordsLocalizations = this.GetLocalizations(httpContext),
+          ProductProviderCSharpClassNameOptions = this.GetProductProviderCSharpClassNameOptions(),
           ProductProviders = this.GetProductProviders()
         };
 
@@ -30,15 +34,19 @@ namespace Platformus.ECommerce.Backend.ViewModels.Categories
         Id = category.Id,
         Url = category.Url,
         NameLocalizations = this.GetLocalizations(httpContext, category.Name),
-        CSharpClassName = category.CSharpClassName,
-        CSharpClassNameOptions = this.GetCSharpClassNameOptions(),
-        Parameters = category.Parameters,
-        ProductProviders = this.GetProductProviders(),
-        Position =  category.Position
+        DescriptionLocalizations = this.GetLocalizations(httpContext, category.Description),
+        TitleLocalizations = this.GetLocalizations(httpContext, category.Title),
+        MetaDescriptionLocalizations = this.GetLocalizations(httpContext, category.MetaDescription),
+        MetaKeywordsLocalizations = this.GetLocalizations(httpContext, category.MetaKeywords),
+        Position = category.Position,
+        ProductProviderCSharpClassName = category.ProductProviderCSharpClassName,
+        ProductProviderCSharpClassNameOptions = this.GetProductProviderCSharpClassNameOptions(),
+        ProductProviderParameters = category.ProductProviderParameters,
+        ProductProviders = this.GetProductProviders()
       };
     }
 
-    private IEnumerable<Option> GetCSharpClassNameOptions()
+    private IEnumerable<Option> GetProductProviderCSharpClassNameOptions()
     {
       return ExtensionManager.GetImplementations<IProductProvider>().Where(t => !t.GetTypeInfo().IsAbstract).Select(
         t => new Option(t.FullName)

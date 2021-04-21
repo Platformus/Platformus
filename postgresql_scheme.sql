@@ -1,6 +1,6 @@
 --
 -- Extension: Platformus.Core
--- Version: 2.1.0
+-- Version: 2.2.0
 --
 
 -- Users
@@ -169,7 +169,7 @@ ALTER TABLE "Localizations" OWNER TO postgres;
 
 --
 -- Extension: Platformus.Website
--- Version: 2.1.0
+-- Version: 2.2.0
 --
 
 -- Endpoints
@@ -180,9 +180,10 @@ CREATE TABLE "Endpoints" (
     "Position" integer,
     "DisallowAnonymous" boolean NOT NULL,
     "SignInUrl" text,
+    "RequestProcessorCSharpClassName" text NOT NULL,
+    "RequestProcessorParameters" text,
     "ResponseCacheCSharpClassName" text,
-    "CSharpClassName" text NOT NULL,
-    "Parameters" text,
+    "ResponseCacheParameters" text,
     CONSTRAINT "PK_Endpoints" PRIMARY KEY ("Id")
 );
 
@@ -210,8 +211,8 @@ CREATE TABLE "DataSources" (
     "Id" serial NOT NULL,
     "EndpointId" integer NOT NULL,
     "Code" text NOT NULL,
-    "CSharpClassName" text NOT NULL,
-    "Parameters" text,
+    "DataProviderCSharpClassName" text NOT NULL,
+    "DataProviderParameters" text,
     CONSTRAINT "PK_DataSources" PRIMARY KEY ("Id"),
     CONSTRAINT "FK_DataSources_Endpoints" FOREIGN KEY ("EndpointId")
         REFERENCES public."Endpoints" ("Id") MATCH SIMPLE
@@ -443,15 +444,15 @@ CREATE TABLE "Forms" (
     "Code" text NOT NULL,
     "NameId" integer NOT NULL,
     "SubmitButtonTitleId" integer NOT NULL,
-	"ProduceCompletedForms" boolean NOT NULL,
-    "CSharpClassName" text NOT NULL,
-	"Parameters" text,
+	  "ProduceCompletedForms" boolean NOT NULL,
+    "FormHandlerCSharpClassName" text NOT NULL,
+	  "FormHandlerParameters" text,
     CONSTRAINT "PK_Forms" PRIMARY KEY ("Id"),
     CONSTRAINT "FK_Forms_Dictionaries_NameId" FOREIGN KEY ("NameId")
         REFERENCES public."Dictionaries" ("Id") MATCH SIMPLE
         ON UPDATE NO ACTION
         ON DELETE NO ACTION,
-	CONSTRAINT "FK_Forms_Dictionaries_SubmitButtonTitleId" FOREIGN KEY ("SubmitButtonTitleId")
+	  CONSTRAINT "FK_Forms_Dictionaries_SubmitButtonTitleId" FOREIGN KEY ("SubmitButtonTitleId")
         REFERENCES public."Dictionaries" ("Id") MATCH SIMPLE
         ON UPDATE NO ACTION
         ON DELETE NO ACTION
@@ -562,7 +563,7 @@ ALTER TABLE "Files" OWNER TO postgres;
 
 --
 -- Extension: Platformus.ECommerce
--- Version: 2.1.0
+-- Version: 2.2.0
 --
 
 -- Categories
@@ -571,15 +572,35 @@ CREATE TABLE "Categories" (
     "CategoryId" integer,
     "Url" text NOT NULL,
     "NameId" integer NOT NULL,
-    "CSharpClassName" text NOT NULL,
-    "Parameters" text,
+    "DescriptionId" integer NOT NULL,
     "Position" integer,
+    "TitleId" integer NOT NULL,
+    "MetaDescriptionId" integer NOT NULL,
+	  "MetaKeywordsId" integer NOT NULL,
+    "ProductProviderCSharpClassName" text NOT NULL,
+    "ProductProviderParameters" text,
     CONSTRAINT "PK_Categories" PRIMARY KEY ("Id"),
     CONSTRAINT "FK_Categories_Categories" FOREIGN KEY ("CategoryId")
         REFERENCES public."Categories" ("Id") MATCH SIMPLE
         ON UPDATE NO ACTION
         ON DELETE CASCADE,
     CONSTRAINT "FK_Categories_Dictionaries" FOREIGN KEY ("NameId")
+        REFERENCES public."Dictionaries" ("Id") MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION
+    CONSTRAINT "FK_Categories_Dictionaries_DescriptionId" FOREIGN KEY ("DescriptionId")
+        REFERENCES public."Dictionaries" ("Id") MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION,
+	  CONSTRAINT "FK_Categories_Dictionaries_TitleId" FOREIGN KEY ("TitleId")
+        REFERENCES public."Dictionaries" ("Id") MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION,
+	  CONSTRAINT "FK_Categories_Dictionaries_MetaDescriptionId" FOREIGN KEY ("MetaDescriptionId")
+        REFERENCES public."Dictionaries" ("Id") MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION,
+	  CONSTRAINT "FK_Categories_Dictionaries_MetaKeywordsId" FOREIGN KEY ("MetaKeywordsId")
         REFERENCES public."Dictionaries" ("Id") MATCH SIMPLE
         ON UPDATE NO ACTION
         ON DELETE NO ACTION

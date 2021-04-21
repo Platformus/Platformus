@@ -4,7 +4,7 @@
     <Authors>Dmitry Sikorsky</Authors>
     <Copyright>Copyright © 2015 Dmitry Sikorsky</Copyright>
     <Description>The Platformus.Website extension component.</Description>
-    <VersionPrefix>2.1.0</VersionPrefix>
+    <VersionPrefix>2.2.0</VersionPrefix>
     <TargetFramework>net5.0</TargetFramework>
     <AssemblyName>Platformus.Website</AssemblyName>
     <PackageId>Platformus.Website</PackageId>
@@ -14,7 +14,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Platformus.Core\Platformus.Core.csproj" />
-    <ProjectReference Include="..\Platformus.Website.Data.Abstractions\Platformus.Website.Data.Abstractions.csproj" />
+    <ProjectReference Include="..\Platformus.Website.Data.Entities\Platformus.Website.Data.Entities.csproj" />
   </ItemGroup>
 
 </Project>

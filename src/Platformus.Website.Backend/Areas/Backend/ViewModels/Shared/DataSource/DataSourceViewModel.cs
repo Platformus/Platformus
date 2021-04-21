@@ -9,6 +9,6 @@ namespace Platformus.Website.Backend.ViewModels.Shared
   {
     public int Id { get; set; }
     public string Code { get; set; }
-    public string CShartClassName { get; set; }
+    public string DataProviderCShartClassName { get; set; }
   }
 }

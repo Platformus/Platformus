@@ -14,7 +14,7 @@ namespace Platformus.Website.Backend.ViewModels.Shared
       {
         Id = dataSource.Id,
         Code = dataSource.Code,
-        CShartClassName = dataSource.CSharpClassName
+        DataProviderCShartClassName = dataSource.DataProviderCSharpClassName
       };
     }
   }

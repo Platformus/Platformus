@@ -27,7 +27,7 @@ namespace Platformus.Website.Frontend.ViewComponents
       Form form = await this.cache.GetFormWithDefaultValue(
         code,
         async () => (await this.Storage.GetRepository<int, Form, FormFilter>().GetAllAsync(
-          new FormFilter() { Code = code },
+          new FormFilter(code: code),
           inclusions: new Inclusion<Form>[] {
             new Inclusion<Form>(f => f.Name.Localizations),
             new Inclusion<Form>(f => f.SubmitButtonTitle.Localizations),

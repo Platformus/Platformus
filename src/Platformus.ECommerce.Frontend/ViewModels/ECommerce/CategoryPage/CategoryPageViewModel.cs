@@ -10,6 +10,10 @@ namespace Platformus.ECommerce.Frontend.ViewModels.ECommerce
   public class CategoryPageViewModel : ViewModelBase
   {
     public string Name { get; set; }
+    public string Description { get; set; }
+    public string Title { get; set; }
+    public string MetaDescription { get; set; }
+    public string MetaKeywords { get; set; }
     public IEnumerable<ProductViewModel> Products { get; set; }
   }
 }

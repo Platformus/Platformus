@@ -15,8 +15,8 @@ namespace Platformus.Website.Backend.ViewModels.DataSources
         dataSource.EndpointId = (int)filter.Endpoint.Id;
 
       dataSource.Code = createOrEdit.Code;
-      dataSource.CSharpClassName = createOrEdit.CSharpClassName;
-      dataSource.Parameters = createOrEdit.Parameters;
+      dataSource.DataProviderCSharpClassName = createOrEdit.DataProviderCSharpClassName;
+      dataSource.DataProviderParameters = createOrEdit.DataProviderParameters;
       return dataSource;
     }
   }

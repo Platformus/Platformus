@@ -26,7 +26,7 @@ namespace Platformus.ECommerce.Frontend.ViewComponents
       
       if (!string.IsNullOrEmpty(this.Request.Cookies["CartId"]) && Guid.TryParse(this.Request.Cookies["CartId"], out Guid clientSideId))
         positions = (await this.Storage.GetRepository<int, Position, PositionFilter>().GetAllAsync(
-          new PositionFilter() { Cart = new CartFilter() { ClientSideId = clientSideId } },
+          new PositionFilter(cart: new CartFilter(clientSideId: clientSideId)),
           inclusions: new Inclusion<Position>[] {
             new Inclusion<Position>(p => p.Product.Name.Localizations),
             new Inclusion<Position>(p => p.Product.Units.Localizations),

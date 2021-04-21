@@ -4,9 +4,7 @@
 .checkbox {
   color: #323232;
   text-decoration: none;
-  display: block;
-  padding-left: 30px;
-  position: relative;
+  display: inline-flex;
 }
 
 .checkbox:hover {
@@ -15,9 +13,6 @@
 
 .checkbox__indicator {
   background-color: #f0f0f0;
-  position: absolute;
-  left: 0;
-  top: 0;
   width: 20px;
   height: 20px;
 }
@@ -33,6 +28,7 @@
 }
 
 .checkbox__label {
+  margin-left: 10px;
 }
 
 @media

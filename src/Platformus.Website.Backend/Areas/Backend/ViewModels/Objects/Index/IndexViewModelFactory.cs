@@ -43,15 +43,15 @@ namespace Platformus.Website.Backend.ViewModels.Objects
 
     private async Task<IDictionary<ClassViewModel, IEnumerable<ClassViewModel>>> GetClassesByAbstractClassesAsync(HttpContext httpContext)
     {
-      List<Class> abstractClasses = (await httpContext.GetStorage().GetRepository<int, Class, ClassFilter>().GetAllAsync(new ClassFilter() { IsAbstract = true }, inclusions: new Inclusion<Class>(c => c.Classes))).ToList();
+      List<Class> abstractClasses = (await httpContext.GetStorage().GetRepository<int, Class, ClassFilter>().GetAllAsync(new ClassFilter(isAbstract: true), inclusions: new Inclusion<Class>(c => c.Classes))).ToList();
       
       // TODO: must be refactored
-      List<Class> tempClasses = (await httpContext.GetStorage().GetRepository<int, Class, ClassFilter>().GetAllAsync(new ClassFilter() { IsAbstract = false }))
+      List<Class> tempClasses = (await httpContext.GetStorage().GetRepository<int, Class, ClassFilter>().GetAllAsync(new ClassFilter(isAbstract: false)))
         .Where(c => c.ClassId == null).ToList();
       List<Class> classes = new List<Class>();
 
       foreach (Class @class in tempClasses)
-        if (await httpContext.GetStorage().GetRepository<int, Member, MemberFilter>().CountAsync(new MemberFilter() { RelationClass = new ClassFilter() { Id = @class.Id }, IsRelationSingleParent = true }) == 0)
+        if (await httpContext.GetStorage().GetRepository<int, Member, MemberFilter>().CountAsync(new MemberFilter(relationClass: new ClassFilter(id: @class.Id), isRelationSingleParent: true)) == 0)
           classes.Add(@class);
 
       if (classes.Count() != 0)

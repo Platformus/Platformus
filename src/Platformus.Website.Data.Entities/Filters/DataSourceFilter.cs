@@ -10,5 +10,14 @@ namespace Platformus.Website.Filters
     public int? Id { get; set; }
     public EndpointFilter Endpoint { get; set; }
     public string Code { get; set; }
+
+    public DataSourceFilter() { }
+
+    public DataSourceFilter(int? id = null, EndpointFilter endpoint = null, string code = null)
+    {
+      Id = id;
+      Endpoint = endpoint;
+      Code = code;
+    }
   }
 }

@@ -55,8 +55,9 @@ namespace Platformus.Core.Backend
       {
         if (localization.Culture.Id != NeutralCulture.Id)
         {
-          tb.InnerHtml.AppendHtml(fieldGenerator.GenerateCulture(localization));
+          tb.InnerHtml.AppendHtml(fieldGenerator.GenerateCulture(localization, true));
           tb.InnerHtml.AppendHtml(new TextAreaGenerator().GenerateTextArea(this.ViewContext, this.For, attributes, localization, "field__text-area field__text-area--multilingual" + (this.Height == "small" ? " field__text-area--small" : null)));
+          tb.InnerHtml.AppendHtml(new ValidationErrorMessageGenerator().GenerateValidationErrorMessage(this.For, localization));
 
           if (localization != this.Localizations.Last())
             tb.InnerHtml.AppendHtml(fieldGenerator.GenerateMultilingualSeparator());

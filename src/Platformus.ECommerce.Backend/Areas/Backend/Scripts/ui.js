@@ -3,8 +3,8 @@
 
 (function (platformus) {
   platformus.ui = platformus.ui || {};
-  platformus.ui.catalogCSharpClassNameChanged = function () {
-    platformus.parameterEditors.sync(getProductProviderByCSharpClassName(getSelectedCatalogCSharpClassName()));
+  platformus.ui.productProviderCSharpClassNameChanged = function () {
+    platformus.parameterEditors.sync(getProductProviderByCSharpClassName(getSelectedProductProviderCSharpClassName()));
   };
 
   platformus.ui.addPosition = function () {
@@ -161,17 +161,11 @@
     return price * quantity;
   }
 
-  function getSelectedCatalogCSharpClassName() {
-    return $("#cSharpClassName").val();
+  function getSelectedProductProviderCSharpClassName() {
+    return $("#productProviderCSharpClassName").val();
   }
 
   function getProductProviderByCSharpClassName(cSharpClassName) {
-    for (var i = 0; i < productProviders.length; i++) {
-      if (productProviders[i].cSharpClassName === cSharpClassName) {
-        return productProviders[i];
-      }
-    }
-
-    return null;
+    return productProviders.find(pp => pp.cSharpClassName == cSharpClassName);
   }
 })(window.platformus = window.platformus || {});

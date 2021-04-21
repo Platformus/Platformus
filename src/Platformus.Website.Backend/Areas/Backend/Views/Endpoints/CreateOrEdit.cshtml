@@ -12,7 +12,9 @@
 <form class="form" method="post">
   <div class="tabs">
     <div class="tabs__tab" data-tab-page-id="General">@Localizer["General"]</div>
-    <div class="tabs__tab" data-tab-page-id="Permissions">@Localizer["Permissions"]</div>
+    <div class="tabs__tab" data-tab-page-id="RequiredPermissions">@Localizer["Required permissions"]</div>
+    <div class="tabs__tab" data-tab-page-id="RequestProcessing">@Localizer["Request processing"]</div>
+    <div class="tabs__tab" data-tab-page-id="ResponseCaching">@Localizer["Response caching"]</div>
   </div>
   <div class="tab-pages">
     <div id="tabPageGeneral" class="tab-pages__tab-page">
@@ -21,18 +23,22 @@
       <numeric-field asp-for="Position" />
       <checkbox-field asp-for="DisallowAnonymous" />
       <single-line-text-field asp-for="SignInUrl" />
-      <drop-down-list-field asp-for="ResponseCacheCSharpClassName" asp-options="@Model.ResponseCacheCSharpClassNameOptions" />
-      <drop-down-list-field asp-for="CSharpClassName" asp-options="@Model.CSharpClassNameOptions" />
-      <div id="parameterEditors"></div>
-      <input id="parameters" name="parameters" type="hidden" value="@Model.Parameters" />
     </div>
-    <div id="tabPagePermissions" class="tab-pages__tab-page">
+    <div id="tabPageRequiredPermissions" class="tab-pages__tab-page">
       @foreach (var endpointPermission in this.Model.EndpointPermissions)
       {
-        <div class="form__field form__field--separated field">
+        <div class="form__field @(endpointPermission.Permission.Id == this.Model.EndpointPermissions.First().Permission.Id ? "form__field--separated" : null) field">
           <unbound-check-box asp-identity="permission@(endpointPermission.Permission.Id)" asp-text="@endpointPermission.Permission.Name" asp-checked="@endpointPermission.IsAssigned" />
         </div>
       }
+    </div>
+    <div id="tabPageRequestProcessing" class="tab-pages__tab-page">
+      <drop-down-list-field asp-for="RequestProcessorCSharpClassName" asp-options="@Model.RequestProcessorCSharpClassNameOptions" />
+      <div id="parameterEditors"></div>
+      <input id="parameters" name="requestProcessorParameters" type="hidden" value="@Model.RequestProcessorParameters" />
+    </div>
+    <div id="tabPageResponseCaching" class="tab-pages__tab-page">
+      <drop-down-list-field asp-for="ResponseCacheCSharpClassName" asp-options="@Model.ResponseCacheCSharpClassNameOptions" />
     </div>
   </div>
   <div class="form__buttons buttons">
@@ -41,8 +47,8 @@
   </div>
 </form>
 <script>
-  var endpoints = @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(this.Model.Endpoints));
+  var requestProcessors = @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(this.Model.RequestProcessors));
 </script>
 @section startUpScript {
-  platformus.ui.endpointCSharpClassNameChanged();
+  platformus.ui.requestProcessorCSharpClassNameChanged();
 }

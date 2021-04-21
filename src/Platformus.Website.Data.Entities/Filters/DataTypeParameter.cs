@@ -11,5 +11,15 @@ namespace Platformus.Website.Filters
     public DataTypeFilter DataType { get; set; }
     public string Code { get; set; }
     public StringFilter Name { get; set; }
+
+    public DataTypeParameterFilter() { }
+
+    public DataTypeParameterFilter(int? id = null, DataTypeFilter dataType = null, string code = null, StringFilter name = null)
+    {
+      Id = id;
+      DataType = dataType;
+      Code = code;
+      Name = name;
+    }
   }
 }

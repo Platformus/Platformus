@@ -36,13 +36,13 @@ namespace Platformus.Website.Backend.ViewModels.Forms
     [Required]
     public bool ProduceCompletedForms { get; set; }
 
-    [Display(Name = "C# class name")]
+    [Display(Name = "Form handler C# class name")]
     [Required]
     [StringLength(128)]
-    public string CSharpClassName { get; set; }
-    public IEnumerable<Option> CSharpClassNameOptions { get; set; }
+    public string FormHandlerCSharpClassName { get; set; }
+    public IEnumerable<Option> FormHandlerCSharpClassNameOptions { get; set; }
 
-    public string Parameters { get; set; }
+    public string FormHandlerParameters { get; set; }
     public IEnumerable<dynamic> FormHandlers { get; set; }
   }
 }

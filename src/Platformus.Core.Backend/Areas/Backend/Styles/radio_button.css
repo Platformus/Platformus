@@ -4,9 +4,7 @@
 .radio-button {
   color: #323232;
   text-decoration: none;
-  display: block;
-  padding-left: 30px;
-  position: relative;
+  display: inline-flex;
 }
 
 .radio-button:hover {
@@ -16,9 +14,6 @@
 .radio-button__indicator {
   background-color: #f0f0f0;
   border-radius: 10px;
-  position: absolute;
-  left: 0;
-  top: 0;
   width: 20px;
   height: 20px;
 }
@@ -34,6 +29,7 @@
 }
 
 .radio-button__label {
+  margin-left: 10px;
 }
 
 @media

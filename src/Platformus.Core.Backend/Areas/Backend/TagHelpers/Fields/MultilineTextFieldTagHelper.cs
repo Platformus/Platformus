@@ -41,6 +41,7 @@ namespace Platformus.Core.Backend
       tb.InnerHtml.Clear();
       tb.InnerHtml.AppendHtml(new FieldGenerator().GenerateLabel(this.For));
       tb.InnerHtml.AppendHtml(new TextAreaGenerator().GenerateTextArea(this.ViewContext, this.For, attributes, null, "field__text-area" + (this.Height == "small" ? " field__text-area--small" : null)));
+      tb.InnerHtml.AppendHtml(new ValidationErrorMessageGenerator().GenerateValidationErrorMessage(this.For));
       return tb;
     }
   }

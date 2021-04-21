@@ -13,5 +13,14 @@ namespace Platformus.ECommerce.Filters
 
     [FilterShortcut("Name.Localizations[]")]
     public LocalizationFilter Name { get; set; }
+
+    public OrderStateFilter() { }
+
+    public OrderStateFilter(int? id = null, string code = null, LocalizationFilter name = null)
+    {
+      Id = id;
+      Code = code;
+      Name = name;
+    }
   }
 }

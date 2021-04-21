@@ -20,11 +20,15 @@ namespace Platformus.Core.Backend
       return tb;
     }
 
-    public TagBuilder GenerateCulture(Localization localization)
+    public TagBuilder GenerateCulture(Localization localization, bool isFullscreen)
     {
       TagBuilder tb = new TagBuilder("div");
 
-      tb.AddCssClass("field__culture");
+      tb.AddCssClass("field__culture culture");
+
+      if (isFullscreen)
+        tb.AddCssClass("field__culture--fullscreen");
+
       tb.InnerHtml.Clear();
       tb.InnerHtml.AppendHtml(this.GenerateFlag(localization));
       return tb;
@@ -34,7 +38,7 @@ namespace Platformus.Core.Backend
     {
       TagBuilder tb = new TagBuilder("div");
 
-      tb.AddCssClass("field__culture-flag");
+      tb.AddCssClass($"culture__flag");
       tb.InnerHtml.Clear();
       tb.InnerHtml.AppendHtml(localization.Culture.Id);
       return tb;

@@ -14,5 +14,18 @@ namespace Platformus.ECommerce.Filters
 
     [FilterShortcut("Name.Localizations[]")]
     public LocalizationFilter Name { get; set; }
+
+    [FilterShortcut("Description.Localizations[]")]
+    public LocalizationFilter Description { get; set; }
+
+    public CategoryFilter() { }
+
+    public CategoryFilter(IntegerFilter id = null, CategoryFilter owner = null, string url = null, LocalizationFilter name = null)
+    {
+      Id = id;
+      Owner = owner;
+      Url = url;
+      Name = name;
+    }
   }
 }

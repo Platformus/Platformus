@@ -37,7 +37,7 @@ namespace Platformus.Website.Frontend.FormHandlers
       foreach (KeyValuePair<Field, string> valueByField in valuesByFields)
         body.AppendFormat("<p>{0}: {1}</p>", valueByField.Key.Name.GetLocalizationValue(), valueByField.Value);
 
-      ParametersParser parametersParser = new ParametersParser(form.Parameters);
+      ParametersParser parametersParser = new ParametersParser(form.FormHandlerParameters);
       IEmailSender emailSender = httpContext.RequestServices.GetService<IEmailSender>();
 
       if (emailSender != null)

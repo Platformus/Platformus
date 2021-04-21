@@ -1,6 +1,7 @@
 ﻿// Copyright © 2020 Dmitry Sikorsky. All rights reserved.
 // Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information.
 
+using System.Linq;
 using System.Threading.Tasks;
 using ExtCore.Events;
 using Magicalizer.Data.Repositories.Abstractions;
@@ -8,7 +9,6 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Platformus.Core.Backend.ViewModels.Roles;
-using Platformus.Core.Data.Abstractions;
 using Platformus.Core.Data.Entities;
 using Platformus.Core.Events;
 using Platformus.Core.Filters;
@@ -19,9 +19,14 @@ namespace Platformus.Core.Backend.Controllers
   [Authorize(Policy = Policies.HasManageRolesPermission)]
   public class RolesController : ControllerBase
   {
-    private IRepository<int, Role, RoleFilter> Repository
+    private IRepository<int, Role, RoleFilter> RoleRepository
     {
       get => this.Storage.GetRepository<int, Role, RoleFilter>();
+    }
+
+    private IRepository<int, int, RolePermission, RolePermissionFilter> RolePermissionRepository
+    {
+      get => this.Storage.GetRepository<int, int, RolePermission, RolePermissionFilter>();
     }
 
     public RolesController(IStorage storage)
@@ -33,8 +38,8 @@ namespace Platformus.Core.Backend.Controllers
     {
       return this.View(new IndexViewModelFactory().Create(
         this.HttpContext, filter,
-        await this.Repository.GetAllAsync(filter, orderBy, skip, take),
-        orderBy, skip, take, await this.Repository.CountAsync(filter)
+        await this.RoleRepository.GetAllAsync(filter, orderBy, skip, take),
+        orderBy, skip, take, await this.RoleRepository.CountAsync(filter)
       ));
     }
 
@@ -43,7 +48,7 @@ namespace Platformus.Core.Backend.Controllers
     public async Task<IActionResult> CreateOrEditAsync(int? id)
     {
       return this.View(await new CreateOrEditViewModelFactory().CreateAsync(
-        this.HttpContext, id == null ? null : await this.Repository.GetByIdAsync((int)id, new Inclusion<Role>(r => r.RolePermissions))
+        this.HttpContext, id == null ? null : await this.RoleRepository.GetByIdAsync((int)id, new Inclusion<Role>(r => r.RolePermissions))
       ));
     }
 
@@ -57,14 +62,14 @@ namespace Platformus.Core.Backend.Controllers
       if (this.ModelState.IsValid)
       {
         Role role = new CreateOrEditViewModelMapper().Map(
-          createOrEdit.Id == null ? new Role() : await this.Repository.GetByIdAsync((int)createOrEdit.Id, new Inclusion<Role>(r => r.RolePermissions)),
+          createOrEdit.Id == null ? new Role() : await this.RoleRepository.GetByIdAsync((int)createOrEdit.Id, new Inclusion<Role>(r => r.RolePermissions)),
           createOrEdit
         );
 
         if (createOrEdit.Id == null)
-          this.Repository.Create(role);
+          this.RoleRepository.Create(role);
 
-        else this.Repository.Edit(role);
+        else this.RoleRepository.Edit(role);
 
         await this.Storage.SaveAsync();
         await this.CreateOrEditRolePermissionsAsync(role);
@@ -82,9 +87,9 @@ namespace Platformus.Core.Backend.Controllers
 
     public async Task<IActionResult> DeleteAsync(int id)
     {
-      Role role = await this.Repository.GetByIdAsync(id);
+      Role role = await this.RoleRepository.GetByIdAsync(id);
 
-      this.Repository.Delete(role.Id);
+      this.RoleRepository.Delete(role.Id);
       await this.Storage.SaveAsync();
       Event<IRoleDeletedEventHandler, HttpContext, Role>.Broadcast(this.HttpContext, role);
       return this.RedirectToAction("Index");
@@ -92,7 +97,7 @@ namespace Platformus.Core.Backend.Controllers
 
     private async Task<bool> IsCodeUniqueAsync(string code)
     {
-      return await this.Repository.CountAsync(new RoleFilter() { Code = code }) == 0;
+      return await this.RoleRepository.CountAsync(new RoleFilter(code: code)) == 0;
     }
 
     private async Task CreateOrEditRolePermissionsAsync(Role role)
@@ -104,8 +109,12 @@ namespace Platformus.Core.Backend.Controllers
     private async Task DeleteRolePermissionsAsync(Role role)
     {
       if (role.RolePermissions != null)
-        foreach (RolePermission rolePermission in role.RolePermissions)
-          this.Storage.GetRepository<IRolePermissionRepository>().Delete(rolePermission);
+        for (int i = 0; i != role.RolePermissions.Count; i++)
+        {
+          RolePermission rolePermission = role.RolePermissions.ToArray()[i];
+
+          this.RolePermissionRepository.Delete(rolePermission.RoleId, rolePermission.PermissionId);
+        }
 
       await this.Storage.SaveAsync();
     }
@@ -131,7 +140,7 @@ namespace Platformus.Core.Backend.Controllers
 
       rolePermission.RoleId = role.Id;
       rolePermission.PermissionId = permissionId;
-      this.Storage.GetRepository<IRolePermissionRepository>().Create(rolePermission);
+      this.RolePermissionRepository.Create(rolePermission);
     }
   }
 }

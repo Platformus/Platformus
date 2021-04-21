@@ -13,5 +13,17 @@ namespace Platformus.Core.Filters
     public StringFilter Identifier { get; set; }
     public string Secret { get; set; }
     public string Extra { get; set; }
+
+    public CredentialFilter() { }
+
+    public CredentialFilter(int? id = null, UserFilter user = null, CredentialTypeFilter credentialType = null, StringFilter identifier = null, string secret = null, string extra = null)
+    {
+      Id = id;
+      User = user;
+      CredentialType = credentialType;
+      Identifier = identifier;
+      Secret = secret;
+      Extra = extra;
+    }
   }
 }

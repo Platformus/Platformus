@@ -8,7 +8,7 @@ using ExtCore.Infrastructure;
 using Platformus.Core.Backend.ViewModels;
 using Platformus.Core.Primitives;
 using Platformus.Website.Data.Entities;
-using Platformus.Website.DataSources;
+using Platformus.Website.DataProviders;
 
 namespace Platformus.Website.Backend.ViewModels.DataSources
 {
@@ -19,53 +19,53 @@ namespace Platformus.Website.Backend.ViewModels.DataSources
       if (dataSource == null)
         return new CreateOrEditViewModel()
         {
-          CSharpClassNameOptions = this.GetCSharpClassNameOptions(),
-          DataSources = this.GetDataSources()
+          DataProviderCSharpClassNameOptions = this.GetDataProviderCSharpClassNameOptions(),
+          DataProviders = this.GetDataProviders()
         };
 
       return new CreateOrEditViewModel()
       {
         Id = dataSource.Id,
         Code = dataSource.Code,
-        CSharpClassName = dataSource.CSharpClassName,
-        CSharpClassNameOptions = this.GetCSharpClassNameOptions(),
-        Parameters = dataSource.Parameters,
-        DataSources = this.GetDataSources()
+        DataProviderCSharpClassName = dataSource.DataProviderCSharpClassName,
+        DataProviderCSharpClassNameOptions = this.GetDataProviderCSharpClassNameOptions(),
+        DataProviderParameters = dataSource.DataProviderParameters,
+        DataProviders = this.GetDataProviders()
       };
     }
 
-    private IEnumerable<Option> GetCSharpClassNameOptions()
+    private IEnumerable<Option> GetDataProviderCSharpClassNameOptions()
     {
-      return ExtensionManager.GetImplementations<IDataSource>().Where(t => !t.GetTypeInfo().IsAbstract).Select(
+      return ExtensionManager.GetImplementations<IDataProvider>().Where(t => !t.GetTypeInfo().IsAbstract).Select(
         t => new Option(t.FullName)
       );
     }
 
-    private IEnumerable<dynamic> GetDataSources()
+    private IEnumerable<dynamic> GetDataProviders()
     {
-      return ExtensionManager.GetInstances<IDataSource>().Where(ds => !ds.GetType().GetTypeInfo().IsAbstract).Select(
-        ds => new {
-          cSharpClassName = ds.GetType().FullName,
-          parameterGroups = ds.ParameterGroups.Select(
-            dspg => new
+      return ExtensionManager.GetInstances<IDataProvider>().Where(dp => !dp.GetType().GetTypeInfo().IsAbstract).Select(
+        dp => new {
+          cSharpClassName = dp.GetType().FullName,
+          parameterGroups = dp.ParameterGroups.Select(
+            dppg => new
             {
-              name = dspg.Name,
-              parameters = dspg.Parameters.Select(
-                dsp => new
+              name = dppg.Name,
+              parameters = dppg.Parameters.Select(
+                dpp => new
                 {
-                  code = dsp.Code,
-                  name = dsp.Name,
-                  javaScriptEditorClassName = dsp.JavaScriptEditorClassName,
-                  options = dsp.Options == null ? null : dsp.Options.Select(
+                  code = dpp.Code,
+                  name = dpp.Name,
+                  javaScriptEditorClassName = dpp.JavaScriptEditorClassName,
+                  options = dpp.Options == null ? null : dpp.Options.Select(
                     o => new { text = o.Text, value = o.Value }
                   ),
-                  defaultValue = dsp.DefaultValue,
-                  isRequired = dsp.IsRequired
+                  defaultValue = dpp.DefaultValue,
+                  isRequired = dpp.IsRequired
                 }
               )
             }
           ),
-          description = ds.Description
+          description = dp.Description
         }
       );
     }

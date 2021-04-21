@@ -78,21 +78,15 @@
 (function (platformus) {
   platformus.ui = platformus.ui || {};
   platformus.ui.formHandlerCSharpClassNameChanged = function () {
-    platformus.parameterEditors.sync(getFormHandlerByCSharpClassName(getSelectedCSharpClassName()));
+    platformus.parameterEditors.sync(getFormHandlerByCSharpClassName(getSelectedFormHandlerCSharpClassName()));
   };
 
-  function getSelectedCSharpClassName() {
-    return $("#cSharpClassName").val();
+  function getSelectedFormHandlerCSharpClassName() {
+    return $("#formHandlerCSharpClassName").val();
   }
 
   function getFormHandlerByCSharpClassName(cSharpClassName) {
-    for (var i = 0; i < formHandlers.length; i++) {
-      if (formHandlers[i].cSharpClassName === cSharpClassName) {
-        return formHandlers[i];
-      }
-    }
-
-    return null;
+    return formHandlers.find(fh => fh.cSharpClassName == cSharpClassName);
   }
 })(window.platformus = window.platformus || {});
 
@@ -109,39 +103,27 @@
 
 (function (platformus) {
   platformus.ui = platformus.ui || {};
-  platformus.ui.endpointCSharpClassNameChanged = function () {
-    platformus.parameterEditors.sync(getEndpointByCSharpClassName(getSelectedEndpointCSharpClassName()));
+  platformus.ui.requestProcessorCSharpClassNameChanged = function () {
+    platformus.parameterEditors.sync(getRequestProcessorByCSharpClassName(getSelectedRequestProcessorCSharpClassName()));
   };
 
-  platformus.ui.dataSourceCSharpClassNameChanged = function () {
-    platformus.parameterEditors.sync(getDataSourceByCSharpClassName(getSelectedDataSourceCSharpClassName()));
+  platformus.ui.dataProviderCSharpClassNameChanged = function () {
+    platformus.parameterEditors.sync(getDataProviderByCSharpClassName(getSelectedDataProviderCSharpClassName()));
   };
 
-  function getSelectedEndpointCSharpClassName() {
-    return $("#cSharpClassName").val();
+  function getSelectedRequestProcessorCSharpClassName() {
+    return $("#requestProcessorCSharpClassName").val();
   }
 
-  function getSelectedDataSourceCSharpClassName() {
-    return $("#cSharpClassName").val();
+  function getSelectedDataProviderCSharpClassName() {
+    return $("#dataProviderCSharpClassName").val();
   }
 
-  function getEndpointByCSharpClassName(cSharpClassName) {
-    for (var i = 0; i < endpoints.length; i++) {
-      if (endpoints[i].cSharpClassName === cSharpClassName) {
-        return endpoints[i];
-      }
-    }
-
-    return null;
+  function getRequestProcessorByCSharpClassName(cSharpClassName) {
+    return requestProcessors.find(rp => rp.cSharpClassName == cSharpClassName);
   }
 
-  function getDataSourceByCSharpClassName(cSharpClassName) {
-    for (var i = 0; i < dataSources.length; i++) {
-      if (dataSources[i].cSharpClassName === cSharpClassName) {
-        return dataSources[i];
-      }
-    }
-
-    return null;
+  function getDataProviderByCSharpClassName(cSharpClassName) {
+    return dataProviders.find(dp => dp.cSharpClassName == cSharpClassName);
   }
 })(window.platformus = window.platformus || {});

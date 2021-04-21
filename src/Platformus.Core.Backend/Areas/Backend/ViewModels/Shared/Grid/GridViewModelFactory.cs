@@ -34,10 +34,6 @@ namespace Platformus.Core.Backend.ViewModels.Shared
       };
 
       gridColumns.ToList().ForEach(gc => gc.Grid = grid);
-
-      if (gridColumns.Count() != 0)
-        gridColumns.ToList().Last().IsLast = true;
-
       return grid;
     }
 

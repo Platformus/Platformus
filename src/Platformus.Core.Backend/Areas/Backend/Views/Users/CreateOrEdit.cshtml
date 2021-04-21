@@ -21,7 +21,7 @@
     <div id="tabPageRoles" class="tab-pages__tab-page">
       @foreach (var userRole in this.Model.UserRoles)
       {
-        <div class="form__field form__field--separated field">
+        <div class="form__field @(userRole.Role.Id == this.Model.UserRoles.First().Role.Id ? "form__field--separated" : null) field">
           <unbound-check-box asp-identity="role@(userRole.Role.Id)" asp-text="@userRole.Role.Name" asp-checked="@userRole.IsAssigned" />
         </div>
       }

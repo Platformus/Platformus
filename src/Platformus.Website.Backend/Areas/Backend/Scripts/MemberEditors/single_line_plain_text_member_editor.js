@@ -20,7 +20,7 @@
         var localization = member.property.stringValue.localizations[i];
 
         if (localization.culture.id != "__") {
-          platformus.memberEditors.base.createCulture(localization).appendTo(field);
+          platformus.memberEditors.base.createCulture(localization, false).appendTo(field);
           createTextBox(member, localization).appendTo(field);
 
           if (i != member.property.stringValue.localizations.length - 1) {

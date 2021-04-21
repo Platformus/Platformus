@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Platformus.Website.Data.Entities;
 
-namespace Platformus.Website.FormHandlers
+namespace Platformus.Website.FieldValidators
 {
   public interface IFieldValidator
   {

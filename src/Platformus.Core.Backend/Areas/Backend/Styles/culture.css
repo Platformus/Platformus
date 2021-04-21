@@ -1,0 +1,21 @@
+﻿/* Copyright © 2021 Dmitry Sikorsky. All rights reserved. */
+/* Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information. */
+
+.culture {
+  position: relative;
+  z-index: 10;
+}
+
+.culture__flag {
+  background-color: #323232;
+  color: #fff;
+  font-size: 7.5px;
+  line-height: 15px;
+  text-align: center;
+  text-transform: uppercase;
+  position: absolute;
+  top: 7.5px;
+  right: 7.5px;
+  width: 15px;
+  height: 15px;
+}

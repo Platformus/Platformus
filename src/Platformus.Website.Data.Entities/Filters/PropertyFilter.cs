@@ -17,5 +17,18 @@ namespace Platformus.Website.Filters
     [FilterShortcut("StringValue.Localizations[]")]
     public LocalizationFilter StringValue { get; set; }
     public DateTimeFilter DateTimeValue { get; set; }
+
+    public PropertyFilter() { }
+
+    public PropertyFilter(int? id = null, ObjectFilter @object = null, MemberFilter member = null, IntegerFilter integerValue = null, DecimalFilter decimalValue = null, LocalizationFilter stringValue = null, DateTimeFilter dateTimeValue = null)
+    {
+      Id = id;
+      Object = @object;
+      Member = member;
+      IntegerValue = integerValue;
+      DecimalValue = decimalValue;
+      StringValue = stringValue;
+      DateTimeValue = dateTimeValue;
+    }
   }
 }

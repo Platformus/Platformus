@@ -11,5 +11,15 @@ namespace Platformus.Core.Filters
     public DictionaryFilter Dictionary { get; set; }
     public CultureFilter Culture { get; set; }
     public StringFilter Value { get; set; }
+
+    public LocalizationFilter() { }
+
+    public LocalizationFilter(int? id = null, DictionaryFilter dictionary = null, CultureFilter culture = null, StringFilter value = null)
+    {
+      Id = id;
+      Dictionary = dictionary;
+      Culture = culture;
+      Value = value;
+    }
   }
 }

@@ -12,8 +12,8 @@ namespace Platformus.Website.Backend.ViewModels.Forms
     {
       form.Code = createOrEdit.Code;
       form.ProduceCompletedForms = createOrEdit.ProduceCompletedForms;
-      form.CSharpClassName = createOrEdit.CSharpClassName;
-      form.Parameters = createOrEdit.Parameters;
+      form.FormHandlerCSharpClassName = createOrEdit.FormHandlerCSharpClassName;
+      form.FormHandlerParameters = createOrEdit.FormHandlerParameters;
       return form;
     }
   }

@@ -57,14 +57,14 @@ namespace Platformus.ECommerce.Frontend.Controllers
     {
       if (this.HttpContext.GetCartManager().TryGetClientSideId(out Guid clientSideId))
       {
-        if (await this.PositionRepository.CountAsync(new PositionFilter() { Id = positionId, Cart = new CartFilter() { ClientSideId = clientSideId } }) != 0)
+        if (await this.PositionRepository.CountAsync(new PositionFilter(id: positionId, cart: new CartFilter(clientSideId: clientSideId))) != 0)
         {
           this.PositionRepository.Delete(positionId);
           await this.Storage.SaveAsync();
 
-          if (await this.PositionRepository.CountAsync(new PositionFilter() { Cart = new CartFilter() { ClientSideId = clientSideId } }) == 0)
+          if (await this.PositionRepository.CountAsync(new PositionFilter(cart: new CartFilter(clientSideId: clientSideId))) == 0)
           {
-            Cart cart = (await this.CartRepository.GetAllAsync(new CartFilter() { ClientSideId = clientSideId })).FirstOrDefault();
+            Cart cart = (await this.CartRepository.GetAllAsync(new CartFilter(clientSideId: clientSideId))).FirstOrDefault();
 
             this.CartRepository.Delete(cart.Id);
             await this.Storage.SaveAsync();
@@ -82,7 +82,7 @@ namespace Platformus.ECommerce.Frontend.Controllers
     {
       if (this.HttpContext.GetCartManager().TryGetClientSideId(out Guid clientSideId))
       {
-        Cart cart = (await this.CartRepository.GetAllAsync(new CartFilter() { ClientSideId = clientSideId })).FirstOrDefault();
+        Cart cart = (await this.CartRepository.GetAllAsync(new CartFilter(clientSideId: clientSideId))).FirstOrDefault();
 
         if (cart != null)
           return cart;

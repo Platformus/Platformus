@@ -42,6 +42,7 @@ input, textarea, button {
 
 :focus {
   outline: 1px dashed #0096fa;
+  z-index: 1;
 }
 
 ::-moz-focus-inner { 

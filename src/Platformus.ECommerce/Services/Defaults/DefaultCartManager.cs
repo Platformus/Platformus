@@ -46,7 +46,7 @@ namespace Platformus.ECommerce.Services.Defaults
     {
       if (!this.IsEmpty && Guid.TryParse(this.httpContextAccessor.HttpContext.Request.Cookies[CartId], out Guid clientSideId))
         return await this.httpContextAccessor.HttpContext.GetStorage().GetRepository<int, Position, PositionFilter>().CountAsync(
-          new PositionFilter() { Cart = new CartFilter() { ClientSideId = clientSideId } }
+          new PositionFilter(cart: new CartFilter(clientSideId: clientSideId))
         );
 
       return 0;
@@ -57,7 +57,7 @@ namespace Platformus.ECommerce.Services.Defaults
       if (!this.IsEmpty && Guid.TryParse(this.httpContextAccessor.HttpContext.Request.Cookies[CartId], out Guid clientSideId))
       {
         Cart cart = (await this.httpContextAccessor.HttpContext.GetStorage().GetRepository<int, Cart, CartFilter>().GetAllAsync(
-          new CartFilter() { ClientSideId = clientSideId },
+          new CartFilter(clientSideId: clientSideId),
           inclusions: new Inclusion<Cart>[] {
             new Inclusion<Cart>(c => c.Positions)
           }

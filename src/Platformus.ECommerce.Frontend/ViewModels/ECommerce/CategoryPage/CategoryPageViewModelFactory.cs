@@ -20,13 +20,17 @@ namespace Platformus.ECommerce.Frontend.ViewModels.ECommerce
       return new CategoryPageViewModel()
       {
         Name = category.Name.GetLocalizationValue(),
+        Description = category.Description.GetLocalizationValue(),
+        Title = category.Title.GetLocalizationValue(),
+        MetaDescription = category.MetaDescription.GetLocalizationValue(),
+        MetaKeywords = category.MetaKeywords.GetLocalizationValue(),
         Products = await this.GetProductsAsync(httpContext, category)
       };
     }
 
     private async Task<IEnumerable<ProductViewModel>> GetProductsAsync(HttpContext httpContext, Category category)
     {
-      IProductProvider productProvider = StringActivator.CreateInstance<IProductProvider>(category.CSharpClassName);
+      IProductProvider productProvider = StringActivator.CreateInstance<IProductProvider>(category.ProductProviderCSharpClassName);
 
       return (await productProvider.GetProductsAsync(httpContext, category)).Select(
         p => new ProductViewModelFactory().Create(p)

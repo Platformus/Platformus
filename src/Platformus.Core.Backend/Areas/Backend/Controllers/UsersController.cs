@@ -1,6 +1,7 @@
 ﻿// Copyright © 2020 Dmitry Sikorsky. All rights reserved.
 // Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information.
 
+using System.Linq;
 using System.Threading.Tasks;
 using ExtCore.Events;
 using Magicalizer.Data.Repositories.Abstractions;
@@ -8,7 +9,6 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Platformus.Core.Backend.ViewModels.Users;
-using Platformus.Core.Data.Abstractions;
 using Platformus.Core.Data.Entities;
 using Platformus.Core.Events;
 using Platformus.Core.Filters;
@@ -19,9 +19,14 @@ namespace Platformus.Core.Backend.Controllers
   [Authorize(Policy = Policies.HasManageUsersPermission)]
   public class UsersController : ControllerBase
   {
-    private IRepository<int, User, UserFilter> Repository
+    private IRepository<int, User, UserFilter> UserRepository
     {
       get => this.Storage.GetRepository<int, User, UserFilter>();
+    }
+
+    private IRepository<int, int, UserRole, UserRoleFilter> UserRoleRepository
+    {
+      get => this.Storage.GetRepository<int, int, UserRole, UserRoleFilter>();
     }
 
     public UsersController(IStorage storage)
@@ -33,8 +38,8 @@ namespace Platformus.Core.Backend.Controllers
     {
       return this.View(new IndexViewModelFactory().Create(
         this.HttpContext, filter,
-        await this.Repository.GetAllAsync(filter, orderBy, skip, take),
-        orderBy, skip, take, await this.Repository.CountAsync(filter)
+        await this.UserRepository.GetAllAsync(filter, orderBy, skip, take),
+        orderBy, skip, take, await this.UserRepository.CountAsync(filter)
       ));
     }
 
@@ -43,7 +48,7 @@ namespace Platformus.Core.Backend.Controllers
     public async Task<IActionResult> CreateOrEditAsync(int? id)
     {
       return this.View(await new CreateOrEditViewModelFactory().CreateAsync(
-        this.HttpContext, id == null ? null : await this.Repository.GetByIdAsync((int)id, new Inclusion<User>(u => u.UserRoles))
+        this.HttpContext, id == null ? null : await this.UserRepository.GetByIdAsync((int)id, new Inclusion<User>(u => u.UserRoles))
       ));
     }
 
@@ -54,14 +59,14 @@ namespace Platformus.Core.Backend.Controllers
       if (this.ModelState.IsValid)
       {
         User user = new CreateOrEditViewModelMapper().Map(
-          createOrEdit.Id == null ? new User() : await this.Repository.GetByIdAsync((int)createOrEdit.Id, new Inclusion<User>(u => u.UserRoles)),
+          createOrEdit.Id == null ? new User() : await this.UserRepository.GetByIdAsync((int)createOrEdit.Id, new Inclusion<User>(u => u.UserRoles)),
           createOrEdit
         );
 
         if (createOrEdit.Id == null)
-          this.Repository.Create(user);
+          this.UserRepository.Create(user);
 
-        else this.Repository.Edit(user);
+        else this.UserRepository.Edit(user);
 
         await this.Storage.SaveAsync();
         await this.CreateOrEditUserRolesAsync(user);
@@ -79,9 +84,9 @@ namespace Platformus.Core.Backend.Controllers
 
     public async Task<IActionResult> DeleteAsync(int id)
     {
-      User user = await this.Repository.GetByIdAsync(id);
+      User user = await this.UserRepository.GetByIdAsync(id);
 
-      this.Repository.Delete(user.Id);
+      this.UserRepository.Delete(user.Id);
       await this.Storage.SaveAsync();
       Event<IUserDeletedEventHandler, HttpContext, User>.Broadcast(this.HttpContext, user);
       return this.RedirectToAction("Index");
@@ -96,8 +101,12 @@ namespace Platformus.Core.Backend.Controllers
     private async Task DeleteUserRolesAsync(User user)
     {
       if (user.UserRoles != null)
-        foreach (UserRole userRole in user.UserRoles)
-          this.Storage.GetRepository<IUserRoleRepository>().Delete(userRole);
+        for (int i = 0; i != user.UserRoles.Count; i++)
+        {
+          UserRole userRole = user.UserRoles.ToArray()[i];
+
+          this.UserRoleRepository.Delete(userRole.UserId, userRole.RoleId);
+        }
 
       await this.Storage.SaveAsync();
     }
@@ -123,7 +132,7 @@ namespace Platformus.Core.Backend.Controllers
 
       userRole.UserId = user.Id;
       userRole.RoleId = roleId;
-      this.Storage.GetRepository<IUserRoleRepository>().Create(userRole);
+      this.UserRoleRepository.Create(userRole);
     }
   }
 }

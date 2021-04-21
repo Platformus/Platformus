@@ -4,7 +4,7 @@
     <Authors>Dmitry Sikorsky</Authors>
     <Copyright>Copyright © 2015 Dmitry Sikorsky</Copyright>
     <Description>The Platformus.Core extension component.</Description>
-    <VersionPrefix>2.1.0</VersionPrefix>
+    <VersionPrefix>2.2.0</VersionPrefix>
     <TargetFramework>net5.0</TargetFramework>
     <AssemblyName>Platformus.Core</AssemblyName>
     <PackageId>Platformus.Core</PackageId>
@@ -15,14 +15,13 @@
   <ItemGroup>
     <PackageReference Include="ExtCore.Events" Version="6.0.0" />
     <PackageReference Include="ExtCore.Mvc" Version="6.0.0" />
-    <PackageReference Include="Magicalizer.Data.Repositories.Abstractions" Version="1.0.0-alpha4" />
+    <PackageReference Include="Magicalizer.Data.Repositories.Abstractions" Version="1.0.0-alpha5" />
     <PackageReference Include="MailKit" Version="2.11.1" />
     <PackageReference Include="Newtonsoft.Json" Version="12.0.3" />
     <PackageReference Include="SixLabors.ImageSharp" Version="1.0.3" />
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Platformus.Core.Data.Abstractions\Platformus.Core.Data.Abstractions.csproj" />
     <ProjectReference Include="..\Platformus.Core.Data.Entities\Platformus.Core.Data.Entities.csproj" />
   </ItemGroup>
 

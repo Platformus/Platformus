@@ -2,7 +2,7 @@ BEGIN TRANSACTION;
 
 --
 -- Extension: Platformus.Core
--- Version: 2.1.0
+-- Version: 2.2.0
 --
 
 SET IDENTITY_INSERT [dbo].[Users] ON;
@@ -59,7 +59,7 @@ INSERT INTO [dbo].[Cultures] ([Id], [Name], [IsNeutral], [IsFrontendDefault], [I
 
 --
 -- Extension: Platformus.Website
--- Version: 2.1.0
+-- Version: 2.2.0
 --
 
 SET IDENTITY_INSERT [dbo].[Permissions] ON;
@@ -94,10 +94,16 @@ INSERT INTO [dbo].[DataTypeParameters] ([Id], [DataTypeId], [JavaScriptEditorCla
 INSERT INTO [dbo].[DataTypeParameters] ([Id], [DataTypeId], [JavaScriptEditorClassName], [Code], [Name]) VALUES (2, 1, N'numericTextBox', N'MaxLength', N'Max length');
 INSERT INTO [dbo].[DataTypeParameters] ([Id], [DataTypeId], [JavaScriptEditorClassName], [Code], [Name]) VALUES (3, 2, N'checkbox', N'IsRequired', N'Is required');
 INSERT INTO [dbo].[DataTypeParameters] ([Id], [DataTypeId], [JavaScriptEditorClassName], [Code], [Name]) VALUES (4, 2, N'numericTextBox', N'MaxLength', N'Max length');
-INSERT INTO [dbo].[DataTypeParameters] ([Id], [DataTypeId], [JavaScriptEditorClassName], [Code], [Name]) VALUES (5, 7, N'checkbox', N'IsRequired', N'Is required');
-INSERT INTO [dbo].[DataTypeParameters] ([Id], [DataTypeId], [JavaScriptEditorClassName], [Code], [Name]) VALUES (6, 8, N'numericTextBox', N'Width', N'Width');
-INSERT INTO [dbo].[DataTypeParameters] ([Id], [DataTypeId], [JavaScriptEditorClassName], [Code], [Name]) VALUES (7, 8, N'numericTextBox', N'Height', N'Height');
-INSERT INTO [dbo].[DataTypeParameters] ([Id], [DataTypeId], [JavaScriptEditorClassName], [Code], [Name]) VALUES (8, 9, N'textBox', N'Mode', N'Mode');
+INSERT INTO [dbo].[DataTypeParameters] ([Id], [DataTypeId], [JavaScriptEditorClassName], [Code], [Name]) VALUES (5, 4, N'checkbox', N'IsRequired', N'Is required');
+INSERT INTO [dbo].[DataTypeParameters] ([Id], [DataTypeId], [JavaScriptEditorClassName], [Code], [Name]) VALUES (6, 4, N'numericTextBox', N'MinValue', N'Min value');
+INSERT INTO [dbo].[DataTypeParameters] ([Id], [DataTypeId], [JavaScriptEditorClassName], [Code], [Name]) VALUES (7, 4, N'numericTextBox', N'MaxValue', N'Max value');
+INSERT INTO [dbo].[DataTypeParameters] ([Id], [DataTypeId], [JavaScriptEditorClassName], [Code], [Name]) VALUES (8, 5, N'checkbox', N'IsRequired', N'Is required');
+INSERT INTO [dbo].[DataTypeParameters] ([Id], [DataTypeId], [JavaScriptEditorClassName], [Code], [Name]) VALUES (9, 5, N'numericTextBox', N'MinValue', N'Min value');
+INSERT INTO [dbo].[DataTypeParameters] ([Id], [DataTypeId], [JavaScriptEditorClassName], [Code], [Name]) VALUES (10, 5, N'numericTextBox', N'MaxValue', N'Max value');
+INSERT INTO [dbo].[DataTypeParameters] ([Id], [DataTypeId], [JavaScriptEditorClassName], [Code], [Name]) VALUES (11, 7, N'checkbox', N'IsRequired', N'Is required');
+INSERT INTO [dbo].[DataTypeParameters] ([Id], [DataTypeId], [JavaScriptEditorClassName], [Code], [Name]) VALUES (12, 8, N'numericTextBox', N'Width', N'Width');
+INSERT INTO [dbo].[DataTypeParameters] ([Id], [DataTypeId], [JavaScriptEditorClassName], [Code], [Name]) VALUES (13, 8, N'numericTextBox', N'Height', N'Height');
+INSERT INTO [dbo].[DataTypeParameters] ([Id], [DataTypeId], [JavaScriptEditorClassName], [Code], [Name]) VALUES (14, 9, N'textBox', N'Mode', N'Mode');
 SET IDENTITY_INSERT [dbo].[DataTypeParameters] OFF;
 
 SET IDENTITY_INSERT [dbo].[FieldTypes] ON;
@@ -107,12 +113,12 @@ INSERT INTO [dbo].[FieldTypes] ([Id], [Code], [Name], [Position], [ValidatorCSha
 INSERT INTO [dbo].[FieldTypes] ([Id], [Code], [Name], [Position], [ValidatorCSharpClassName]) VALUES (4, N'RadioButtonList', N'Radio button list', 4, NULL);
 INSERT INTO [dbo].[FieldTypes] ([Id], [Code], [Name], [Position], [ValidatorCSharpClassName]) VALUES (5, N'DropDownList', N'Drop down list', 5, NULL);
 INSERT INTO [dbo].[FieldTypes] ([Id], [Code], [Name], [Position], [ValidatorCSharpClassName]) VALUES (6, N'FileUpload', N'File upload', 6, NULL);
-INSERT INTO [dbo].[FieldTypes] ([Id], [Code], [Name], [Position], [ValidatorCSharpClassName]) VALUES (7, N'ReCAPTCHA', N'ReCAPTCHA', 7, N'Platformus.Website.Frontend.FormHandlers.ReCaptchaFieldValidator');
+INSERT INTO [dbo].[FieldTypes] ([Id], [Code], [Name], [Position], [ValidatorCSharpClassName]) VALUES (7, N'ReCAPTCHA', N'ReCAPTCHA', 7, N'Platformus.Website.Frontend.FieldValidators.ReCaptchaFieldValidator');
 SET IDENTITY_INSERT [dbo].[FieldTypes] OFF;
 
 --
 -- Extension: Platformus.ECommerce
--- Version: 2.1.0
+-- Version: 2.2.0
 --
 
 SET IDENTITY_INSERT [dbo].[Permissions] ON;

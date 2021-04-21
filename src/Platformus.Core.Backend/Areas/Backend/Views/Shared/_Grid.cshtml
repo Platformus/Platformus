@@ -46,7 +46,7 @@
     @if (this.Model.Pager.Total == 0)
     {
       <tr class="table__row">
-        <td class="table__cell" colspan="@Model.GridColumns.Count()">
+        <td class="table__cell table__cell--no-records" colspan="@Model.GridColumns.Count()">
           @Localizer["No records"]
         </td>
       </tr>

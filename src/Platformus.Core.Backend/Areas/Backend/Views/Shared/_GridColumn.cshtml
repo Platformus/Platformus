@@ -4,13 +4,13 @@
 @using Platformus.Core.Backend.ViewModels.Shared
 @if (string.IsNullOrEmpty(this.Model.SortingName))
 {
-  <th class="table__cell table__cell--header @(this.Model.IsLast ? "table__cell--no-width" : string.Empty)">@Html.Raw(this.Model.DisplayName)</th>
+  <th class="table__cell table__cell--header">@Html.Raw(this.Model.DisplayName)</th>
 }
 else
 {
   if (string.Equals(this.Model.SortingName, this.Model.Grid.SortingName, StringComparison.OrdinalIgnoreCase))
   {
-    <th class="table__cell table__cell--header table__cell--header-ordered-by @(this.Model.Grid.SortingDirection == SortingDirection.Ascending ? "table__cell--header-ordered-by-asc" : "table__cell--header-ordered-by-desc") @(this.Model.IsLast ? "table__cell--no-width" : string.Empty)">
+    <th class="table__cell table__cell--header table__cell--header-ordered-by @(this.Model.Grid.SortingDirection == SortingDirection.Ascending ? "table__cell--header-ordered-by-asc" : "table__cell--header-ordered-by-desc")">
       <a class="table__order-by table__order-by--ordered-by" href="@this.Context.Request.CombineUrl(
         new Url.Descriptor(name: "filter", takeFromUrl: true),
         new Url.Descriptor(name: "orderby", value: (this.Model.Grid.SortingDirection == SortingDirection.Ascending ? "-" : "%2B") + this.Model.SortingName),
@@ -21,7 +21,7 @@ else
   }
   else
   {
-    <th class="table__cell table__cell--header @(this.Model.IsLast ? "table__cell--no-width" : string.Empty)">
+    <th class="table__cell table__cell--header">
       <a class="table__order-by" href="@this.Context.Request.CombineUrl(
         new Url.Descriptor(name: "filter", takeFromUrl: true),
         new Url.Descriptor(name: "orderby", value: "%2B" + this.Model.SortingName),

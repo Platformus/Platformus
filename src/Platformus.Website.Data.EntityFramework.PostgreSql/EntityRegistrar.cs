@@ -123,8 +123,8 @@ namespace Platformus.Website.Data.EntityFramework.PostgreSql
           etb.HasKey(e => e.Id);
           etb.Property(e => e.Id).ValueGeneratedOnAdd();
           etb.Property(e => e.Code).IsRequired().HasMaxLength(32);
-          etb.Property(e => e.CSharpClassName).IsRequired().HasMaxLength(128);
-          etb.Property(e => e.Parameters).HasMaxLength(1024);
+          etb.Property(e => e.FormHandlerCSharpClassName).IsRequired().HasMaxLength(128);
+          etb.Property(e => e.FormHandlerParameters).HasMaxLength(1024);
           etb.ToTable("Forms");
         }
       );
@@ -187,8 +187,8 @@ namespace Platformus.Website.Data.EntityFramework.PostgreSql
           etb.Property(e => e.Name).IsRequired().HasMaxLength(64);
           etb.Property(e => e.UrlTemplate).HasMaxLength(128);
           etb.Property(e => e.SignInUrl).HasMaxLength(128);
-          etb.Property(e => e.CSharpClassName).IsRequired().HasMaxLength(128);
-          etb.Property(e => e.Parameters).HasMaxLength(1024);
+          etb.Property(e => e.RequestProcessorCSharpClassName).IsRequired().HasMaxLength(128);
+          etb.Property(e => e.RequestProcessorParameters).HasMaxLength(1024);
           etb.ToTable("Endpoints");
         }
       );
@@ -205,8 +205,8 @@ namespace Platformus.Website.Data.EntityFramework.PostgreSql
           etb.HasKey(e => e.Id);
           etb.Property(e => e.Id).ValueGeneratedOnAdd();
           etb.Property(e => e.Code).IsRequired().HasMaxLength(32);
-          etb.Property(e => e.CSharpClassName).IsRequired().HasMaxLength(128);
-          etb.Property(e => e.Parameters).HasMaxLength(1024);
+          etb.Property(e => e.DataProviderCSharpClassName).IsRequired().HasMaxLength(128);
+          etb.Property(e => e.DataProviderParameters).HasMaxLength(1024);
           etb.ToTable("DataSources");
         }
       );

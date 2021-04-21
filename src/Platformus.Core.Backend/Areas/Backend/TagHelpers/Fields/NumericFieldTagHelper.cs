@@ -39,6 +39,7 @@ namespace Platformus.Core.Backend
       tb.InnerHtml.AppendHtml(new FieldGenerator().GenerateLabel(this.For));
       tb.InnerHtml.AppendHtml(new TextBoxGenerator().GenerateTextBox(this.ViewContext, this.For, attributes, null, "text", "field__text-box field__text-box--numeric"));
       tb.InnerHtml.AppendHtml(this.GenerateNumericButtons());
+      tb.InnerHtml.AppendHtml(new ValidationErrorMessageGenerator().GenerateValidationErrorMessage(this.For));
       return tb;
     }
 

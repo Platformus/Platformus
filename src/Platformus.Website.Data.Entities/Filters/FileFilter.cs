@@ -9,5 +9,13 @@ namespace Platformus.Website.Filters
   {
     public int? Id { get; set; }
     public StringFilter Name { get; set; }
+
+    public FileFilter() { }
+
+    public FileFilter(int? id = null, StringFilter name = null)
+    {
+      Id = id;
+      Name = name;
+    }
   }
 }

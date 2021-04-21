@@ -4,7 +4,7 @@
     <Authors>Dmitry Sikorsky</Authors>
     <Copyright>Copyright © 2015 Dmitry Sikorsky</Copyright>
     <Description>The Platformus.Core extension component.</Description>
-    <VersionPrefix>2.1.0</VersionPrefix>
+    <VersionPrefix>2.2.0</VersionPrefix>
     <TargetFramework>net5.0</TargetFramework>
     <AssemblyName>Platformus.Core.Data.EntityFramework.Sqlite</AssemblyName>
     <PackageId>Platformus.Core.Data.EntityFramework.Sqlite</PackageId>
@@ -17,7 +17,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Platformus.Core.Data.Abstractions\Platformus.Core.Data.Abstractions.csproj" />
+    <ProjectReference Include="..\Platformus.Core.Data.Entities\Platformus.Core.Data.Entities.csproj" />
   </ItemGroup>
 
 </Project>

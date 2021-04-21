@@ -29,7 +29,7 @@ namespace Platformus.Website.Backend.ViewModels.DataSources
           orderBy, skip, take, total,
           new[] {
             new GridColumnViewModelFactory().Create(localizer["Code"], "Code"),
-            new GridColumnViewModelFactory().Create(localizer["C# class name"], "CSharpClassName"),
+            new GridColumnViewModelFactory().Create(localizer["Data provider C# class name"], "DataProviderCSharpClassName"),
             new GridColumnViewModelFactory().CreateEmpty()
           },
           dataSources.Select(ds => new DataSourceViewModelFactory().Create(ds)),

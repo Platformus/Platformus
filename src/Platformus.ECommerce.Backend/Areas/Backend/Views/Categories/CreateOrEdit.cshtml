@@ -2,6 +2,7 @@
 @* Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information. *@
 @model Platformus.ECommerce.Backend.ViewModels.Categories.CreateOrEditViewModel
 @inject Microsoft.AspNetCore.Mvc.Localization.IViewLocalizer Localizer
+@inject Platformus.Core.Services.Abstractions.ICultureManager CultureManager
 @{
   this.ViewBag.Title = (this.Model.Id == null ? this.Localizer["Create Category"].Value : this.Localizer["Edit Category"].Value);
   this.ViewBag.ActiveMenuItem = "categories";
@@ -10,14 +11,41 @@
   @ViewBag.Title
 }
 <form class="form" method="post">
-  <single-line-text-field asp-for="Url" />
-  <multilingual-single-line-text-field asp-for="Name" asp-localizations="@Model.NameLocalizations" />
-  <drop-down-list-field asp-for="CSharpClassName" asp-options="@Model.CSharpClassNameOptions" />
-  <numeric-field asp-for="Position" />
-  <div id="parameterEditors"></div>
-  <input id="parameters" name="parameters" type="hidden" value="@Model.Parameters" />
+  <div class="tabs">
+    <div class="tabs__tab" data-tab-page-id="General">@Localizer["General"]</div>
+    <div class="tabs__tab" data-tab-page-id="Seo">@Localizer["SEO"]</div>
+    <div class="tabs__tab" data-tab-page-id="Products">@Localizer["Products"]</div>
+  </div>
+  <div class="tab-pages">
+    <div id="tabPageGeneral" class="tab-pages__tab-page">
+      <single-line-text-field asp-for="Url" />
+      <multilingual-single-line-text-field asp-for="Name" asp-localizations="@Model.NameLocalizations" />
+      <multilingual-multiline-text-field asp-for="Description" asp-localizations="this.Model.DescriptionLocalizations" asp-height="normal" />
+      <numeric-field asp-for="Position" />
+    </div>
+    <div id="tabPageSeo" class="tab-pages__tab-page">
+      <multilingual-single-line-text-field asp-for="Title" asp-localizations="this.Model.TitleLocalizations" />
+      <multilingual-single-line-text-field asp-for="MetaDescription" asp-localizations="this.Model.MetaDescriptionLocalizations" />
+      <multilingual-single-line-text-field asp-for="MetaKeywords" asp-localizations="this.Model.MetaKeywordsLocalizations" />
+    </div>
+    <div id="tabPageProducts" class="tab-pages__tab-page">
+      <drop-down-list-field asp-for="ProductProviderCSharpClassName" asp-options="@Model.ProductProviderCSharpClassNameOptions" onchange="platformus.ui.productProviderCSharpClassNameChanged();" />
+      <div id="parameterEditors"></div>
+      <input id="parameters" name="productProviderParameters" type="hidden" value="@Model.ProductProviderParameters" />
+    </div>
+  </div>
   <div class="form__buttons buttons">
     <button class="buttons__button button button--positive" type="submit">@Localizer["Save"]</button>
     <a class="buttons__button button button--neutral" href="/backend/categories">@Localizer["Cancel"]</a>
   </div>
 </form>
+<script>
+  var productProviders = @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(this.Model.ProductProviders));
+</script>
+@section startUpScript {
+  platformus.ui.productProviderCSharpClassNameChanged();
+  @foreach (var culture in await this.CultureManager.GetNotNeutralCulturesAsync())
+  {
+    @:platformus.ui.initializeTinyMce("description@(culture.Id)");
+  }
+}

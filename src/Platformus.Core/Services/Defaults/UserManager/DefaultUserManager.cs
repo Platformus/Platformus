@@ -10,7 +10,6 @@ using Magicalizer.Data.Repositories.Abstractions;
 using Magicalizer.Filters.Abstractions;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Http;
-using Platformus.Core.Data.Abstractions;
 using Platformus.Core.Data.Entities;
 using Platformus.Core.Filters;
 using Platformus.Core.Services.Abstractions;
@@ -23,9 +22,9 @@ namespace Platformus.Core.Services.Defaults
     private readonly IStorage storage;
     private readonly IRepository<int, Permission, PermissionFilter> permissionRepository;
     private readonly IRepository<int, Role, RoleFilter> roleRepository;
-    private readonly IRolePermissionRepository rolePermissionRepository;
+    private readonly IRepository<int, int, RolePermission, RolePermissionFilter> rolePermissionRepository;
     private readonly IRepository<int, User, UserFilter> userRepository;
-    private readonly IUserRoleRepository userRoleRepository;
+    private readonly IRepository<int, int, UserRole, UserRoleFilter> userRoleRepository;
     private readonly IRepository<int, CredentialType, CredentialTypeFilter> credentialTypeRepository;
     private readonly IRepository<int, Credential, CredentialFilter> credentialRepository;
     
@@ -35,9 +34,9 @@ namespace Platformus.Core.Services.Defaults
       this.storage = storage;
       this.permissionRepository = this.storage.GetRepository<int, Permission, PermissionFilter>();
       this.roleRepository = this.storage.GetRepository<int, Role, RoleFilter>();
-      this.rolePermissionRepository = this.storage.GetRepository<IRolePermissionRepository>();
+      this.rolePermissionRepository = this.storage.GetRepository<int, int, RolePermission, RolePermissionFilter>();
       this.userRepository = this.storage.GetRepository<int, User, UserFilter>();
-      this.userRoleRepository = this.storage.GetRepository<IUserRoleRepository>();
+      this.userRoleRepository = this.storage.GetRepository<int, int, UserRole, UserRoleFilter>();
       this.credentialTypeRepository = this.storage.GetRepository<int, CredentialType, CredentialTypeFilter>();
       this.credentialRepository = this.storage.GetRepository<int, Credential, CredentialFilter>();
     }
@@ -56,7 +55,7 @@ namespace Platformus.Core.Services.Defaults
       this.userRepository.Create(user);
       await this.storage.SaveAsync();
 
-      CredentialType credentialType = (await this.credentialTypeRepository.GetAllAsync(new CredentialTypeFilter() { Code = credentialTypeCode })).FirstOrDefault();
+      CredentialType credentialType = (await this.credentialTypeRepository.GetAllAsync(new CredentialTypeFilter(code: credentialTypeCode))).FirstOrDefault();
 
       if (credentialType == null)
         return new SignUpResult(success: false, error: SignUpResultError.CredentialTypeNotFound);
@@ -83,7 +82,7 @@ namespace Platformus.Core.Services.Defaults
 
     public async Task AddToRoleAsync(User user, string roleCode)
     {
-      Role role = (await this.roleRepository.GetAllAsync(new RoleFilter() { Code = roleCode })).FirstOrDefault();
+      Role role = (await this.roleRepository.GetAllAsync(new RoleFilter(code: roleCode))).FirstOrDefault();
 
       if (role == null)
         return;
@@ -93,7 +92,7 @@ namespace Platformus.Core.Services.Defaults
 
     public async Task AddToRoleAsync(User user, Role role)
     {
-      UserRole userRole = this.userRoleRepository.WithKey(user.Id, role.Id);
+      UserRole userRole = await this.userRoleRepository.GetByIdAsync(user.Id, role.Id);
 
       if (userRole != null)
         return;
@@ -107,7 +106,7 @@ namespace Platformus.Core.Services.Defaults
 
     public async Task RemoveFromRoleAsync(User user, string roleCode)
     {
-      Role role = (await this.roleRepository.GetAllAsync(new RoleFilter() { Code = roleCode })).FirstOrDefault();
+      Role role = (await this.roleRepository.GetAllAsync(new RoleFilter(code: roleCode))).FirstOrDefault();
 
       if (role == null)
         return;
@@ -117,18 +116,18 @@ namespace Platformus.Core.Services.Defaults
 
     public async Task RemoveFromRoleAsync(User user, Role role)
     {
-      UserRole userRole = this.userRoleRepository.WithKey(user.Id, role.Id);
+      UserRole userRole = await this.userRoleRepository.GetByIdAsync(user.Id, role.Id);
 
       if (userRole == null)
         return;
 
-      this.userRoleRepository.Delete(userRole);
+      this.userRoleRepository.Delete(userRole.UserId, userRole.RoleId);
       await this.storage.SaveAsync();
     }
 
     public async Task<ChangeSecretResult> ChangeSecretAsync(string credentialTypeCode, string identifier, string secret)
     {
-      Credential credential = (await this.credentialRepository.GetAllAsync(new CredentialFilter() { CredentialType = new CredentialTypeFilter() { Code = credentialTypeCode }, Identifier = new StringFilter(equals: identifier) })).FirstOrDefault();
+      Credential credential = (await this.credentialRepository.GetAllAsync(new CredentialFilter(credentialType: new CredentialTypeFilter(code: credentialTypeCode), identifier: new StringFilter(equals: identifier)))).FirstOrDefault();
 
       if (credential == null)
         return new ChangeSecretResult(success: false, error: ChangeSecretResultError.CredentialNotFound);
@@ -150,7 +149,7 @@ namespace Platformus.Core.Services.Defaults
 
     public async Task<ValidateResult> ValidateAsync(string credentialTypeCode, string identifier, string secret)
     {
-      Credential credential = (await this.credentialRepository.GetAllAsync(new CredentialFilter() { CredentialType = new CredentialTypeFilter() { Code = credentialTypeCode }, Identifier = new StringFilter(equals: identifier) }, inclusions: new Inclusion<Credential>(c => c.User))).FirstOrDefault();
+      Credential credential = (await this.credentialRepository.GetAllAsync(new CredentialFilter(credentialType: new CredentialTypeFilter(code: credentialTypeCode), identifier: new StringFilter(equals: identifier)), inclusions: new Inclusion<Credential>(c => c.User))).FirstOrDefault();
 
       if (credential == null)
         return new ValidateResult(success: false, error: ValidateResultError.CredentialNotFound);
@@ -223,7 +222,7 @@ namespace Platformus.Core.Services.Defaults
     private async Task<IEnumerable<Claim>> GetUserRoleClaimsAsync(User user)
     {
       List<Claim> claims = new List<Claim>();
-      IEnumerable<int> roleIds = this.userRoleRepository.FilteredByUserId(user.Id)?.Select(ur => ur.RoleId).ToList();
+      IEnumerable<int> roleIds = (await this.userRoleRepository.GetAllAsync(new UserRoleFilter(user: new UserFilter(id: user.Id)))).Select(ur => ur.RoleId).ToList();
 
       if (roleIds != null)
       {
@@ -242,7 +241,7 @@ namespace Platformus.Core.Services.Defaults
     private async Task<IEnumerable<Claim>> GetUserPermissionClaimsAsync(Role role)
     {
       List<Claim> claims = new List<Claim>();
-      IEnumerable<int> permissionIds = this.rolePermissionRepository.FilteredByRoleId(role.Id)?.Select(rp => rp.PermissionId).ToList();
+      IEnumerable<int> permissionIds = (await this.rolePermissionRepository.GetAllAsync(new RolePermissionFilter(role: new RoleFilter(id: role.Id)))).Select(rp => rp.PermissionId).ToList();
 
       if (permissionIds != null)
       {

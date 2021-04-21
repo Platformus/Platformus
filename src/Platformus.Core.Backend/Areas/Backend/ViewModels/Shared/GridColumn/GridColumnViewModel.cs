@@ -8,6 +8,5 @@ namespace Platformus.Core.Backend.ViewModels.Shared
     public GridViewModel Grid { get; set; }
     public string DisplayName { get; set; }
     public string SortingName { get; set; }
-    public bool IsLast { get; set; }
   }
 }

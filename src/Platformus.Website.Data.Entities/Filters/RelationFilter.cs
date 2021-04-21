@@ -11,5 +11,15 @@ namespace Platformus.Website.Filters
     public MemberFilter Member { get; set; }
     public ObjectFilter Primary { get; set; }
     public ObjectFilter Foreign { get; set; }
+
+    public RelationFilter() { }
+
+    public RelationFilter(int? id = null, MemberFilter member = null, ObjectFilter primary = null, ObjectFilter foreign = null)
+    {
+      Id = id;
+      Member = member;
+      Primary = primary;
+      Foreign = foreign;
+    }
   }
 }

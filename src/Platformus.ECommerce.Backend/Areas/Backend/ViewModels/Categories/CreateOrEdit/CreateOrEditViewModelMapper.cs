@@ -15,8 +15,8 @@ namespace Platformus.ECommerce.Backend.ViewModels.Categories
         category.CategoryId = filter?.Owner?.Id?.Equals;
 
       category.Url = createOrEdit.Url;
-      category.CSharpClassName = createOrEdit.CSharpClassName;
-      category.Parameters = createOrEdit.Parameters;
+      category.ProductProviderCSharpClassName = createOrEdit.ProductProviderCSharpClassName;
+      category.ProductProviderParameters = createOrEdit.ProductProviderParameters;
       category.Position = createOrEdit.Position;
       return category;
     }

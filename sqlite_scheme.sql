@@ -1,7 +1,7 @@
 BEGIN TRANSACTION;
 --
 -- Extension: Platformus.Core
--- Version: 2.1.0
+-- Version: 2.2.0
 --
 
 -- Users
@@ -109,7 +109,7 @@ CREATE TABLE "Localizations" (
 
 --
 -- Extension: Platformus.Website
--- Version: 2.1.0
+-- Version: 2.2.0
 --
 
 -- Endpoints
@@ -120,9 +120,10 @@ CREATE TABLE "Endpoints" (
 	"Position" INTEGER,
 	"DisallowAnonymous" INTEGER NOT NULL,
 	"SignInUrl" TEXT,
+	"RequestProcessorCSharpClassName" TEXT NOT NULL,
+	"RequestProcessorParameters" TEXT,
   "ResponseCacheCSharpClassName" TEXT,
-	"CSharpClassName" TEXT NOT NULL,
-	"Parameters" TEXT
+  "ResponseCacheParameters" TEXT
 );
 
 -- EndpointPermissions
@@ -139,8 +140,8 @@ CREATE TABLE "DataSources" (
 	"Id" INTEGER NOT NULL CONSTRAINT "PK_DataSource" PRIMARY KEY AUTOINCREMENT,
 	"EndpointId" INTEGER NOT NULL,
 	"Code" TEXT NOT NULL,
-	"CSharpClassName" TEXT NOT NULL,
-	"Parameters" TEXT,
+	"DataProviderCSharpClassName" TEXT NOT NULL,
+	"DataProviderParameters" TEXT,
 	CONSTRAINT "FK_DataSource_Endpoint_EndpointId" FOREIGN KEY("EndpointId") REFERENCES "Endpoints"("Id") ON DELETE CASCADE
 );
 
@@ -274,8 +275,8 @@ CREATE TABLE "Forms" (
 	"NameId" INTEGER NOT NULL,
 	"SubmitButtonTitleId" INTEGER NOT NULL,
 	"ProduceCompletedForms" INTEGER NOT NULL,
-	"CSharpClassName" TEXT NOT NULL,
-	"Parameters" TEXT,
+	"FormHandlerCSharpClassName" TEXT NOT NULL,
+	"FormHandlerParameters" TEXT,
 	CONSTRAINT "FK_Form_Dictionary_NameId" FOREIGN KEY ("NameId") REFERENCES "Dictionaries" ("Id"),
 	CONSTRAINT "FK_Form_Dictionary_SubmitButtonTitleId" FOREIGN KEY ("SubmitButtonTitleId") REFERENCES "Dictionaries" ("Id")
 );
@@ -341,7 +342,7 @@ CREATE TABLE "Files" (
 
 --
 -- Extension: Platformus.ECommerce
--- Version: 2.1.0
+-- Version: 2.2.0
 --
 
 -- Categories
@@ -350,11 +351,19 @@ CREATE TABLE "Categories" (
 	"CategoryId" INTEGER,
   "Url" TEXT,
 	"NameId" INTEGER NOT NULL,
-  "CSharpClassName" TEXT NOT NULL,
-  "Parameters" TEXT,
-	"Position" INTEGER,
+  "DescriptionId" INTEGER NOT NULL,
+  "Position" INTEGER,
+  "TitleId" INTEGER NOT NULL,
+	"MetaDescriptionId" INTEGER NOT NULL,
+	"MetaKeywordsId" INTEGER NOT NULL,
+  "ProductProviderCSharpClassName" TEXT NOT NULL,
+  "ProductProviderParameters" TEXT,
 	CONSTRAINT "FK_Category_Category_CategoryId" FOREIGN KEY("CategoryId") REFERENCES "Categories" ("Id") ON DELETE CASCADE,
-	CONSTRAINT "FK_Category_Dictionary_NameId" FOREIGN KEY("NameId") REFERENCES "Dictionaries" ("Id")
+	CONSTRAINT "FK_Category_Dictionary_NameId" FOREIGN KEY("NameId") REFERENCES "Dictionaries" ("Id"),
+  CONSTRAINT "FK_Category_Dictionary_DescriptionId" FOREIGN KEY("DescriptionId") REFERENCES "Dictionaries" ("Id"),
+  CONSTRAINT "FK_Category_Dictionary_TitleId" FOREIGN KEY("TitleId") REFERENCES "Dictionaries" ("Id"),
+	CONSTRAINT "FK_Category_Dictionary_MetaDescriptionId" FOREIGN KEY("MetaDescriptionId") REFERENCES "Dictionaries" ("Id"),
+	CONSTRAINT "FK_Category_Dictionary_MetaKeywordsId" FOREIGN KEY("MetaKeywordsId") REFERENCES "Dictionaries" ("Id")
 );
 
 -- Products

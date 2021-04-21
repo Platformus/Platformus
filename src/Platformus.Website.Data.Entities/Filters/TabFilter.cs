@@ -10,5 +10,14 @@ namespace Platformus.Website.Filters
     public int? Id { get; set; }
     public ClassFilter Class { get; set; }
     public StringFilter Name { get; set; }
+
+    public TabFilter() { }
+
+    public TabFilter(int? id = null, ClassFilter @class = null, StringFilter name = null)
+    {
+      Id = id;
+      Class = @class;
+      Name = name;
+    }
   }
 }

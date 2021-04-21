@@ -27,15 +27,15 @@ namespace Platformus.Website.Data.Entities
     public string Code { get; set; }
 
     /// <summary>
-    /// Gets or sets the name (including namespace) of the C# class which will be instantiated each time
+    /// Gets or sets the name (including namespace) of the data provider C# class which will be instantiated each time
     /// when the data source is requested to provide data.
     /// </summary>
-    public string CSharpClassName { get; set; }
+    public string DataProviderCSharpClassName { get; set; }
 
     /// <summary>
-    /// Gets or sets the parameters (key=value pairs separated by commas) for the C# class instances.
+    /// Gets or sets the parameters (key=value pairs separated by commas) for the data provider C# class instances.
     /// </summary>
-    public string Parameters { get; set; }
+    public string DataProviderParameters { get; set; }
 
     public virtual Endpoint Endpoint { get; set; }
   }

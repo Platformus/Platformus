@@ -15,9 +15,9 @@ namespace Platformus.Website.Backend.ViewModels.Endpoints
       endpoint.Position = createOrEdit.Position;
       endpoint.DisallowAnonymous = createOrEdit.DisallowAnonymous;
       endpoint.SignInUrl = createOrEdit.SignInUrl;
+      endpoint.RequestProcessorCSharpClassName = createOrEdit.RequestProcessorCSharpClassName;
+      endpoint.RequestProcessorParameters = createOrEdit.RequestProcessorParameters;
       endpoint.ResponseCacheCSharpClassName = createOrEdit.ResponseCacheCSharpClassName;
-      endpoint.CSharpClassName = createOrEdit.CSharpClassName;
-      endpoint.Parameters = createOrEdit.Parameters;
       return endpoint;
     }
   }

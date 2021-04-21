@@ -11,5 +11,14 @@ namespace Platformus.ECommerce.Filters
     public int? Id { get; set; }
     public Guid? ClientSideId { get; set; }
     public DateTimeFilter Created { get; set; }
+
+    public CartFilter() { }
+
+    public CartFilter(int? id = null, Guid? clientSideId = null, DateTimeFilter created = null)
+    {
+      Id = id;
+      ClientSideId = clientSideId;
+      Created = created;
+    }
   }
 }

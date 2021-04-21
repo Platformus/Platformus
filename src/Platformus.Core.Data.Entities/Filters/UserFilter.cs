@@ -7,11 +7,22 @@ namespace Platformus.Core.Filters
 {
   public class UserFilter : IFilter
   {
+
     public int? Id { get; set; }
     public StringFilter Name { get; set; }
     public DateTimeFilter Created { get; set; }
 
     [FilterShortcut("Credentials[]")]
     public CredentialFilter Credential { get; set; }
+
+    public UserFilter() { }
+
+    public UserFilter(int? id = null, StringFilter name = null, DateTimeFilter created = null, CredentialFilter credential = null)
+    {
+      Id = id;
+      Name = name;
+      Created = created;
+      Credential = credential;
+    }
   }
 }

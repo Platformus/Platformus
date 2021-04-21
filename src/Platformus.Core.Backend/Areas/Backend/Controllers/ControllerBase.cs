@@ -79,7 +79,7 @@ namespace Platformus.Core.Backend.Controllers
 
     private async Task DeleteLocalizationsAsync(Dictionary dictionary)
     {
-      foreach (Localization localization in await this.LocalizationRepository.GetAllAsync(new LocalizationFilter() { Dictionary = new DictionaryFilter() { Id = dictionary.Id } }))
+      foreach (Localization localization in await this.LocalizationRepository.GetAllAsync(new LocalizationFilter(dictionary: new DictionaryFilter(id: dictionary.Id))))
         this.LocalizationRepository.Delete(localization.Id);
 
       await this.Storage.SaveAsync();

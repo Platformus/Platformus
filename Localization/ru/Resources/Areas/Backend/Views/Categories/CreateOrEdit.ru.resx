@@ -126,7 +126,16 @@
   <data name="Edit Category" xml:space="preserve">
     <value>Редактирование категории</value>
   </data>
+  <data name="General" xml:space="preserve">
+    <value>Основное</value>
+  </data>
+  <data name="Products" xml:space="preserve">
+    <value>Товары</value>
+  </data>
   <data name="Save" xml:space="preserve">
     <value>Сохранить</value>
+  </data>
+  <data name="SEO" xml:space="preserve">
+    <value>SEO</value>
   </data>
 </root>

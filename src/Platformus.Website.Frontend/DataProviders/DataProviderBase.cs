@@ -1,4 +1,4 @@
-﻿// Copyright © 2020 Dmitry Sikorsky. All rights reserved.
+﻿// Copyright © 2021 Dmitry Sikorsky. All rights reserved.
 // Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information.
 
 using System.Collections.Generic;
@@ -7,11 +7,11 @@ using Microsoft.AspNetCore.Http;
 using Platformus.Core;
 using Platformus.Core.Parameters;
 using Platformus.Website.Data.Entities;
-using Platformus.Website.DataSources;
+using Platformus.Website.DataProviders;
 
-namespace Platformus.Website.Frontend.DataSources
+namespace Platformus.Website.Frontend.DataProviders
 {
-  public abstract class DataSourceBase : IDataSource
+  public abstract class DataProviderBase : IDataProvider
   {
     public abstract IEnumerable<ParameterGroup> ParameterGroups { get; }
     public abstract string Description { get; }

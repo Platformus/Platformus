@@ -1,4 +1,4 @@
-﻿// Copyright © 2020 Dmitry Sikorsky. All rights reserved.
+﻿// Copyright © 2021 Dmitry Sikorsky. All rights reserved.
 // Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information.
 
 using System.Collections.Generic;
@@ -13,9 +13,9 @@ using Platformus.Core.Parameters;
 using Platformus.Website.Data.Entities;
 using Platformus.Website.Filters;
 
-namespace Platformus.Website.Frontend.DataSources
+namespace Platformus.Website.Frontend.DataProviders
 {
-  public class PageObjectDataSource : DataSourceBase
+  public class PageObjectDataProvider : DataProviderBase
   {
     public override IEnumerable<ParameterGroup> ParameterGroups => new ParameterGroup[] { };
     public override string Description => "Loads current page’s object by URL.";
@@ -23,7 +23,7 @@ namespace Platformus.Website.Frontend.DataSources
     public override async Task<dynamic> GetDataAsync(HttpContext httpContext, DataSource dataSource)
     {
       Object @object = (await httpContext.GetStorage().GetRepository<int, Object, ObjectFilter>().GetAllAsync(
-        new ObjectFilter() { StringValue = new LocalizationFilter() { Value = new StringFilter() { Equals = httpContext.Request.GetUrl() } } },
+        new ObjectFilter(stringValue: new LocalizationFilter(value: new StringFilter(equals: httpContext.Request.GetUrl()))),
         inclusions: new Inclusion<Object>[]
         {
           new Inclusion<Object>("Properties.Member"),

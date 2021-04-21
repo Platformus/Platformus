@@ -12,5 +12,16 @@ namespace Platformus.Core.Filters
     public string Code { get; set; }
     public StringFilter Name { get; set; }
     public StringFilter Value { get; set; }
+
+    public VariableFilter() { }
+
+    public VariableFilter(int? id = null, ConfigurationFilter configuration = null, string code = null, StringFilter name = null, StringFilter value = null)
+    {
+      Id = id;
+      Configuration = configuration;
+      Code = code;
+      Name = name;
+      Value = value;
+    }
   }
 }

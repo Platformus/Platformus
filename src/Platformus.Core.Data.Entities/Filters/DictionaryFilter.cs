@@ -12,5 +12,14 @@ namespace Platformus.Core.Filters
 
     [FilterShortcut("Localizations[]")]
     public LocalizationFilter Localization { get; set; }
+
+    public DictionaryFilter() { }
+
+    public DictionaryFilter(int? id = null, CultureFilter culture = null, LocalizationFilter localization = null)
+    {
+      Id = id;
+      Culture = culture;
+      Localization = localization;
+    }
   }
 }
