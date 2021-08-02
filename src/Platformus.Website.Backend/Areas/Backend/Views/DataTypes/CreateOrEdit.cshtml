@@ -10,12 +10,12 @@
   @ViewBag.Title
 }
 <form class="form" method="post">
-  <drop-down-list-field asp-for="StorageDataType" asp-options="@Model.StorageDataTypeOptions" />
-  <single-line-text-field asp-for="JavaScriptEditorClassName" />
-  <single-line-text-field asp-for="Name" />
-  <numeric-field asp-for="Position" />
+  <drop-down-list-field for="StorageDataType" options="@Model.StorageDataTypeOptions" />
+  <single-line-text-field for="JavaScriptEditorClassName" />
+  <single-line-text-field for="Name" />
+  <numeric-field for="Position" />
   <div class="form__buttons buttons">
-    <button class="buttons__button button button--positive" type="submit">@Localizer["Save"]</button>
-    <a class="buttons__button button button--neutral" href="@this.Context.Request.CombineUrl("/backend/datatypes")">@Localizer["Cancel"]</a>
+    <submit-button>@Localizer["Save"]</submit-button>
+    <neutral-button href="@this.Context.Request.CombineUrl("/backend/datatypes")">@Localizer["Cancel"]</neutral-button>
   </div>
 </form>

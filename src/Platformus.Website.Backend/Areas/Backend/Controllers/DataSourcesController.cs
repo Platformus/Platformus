@@ -30,7 +30,7 @@ namespace Platformus.Website.Backend.Controllers
 
     public async Task<IActionResult> IndexAsync([FromQuery]DataSourceFilter filter = null, string orderBy = "+code", int skip = 0, int take = 10)
     {
-      return this.View(new IndexViewModelFactory().Create(
+      return this.View(IndexViewModelFactory.Create(
         this.HttpContext, filter,
         await this.Repository.GetAllAsync(filter, orderBy, skip, take),
         orderBy, skip, take, await this.Repository.CountAsync(filter)
@@ -41,7 +41,7 @@ namespace Platformus.Website.Backend.Controllers
     [ImportModelStateFromTempData]
     public async Task<IActionResult> CreateOrEditAsync(int? id)
     {
-      return this.View(new CreateOrEditViewModelFactory().Create(
+      return this.View(CreateOrEditViewModelFactory.Create(
         id == null ? null : await this.Repository.GetByIdAsync((int)id)
       ));
     }
@@ -55,7 +55,7 @@ namespace Platformus.Website.Backend.Controllers
 
       if (this.ModelState.IsValid)
       {
-        DataSource dataSource = new CreateOrEditViewModelMapper().Map(
+        DataSource dataSource = CreateOrEditViewModelMapper.Map(
           filter,
           createOrEdit.Id == null ? new DataSource() : await this.Repository.GetByIdAsync((int)createOrEdit.Id),
           createOrEdit
@@ -86,7 +86,7 @@ namespace Platformus.Website.Backend.Controllers
       this.Repository.Delete(dataSource.Id);
       await this.Storage.SaveAsync();
       Event<IDataSourceDeletedEventHandler, HttpContext, DataSource>.Broadcast(this.HttpContext, dataSource);
-      return this.Redirect(string.Format("/backend/datasources?endpoint.id={0}", dataSource.EndpointId));
+      return this.Redirect(this.Request.CombineUrl("/backend/datasources"));
     }
 
     private async Task<bool> IsCodeUniqueAsync(DataSourceFilter filter, string code)

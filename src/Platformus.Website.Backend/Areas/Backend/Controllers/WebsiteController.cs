@@ -22,7 +22,7 @@ namespace Platformus.Website.Backend.Controllers
 
     public async Task<IActionResult> ClassSelectorFormAsync(int? classId)
     {
-      return this.PartialView("_ClassSelectorForm", new ClassSelectorFormViewModelFactory().Create(
+      return this.PartialView("_ClassSelectorForm", ClassSelectorFormViewModelFactory.Create(
         this.HttpContext,
         await this.Storage.GetRepository<int, Class, ClassFilter>().GetAllAsync(
           inclusions: new Inclusion<Class>(c => c.Parent)
@@ -38,7 +38,7 @@ namespace Platformus.Website.Backend.Controllers
 
     public async Task<IActionResult> MemberSelectorFormAsync(int? memberId)
     {
-      return this.PartialView("_MemberSelectorForm", new MemberSelectorFormViewModelFactory().Create(
+      return this.PartialView("_MemberSelectorForm", MemberSelectorFormViewModelFactory.Create(
         this.HttpContext,
         await this.Storage.GetRepository<int, Class, ClassFilter>().GetAllAsync(
           inclusions: new Inclusion<Class>(c => c.Members)
@@ -60,7 +60,7 @@ namespace Platformus.Website.Backend.Controllers
 
     public async Task<IActionResult> ObjectSelectorFormAsync([FromQuery]ObjectFilter filter, string objectIds)
     {
-      return this.PartialView("_ObjectSelectorForm", await new ObjectSelectorFormViewModelFactory().CreateAsync(
+      return this.PartialView("_ObjectSelectorForm", await ObjectSelectorFormViewModelFactory.CreateAsync(
         this.HttpContext,
         filter,
         await this.Storage.GetRepository<int, Object, ObjectFilter>().GetAllAsync(
@@ -99,7 +99,7 @@ namespace Platformus.Website.Backend.Controllers
 
     public async Task<IActionResult> FileSelectorForm()
     {
-      return this.PartialView("_FileSelectorForm", new FileSelectorFormViewModelFactory().Create(
+      return this.PartialView("_FileSelectorForm", FileSelectorFormViewModelFactory.Create(
         await this.Storage.GetRepository<int, File, FileFilter>().GetAllAsync()
       ));
     }

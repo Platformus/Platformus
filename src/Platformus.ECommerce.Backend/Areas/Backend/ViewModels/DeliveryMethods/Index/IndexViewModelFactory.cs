@@ -5,7 +5,6 @@ using System.Collections.Generic;
 using System.Linq;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Localization;
-using Platformus.Core.Backend.ViewModels;
 using Platformus.Core.Backend.ViewModels.Shared;
 using Platformus.Core.Extensions;
 using Platformus.ECommerce.Backend.ViewModels.Shared;
@@ -14,24 +13,24 @@ using Platformus.ECommerce.Filters;
 
 namespace Platformus.ECommerce.Backend.ViewModels.DeliveryMethods
 {
-  public class IndexViewModelFactory : ViewModelFactoryBase
+  public static class IndexViewModelFactory
   {
-    public IndexViewModel Create(HttpContext httpContext, DeliveryMethodFilter filter, IEnumerable<DeliveryMethod> deliveryMethods, string orderBy, int skip, int take, int total)
+    public static IndexViewModel Create(HttpContext httpContext, DeliveryMethodFilter filter, IEnumerable<DeliveryMethod> deliveryMethods, string orderBy, int skip, int take, int total)
     {
-      IStringLocalizer<IndexViewModelFactory> localizer = httpContext.GetStringLocalizer<IndexViewModelFactory>();
+      IStringLocalizer<IndexViewModel> localizer = httpContext.GetStringLocalizer<IndexViewModel>();
 
       return new IndexViewModel()
       {
-        Grid = new GridViewModelFactory().Create(
+        Grid = GridViewModelFactory.Create(
           httpContext,
-          new FilterViewModelFactory().Create(httpContext, "Name.Value.Contains", localizer["Name"]),
+          FilterViewModelFactory.Create(httpContext, "Name.Value.Contains", localizer["Name"]),
           orderBy, skip, take, total,
           new[] {
-            new GridColumnViewModelFactory().Create(localizer["Name"], httpContext.CreateLocalizedOrderBy("Name")),
-            new GridColumnViewModelFactory().Create(localizer["Position"], "Position"),
-            new GridColumnViewModelFactory().CreateEmpty()
+            GridColumnViewModelFactory.Create(localizer["Name"], httpContext.CreateLocalizedOrderBy("Name")),
+            GridColumnViewModelFactory.Create(localizer["Position"], "Position"),
+            GridColumnViewModelFactory.CreateEmpty()
           },
-          deliveryMethods.Select(dm => new DeliveryMethodViewModelFactory().Create(dm)),
+          deliveryMethods.Select(DeliveryMethodViewModelFactory.Create),
           "_DeliveryMethod"
         )
       };

@@ -7,7 +7,6 @@ using System.Text;
 using System.Threading.Tasks;
 using Magicalizer.Data.Repositories.Abstractions;
 using Microsoft.AspNetCore.Http;
-using Platformus.Core.Backend.ViewModels;
 using Platformus.Core.Extensions;
 using Platformus.Core.Primitives;
 using Platformus.Website.Data.Entities;
@@ -15,42 +14,42 @@ using Platformus.Website.Filters;
 
 namespace Platformus.Website.Backend.ViewModels.Members
 {
-  public class CreateOrEditViewModelFactory : ViewModelFactoryBase
+  public static class CreateOrEditViewModelFactory
   {
-    public async Task<CreateOrEditViewModel> CreateAsync(HttpContext httpContext, MemberFilter filter, Member member)
+    public static async Task<CreateOrEditViewModel> CreateAsync(HttpContext httpContext, MemberFilter filter, Member member)
     {
       if (member == null)
         return new CreateOrEditViewModel()
         {
-          TabOptions = await this.GetTabOptionsAsync(httpContext, (int)filter.Class.Id),
-          PropertyDataTypeOptions = await this.GetPropertyDataTypeOptionsAsync(httpContext),
-          RelationClassOptions = await this.GetRelationClassOptionsAsync(httpContext),
-          DataTypes = await this.GetDataTypesAsync(httpContext)
+          TabOptions = await GetTabOptionsAsync(httpContext, (int)filter.Class.Id),
+          PropertyDataTypeOptions = await GetPropertyDataTypeOptionsAsync(httpContext),
+          RelationClassOptions = await GetRelationClassOptionsAsync(httpContext),
+          DataTypes = await GetDataTypesAsync(httpContext)
         };
 
       return new CreateOrEditViewModel()
       {
         Id = member.Id,
         TabId = member.TabId,
-        TabOptions = await this.GetTabOptionsAsync(httpContext, member.ClassId),
+        TabOptions = await GetTabOptionsAsync(httpContext, member.ClassId),
         Code = member.Code,
         Name = member.Name,
         Position = member.Position,
         PropertyDataTypeId = member.PropertyDataTypeId,
-        PropertyDataTypeOptions = await this.GetPropertyDataTypeOptionsAsync(httpContext),
+        PropertyDataTypeOptions = await GetPropertyDataTypeOptionsAsync(httpContext),
         IsPropertyLocalizable = member.IsPropertyLocalizable == true,
         IsPropertyVisibleInList = member.IsPropertyVisibleInList == true,
-        Parameters = await this.GetParametersAsync(httpContext, member.Id),
+        Parameters = await GetParametersAsync(httpContext, member.Id),
         RelationClassId = member.RelationClassId,
-        RelationClassOptions = await this.GetRelationClassOptionsAsync(httpContext),
+        RelationClassOptions = await GetRelationClassOptionsAsync(httpContext),
         IsRelationSingleParent = member.IsRelationSingleParent == true,
         MinRelatedObjectsNumber = member.MinRelatedObjectsNumber,
         MaxRelatedObjectsNumber = member.MaxRelatedObjectsNumber,
-        DataTypes = await this.GetDataTypesAsync(httpContext)
+        DataTypes = await GetDataTypesAsync(httpContext)
       };
     }
 
-    private async Task<IEnumerable<Option>> GetTabOptionsAsync(HttpContext httpContext, int classId)
+    private static async Task<IEnumerable<Option>> GetTabOptionsAsync(HttpContext httpContext, int classId)
     {
       List<Option> options = new List<Option>();
 
@@ -64,7 +63,7 @@ namespace Platformus.Website.Backend.ViewModels.Members
       return options;
     }
 
-    private async Task<IEnumerable<Option>> GetPropertyDataTypeOptionsAsync(HttpContext httpContext)
+    private static async Task<IEnumerable<Option>> GetPropertyDataTypeOptionsAsync(HttpContext httpContext)
     {
       List<Option> options = new List<Option>();
 
@@ -78,7 +77,7 @@ namespace Platformus.Website.Backend.ViewModels.Members
       return options;
     }
 
-    private async Task<IEnumerable<Option>> GetRelationClassOptionsAsync(HttpContext httpContext)
+    private static async Task<IEnumerable<Option>> GetRelationClassOptionsAsync(HttpContext httpContext)
     {
       List<Option> options = new List<Option>();
 
@@ -92,7 +91,7 @@ namespace Platformus.Website.Backend.ViewModels.Members
       return options;
     }
 
-    private async Task<string> GetParametersAsync(HttpContext httpContext, int? memberId)
+    private static async Task<string> GetParametersAsync(HttpContext httpContext, int? memberId)
     {
       if (memberId == null)
         return null;
@@ -123,7 +122,7 @@ namespace Platformus.Website.Backend.ViewModels.Members
       return sb.ToString();
     }
 
-    private async Task<IEnumerable<dynamic>> GetDataTypesAsync(HttpContext httpContext)
+    private static async Task<IEnumerable<dynamic>> GetDataTypesAsync(HttpContext httpContext)
     {
       IEnumerable<DataType> dataTypes = await httpContext.GetStorage().GetRepository<int, DataType, DataTypeFilter>().GetAllAsync(
         inclusions: new Inclusion<DataType>(dt => dt.DataTypeParameters)

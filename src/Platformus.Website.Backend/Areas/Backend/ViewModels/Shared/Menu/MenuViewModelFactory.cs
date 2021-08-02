@@ -2,22 +2,19 @@
 // Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information.
 
 using System.Linq;
-using Platformus.Core.Backend.ViewModels;
 using Platformus.Website.Data.Entities;
 
 namespace Platformus.Website.Backend.ViewModels.Shared
 {
-  public class MenuViewModelFactory : ViewModelFactoryBase
+  public static class MenuViewModelFactory
   {
-    public MenuViewModel Create(Menu menu)
+    public static MenuViewModel Create(Menu menu)
     {
       return new MenuViewModel()
       {
         Id = menu.Id,
         Name = menu.Name.GetLocalizationValue(),
-        MenuItems = menu.MenuItems.Select(
-          mi => new MenuItemViewModelFactory().Create(mi)
-        )
+        MenuItems = menu.MenuItems.Select(MenuItemViewModelFactory.Create)
       };
     }
   }

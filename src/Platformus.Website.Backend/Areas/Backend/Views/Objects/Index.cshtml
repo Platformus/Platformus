@@ -21,7 +21,7 @@
   }
   @Html.Partial("_Grid", this.Model.Grid)
   <div class="master-detail__detail-buttons buttons">
-    <a class="buttons__button button button--positive" href="@this.Context.Request.CombineUrl("/backend/objects/create")">@Localizer["Create"] @Model.Class.Name.ToLower()</a>
+    <positive-button href="@this.Context.Request.CombineUrl("/backend/objects/create")">@Localizer["Create"] @Model.Class.Name.ToLower()</positive-button>
   </div>
 }
 @section side

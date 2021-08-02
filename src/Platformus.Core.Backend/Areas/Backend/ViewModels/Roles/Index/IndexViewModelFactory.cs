@@ -12,24 +12,24 @@ using Platformus.Core.Filters;
 
 namespace Platformus.Core.Backend.ViewModels.Roles
 {
-  public class IndexViewModelFactory : ViewModelFactoryBase
+  public static class IndexViewModelFactory
   {
-    public IndexViewModel Create(HttpContext httpContext, RoleFilter filter, IEnumerable<Role> roles, string orderBy, int skip, int take, int total)
+    public static IndexViewModel Create(HttpContext httpContext, RoleFilter filter, IEnumerable<Role> roles, string orderBy, int skip, int take, int total)
     {
-      IStringLocalizer<IndexViewModelFactory> localizer = httpContext.GetStringLocalizer<IndexViewModelFactory>();
+      IStringLocalizer<IndexViewModel> localizer = httpContext.GetStringLocalizer<IndexViewModel>();
 
       return new IndexViewModel()
       {
-        Grid = new GridViewModelFactory().Create(
+        Grid = GridViewModelFactory.Create(
           httpContext,
-          new FilterViewModelFactory().Create(httpContext, "Name.Contains", localizer["Name"]),
+          FilterViewModelFactory.Create(httpContext, "Name.Contains", localizer["Name"]),
           orderBy, skip, take, total,
           new[] {
-            new GridColumnViewModelFactory().Create(localizer["Name"], "Name"),
-            new GridColumnViewModelFactory().Create(localizer["Position"], "Position"),
-            new GridColumnViewModelFactory().CreateEmpty()
+            GridColumnViewModelFactory.Create(localizer["Name"], "Name"),
+            GridColumnViewModelFactory.Create(localizer["Position"], "Position"),
+            GridColumnViewModelFactory.CreateEmpty()
           },
-          roles.Select(r => new RoleViewModelFactory().Create(r)),
+          roles.Select(RoleViewModelFactory.Create),
           "_Role"
         )
       };

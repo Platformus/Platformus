@@ -2,51 +2,47 @@
 // Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information.
 
 using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.AspNetCore.Mvc.ViewFeatures;
 using Platformus.Core.Primitives;
 
 namespace Platformus.Core.Backend
 {
-  public class FieldGenerator : GeneratorBase
+  public static class FieldGenerator
   {
-    public TagBuilder GenerateLabel(ModelExpression modelExpression)
+    public static TagBuilder GenerateLabel(string text, string identity)
     {
-      TagBuilder tb = new TagBuilder("label");
+      TagBuilder tb = new TagBuilder(TagNames.Label);
 
       tb.AddCssClass("field__label label");
-      tb.MergeAttribute("for", this.GetIdentity(modelExpression));
-      tb.InnerHtml.Clear();
-      tb.InnerHtml.AppendHtml(modelExpression.Metadata.DisplayName);
+      tb.MergeAttribute("for", identity);
+      tb.InnerHtml.AppendHtml(text);
       return tb;
     }
 
-    public TagBuilder GenerateCulture(Localization localization, bool isFullscreen)
+    public static TagBuilder GenerateCulture(Localization localization, bool isFullscreen = false)
     {
-      TagBuilder tb = new TagBuilder("div");
+      TagBuilder tb = new TagBuilder(TagNames.Div);
 
       tb.AddCssClass("field__culture culture");
 
       if (isFullscreen)
         tb.AddCssClass("field__culture--fullscreen");
 
-      tb.InnerHtml.Clear();
-      tb.InnerHtml.AppendHtml(this.GenerateFlag(localization));
+      tb.InnerHtml.AppendHtml(GenerateFlag(localization));
       return tb;
     }
 
-    public TagBuilder GenerateFlag(Localization localization)
+    public static TagBuilder GenerateFlag(Localization localization)
     {
-      TagBuilder tb = new TagBuilder("div");
+      TagBuilder tb = new TagBuilder(TagNames.Div);
 
       tb.AddCssClass($"culture__flag");
-      tb.InnerHtml.Clear();
       tb.InnerHtml.AppendHtml(localization.Culture.Id);
       return tb;
     }
 
-    public TagBuilder GenerateMultilingualSeparator()
+    public static TagBuilder GenerateMultilingualSeparator()
     {
-      TagBuilder tb = new TagBuilder("div");
+      TagBuilder tb = new TagBuilder(TagNames.Div);
 
       tb.AddCssClass("field__multilingual-separator");
       return tb;

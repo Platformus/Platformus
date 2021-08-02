@@ -32,7 +32,7 @@ namespace Platformus.Core.Backend.Controllers
     [ImportModelStateFromTempData]
     public async Task<IActionResult> CreateOrEditAsync(int? id)
     {
-      return this.View(new CreateOrEditViewModelFactory().Create(
+      return this.View(CreateOrEditViewModelFactory.Create(
         id == null ? null : await this.Repository.GetByIdAsync((int)id)
       ));
     }
@@ -46,7 +46,7 @@ namespace Platformus.Core.Backend.Controllers
 
       if (this.ModelState.IsValid)
       {
-        Variable variable = new CreateOrEditViewModelMapper().Map(
+        Variable variable = CreateOrEditViewModelMapper.Map(
           filter,
           createOrEdit.Id == null ? new Variable() : await this.Repository.GetByIdAsync((int)createOrEdit.Id),
           createOrEdit

@@ -79,7 +79,7 @@
   }
 
   function createQuantityTableCell(product, index) {
-    var cell = createTableCell().addClass("table__cell--controls");
+    var cell = createTableCell().addClass("table__cell--context-controls");
 
     platformus.controls.numericTextBox.create(
       {

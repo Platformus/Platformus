@@ -2,22 +2,29 @@
 @* Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information. *@
 @model Platformus.Website.Backend.ViewModels.Shared.ObjectViewModel
 @inject Microsoft.AspNetCore.Mvc.Localization.IViewLocalizer Localizer
-<tr class="table__row">
+<table-row>
   @foreach (var propertyByMember in this.Model.PropertiesByMembers)
   {
     if (propertyByMember.Key.PropertyDataType != null)
     {
-      <td class="table__cell">@propertyByMember.Value</td>
+      if (propertyByMember.Key.PropertyDataType.JavaScriptEditorClassName == "image")
+      {
+        <image-table-cell url="@propertyByMember.Value" />
+      }
+      else
+      {
+        <table-cell>@propertyByMember.Value</table-cell>
+      }
     }
     else if (propertyByMember.Key.RelationClass != null)
     {
-      <td class="table__cell">
+      <table-cell>
         <a href="/backend/objects?class.id=@propertyByMember.Key.RelationClass.Id&primary.id=@Model.Id">@propertyByMember.Key.RelationClass.PluralizedName</a>
-      </td>
+      </table-cell>
     }
   }
-  <td class="table__cell table__buttons buttons">
-    <a class="table__button buttons__button buttons__button--minor button button--positive button--minor" href="@(this.Context.Request.CombineUrl("/backend/objects/edit/" + this.Model.Id))">@Localizer["Edit"]</a>
-    <a class="table__button buttons__button buttons__button--minor button button--negative button--minor button--delete" href="#" onclick="return platformus.forms.deleteForm.show('/backend/objects/delete/@Model.Id');"></a>
-  </td>
-</tr>
+<buttons-table-cell>
+  <positive-button is-minor="true" href="@(this.Context.Request.CombineUrl("/backend/objects/edit/" + this.Model.Id))">@Localizer["Edit"]</positive-button>
+  <delete-button href="/backend/objects/delete/@Model.Id"></delete-button>
+</buttons-table-cell>
+</table-row>

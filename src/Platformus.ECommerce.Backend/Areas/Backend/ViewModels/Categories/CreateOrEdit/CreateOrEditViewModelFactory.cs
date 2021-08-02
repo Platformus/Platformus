@@ -6,54 +6,54 @@ using System.Linq;
 using System.Reflection;
 using ExtCore.Infrastructure;
 using Microsoft.AspNetCore.Http;
-using Platformus.Core.Backend.ViewModels;
+using Platformus.Core.Extensions;
 using Platformus.Core.Primitives;
 using Platformus.ECommerce.Data.Entities;
 using Platformus.ECommerce.ProductProviders;
 
 namespace Platformus.ECommerce.Backend.ViewModels.Categories
 {
-  public class CreateOrEditViewModelFactory : ViewModelFactoryBase
+  public static class CreateOrEditViewModelFactory
   {
-    public CreateOrEditViewModel Create(HttpContext httpContext, Category category)
+    public static CreateOrEditViewModel Create(HttpContext httpContext, Category category)
     {
       if (category == null)
         return new CreateOrEditViewModel()
         {
-          NameLocalizations = this.GetLocalizations(httpContext),
-          DescriptionLocalizations = this.GetLocalizations(httpContext),
-          TitleLocalizations = this.GetLocalizations(httpContext),
-          MetaDescriptionLocalizations = this.GetLocalizations(httpContext),
-          MetaKeywordsLocalizations = this.GetLocalizations(httpContext),
-          ProductProviderCSharpClassNameOptions = this.GetProductProviderCSharpClassNameOptions(),
-          ProductProviders = this.GetProductProviders()
+          NameLocalizations = httpContext.GetLocalizations(),
+          DescriptionLocalizations = httpContext.GetLocalizations(),
+          TitleLocalizations = httpContext.GetLocalizations(),
+          MetaDescriptionLocalizations = httpContext.GetLocalizations(),
+          MetaKeywordsLocalizations = httpContext.GetLocalizations(),
+          ProductProviderCSharpClassNameOptions = GetProductProviderCSharpClassNameOptions(),
+          ProductProviders = GetProductProviders()
         };
 
       return new CreateOrEditViewModel()
       {
         Id = category.Id,
         Url = category.Url,
-        NameLocalizations = this.GetLocalizations(httpContext, category.Name),
-        DescriptionLocalizations = this.GetLocalizations(httpContext, category.Description),
-        TitleLocalizations = this.GetLocalizations(httpContext, category.Title),
-        MetaDescriptionLocalizations = this.GetLocalizations(httpContext, category.MetaDescription),
-        MetaKeywordsLocalizations = this.GetLocalizations(httpContext, category.MetaKeywords),
+        NameLocalizations = httpContext.GetLocalizations(category.Name),
+        DescriptionLocalizations = httpContext.GetLocalizations(category.Description),
+        TitleLocalizations = httpContext.GetLocalizations(category.Title),
+        MetaDescriptionLocalizations = httpContext.GetLocalizations(category.MetaDescription),
+        MetaKeywordsLocalizations = httpContext.GetLocalizations(category.MetaKeywords),
         Position = category.Position,
         ProductProviderCSharpClassName = category.ProductProviderCSharpClassName,
-        ProductProviderCSharpClassNameOptions = this.GetProductProviderCSharpClassNameOptions(),
+        ProductProviderCSharpClassNameOptions = GetProductProviderCSharpClassNameOptions(),
         ProductProviderParameters = category.ProductProviderParameters,
-        ProductProviders = this.GetProductProviders()
+        ProductProviders = GetProductProviders()
       };
     }
 
-    private IEnumerable<Option> GetProductProviderCSharpClassNameOptions()
+    private static IEnumerable<Option> GetProductProviderCSharpClassNameOptions()
     {
       return ExtensionManager.GetImplementations<IProductProvider>().Where(t => !t.GetTypeInfo().IsAbstract).Select(
         t => new Option(t.FullName)
       );
     }
 
-    private IEnumerable<dynamic> GetProductProviders()
+    private static IEnumerable<dynamic> GetProductProviders()
     {
       return ExtensionManager.GetInstances<IProductProvider>().Where(pp => !pp.GetType().GetTypeInfo().IsAbstract).Select(
         pp => new {

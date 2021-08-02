@@ -30,7 +30,7 @@ namespace Platformus.Core.Backend.Controllers
 
     public async Task<IActionResult> IndexAsync([FromQuery]PermissionFilter filter = null, string orderBy = "+position", int skip = 0, int take = 10)
     {
-      return this.View(new IndexViewModelFactory().Create(
+      return this.View(IndexViewModelFactory.Create(
         this.HttpContext, filter,
         await this.Repository.GetAllAsync(filter, orderBy, skip, take),
         orderBy, skip, take, await this.Repository.CountAsync(filter)
@@ -41,7 +41,7 @@ namespace Platformus.Core.Backend.Controllers
     [ImportModelStateFromTempData]
     public async Task<IActionResult> CreateOrEditAsync(int? id)
     {
-      return this.View(new CreateOrEditViewModelFactory().Create(
+      return this.View(CreateOrEditViewModelFactory.Create(
         id == null ? null : await this.Repository.GetByIdAsync((int)id)
       ));
     }
@@ -55,7 +55,7 @@ namespace Platformus.Core.Backend.Controllers
 
       if (this.ModelState.IsValid)
       {
-        Permission permission = new CreateOrEditViewModelMapper().Map(
+        Permission permission = CreateOrEditViewModelMapper.Map(
           createOrEdit.Id == null ? new Permission() : await this.Repository.GetByIdAsync((int)createOrEdit.Id),
           createOrEdit
         );
@@ -85,7 +85,7 @@ namespace Platformus.Core.Backend.Controllers
       this.Repository.Delete(permission.Id);
       await this.Storage.SaveAsync();
       Event<IPermissionDeletedEventHandler, HttpContext, Permission>.Broadcast(this.HttpContext, permission);
-      return this.RedirectToAction("Index");
+      return this.Redirect(this.Request.CombineUrl("/backend/permissions"));
     }
 
     private async Task<bool> IsCodeUniqueAsync(string code)

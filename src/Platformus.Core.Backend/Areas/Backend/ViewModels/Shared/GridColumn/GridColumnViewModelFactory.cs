@@ -3,9 +3,9 @@
 
 namespace Platformus.Core.Backend.ViewModels.Shared
 {
-  public class GridColumnViewModelFactory : ViewModelFactoryBase
+  public static class GridColumnViewModelFactory
   {
-    public GridColumnViewModel Create(string displayName, string sortingName = null)
+    public static GridColumnViewModel Create(string displayName, string sortingName = null)
     {
       return new GridColumnViewModel()
       {
@@ -14,7 +14,7 @@ namespace Platformus.Core.Backend.ViewModels.Shared
       };
     }
 
-    public GridColumnViewModel CreateEmpty()
+    public static GridColumnViewModel CreateEmpty()
     {
       return new GridColumnViewModel()
       {

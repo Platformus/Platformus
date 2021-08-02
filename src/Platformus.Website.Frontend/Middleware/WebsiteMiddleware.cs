@@ -6,8 +6,8 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Platformus.Core;
 using Platformus.Core.Extensions;
-using Platformus.Website.RequestProcessors;
 using Platformus.Website.Frontend.Services.Abstractions;
+using Platformus.Website.RequestProcessors;
 using Platformus.Website.ResponseCaches;
 
 namespace Platformus.Website.Frontend.Middleware

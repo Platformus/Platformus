@@ -17,12 +17,12 @@ namespace Platformus.Core.Backend.Controllers
 
     public IActionResult DeleteForm(string targetUrl)
     {
-      return this.PartialView("_DeleteForm", new DeleteFormViewModelFactory().Create(targetUrl));
+      return this.PartialView("_DeleteForm", DeleteFormViewModelFactory.Create(targetUrl));
     }
 
     public IActionResult ImageUploaderForm()
     {
-      return this.PartialView("_ImageUploaderForm", new ImageUploaderFormViewModelFactory().Create());
+      return this.PartialView("_ImageUploaderForm", ImageUploaderFormViewModelFactory.Create());
     }
   }
 }

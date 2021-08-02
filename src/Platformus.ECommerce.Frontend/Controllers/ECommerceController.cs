@@ -43,7 +43,7 @@ namespace Platformus.ECommerce.Frontend.Controllers
       if (this.HttpContext.GetCartManager().IsEmpty)
         return this.Redirect(GlobalizedUrlFormatter.Format(this.HttpContext, "/"));
 
-      return this.View(await new CheckoutPageViewModelFactory().CreateAsync(this.HttpContext));
+      return this.View(await CheckoutPageViewModelFactory.CreateAsync(this.HttpContext));
     }
 
     [HttpPost]
@@ -98,7 +98,7 @@ namespace Platformus.ECommerce.Frontend.Controllers
     [HttpGet]
     public async Task<IActionResult> ThankYouAsync(int orderId)
     {
-      return this.View(new ThankYouPageViewModelFactory().Create(
+      return this.View(ThankYouPageViewModelFactory.Create(
         await this.OrderRepository.GetByIdAsync(
           orderId,
           new Inclusion<Order>(o => o.OrderState.Name.Localizations),

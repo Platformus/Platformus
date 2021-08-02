@@ -9,7 +9,7 @@
   };
 
   function createField(member) {
-    var field = $("<div>").addClass("form__field form__field--separated field");
+    var field = $("<div>").addClass("form__field field");
 
     platformus.controls.checkbox.create(
       {

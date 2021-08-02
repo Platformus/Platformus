@@ -5,22 +5,22 @@ using System;
 using System.Linq;
 using Microsoft.AspNetCore.Http;
 using Platformus.Core.Frontend;
-using Platformus.Core.Frontend.ViewModels;
 using Platformus.Website.Data.Entities;
 
 namespace Platformus.Website.Frontend.ViewModels.Shared
 {
-  public class MenuItemViewModelFactory : ViewModelFactoryBase
+  public static class MenuItemViewModelFactory
   {
-    public MenuItemViewModel Create(HttpContext httpContext, MenuItem menuItem)
+    public static MenuItemViewModel Create(HttpContext httpContext, MenuItem menuItem)
     {
       return new MenuItemViewModel()
       {
         Name = menuItem.Name.GetLocalizationValue(),
         Url = GlobalizedUrlFormatter.Format(httpContext, menuItem.Url),
-        MenuItems = menuItem.MenuItems == null ? Array.Empty<MenuItemViewModel>() : menuItem.MenuItems.OrderBy(mi => mi.Position).Select(
-          mi => new MenuItemViewModelFactory().Create(httpContext, mi)
-        )
+        MenuItems = menuItem.MenuItems == null ?
+          Array.Empty<MenuItemViewModel>() :
+          menuItem.MenuItems.OrderBy(mi => mi.Position)
+            .Select(mi => MenuItemViewModelFactory.Create(httpContext, mi)).ToList()
       };
     }
   }

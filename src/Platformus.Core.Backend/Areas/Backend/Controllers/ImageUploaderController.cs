@@ -1,7 +1,6 @@
 ﻿// Copyright © 2020 Dmitry Sikorsky. All rights reserved.
 // Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information.
 
-using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -10,10 +9,7 @@ using Magicalizer.Data.Repositories.Abstractions;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using SixLabors.ImageSharp;
-using SixLabors.ImageSharp.Formats;
-using SixLabors.ImageSharp.Formats.Jpeg;
-using SixLabors.ImageSharp.Processing;
+using Platformus.Core.Services.Abstractions;
 
 namespace Platformus.Core.Backend.Controllers
 {
@@ -21,15 +17,17 @@ namespace Platformus.Core.Backend.Controllers
   public class ImageUploaderController : ControllerBase
   {
     private IWebHostEnvironment webHostEnvironment;
+    private IFilenameSanitizer filenameSanitizer;
 
-    public ImageUploaderController(IStorage storage, IWebHostEnvironment webHostEnvironment)
+    public ImageUploaderController(IStorage storage, IWebHostEnvironment webHostEnvironment, IFilenameSanitizer filenameSanitizer)
       : base(storage)
     {
       this.webHostEnvironment = webHostEnvironment;
+      this.filenameSanitizer = filenameSanitizer;
     }
 
     [HttpGet]
-    public async Task<IActionResult> IndexAsync()
+    public IActionResult IndexAsync()
     {
       return this.View();
     }
@@ -37,68 +35,21 @@ namespace Platformus.Core.Backend.Controllers
     [HttpPost]
     public async Task<IActionResult> IndexAsync(IList<IFormFile> files)
     {
-      foreach (IFormFile source in files)
-        using (FileStream output = System.IO.File.Create(this.GetTempFilepath(source.FileName)))
-          await source.CopyToAsync(output);
+      if (files.Count() == 0)
+        return this.BadRequest();
 
-      return this.Content("filename=" + string.Join(",", files.Select(f => f.FileName)));
-    }
+      IFormFile file = files.First();
+      string filename = this.filenameSanitizer.SanitizeFilename(file.FileName);
 
-    [HttpGet]
-    public async Task<IActionResult> GetCroppedImageUrl(string sourceImageUrl, int sourceX, int sourceY, int sourceWidth, int sourceHeight, string destinationBaseUrl, int destinationWidth, int destinationHeight)
-    {
-      string filename = sourceImageUrl.Substring(sourceImageUrl.LastIndexOf("/") + 1);
-      string tempFilepath = this.GetTempFilepath(filename);
-      string destinationFilepath = this.GetFilepath(destinationBaseUrl, filename);
+      using (FileStream output = System.IO.File.Create(this.GetTempFilepath(filename)))
+        await file.CopyToAsync(output);
 
-      using (Image image = this.LoadImageFromFile(tempFilepath, out IImageFormat imageFormat))
-      {
-        if (image.Width == destinationWidth && image.Height == destinationHeight)
-        {
-          if (System.IO.File.Exists(destinationFilepath))
-            System.IO.File.Delete(destinationFilepath);
-
-          System.IO.File.Move(tempFilepath, destinationFilepath);
-        }
-
-        else
-        {
-          image.Mutate(
-            i => i.Crop(new Rectangle(sourceX, sourceY, sourceWidth, sourceHeight)).Resize(destinationWidth, destinationHeight)
-          );
-
-          if (string.Equals(imageFormat.Name, "Jpeg", StringComparison.OrdinalIgnoreCase))
-            image.Save(destinationFilepath, new JpegEncoder() { Quality = 80 });
-
-          else image.Save(destinationFilepath);
-        }
-
-        return this.Content(destinationBaseUrl + filename);
-      }
-    }
-
-    private Image LoadImageFromFile(string filepath, out IImageFormat imageFormat)
-    {
-      return Image.Load(filepath, out imageFormat);
+      return this.Content("filename=" + filename);
     }
 
     private string GetTempFilepath(string filename)
     {
-      return this.GetFilepath(this.GetTempBasePath(), filename);
-    }
-
-    private string GetFilepath(string basePath, string filename)
-    {
-      basePath = basePath.Replace('/', '\\');
-
-      return this.webHostEnvironment.WebRootPath + basePath.Replace('\\', Path.DirectorySeparatorChar) + filename;
-    }
-
-    private string GetTempBasePath()
-    {
-      char directorySeparatorChar = Path.DirectorySeparatorChar;
-
-      return $"{directorySeparatorChar}images{directorySeparatorChar}temp{directorySeparatorChar}";
+      return Path.Combine(this.webHostEnvironment.WebRootPath, "images", "temp", filename);
     }
   }
 }

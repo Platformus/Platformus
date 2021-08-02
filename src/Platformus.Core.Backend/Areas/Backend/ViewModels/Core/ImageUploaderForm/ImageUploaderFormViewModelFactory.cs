@@ -3,9 +3,9 @@
 
 namespace Platformus.Core.Backend.ViewModels.Core
 {
-  public class ImageUploaderFormViewModelFactory : ViewModelFactoryBase
+  public static class ImageUploaderFormViewModelFactory
   {
-    public ImageUploaderFormViewModel Create()
+    public static ImageUploaderFormViewModel Create()
     {
       return new ImageUploaderFormViewModel()
       {

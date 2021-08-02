@@ -10,25 +10,23 @@
   @ViewBag.Title
 }
 <form class="form" method="post">
-  <div class="tabs">
-    <div class="tabs__tab" data-tab-page-id="General">@Localizer["General"]</div>
-    <div class="tabs__tab" data-tab-page-id="Roles">@Localizer["Roles"]</div>
-  </div>
-  <div class="tab-pages">
-    <div id="tabPageGeneral" class="tab-pages__tab-page">
-      <single-line-text-field asp-for="Name" />
-    </div>
-    <div id="tabPageRoles" class="tab-pages__tab-page">
+  <tabs>
+    <tab code="General">@Localizer["General"]</tab>
+    <tab code="Roles">@Localizer["Roles"]</tab>
+  </tabs>
+  <tab-pages>
+    <tab-page code="General">
+      <single-line-text-field for="Name" />
+    </tab-page>
+    <tab-page code="Roles">
       @foreach (var userRole in this.Model.UserRoles)
       {
-        <div class="form__field @(userRole.Role.Id == this.Model.UserRoles.First().Role.Id ? "form__field--separated" : null) field">
-          <unbound-check-box asp-identity="role@(userRole.Role.Id)" asp-text="@userRole.Role.Name" asp-checked="@userRole.IsAssigned" />
-        </div>
+        <checkbox-field class="@(userRole.Role.Id == this.Model.UserRoles.First().Role.Id ? "form__field--separated" : null)" id="role@(userRole.Role.Id)" label="@userRole.Role.Name" is-checked="@userRole.IsAssigned" />
       }
-    </div>
-  </div>
+    </tab-page>
+  </tab-pages>
   <div class="form__buttons buttons">
-    <button class="buttons__button button button--positive" type="submit">@Localizer["Save"]</button>
-    <a class="buttons__button button button--neutral" href="@this.Context.Request.CombineUrl("/backend/users")">@Localizer["Cancel"]</a>
+    <submit-button>@Localizer["Save"]</submit-button>
+    <neutral-button href="@this.Context.Request.CombineUrl("/backend/users")">@Localizer["Cancel"]</neutral-button>
   </div>
 </form>

@@ -11,37 +11,37 @@
   @ViewBag.Title
 }
 <form class="form" method="post">
-  <div class="tabs">
-    <div class="tabs__tab" data-tab-page-id="General">@Localizer["General"]</div>
-    <div class="tabs__tab" data-tab-page-id="Photos">@Localizer["Photos"]</div>
-    <div class="tabs__tab" data-tab-page-id="Seo">@Localizer["SEO"]</div>
-  </div>
-  <div class="tab-pages">
-    <div id="tabPageGeneral" class="tab-pages__tab-page">
-      <drop-down-list-field asp-for="CategoryId" asp-options="@Model.CategoryOptions" />
-      <single-line-text-field asp-for="Url" />
-      <single-line-text-field asp-for="Code" />
-      <multilingual-single-line-text-field asp-for="Name" asp-localizations="this.Model.NameLocalizations" />
-      <multilingual-multiline-text-field asp-for="Description" asp-localizations="this.Model.DescriptionLocalizations" asp-height="normal" />
-      <multilingual-single-line-text-field asp-for="Units" asp-localizations="this.Model.UnitsLocalizations" />
-      <numeric-field asp-for="Price" />
-    </div>
-    <div id="tabPagePhotos" class="tab-pages__tab-page">
-      <image-uploader-field asp-for="Photo1Filename" asp-destination-base-url="/images/products/" asp-width="1080" asp-height="1080" />
-      <image-uploader-field asp-for="Photo2Filename" asp-destination-base-url="/images/products/" asp-width="1080" asp-height="1080" />
-      <image-uploader-field asp-for="Photo3Filename" asp-destination-base-url="/images/products/" asp-width="1080" asp-height="1080" />
-      <image-uploader-field asp-for="Photo4Filename" asp-destination-base-url="/images/products/" asp-width="1080" asp-height="1080" />
-      <image-uploader-field asp-for="Photo5Filename" asp-destination-base-url="/images/products/" asp-width="1080" asp-height="1080" />
-    </div>
-    <div id="tabPageSeo" class="tab-pages__tab-page">
-      <multilingual-single-line-text-field asp-for="Title" asp-localizations="this.Model.TitleLocalizations" />
-      <multilingual-single-line-text-field asp-for="MetaDescription" asp-localizations="this.Model.MetaDescriptionLocalizations" />
-      <multilingual-single-line-text-field asp-for="MetaKeywords" asp-localizations="this.Model.MetaKeywordsLocalizations" />
-    </div>
-  </div>
+  <tabs>
+    <tab code="General">@Localizer["General"]</tab>
+    <tab code="Photos">@Localizer["Photos"]</tab>
+    <tab code="Seo">@Localizer["SEO"]</tab>
+  </tabs>
+  <tab-pages>
+    <tab-page code="General">
+      <drop-down-list-field for="CategoryId" options="@Model.CategoryOptions" />
+      <single-line-text-field for="Url" />
+      <single-line-text-field for="Code" />
+      <multilingual-single-line-text-field for="Name" localizations="this.Model.NameLocalizations" />
+      <multilingual-multiline-text-field for="Description" localizations="this.Model.DescriptionLocalizations" />
+      <multilingual-single-line-text-field for="Units" localizations="this.Model.UnitsLocalizations" />
+      <numeric-field for="Price" />
+    </tab-page>
+    <tab-page code="Photos">
+      <image-uploader-field for="Photo1Filename" destination-base-url="/images/products/" width="1080" height="1080" />
+      <image-uploader-field for="Photo2Filename" destination-base-url="/images/products/" width="1080" height="1080" />
+      <image-uploader-field for="Photo3Filename" destination-base-url="/images/products/" width="1080" height="1080" />
+      <image-uploader-field for="Photo4Filename" destination-base-url="/images/products/" width="1080" height="1080" />
+      <image-uploader-field for="Photo5Filename" destination-base-url="/images/products/" width="1080" height="1080" />
+    </tab-page>
+    <tab-page code="Seo">
+      <multilingual-single-line-text-field for="Title" localizations="this.Model.TitleLocalizations" />
+      <multilingual-single-line-text-field for="MetaDescription" localizations="this.Model.MetaDescriptionLocalizations" />
+      <multilingual-single-line-text-field for="MetaKeywords" localizations="this.Model.MetaKeywordsLocalizations" />
+    </tab-page>
+  </tab-pages>
   <div class="form__buttons buttons">
-    <button class="buttons__button button button--positive" type="submit">@Localizer["Save"]</button>
-    <a class="buttons__button button button--neutral" href="@this.Context.Request.CombineUrl("/backend/products")">@Localizer["Cancel"]</a>
+    <submit-button>@Localizer["Save"]</submit-button>
+    <neutral-button href="@this.Context.Request.CombineUrl("/backend/products")">@Localizer["Cancel"]</neutral-button>
   </div>
 </form>
 

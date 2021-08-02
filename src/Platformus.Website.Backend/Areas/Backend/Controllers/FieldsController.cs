@@ -32,7 +32,7 @@ namespace Platformus.Website.Backend.Controllers
     [ImportModelStateFromTempData]
     public async Task<IActionResult> CreateOrEditAsync(int? id)
     {
-      return this.View(await new CreateOrEditViewModelFactory().CreateAsync(
+      return this.View(await CreateOrEditViewModelFactory.CreateAsync(
         this.HttpContext, id == null ? null : await this.Repository.GetByIdAsync(
           (int)id,
           new Inclusion<Field>(fo => fo.Name.Localizations)
@@ -49,7 +49,7 @@ namespace Platformus.Website.Backend.Controllers
 
       if (this.ModelState.IsValid)
       {
-        Field field = new CreateOrEditViewModelMapper().Map(
+        Field field = CreateOrEditViewModelMapper.Map(
           filter,
           createOrEdit.Id == null ? new Field() : await this.Repository.GetByIdAsync((int)createOrEdit.Id),
           createOrEdit

@@ -10,27 +10,25 @@
   @ViewBag.Title
 }
 <form class="form" method="post">
-  <div class="tabs">
-    <div class="tabs__tab" data-tab-page-id="General">@Localizer["General"]</div>
-    <div class="tabs__tab" data-tab-page-id="Permissions">@Localizer["Permissions"]</div>
-  </div>
-  <div class="tab-pages">
-    <div id="tabPageGeneral" class="tab-pages__tab-page">
-      <single-line-text-field asp-for="Code" />
-      <single-line-text-field asp-for="Name" />
-      <numeric-field asp-for="Position" />
-    </div>
-    <div id="tabPagePermissions" class="tab-pages__tab-page">
+  <tabs>
+    <tab code="General">@Localizer["General"]</tab>
+    <tab code="Permissions">@Localizer["Permissions"]</tab>
+  </tabs>
+  <tab-pages>
+    <tab-page code="General">
+      <single-line-text-field for="Code" />
+      <single-line-text-field for="Name" />
+      <numeric-field for="Position" />
+    </tab-page>
+    <tab-page code="Permissions">
       @foreach (var rolePermission in this.Model.RolePermissions)
       {
-        <div class="form__field @(rolePermission.Permission.Id == this.Model.RolePermissions.First().Permission.Id ? "form__field--separated" : null) field">
-          <unbound-check-box asp-identity="permission@(rolePermission.Permission.Id)" asp-text="@rolePermission.Permission.Name" asp-checked="@rolePermission.IsAssigned" />
-        </div>
+        <checkbox-field class="@(rolePermission.Permission.Id == this.Model.RolePermissions.First().Permission.Id ? "form__field--separated" : null)" id="permission@(rolePermission.Permission.Id)" label="@rolePermission.Permission.Name" is-checked="@rolePermission.IsAssigned" />
       }
-    </div>
-  </div>
+    </tab-page>
+  </tab-pages>
   <div class="form__buttons buttons">
-    <button class="buttons__button button button--positive" type="submit">@Localizer["Save"]</button>
-    <a class="buttons__button button button--neutral" href="@this.Context.Request.CombineUrl("/backend/roles")">@Localizer["Cancel"]</a>
+    <submit-button>@Localizer["Save"]</submit-button>
+    <neutral-button href="@this.Context.Request.CombineUrl("/backend/roles")">@Localizer["Cancel"]</neutral-button>
   </div>
 </form>

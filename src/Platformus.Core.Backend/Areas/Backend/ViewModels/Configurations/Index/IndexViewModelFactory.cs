@@ -8,15 +8,13 @@ using Platformus.Core.Data.Entities;
 
 namespace Platformus.Core.Backend.ViewModels.Configurations
 {
-  public class IndexViewModelFactory : ViewModelFactoryBase
+  public static class IndexViewModelFactory
   {
-    public IndexViewModel Create(IEnumerable<Configuration> configurations)
+    public static IndexViewModel Create(IEnumerable<Configuration> configurations)
     {
       return new IndexViewModel()
       {
-        Configurations = configurations.Select(
-          c => new ConfigurationViewModelFactory().Create(c)
-        )
+        Configurations = configurations.Select(ConfigurationViewModelFactory.Create)
       };
     }
   }

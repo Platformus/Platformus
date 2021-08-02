@@ -8,35 +8,35 @@
 }
 <h1>@ViewBag.Title</h1>
 <form class="form" method="post">
-  <div class="tabs">
-    <div class="tabs__tab" data-tab-page-id="General">@Localizer["General"]</div>
-    <div class="tabs__tab" data-tab-page-id="Property">@Localizer["Property"]</div>
-    <div class="tabs__tab" data-tab-page-id="Relation">@Localizer["Relation"]</div>
-  </div>
-  <div class="tab-pages">
-    <div id="tabPageGeneral" class="tab-pages__tab-page">
-      <drop-down-list-field asp-for="TabId" asp-options="@Model.TabOptions" />
-      <single-line-text-field asp-for="Code" />
-      <single-line-text-field asp-for="Name" />
-      <numeric-field asp-for="Position" />
-    </div>
-    <div id="tabPageProperty" class="tab-pages__tab-page">
-      <drop-down-list-field asp-for="PropertyDataTypeId" asp-options="@Model.PropertyDataTypeOptions" onchange="platformus.ui.propertyDataTypeIdChanged();" />
-      <checkbox-field asp-for="IsPropertyLocalizable" />
-      <checkbox-field asp-for="IsPropertyVisibleInList" />
+  <tabs>
+    <tab code="General">@Localizer["General"]</tab>
+    <tab code="Property">@Localizer["Property"]</tab>
+    <tab code="Relation">@Localizer["Relation"]</tab>
+  </tabs>
+  <tab-pages>
+    <tab-page code="General">
+      <drop-down-list-field for="TabId" options="@Model.TabOptions" />
+      <single-line-text-field for="Code" />
+      <single-line-text-field for="Name" />
+      <numeric-field for="Position" />
+    </tab-page>
+    <tab-page code="Property">
+      <drop-down-list-field for="PropertyDataTypeId" options="@Model.PropertyDataTypeOptions" onchange="platformus.ui.propertyDataTypeIdChanged();" />
+      <checkbox-field class="form__field--separated" for="IsPropertyLocalizable" />
+      <checkbox-field for="IsPropertyVisibleInList" />
       <div id="parameterEditors"></div>
       <input id="parameters" name="parameters" type="hidden" value="@Model.Parameters" />
-    </div>
-    <div id="tabPageRelation" class="tab-pages__tab-page">
-      <drop-down-list-field asp-for="RelationClassId" asp-options="@Model.RelationClassOptions" onchange="platformus.ui.relationClassIdChanged();" />
-      <checkbox-field asp-for="IsRelationSingleParent" onchange="platformus.ui.isRelationSingleParentChanged();" />
-      <single-line-text-field asp-for="MinRelatedObjectsNumber" />
-      <single-line-text-field asp-for="MaxRelatedObjectsNumber" />
-    </div>
-  </div>
+    </tab-page>
+    <tab-page code="Relation">
+      <drop-down-list-field for="RelationClassId" options="@Model.RelationClassOptions" onchange="platformus.ui.relationClassIdChanged();" />
+      <checkbox-field class="form__field--separated" for="IsRelationSingleParent" onchange="platformus.ui.isRelationSingleParentChanged();" />
+      <single-line-text-field for="MinRelatedObjectsNumber" />
+      <single-line-text-field for="MaxRelatedObjectsNumber" />
+    </tab-page>
+  </tab-pages>
   <div class="form__buttons buttons">
-    <button class="buttons__button button button--positive" type="submit">@Localizer["Save"]</button>
-    <a class="buttons__button button button--neutral" href="@this.Context.Request.CombineUrl("/backend/members")">@Localizer["Cancel"]</a>
+    <submit-button>@Localizer["Save"]</submit-button>
+    <neutral-button href="@this.Context.Request.CombineUrl("/backend/members")">@Localizer["Cancel"]</neutral-button>
   </div>
 </form>
 <script>

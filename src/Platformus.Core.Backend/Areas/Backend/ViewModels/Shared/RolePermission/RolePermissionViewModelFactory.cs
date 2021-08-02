@@ -5,12 +5,12 @@ using Platformus.Core.Data.Entities;
 
 namespace Platformus.Core.Backend.ViewModels.Shared
 {
-  public class RolePermissionViewModelFactory : ViewModelFactoryBase
+  public static class RolePermissionViewModelFactory
   {
-    public RolePermissionViewModel Create(Permission permission, bool isAssigned)
+    public static RolePermissionViewModel Create(Permission permission, bool isAssigned)
     {      return new RolePermissionViewModel()
       {
-        Permission = new PermissionViewModelFactory().Create(permission),
+        Permission = PermissionViewModelFactory.Create(permission),
         IsAssigned = isAssigned
     };
     }

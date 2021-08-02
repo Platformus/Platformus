@@ -3,22 +3,21 @@
 
 using System;
 using System.Linq;
-using Platformus.Core.Backend.ViewModels;
 using Platformus.ECommerce.Data.Entities;
 
 namespace Platformus.ECommerce.Backend.ViewModels.Shared
 {
-  public class CategoryViewModelFactory : ViewModelFactoryBase
+  public static class CategoryViewModelFactory
   {
-    public CategoryViewModel Create(Category category)
+    public static CategoryViewModel Create(Category category)
     {
       return new CategoryViewModel()
       {
         Id = category.Id,
         Name = category.Name.GetLocalizationValue(),
-        Categories = category.Categories == null? Array.Empty<CategoryViewModel>() : category.Categories.Select(
-          c => new CategoryViewModelFactory().Create(c)
-        )
+        Categories = category.Categories == null?
+          Array.Empty<CategoryViewModel>() :
+          category.Categories.Select(CategoryViewModelFactory.Create).ToList()
       };
     }
   }

@@ -12,25 +12,25 @@ using Platformus.Core.Filters;
 
 namespace Platformus.Core.Backend.ViewModels.Credentials
 {
-  public class IndexViewModelFactory : ViewModelFactoryBase
+  public static class IndexViewModelFactory
   {
-    public IndexViewModel Create(HttpContext httpContext, CredentialFilter filter, IEnumerable<Credential> credentials, string orderBy, int skip, int take, int total)
+    public static IndexViewModel Create(HttpContext httpContext, CredentialFilter filter, IEnumerable<Credential> credentials, string orderBy, int skip, int take, int total)
     {
-      IStringLocalizer<IndexViewModelFactory> localizer = httpContext.GetStringLocalizer<IndexViewModelFactory>();
+      IStringLocalizer<IndexViewModel> localizer = httpContext.GetStringLocalizer<IndexViewModel>();
 
       return new IndexViewModel()
       {
         Filter = filter,
-        Grid = new GridViewModelFactory().Create(
+        Grid = GridViewModelFactory.Create(
           httpContext,
-          new FilterViewModelFactory().Create(httpContext, "Identifier.Contains", localizer["Identifier"]),
+          FilterViewModelFactory.Create(httpContext, "Identifier.Contains", localizer["Identifier"]),
           orderBy, skip, take, total,
           new[] {
-            new GridColumnViewModelFactory().Create(localizer["Credential Type"]),
-            new GridColumnViewModelFactory().Create(localizer["Identifier"], "Identifier"),
-            new GridColumnViewModelFactory().CreateEmpty()
+            GridColumnViewModelFactory.Create(localizer["Credential Type"]),
+            GridColumnViewModelFactory.Create(localizer["Identifier"], "Identifier"),
+            GridColumnViewModelFactory.CreateEmpty()
           },
-          credentials.Select(c => new CredentialViewModelFactory().Create(c)),
+          credentials.Select(CredentialViewModelFactory.Create),
           "_Credential"
         )
       };

@@ -2,25 +2,25 @@
 @* Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information. *@
 @model Platformus.ECommerce.Backend.ViewModels.Shared.PositionViewModel
 @inject Microsoft.AspNetCore.Mvc.Localization.IViewLocalizer Localizer
-<tr class="table__row" data-index="@Model.Index">
-  <td class="table__cell">@Model.Product.Category.Name</td>
-  <td class="table__cell">
+<table-row data-index="@Model.Index">
+  <table-cell>@Model.Product.Category.Name</table-cell>
+  <table-cell>
     @Model.Product.Name
     <input name="positions[@Model.Index].product.id" type="hidden" value="@Model.Product.Id">
-  </td>
-  <td class="table__cell">
+  </table-cell>
+  <table-cell>
     @Model.Price.ToString("0.00")
     <input name="positions[@Model.Index].price" type="hidden" value="@Model.Price.ToString("0.00")">
-  </td>
-  <td class="table__cell table__cell--controls">
+  </table-cell>
+  <table-cell class="table__cell--context-controls">
     <input class="table__text-box--numeric field__text-box text-box field__text-box--numeric" id="positions[@Model.Index].quantity" name="positions[@Model.Index].quantity" type="text" value="@Model.Quantity" onchange="platformus.ui.onQuantityChange(@Model.Index);">
     <div class="table__numeric-buttons field__numeric-buttons">
       <a class="field__numeric-button field__numeric-button--up" href="#"></a>
       <a class="field__numeric-button field__numeric-button--down" href="#"></a>
     </div>
-  </td>
-  <td class="table__cell" data-subtotal="true">@Model.Subtotal.ToString("0.00")</td>
-  <td class="table__cell table__buttons buttons">
+  </table-cell>
+  <table-cell data-subtotal="true">@Model.Subtotal.ToString("0.00")</table-cell>
+  <buttons-table-cell>
     <a class="table__button buttons__button buttons__button--minor button button--negative button--minor button--delete" href="#" onclick="return platformus.ui.removePosition(this);"></a>
-  </td>
-</tr>
+  </buttons-table-cell>
+</table-row>

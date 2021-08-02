@@ -30,7 +30,7 @@ namespace Platformus.Website.Backend.Controllers
 
     public async Task<IActionResult> IndexAsync()
     {
-      return this.View(new IndexViewModelFactory().Create(
+      return this.View(IndexViewModelFactory.Create(
         await this.Repository.GetAllAsync(
           inclusions: new Inclusion<Form>[] {
             new Inclusion<Form>(m => m.Name.Localizations),
@@ -46,7 +46,7 @@ namespace Platformus.Website.Backend.Controllers
     [ImportModelStateFromTempData]
     public async Task<IActionResult> CreateOrEditAsync(int? id)
     {
-      return this.View(new CreateOrEditViewModelFactory().Create(
+      return this.View(CreateOrEditViewModelFactory.Create(
         this.HttpContext, id == null ? null : await this.Repository.GetByIdAsync(
           (int)id,
           new Inclusion<Form>(f => f.Name.Localizations),
@@ -64,7 +64,7 @@ namespace Platformus.Website.Backend.Controllers
 
       if (this.ModelState.IsValid)
       {
-        Form form = new CreateOrEditViewModelMapper().Map(
+        Form form = CreateOrEditViewModelMapper.Map(
           createOrEdit.Id == null ? new Form() : await this.Repository.GetByIdAsync((int)createOrEdit.Id),
           createOrEdit
         );

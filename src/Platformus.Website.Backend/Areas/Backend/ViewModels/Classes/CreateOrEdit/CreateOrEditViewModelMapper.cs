@@ -1,14 +1,13 @@
 ﻿// Copyright © 2020 Dmitry Sikorsky. All rights reserved.
 // Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information.
 
-using Platformus.Core.Backend.ViewModels;
 using Platformus.Website.Data.Entities;
 
 namespace Platformus.Website.Backend.ViewModels.Classes
 {
-  public class CreateOrEditViewModelMapper : ViewModelMapperBase
+  public static class CreateOrEditViewModelMapper
   {
-    public Class Map(Class @class, CreateOrEditViewModel createOrEdit)
+    public static Class Map(Class @class, CreateOrEditViewModel createOrEdit)
     {
       @class.ClassId = createOrEdit.ClassId;
       @class.Code = createOrEdit.Code;

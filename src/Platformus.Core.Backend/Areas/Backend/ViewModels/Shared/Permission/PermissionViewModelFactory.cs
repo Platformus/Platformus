@@ -5,9 +5,9 @@ using Platformus.Core.Data.Entities;
 
 namespace Platformus.Core.Backend.ViewModels.Shared
 {
-  public class PermissionViewModelFactory : ViewModelFactoryBase
+  public static class PermissionViewModelFactory
   {
-    public PermissionViewModel Create(Permission permission)
+    public static PermissionViewModel Create(Permission permission)
     {
       return new PermissionViewModel()
       {

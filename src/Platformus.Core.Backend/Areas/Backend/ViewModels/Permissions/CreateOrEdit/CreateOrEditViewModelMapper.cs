@@ -5,9 +5,9 @@ using Platformus.Core.Data.Entities;
 
 namespace Platformus.Core.Backend.ViewModels.Permissions
 {
-  public class CreateOrEditViewModelMapper : ViewModelMapperBase
+  public static class CreateOrEditViewModelMapper
   {
-    public Permission Map(Permission permission, CreateOrEditViewModel createOrEdit)
+    public static Permission Map(Permission permission, CreateOrEditViewModel createOrEdit)
     {
       permission.Code = createOrEdit.Code;
       permission.Name = createOrEdit.Name;

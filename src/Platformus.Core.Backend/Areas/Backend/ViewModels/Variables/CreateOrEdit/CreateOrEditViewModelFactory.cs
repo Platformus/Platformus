@@ -5,9 +5,9 @@ using Platformus.Core.Data.Entities;
 
 namespace Platformus.Core.Backend.ViewModels.Variables
 {
-  public class CreateOrEditViewModelFactory : ViewModelFactoryBase
+  public static class CreateOrEditViewModelFactory
   {
-    public CreateOrEditViewModel Create(Variable variable)
+    public static CreateOrEditViewModel Create(Variable variable)
     {
       if (variable == null)
         return new CreateOrEditViewModel()

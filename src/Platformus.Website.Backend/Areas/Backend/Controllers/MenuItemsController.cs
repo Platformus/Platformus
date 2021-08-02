@@ -32,7 +32,7 @@ namespace Platformus.Website.Backend
     [ImportModelStateFromTempData]
     public async Task<IActionResult> CreateOrEditAsync(int? id)
     {
-      return this.View(new CreateOrEditViewModelFactory().Create(
+      return this.View(CreateOrEditViewModelFactory.Create(
         this.HttpContext, id == null ? null : await this.Repository.GetByIdAsync(
           (int)id,
           new Inclusion<MenuItem>(mi => mi.Name.Localizations)
@@ -46,7 +46,7 @@ namespace Platformus.Website.Backend
     {
       if (this.ModelState.IsValid)
       {
-        MenuItem menuItem = new CreateOrEditViewModelMapper().Map(
+        MenuItem menuItem = CreateOrEditViewModelMapper.Map(
           filter,
           createOrEdit.Id == null ? new MenuItem() : await this.Repository.GetByIdAsync((int)createOrEdit.Id),
           createOrEdit

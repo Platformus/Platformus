@@ -6,7 +6,6 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Localization;
-using Platformus.Core.Backend.ViewModels;
 using Platformus.Core.Backend.ViewModels.Shared;
 using Platformus.Core.Extensions;
 using Platformus.Core.Primitives;
@@ -16,38 +15,38 @@ using Platformus.Website.Filters;
 
 namespace Platformus.Website.Backend.ViewModels.Classes
 {
-  public class IndexViewModelFactory : ViewModelFactoryBase
+  public static class IndexViewModelFactory
   {
-    public async Task<IndexViewModel> CreateAsync(HttpContext httpContext, ClassFilter filter, IEnumerable<Class> classes, string orderBy, int skip, int take, int total)
+    public static async Task<IndexViewModel> CreateAsync(HttpContext httpContext, ClassFilter filter, IEnumerable<Class> classes, string orderBy, int skip, int take, int total)
     {
-      IStringLocalizer<IndexViewModelFactory> localizer = httpContext.GetStringLocalizer<IndexViewModelFactory>();
+      IStringLocalizer<IndexViewModel> localizer = httpContext.GetStringLocalizer<IndexViewModel>();
 
       return new IndexViewModel()
       {
-        Grid = new GridViewModelFactory().Create(
+        Grid = GridViewModelFactory.Create(
           httpContext,
           new[] {
-            new FilterViewModelFactory().Create(httpContext, "Parent.Id", localizer["Parent class"], await this.GetClassOptionsAsync(httpContext)),
-            new FilterViewModelFactory().Create(httpContext, "Name.Contains", localizer["Name"])
+            FilterViewModelFactory.Create(httpContext, "Parent.Id", localizer["Parent class"], await GetClassOptionsAsync(httpContext)),
+            FilterViewModelFactory.Create(httpContext, "Name.Contains", localizer["Name"])
           },
           orderBy, skip, take, total,
           new[] {
-            new GridColumnViewModelFactory().Create(localizer["Parent class"]),
-            new GridColumnViewModelFactory().Create(localizer["Name"], "Name"),
-            new GridColumnViewModelFactory().Create(localizer["Is abstract"], "IsAbstract"),
-            new GridColumnViewModelFactory().Create(localizer["Tabs"]),
-            new GridColumnViewModelFactory().Create(localizer["Members"]),
-            new GridColumnViewModelFactory().CreateEmpty()
+            GridColumnViewModelFactory.Create(localizer["Parent class"]),
+            GridColumnViewModelFactory.Create(localizer["Name"], "Name"),
+            GridColumnViewModelFactory.Create(localizer["Is abstract"], "IsAbstract"),
+            GridColumnViewModelFactory.Create(localizer["Tabs"]),
+            GridColumnViewModelFactory.Create(localizer["Members"]),
+            GridColumnViewModelFactory.CreateEmpty()
           },
-          classes.Select(c => new ClassViewModelFactory().Create(c)),
+          classes.Select(ClassViewModelFactory.Create),
           "_Class"
         )
       };
     }
 
-    private async Task<IEnumerable<Option>> GetClassOptionsAsync(HttpContext httpContext)
+    private static async Task<IEnumerable<Option>> GetClassOptionsAsync(HttpContext httpContext)
     {
-      IStringLocalizer<IndexViewModelFactory> localizer = httpContext.GetStringLocalizer<IndexViewModelFactory>();
+      IStringLocalizer<IndexViewModel> localizer = httpContext.GetStringLocalizer<IndexViewModel>();
       List<Option> options = new List<Option>();
 
       options.Add(new Option(localizer["All parent classes"], string.Empty));

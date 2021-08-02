@@ -27,7 +27,7 @@ namespace Platformus.Website.Backend.Controllers
 
     public async Task<IActionResult> IndexAsync([FromQuery]TabFilter filter = null, string orderBy = "+position", int skip = 0, int take = 10)
     {
-      return this.View(new IndexViewModelFactory().Create(
+      return this.View(IndexViewModelFactory.Create(
         this.HttpContext, filter,
         await this.Repository.GetAllAsync(filter, orderBy, skip, take),
         orderBy, skip, take, await this.Repository.CountAsync(filter)
@@ -38,7 +38,7 @@ namespace Platformus.Website.Backend.Controllers
     [ImportModelStateFromTempData]
     public async Task<IActionResult> CreateOrEditAsync(int? id)
     {
-      return this.View(new CreateOrEditViewModelFactory().Create(
+      return this.View(CreateOrEditViewModelFactory.Create(
         id == null ? null : await this.Repository.GetByIdAsync((int)id)
       ));
     }
@@ -49,7 +49,7 @@ namespace Platformus.Website.Backend.Controllers
     {
       if (this.ModelState.IsValid)
       {
-        Tab tab = new CreateOrEditViewModelMapper().Map(
+        Tab tab = CreateOrEditViewModelMapper.Map(
           filter,
           createOrEdit.Id == null ? new Tab() : await this.Repository.GetByIdAsync((int)createOrEdit.Id),
           createOrEdit
@@ -73,7 +73,7 @@ namespace Platformus.Website.Backend.Controllers
 
       this.Repository.Delete(tab.Id);
       await this.Storage.SaveAsync();
-      return this.Redirect(string.Format("/backend/tabs?class.id={0}", tab.ClassId));
+      return this.Redirect(this.Request.CombineUrl("/backend/tabs"));
     }
   }
 }

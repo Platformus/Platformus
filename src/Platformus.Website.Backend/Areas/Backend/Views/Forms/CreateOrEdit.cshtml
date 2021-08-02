@@ -10,16 +10,16 @@
   @ViewBag.Title
 }
 <form class="form" method="post">
-  <single-line-text-field asp-for="Code" />
-  <multilingual-single-line-text-field asp-for="Name" asp-localizations="@Model.NameLocalizations" />
-  <multilingual-single-line-text-field asp-for="SubmitButtonTitle" asp-localizations="@Model.SubmitButtonTitleLocalizations" />
-  <checkbox-field asp-for="ProduceCompletedForms" />
-  <drop-down-list-field asp-for="FormHandlerCSharpClassName" asp-options="@Model.FormHandlerCSharpClassNameOptions" onchange="platformus.ui.formHandlerCSharpClassNameChanged();" />
+  <single-line-text-field for="Code" />
+  <multilingual-single-line-text-field for="Name" localizations="@Model.NameLocalizations" />
+  <multilingual-single-line-text-field for="SubmitButtonTitle" localizations="@Model.SubmitButtonTitleLocalizations" />
+  <checkbox-field class="form__field--separated" for="ProduceCompletedForms" />
+  <drop-down-list-field for="FormHandlerCSharpClassName" options="@Model.FormHandlerCSharpClassNameOptions" onchange="platformus.ui.formHandlerCSharpClassNameChanged();" />
   <div id="parameterEditors"></div>
   <input id="parameters" name="formHandlerParameters" type="hidden" value="@Model.FormHandlerParameters" />
   <div class="form__buttons buttons">
-    <button class="buttons__button button button--positive" type="submit">@Localizer["Save"]</button>
-    <a class="buttons__button button button--neutral" href="/backend/forms">@Localizer["Cancel"]</a>
+    <submit-button>@Localizer["Save"]</submit-button>
+    <neutral-button href="/backend/forms">@Localizer["Cancel"]</neutral-button>
   </div>
 </form>
 <script>

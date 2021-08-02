@@ -10,13 +10,13 @@
   @ViewBag.Title
 }
 <form class="forms" method="post">
-  <div id="tabs" class="tabs"></div>
-  <div id="tabPages" class="tab-pages">
-    <div id="tabPage0" class="tab-pages__tab-page"></div>
+  <div class="tabs" id="tabs"></div>
+  <div class="tab-pages" id="tabPages">
+    <div class="tab-pages__tab-page" id="tabPage0"></div>
   </div>
   <div class="form__buttons buttons">
-    <button class="buttons__button button button--positive" type="submit">@Localizer["Save"]</button>
-    <a class="buttons__button button button--neutral" href="@this.Context.Request.CombineUrl("/backend/objects")">@Localizer["Cancel"]</a>
+    <submit-button>@Localizer["Save"]</submit-button>
+    <neutral-button href="@this.Context.Request.CombineUrl("/backend/objects")">@Localizer["Cancel"]</neutral-button>
   </div>
 </form>
 <script>

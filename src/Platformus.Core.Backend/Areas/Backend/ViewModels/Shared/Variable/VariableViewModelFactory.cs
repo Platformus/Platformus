@@ -5,9 +5,9 @@ using Platformus.Core.Data.Entities;
 
 namespace Platformus.Core.Backend.ViewModels.Shared
 {
-  public class VariableViewModelFactory : ViewModelFactoryBase
+  public static class VariableViewModelFactory
   {
-    public VariableViewModel Create(Variable variable)
+    public static VariableViewModel Create(Variable variable)
     {
       return new VariableViewModel()
       {

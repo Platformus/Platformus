@@ -8,9 +8,9 @@ using Platformus.Core.Services.Defaults;
 
 namespace Platformus.Core.Backend.ViewModels.Credentials
 {
-  public class CreateOrEditViewModelMapper : ViewModelMapperBase
+  public static class CreateOrEditViewModelMapper
   {
-    public Credential Map(CredentialFilter filter, Credential credential, CreateOrEditViewModel createOrEdit)
+    public static Credential Map(CredentialFilter filter, Credential credential, CreateOrEditViewModel createOrEdit)
     {
       if (credential.Id == 0)
         credential.UserId = (int)filter.User.Id;

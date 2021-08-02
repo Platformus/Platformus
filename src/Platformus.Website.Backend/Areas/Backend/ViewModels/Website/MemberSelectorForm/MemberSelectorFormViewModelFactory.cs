@@ -5,7 +5,6 @@ using System.Collections.Generic;
 using System.Linq;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Localization;
-using Platformus.Core.Backend.ViewModels;
 using Platformus.Core.Backend.ViewModels.Shared;
 using Platformus.Core.Extensions;
 using Platformus.Website.Backend.ViewModels.Shared;
@@ -13,24 +12,24 @@ using Platformus.Website.Data.Entities;
 
 namespace Platformus.Website.Backend.ViewModels.Website
 {
-  public class MemberSelectorFormViewModelFactory : ViewModelFactoryBase
+  public static class MemberSelectorFormViewModelFactory
   {
-    public MemberSelectorFormViewModel Create(HttpContext httpContext, IEnumerable<Class> classes, int? memberId)
+    public static MemberSelectorFormViewModel Create(HttpContext httpContext, IEnumerable<Class> classes, int? memberId)
     {
       Dictionary<ClassViewModel, IEnumerable<MemberViewModel>> membersByClasses = new Dictionary<ClassViewModel, IEnumerable<MemberViewModel>>();
-      IStringLocalizer<MemberSelectorFormViewModelFactory> localizer = httpContext.GetStringLocalizer<MemberSelectorFormViewModelFactory>();
+      IStringLocalizer<MemberSelectorFormViewModel> localizer = httpContext.GetStringLocalizer<MemberSelectorFormViewModel>();
 
       foreach (Class @class in classes)
         membersByClasses.Add(
-          new ClassViewModelFactory().Create(@class),
-          @class.Members.Select(m => new MemberViewModelFactory().Create(m))
+          ClassViewModelFactory.Create(@class),
+          @class.Members.Select(MemberViewModelFactory.Create)
         );
 
       return new MemberSelectorFormViewModel()
       {
         GridColumns = new[] {
-          new GridColumnViewModelFactory().Create(localizer["Class"]),
-          new GridColumnViewModelFactory().Create(localizer["Name"])
+          GridColumnViewModelFactory.Create(localizer["Class"]),
+          GridColumnViewModelFactory.Create(localizer["Name"])
         },
         MembersByClasses = membersByClasses,
         MemberId = memberId

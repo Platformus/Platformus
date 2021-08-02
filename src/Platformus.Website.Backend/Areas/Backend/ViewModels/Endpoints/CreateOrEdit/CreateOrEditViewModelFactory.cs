@@ -7,7 +7,6 @@ using System.Reflection;
 using System.Threading.Tasks;
 using ExtCore.Infrastructure;
 using Microsoft.AspNetCore.Http;
-using Platformus.Core.Backend.ViewModels;
 using Platformus.Core.Data.Entities;
 using Platformus.Core.Extensions;
 using Platformus.Core.Filters;
@@ -18,17 +17,17 @@ using Platformus.Website.ResponseCaches;
 
 namespace Platformus.Website.Backend.ViewModels.Endpoints
 {
-  public class CreateOrEditViewModelFactory : ViewModelFactoryBase
+  public static class CreateOrEditViewModelFactory
   {
-    public async Task<CreateOrEditViewModel> CreateAsync(HttpContext httpContext, Data.Entities.Endpoint endpoint)
+    public static async Task<CreateOrEditViewModel> CreateAsync(HttpContext httpContext, Data.Entities.Endpoint endpoint)
     {
       if (endpoint == null)
         return new CreateOrEditViewModel()
         {
-          EndpointPermissions = await this.GetEndpointPermissionsAsync(httpContext),
-          RequestProcessorCSharpClassNameOptions = this.GetRequestProcessorCSharpClassNameOptions(),
-          RequestProcessors = this.GetRequestProcessors(),
-          ResponseCacheCSharpClassNameOptions = this.GetResponseCacheCSharpClassNameOptions()
+          EndpointPermissions = await GetEndpointPermissionsAsync(httpContext),
+          RequestProcessorCSharpClassNameOptions = GetRequestProcessorCSharpClassNameOptions(),
+          RequestProcessors = GetRequestProcessors(),
+          ResponseCacheCSharpClassNameOptions = GetResponseCacheCSharpClassNameOptions()
         };
 
       return new CreateOrEditViewModel()
@@ -39,31 +38,31 @@ namespace Platformus.Website.Backend.ViewModels.Endpoints
         Position = endpoint.Position,
         DisallowAnonymous = endpoint.DisallowAnonymous,
         SignInUrl = endpoint.SignInUrl,
-        EndpointPermissions = await this.GetEndpointPermissionsAsync(httpContext, endpoint),
+        EndpointPermissions = await GetEndpointPermissionsAsync(httpContext, endpoint),
         RequestProcessorCSharpClassName = endpoint.RequestProcessorCSharpClassName,
-        RequestProcessorCSharpClassNameOptions = this.GetRequestProcessorCSharpClassNameOptions(),
+        RequestProcessorCSharpClassNameOptions = GetRequestProcessorCSharpClassNameOptions(),
         RequestProcessorParameters = endpoint.RequestProcessorParameters,
-        RequestProcessors = this.GetRequestProcessors(),
+        RequestProcessors = GetRequestProcessors(),
         ResponseCacheCSharpClassName = endpoint.ResponseCacheCSharpClassName,
-        ResponseCacheCSharpClassNameOptions = this.GetResponseCacheCSharpClassNameOptions()
+        ResponseCacheCSharpClassNameOptions = GetResponseCacheCSharpClassNameOptions()
       };
     }
 
-    public async Task<IEnumerable<EndpointPermissionViewModel>> GetEndpointPermissionsAsync(HttpContext httpContext, Data.Entities.Endpoint endpoint = null)
+    public static async Task<IEnumerable<EndpointPermissionViewModel>> GetEndpointPermissionsAsync(HttpContext httpContext, Data.Entities.Endpoint endpoint = null)
     {
       return (await httpContext.GetStorage().GetRepository<int, Permission, PermissionFilter>().GetAllAsync()).Select(
-        p => new EndpointPermissionViewModelFactory().Create(p, endpoint != null && endpoint.EndpointPermissions.Any(ep => ep.PermissionId == p.Id))
+        p => EndpointPermissionViewModelFactory.Create(p, endpoint != null && endpoint.EndpointPermissions.Any(ep => ep.PermissionId == p.Id))
       );
     }
 
-    private IEnumerable<Option> GetRequestProcessorCSharpClassNameOptions()
+    private static IEnumerable<Option> GetRequestProcessorCSharpClassNameOptions()
     {
       return ExtensionManager.GetImplementations<IRequestProcessor>().Where(t => !t.GetTypeInfo().IsAbstract).Select(
         t => new Option(t.FullName)
       );
     }
 
-    private IEnumerable<dynamic> GetRequestProcessors()
+    private static IEnumerable<dynamic> GetRequestProcessors()
     {
       return ExtensionManager.GetInstances<IRequestProcessor>().Where(rp => !rp.GetType().GetTypeInfo().IsAbstract).Select(
         rp => new {
@@ -92,7 +91,7 @@ namespace Platformus.Website.Backend.ViewModels.Endpoints
       );
     }
 
-    private IEnumerable<Option> GetResponseCacheCSharpClassNameOptions()
+    private static IEnumerable<Option> GetResponseCacheCSharpClassNameOptions()
     {
       List<Option> options = new List<Option>();
 

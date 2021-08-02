@@ -5,13 +5,13 @@ using Platformus.Core.Data.Entities;
 
 namespace Platformus.Core.Backend.ViewModels.Shared
 {
-  public class UserRoleViewModelFactory : ViewModelFactoryBase
+  public static class UserRoleViewModelFactory
   {
-    public UserRoleViewModel Create(Role role, bool isAssigned)
+    public static UserRoleViewModel Create(Role role, bool isAssigned)
     {
       return new UserRoleViewModel()
       {
-        Role = new RoleViewModelFactory().Create(role),
+        Role = RoleViewModelFactory.Create(role),
         IsAssigned = isAssigned
       };
     }

@@ -7,9 +7,9 @@
   this.ViewBag.ActiveMenuItem = "permissions";
 }
 @section title {
-  @ViewBag.Title @*<span class="master-detail__detail-header-counter">@Model.Grid.Pager.Total</span>*@
+  @ViewBag.Title
 }
 @Html.Partial("_Grid", this.Model.Grid)
 <div class="master-detail__detail-buttons buttons">
-  <a class="buttons__button button button--positive" href="@this.Context.Request.CombineUrl("/backend/permissions/create")">@Localizer["Create permission"]</a>
+  <positive-button href="@this.Context.Request.CombineUrl("/backend/permissions/create")">@Localizer["Create permission"]</positive-button>
 </div>

@@ -12,28 +12,28 @@ using Platformus.Core.Filters;
 
 namespace Platformus.Core.Backend.ViewModels.Users
 {
-  public class CreateOrEditViewModelFactory : ViewModelFactoryBase
+  public static class CreateOrEditViewModelFactory
   {
-    public async Task<CreateOrEditViewModel> CreateAsync(HttpContext httpContext, User user)
+    public static async Task<CreateOrEditViewModel> CreateAsync(HttpContext httpContext, User user)
     {
       if (user == null)
         return new CreateOrEditViewModel()
         {
-          UserRoles = await this.GetUserRolesAsync(httpContext)
+          UserRoles = await GetUserRolesAsync(httpContext)
         };
 
       return new CreateOrEditViewModel()
       {
         Id = user.Id,
         Name = user.Name,
-        UserRoles = await this.GetUserRolesAsync(httpContext, user)
+        UserRoles = await GetUserRolesAsync(httpContext, user)
       };
     }
 
-    public async Task<IEnumerable<UserRoleViewModel>> GetUserRolesAsync(HttpContext httpContext, User user = null)
+    public static async Task<IEnumerable<UserRoleViewModel>> GetUserRolesAsync(HttpContext httpContext, User user = null)
     {
       return (await httpContext.GetStorage().GetRepository<int, Role, RoleFilter>().GetAllAsync()).Select(
-        r => new UserRoleViewModelFactory().Create(r, user != null && user.UserRoles.Any(ur => ur.RoleId == r.Id))
+        r => UserRoleViewModelFactory.Create(r, user != null && user.UserRoles.Any(ur => ur.RoleId == r.Id))
       );
     }
   }

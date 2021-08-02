@@ -55,7 +55,7 @@ namespace Platformus.Website.Backend.Controllers
 
     public async Task<IActionResult> IndexAsync([FromQuery]ObjectFilter filter = null, string orderBy = null, int skip = 0, int take = 10)
     {
-      return this.View(await new IndexViewModelFactory().CreateAsync(
+      return this.View(await IndexViewModelFactory.CreateAsync(
         this.HttpContext, filter,
         filter?.Class?.Id == null ? null : await this.ObjectRepository.GetAllAsync(
           filter, orderBy, skip, take,
@@ -78,7 +78,7 @@ namespace Platformus.Website.Backend.Controllers
         new Inclusion<Object>("ForeignRelations.Member")
       );
 
-      return this.View(await new CreateOrEditViewModelFactory().CreateAsync(
+      return this.View(await CreateOrEditViewModelFactory.CreateAsync(
         this.HttpContext, filter, @object
       ));
     }
@@ -89,7 +89,7 @@ namespace Platformus.Website.Backend.Controllers
     {
       if (this.ModelState.IsValid)
       {
-        Object @object = new CreateOrEditViewModelMapper().Map(
+        Object @object = CreateOrEditViewModelMapper.Map(
           filter,
           createOrEdit.Id == null ? new Object() : await this.ObjectRepository.GetByIdAsync(
             (int)createOrEdit.Id,
@@ -147,7 +147,7 @@ namespace Platformus.Website.Backend.Controllers
       this.ObjectRepository.Delete(@object.Id);
       await this.Storage.SaveAsync();
       Event<IObjectDeletedEventHandler, HttpContext, Object>.Broadcast(this.HttpContext, @object);
-      return this.Redirect(string.Format("/backend/objects?class.id={0}", @object.ClassId));
+      return this.Redirect(this.Request.CombineUrl("/backend/objects"));
     }
 
     private async Task CreateOrEditPropertiesAsync(Class @class, Object @object)

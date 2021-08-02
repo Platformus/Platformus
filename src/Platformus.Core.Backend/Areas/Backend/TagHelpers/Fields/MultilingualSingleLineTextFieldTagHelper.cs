@@ -10,20 +10,13 @@ using Platformus.Core.Primitives;
 
 namespace Platformus.Core.Backend
 {
-  [HtmlTargetElement("multilingual-single-line-text-field", Attributes = ForAttributeName + "," + LocalizationsAttributeName)]
   public class MultilingualSingleLineTextFieldTagHelper : TagHelper
   {
-    private const string ForAttributeName = "asp-for";
-    private const string LocalizationsAttributeName = "asp-localizations";
-
     [HtmlAttributeNotBound]
     [ViewContext]
     public ViewContext ViewContext { get; set; }
-
-    [HtmlAttributeName(ForAttributeName)] 
+    public string Class { get; set; }
     public ModelExpression For { get; set; }
-
-    [HtmlAttributeName(LocalizationsAttributeName)]
     public IEnumerable<Localization> Localizations { get; set; }
 
     public override void Process(TagHelperContext context, TagHelperOutput output)
@@ -31,36 +24,59 @@ namespace Platformus.Core.Backend
       if (this.For == null)
         return;
 
-      output.SuppressOutput();
-      output.Content.Clear();
-      output.Content.AppendHtml(this.GenerateField(output.Attributes));
-    }
+      output.TagMode = TagMode.StartTagAndEndTag;
+      output.TagName = TagNames.Div;
+      output.Attributes.SetAttribute(AttributeNames.Class, "form__field field field--multilingual" + (string.IsNullOrEmpty(this.Class) ? null : $" {this.Class}"));
+      output.Content.AppendHtml(this.CreateLabel());
 
-    private TagBuilder GenerateField(TagHelperAttributeList attributes)
-    {
-      TagBuilder tb = new TagBuilder("div");
-
-      tb.AddCssClass("form__field field field--multilingual");
-
-      FieldGenerator fieldGenerator = new FieldGenerator();
-
-      tb.InnerHtml.Clear();
-      tb.InnerHtml.AppendHtml(fieldGenerator.GenerateLabel(this.For));
-      
       foreach (Localization localization in this.Localizations)
       {
         if (localization.Culture.Id != NeutralCulture.Id)
         {
-          tb.InnerHtml.AppendHtml(fieldGenerator.GenerateCulture(localization, false));
-          tb.InnerHtml.AppendHtml(new TextBoxGenerator().GenerateTextBox(this.ViewContext, this.For, attributes, localization, "text", "field__text-box field__text-box--multilingual"));
-          tb.InnerHtml.AppendHtml(new ValidationErrorMessageGenerator().GenerateValidationErrorMessage(this.For, localization));
+          output.Content.AppendHtml(this.CreateCulture(localization));
+          output.Content.AppendHtml(this.CreateTextBox(localization));
+          output.Content.AppendHtml(this.CreateValidationErrorMessage(localization));
 
           if (localization != this.Localizations.Last())
-            tb.InnerHtml.AppendHtml(fieldGenerator.GenerateMultilingualSeparator());
+            output.Content.AppendHtml(this.CreateMultilingualSeparator());
         }
       }
+    }
 
+    private TagBuilder CreateLabel()
+    {
+      return FieldGenerator.GenerateLabel(this.For.GetLabel(), this.For.GetIdentity());
+    }
+
+    private TagBuilder CreateCulture(Localization localization)
+    {
+      return FieldGenerator.GenerateCulture(localization);
+    }
+
+    private TagBuilder CreateTextBox(Localization localization)
+    {
+      TagBuilder tb = TextBoxGenerator.Generate(
+        this.For.GetIdentity(localization),
+        InputTypes.Text,
+        this.For.GetValue(this.ViewContext, localization),
+        this.For.HasRequiredAttribute(),
+        this.For.HasStringLengthAttribute() ? this.For.GetMaxStringLength() : null,
+        this.For.IsValid(this.ViewContext, localization)
+      );
+
+      tb.AddCssClass("field__text-box");
+      tb.MergeAttribute("data-culture", localization.Culture.Id);
       return tb;
+    }
+
+    private TagBuilder CreateValidationErrorMessage(Localization localization)
+    {
+      return ValidationErrorMessageGenerator.Generate(this.For.GetIdentity(localization));
+    }
+
+    private TagBuilder CreateMultilingualSeparator()
+    {
+      return FieldGenerator.GenerateMultilingualSeparator();
     }
   }
 }

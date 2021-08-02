@@ -12,26 +12,26 @@ using Platformus.Core.Primitives;
 
 namespace Platformus.Core.Backend.ViewModels.Credentials
 {
-  public class CreateOrEditViewModelFactory : ViewModelFactoryBase
+  public static class CreateOrEditViewModelFactory
   {
-    public async Task<CreateOrEditViewModel> CreateAsync(HttpContext httpContext, Credential credential)
+    public static async Task<CreateOrEditViewModel> CreateAsync(HttpContext httpContext, Credential credential)
     {
       if (credential == null)
         return new CreateOrEditViewModel()
         {
-          CredentialTypeOptions = await this.GetCredentialTypeOptionsAsync(httpContext)
+          CredentialTypeOptions = await GetCredentialTypeOptionsAsync(httpContext)
         };
 
       return new CreateOrEditViewModel()
       {
         Id = credential.Id,
         CredentialTypeId = credential.CredentialTypeId,
-        CredentialTypeOptions = await this.GetCredentialTypeOptionsAsync(httpContext),
+        CredentialTypeOptions = await GetCredentialTypeOptionsAsync(httpContext),
         Identifier = credential.Identifier
       };
     }
 
-    private async Task<IEnumerable<Option>> GetCredentialTypeOptionsAsync(HttpContext httpContext)
+    private static async Task<IEnumerable<Option>> GetCredentialTypeOptionsAsync(HttpContext httpContext)
     {
       return (await httpContext.GetStorage().GetRepository<int, CredentialType, CredentialTypeFilter>().GetAllAsync()).Select(
         ct => new Option(ct.Name, ct.Id.ToString())

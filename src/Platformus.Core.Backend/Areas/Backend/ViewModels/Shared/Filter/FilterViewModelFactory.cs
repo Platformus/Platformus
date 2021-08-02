@@ -7,9 +7,9 @@ using Platformus.Core.Primitives;
 
 namespace Platformus.Core.Backend.ViewModels.Shared
 {
-  public class FilterViewModelFactory : ViewModelFactoryBase
+  public static class FilterViewModelFactory
   {
-    public FilterViewModel Create(HttpContext httpContext, string filteringProperty, string title, IEnumerable<Option> options = null)
+    public static FilterViewModel Create(HttpContext httpContext, string filteringProperty, string title, IEnumerable<Option> options = null)
     {
       return new FilterViewModel()
       {

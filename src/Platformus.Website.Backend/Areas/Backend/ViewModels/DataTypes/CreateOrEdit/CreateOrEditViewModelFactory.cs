@@ -2,34 +2,33 @@
 // Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information.
 
 using System.Collections.Generic;
-using Platformus.Core.Backend.ViewModels;
 using Platformus.Core.Primitives;
 using Platformus.Website.Data.Entities;
 
 namespace Platformus.Website.Backend.ViewModels.DataTypes
 {
-  public class CreateOrEditViewModelFactory : ViewModelFactoryBase
+  public static class CreateOrEditViewModelFactory
   {
-    public CreateOrEditViewModel Create(DataType dataType)
+    public static CreateOrEditViewModel Create(DataType dataType)
     {
       if (dataType == null)
         return new CreateOrEditViewModel()
         {
-          StorageDataTypeOptions = this.GetStorageDataTypeOptions()
+          StorageDataTypeOptions = GetStorageDataTypeOptions()
         };
 
       return new CreateOrEditViewModel()
       {
         Id = dataType.Id,
         StorageDataType = dataType.StorageDataType,
-        StorageDataTypeOptions = this.GetStorageDataTypeOptions(),
+        StorageDataTypeOptions = GetStorageDataTypeOptions(),
         JavaScriptEditorClassName = dataType.JavaScriptEditorClassName,
         Name = dataType.Name,
         Position = dataType.Position
       };
     }
 
-    private IEnumerable<Option> GetStorageDataTypeOptions()
+    private static IEnumerable<Option> GetStorageDataTypeOptions()
     {
       return new Option[]
       {

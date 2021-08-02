@@ -27,7 +27,7 @@ namespace Platformus.Core.Backend.Controllers
 
     public async Task<IActionResult> IndexAsync([FromQuery]CredentialFilter filter = null, string orderBy = "+identifier", int skip = 0, int take = 10)
     {
-      return this.View(new IndexViewModelFactory().Create(
+      return this.View(IndexViewModelFactory.Create(
         this.HttpContext, filter,
         await this.Repository.GetAllAsync(filter, orderBy, skip, take, new Inclusion<Credential>(c => c.CredentialType)),
         orderBy, skip, take, await this.Repository.CountAsync(filter)
@@ -38,7 +38,7 @@ namespace Platformus.Core.Backend.Controllers
     [ImportModelStateFromTempData]
     public async Task<IActionResult> CreateOrEditAsync(int? id)
     {
-      return this.View(await new CreateOrEditViewModelFactory().CreateAsync(
+      return this.View(await CreateOrEditViewModelFactory.CreateAsync(
         this.HttpContext, id == null ? null : await this.Repository.GetByIdAsync((int)id)
       ));
     }
@@ -49,7 +49,7 @@ namespace Platformus.Core.Backend.Controllers
     {
       if (this.ModelState.IsValid)
       {
-        Credential credential = new CreateOrEditViewModelMapper().Map(
+        Credential credential = CreateOrEditViewModelMapper.Map(
           filter,
           createOrEdit.Id == null ? new Credential() : await this.Repository.GetByIdAsync((int)createOrEdit.Id),
           createOrEdit
@@ -73,7 +73,7 @@ namespace Platformus.Core.Backend.Controllers
 
       this.Repository.Delete(credential.Id);
       await this.Storage.SaveAsync();
-      return this.Redirect(string.Format("/backend/credentials?user.id={0}", credential.UserId));
+      return this.Redirect(this.Request.CombineUrl("/backend/credentials"));
     }
   }
 }

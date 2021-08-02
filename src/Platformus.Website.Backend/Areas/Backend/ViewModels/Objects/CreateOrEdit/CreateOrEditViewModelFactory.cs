@@ -7,7 +7,6 @@ using System.Threading.Tasks;
 using Magicalizer.Data.Repositories.Abstractions;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Localization;
-using Platformus.Core.Backend.ViewModels;
 using Platformus.Core.Extensions;
 using Platformus.Website.Backend.ViewModels.Shared;
 using Platformus.Website.Data.Entities;
@@ -15,9 +14,9 @@ using Platformus.Website.Filters;
 
 namespace Platformus.Website.Backend.ViewModels.Objects
 {
-  public class CreateOrEditViewModelFactory : ViewModelFactoryBase
+  public static class CreateOrEditViewModelFactory
   {
-    public async Task<CreateOrEditViewModel> CreateAsync(HttpContext httpContext, ObjectFilter filter, Object @object)
+    public static async Task<CreateOrEditViewModel> CreateAsync(HttpContext httpContext, ObjectFilter filter, Object @object)
     {
       Class @class = await httpContext.GetStorage().GetRepository<int, Class, ClassFilter>().GetByIdAsync(
         (int)filter.Class.Id,
@@ -34,32 +33,32 @@ namespace Platformus.Website.Backend.ViewModels.Objects
       if (@object == null)
         return new CreateOrEditViewModel()
         {
-          Class = new ClassViewModelFactory().Create(@class),
-          MembersByTabs = this.GetMembersByTabs(httpContext, @class)
+          Class = ClassViewModelFactory.Create(@class),
+          MembersByTabs = GetMembersByTabs(httpContext, @class)
         };
 
       return new CreateOrEditViewModel()
       {
         Id = @object.Id,
-        Class = new ClassViewModelFactory().Create(@class),
-        MembersByTabs = this.GetMembersByTabs(httpContext, @class, @object)
+        Class = ClassViewModelFactory.Create(@class),
+        MembersByTabs = GetMembersByTabs(httpContext, @class, @object)
       };
     }
 
-    private List<dynamic> GetMembersByTabs(HttpContext httpContext, Class @class, Object @object = null)
+    private static List<dynamic> GetMembersByTabs(HttpContext httpContext, Class @class, Object @object = null)
     {
       List<dynamic> membersByTabs = new List<dynamic>();
-      IStringLocalizer<CreateOrEditViewModelFactory> localizer = httpContext.GetStringLocalizer<CreateOrEditViewModelFactory>();
+      IStringLocalizer<CreateOrEditViewModel> localizer = httpContext.GetStringLocalizer<CreateOrEditViewModel>();
 
-      membersByTabs.Add(new { id = 0, name = localizer["General"].Value, members = this.GetMembersByTab(httpContext, @class, null, @object) });
+      membersByTabs.Add(new { id = 0, name = localizer["General"].Value, members = GetMembersByTab(httpContext, @class, null, @object) });
 
       foreach (Tab tab in @class.GetTabs())
-        membersByTabs.Add(new { id = tab.Id, name = tab.Name, members = this.GetMembersByTab(httpContext, @class, tab, @object) });
+        membersByTabs.Add(new { id = tab.Id, name = tab.Name, members = GetMembersByTab(httpContext, @class, tab, @object) });
 
       return membersByTabs;
     }
 
-    private dynamic GetMembersByTab(HttpContext httpContext, Class @class, Tab tab, Object @object)
+    private static dynamic GetMembersByTab(HttpContext httpContext, Class @class, Tab tab, Object @object)
     {
       return @class.GetMembers().Where(m => m.Tab?.Id == tab?.Id).Select(
         m => new
@@ -74,7 +73,7 @@ namespace Platformus.Website.Backend.ViewModels.Objects
             )
           },
           isPropertyLocalizable = m.IsPropertyLocalizable,
-          property = m.PropertyDataType == null ? null : this.GetProperty(httpContext, m, @object),
+          property = m.PropertyDataType == null ? null : GetProperty(httpContext, m, @object),
           relationClass = m.RelationClass == null ? null : new
           {
             id = m.RelationClass.Id
@@ -82,12 +81,12 @@ namespace Platformus.Website.Backend.ViewModels.Objects
           isRelationSingleParent = m.IsRelationSingleParent,
           minRelatedObjectsNumber = m.MinRelatedObjectsNumber,
           maxRelatedObjectsNumber = m.MaxRelatedObjectsNumber,
-          relations = m.RelationClass == null ? null : this.GetRelations(m, @object)
+          relations = m.RelationClass == null ? null : GetRelations(m, @object)
         }
       );
     }
 
-    private dynamic GetProperty(HttpContext httpContext, Member member, Object @object)
+    private static dynamic GetProperty(HttpContext httpContext, Member member, Object @object)
     {
       Property property = @object?.Properties.FirstOrDefault(p => p.MemberId == member.Id);
 
@@ -109,7 +108,7 @@ namespace Platformus.Website.Backend.ViewModels.Objects
       };
     }
 
-    private IEnumerable<object> GetRelations(Member m, Object @object)
+    private static IEnumerable<object> GetRelations(Member m, Object @object)
     {
       if (@object == null)
         return new object[] { };

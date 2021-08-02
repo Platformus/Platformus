@@ -33,7 +33,7 @@ namespace Platformus.Website.Backend.Controllers
 
     public async Task<IActionResult> IndexAsync([FromQuery]MemberFilter filter = null, string orderBy = "+position", int skip = 0, int take = 10)
     {
-      return this.View(new IndexViewModelFactory().Create(
+      return this.View(IndexViewModelFactory.Create(
         this.HttpContext, filter,
         await this.Repository.GetAllAsync(filter, orderBy, skip, take, new Inclusion<Member>(m => m.PropertyDataType), new Inclusion<Member>(m => m.RelationClass)),
         orderBy, skip, take, await this.Repository.CountAsync(filter)
@@ -44,7 +44,7 @@ namespace Platformus.Website.Backend.Controllers
     [ImportModelStateFromTempData]
     public async Task<IActionResult> CreateOrEditAsync([FromQuery]MemberFilter filter, int? id)
     {
-      return this.View(await new CreateOrEditViewModelFactory().CreateAsync(
+      return this.View(await CreateOrEditViewModelFactory.CreateAsync(
         this.HttpContext, filter, id == null ? null : await this.Repository.GetByIdAsync((int)id)
       ));
     }
@@ -58,7 +58,7 @@ namespace Platformus.Website.Backend.Controllers
 
       if (this.ModelState.IsValid)
       {
-        Member member = new CreateOrEditViewModelMapper().Map(
+        Member member = CreateOrEditViewModelMapper.Map(
           filter,
           createOrEdit.Id == null ? new Member() : await this.Repository.GetByIdAsync((int)createOrEdit.Id),
           createOrEdit
@@ -90,7 +90,7 @@ namespace Platformus.Website.Backend.Controllers
       this.Repository.Delete(member.Id);
       await this.Storage.SaveAsync();
       Event<IMemberDeletedEventHandler, HttpContext, Member>.Broadcast(this.HttpContext, member);
-      return this.Redirect(string.Format("/backend/members?class.id={0}", member.ClassId));
+      return this.Redirect(this.Request.CombineUrl("/backend/members"));
     }
 
     private async Task<bool> IsCodeUniqueAsync(MemberFilter filter, string code)

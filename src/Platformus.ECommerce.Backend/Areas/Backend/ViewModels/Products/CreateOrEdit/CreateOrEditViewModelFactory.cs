@@ -6,7 +6,6 @@ using System.Linq;
 using System.Threading.Tasks;
 using Magicalizer.Data.Repositories.Abstractions;
 using Microsoft.AspNetCore.Http;
-using Platformus.Core.Backend.ViewModels;
 using Platformus.Core.Extensions;
 using Platformus.Core.Primitives;
 using Platformus.ECommerce.Data.Entities;
@@ -14,46 +13,46 @@ using Platformus.ECommerce.Filters;
 
 namespace Platformus.ECommerce.Backend.ViewModels.Products
 {
-  public class CreateOrEditViewModelFactory : ViewModelFactoryBase
+  public static class CreateOrEditViewModelFactory
   {
-    public async Task<CreateOrEditViewModel> CreateAsync(HttpContext httpContext, Product product)
+    public static async Task<CreateOrEditViewModel> CreateAsync(HttpContext httpContext, Product product)
     {
       if (product == null)
         return new CreateOrEditViewModel()
         {
-          CategoryOptions = await this.GetCategoryOptionsAsync(httpContext),
+          CategoryOptions = await GetCategoryOptionsAsync(httpContext),
           Url = "/",
-          NameLocalizations = this.GetLocalizations(httpContext),
-          DescriptionLocalizations = this.GetLocalizations(httpContext),
-          UnitsLocalizations = this.GetLocalizations(httpContext),
-          TitleLocalizations = this.GetLocalizations(httpContext),
-          MetaDescriptionLocalizations = this.GetLocalizations(httpContext),
-          MetaKeywordsLocalizations = this.GetLocalizations(httpContext)
+          NameLocalizations = httpContext.GetLocalizations(),
+          DescriptionLocalizations = httpContext.GetLocalizations(),
+          UnitsLocalizations = httpContext.GetLocalizations(),
+          TitleLocalizations = httpContext.GetLocalizations(),
+          MetaDescriptionLocalizations = httpContext.GetLocalizations(),
+          MetaKeywordsLocalizations = httpContext.GetLocalizations()
         };
 
       return new CreateOrEditViewModel()
       {
         Id = product.Id,
         CategoryId = product.CategoryId,
-        CategoryOptions = await this.GetCategoryOptionsAsync(httpContext),
+        CategoryOptions = await GetCategoryOptionsAsync(httpContext),
         Url = product.Url,
         Code = product.Code,
-        NameLocalizations = this.GetLocalizations(httpContext, product.Name),
-        DescriptionLocalizations = this.GetLocalizations(httpContext, product.Description),
-        UnitsLocalizations = this.GetLocalizations(httpContext, product.Units),
+        NameLocalizations = httpContext.GetLocalizations(product.Name),
+        DescriptionLocalizations = httpContext.GetLocalizations(product.Description),
+        UnitsLocalizations = httpContext.GetLocalizations(product.Units),
         Price = product.Price,
         Photo1Filename = product.Photos.FirstOrDefault(p => p.Position == 1)?.Filename,
         Photo2Filename = product.Photos.FirstOrDefault(p => p.Position == 2)?.Filename,
         Photo3Filename = product.Photos.FirstOrDefault(p => p.Position == 3)?.Filename,
         Photo4Filename = product.Photos.FirstOrDefault(p => p.Position == 4)?.Filename,
         Photo5Filename = product.Photos.FirstOrDefault(p => p.Position == 5)?.Filename,
-        TitleLocalizations = this.GetLocalizations(httpContext, product.Title),
-        MetaDescriptionLocalizations = this.GetLocalizations(httpContext, product.MetaDescription),
-        MetaKeywordsLocalizations = this.GetLocalizations(httpContext, product.MetaKeywords)
+        TitleLocalizations = httpContext.GetLocalizations(product.Title),
+        MetaDescriptionLocalizations = httpContext.GetLocalizations(product.MetaDescription),
+        MetaKeywordsLocalizations = httpContext.GetLocalizations(product.MetaKeywords)
       };
     }
 
-    private async Task<IEnumerable<Option>> GetCategoryOptionsAsync(HttpContext httpContext)
+    private static async Task<IEnumerable<Option>> GetCategoryOptionsAsync(HttpContext httpContext)
     {
       return (await httpContext.GetStorage().GetRepository<int, Category, CategoryFilter>().GetAllAsync(inclusions: new Inclusion<Category>(c => c.Name.Localizations))).Select(
         c => new Option(c.Name.GetLocalizationValue(), c.Id.ToString())

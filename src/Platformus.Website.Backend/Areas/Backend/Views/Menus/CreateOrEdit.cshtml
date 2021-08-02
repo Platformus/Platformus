@@ -10,10 +10,10 @@
   @ViewBag.Title
 }
 <form class="form" method="post">
-  <single-line-text-field asp-for="Code" />
-  <multilingual-single-line-text-field asp-for="Name" asp-localizations="@Model.NameLocalizations" />
+  <single-line-text-field for="Code" />
+  <multilingual-single-line-text-field for="Name" localizations="@Model.NameLocalizations" />
   <div class="form__buttons buttons">
-    <button class="buttons__button button button--positive" type="submit">@Localizer["Save"]</button>
-    <a class="buttons__button button button--neutral" href="/backend/menus">@Localizer["Cancel"]</a>
+    <submit-button>@Localizer["Save"]</submit-button>
+    <neutral-button href="/backend/menus">@Localizer["Cancel"]</neutral-button>
   </div>
 </form>

@@ -6,48 +6,48 @@ using System.Linq;
 using System.Reflection;
 using ExtCore.Infrastructure;
 using Microsoft.AspNetCore.Http;
-using Platformus.Core.Backend.ViewModels;
+using Platformus.Core.Extensions;
 using Platformus.Core.Primitives;
 using Platformus.Website.Data.Entities;
 using Platformus.Website.FormHandlers;
 
 namespace Platformus.Website.Backend.ViewModels.Forms
 {
-  public class CreateOrEditViewModelFactory : ViewModelFactoryBase
+  public static class CreateOrEditViewModelFactory
   {
-    public CreateOrEditViewModel Create(HttpContext httpContext, Form form)
+    public static CreateOrEditViewModel Create(HttpContext httpContext, Form form)
     {
       if (form == null)
         return new CreateOrEditViewModel()
         {
-          NameLocalizations = this.GetLocalizations(httpContext),
-          SubmitButtonTitleLocalizations = this.GetLocalizations(httpContext),
-          FormHandlerCSharpClassNameOptions = this.GetFormHandlerCSharpClassNameOptions(),
-          FormHandlers = this.GetFormHandlers()
+          NameLocalizations = httpContext.GetLocalizations(),
+          SubmitButtonTitleLocalizations = httpContext.GetLocalizations(),
+          FormHandlerCSharpClassNameOptions = GetFormHandlerCSharpClassNameOptions(),
+          FormHandlers = GetFormHandlers()
         };
 
       return new CreateOrEditViewModel()
       {
         Id = form.Id,
         Code = form.Code,
-        NameLocalizations = this.GetLocalizations(httpContext, form.Name),
-        SubmitButtonTitleLocalizations = this.GetLocalizations(httpContext, form.SubmitButtonTitle),
+        NameLocalizations = httpContext.GetLocalizations(form.Name),
+        SubmitButtonTitleLocalizations = httpContext.GetLocalizations(form.SubmitButtonTitle),
         ProduceCompletedForms = form.ProduceCompletedForms,
         FormHandlerCSharpClassName = form.FormHandlerCSharpClassName,
-        FormHandlerCSharpClassNameOptions = this.GetFormHandlerCSharpClassNameOptions(),
+        FormHandlerCSharpClassNameOptions = GetFormHandlerCSharpClassNameOptions(),
         FormHandlerParameters = form.FormHandlerParameters,
-        FormHandlers = this.GetFormHandlers()
+        FormHandlers = GetFormHandlers()
       };
     }
 
-    private IEnumerable<Option> GetFormHandlerCSharpClassNameOptions()
+    private static IEnumerable<Option> GetFormHandlerCSharpClassNameOptions()
     {
       return ExtensionManager.GetImplementations<IFormHandler>().Where(t => !t.GetTypeInfo().IsAbstract).Select(
         t => new Option(t.FullName)
       );
     }
 
-    private IEnumerable<dynamic> GetFormHandlers()
+    private static IEnumerable<dynamic> GetFormHandlers()
     {
       return ExtensionManager.GetInstances<IFormHandler>().Where(fh => !fh.GetType().GetTypeInfo().IsAbstract).Select(
         fh => new {

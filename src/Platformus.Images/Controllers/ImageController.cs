@@ -3,68 +3,60 @@
 
 using System;
 using System.IO;
+using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
-using Magicalizer.Data.Repositories.Abstractions;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using SixLabors.ImageSharp;
 using SixLabors.ImageSharp.Formats;
+using SixLabors.ImageSharp.Formats.Gif;
 using SixLabors.ImageSharp.Formats.Jpeg;
 using SixLabors.ImageSharp.Formats.Png;
 using SixLabors.ImageSharp.Processing;
 
 namespace Platformus.Images.Controllers
 {
-  public class ImagesController : Core.Controllers.ControllerBase
+  public class ImagesController : Controller
   {
-    public class LoadImageFromUrlResult : IDisposable
+    private IWebHostEnvironment webHostEnvironment;
+
+    public ImagesController(IWebHostEnvironment webHostEnvironment)
     {
-      public Image Image { get; set; }
-      public IImageFormat ImageFormat { get; set; }
-
-      public LoadImageFromUrlResult(Image image, IImageFormat imageFormat)
-      {
-        this.Image = image;
-        this.ImageFormat = imageFormat;
-      }
-
-      public void Dispose()
-      {
-        this.Image.Dispose();
-      }
-    }
-
-    public ImagesController(IStorage storage)
-      : base(storage)
-    {
+      this.webHostEnvironment = webHostEnvironment;
     }
 
     [HttpGet]
-    public async Task<IActionResult> IndexAsync(string url, int w, int h, int q = 90)
+    public async Task<IActionResult> IndexAsync(string url, [FromQuery] Rectangle source = null, [FromQuery] Size destination = null, string format = null, int quality = 90, string copyTo = null)
     {
-      string filename = url.Substring(url.LastIndexOf("/") + 1);
+      (Image Image, IImageFormat ImageFormat) result = await this.LoadImageFromUrlAsync(url);
 
-      using (LoadImageFromUrlResult result = await this.LoadImageFromUrlAsync(url))
+      this.ProcessImage(result.Image, source, destination);
+
+      IImageEncoder imageEncoder = this.GetImageEncoder(result.ImageFormat, format, quality);
+
+      if (!string.IsNullOrEmpty(copyTo))
       {
-        if (result == null || result.Image == null || result.ImageFormat == null)
-          return this.NotFound();
+        string filename = this.GetFilenameFromUrl(url);
+        string destinationFilepath = this.GetDestinationFilepath(copyTo, filename);
 
-        Stream output = new MemoryStream();
+        await result.Image.SaveAsync(
+          destinationFilepath,
+          imageEncoder
+        );
 
-        if (result.Image.Width != w || result.Image.Height != h)
-          result.Image.Mutate(i => i.Resize(w, h));
-
-        if (string.Equals(result.ImageFormat.Name, "Jpeg", StringComparison.OrdinalIgnoreCase))
-          result.Image.Save(output, new JpegEncoder() { Quality = q });
-
-        else result.Image.Save(output, new PngEncoder());
-
-        output.Seek(0, SeekOrigin.Begin);
-        return this.File(output, result.ImageFormat.DefaultMimeType);
+        this.Response.Headers.Add("DestinationUrl", this.GetDestinationUrl(copyTo, filename));
       }
+
+      Stream output = new MemoryStream();
+      
+      await result.Image.SaveAsync(output, imageEncoder);
+      result.Image.Dispose();
+      output.Seek(0, SeekOrigin.Begin);
+      return this.File(output, this.GetImageMimeType(result.ImageFormat, format));
     }
 
-    private async Task<LoadImageFromUrlResult> LoadImageFromUrlAsync(string url)
+    private async Task<(Image Image, IImageFormat Format)> LoadImageFromUrlAsync(string url)
     {
       if (!Uri.IsWellFormedUriString(url, UriKind.Absolute))
         url = $"{this.Request.Scheme}://{this.Request.Host}{url}";
@@ -74,13 +66,69 @@ namespace Platformus.Images.Controllers
         using (HttpClient httpClient = new HttpClient())
         using (HttpResponseMessage response = await httpClient.GetAsync(url))
         using (Stream inputStream = await response.Content.ReadAsStreamAsync())
-          return new LoadImageFromUrlResult(Image.Load(inputStream, out IImageFormat imageFormat), imageFormat);
+          return await Image.LoadWithFormatAsync(inputStream);
       }
 
       catch (Exception e)
       {
-        return null;
+        return default((Image Image, IImageFormat Format));
       }
+    }
+
+    private void ProcessImage(Image image, Rectangle source, Size destination)
+    {
+        image.Mutate(i => {
+          if (!source.IsEmpty())
+            i.Crop(new SixLabors.ImageSharp.Rectangle(source.X, source.Y, source.Width, source.Height));
+
+          if (!destination.IsEmpty())
+            i.Resize(new SixLabors.ImageSharp.Size(destination.Width, destination.Height));
+        });
+    }
+
+    private IImageEncoder GetImageEncoder(IImageFormat imageFormat, string destinationImageFormatName, int destinationImageQuality)
+    {
+      if (string.IsNullOrEmpty(destinationImageFormatName))
+        destinationImageFormatName = imageFormat.Name;
+
+      if (string.Equals(destinationImageFormatName, "Gif", StringComparison.OrdinalIgnoreCase))
+        return new GifEncoder();
+
+      else if (string.Equals(destinationImageFormatName, "Jpeg", StringComparison.OrdinalIgnoreCase))
+        return new JpegEncoder() { Quality = destinationImageQuality };
+
+      else return new PngEncoder();
+    }
+
+    private string GetImageMimeType(IImageFormat imageFormat, string destinationImageFormatName)
+    {
+      if (string.IsNullOrEmpty(destinationImageFormatName))
+        destinationImageFormatName = imageFormat.Name;
+
+      if (string.Equals(destinationImageFormatName, "Gif", StringComparison.OrdinalIgnoreCase))
+        return "image/gif";
+
+      else if (string.Equals(destinationImageFormatName, "Jpeg", StringComparison.OrdinalIgnoreCase))
+        return "image/jpeg";
+
+      else return "image/png";
+    }
+
+    private string GetFilenameFromUrl(string url)
+    {
+      return url.Split('/').Last();
+    }
+
+    private string GetDestinationFilepath(string destinationBaseUrl, string filename)
+    {
+      string destinationPath = destinationBaseUrl.Trim('/').Replace('/', Path.DirectorySeparatorChar);
+
+      return Path.Combine(this.webHostEnvironment.WebRootPath, destinationPath, filename);
+    }
+
+    private string GetDestinationUrl(string destinationBaseUrl, string filename)
+    {
+      return '/' + destinationBaseUrl.Trim('/') + '/' + filename;
     }
   }
 }

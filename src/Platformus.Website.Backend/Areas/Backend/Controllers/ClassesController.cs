@@ -30,7 +30,7 @@ namespace Platformus.Website.Backend.Controllers
 
     public async Task<IActionResult> IndexAsync([FromQuery]ClassFilter filter = null, string orderBy = "+name", int skip = 0, int take = 10)
     {
-      return this.View(await new IndexViewModelFactory().CreateAsync(
+      return this.View(await IndexViewModelFactory.CreateAsync(
         this.HttpContext, filter,
         await this.Repository.GetAllAsync(filter, orderBy, skip, take, new Inclusion<Class>(c => c.Parent)),
         orderBy, skip, take, await this.Repository.CountAsync(filter)
@@ -41,7 +41,7 @@ namespace Platformus.Website.Backend.Controllers
     [ImportModelStateFromTempData]
     public async Task<IActionResult> CreateOrEditAsync(int? id)
     {
-      return this.View(await new CreateOrEditViewModelFactory().CreateAsync(
+      return this.View(await CreateOrEditViewModelFactory.CreateAsync(
         this.HttpContext, id == null ? null : await this.Repository.GetByIdAsync((int)id)
       ));
     }
@@ -55,7 +55,7 @@ namespace Platformus.Website.Backend.Controllers
 
       if (this.ModelState.IsValid)
       {
-        Class @class = new CreateOrEditViewModelMapper().Map(
+        Class @class = CreateOrEditViewModelMapper.Map(
           createOrEdit.Id == null ? new Class() : await this.Repository.GetByIdAsync((int)createOrEdit.Id),
           createOrEdit
         );
@@ -85,7 +85,7 @@ namespace Platformus.Website.Backend.Controllers
       this.Repository.Delete(@class.Id);
       await this.Storage.SaveAsync();
       Event<IClassDeletedEventHandler, HttpContext, Class>.Broadcast(this.HttpContext, @class);
-      return this.RedirectToAction("Index");
+      return this.Redirect(this.Request.CombineUrl("/backend/classes"));
     }
 
     private async Task<bool> IsCodeUniqueAsync(string code)

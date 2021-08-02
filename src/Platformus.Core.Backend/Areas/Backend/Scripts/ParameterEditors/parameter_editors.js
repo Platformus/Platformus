@@ -15,7 +15,9 @@
     $("<div>").addClass("form__description").html(parameterizableTarget.description).appendTo(parameterEditors);
 
     for (var i = 0; i < parameterizableTarget.parameterGroups.length; i++) {
-      var group = $("<h2>").addClass("form__title").html(parameterizableTarget.parameterGroups[i].name).appendTo(parameterEditors);
+      if (parameterizableTarget.parameterGroups[i].name) {
+        $("<h2>").addClass("form__title").html(parameterizableTarget.parameterGroups[i].name).appendTo(parameterEditors);
+      }
 
       for (var j = 0; j < parameterizableTarget.parameterGroups[i].parameters.length; j++) {
         var parameterEditor = platformus.parameterEditors[parameterizableTarget.parameterGroups[i].parameters[j].javaScriptEditorClassName];

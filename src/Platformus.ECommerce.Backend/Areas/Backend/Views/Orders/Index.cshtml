@@ -11,5 +11,5 @@
 }
 @Html.Partial("_Grid", this.Model.Grid)
 <div class="master-detail__detail-buttons buttons">
-  <a class="buttons__button button button--positive" href="@this.Context.Request.CombineUrl("/backend/orders/create")">@Localizer["Create order"]</a>
+  <positive-button href="@this.Context.Request.CombineUrl("/backend/orders/create")">@Localizer["Create order"]</positive-button>
 </div>

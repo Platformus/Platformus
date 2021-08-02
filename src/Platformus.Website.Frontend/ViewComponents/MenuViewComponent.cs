@@ -38,7 +38,7 @@ namespace Platformus.Website.Frontend.ViewComponents
       if (menu == null)
         return this.Content($"There is no menu with code “{code}” defined.");
 
-      return this.View(new MenuViewModelFactory().Create(this.HttpContext, menu, partialViewName, additionalCssClass));
+      return this.View(MenuViewModelFactory.Create(this.HttpContext, menu, partialViewName, additionalCssClass));
     }
   }
 }

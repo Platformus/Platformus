@@ -5,14 +5,14 @@ using Platformus.Core.Data.Entities;
 
 namespace Platformus.Core.Backend.ViewModels.Shared
 {
-  public class CredentialViewModelFactory : ViewModelFactoryBase
+  public static class CredentialViewModelFactory
   {
-    public CredentialViewModel Create(Credential credential)
+    public static CredentialViewModel Create(Credential credential)
     {
       return new CredentialViewModel()
       {
         Id = credential.Id,
-        CredentialType = new CredentialTypeViewModelFactory().Create(credential.CredentialType),
+        CredentialType = CredentialTypeViewModelFactory.Create(credential.CredentialType),
         Identifier = credential.Identifier
       };
     }

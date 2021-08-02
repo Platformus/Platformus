@@ -34,7 +34,7 @@ namespace Platformus.ECommerce.Frontend.ViewComponents
           }
         ));
 
-      return this.View(new PositionsViewModelFactory().Create(positions, partialViewName, additionalCssClass));
+      return this.View(PositionsViewModelFactory.Create(positions, partialViewName, additionalCssClass));
     }
   }
 }

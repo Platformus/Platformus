@@ -12,24 +12,24 @@ using Platformus.Core.Filters;
 
 namespace Platformus.Core.Backend.ViewModels.Permissions
 {
-  public class IndexViewModelFactory : ViewModelFactoryBase
+  public static class IndexViewModelFactory
   {
-    public IndexViewModel Create(HttpContext httpContext, PermissionFilter filter, IEnumerable<Permission> permissions, string orderBy, int skip, int take, int total)
+    public static IndexViewModel Create(HttpContext httpContext, PermissionFilter filter, IEnumerable<Permission> permissions, string orderBy, int skip, int take, int total)
     {
-      IStringLocalizer<IndexViewModelFactory> localizer = httpContext.GetStringLocalizer<IndexViewModelFactory>();
+      IStringLocalizer<IndexViewModel> localizer = httpContext.GetStringLocalizer<IndexViewModel>();
 
       return new IndexViewModel()
       {
-        Grid = new GridViewModelFactory().Create(
+        Grid = GridViewModelFactory.Create(
           httpContext,
-          new FilterViewModelFactory().Create(httpContext, "Name.Contains", localizer["Name"]),
+          FilterViewModelFactory.Create(httpContext, "Name.Contains", localizer["Name"]),
           orderBy, skip, take, total,
           new[] {
-            new GridColumnViewModelFactory().Create(localizer["Name"], "Name"),
-            new GridColumnViewModelFactory().Create(localizer["Position"], "Position"),
-            new GridColumnViewModelFactory().CreateEmpty()
+            GridColumnViewModelFactory.Create(localizer["Name"], "Name"),
+            GridColumnViewModelFactory.Create(localizer["Position"], "Position"),
+            GridColumnViewModelFactory.CreateEmpty()
           },
-          permissions.Select(p => new PermissionViewModelFactory().Create(p)),
+          permissions.Select(PermissionViewModelFactory.Create),
           "_Permission"
         )
       };

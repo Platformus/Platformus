@@ -30,7 +30,7 @@ namespace Platformus.ECommerce.Backend.Controllers
 
     public async Task<IActionResult> IndexAsync([FromQuery]DeliveryMethodFilter filter = null, string orderBy = "+position", int skip = 0, int take = 10)
     {
-      return this.View(new IndexViewModelFactory().Create(
+      return this.View(IndexViewModelFactory.Create(
         this.HttpContext, filter,
         await this.Repository.GetAllAsync(
           filter, orderBy, skip, take,
@@ -44,7 +44,7 @@ namespace Platformus.ECommerce.Backend.Controllers
     [ImportModelStateFromTempData]
     public async Task<IActionResult> CreateOrEditAsync(int? id)
     {
-      return this.View(new CreateOrEditViewModelFactory().Create(
+      return this.View(CreateOrEditViewModelFactory.Create(
         this.HttpContext, id == null ? null : await this.Repository.GetByIdAsync(
           (int)id, new Inclusion<DeliveryMethod>(dm => dm.Name.Localizations)
         )
@@ -60,7 +60,7 @@ namespace Platformus.ECommerce.Backend.Controllers
 
       if (this.ModelState.IsValid)
       {
-        DeliveryMethod deliveryMethod = new CreateOrEditViewModelMapper().Map(
+        DeliveryMethod deliveryMethod = CreateOrEditViewModelMapper.Map(
           createOrEdit.Id == null ? new DeliveryMethod() : await this.Repository.GetByIdAsync((int)createOrEdit.Id),
           createOrEdit
         );
@@ -92,7 +92,7 @@ namespace Platformus.ECommerce.Backend.Controllers
       this.Repository.Delete(deliveryMethod.Id);
       await this.Storage.SaveAsync();
       Event<IDeliveryMethodCreatedEventHandler, HttpContext, DeliveryMethod>.Broadcast(this.HttpContext, deliveryMethod);
-      return this.RedirectToAction("Index");
+      return this.Redirect(this.Request.CombineUrl("/backend/deliverymethods"));
     }
 
     private async Task<bool> IsCodeUniqueAsync(string code)

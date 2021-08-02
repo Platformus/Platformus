@@ -7,28 +7,15 @@ using Microsoft.AspNetCore.Razor.TagHelpers;
 
 namespace Platformus.Core.Backend
 {
-  [HtmlTargetElement("image-uploader-field", Attributes = ForAttributeName + "," + DestinationBaseUrlAttributeName + "," + WidthAttributeName + "," + HeightAttributeName)]
   public class ImageUploaderFieldTagHelper : TagHelper
   {
-    private const string ForAttributeName = "asp-for";
-    private const string DestinationBaseUrlAttributeName = "asp-destination-base-url";
-    private const string WidthAttributeName = "asp-width";
-    private const string HeightAttributeName = "asp-height";
-
     [HtmlAttributeNotBound]
     [ViewContext]
     public ViewContext ViewContext { get; set; }
-
-    [HtmlAttributeName(ForAttributeName)] 
+    public string Class { get; set; }
     public ModelExpression For { get; set; }
-
-    [HtmlAttributeName(DestinationBaseUrlAttributeName)]
     public string DestinationBaseUrl { get; set; }
-
-    [HtmlAttributeName(WidthAttributeName)]
     public int? Width { get; set; }
-
-    [HtmlAttributeName(HeightAttributeName)]
     public int? Height { get; set; }
 
     public override void Process(TagHelperContext context, TagHelperOutput output)
@@ -36,19 +23,29 @@ namespace Platformus.Core.Backend
       if (this.For == null)
         return;
 
-      output.SuppressOutput();
-      output.Content.Clear();
-      output.Content.AppendHtml(this.GenerateField(output.Attributes));
+      output.TagMode = TagMode.StartTagAndEndTag;
+      output.TagName = TagNames.Div;
+      output.Attributes.SetAttribute(AttributeNames.Class, "form__field field" + (string.IsNullOrEmpty(this.Class) ? null : $" {this.Class}"));
+      output.Content.AppendHtml(this.CreateLabel());
+      output.Content.AppendHtml(this.CreateImageUploader());
     }
 
-    private TagBuilder GenerateField(TagHelperAttributeList attributes)
+    private TagBuilder CreateLabel()
     {
-      TagBuilder tb = new TagBuilder("div");
+      return FieldGenerator.GenerateLabel(this.For.GetLabel(), this.For.GetIdentity());
+    }
 
-      tb.AddCssClass("form__field field");
-      tb.InnerHtml.Clear();
-      tb.InnerHtml.AppendHtml(new FieldGenerator().GenerateLabel(this.For));
-      tb.InnerHtml.AppendHtml(new ImageUploaderGenerator().GenerateImageUploader(this.ViewContext, this.For, attributes, this.DestinationBaseUrl, this.Width, this.Height, "field__image-uploader"));
+    private TagBuilder CreateImageUploader()
+    {
+      TagBuilder tb = ImageUploaderGenerator.Generate(
+        this.For.GetIdentity(),
+        this.DestinationBaseUrl,
+        this.Width,
+        this.Height,
+        this.For.GetValue(this.ViewContext)
+      );
+
+      tb.AddCssClass("field__image-uploader");
       return tb;
     }
   }

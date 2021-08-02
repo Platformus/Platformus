@@ -21,7 +21,7 @@ namespace Platformus.Core.Frontend.ViewComponents
 
     public async Task<IViewComponentResult> InvokeAsync(string partialViewName = null, string additionalCssClass = null)
     {
-      return this.View(new CulturesViewModelFactory().Create(
+      return this.View(CulturesViewModelFactory.Create(
         await this.cultureManager.GetNotNeutralCulturesAsync(),
         partialViewName,
         additionalCssClass

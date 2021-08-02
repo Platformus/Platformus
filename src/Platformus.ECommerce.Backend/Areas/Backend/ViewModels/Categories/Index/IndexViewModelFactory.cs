@@ -3,19 +3,18 @@
 
 using System.Collections.Generic;
 using System.Linq;
-using Platformus.Core.Backend.ViewModels;
 using Platformus.ECommerce.Backend.ViewModels.Shared;
 using Platformus.ECommerce.Data.Entities;
 
 namespace Platformus.ECommerce.Backend.ViewModels.Categories
 {
-  public class IndexViewModelFactory : ViewModelFactoryBase
+  public static class IndexViewModelFactory
   {
-    public IndexViewModel Create(IEnumerable<Category> categories)
+    public static IndexViewModel Create(IEnumerable<Category> categories)
     {
       return new IndexViewModel()
       {
-        Categories = categories.Select(c => new CategoryViewModelFactory().Create(c))
+        Categories = categories.Select(CategoryViewModelFactory.Create)
       };
     }
   }

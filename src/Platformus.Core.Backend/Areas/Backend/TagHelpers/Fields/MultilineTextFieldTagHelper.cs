@@ -7,42 +7,57 @@ using Microsoft.AspNetCore.Razor.TagHelpers;
 
 namespace Platformus.Core.Backend
 {
-  [HtmlTargetElement("multiline-text-field", Attributes = ForAttributeName + "," + HeightAttributeName)]
   public class MultilineTextFieldTagHelper : TagHelper
   {
-    private const string ForAttributeName = "asp-for";
-    private const string HeightAttributeName = "asp-height";
-
     [HtmlAttributeNotBound]
     [ViewContext]
     public ViewContext ViewContext { get; set; }
-
-    [HtmlAttributeName(ForAttributeName)] 
+    public string Class { get; set; }
     public ModelExpression For { get; set; }
-
-    [HtmlAttributeName(HeightAttributeName)]
-    public string Height { get; set; }
+    public Size Height { get; set; } = Size.Large;
 
     public override void Process(TagHelperContext context, TagHelperOutput output)
     {
       if (this.For == null)
         return;
 
-      output.SuppressOutput();
-      output.Content.Clear();
-      output.Content.AppendHtml(this.GenerateField(output.Attributes));
+      output.TagMode = TagMode.StartTagAndEndTag;
+      output.TagName = TagNames.Div;
+      output.Attributes.SetAttribute(AttributeNames.Class, "form__field field" + (string.IsNullOrEmpty(this.Class) ? null : $" {this.Class}"));
+      output.Content.AppendHtml(this.CreateLabel());
+      output.Content.AppendHtml(this.CreateTextArea());
+      output.Content.AppendHtml(this.CreateValidationErrorMessage());
     }
 
-    private TagBuilder GenerateField(TagHelperAttributeList attributes)
+    private TagBuilder CreateLabel()
     {
-      TagBuilder tb = new TagBuilder("div");
+      return FieldGenerator.GenerateLabel(this.For.GetLabel(), this.For.GetIdentity());
+    }
 
-      tb.AddCssClass("form__field field");
-      tb.InnerHtml.Clear();
-      tb.InnerHtml.AppendHtml(new FieldGenerator().GenerateLabel(this.For));
-      tb.InnerHtml.AppendHtml(new TextAreaGenerator().GenerateTextArea(this.ViewContext, this.For, attributes, null, "field__text-area" + (this.Height == "small" ? " field__text-area--small" : null)));
-      tb.InnerHtml.AppendHtml(new ValidationErrorMessageGenerator().GenerateValidationErrorMessage(this.For));
+    private TagBuilder CreateTextArea()
+    {
+      TagBuilder tb = TextAreaGenerator.Generate(
+        this.For.GetIdentity(),
+        this.For.GetValue(this.ViewContext),
+        this.For.HasRequiredAttribute(),
+        this.For.HasStringLengthAttribute() ? this.For.GetMaxStringLength() : null,
+        this.For.IsValid(this.ViewContext)
+      );
+
+      tb.AddCssClass("field__text-area");
+
+      if (this.Height == Size.Medium)
+        tb.AddCssClass("field__text-area--medium");
+
+      else if (this.Height == Size.Small)
+        tb.AddCssClass("field__text-area--small");
+
       return tb;
+    }
+
+    private TagBuilder CreateValidationErrorMessage()
+    {
+      return ValidationErrorMessageGenerator.Generate(this.For.GetIdentity());
     }
   }
 }

@@ -9,16 +9,16 @@
   @ViewBag.Title
 }
 <form class="form" method="post">
-  <single-line-text-field asp-for="Email" />
-  <secret-field asp-for="Password" />
-  <checkbox-field asp-for="RememberMe" />
+  <single-line-text-field for="Email" />
+  <secret-field for="Password" />
+  <checkbox-field class="form__field--separated" for="RememberMe" />
   <div class="form__buttons buttons">
-    <button class="buttons__button button button--positive" type="submit">@Localizer["Sign  in"]</button>
+    <submit-button>@Localizer["Sign in"]</submit-button>
   </div>
   <h2 class="form__title">
     @Localizer["Forgot your password?"]
   </h2>
   <div class="form__buttons buttons">
-    <a class="buttons__button button button--neutral" href="/backend/account/resetpassword">@Localizer["Reset password"]</a>
+    <neutral-button href="/backend/account/resetpassword">@Localizer["Reset password"]</neutral-button>
   </div>
 </form>

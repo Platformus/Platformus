@@ -3,9 +3,9 @@
 
 namespace Platformus.Core.Backend.ViewModels.Shared
 {
-  public class PagerViewModelFactory : ViewModelFactoryBase
+  public static class PagerViewModelFactory
   {
-    public PagerViewModel Create(int skip, int take, int total)
+    public static PagerViewModel Create(int skip, int take, int total)
     {
       return new PagerViewModel()
       {

@@ -36,7 +36,7 @@ namespace Platformus.Core.Backend.Controllers
 
     public async Task<IActionResult> IndexAsync([FromQuery]UserFilter filter = null, string orderBy = "+name", int skip = 0, int take = 10)
     {
-      return this.View(new IndexViewModelFactory().Create(
+      return this.View(IndexViewModelFactory.Create(
         this.HttpContext, filter,
         await this.UserRepository.GetAllAsync(filter, orderBy, skip, take),
         orderBy, skip, take, await this.UserRepository.CountAsync(filter)
@@ -47,7 +47,7 @@ namespace Platformus.Core.Backend.Controllers
     [ImportModelStateFromTempData]
     public async Task<IActionResult> CreateOrEditAsync(int? id)
     {
-      return this.View(await new CreateOrEditViewModelFactory().CreateAsync(
+      return this.View(await CreateOrEditViewModelFactory.CreateAsync(
         this.HttpContext, id == null ? null : await this.UserRepository.GetByIdAsync((int)id, new Inclusion<User>(u => u.UserRoles))
       ));
     }
@@ -58,7 +58,7 @@ namespace Platformus.Core.Backend.Controllers
     {
       if (this.ModelState.IsValid)
       {
-        User user = new CreateOrEditViewModelMapper().Map(
+        User user = CreateOrEditViewModelMapper.Map(
           createOrEdit.Id == null ? new User() : await this.UserRepository.GetByIdAsync((int)createOrEdit.Id, new Inclusion<User>(u => u.UserRoles)),
           createOrEdit
         );
@@ -89,7 +89,7 @@ namespace Platformus.Core.Backend.Controllers
       this.UserRepository.Delete(user.Id);
       await this.Storage.SaveAsync();
       Event<IUserDeletedEventHandler, HttpContext, User>.Broadcast(this.HttpContext, user);
-      return this.RedirectToAction("Index");
+      return this.Redirect(this.Request.CombineUrl("/backend/users"));
     }
 
     private async Task CreateOrEditUserRolesAsync(User user)

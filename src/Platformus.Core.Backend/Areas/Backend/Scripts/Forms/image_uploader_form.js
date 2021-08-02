@@ -138,26 +138,24 @@
     var width = Math.round(frame.width() * factor);
     var height = Math.round(frame.height() * factor);
 
-    $.get(
-      "/backend/imageuploader/getcroppedimageurl",
-      {
-        sourceImageUrl: image.attr("src"),
-        sourceX: x,
-        sourceY: y,
-        sourceWidth: width,
-        sourceHeight: height,
-        destinationBaseUrl: _destinationBaseUrl,
-        destinationWidth: _destinationWidth == null ? width : _destinationWidth,
-        destinationHeight: _destinationHeight == null ? height : _destinationHeight
-      },
-      function (result) {
+    $.ajax({
+      type: "GET",
+      url: "/img?url=" + image.attr("src") +
+        "&source.x=" + x +
+        "&source.y=" + y +
+        "&source.width=" + width +
+        "&source.height=" + height +
+        "&destination.width=" + (_destinationWidth == null ? width : _destinationWidth) +
+        "&destination.height=" + (_destinationHeight == null ? height : _destinationHeight) +
+        "&copyto=" + _destinationBaseUrl,
+      success: function (data, textStatus, request) {
         if (_callback != null) {
-          _callback(result);
+          _callback(request.getResponseHeader("DestinationUrl"));
         }
 
         platformus.forms.imageUploaderForm.hideAndRemove();
       }
-    );
+    });
 
     return false;
   };

@@ -31,6 +31,10 @@
   height: 500px;
 }
 
+.field__text-area--medium {
+  height: 250px;
+}
+
 .field__text-area--small {
   height: 100px;
 }

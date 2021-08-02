@@ -12,28 +12,28 @@ using Platformus.Core.Filters;
 
 namespace Platformus.Core.Backend.ViewModels.Users
 {
-  public class IndexViewModelFactory : ViewModelFactoryBase
+  public static class IndexViewModelFactory
   {
-    public IndexViewModel Create(HttpContext httpContext, UserFilter filter, IEnumerable<User> users, string orderBy, int skip, int take, int total)
+    public static IndexViewModel Create(HttpContext httpContext, UserFilter filter, IEnumerable<User> users, string orderBy, int skip, int take, int total)
     {
-      IStringLocalizer<IndexViewModelFactory> localizer = httpContext.GetStringLocalizer<IndexViewModelFactory>();
+      IStringLocalizer<IndexViewModel> localizer = httpContext.GetStringLocalizer<IndexViewModel>();
 
       return new IndexViewModel()
       {
-        Grid = new GridViewModelFactory().Create(
+        Grid = GridViewModelFactory.Create(
           httpContext,
           new[] {
-            new FilterViewModelFactory().Create(httpContext, "Name.Contains", localizer["Name"]),
-            new FilterViewModelFactory().Create(httpContext, "Credential.Identifier.Contains", localizer["Credential identifier"])
+            FilterViewModelFactory.Create(httpContext, "Name.Contains", localizer["Name"]),
+            FilterViewModelFactory.Create(httpContext, "Credential.Identifier.Contains", localizer["Credential identifier"])
           },
           orderBy, skip, take, total,
           new[] {
-            new GridColumnViewModelFactory().Create(localizer["Name"], "Name"),
-            new GridColumnViewModelFactory().Create(localizer["Credentials"]),
-            new GridColumnViewModelFactory().Create(localizer["Created"], "Created"),
-            new GridColumnViewModelFactory().CreateEmpty()
+            GridColumnViewModelFactory.Create(localizer["Name"], "Name"),
+            GridColumnViewModelFactory.Create(localizer["Credentials"]),
+            GridColumnViewModelFactory.Create(localizer["Created"], "Created"),
+            GridColumnViewModelFactory.CreateEmpty()
           },
-          users.Select(u => new UserViewModelFactory().Create(u)),
+          users.Select(UserViewModelFactory.Create),
           "_User"
         )
       };

@@ -4,18 +4,17 @@
 using System.Collections.Generic;
 using System.Linq;
 using Microsoft.AspNetCore.Http;
-using Platformus.Core.Frontend.ViewModels;
 using Platformus.ECommerce.Data.Entities;
 
 namespace Platformus.ECommerce.Frontend.ViewModels.Shared
 {
-  public class CatalogViewModelFactory : ViewModelFactoryBase
+  public static class CatalogViewModelFactory
   {
-    public CatalogViewModel Create(HttpContext httpContext, IEnumerable<Category> categories, string partialViewName, string additionalCssClass)
+    public static CatalogViewModel Create(HttpContext httpContext, IEnumerable<Category> categories, string partialViewName, string additionalCssClass)
     {
       return new CatalogViewModel()
       {
-        Categories = categories.Select(c => new CategoryViewModelFactory().Create(httpContext, c)),
+        Categories = categories.Select(c => CategoryViewModelFactory.Create(httpContext, c)),
         PartialViewName = partialViewName ?? "_Catalog",
         AdditionalCssClass = additionalCssClass
       };

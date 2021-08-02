@@ -5,22 +5,21 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using ExtCore.Infrastructure;
-using Platformus.Core.Backend.ViewModels;
 using Platformus.Core.Primitives;
 using Platformus.Website.Data.Entities;
 using Platformus.Website.DataProviders;
 
 namespace Platformus.Website.Backend.ViewModels.DataSources
 {
-  public class CreateOrEditViewModelFactory : ViewModelFactoryBase
+  public static class CreateOrEditViewModelFactory
   {
-    public CreateOrEditViewModel Create(DataSource dataSource)
+    public static CreateOrEditViewModel Create(DataSource dataSource)
     {
       if (dataSource == null)
         return new CreateOrEditViewModel()
         {
-          DataProviderCSharpClassNameOptions = this.GetDataProviderCSharpClassNameOptions(),
-          DataProviders = this.GetDataProviders()
+          DataProviderCSharpClassNameOptions = GetDataProviderCSharpClassNameOptions(),
+          DataProviders = GetDataProviders()
         };
 
       return new CreateOrEditViewModel()
@@ -28,20 +27,20 @@ namespace Platformus.Website.Backend.ViewModels.DataSources
         Id = dataSource.Id,
         Code = dataSource.Code,
         DataProviderCSharpClassName = dataSource.DataProviderCSharpClassName,
-        DataProviderCSharpClassNameOptions = this.GetDataProviderCSharpClassNameOptions(),
+        DataProviderCSharpClassNameOptions = GetDataProviderCSharpClassNameOptions(),
         DataProviderParameters = dataSource.DataProviderParameters,
-        DataProviders = this.GetDataProviders()
+        DataProviders = GetDataProviders()
       };
     }
 
-    private IEnumerable<Option> GetDataProviderCSharpClassNameOptions()
+    private static IEnumerable<Option> GetDataProviderCSharpClassNameOptions()
     {
       return ExtensionManager.GetImplementations<IDataProvider>().Where(t => !t.GetTypeInfo().IsAbstract).Select(
         t => new Option(t.FullName)
       );
     }
 
-    private IEnumerable<dynamic> GetDataProviders()
+    private static IEnumerable<dynamic> GetDataProviders()
     {
       return ExtensionManager.GetInstances<IDataProvider>().Where(dp => !dp.GetType().GetTypeInfo().IsAbstract).Select(
         dp => new {

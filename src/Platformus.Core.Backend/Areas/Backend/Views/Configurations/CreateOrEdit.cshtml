@@ -10,10 +10,10 @@
   @ViewBag.Title
 }
 <form class="form" method="post">
-  <single-line-text-field asp-for="Code" />
-  <single-line-text-field asp-for="Name" />
+  <single-line-text-field for="Code" />
+  <single-line-text-field for="Name" />
   <div class="form__buttons buttons">
-    <button class="buttons__button button button--positive" type="submit">@Localizer["Save"]</button>
-    <a class="buttons__button button button--neutral" href="/backend/configurations">@Localizer["Cancel"]</a>
+    <submit-button>@Localizer["Save"]</submit-button>
+    <neutral-button href="/backend/configurations">@Localizer["Cancel"]</neutral-button>
   </div>
 </form>

@@ -3,19 +3,18 @@
 
 using System.Collections.Generic;
 using System.Linq;
-using Platformus.Core.Backend.ViewModels;
 using Platformus.Website.Backend.ViewModels.Shared;
 using Platformus.Website.Data.Entities;
 
 namespace Platformus.Website.Backend.ViewModels.Menus
 {
-  public class IndexViewModelFactory : ViewModelFactoryBase
+  public static class IndexViewModelFactory
   {
-    public IndexViewModel Create(IEnumerable<Menu> menus)
+    public static IndexViewModel Create(IEnumerable<Menu> menus)
     {
       return new IndexViewModel()
       {
-        Menus = menus.Select(m => new MenuViewModelFactory().Create(m))
+        Menus = menus.Select(MenuViewModelFactory.Create)
       };
     }
   }

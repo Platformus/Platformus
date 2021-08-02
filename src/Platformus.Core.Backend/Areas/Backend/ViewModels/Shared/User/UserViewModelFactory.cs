@@ -5,9 +5,9 @@ using Platformus.Core.Data.Entities;
 
 namespace Platformus.Core.Backend.ViewModels.Shared
 {
-  public class UserViewModelFactory : ViewModelFactoryBase
+  public static class UserViewModelFactory
   {
-    public UserViewModel Create(User user)
+    public static UserViewModel Create(User user)
     {
       return new UserViewModel()
       {

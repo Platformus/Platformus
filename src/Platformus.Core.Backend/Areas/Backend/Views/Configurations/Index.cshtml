@@ -9,14 +9,14 @@
 @section title {
   @ViewBag.Title
 }
-<div class="tree">
+<tree>
   @foreach (var configuration in this.Model.Configurations)
   {
     @Html.Partial("_Configuration", configuration)
   }
-  <div class="tree__node">
+  <tree-node>
     <div class="tree__buttons buttons">
-      <a class="buttons__button buttons__button--minor button button--positive button--minor" href="/backend/configurations/create">@Localizer["Create configuration"]</a>
+      <positive-button is-minor="true" href="/backend/configurations/create">@Localizer["Create configuration"]</positive-button>
     </div>
-  </div>
-</div>
+  </tree-node>
+</tree>

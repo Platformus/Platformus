@@ -10,61 +10,80 @@ using Platformus.Core.Primitives;
 
 namespace Platformus.Core.Backend
 {
-  [HtmlTargetElement("multilingual-multiline-text-field", Attributes = ForAttributeName + "," + LocalizationsAttributeName + "," + HeightAttributeName)]
   public class MultilingualMultilineTextFieldTagHelper : TagHelper
   {
-    private const string ForAttributeName = "asp-for";
-    private const string LocalizationsAttributeName = "asp-localizations";
-    private const string HeightAttributeName = "asp-height";
-
     [HtmlAttributeNotBound]
     [ViewContext]
     public ViewContext ViewContext { get; set; }
-
-    [HtmlAttributeName(ForAttributeName)] 
+    public string Class { get; set; }
     public ModelExpression For { get; set; }
-
-    [HtmlAttributeName(LocalizationsAttributeName)]
     public IEnumerable<Localization> Localizations { get; set; }
-
-    [HtmlAttributeName(HeightAttributeName)]
-    public string Height { get; set; }
+    public Size Height { get; set; } = Size.Large;
 
     public override void Process(TagHelperContext context, TagHelperOutput output)
     {
       if (this.For == null)
         return;
 
-      output.SuppressOutput();
-      output.Content.Clear();
-      output.Content.AppendHtml(this.GenerateField(output.Attributes));
-    }
-
-    private TagBuilder GenerateField(TagHelperAttributeList attributes)
-    {
-      TagBuilder tb = new TagBuilder("div");
-
-      tb.AddCssClass("form__field field field--multilingual");
-
-      FieldGenerator fieldGenerator = new FieldGenerator();
-
-      tb.InnerHtml.Clear();
-      tb.InnerHtml.AppendHtml(fieldGenerator.GenerateLabel(this.For));
+      output.TagMode = TagMode.StartTagAndEndTag;
+      output.TagName = TagNames.Div;
+      output.Attributes.SetAttribute(AttributeNames.Class, "form__field field field--multilingual" + (string.IsNullOrEmpty(this.Class) ? null : $" {this.Class}"));
+      output.Content.AppendHtml(this.CreateLabel());
 
       foreach (Localization localization in this.Localizations)
       {
         if (localization.Culture.Id != NeutralCulture.Id)
         {
-          tb.InnerHtml.AppendHtml(fieldGenerator.GenerateCulture(localization, true));
-          tb.InnerHtml.AppendHtml(new TextAreaGenerator().GenerateTextArea(this.ViewContext, this.For, attributes, localization, "field__text-area field__text-area--multilingual" + (this.Height == "small" ? " field__text-area--small" : null)));
-          tb.InnerHtml.AppendHtml(new ValidationErrorMessageGenerator().GenerateValidationErrorMessage(this.For, localization));
+          output.Content.AppendHtml(this.CreateCulture(localization));
+          output.Content.AppendHtml(this.CreateTextArea(localization));
+          output.Content.AppendHtml(this.CreateValidationErrorMessage(localization));
 
           if (localization != this.Localizations.Last())
-            tb.InnerHtml.AppendHtml(fieldGenerator.GenerateMultilingualSeparator());
+            output.Content.AppendHtml(this.CreateMultilingualSeparator());
         }
       }
+    }
 
+    private TagBuilder CreateLabel()
+    {
+      return FieldGenerator.GenerateLabel(this.For.GetLabel(), this.For.GetIdentity());
+    }
+
+    private TagBuilder CreateCulture(Localization localization)
+    {
+      return FieldGenerator.GenerateCulture(localization, false);
+    }
+
+    private TagBuilder CreateTextArea(Localization localization)
+    {
+      TagBuilder tb = TextAreaGenerator.Generate(
+        this.For.GetIdentity(localization),
+        this.For.GetValue(this.ViewContext, localization),
+        this.For.HasRequiredAttribute(),
+        this.For.HasStringLengthAttribute() ? this.For.GetMaxStringLength() : null,
+        this.For.IsValid(this.ViewContext, localization)
+      );
+
+      tb.AddCssClass("field__text-area field__text-area--multilingual");
+
+      if (this.Height == Size.Medium)
+        tb.AddCssClass("field__text-area--medium");
+
+      else if (this.Height == Size.Small)
+        tb.AddCssClass("field__text-area--small");
+
+      tb.MergeAttribute("data-culture", localization.Culture.Id);
       return tb;
+    }
+
+    private TagBuilder CreateValidationErrorMessage(Localization localization)
+    {
+      return ValidationErrorMessageGenerator.Generate(this.For.GetIdentity(localization));
+    }
+
+    private TagBuilder CreateMultilingualSeparator()
+    {
+      return FieldGenerator.GenerateMultilingualSeparator();
     }
   }
 }

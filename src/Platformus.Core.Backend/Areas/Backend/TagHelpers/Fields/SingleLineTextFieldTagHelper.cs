@@ -7,16 +7,12 @@ using Microsoft.AspNetCore.Razor.TagHelpers;
 
 namespace Platformus.Core.Backend
 {
-  [HtmlTargetElement("single-line-text-field", Attributes = ForAttributeName)]
   public class SingleLineTextFieldTagHelper : TagHelper
   {
-    private const string ForAttributeName = "asp-for";
-
     [HtmlAttributeNotBound]
     [ViewContext]
     public ViewContext ViewContext { get; set; }
-
-    [HtmlAttributeName(ForAttributeName)] 
+    public string Class { get; set; }
     public ModelExpression For { get; set; }
 
     public override void Process(TagHelperContext context, TagHelperOutput output)
@@ -24,21 +20,37 @@ namespace Platformus.Core.Backend
       if (this.For == null)
         return;
 
-      output.SuppressOutput();
-      output.Content.Clear();
-      output.Content.AppendHtml(this.GenerateField(output.Attributes));
+      output.TagMode = TagMode.StartTagAndEndTag;
+      output.TagName = TagNames.Div;
+      output.Attributes.SetAttribute(AttributeNames.Class, "form__field field" + (string.IsNullOrEmpty(this.Class) ? null : $" {this.Class}"));
+      output.Content.AppendHtml(this.CreateLabel());
+      output.Content.AppendHtml(this.CreateTextBox());
+      output.Content.AppendHtml(this.CreateValidationErrorMessage());
     }
 
-    private TagBuilder GenerateField(TagHelperAttributeList attributes)
+    private TagBuilder CreateLabel()
     {
-      TagBuilder tb = new TagBuilder("div");
+      return FieldGenerator.GenerateLabel(this.For.GetLabel(), this.For.GetIdentity());
+    }
 
-      tb.AddCssClass("form__field field");
-      tb.InnerHtml.Clear();
-      tb.InnerHtml.AppendHtml(new FieldGenerator().GenerateLabel(this.For));
-      tb.InnerHtml.AppendHtml(new TextBoxGenerator().GenerateTextBox(this.ViewContext, this.For, attributes, null, "text", "field__text-box"));
-      tb.InnerHtml.AppendHtml(new ValidationErrorMessageGenerator().GenerateValidationErrorMessage(this.For));
+    private TagBuilder CreateTextBox()
+    {
+      TagBuilder tb = TextBoxGenerator.Generate(
+        this.For.GetIdentity(),
+        InputTypes.Text,
+        this.For.GetValue(this.ViewContext),
+        this.For.HasRequiredAttribute(),
+        this.For.HasStringLengthAttribute() ? this.For.GetMaxStringLength() : null,
+        this.For.IsValid(this.ViewContext)
+      );
+
+      tb.AddCssClass("field__text-box");
       return tb;
+    }
+
+    private TagBuilder CreateValidationErrorMessage()
+    {
+      return ValidationErrorMessageGenerator.Generate(this.For.GetIdentity());
     }
   }
 }

@@ -7,7 +7,6 @@ using System.Threading.Tasks;
 using Magicalizer.Data.Repositories.Abstractions;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Localization;
-using Platformus.Core.Backend.ViewModels;
 using Platformus.Core.Backend.ViewModels.Shared;
 using Platformus.Core.Extensions;
 using Platformus.Core.Primitives;
@@ -17,37 +16,37 @@ using Platformus.ECommerce.Filters;
 
 namespace Platformus.ECommerce.Backend.ViewModels.Products
 {
-  public class IndexViewModelFactory : ViewModelFactoryBase
+  public static class IndexViewModelFactory
   {
-    public async Task<IndexViewModel> CreateAsync(HttpContext httpContext, ProductFilter filter, IEnumerable<Product> products, string orderBy, int skip, int take, int total)
+    public static async Task<IndexViewModel> CreateAsync(HttpContext httpContext, ProductFilter filter, IEnumerable<Product> products, string orderBy, int skip, int take, int total)
     {
-      IStringLocalizer<IndexViewModelFactory> localizer = httpContext.GetStringLocalizer<IndexViewModelFactory>();
+      IStringLocalizer<IndexViewModel> localizer = httpContext.GetStringLocalizer<IndexViewModel>();
 
       return new IndexViewModel()
       {
-        Grid = new GridViewModelFactory().Create(
+        Grid = GridViewModelFactory.Create(
           httpContext,
           new[] {
-            new FilterViewModelFactory().Create(httpContext, "Category.Id.Equals", localizer["Category"], await this.GetCategoryOptionsAsync(httpContext)),
-            new FilterViewModelFactory().Create(httpContext, "Name.Value.Contains", localizer["Name"])
+            FilterViewModelFactory.Create(httpContext, "Category.Id.Equals", localizer["Category"], await GetCategoryOptionsAsync(httpContext)),
+            FilterViewModelFactory.Create(httpContext, "Name.Value.Contains", localizer["Name"])
           },
           orderBy, skip, take, total,
           new[] {
-            new GridColumnViewModelFactory().Create(localizer["Category"]),
-            new GridColumnViewModelFactory().Create(localizer["Name"], httpContext.CreateLocalizedOrderBy("Name")),
-            new GridColumnViewModelFactory().Create(localizer["Units"], httpContext.CreateLocalizedOrderBy("Units")),
-            new GridColumnViewModelFactory().Create(localizer["Price"], "Price"),
-            new GridColumnViewModelFactory().CreateEmpty()
+            GridColumnViewModelFactory.Create(localizer["Category"]),
+            GridColumnViewModelFactory.Create(localizer["Name"], httpContext.CreateLocalizedOrderBy("Name")),
+            GridColumnViewModelFactory.Create(localizer["Units"], httpContext.CreateLocalizedOrderBy("Units")),
+            GridColumnViewModelFactory.Create(localizer["Price"], "Price"),
+            GridColumnViewModelFactory.CreateEmpty()
           },
-          products.Select(p => new ProductViewModelFactory().Create(p)),
+          products.Select(ProductViewModelFactory.Create),
           "_Product"
         )
       };
     }
 
-    private async Task<IEnumerable<Option>> GetCategoryOptionsAsync(HttpContext httpContext)
+    private static async Task<IEnumerable<Option>> GetCategoryOptionsAsync(HttpContext httpContext)
     {
-      IStringLocalizer<IndexViewModelFactory> localizer = httpContext.GetStringLocalizer<IndexViewModelFactory>();
+      IStringLocalizer<IndexViewModel> localizer = httpContext.GetStringLocalizer<IndexViewModel>();
       List<Option> options = new List<Option>();
 
       options.Add(new Option(localizer["All categories"], string.Empty));

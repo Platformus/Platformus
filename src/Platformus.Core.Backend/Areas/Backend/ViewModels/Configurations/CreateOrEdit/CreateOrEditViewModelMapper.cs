@@ -5,9 +5,9 @@ using Platformus.Core.Data.Entities;
 
 namespace Platformus.Core.Backend.ViewModels.Configurations
 {
-  public class CreateOrEditViewModelMapper : ViewModelMapperBase
+  public static class CreateOrEditViewModelMapper
   {
-    public Configuration Map(Configuration configuration, CreateOrEditViewModel createOrEdit)
+    public static Configuration Map(Configuration configuration, CreateOrEditViewModel createOrEdit)
     {
       configuration.Code = createOrEdit.Code;
       configuration.Name = createOrEdit.Name;

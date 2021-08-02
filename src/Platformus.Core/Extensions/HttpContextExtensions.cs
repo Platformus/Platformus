@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Globalization;
+using System.Linq;
 using System.Threading.Tasks;
 using Magicalizer.Data.Repositories.Abstractions;
 using Microsoft.AspNetCore.Http;
@@ -9,6 +11,7 @@ using Microsoft.AspNetCore.Mvc.Infrastructure;
 using Microsoft.AspNetCore.Routing;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Localization;
+using Platformus.Core.Data.Entities;
 using Platformus.Core.Services.Abstractions;
 
 namespace Platformus.Core.Extensions
@@ -43,14 +46,38 @@ namespace Platformus.Core.Extensions
       return httpContext.RequestServices.GetService<ICultureManager>();
     }
 
-    public static string CreateLocalizedOrderBy(this HttpContext httpContext, string propertyName)
-    {
-      return $"{propertyName}.Localizations.First(l=>l.Culture.Id=\"{CultureInfo.CurrentUICulture.TwoLetterISOLanguageName}\").Value";
-    }
-
     public static IUserManager GetUserManager(this HttpContext httpContext)
     {
       return httpContext.RequestServices.GetService<IUserManager>();
+    }
+
+    public static IEnumerable<Primitives.Localization> GetLocalizations(this HttpContext httpContext, Data.Entities.Dictionary dictionary = null)
+    {
+      List<Primitives.Localization> localizations = new List<Primitives.Localization>();
+
+      foreach (Culture culture in httpContext.GetCultureManager().GetCulturesAsync().Result)
+      {
+        Primitives.Localization localization;
+
+        if (dictionary == null)
+          localization = new Primitives.Localization(
+            new Primitives.Culture(culture.Id)
+          );
+
+        else localization = new Primitives.Localization(
+          new Primitives.Culture(culture.Id),
+          dictionary.Localizations.FirstOrDefault(l => l.CultureId == culture.Id)?.Value
+        );
+
+        localizations.Add(localization);
+      }
+
+      return localizations;
+    }
+
+    public static string CreateLocalizedOrderBy(this HttpContext httpContext, string propertyName)
+    {
+      return $"{propertyName}.Localizations.First(l=>l.Culture.Id=\"{CultureInfo.CurrentUICulture.TwoLetterISOLanguageName}\").Value";
     }
 
     public static async Task ExecuteResultAsync(this HttpContext httpContext, IActionResult result)

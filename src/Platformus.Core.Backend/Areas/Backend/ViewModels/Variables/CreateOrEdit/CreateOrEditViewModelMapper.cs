@@ -6,9 +6,9 @@ using Platformus.Core.Filters;
 
 namespace Platformus.Core.Backend.ViewModels.Variables
 {
-  public class CreateOrEditViewModelMapper : ViewModelMapperBase
+  public static class CreateOrEditViewModelMapper
   {
-    public Variable Map(VariableFilter filter, Variable variable, CreateOrEditViewModel createOrEdit)
+    public static Variable Map(VariableFilter filter, Variable variable, CreateOrEditViewModel createOrEdit)
     {
       if (variable.Id == 0)
         variable.ConfigurationId = (int)filter.Configuration.Id;

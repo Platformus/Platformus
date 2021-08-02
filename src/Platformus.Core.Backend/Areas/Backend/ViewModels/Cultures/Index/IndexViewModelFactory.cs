@@ -12,27 +12,27 @@ using Platformus.Core.Filters;
 
 namespace Platformus.Core.Backend.ViewModels.Cultures
 {
-  public class IndexViewModelFactory : ViewModelFactoryBase
+  public static class IndexViewModelFactory
   {
-    public IndexViewModel Create(HttpContext httpContext, CultureFilter filter, IEnumerable<Culture> cultures, string orderBy, int skip, int take, int total)
+    public static IndexViewModel Create(HttpContext httpContext, CultureFilter filter, IEnumerable<Culture> cultures, string orderBy, int skip, int take, int total)
     {
-      IStringLocalizer<IndexViewModelFactory> localizer = httpContext.GetStringLocalizer<IndexViewModelFactory>();
+      IStringLocalizer<IndexViewModel> localizer = httpContext.GetStringLocalizer<IndexViewModel>();
 
       return new IndexViewModel()
       {
-        Grid = new GridViewModelFactory().Create(
+        Grid = GridViewModelFactory.Create(
           httpContext,
           new[] {
-            new FilterViewModelFactory().Create(httpContext, "Id", localizer["Two letter country code (ISO 3166)"]),
-            new FilterViewModelFactory().Create(httpContext, "Name.Contains", localizer["Name"])
+            FilterViewModelFactory.Create(httpContext, "Id", localizer["Two letter country code (ISO 3166)"]),
+            FilterViewModelFactory.Create(httpContext, "Name.Contains", localizer["Name"])
           },
           orderBy, skip, take, total,
           new[] {
-            new GridColumnViewModelFactory().Create(localizer["Two letter country code (ISO 3166)"], "Id"),
-            new GridColumnViewModelFactory().Create(localizer["Name"], "Name"),
-            new GridColumnViewModelFactory().CreateEmpty()
+            GridColumnViewModelFactory.Create(localizer["Two letter country code (ISO 3166)"], "Id"),
+            GridColumnViewModelFactory.Create(localizer["Name"], "Name"),
+            GridColumnViewModelFactory.CreateEmpty()
           },
-          cultures.Select(c => new CultureViewModelFactory().Create(c)),
+          cultures.Select(CultureViewModelFactory.Create),
           "_Culture"
         )
       };

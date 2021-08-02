@@ -7,7 +7,6 @@ using System.Threading.Tasks;
 using Magicalizer.Data.Repositories.Abstractions;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Localization;
-using Platformus.Core.Backend.ViewModels;
 using Platformus.Core.Backend.ViewModels.Shared;
 using Platformus.Core.Extensions;
 using Platformus.Website.Backend.ViewModels.Shared;
@@ -16,9 +15,9 @@ using Platformus.Website.Filters;
 
 namespace Platformus.Website.Backend.ViewModels.Objects
 {
-  public class IndexViewModelFactory : ViewModelFactoryBase
+  public static class IndexViewModelFactory
   {
-    public async Task<IndexViewModel> CreateAsync(HttpContext httpContext, ObjectFilter filter, IEnumerable<Object> objects, string orderBy, int skip, int take, int total)
+    public static async Task<IndexViewModel> CreateAsync(HttpContext httpContext, ObjectFilter filter, IEnumerable<Object> objects, string orderBy, int skip, int take, int total)
     {
       Class @class = filter?.Class?.Id == null ? null : await httpContext.GetStorage().GetRepository<int, Class, ClassFilter>().GetByIdAsync(
         (int)filter.Class.Id,
@@ -30,18 +29,18 @@ namespace Platformus.Website.Backend.ViewModels.Objects
 
       return new IndexViewModel()
       {
-        Class = @class == null ? null : new ClassViewModelFactory().Create(@class),
-        ClassesByAbstractClasses = await this.GetClassesByAbstractClassesAsync(httpContext),
-        Grid = @class == null ? null : new GridViewModelFactory().Create(
+        Class = @class == null ? null : ClassViewModelFactory.Create(@class),
+        ClassesByAbstractClasses = await GetClassesByAbstractClassesAsync(httpContext),
+        Grid = @class == null ? null : GridViewModelFactory.Create(
           httpContext, orderBy, skip, take, total,
-          this.GetGridColumns(@class),
-          objects.Select(o => new ObjectViewModelFactory().Create(o, @class.GetVisibleInListMembers())),
+          GetGridColumns(@class),
+          objects.Select(o => ObjectViewModelFactory.Create(o, @class.GetVisibleInListMembers())),
           "_Object"
         )
       };
     }
 
-    private async Task<IDictionary<ClassViewModel, IEnumerable<ClassViewModel>>> GetClassesByAbstractClassesAsync(HttpContext httpContext)
+    private static async Task<IDictionary<ClassViewModel, IEnumerable<ClassViewModel>>> GetClassesByAbstractClassesAsync(HttpContext httpContext)
     {
       List<Class> abstractClasses = (await httpContext.GetStorage().GetRepository<int, Class, ClassFilter>().GetAllAsync(new ClassFilter(isAbstract: true), inclusions: new Inclusion<Class>(c => c.Classes))).ToList();
       
@@ -56,24 +55,24 @@ namespace Platformus.Website.Backend.ViewModels.Objects
 
       if (classes.Count() != 0)
       {
-        IStringLocalizer<IndexViewModelFactory> localizer = httpContext.GetStringLocalizer<IndexViewModelFactory>();
+        IStringLocalizer<IndexViewModel> localizer = httpContext.GetStringLocalizer<IndexViewModel>();
 
         abstractClasses.Add(new Class() { PluralizedName = localizer["Others"], Classes = classes });
       }
 
       return abstractClasses.ToDictionary(
-        ac => new ClassViewModelFactory().Create(ac),
-        ac => ac.Classes.Select(c => new ClassViewModelFactory().Create(c))
+        ac => ClassViewModelFactory.Create(ac),
+        ac => ac.Classes.Select(c => ClassViewModelFactory.Create(c))
       );
     }
 
-    private IEnumerable<GridColumnViewModel> GetGridColumns(Class @class)
+    private static IEnumerable<GridColumnViewModel> GetGridColumns(Class @class)
     {
       List<GridColumnViewModel> gridColumns = @class.GetVisibleInListMembers().Select(
-        m => new GridColumnViewModelFactory().Create(m.Name)
+        m => GridColumnViewModelFactory.Create(m.Name)
       ).ToList();
 
-      gridColumns.Add(new GridColumnViewModelFactory().CreateEmpty());
+      gridColumns.Add(GridColumnViewModelFactory.CreateEmpty());
       return gridColumns;
     }
   }

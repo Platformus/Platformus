@@ -9,40 +9,41 @@ using Platformus.Core.Primitives;
 
 namespace Platformus.Core.Backend
 {
-  [HtmlTargetElement("radio-button-list-field", Attributes = ForAttributeName + "," + OptionsAttributeName)]
   public class RadioButtonListFieldTagHelper : TagHelper
   {
-    private const string ForAttributeName = "asp-for";
-    private const string OptionsAttributeName = "asp-options";
-
     [HtmlAttributeNotBound]
     [ViewContext]
     public ViewContext ViewContext { get; set; }
-
-    [HtmlAttributeName(ForAttributeName)] 
+    public string Class { get; set; }
     public ModelExpression For { get; set; }
-
-    [HtmlAttributeName(OptionsAttributeName)]
     public IEnumerable<Option> Options { get; set; }
 
     public override void Process(TagHelperContext context, TagHelperOutput output)
     {
-      if (this.ViewContext == null || this.For == null || this.Options == null)
+      if (this.For == null || this.Options == null)
         return;
 
-      output.SuppressOutput();
-      output.Content.Clear();
-      output.Content.AppendHtml(this.GenerateField(output.Attributes));
+      output.TagMode = TagMode.StartTagAndEndTag;
+      output.TagName = TagNames.Div;
+      output.Attributes.SetAttribute(AttributeNames.Class, "form__field field" + (string.IsNullOrEmpty(this.Class) ? null : $" {this.Class}"));
+      output.Content.AppendHtml(this.CreateLabel());
+      output.Content.AppendHtml(this.CreateRadioButtonList());
     }
 
-    private TagBuilder GenerateField(TagHelperAttributeList attributes)
+    private TagBuilder CreateLabel()
     {
-      TagBuilder tb = new TagBuilder("div");
+      return FieldGenerator.GenerateLabel(this.For.GetLabel(), this.For.GetIdentity());
+    }
 
-      tb.AddCssClass("form__field field");
-      tb.InnerHtml.Clear();
-      tb.InnerHtml.AppendHtml(new FieldGenerator().GenerateLabel(this.For));
-      tb.InnerHtml.AppendHtml(new RadioButtonListGenerator().GenerateRadioButtonList(this.ViewContext, this.For, this.Options, attributes, "field__radio-button-list"));
+    private TagBuilder CreateRadioButtonList()
+    {
+      TagBuilder tb = RadioButtonListGenerator.Generate(
+        this.For.GetIdentity(),
+        this.Options,
+        this.For.GetValue(this.ViewContext)
+      );
+
+      tb.AddCssClass("field__radio-button-list");
       return tb;
     }
   }

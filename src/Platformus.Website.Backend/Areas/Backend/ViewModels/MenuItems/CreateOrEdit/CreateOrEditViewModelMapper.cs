@@ -1,15 +1,14 @@
 ﻿// Copyright © 2020 Dmitry Sikorsky. All rights reserved.
 // Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information.
 
-using Platformus.Core.Backend.ViewModels;
 using Platformus.Website.Data.Entities;
 using Platformus.Website.Filters;
 
 namespace Platformus.Website.Backend.ViewModels.MenuItems
 {
-  public class CreateOrEditViewModelMapper : ViewModelMapperBase
+  public static class CreateOrEditViewModelMapper
   {
-    public MenuItem Map(MenuItemFilter filter, MenuItem menuItem, CreateOrEditViewModel createOrEdit)
+    public static MenuItem Map(MenuItemFilter filter, MenuItem menuItem, CreateOrEditViewModel createOrEdit)
     {
       if (menuItem.Id == 0)
       {

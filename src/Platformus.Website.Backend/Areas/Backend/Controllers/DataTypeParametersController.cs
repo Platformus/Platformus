@@ -27,7 +27,7 @@ namespace Platformus.Website.Backend.Controllers
 
     public async Task<IActionResult> IndexAsync([FromQuery]DataTypeParameterFilter filter = null, string orderBy = "+name", int skip = 0, int take = 10)
     {
-      return this.View(new IndexViewModelFactory().Create(
+      return this.View(IndexViewModelFactory.Create(
         this.HttpContext, filter,
         await this.Repository.GetAllAsync(filter, orderBy, skip, take),
         orderBy, skip, take, await this.Repository.CountAsync(filter)
@@ -38,7 +38,7 @@ namespace Platformus.Website.Backend.Controllers
     [ImportModelStateFromTempData]
     public async Task<IActionResult> CreateOrEditAsync(int? id)
     {
-      return this.View(new CreateOrEditViewModelFactory().Create(
+      return this.View(CreateOrEditViewModelFactory.Create(
         id == null ? null : await this.Repository.GetByIdAsync((int)id)
       ));
     }
@@ -52,7 +52,7 @@ namespace Platformus.Website.Backend.Controllers
 
       if (this.ModelState.IsValid)
       {
-        DataTypeParameter dataTypeParameter = new CreateOrEditViewModelMapper().Map(
+        DataTypeParameter dataTypeParameter = CreateOrEditViewModelMapper.Map(
           filter,
           createOrEdit.Id == null ? new DataTypeParameter() : await this.Repository.GetByIdAsync((int)createOrEdit.Id),
           createOrEdit
@@ -76,7 +76,7 @@ namespace Platformus.Website.Backend.Controllers
 
       this.Repository.Delete(dataTypeParameter.Id);
       await this.Storage.SaveAsync();
-      return this.Redirect(string.Format("/backend/datatypeparameters?datatype.id={0}", dataTypeParameter.DataTypeId));
+      return this.Redirect(this.Request.CombineUrl("/backend/datatypeparameters"));
     }
 
     private async Task<bool> IsCodeUniqueAsync(DataTypeParameterFilter filter, string code)

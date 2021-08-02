@@ -27,7 +27,7 @@ namespace Platformus.Website.Backend.Controllers
 
     public async Task<IActionResult> IndexAsync([FromQuery]CompletedFormFilter filter = null, string orderBy = "-created", int skip = 0, int take = 10)
     {
-      return this.View(new IndexViewModelFactory().Create(
+      return this.View(IndexViewModelFactory.Create(
         this.HttpContext, filter,
         await this.Repository.GetAllAsync(filter, orderBy, skip, take, new Inclusion<CompletedForm>(cf => cf.Form.Name.Localizations)),
         orderBy, skip, take, await this.Repository.CountAsync(filter)
@@ -36,8 +36,12 @@ namespace Platformus.Website.Backend.Controllers
 
     public async Task<IActionResult> ViewAsync(int id)
     {
-      return this.View(new ViewViewModelFactory().Create(
-        await this.Repository.GetByIdAsync(id, new Inclusion<CompletedForm>("CompletedFields"))
+      return this.View(ViewViewModelFactory.Create(
+        await this.Repository.GetByIdAsync(
+          id,
+          new Inclusion<CompletedForm>("CompletedFields.Field.FieldType"),
+          new Inclusion<CompletedForm>("CompletedFields.Field.Name.Localizations")
+        )
       ));
     }
 
@@ -45,7 +49,7 @@ namespace Platformus.Website.Backend.Controllers
     {
       this.Repository.Delete(id);
       await this.Storage.SaveAsync();
-      return this.RedirectToAction("Index");
+      return this.Redirect(this.Request.CombineUrl("/backend/completedforms"));
     }
   }
 }

@@ -2,43 +2,33 @@
 // Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information.
 
 using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.AspNetCore.Mvc.ViewFeatures;
-using Microsoft.AspNetCore.Razor.TagHelpers;
-using Platformus.Core.Primitives;
 
 namespace Platformus.Core.Backend
 {
-  public class TextBoxGenerator : GeneratorBase
+  public static class TextBoxGenerator
   {
-    public TagBuilder GenerateTextBox(ViewContext viewContext, ModelExpression modelExpression, TagHelperAttributeList attributes, Localization localization = null, string type = "text", string additionalCssClass = null)
+    public static TagBuilder Generate(string identity, string type, string value = null, bool isRequired = false, int? maxLength = null, bool isValid = true)
     {
-      TagBuilder tb = new TagBuilder("input");
+      TagBuilder tb = new TagBuilder(TagNames.Input);
 
       tb.TagRenderMode = TagRenderMode.SelfClosing;
-
-      if (!string.IsNullOrEmpty(additionalCssClass))
-        tb.AddCssClass(additionalCssClass);
-
       tb.AddCssClass("text-box");
-
-      if (!this.IsValid(viewContext, modelExpression, localization))
-        tb.AddCssClass("input-validation-error");
-
-      tb.MergeAttribute("id", this.GetIdentity(modelExpression, localization));
-      tb.MergeAttribute("name", this.GetIdentity(modelExpression, localization));
-      tb.MergeAttribute("type", type);
-
-      string value = this.GetValue(viewContext, modelExpression, localization);
+      tb.MergeAttribute(AttributeNames.Id, identity);
+      tb.MergeAttribute(AttributeNames.Name, identity);
+      tb.MergeAttribute(AttributeNames.Type, type);
 
       if (!string.IsNullOrEmpty(value))
-        tb.MergeAttribute("value", value);
+        tb.MergeAttribute(AttributeNames.Value, value);
 
-      if (localization != null)
-        tb.MergeAttribute("data-culture", localization.Culture.Id);
+      if (isRequired)
+        tb.AddRequiredAttributes("text-box--required");
 
-      this.MergeRequiredAttribute(tb, modelExpression, "text-box--required");
-      this.MergeStringLengthAttribute(tb, modelExpression);
-      this.MergeOtherAttribute(tb, attributes);
+      if (maxLength != null)
+        tb.AddMaxLengthAttributes((int)maxLength);
+
+      if (!isValid)
+        tb.AddCssClass("input-validation-error");
+
       return tb;
     }
   }

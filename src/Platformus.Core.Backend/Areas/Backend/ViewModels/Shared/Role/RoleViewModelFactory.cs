@@ -5,9 +5,9 @@ using Platformus.Core.Data.Entities;
 
 namespace Platformus.Core.Backend.ViewModels.Shared
 {
-  public class RoleViewModelFactory : ViewModelFactoryBase
+  public static class RoleViewModelFactory
   {
-    public RoleViewModel Create(Role role)
+    public static RoleViewModel Create(Role role)
     {
       return new RoleViewModel()
       {

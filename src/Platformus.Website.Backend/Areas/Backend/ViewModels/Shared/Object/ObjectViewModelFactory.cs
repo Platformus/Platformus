@@ -3,26 +3,25 @@
 
 using System.Collections.Generic;
 using System.Linq;
-using Platformus.Core.Backend.ViewModels;
 using Platformus.Website.Data.Entities;
 
 namespace Platformus.Website.Backend.ViewModels.Shared
 {
-  public class ObjectViewModelFactory : ViewModelFactoryBase
+  public static class ObjectViewModelFactory
   {
-    public ObjectViewModel Create(Object @object, IEnumerable<Member> members)
+    public static ObjectViewModel Create(Object @object, IEnumerable<Member> members)
     {
       Dictionary<MemberViewModel, object> propertiesByMembers = new Dictionary<MemberViewModel, object>();
       
       foreach (Member member in members)
       {
-        MemberViewModel memberViewModel = new MemberViewModelFactory().Create(member);
+        MemberViewModel memberViewModel = MemberViewModelFactory.Create(member);
 
         if (member.PropertyDataType != null)
         {
           Property property = @object.Properties.FirstOrDefault(p => p.MemberId == member.Id);
 
-          propertiesByMembers.Add(memberViewModel, property.GetValue());
+          propertiesByMembers.Add(memberViewModel, property?.GetValue());
         }
 
         else if (member.RelationClass != null)

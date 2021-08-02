@@ -7,6 +7,17 @@ namespace Platformus
 {
   public static class StringExtensions
   {
+    public static string ToCamelCase(this string value)
+    {
+      if (string.IsNullOrEmpty(value))
+        return value;
+
+      if (value.Length == 1)
+        return value.ToLower();
+
+      return value.Remove(1).ToLower() + value.Substring(1);
+    }
+
     public static int ToIntWithDefaultValue(this string value, int defaultValue)
     {
       if (int.TryParse(value, out int result))

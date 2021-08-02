@@ -3,19 +3,18 @@
 
 using System.Collections.Generic;
 using System.Linq;
-using Platformus.Core.Backend.ViewModels;
 using Platformus.Website.Backend.ViewModels.Shared;
 using Platformus.Website.Data.Entities;
 
 namespace Platformus.Website.Backend.ViewModels.Forms
 {
-  public class IndexViewModelFactory : ViewModelFactoryBase
+  public static class IndexViewModelFactory
   {
-    public IndexViewModel Create(IEnumerable<Form> forms)
+    public static IndexViewModel Create(IEnumerable<Form> forms)
     {
       return new IndexViewModel()
       {
-        Forms = forms.Select(f => new FormViewModelFactory().Create(f))
+        Forms = forms.Select(FormViewModelFactory.Create)
       };
     }
   }

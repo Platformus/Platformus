@@ -2,14 +2,13 @@
 // Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information.
 
 using System.Linq;
-using Platformus.Core.Frontend.ViewModels;
 using Platformus.Website.Data.Entities;
 
 namespace Platformus.Website.Frontend.ViewModels.Shared
 {
-  public class FieldViewModelFactory : ViewModelFactoryBase
+  public static class FieldViewModelFactory
   {
-    public FieldViewModel Create(Field field)
+    public static FieldViewModel Create(Field field)
     {
       return new FieldViewModel()
       {
@@ -19,9 +18,7 @@ namespace Platformus.Website.Frontend.ViewModels.Shared
         Code = field.Code,
         IsRequired = field.IsRequired,
         MaxLength = field.MaxLength,
-        FieldOptions = field.FieldOptions.Select(
-          fo => new FieldOptionViewModelFactory().Create(fo)
-        )
+        FieldOptions = field.FieldOptions.Select(FieldOptionViewModelFactory.Create)
       };
     }
   }

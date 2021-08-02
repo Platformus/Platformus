@@ -10,13 +10,13 @@
   @ViewBag.Title
 }
 <form class="form" method="post">
-  <single-line-text-field asp-for="Code" />
-  <drop-down-list-field asp-for="DataProviderCSharpClassName" asp-options="@Model.DataProviderCSharpClassNameOptions" onchange="platformus.ui.dataProviderCSharpClassNameChanged();" />
+  <single-line-text-field for="Code" />
+  <drop-down-list-field for="DataProviderCSharpClassName" options="@Model.DataProviderCSharpClassNameOptions" onchange="platformus.ui.dataProviderCSharpClassNameChanged();" />
   <div id="parameterEditors"></div>
   <input id="parameters" name="dataProviderParameters" type="hidden" value="@Model.DataProviderParameters" />
   <div class="form__buttons buttons">
-    <button class="buttons__button button button--positive" type="submit">@Localizer["Save"]</button>
-    <a class="buttons__button button button--neutral" href="@this.Context.Request.CombineUrl("/backend/datasources")">@Localizer["Cancel"]</a>
+    <submit-button>@Localizer["Save"]</submit-button>
+    <neutral-button href="@this.Context.Request.CombineUrl("/backend/datasources")">@Localizer["Cancel"]</neutral-button>
   </div>
 </form>
 <script>

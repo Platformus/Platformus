@@ -1,6 +1,7 @@
 ﻿// Copyright © 2020 Dmitry Sikorsky. All rights reserved.
 // Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information.
 
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
@@ -48,10 +49,16 @@ namespace Platformus.Website.Frontend.Services.Defaults
 
     private bool IsMatch(string urlTemplate, string url)
     {
-      if (urlTemplate == "{*url}" || urlTemplate == url)
+      if (urlTemplate == "{*url}")
         return true;
 
-      if (string.IsNullOrEmpty(urlTemplate) || string.IsNullOrEmpty(url))
+      if (string.IsNullOrEmpty(urlTemplate) && string.IsNullOrEmpty(url))
+        return true;
+
+      if (string.Equals(urlTemplate, url, StringComparison.OrdinalIgnoreCase))
+        return true;
+
+      if (string.IsNullOrEmpty(urlTemplate))
         return false;
 
       return urlTemplate.Count(ch => ch == '/') == url.Count(ch => ch == '/') && Regex.IsMatch(url, this.GetRegexFromUrlTemplate(urlTemplate));

@@ -5,9 +5,9 @@ using Platformus.Core.Data.Entities;
 
 namespace Platformus.Core.Frontend.ViewModels.Shared
 {
-  public class CultureViewModelFactory : ViewModelFactoryBase
+  public static class CultureViewModelFactory
   {
-    public CultureViewModel Create(Culture culture)
+    public static CultureViewModel Create(Culture culture)
     {
       return new CultureViewModel()
       {

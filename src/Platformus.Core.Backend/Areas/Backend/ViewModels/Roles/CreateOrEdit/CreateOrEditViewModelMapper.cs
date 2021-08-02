@@ -5,9 +5,9 @@ using Platformus.Core.Data.Entities;
 
 namespace Platformus.Core.Backend.ViewModels.Roles
 {
-  public class CreateOrEditViewModelMapper : ViewModelMapperBase
+  public static class CreateOrEditViewModelMapper
   {
-    public Role Map(Role role, CreateOrEditViewModel createOrEdit)
+    public static Role Map(Role role, CreateOrEditViewModel createOrEdit)
     {
       role.Code = createOrEdit.Code;
       role.Name = createOrEdit.Name;

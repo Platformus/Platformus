@@ -8,16 +8,12 @@ using Microsoft.AspNetCore.Razor.TagHelpers;
 
 namespace Platformus.Core.Backend
 {
-  [HtmlTargetElement("numeric-field", Attributes = ForAttributeName)]
   public class NumericFieldTagHelper : TagHelper
   {
-    private const string ForAttributeName = "asp-for";
-
     [HtmlAttributeNotBound]
     [ViewContext]
     public ViewContext ViewContext { get; set; }
-
-    [HtmlAttributeName(ForAttributeName)] 
+    public string Class { get; set; }
     public ModelExpression For { get; set; }
 
     public override void Process(TagHelperContext context, TagHelperOutput output)
@@ -26,29 +22,32 @@ namespace Platformus.Core.Backend
         return;
 
       output.SuppressOutput();
-      output.Content.Clear();
       output.Content.AppendHtml(this.GenerateField(output.Attributes));
     }
 
     private TagBuilder GenerateField(TagHelperAttributeList attributes)
     {
-      TagBuilder tb = new TagBuilder("div");
+      TagBuilder tb = new TagBuilder(TagNames.Div);
 
-      tb.AddCssClass("form__field field");
-      tb.InnerHtml.Clear();
-      tb.InnerHtml.AppendHtml(new FieldGenerator().GenerateLabel(this.For));
-      tb.InnerHtml.AppendHtml(new TextBoxGenerator().GenerateTextBox(this.ViewContext, this.For, attributes, null, "text", "field__text-box field__text-box--numeric"));
+      tb.AddCssClass("form__field field" + (string.IsNullOrEmpty(this.Class) ? null : $" {this.Class}"));
+      tb.InnerHtml.AppendHtml(FieldGenerator.GenerateLabel(this.For.GetLabel(), this.For.GetIdentity()));
+
+      TagBuilder tbTextBox = TextBoxGenerator.Generate(
+        this.For.GetIdentity(), "text", this.For.GetValue(this.ViewContext)
+      );
+
+      tbTextBox.AddCssClass("field__text-box field__text-box--numeric");
+      tb.InnerHtml.AppendHtml(tbTextBox);
       tb.InnerHtml.AppendHtml(this.GenerateNumericButtons());
-      tb.InnerHtml.AppendHtml(new ValidationErrorMessageGenerator().GenerateValidationErrorMessage(this.For));
+      tb.InnerHtml.AppendHtml(ValidationErrorMessageGenerator.Generate(this.For.GetIdentity()));
       return tb;
     }
 
     private IHtmlContent GenerateNumericButtons()
     {
-      TagBuilder tb = new TagBuilder("div");
+      TagBuilder tb = new TagBuilder(TagNames.Div);
 
       tb.AddCssClass("field__numeric-buttons");
-      tb.InnerHtml.Clear();
       tb.InnerHtml.AppendHtml(this.GenerateNumericButtonUp());
       tb.InnerHtml.AppendHtml(this.GenerateNumericButtonDown());
       return tb;
@@ -56,7 +55,7 @@ namespace Platformus.Core.Backend
 
     private IHtmlContent GenerateNumericButtonUp()
     {
-      TagBuilder tb = new TagBuilder("a");
+      TagBuilder tb = new TagBuilder(TagNames.A);
 
       tb.AddCssClass("field__numeric-button field__numeric-button--up");
       return tb;
@@ -64,7 +63,7 @@ namespace Platformus.Core.Backend
 
     private IHtmlContent GenerateNumericButtonDown()
     {
-      TagBuilder tb = new TagBuilder("a");
+      TagBuilder tb = new TagBuilder(TagNames.A);
 
       tb.AddCssClass("field__numeric-button field__numeric-button--down");
       return tb;

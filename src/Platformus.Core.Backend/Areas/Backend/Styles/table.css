@@ -63,12 +63,8 @@
   color: #fff;
 }
 
-.table__cell--controls {
+.table__cell--context-controls {
   padding: 0;
-}
-
-.table__cell--no-width {
-  white-space: nowrap;
   width: 0;
 }
 
@@ -94,27 +90,12 @@
   max-height: 100px;
 }
 
-.table__secondary {
-  font-size: 10px;
-}
-
-.table__text-box--numeric {
-  width: 100px;
-}
-
-.table__numeric-buttons {
-  left: 120px;
-}
-
 .table__buttons {
+  visibility: hidden;
   padding: 5px;
 }
 
-.table__button {
-  visibility: hidden;
-}
-
-.table__row:hover .table__button {
+.table__row:hover .table__buttons {
   visibility: visible;
 }
 

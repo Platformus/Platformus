@@ -51,7 +51,7 @@ namespace Platformus.ECommerce.Frontend.Middleware
       if (category == null)
         return null;
 
-      CategoryPageViewModel catalogPageViewModel = await new CategoryPageViewModelFactory().CreateAsync(httpContext, category);
+      CategoryPageViewModel catalogPageViewModel = await CategoryPageViewModelFactory.CreateAsync(httpContext, category);
 
       return new ViewResult()
       {

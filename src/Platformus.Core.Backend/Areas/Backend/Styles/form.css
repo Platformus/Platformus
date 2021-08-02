@@ -29,3 +29,8 @@
   font-style: italic;
   margin-top: 10px;
 }
+
+.form__table {
+  margin-top: 10px;
+  width: 100%;
+}

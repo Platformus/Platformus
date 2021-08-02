@@ -30,7 +30,7 @@ namespace Platformus.Core.Backend.Controllers
 
     public async Task<IActionResult> IndexAsync()
     {
-      return this.View(new IndexViewModelFactory().Create(
+      return this.View(IndexViewModelFactory.Create(
         await this.Repository.GetAllAsync(inclusions: new Inclusion<Configuration>(c => c.Variables))
       ));
     }
@@ -39,7 +39,7 @@ namespace Platformus.Core.Backend.Controllers
     [ImportModelStateFromTempData]
     public async Task<IActionResult> CreateOrEditAsync(int? id)
     {
-      return this.View(new CreateOrEditViewModelFactory().Create(
+      return this.View(CreateOrEditViewModelFactory.Create(
         id == null ? null : await this.Repository.GetByIdAsync((int)id)
       ));
     }
@@ -53,7 +53,7 @@ namespace Platformus.Core.Backend.Controllers
 
       if (this.ModelState.IsValid)
       {
-        Configuration configuration = new CreateOrEditViewModelMapper().Map(
+        Configuration configuration = CreateOrEditViewModelMapper.Map(
           createOrEdit.Id == null ? new Configuration() : await this.Repository.GetByIdAsync((int)createOrEdit.Id),
           createOrEdit
         );

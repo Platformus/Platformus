@@ -21,7 +21,7 @@ namespace Platformus.ECommerce.Backend.Controllers
 
     public async Task<IActionResult> CategorySelectorFormAsync(int? categoryId)
     {
-      return this.PartialView("_CategorySelectorForm", new CategorySelectorFormViewModelFactory().Create(
+      return this.PartialView("_CategorySelectorForm", CategorySelectorFormViewModelFactory.Create(
         this.HttpContext,
         await this.Storage.GetRepository<int, Category, CategoryFilter>().GetAllAsync(
           inclusions: new Inclusion<Category>(c => c.Name.Localizations)
@@ -37,12 +37,12 @@ namespace Platformus.ECommerce.Backend.Controllers
         new Inclusion<Category>(c => c.Name.Localizations)
       );
 
-      return this.Json(new CategoryViewModelFactory().Create(category));
+      return this.Json(CategoryViewModelFactory.Create(category));
     }
 
     public async Task<IActionResult> ProductSelectorFormAsync(int? productId)
     {
-      return this.PartialView("_ProductSelectorForm", new ProductSelectorFormViewModelFactory().Create(
+      return this.PartialView("_ProductSelectorForm", ProductSelectorFormViewModelFactory.Create(
         this.HttpContext,
         await this.Storage.GetRepository<int, Product, ProductFilter>().GetAllAsync(
           inclusions: new Inclusion<Product>[]
@@ -63,7 +63,7 @@ namespace Platformus.ECommerce.Backend.Controllers
         new Inclusion<Product>(p => p.Name.Localizations)
       );
 
-      return this.Json(new ProductViewModelFactory().Create(product));
+      return this.Json(ProductViewModelFactory.Create(product));
     }
   }
 }

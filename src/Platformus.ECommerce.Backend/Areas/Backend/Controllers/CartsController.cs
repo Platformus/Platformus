@@ -28,22 +28,22 @@ namespace Platformus.ECommerce.Backend.Controllers
     {
     }
 
-    public async Task<IActionResult> IndexAsync([FromQuery]CartFilter filter = null, string cartBy = "-created", int skip = 0, int take = 10)
+    public async Task<IActionResult> IndexAsync([FromQuery]CartFilter filter = null, string orderBy = "-created", int skip = 0, int take = 10)
     {
-      return this.View(new IndexViewModelFactory().Create(
+      return this.View(IndexViewModelFactory.Create(
         this.HttpContext, filter,
         await this.Repository.GetAllAsync(
-          filter, cartBy, skip, take,
+          filter, orderBy, skip, take,
           new Inclusion<Cart>(c => c.Positions)
         ),
-        cartBy, skip, take, await this.Repository.CountAsync(filter)
+        orderBy, skip, take, await this.Repository.CountAsync(filter)
       ));
     }
 
     [HttpGet]
     public async Task<IActionResult> ViewAsync(int id)
     {
-      return this.View(new ViewViewModelFactory().Create(
+      return this.View(ViewViewModelFactory.Create(
         await this.Repository.GetByIdAsync(
           id,
           new Inclusion<Cart>("Positions.Product.Category.Name.Localizations"),
@@ -59,7 +59,7 @@ namespace Platformus.ECommerce.Backend.Controllers
       this.Repository.Delete(cart.Id);
       await this.Storage.SaveAsync();
       Event<ICartCreatedEventHandler, HttpContext, Cart>.Broadcast(this.HttpContext, cart);
-      return this.RedirectToAction("Index");
+      return this.Redirect(this.Request.CombineUrl("/backend/carts"));
     }
   }
 }

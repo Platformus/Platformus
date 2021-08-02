@@ -16,7 +16,8 @@ namespace Platformus.Core.Services.Defaults
       foreach (ITransliterator transliterator in ExtensionManager.GetInstances<ITransliterator>())
         filename = transliterator.Transliterate(filename);
 
-      return string.Join("_", filename.Split(Path.GetInvalidFileNameChars()));
+      return string.Join("_", filename.Split(Path.GetInvalidFileNameChars()))
+        .Replace(' ', '_');
     }
   }
 }

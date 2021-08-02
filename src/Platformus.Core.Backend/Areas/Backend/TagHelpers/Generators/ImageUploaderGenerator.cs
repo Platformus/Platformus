@@ -2,22 +2,17 @@
 // Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information.
 
 using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.AspNetCore.Mvc.ViewFeatures;
-using Microsoft.AspNetCore.Razor.TagHelpers;
 
 namespace Platformus.Core.Backend
 {
-  public class ImageUploaderGenerator : GeneratorBase
+  public static class ImageUploaderGenerator
   {
-    public TagBuilder GenerateImageUploader(ViewContext viewContext, ModelExpression modelExpression, TagHelperAttributeList attributes, string destinationBaseUrl, int? width, int? height, string additionalCssClass = null)
+    public static TagBuilder Generate(string identity, string destinationBaseUrl = null, int? width = null, int? height = null, string value = null)
     {
-      TagBuilder tb = new TagBuilder("div");
-
-      if (!string.IsNullOrEmpty(additionalCssClass))
-        tb.AddCssClass(additionalCssClass);
+      TagBuilder tb = new TagBuilder(TagNames.Div);
 
       tb.AddCssClass("image-uploader");
-      tb.MergeAttribute("id", this.GetIdentity(modelExpression));
+      tb.MergeAttribute("id", identity);
 
       if (!string.IsNullOrEmpty(destinationBaseUrl))
         tb.MergeAttribute("data-destination-base-url", destinationBaseUrl);
@@ -28,74 +23,67 @@ namespace Platformus.Core.Backend
         tb.MergeAttribute("data-height", height.ToString());
       }
 
-      this.MergeOtherAttribute(tb, attributes);
-      tb.InnerHtml.Clear();
-      tb.InnerHtml.AppendHtml(this.GenerageInput(viewContext, modelExpression));
-      tb.InnerHtml.AppendHtml(this.GenerateImage(viewContext, modelExpression));
-      tb.InnerHtml.AppendHtml(this.GenerateButtons());
+      tb.InnerHtml.AppendHtml(GenerateImage(value));
+      tb.InnerHtml.AppendHtml(GenerateButtons());
+      tb.InnerHtml.AppendHtml(GenerageInput(identity, value));
       return tb;
     }
 
-    private TagBuilder GenerageInput(ViewContext viewContext, ModelExpression modelExpression)
+    private static TagBuilder GenerateImage(string value)
     {
-      TagBuilder tb = new TagBuilder("input");
-
-      tb.TagRenderMode = TagRenderMode.SelfClosing;
-      tb.MergeAttribute("name", this.GetIdentity(modelExpression));
-      tb.MergeAttribute("type", "hidden");
-
-      string value = this.GetValue(viewContext, modelExpression);
-
-      if (!string.IsNullOrEmpty(value))
-        tb.MergeAttribute("value", value);
-
-      return tb;
-    }
-
-    private TagBuilder GenerateImage(ViewContext viewContext, ModelExpression modelExpression)
-    {
-      TagBuilder tb = new TagBuilder("img");
+      TagBuilder tb = new TagBuilder(TagNames.Img);
 
       tb.AddCssClass("image-uploader__image");
 
-      string value = this.GetValue(viewContext, modelExpression);
-
       if (string.IsNullOrEmpty(value))
-        tb.MergeAttribute("style", "display: none;");
+        tb.MergeAttribute(AttributeNames.Style, "display: none;");
 
-      else tb.MergeAttribute("src", value);
+      else tb.MergeAttribute(AttributeNames.Src, value);
 
       return tb;
     }
 
-    private TagBuilder GenerateButtons()
+    private static TagBuilder GenerateButtons()
     {
-      TagBuilder tb = new TagBuilder("div");
+      TagBuilder tb = new TagBuilder(TagNames.Div);
 
       tb.AddCssClass("form__buttons form__buttons--minor buttons");
-      tb.InnerHtml.Clear();
-      tb.InnerHtml.AppendHtml(this.GenerateUploadButton());
-      tb.InnerHtml.AppendHtml(this.GenerateRemoveButton());
+      tb.InnerHtml.AppendHtml(GenerateUploadButton());
+      tb.InnerHtml.AppendHtml(GenerateRemoveButton());
       return tb;
     }
 
-    private TagBuilder GenerateUploadButton()
+    private static TagBuilder GenerateUploadButton()
     {
-      TagBuilder tb = new TagBuilder("button");
+      TagBuilder tb = new TagBuilder(TagNames.Button);
 
       tb.AddCssClass("image-uploader__upload-button buttons__button buttons__button--minor button button--positive button--minor");
-      tb.MergeAttribute("type", "button");
+      tb.MergeAttribute(AttributeNames.Type, "button");
       tb.InnerHtml.AppendHtml("Upload…");
       return tb;
     }
 
-    private TagBuilder GenerateRemoveButton()
+    private static TagBuilder GenerateRemoveButton()
     {
-      TagBuilder tb = new TagBuilder("button");
+      TagBuilder tb = new TagBuilder(TagNames.Button);
 
       tb.AddCssClass("image-uploader__remove-button buttons__button buttons__button--minor button button--negative button--minor");
-      tb.MergeAttribute("type", "button");
+      tb.MergeAttribute(AttributeNames.Type, "button");
       tb.InnerHtml.AppendHtml("Remove");
+      return tb;
+    }
+
+    private static TagBuilder GenerageInput(string identity, string value)
+    {
+      TagBuilder tb = new TagBuilder(TagNames.Input);
+
+      tb.TagRenderMode = TagRenderMode.SelfClosing;
+      tb.MergeAttribute(AttributeNames.Name, identity);
+      tb.MergeAttribute(AttributeNames.Type, "hidden");
+
+      if (!string.IsNullOrEmpty(value))
+        tb.MergeAttribute(AttributeNames.Value, value);
+
       return tb;
     }
   }

@@ -11,32 +11,32 @@
   @ViewBag.Title
 }
 <form class="form" method="post">
-  <div class="tabs">
-    <div class="tabs__tab" data-tab-page-id="General">@Localizer["General"]</div>
-    <div class="tabs__tab" data-tab-page-id="Seo">@Localizer["SEO"]</div>
-    <div class="tabs__tab" data-tab-page-id="Products">@Localizer["Products"]</div>
-  </div>
-  <div class="tab-pages">
-    <div id="tabPageGeneral" class="tab-pages__tab-page">
-      <single-line-text-field asp-for="Url" />
-      <multilingual-single-line-text-field asp-for="Name" asp-localizations="@Model.NameLocalizations" />
-      <multilingual-multiline-text-field asp-for="Description" asp-localizations="this.Model.DescriptionLocalizations" asp-height="normal" />
-      <numeric-field asp-for="Position" />
-    </div>
-    <div id="tabPageSeo" class="tab-pages__tab-page">
-      <multilingual-single-line-text-field asp-for="Title" asp-localizations="this.Model.TitleLocalizations" />
-      <multilingual-single-line-text-field asp-for="MetaDescription" asp-localizations="this.Model.MetaDescriptionLocalizations" />
-      <multilingual-single-line-text-field asp-for="MetaKeywords" asp-localizations="this.Model.MetaKeywordsLocalizations" />
-    </div>
-    <div id="tabPageProducts" class="tab-pages__tab-page">
-      <drop-down-list-field asp-for="ProductProviderCSharpClassName" asp-options="@Model.ProductProviderCSharpClassNameOptions" onchange="platformus.ui.productProviderCSharpClassNameChanged();" />
+  <tabs>
+    <tab code="General">@Localizer["General"]</tab>
+    <tab code="Seo">@Localizer["SEO"]</tab>
+    <tab code="Products">@Localizer["Products"]</tab>
+  </tabs>
+  <tab-pages>
+    <tab-page code="General">
+      <single-line-text-field for="Url" />
+      <multilingual-single-line-text-field for="Name" localizations="@Model.NameLocalizations" />
+      <multilingual-multiline-text-field for="Description" localizations="this.Model.DescriptionLocalizations" />
+      <numeric-field for="Position" />
+    </tab-page>
+    <tab-page code="Seo">
+      <multilingual-single-line-text-field for="Title" localizations="this.Model.TitleLocalizations" />
+      <multilingual-single-line-text-field for="MetaDescription" localizations="this.Model.MetaDescriptionLocalizations" />
+      <multilingual-single-line-text-field for="MetaKeywords" localizations="this.Model.MetaKeywordsLocalizations" />
+    </tab-page>
+    <tab-page code="Products">
+      <drop-down-list-field for="ProductProviderCSharpClassName" options="@Model.ProductProviderCSharpClassNameOptions" onchange="platformus.ui.productProviderCSharpClassNameChanged();" />
       <div id="parameterEditors"></div>
       <input id="parameters" name="productProviderParameters" type="hidden" value="@Model.ProductProviderParameters" />
-    </div>
-  </div>
+    </tab-page>
+  </tab-pages>
   <div class="form__buttons buttons">
-    <button class="buttons__button button button--positive" type="submit">@Localizer["Save"]</button>
-    <a class="buttons__button button button--neutral" href="/backend/categories">@Localizer["Cancel"]</a>
+    <submit-button>@Localizer["Save"]</submit-button>
+    <neutral-button href="/backend/categories">@Localizer["Cancel"]</neutral-button>
   </div>
 </form>
 <script>

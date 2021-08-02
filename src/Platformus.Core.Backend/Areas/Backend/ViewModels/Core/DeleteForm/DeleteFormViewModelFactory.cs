@@ -3,9 +3,9 @@
 
 namespace Platformus.Core.Backend.ViewModels.Core
 {
-  public class DeleteFormViewModelFactory : ViewModelFactoryBase
+  public static class DeleteFormViewModelFactory
   {
-    public DeleteFormViewModel Create(string targetUrl)
+    public static DeleteFormViewModel Create(string targetUrl)
     {
       return new DeleteFormViewModel()
       {

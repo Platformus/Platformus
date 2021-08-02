@@ -4,120 +4,84 @@
 using System.Collections.Generic;
 using System.Linq;
 using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.AspNetCore.Mvc.ViewFeatures;
-using Microsoft.AspNetCore.Razor.TagHelpers;
 using Platformus.Core.Primitives;
 
 namespace Platformus.Core.Backend
 {
-  public class DropDownListGenerator : GeneratorBase
+  public static class DropDownListGenerator
   {
-    public TagBuilder GenerateDropDownList(ViewContext viewContext, ModelExpression modelExpression, IEnumerable<Option> options, TagHelperAttributeList attributes, string additionalCssClass = null)
+    public static TagBuilder Generate(string identity, IEnumerable<Option> options, string value = null, bool isRequired = false, bool isValid = true)
     {
-      TagBuilder tb = new TagBuilder("div");
-
-      if (!string.IsNullOrEmpty(additionalCssClass))
-        tb.AddCssClass(additionalCssClass);
+      TagBuilder tb = new TagBuilder(TagNames.Div);
 
       tb.AddCssClass("drop-down-list");
+      tb.MergeAttribute(AttributeNames.Id, identity);
 
-      if (!this.IsValid(viewContext, modelExpression))
+      if (isRequired)
+        tb.AddRequiredAttributes("drop-down-list--required");
+
+      if (!isValid)
         tb.AddCssClass("input-validation-error");
 
-      tb.MergeAttribute("id", this.GetIdentity(modelExpression));
-      this.MergeRequiredAttribute(tb, modelExpression, "drop-down-list--required");
-      this.MergeOtherAttribute(tb, attributes);
-      tb.InnerHtml.Clear();
-      tb.InnerHtml.AppendHtml(this.GenerateSelectedDropDownListItem(viewContext, modelExpression, options));
-      tb.InnerHtml.AppendHtml(this.GenerateDropDownListItems(options));
-      tb.InnerHtml.AppendHtml(this.GenerateInput(viewContext, modelExpression, options));
+      tb.InnerHtml.AppendHtml(GenerateSelectedDropDownListItem(GetSelectedOption(options, value)));
+      tb.InnerHtml.AppendHtml(GenerateDropDownListItems(options));
+      tb.InnerHtml.AppendHtml(GenerateInput(identity, options, value, isRequired));
       return tb;
     }
 
-    private TagBuilder GenerateSelectedDropDownListItem(ViewContext viewContext, ModelExpression modelExpression, IEnumerable<Option> options)
+    private static TagBuilder GenerateSelectedDropDownListItem(Option option)
     {
-      TagBuilder tb = new TagBuilder("a");
+      TagBuilder tb = new TagBuilder(TagNames.A);
 
       tb.AddCssClass("drop-down-list__item drop-down-list__item--selected");
-      tb.MergeAttribute("href", "#");
-      tb.InnerHtml.Clear();
-      tb.InnerHtml.AppendHtml(this.GetSelectedOptionText(viewContext, modelExpression, options));
-      return tb;
-    }
-
-    private TagBuilder GenerateDropDownListItems(IEnumerable<Option> options)
-    {
-      TagBuilder tb = new TagBuilder("div");
-
-      tb.AddCssClass("drop-down-list__items");
-      tb.InnerHtml.Clear();
-
-      foreach (Option option in options)
-        tb.InnerHtml.AppendHtml(this.GenerateDropDownListItem(option));
-
-      return tb;
-    }
-
-    private TagBuilder GenerateDropDownListItem(Option option)
-    {
-      TagBuilder tb = new TagBuilder("a");
-
-      tb.AddCssClass("drop-down-list__item");
-      tb.MergeAttribute("data-value", option.Value);
-      tb.MergeAttribute("href", "#");
-      tb.InnerHtml.Clear();
+      tb.MergeAttribute(AttributeNames.Href, "#");
       tb.InnerHtml.AppendHtml(option.Text);
       return tb;
     }
 
-    private TagBuilder GenerateInput(ViewContext viewContext, ModelExpression modelExpression, IEnumerable<Option> options)
+    private static TagBuilder GenerateDropDownListItems(IEnumerable<Option> options)
     {
-      TagBuilder tb = new TagBuilder("input");
+      TagBuilder tb = new TagBuilder(TagNames.Div);
 
-      tb.TagRenderMode = TagRenderMode.SelfClosing;
-      tb.MergeAttribute("name", this.GetIdentity(modelExpression));
-      tb.MergeAttribute("type", "hidden");
-      tb.MergeAttribute("value", this.GetSelectedOptionValue(viewContext, modelExpression, options));
-      this.MergeRequiredAttribute(tb, modelExpression, null);
+      tb.AddCssClass("drop-down-list__items");
+
+      foreach (Option option in options)
+        tb.InnerHtml.AppendHtml(GenerateDropDownListItem(option));
+
       return tb;
     }
 
-    private string GetSelectedOptionText(ViewContext viewContext, ModelExpression modelExpression, IEnumerable<Option> options)
+    private static TagBuilder GenerateDropDownListItem(Option option)
     {
-      Option option = this.GetSelectedOption(viewContext, modelExpression, options);
+      TagBuilder tb = new TagBuilder(TagNames.A);
 
-      if (option == null)
-        return null;
-
-      return option.Text;
+      tb.AddCssClass("drop-down-list__item");
+      tb.MergeAttribute(AttributeNames.Href, "#");
+      tb.MergeAttribute("data-value", option.Value);
+      tb.InnerHtml.AppendHtml(option.Text);
+      return tb;
     }
 
-    private string GetSelectedOptionValue(ViewContext viewContext, ModelExpression modelExpression, IEnumerable<Option> options)
+    private static TagBuilder GenerateInput(string identity, IEnumerable<Option> options, string value, bool isRequired)
     {
-      Option option = this.GetSelectedOption(viewContext, modelExpression, options);
+      TagBuilder tb = new TagBuilder(TagNames.Input);
 
-      if (option == null)
-        return null;
+      tb.TagRenderMode = TagRenderMode.SelfClosing;
+      tb.MergeAttribute(AttributeNames.Name, identity);
+      tb.MergeAttribute(AttributeNames.Type, "hidden");
+      tb.MergeAttribute(AttributeNames.Value, GetSelectedOption(options, value)?.Value);
 
-      return option.Value;
+      if (isRequired)
+        tb.AddRequiredAttributes(string.Empty);
+
+      return tb;
     }
 
-    private Option GetSelectedOption(ViewContext viewContext, ModelExpression modelExpression, IEnumerable<Option> options)
+    private static Option GetSelectedOption(IEnumerable<Option> options, string value)
     {
-      string value = this.GetValue(viewContext, modelExpression);
-      Option option = null;
+      Option option = options.FirstOrDefault(o => o.Value == value);
 
-      if (!string.IsNullOrEmpty(value))
-        option = options.FirstOrDefault(o => o.Value == value);
-
-      if (option == null)
-        if (modelExpression.Model != null)
-          option = options.FirstOrDefault(o => o.Value == modelExpression.Model.ToString());
-
-      if (option == null)
-        option = options.FirstOrDefault();
-
-      return option;
+      return option ?? options.FirstOrDefault();
     }
   }
 }

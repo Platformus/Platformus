@@ -3,19 +3,18 @@
 
 using System.Collections.Generic;
 using System.Linq;
-using Platformus.Core.Backend.ViewModels;
 using Platformus.Website.Backend.ViewModels.Shared;
 using Platformus.Website.Data.Entities;
 
 namespace Platformus.Website.Backend.ViewModels.Website
 {
-  public class FileSelectorFormViewModelFactory : ViewModelFactoryBase
+  public static class FileSelectorFormViewModelFactory
   {
-    public FileSelectorFormViewModel Create(IEnumerable<File> files)
+    public static FileSelectorFormViewModel Create(IEnumerable<File> files)
     {
       return new FileSelectorFormViewModel()
       {
-        Files = files.Select(f => new FileViewModelFactory().Create(f))
+        Files = files.Select(FileViewModelFactory.Create)
       };
     }
   }

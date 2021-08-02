@@ -5,24 +5,24 @@ using System;
 using System.Linq;
 using Microsoft.AspNetCore.Http;
 using Platformus.Core.Frontend;
-using Platformus.Core.Frontend.ViewModels;
 using Platformus.ECommerce.Data.Entities;
 
 namespace Platformus.ECommerce.Frontend.ViewModels.Shared
 {
-  public class CategoryViewModelFactory : ViewModelFactoryBase
+  public static class CategoryViewModelFactory
   {
-    public CategoryViewModel Create(HttpContext httpContext, Category category)
+    public static CategoryViewModel Create(HttpContext httpContext, Category category)
     {
       return new CategoryViewModel()
       {
         Id = category.Id,
-        Category = category.Owner == null ? null : new CategoryViewModelFactory().Create(httpContext, category.Owner),
+        Category = category.Owner == null ? null : CategoryViewModelFactory.Create(httpContext, category.Owner),
         Url = GlobalizedUrlFormatter.Format(httpContext, category.Url),
         Name = category.Name.GetLocalizationValue(),
-        Categories = category.Categories == null ? Array.Empty<CategoryViewModel>() : category.Categories.OrderBy(c => c.Position).Select(
-          c => new CategoryViewModelFactory().Create(httpContext, c)
-        ).ToArray()
+        Categories = category.Categories == null ?
+          Array.Empty<CategoryViewModel>() :
+          category.Categories.OrderBy(c => c.Position)
+            .Select(c => CategoryViewModelFactory.Create(httpContext, c)).ToList()
       };
     }
   }

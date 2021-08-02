@@ -10,40 +10,38 @@
   @ViewBag.Title
 }
 <form class="form" method="post">
-  <div class="tabs">
-    <div class="tabs__tab" data-tab-page-id="General">@Localizer["General"]</div>
-    <div class="tabs__tab" data-tab-page-id="RequiredPermissions">@Localizer["Required permissions"]</div>
-    <div class="tabs__tab" data-tab-page-id="RequestProcessing">@Localizer["Request processing"]</div>
-    <div class="tabs__tab" data-tab-page-id="ResponseCaching">@Localizer["Response caching"]</div>
-  </div>
-  <div class="tab-pages">
-    <div id="tabPageGeneral" class="tab-pages__tab-page">
-      <single-line-text-field asp-for="Name" />
-      <single-line-text-field asp-for="UrlTemplate" />
-      <numeric-field asp-for="Position" />
-      <checkbox-field asp-for="DisallowAnonymous" />
-      <single-line-text-field asp-for="SignInUrl" />
-    </div>
-    <div id="tabPageRequiredPermissions" class="tab-pages__tab-page">
+  <tabs>
+    <tab code="General">@Localizer["General"]</tab>
+    <tab code="RequiredPermissions">@Localizer["Required permissions"]</tab>
+    <tab code="RequestProcessing">@Localizer["Request processing"]</tab>
+    <tab code="ResponseCaching">@Localizer["Response caching"]</tab>
+  </tabs>
+  <tab-pages>
+    <tab-page code="General">
+      <single-line-text-field for="Name" />
+      <single-line-text-field for="UrlTemplate" />
+      <numeric-field for="Position" />
+      <checkbox-field class="form__field--separated" for="DisallowAnonymous" />
+      <single-line-text-field for="SignInUrl" />
+    </tab-page>
+    <tab-page code="RequiredPermissions">
       @foreach (var endpointPermission in this.Model.EndpointPermissions)
       {
-        <div class="form__field @(endpointPermission.Permission.Id == this.Model.EndpointPermissions.First().Permission.Id ? "form__field--separated" : null) field">
-          <unbound-check-box asp-identity="permission@(endpointPermission.Permission.Id)" asp-text="@endpointPermission.Permission.Name" asp-checked="@endpointPermission.IsAssigned" />
-        </div>
+        <checkbox-field class="@(endpointPermission.Permission.Id == this.Model.EndpointPermissions.First().Permission.Id ? "form__field--separated" : null)" id="permission@(endpointPermission.Permission.Id)" label="@endpointPermission.Permission.Name" is-checked="@endpointPermission.IsAssigned" />
       }
-    </div>
-    <div id="tabPageRequestProcessing" class="tab-pages__tab-page">
-      <drop-down-list-field asp-for="RequestProcessorCSharpClassName" asp-options="@Model.RequestProcessorCSharpClassNameOptions" />
+    </tab-page>
+    <tab-page code="RequestProcessing">
+      <drop-down-list-field for="RequestProcessorCSharpClassName" options="@Model.RequestProcessorCSharpClassNameOptions" />
       <div id="parameterEditors"></div>
       <input id="parameters" name="requestProcessorParameters" type="hidden" value="@Model.RequestProcessorParameters" />
-    </div>
-    <div id="tabPageResponseCaching" class="tab-pages__tab-page">
-      <drop-down-list-field asp-for="ResponseCacheCSharpClassName" asp-options="@Model.ResponseCacheCSharpClassNameOptions" />
-    </div>
-  </div>
+    </tab-page>
+    <tab-page code="ResponseCaching">
+      <drop-down-list-field for="ResponseCacheCSharpClassName" options="@Model.ResponseCacheCSharpClassNameOptions" />
+    </tab-page>
+  </tab-pages>
   <div class="form__buttons buttons">
-    <button class="buttons__button button button--positive" type="submit">@Localizer["Save"]</button>
-    <a class="buttons__button button button--neutral" href="@this.Context.Request.CombineUrl("/backend/endpoints")">@Localizer["Cancel"]</a>
+    <submit-button>@Localizer["Save"]</submit-button>
+    <neutral-button href="@this.Context.Request.CombineUrl("/backend/endpoints")">@Localizer["Cancel"]</neutral-button>
   </div>
 </form>
 <script>

@@ -6,17 +6,15 @@ using Platformus.Core.Data.Entities;
 
 namespace Platformus.Core.Backend.ViewModels.Shared
 {
-  public class ConfigurationViewModelFactory : ViewModelFactoryBase
+  public static class ConfigurationViewModelFactory
   {
-    public ConfigurationViewModel Create(Configuration configuration)
+    public static ConfigurationViewModel Create(Configuration configuration)
     {
       return new ConfigurationViewModel()
       {
         Id = configuration.Id,
         Name = configuration.Name,
-        Variables = configuration.Variables.Select(
-          v => new VariableViewModelFactory().Create(v)
-        )
+        Variables = configuration.Variables.Select(VariableViewModelFactory.Create)
       };
     }
   }

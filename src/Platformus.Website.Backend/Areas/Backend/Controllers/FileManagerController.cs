@@ -39,7 +39,7 @@ namespace Platformus.Website.Backend.Controllers
 
     public async Task<IActionResult> IndexAsync([FromQuery]FileFilter filter = null, string orderBy = "+name", int skip = 0, int take = 10)
     {
-      return this.View(new IndexViewModelFactory().Create(
+      return this.View(IndexViewModelFactory.Create(
         this.HttpContext, filter,
         await this.Repository.GetAllAsync(filter, orderBy, skip, take),
         orderBy, skip, take, await this.Repository.CountAsync(filter)
@@ -68,7 +68,7 @@ namespace Platformus.Website.Backend.Controllers
         Event<IFileCreatedEventHandler, HttpContext, Data.Entities.File>.Broadcast(this.HttpContext, file);
       }
 
-      return this.RedirectToAction("Index");
+      return this.Redirect(this.Request.CombineUrl("/backend/filemanager"));
     }
 
     public async Task<IActionResult> DeleteAsync(int id)
@@ -85,7 +85,7 @@ namespace Platformus.Website.Backend.Controllers
       this.Repository.Delete(file.Id);
       await this.Storage.SaveAsync();
       Event<IFileDeletedEventHandler, HttpContext, Data.Entities.File>.Broadcast(this.HttpContext, file);
-      return this.RedirectToAction("Index");
+      return this.Redirect(this.Request.CombineUrl("/backend/filemanager"));
     }
 
     private string GetFilepath(string filename)

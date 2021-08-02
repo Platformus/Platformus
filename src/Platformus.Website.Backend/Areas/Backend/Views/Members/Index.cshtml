@@ -11,6 +11,6 @@
 }
 @Html.Partial("_Grid", this.Model.Grid)
 <div class="master-detail__detail-buttons buttons">
-  <a class="buttons__button button button--positive" href="/backend/members/create?class.id=@Model.Filter.Class.Id">@Localizer["Create member"]</a>
-  <a class="buttons__button button button--neutral" href="/backend/classes">@Localizer["Back"]</a>
+  <positive-button href="/backend/members/create?class.id=@Model.Filter.Class.Id">@Localizer["Create member"]</positive-button>
+  <neutral-button href="/backend/classes">@Localizer["Back"]</neutral-button>
 </div>

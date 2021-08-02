@@ -2,43 +2,29 @@
 // Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information.
 
 using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.AspNetCore.Mvc.ViewFeatures;
-using Microsoft.AspNetCore.Razor.TagHelpers;
-using Platformus.Core.Primitives;
 
 namespace Platformus.Core.Backend
 {
-  public class TextAreaGenerator : GeneratorBase
+  public static class TextAreaGenerator
   {
-    public TagBuilder GenerateTextArea(ViewContext viewContext, ModelExpression modelExpression, TagHelperAttributeList attributes, Localization localization = null, string additionalCssClass = null)
+    public static TagBuilder Generate(string identity, string value = null, bool isRequired = false, int? maxLength = null, bool isValid = true)
     {
-      TagBuilder tb = new TagBuilder("textarea");
-
-      if (!string.IsNullOrEmpty(additionalCssClass))
-        tb.AddCssClass(additionalCssClass);
+      TagBuilder tb = new TagBuilder(TagNames.TextArea);
 
       tb.AddCssClass("text-area");
-
-      if (!this.IsValid(viewContext, modelExpression, localization))
-        tb.AddCssClass("input-validation-error");
-
-      tb.MergeAttribute("id", this.GetIdentity(modelExpression, localization));
-      tb.MergeAttribute("name", this.GetIdentity(modelExpression, localization));
-
-      if (localization != null)
-        tb.MergeAttribute("data-culture", localization.Culture.Id);
-
-      this.MergeRequiredAttribute(tb, modelExpression, "text-area--required");
-      this.MergeStringLengthAttribute(tb, modelExpression);
-      this.MergeOtherAttribute(tb, attributes);
-
-      string value = this.GetValue(viewContext, modelExpression, localization);
-
+      tb.MergeAttribute(AttributeNames.Id, identity);
+      tb.MergeAttribute(AttributeNames.Name, identity);
       if (!string.IsNullOrEmpty(value))
-      {
-        tb.InnerHtml.Clear();
         tb.InnerHtml.Append(value);
-      }
+
+      if (isRequired)
+        tb.AddRequiredAttributes("text-area--required");
+
+      if (maxLength != null)
+        tb.AddMaxLengthAttributes((int)maxLength);
+
+      if (!isValid)
+        tb.AddCssClass("input-validation-error");
 
       return tb;
     }

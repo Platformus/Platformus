@@ -5,7 +5,6 @@ using System.Collections.Generic;
 using System.Linq;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Localization;
-using Platformus.Core.Backend.ViewModels;
 using Platformus.Core.Backend.ViewModels.Shared;
 using Platformus.Core.Extensions;
 using Platformus.Website.Backend.ViewModels.Shared;
@@ -13,29 +12,29 @@ using Platformus.Website.Filters;
 
 namespace Platformus.Website.Backend.ViewModels.Endpoints
 {
-  public class IndexViewModelFactory : ViewModelFactoryBase
+  public static class IndexViewModelFactory
   {
-    public IndexViewModel Create(HttpContext httpContext, EndpointFilter filter, IEnumerable<Data.Entities.Endpoint> endpoints, string orderBy, int skip, int take, int total)
+    public static IndexViewModel Create(HttpContext httpContext, EndpointFilter filter, IEnumerable<Data.Entities.Endpoint> endpoints, string orderBy, int skip, int take, int total)
     {
-      IStringLocalizer<IndexViewModelFactory> localizer = httpContext.GetStringLocalizer<IndexViewModelFactory>();
+      IStringLocalizer<IndexViewModel> localizer = httpContext.GetStringLocalizer<IndexViewModel>();
 
       return new IndexViewModel()
       {
-        Grid = new GridViewModelFactory().Create(
+        Grid = GridViewModelFactory.Create(
           httpContext,
           new[] {
-            new FilterViewModelFactory().Create(httpContext, "Name.Contains", localizer["Name"]),
-            new FilterViewModelFactory().Create(httpContext, "UrlTemplate.Contains", localizer["URL template"])
+            FilterViewModelFactory.Create(httpContext, "Name.Contains", localizer["Name"]),
+            FilterViewModelFactory.Create(httpContext, "UrlTemplate.Contains", localizer["URL template"])
           },
           orderBy, skip, take, total,
           new[] {
-            new GridColumnViewModelFactory().Create(localizer["Name"], "Name"),
-            new GridColumnViewModelFactory().Create(localizer["URL template"], "UrlTemplate"),
-            new GridColumnViewModelFactory().Create(localizer["Position"], "Position"),
-            new GridColumnViewModelFactory().Create(localizer["Data sources"]),
-            new GridColumnViewModelFactory().CreateEmpty()
+            GridColumnViewModelFactory.Create(localizer["Name"], "Name"),
+            GridColumnViewModelFactory.Create(localizer["URL template"], "UrlTemplate"),
+            GridColumnViewModelFactory.Create(localizer["Position"], "Position"),
+            GridColumnViewModelFactory.Create(localizer["Data sources"]),
+            GridColumnViewModelFactory.CreateEmpty()
           },
-          endpoints.Select(e => new EndpointViewModelFactory().Create(e)),
+          endpoints.Select(EndpointViewModelFactory.Create),
           "_Endpoint"
         )
       };

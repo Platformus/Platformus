@@ -35,7 +35,7 @@ namespace Platformus.ECommerce.Frontend.ViewComponents
         )
       );
 
-      return this.View(new CatalogViewModelFactory().Create(this.HttpContext, categories, partialViewName, additionalCssClass));
+      return this.View(CatalogViewModelFactory.Create(this.HttpContext, categories, partialViewName, additionalCssClass));
     }
   }
 }

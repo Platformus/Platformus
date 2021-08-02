@@ -1,7 +1,6 @@
 ﻿// Copyright © 2020 Dmitry Sikorsky. All rights reserved.
 // Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information.
 
-using System;
 using System.Threading.Tasks;
 using ExtCore.Events;
 using Magicalizer.Data.Repositories.Abstractions;
@@ -32,7 +31,7 @@ namespace Platformus.ECommerce.Backend.Controllers
 
     public async Task<IActionResult> IndexAsync([FromQuery]OrderFilter filter = null, string orderBy = "-created", int skip = 0, int take = 10)
     {
-      return this.View(await new IndexViewModelFactory().CreateAsync(
+      return this.View(await IndexViewModelFactory.CreateAsync(
         this.HttpContext, filter,
         await this.Repository.GetAllAsync(
           filter, orderBy, skip, take,
@@ -49,7 +48,7 @@ namespace Platformus.ECommerce.Backend.Controllers
     [ImportModelStateFromTempData]
     public async Task<IActionResult> CreateOrEditAsync(int? id)
     {
-      return this.View(await new CreateOrEditViewModelFactory().CreateAsync(
+      return this.View(await CreateOrEditViewModelFactory.CreateAsync(
         this.HttpContext, id == null ? null : await this.Repository.GetByIdAsync(
           (int)id,
           new Inclusion<Order>(o => o.OrderState.Name.Localizations),
@@ -67,7 +66,7 @@ namespace Platformus.ECommerce.Backend.Controllers
     {
       if (this.ModelState.IsValid)
       {
-        Order order = new CreateOrEditViewModelMapper().Map(
+        Order order = CreateOrEditViewModelMapper.Map(
           createOrEdit.Id == null ? new Order() : await this.Repository.GetByIdAsync((int)createOrEdit.Id, new Inclusion<Order>("Positions")),
           createOrEdit
         );
@@ -98,7 +97,7 @@ namespace Platformus.ECommerce.Backend.Controllers
       this.Repository.Delete(order.Id);
       await this.Storage.SaveAsync();
       Event<IOrderCreatedEventHandler, HttpContext, Order>.Broadcast(this.HttpContext, order);
-      return this.RedirectToAction("Index");
+      return this.Redirect(this.Request.CombineUrl("/backend/orders"));
     }
 
     private async Task CreateOrEditPositionsAsync(Order order, CreateOrEditViewModel createOrEdit)

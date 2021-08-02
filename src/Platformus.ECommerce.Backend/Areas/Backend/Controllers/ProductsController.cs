@@ -34,7 +34,7 @@ namespace Platformus.ECommerce.Backend.Controllers
       if (string.IsNullOrEmpty(orderBy))
         orderBy = "+" + this.HttpContext.CreateLocalizedOrderBy("Name");
 
-      return this.View(await new IndexViewModelFactory().CreateAsync(
+      return this.View(await IndexViewModelFactory.CreateAsync(
         this.HttpContext, filter,
         await this.Repository.GetAllAsync(
           filter, orderBy, skip, take,
@@ -50,7 +50,7 @@ namespace Platformus.ECommerce.Backend.Controllers
     [ImportModelStateFromTempData]
     public async Task<IActionResult> CreateOrEditAsync(int? id)
     {
-      return this.View(await new CreateOrEditViewModelFactory().CreateAsync(
+      return this.View(await CreateOrEditViewModelFactory.CreateAsync(
         this.HttpContext, id == null ? null : await this.Repository.GetByIdAsync(
           (int)id,
           new Inclusion<Product>(p => p.Category.Name.Localizations),
@@ -74,7 +74,7 @@ namespace Platformus.ECommerce.Backend.Controllers
 
       if (this.ModelState.IsValid)
       {
-        Product product = new CreateOrEditViewModelMapper().Map(
+        Product product = CreateOrEditViewModelMapper.Map(
           createOrEdit.Id == null ? new Product() : await this.Repository.GetByIdAsync((int)createOrEdit.Id, new Inclusion<Product>(p => p.Photos)),
           createOrEdit
         );
@@ -107,7 +107,7 @@ namespace Platformus.ECommerce.Backend.Controllers
       this.Repository.Delete(product.Id);
       await this.Storage.SaveAsync();
       Event<IProductCreatedEventHandler, HttpContext, Product>.Broadcast(this.HttpContext, product);
-      return this.RedirectToAction("Index");
+      return this.Redirect(this.Request.CombineUrl("/backend/products"));
     }
 
     private async Task<bool> IsCodeUniqueAsync(string code)

@@ -8,11 +8,11 @@ using Platformus.Core.Primitives;
 
 namespace Platformus.Core.Backend.ViewModels.Shared
 {
-  public class TakeSelectorViewModelFactory : ViewModelFactoryBase
+  public static class TakeSelectorViewModelFactory
   {
-    public TakeSelectorViewModel Create(HttpContext httpContext, int take)
+    public static TakeSelectorViewModel Create(HttpContext httpContext, int take)
     {
-      IStringLocalizer<TakeSelectorViewModelFactory> localizer = httpContext.GetStringLocalizer<TakeSelectorViewModelFactory>();
+      IStringLocalizer<TakeSelectorViewModel> localizer = httpContext.GetStringLocalizer<TakeSelectorViewModel>();
 
       return new TakeSelectorViewModel()
       {

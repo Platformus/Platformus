@@ -3,18 +3,17 @@
 
 using System.Collections.Generic;
 using System.Linq;
-using Platformus.Core.Frontend.ViewModels;
 using Platformus.ECommerce.Data.Entities;
 
 namespace Platformus.ECommerce.Frontend.ViewModels.Shared
 {
-  public class PositionsViewModelFactory : ViewModelFactoryBase
+  public static class PositionsViewModelFactory
   {
-    public PositionsViewModel Create(IEnumerable<Position> positions, string partialViewName, string additionalCssClass)
+    public static PositionsViewModel Create(IEnumerable<Position> positions, string partialViewName, string additionalCssClass)
     {
       return new PositionsViewModel()
       {
-        Positions = positions.Select(p => new PositionViewModelFactory().Create(p)),
+        Positions = positions.Select(PositionViewModelFactory.Create),
         PartialViewName = partialViewName ?? "_Positions",
         AdditionalCssClass = additionalCssClass
       };

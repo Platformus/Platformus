@@ -12,14 +12,14 @@ using Platformus.Core.Filters;
 
 namespace Platformus.Core.Backend.ViewModels.Roles
 {
-  public class CreateOrEditViewModelFactory : ViewModelFactoryBase
+  public static class CreateOrEditViewModelFactory
   {
-    public async Task<CreateOrEditViewModel> CreateAsync(HttpContext httpContext, Role role)
+    public static async Task<CreateOrEditViewModel> CreateAsync(HttpContext httpContext, Role role)
     {
       if (role == null)
         return new CreateOrEditViewModel()
         {
-          RolePermissions = await this.GetRolePermissionsAsync(httpContext)
+          RolePermissions = await GetRolePermissionsAsync(httpContext)
         };
 
       return new CreateOrEditViewModel()
@@ -28,14 +28,14 @@ namespace Platformus.Core.Backend.ViewModels.Roles
         Code = role.Code,
         Name = role.Name,
         Position = role.Position,
-        RolePermissions = await this.GetRolePermissionsAsync(httpContext, role)
+        RolePermissions = await GetRolePermissionsAsync(httpContext, role)
       };
     }
 
-    public async Task<IEnumerable<RolePermissionViewModel>> GetRolePermissionsAsync(HttpContext httpContext, Role role = null)
+    public static async Task<IEnumerable<RolePermissionViewModel>> GetRolePermissionsAsync(HttpContext httpContext, Role role = null)
     {
       return (await httpContext.GetStorage().GetRepository<int, Permission, PermissionFilter>().GetAllAsync()).Select(
-        p => new RolePermissionViewModelFactory().Create(p, role != null && role.RolePermissions.Any(rp => rp.PermissionId == p.Id))
+        p => RolePermissionViewModelFactory.Create(p, role != null && role.RolePermissions.Any(rp => rp.PermissionId == p.Id))
       );
     }
   }

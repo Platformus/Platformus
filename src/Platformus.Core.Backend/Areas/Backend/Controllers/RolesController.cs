@@ -36,7 +36,7 @@ namespace Platformus.Core.Backend.Controllers
 
     public async Task<IActionResult> IndexAsync([FromQuery]RoleFilter filter = null, string orderBy = "+position", int skip = 0, int take = 10)
     {
-      return this.View(new IndexViewModelFactory().Create(
+      return this.View(IndexViewModelFactory.Create(
         this.HttpContext, filter,
         await this.RoleRepository.GetAllAsync(filter, orderBy, skip, take),
         orderBy, skip, take, await this.RoleRepository.CountAsync(filter)
@@ -47,7 +47,7 @@ namespace Platformus.Core.Backend.Controllers
     [ImportModelStateFromTempData]
     public async Task<IActionResult> CreateOrEditAsync(int? id)
     {
-      return this.View(await new CreateOrEditViewModelFactory().CreateAsync(
+      return this.View(await CreateOrEditViewModelFactory.CreateAsync(
         this.HttpContext, id == null ? null : await this.RoleRepository.GetByIdAsync((int)id, new Inclusion<Role>(r => r.RolePermissions))
       ));
     }
@@ -61,7 +61,7 @@ namespace Platformus.Core.Backend.Controllers
 
       if (this.ModelState.IsValid)
       {
-        Role role = new CreateOrEditViewModelMapper().Map(
+        Role role = CreateOrEditViewModelMapper.Map(
           createOrEdit.Id == null ? new Role() : await this.RoleRepository.GetByIdAsync((int)createOrEdit.Id, new Inclusion<Role>(r => r.RolePermissions)),
           createOrEdit
         );
@@ -92,7 +92,7 @@ namespace Platformus.Core.Backend.Controllers
       this.RoleRepository.Delete(role.Id);
       await this.Storage.SaveAsync();
       Event<IRoleDeletedEventHandler, HttpContext, Role>.Broadcast(this.HttpContext, role);
-      return this.RedirectToAction("Index");
+      return this.Redirect(this.Request.CombineUrl("/backend/roles"));
     }
 
     private async Task<bool> IsCodeUniqueAsync(string code)

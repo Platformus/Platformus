@@ -7,27 +7,27 @@ using Microsoft.AspNetCore.Http;
 
 namespace Platformus.Core.Backend.ViewModels.Shared
 {
-  public class GridViewModelFactory : ViewModelFactoryBase
+  public static class GridViewModelFactory
   {
-    public GridViewModel Create(HttpContext httpContext, string sorting, int skip, int take, int total, IEnumerable<GridColumnViewModel> gridColumns, IEnumerable<ViewModelBase> items, string templateName)
+    public static GridViewModel Create(HttpContext httpContext, string sorting, int skip, int take, int total, IEnumerable<GridColumnViewModel> gridColumns, IEnumerable<ViewModelBase> items, string templateName)
     {
-      return this.Create(httpContext, default(FilterViewModel), sorting, skip, take, total, gridColumns, items, templateName);
+      return Create(httpContext, default(FilterViewModel), sorting, skip, take, total, gridColumns, items, templateName);
     }
 
-    public GridViewModel Create(HttpContext httpContext, FilterViewModel filter, string sorting, int skip, int take, int total, IEnumerable<GridColumnViewModel> gridColumns, IEnumerable<ViewModelBase> items, string templateName)
+    public static GridViewModel Create(HttpContext httpContext, FilterViewModel filter, string sorting, int skip, int take, int total, IEnumerable<GridColumnViewModel> gridColumns, IEnumerable<ViewModelBase> items, string templateName)
     {
-      return this.Create(httpContext, filter == null ? null : new[] { filter }, sorting, skip, take, total, gridColumns, items, templateName);
+      return Create(httpContext, filter == null ? null : new[] { filter }, sorting, skip, take, total, gridColumns, items, templateName);
     }
 
-    public GridViewModel Create(HttpContext httpContext, IEnumerable<FilterViewModel> filters, string sorting, int skip, int take, int total, IEnumerable<GridColumnViewModel> gridColumns, IEnumerable<ViewModelBase> items, string templateName)
+    public static GridViewModel Create(HttpContext httpContext, IEnumerable<FilterViewModel> filters, string sorting, int skip, int take, int total, IEnumerable<GridColumnViewModel> gridColumns, IEnumerable<ViewModelBase> items, string templateName)
     {
       GridViewModel grid = new GridViewModel()
       {
         Filters = filters,
-        SortingName = string.IsNullOrEmpty(sorting) ? null : this.GetSortingName(sorting),
-        SortingDirection = string.IsNullOrEmpty(sorting) ? (SortingDirection?)null: this.GetSortingDirection(sorting),
-        Pager = new PagerViewModelFactory().Create(skip, take, total),
-        TakeSelector = new TakeSelectorViewModelFactory().Create(httpContext, take),
+        SortingName = string.IsNullOrEmpty(sorting) ? null : GetSortingName(sorting),
+        SortingDirection = string.IsNullOrEmpty(sorting) ? null: GetSortingDirection(sorting),
+        Pager = PagerViewModelFactory.Create(skip, take, total),
+        TakeSelector = TakeSelectorViewModelFactory.Create(httpContext, take),
         GridColumns = gridColumns,
         Items = items,
         TemplateName = templateName
@@ -37,12 +37,12 @@ namespace Platformus.Core.Backend.ViewModels.Shared
       return grid;
     }
 
-    private string GetSortingName(string sorting)
+    private static string GetSortingName(string sorting)
     {
       return sorting.Substring(1);
     }
 
-    private SortingDirection GetSortingDirection(string sorting)
+    private static SortingDirection GetSortingDirection(string sorting)
     {
       return sorting[0] == '+' ? SortingDirection.Ascending : SortingDirection.Descending;
     }

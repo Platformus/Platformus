@@ -6,9 +6,9 @@ using Platformus.Core.Data.Entities;
 
 namespace Platformus.Core.Backend.ViewModels.Users
 {
-  public class CreateOrEditViewModelMapper : ViewModelMapperBase
+  public static class CreateOrEditViewModelMapper
   {
-    public User Map(User user, CreateOrEditViewModel createOrEdit)
+    public static User Map(User user, CreateOrEditViewModel createOrEdit)
     {
       if (user.Id == 0)
         user.Created = DateTime.Now;

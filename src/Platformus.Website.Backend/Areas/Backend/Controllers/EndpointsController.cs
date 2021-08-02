@@ -36,7 +36,7 @@ namespace Platformus.Website.Backend.Controllers
 
     public async Task<IActionResult> IndexAsync([FromQuery]EndpointFilter filter = null, string orderBy = "+position", int skip = 0, int take = 10)
     {
-      return this.View(new IndexViewModelFactory().Create(
+      return this.View(IndexViewModelFactory.Create(
         this.HttpContext, filter,
         await this.EndpointRepository.GetAllAsync(filter, orderBy, skip, take),
         orderBy, skip, take, await this.EndpointRepository.CountAsync(filter)
@@ -47,7 +47,7 @@ namespace Platformus.Website.Backend.Controllers
     [ImportModelStateFromTempData]
     public async Task<IActionResult> CreateOrEditAsync(int? id)
     {
-      return this.View(await new CreateOrEditViewModelFactory().CreateAsync(
+      return this.View(await CreateOrEditViewModelFactory.CreateAsync(
         this.HttpContext, id == null? null : await this.EndpointRepository.GetByIdAsync((int)id, new Inclusion<Data.Entities.Endpoint>(e => e.EndpointPermissions))
       ));
     }
@@ -58,7 +58,7 @@ namespace Platformus.Website.Backend.Controllers
     {
       if (this.ModelState.IsValid)
       {
-        Data.Entities.Endpoint endpoint = new CreateOrEditViewModelMapper().Map(
+        Data.Entities.Endpoint endpoint = CreateOrEditViewModelMapper.Map(
           createOrEdit.Id == null ? new Data.Entities.Endpoint() : await this.EndpointRepository.GetByIdAsync((int)createOrEdit.Id),
           createOrEdit
         );
@@ -89,7 +89,7 @@ namespace Platformus.Website.Backend.Controllers
       this.EndpointRepository.Delete(id);
       await this.Storage.SaveAsync();
       Event<IEndpointDeletedEventHandler, HttpContext, Data.Entities.Endpoint>.Broadcast(this.HttpContext, endpoint);
-      return this.RedirectToAction("Index");
+      return this.Redirect(this.Request.CombineUrl("/backend/endpoints"));
     }
 
     private async Task CreateOrEditEndpointPermissionsAsync(Data.Entities.Endpoint endpoint)

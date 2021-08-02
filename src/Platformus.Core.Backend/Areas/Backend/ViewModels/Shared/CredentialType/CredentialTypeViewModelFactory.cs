@@ -5,9 +5,9 @@ using Platformus.Core.Data.Entities;
 
 namespace Platformus.Core.Backend.ViewModels.Shared
 {
-  public class CredentialTypeViewModelFactory : ViewModelFactoryBase
+  public static class CredentialTypeViewModelFactory
   {
-    public CredentialTypeViewModel Create(CredentialType credentialType)
+    public static CredentialTypeViewModel Create(CredentialType credentialType)
     {
       return new CredentialTypeViewModel()
       {

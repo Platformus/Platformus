@@ -2,72 +2,54 @@
 // Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information.
 
 using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.AspNetCore.Mvc.ViewFeatures;
-using Microsoft.AspNetCore.Razor.TagHelpers;
 
 namespace Platformus.Core.Backend
 {
-  public class CheckboxGenerator : GeneratorBase
+  public static class CheckboxGenerator
   {
-    public TagBuilder GenerateCheckbox(ViewContext viewContext, ModelExpression modelExpression, TagHelperAttributeList attributes, string additionalCssClass = null)
+    public static TagBuilder Generate(string identity, string label, bool isChecked)
     {
-      TagBuilder tb = new TagBuilder("a");
-
-      if (!string.IsNullOrEmpty(additionalCssClass))
-        tb.AddCssClass(additionalCssClass);
+      TagBuilder tb = new TagBuilder(TagNames.A);
 
       tb.AddCssClass("checkbox");
-      tb.MergeAttribute("id", this.GetIdentity(modelExpression));
-      tb.MergeAttribute("href", "#");
-      this.MergeOtherAttribute(tb, attributes);
-      tb.InnerHtml.Clear();
-      tb.InnerHtml.AppendHtml(this.GenerateIndicator(viewContext, modelExpression));
-      tb.InnerHtml.AppendHtml(this.GenerateLabel(modelExpression));
-      tb.InnerHtml.AppendHtml(this.GenerateInput(viewContext, modelExpression));
+      tb.MergeAttribute(AttributeNames.Id, identity);
+      tb.MergeAttribute(AttributeNames.Href, "#");
+      tb.InnerHtml.AppendHtml(GenerateIndicator(isChecked));
+      tb.InnerHtml.AppendHtml(GenerateLabel(label));
+      tb.InnerHtml.AppendHtml(GenerateInput(identity, isChecked));
       return tb;
     }
 
-    private TagBuilder GenerateIndicator(ViewContext viewContext, ModelExpression modelExpression)
+    private static TagBuilder GenerateIndicator(bool isChecked)
     {
-      TagBuilder tb = new TagBuilder("div");
+      TagBuilder tb = new TagBuilder(TagNames.Div);
 
       tb.AddCssClass("checkbox__indicator");
 
-      if (this.GetValue(viewContext, modelExpression) == true.ToString().ToLower())
+      if (isChecked)
         tb.AddCssClass("checkbox__indicator--checked");
 
       return tb;
     }
 
-    private TagBuilder GenerateLabel(ModelExpression modelExpression)
+    private static TagBuilder GenerateLabel(string text)
     {
-      TagBuilder tb = new TagBuilder("div");
+      TagBuilder tb = new TagBuilder(TagNames.Div);
 
       tb.AddCssClass("checkbox__label");
-      tb.InnerHtml.Clear();
-      tb.InnerHtml.AppendHtml(modelExpression.Metadata.DisplayName);
+      tb.InnerHtml.AppendHtml(text);
       return tb;
     }
 
-    private TagBuilder GenerateInput(ViewContext viewContext, ModelExpression modelExpression)
+    private static TagBuilder GenerateInput(string identity, bool isChecked)
     {
-      TagBuilder tb = new TagBuilder("input");
+      TagBuilder tb = new TagBuilder(TagNames.Input);
 
       tb.TagRenderMode = TagRenderMode.SelfClosing;
-      tb.MergeAttribute("name", this.GetIdentity(modelExpression));
-      tb.MergeAttribute("type", "hidden");
-      tb.MergeAttribute("value", this.GetValue(viewContext, modelExpression));
+      tb.MergeAttribute(AttributeNames.Name, identity);
+      tb.MergeAttribute(AttributeNames.Type, "hidden");
+      tb.MergeAttribute(AttributeNames.Value, isChecked.ToString().ToLower());
       return tb;
-    }
-
-    private string GetValue(ViewContext viewContext, ModelExpression modelExpression)
-    {
-      string value = base.GetValue(viewContext, modelExpression);
-
-      if (string.IsNullOrEmpty(value))
-        return false.ToString().ToLower();
-
-      return value.ToLower();
     }
   }
 }

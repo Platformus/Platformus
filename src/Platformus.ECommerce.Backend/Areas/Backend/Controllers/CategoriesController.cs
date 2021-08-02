@@ -31,7 +31,7 @@ namespace Platformus.ECommerce.Backend.Controllers
 
     public async Task<IActionResult> IndexAsync()
     {
-      return this.View(new IndexViewModelFactory().Create(
+      return this.View(IndexViewModelFactory.Create(
         await this.Repository.GetAllAsync(
           new CategoryFilter(owner: new CategoryFilter(id: new IntegerFilter(isNull: true))),
           inclusions: new Inclusion<Category>[] {
@@ -48,14 +48,14 @@ namespace Platformus.ECommerce.Backend.Controllers
     [ImportModelStateFromTempData]
     public async Task<IActionResult> CreateOrEditAsync(int? id)
     {
-      return this.View(new CreateOrEditViewModelFactory().Create(
+      return this.View(CreateOrEditViewModelFactory.Create(
         this.HttpContext, id == null ? null : await this.Repository.GetByIdAsync(
           (int)id,
           new Inclusion<Category>(c => c.Name.Localizations),
-          new Inclusion<Category>(p => p.Description.Localizations),
-          new Inclusion<Category>(p => p.Title.Localizations),
-          new Inclusion<Category>(p => p.MetaDescription.Localizations),
-          new Inclusion<Category>(p => p.MetaKeywords.Localizations)
+          new Inclusion<Category>(c => c.Description.Localizations),
+          new Inclusion<Category>(c => c.Title.Localizations),
+          new Inclusion<Category>(c => c.MetaDescription.Localizations),
+          new Inclusion<Category>(c => c.MetaKeywords.Localizations)
         )
       ));
     }
@@ -66,7 +66,7 @@ namespace Platformus.ECommerce.Backend.Controllers
     {
       if (this.ModelState.IsValid)
       {
-        Category category = new CreateOrEditViewModelMapper().Map(
+        Category category = CreateOrEditViewModelMapper.Map(
           filter,
           createOrEdit.Id == null ? new Category() : await this.Repository.GetByIdAsync((int)createOrEdit.Id),
           createOrEdit

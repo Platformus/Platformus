@@ -30,7 +30,7 @@ namespace Platformus.Core.Backend.Controllers
 
     public async Task<IActionResult> IndexAsync([FromQuery]CultureFilter filter = null, string orderBy = "+name", int skip = 0, int take = 10)
     {
-      return this.View(new IndexViewModelFactory().Create(
+      return this.View(IndexViewModelFactory.Create(
         this.HttpContext, filter,
         await this.Repository.GetAllAsync(filter, orderBy, skip, take),
         orderBy, skip, take, await this.Repository.CountAsync(filter)
@@ -41,7 +41,7 @@ namespace Platformus.Core.Backend.Controllers
     [ImportModelStateFromTempData]
     public async Task<IActionResult> CreateOrEditAsync(string id)
     {
-      return this.View(new CreateOrEditViewModelFactory().Create(
+      return this.View(CreateOrEditViewModelFactory.Create(
         string.IsNullOrEmpty(id) ? null : await this.Repository.GetByIdAsync(id)
       ));
     }
@@ -55,7 +55,7 @@ namespace Platformus.Core.Backend.Controllers
 
       if (this.ModelState.IsValid)
       {
-        Culture culture = new CreateOrEditViewModelMapper().Map(
+        Culture culture = CreateOrEditViewModelMapper.Map(
           string.IsNullOrEmpty(id) ? new Culture() : await this.Repository.GetByIdAsync(createOrEdit.Id),
           createOrEdit
         );
@@ -85,7 +85,7 @@ namespace Platformus.Core.Backend.Controllers
       this.Repository.Delete(culture.Id);
       await this.Storage.SaveAsync();
       Event<ICultureDeletedEventHandler, HttpContext, Culture>.Broadcast(this.HttpContext, culture);
-      return this.RedirectToAction("Index");
+      return this.Redirect(this.Request.CombineUrl("/backend/cultures"));
     }
 
     private async Task<bool> IsIdUniqueAsync(string id)

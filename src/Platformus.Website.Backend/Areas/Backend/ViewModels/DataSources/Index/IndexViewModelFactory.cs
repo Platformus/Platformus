@@ -5,7 +5,6 @@ using System.Collections.Generic;
 using System.Linq;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Localization;
-using Platformus.Core.Backend.ViewModels;
 using Platformus.Core.Backend.ViewModels.Shared;
 using Platformus.Core.Extensions;
 using Platformus.Website.Backend.ViewModels.Shared;
@@ -14,25 +13,25 @@ using Platformus.Website.Filters;
 
 namespace Platformus.Website.Backend.ViewModels.DataSources
 {
-  public class IndexViewModelFactory : ViewModelFactoryBase
+  public static class IndexViewModelFactory
   {
-    public IndexViewModel Create(HttpContext httpContext, DataSourceFilter filter, IEnumerable<DataSource> dataSources, string orderBy, int skip, int take, int total)
+    public static IndexViewModel Create(HttpContext httpContext, DataSourceFilter filter, IEnumerable<DataSource> dataSources, string orderBy, int skip, int take, int total)
     {
-      IStringLocalizer<IndexViewModelFactory> localizer = httpContext.GetStringLocalizer<IndexViewModelFactory>();
+      IStringLocalizer<IndexViewModel> localizer = httpContext.GetStringLocalizer<IndexViewModel>();
 
       return new IndexViewModel()
       {
         Filter = filter,
-        Grid = new GridViewModelFactory().Create(
+        Grid = GridViewModelFactory.Create(
           httpContext,
-          new FilterViewModelFactory().Create(httpContext, "Code.Contains", localizer["Code"]),
+          FilterViewModelFactory.Create(httpContext, "Code.Contains", localizer["Code"]),
           orderBy, skip, take, total,
           new[] {
-            new GridColumnViewModelFactory().Create(localizer["Code"], "Code"),
-            new GridColumnViewModelFactory().Create(localizer["Data provider C# class name"], "DataProviderCSharpClassName"),
-            new GridColumnViewModelFactory().CreateEmpty()
+            GridColumnViewModelFactory.Create(localizer["Code"], "Code"),
+            GridColumnViewModelFactory.Create(localizer["Data provider C# class name"], "DataProviderCSharpClassName"),
+            GridColumnViewModelFactory.CreateEmpty()
           },
-          dataSources.Select(ds => new DataSourceViewModelFactory().Create(ds)),
+          dataSources.Select(DataSourceViewModelFactory.Create),
           "_DataSource"
         )
       };

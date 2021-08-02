@@ -5,7 +5,6 @@ using System.Collections.Generic;
 using System.Linq;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Localization;
-using Platformus.Core.Backend.ViewModels;
 using Platformus.Core.Backend.ViewModels.Shared;
 using Platformus.Core.Extensions;
 using Platformus.Core.Primitives;
@@ -15,37 +14,37 @@ using Platformus.Website.Filters;
 
 namespace Platformus.Website.Backend.ViewModels.DataTypes
 {
-  public class IndexViewModelFactory : ViewModelFactoryBase
+  public static class IndexViewModelFactory
   {
-    public IndexViewModel Create(HttpContext httpContext, DataTypeFilter filter, IEnumerable<DataType> dataTypes, string orderBy, int skip, int take, int total)
+    public static IndexViewModel Create(HttpContext httpContext, DataTypeFilter filter, IEnumerable<DataType> dataTypes, string orderBy, int skip, int take, int total)
     {
-      IStringLocalizer<IndexViewModelFactory> localizer = httpContext.GetStringLocalizer<IndexViewModelFactory>();
+      IStringLocalizer<IndexViewModel> localizer = httpContext.GetStringLocalizer<IndexViewModel>();
 
       return new IndexViewModel()
       {
-        Grid = new GridViewModelFactory().Create(
+        Grid = GridViewModelFactory.Create(
           httpContext,
           new[] {
-            new FilterViewModelFactory().Create(httpContext, "StorageDataType", localizer["Storage data type"], this.GetStorageDataTypeOptions(httpContext)),
-            new FilterViewModelFactory().Create(httpContext, "Name.Contains", localizer["Name"])
+            FilterViewModelFactory.Create(httpContext, "StorageDataType", localizer["Storage data type"], GetStorageDataTypeOptions(httpContext)),
+            FilterViewModelFactory.Create(httpContext, "Name.Contains", localizer["Name"])
           },
           orderBy, skip, take, total,
           new[] {
-            new GridColumnViewModelFactory().Create(localizer["Storage data type"], "StorageDataType"),
-            new GridColumnViewModelFactory().Create(localizer["Name"], "Name"),
-            new GridColumnViewModelFactory().Create(localizer["Data type parameters"]),
-            new GridColumnViewModelFactory().Create(localizer["Position"], "Position"),
-            new GridColumnViewModelFactory().CreateEmpty()
+            GridColumnViewModelFactory.Create(localizer["Storage data type"], "StorageDataType"),
+            GridColumnViewModelFactory.Create(localizer["Name"], "Name"),
+            GridColumnViewModelFactory.Create(localizer["Data type parameters"]),
+            GridColumnViewModelFactory.Create(localizer["Position"], "Position"),
+            GridColumnViewModelFactory.CreateEmpty()
           },
-          dataTypes.Select(dt => new DataTypeViewModelFactory().Create(dt)),
+          dataTypes.Select(DataTypeViewModelFactory.Create),
           "_DataType"
         )
       };
     }
 
-    private IEnumerable<Option> GetStorageDataTypeOptions(HttpContext httpContext)
+    private static IEnumerable<Option> GetStorageDataTypeOptions(HttpContext httpContext)
     {
-      IStringLocalizer<IndexViewModelFactory> localizer = httpContext.GetStringLocalizer<IndexViewModelFactory>();
+      IStringLocalizer<IndexViewModel> localizer = httpContext.GetStringLocalizer<IndexViewModel>();
 
       return new Option[]
       {

@@ -9,30 +9,33 @@ using Platformus.Core.Primitives;
 
 namespace Platformus.Core.Backend
 {
-  [HtmlTargetElement("drop-down-list", Attributes = ForAttributeName + "," + OptionsAttributeName)]
   public class DropDownListTagHelper : TagHelper
   {
-    private const string ForAttributeName = "asp-for";
-    private const string OptionsAttributeName = "asp-options";
-
     [HtmlAttributeNotBound]
     [ViewContext]
     public ViewContext ViewContext { get; set; }
-
-    [HtmlAttributeName(ForAttributeName)] 
+    public string Class { get; set; }
     public ModelExpression For { get; set; }
-
-    [HtmlAttributeName(OptionsAttributeName)]
     public IEnumerable<Option> Options { get; set; }
 
     public override void Process(TagHelperContext context, TagHelperOutput output)
     {
-      if (this.ViewContext == null || this.For == null || this.Options == null)
+      if (this.For == null || this.Options == null)
         return;
 
+      TagBuilder tb = DropDownListGenerator.Generate(
+        this.For.GetIdentity(),
+        this.Options,
+        this.For.GetValue(this.ViewContext),
+        this.For.HasRequiredAttribute(),
+        this.For.IsValid(this.ViewContext)
+      );
+
+      if (!string.IsNullOrEmpty(this.Class))
+        tb.AddCssClass(this.Class);
+
       output.SuppressOutput();
-      output.Content.Clear();
-      output.Content.AppendHtml(new DropDownListGenerator().GenerateDropDownList(this.ViewContext, this.For, this.Options, output.Attributes));
+      output.Content.AppendHtml(tb);
     }
   }
 }
