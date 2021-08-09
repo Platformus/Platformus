@@ -31,13 +31,11 @@
     }
 
     else {
-      for (var i = 0; i < member.property.stringValue.localizations.length; i++) {
-        var localization = member.property.stringValue.localizations[i];
-
+      member.property.stringValue.localizations.forEach(function (localization) {
         if (localization.culture.id == "__") {
           createTextBox(member, localization).appendTo(field);
         }
-      }
+      });
     }
 
     return field;
@@ -54,6 +52,6 @@
           maxLength: platformus.memberEditors.base.getMaxLengthDataTypeParameterValue(member)
         }
       }
-    ).attr("data-culture", localization.culture.id);
+    ).attr("lang", localization.culture.id);
   }
 })(window.platformus = window.platformus || {});

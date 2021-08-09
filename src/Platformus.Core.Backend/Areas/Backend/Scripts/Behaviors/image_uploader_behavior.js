@@ -37,7 +37,7 @@
     var input = imageUploader.find("input");
     var image = imageUploader.find("img");
 
-    input.val(platformus.string.empty);
+    input.val("");
     image.removeAttr("src").hide();
   }
 })(window.platformus = window.platformus || {});

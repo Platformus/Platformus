@@ -11,5 +11,6 @@ namespace Platformus.Core.Backend.Metadata
     public virtual IEnumerable<StyleSheet> GetStyleSheets(HttpContext httpContext) => new StyleSheet[] { };
     public virtual IEnumerable<Script> GetScripts(HttpContext httpContext) => new Script[] { };
     public virtual IEnumerable<MenuGroup> GetMenuGroups(HttpContext httpContext) => new MenuGroup[] { };
+    public virtual IEnumerable<DashboardWidget> GetDashboardWidgets(HttpContext httpContext) => new DashboardWidget[] { };
   }
 }

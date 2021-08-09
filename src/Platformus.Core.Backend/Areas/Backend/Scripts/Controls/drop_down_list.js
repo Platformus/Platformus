@@ -7,7 +7,7 @@
   platformus.controls.dropDownList.create = function (descriptor) {
     var dropDownList = $("<div>").addClass("field__drop-down-list drop-down-list").attr("id", descriptor.identity);
 
-    if (descriptor.validation != null && descriptor.validation.isRequired) {
+    if (descriptor.validation && descriptor.validation.isRequired) {
       dropDownList.addClass("drop-down-list--required").attr("data-val", true).attr("data-val-required", true);
     }
 
@@ -26,10 +26,7 @@
   function createDropDownListItems(descriptor) {
     var dropDownListItems = $("<div>").addClass("drop-down-list__items");
 
-    for (var i = 0; i != descriptor.options.length; i++) {
-      createDropDownListItem(descriptor.options[i]).appendTo(dropDownListItems);
-    }
-
+    descriptor.options.forEach(o => createDropDownListItem(o).appendTo(dropDownListItems));
     return dropDownListItems;
   }
 
@@ -40,12 +37,12 @@
       dropDownListItem.addClass("drop-down-list__item--selected");
     }
 
-    if (option == null) {
-      dropDownListItem.html("Not selected");
+    if (option) {
+      dropDownListItem.attr("data-value", option.value).html(option.text);
     }
 
     else {
-      dropDownListItem.attr("data-value", option.value).html(option.text);
+      dropDownListItem.html("Not selected");
     }
 
     return dropDownListItem;
@@ -59,12 +56,6 @@
   }
 
   function getSelectedDropDownListItem(descriptor) {
-    for (var i = 0; i != descriptor.options.length; i++) {
-      if (descriptor.options[i].value == descriptor.value) {
-        return descriptor.options[i];
-      }
-    }
-
-    return null;
+    return descriptor.options.find(o => o.value == descriptor.value);
   }
 })(window.platformus = window.platformus || {});

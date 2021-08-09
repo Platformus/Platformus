@@ -9,14 +9,14 @@
 @section title {
   @ViewBag.Title
 }
-<tree>
+<tree class="master-detail__tree">
   @foreach (var form in this.Model.Forms)
   {
-    @Html.Partial("_Form", form)
+    <partial name="_Form" for="@form" />
   }
   <tree-node>
-    <div class="tree__buttons buttons">
+    <tree-node-buttons>
       <positive-button is-minor="true" href="/backend/forms/create">@Localizer["Create form"]</positive-button>
-    </div>
+    </tree-node-buttons>
   </tree-node>
 </tree>

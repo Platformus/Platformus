@@ -12,13 +12,9 @@ namespace Platformus.Core.Backend.Metadata.Providers
   {
     public IEnumerable<Script> GetScripts(HttpContext httpContext)
     {
-      List<Script> scripts = new List<Script>();
-
-      foreach (IMetadata metadata in ExtensionManager.GetInstances<IMetadata>())
-        foreach (Script script in metadata.GetScripts(httpContext))
-          scripts.Add(script);
-
-      return scripts.OrderBy(s => s.Position);
+      return ExtensionManager.GetInstances<IMetadata>()
+        .SelectMany(m => m.GetScripts(httpContext))
+        .OrderBy(s => s.Position);
     }
   }
 }

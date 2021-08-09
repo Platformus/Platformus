@@ -3,20 +3,22 @@
 @model Platformus.Core.Backend.ViewModels.Shared.ConfigurationViewModel
 @inject Microsoft.AspNetCore.Mvc.Localization.IViewLocalizer Localizer
 <tree-node>
-  <div class="tree__node-header">
-    <div class="tree__buttons tree__buttons--node-header buttons">
+  <tree-node-header>
+    <tree-node-title>
+      @Model.Name
+    </tree-node-title>
+    <tree-node-buttons>
       <positive-button is-minor="true" href="/backend/configurations/edit/@Model.Id">@Localizer["Edit"]</positive-button>
       <delete-button href="/backend/configurations/delete/@Model.Id"></delete-button>
-    </div>
-    @Model.Name
-  </div>
-  <div class="tree__node-content">
+    </tree-node-buttons>
+  </tree-node-header>
+  <tree-node-content>
     @foreach (var variable in this.Model.Variables)
     {
-      @Html.Partial("_Variable", variable)
+      <partial name="_Variable" for="@variable" />
     }
-    <div class="tree__buttons buttons">
+    <tree-node-buttons>
       <positive-button is-minor="true" href="/backend/variables/create?configuration.id=@Model.Id">@Localizer["Create variable"]</positive-button>
-    </div>
-  </div>
+    </tree-node-buttons>
+  </tree-node-content>
 </tree-node>

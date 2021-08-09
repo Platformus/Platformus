@@ -18,7 +18,7 @@ namespace Platformus.Website.Data.Entities
     public int Id { get; set; }
 
     /// <summary>
-    /// Gets or sets the data type storage data type. See the <see cref="Entities.StorageDataType"/>
+    /// Gets or sets the data type storage data type. See the <see cref="Entities.StorageDataTypes"/>
     /// class for the predefined constants.
     /// </summary>
     public string StorageDataType { get; set; }

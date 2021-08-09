@@ -14,6 +14,7 @@ namespace Platformus.Core.Backend
     public ViewContext ViewContext { get; set; }
     public string Class { get; set; }
     public ModelExpression For { get; set; }
+    public bool IsDisabled { get; set; }
 
     public override void Process(TagHelperContext context, TagHelperOutput output)
     {
@@ -45,6 +46,10 @@ namespace Platformus.Core.Backend
       );
 
       tb.AddCssClass("field__text-box");
+
+      if (this.IsDisabled)
+        tb.MergeAttribute("disabled", "disabled");
+
       return tb;
     }
 

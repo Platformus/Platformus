@@ -4,6 +4,6 @@
 <div class="cultures @Model.AdditionalCssClass">
   @foreach (var culture in this.Model.Cultures)
   {
-    @Html.Partial("_Culture", culture)
+    <partial name="_Culture" for="@culture" />
   }
 </div>

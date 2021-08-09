@@ -15,7 +15,7 @@
       @foreach (var catalogItem in this.Model.Categories)
       {
         catalogItem.Level = this.Model.Level + 1;
-        @Html.Partial("_Catalog", catalogItem)
+        <partial name="_Catalog" for="@catalogItem" />
       }
     </div>
   }

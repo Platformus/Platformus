@@ -3,20 +3,22 @@
 @model Platformus.Website.Backend.ViewModels.Shared.MenuItemViewModel
 @inject Microsoft.AspNetCore.Mvc.Localization.IViewLocalizer Localizer
 <tree-node>
-  <div class="tree__node-header">
-    <div class="tree__buttons tree__buttons--node-header buttons">
+  <tree-node-header>
+    <tree-node-title>
+      @Model.Name
+    </tree-node-title>
+    <tree-node-buttons>
       <positive-button is-minor="true" href="/backend/menuitems/edit/@Model.Id">@Localizer["Edit"]</positive-button>
       <delete-button href="/backend/menuitems/delete/@Model.Id"></delete-button>
-    </div>
-    @Model.Name
-  </div>
-  <div class="tree__node-content">
+    </tree-node-buttons>
+  </tree-node-header>
+  <tree-node-content>
     @foreach (var menuItem in this.Model.MenuItems)
     {
-      @Html.Partial("_MenuItem", menuItem)
+      <partial name="_MenuItem" for="@menuItem" />
     }
-    <div class="tree__buttons buttons">
+    <tree-node-buttons>
       <positive-button is-minor="true" href="/backend/menuitems/create?menuitem.id=@Model.Id">@Localizer["Create menu item"]</positive-button>
-    </div>
-  </div>
+    </tree-node-buttons>
+  </tree-node-content>
 </tree-node>

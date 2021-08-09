@@ -59,7 +59,7 @@ namespace Platformus.Website.Backend.Controllers
       if (this.ModelState.IsValid)
       {
         Data.Entities.Endpoint endpoint = CreateOrEditViewModelMapper.Map(
-          createOrEdit.Id == null ? new Data.Entities.Endpoint() : await this.EndpointRepository.GetByIdAsync((int)createOrEdit.Id),
+          createOrEdit.Id == null ? new Data.Entities.Endpoint() : await this.EndpointRepository.GetByIdAsync((int)createOrEdit.Id, new Inclusion<Data.Entities.Endpoint>(e => e.EndpointPermissions)),
           createOrEdit
         );
 

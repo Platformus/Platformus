@@ -9,7 +9,7 @@
 @section title {
   @ViewBag.Title
 }
-<form class="form" method="post">
+<form class="master-detail__form form" method="post">
   <single-line-text-field for="Code" />
   <drop-down-list-field for="DataProviderCSharpClassName" options="@Model.DataProviderCSharpClassNameOptions" onchange="platformus.ui.dataProviderCSharpClassNameChanged();" />
   <div id="parameterEditors"></div>

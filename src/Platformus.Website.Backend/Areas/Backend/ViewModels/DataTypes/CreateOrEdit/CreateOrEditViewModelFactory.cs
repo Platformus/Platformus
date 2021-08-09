@@ -32,10 +32,10 @@ namespace Platformus.Website.Backend.ViewModels.DataTypes
     {
       return new Option[]
       {
-        new Option(StorageDataType.Integer),
-        new Option(StorageDataType.Decimal),
-        new Option(StorageDataType.String),
-        new Option(StorageDataType.DateTime)
+        new Option(StorageDataTypes.Integer),
+        new Option(StorageDataTypes.Decimal),
+        new Option(StorageDataTypes.String),
+        new Option(StorageDataTypes.DateTime)
       };
     }
   }

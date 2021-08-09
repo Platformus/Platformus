@@ -192,13 +192,13 @@ namespace Platformus.Website.Backend.Controllers
       property.ObjectId = @object.Id;
       property.MemberId = memberId;
 
-      if (member.PropertyDataType.StorageDataType == StorageDataType.Integer)
+      if (member.PropertyDataType.StorageDataType == StorageDataTypes.Integer)
         property.IntegerValue = value.ToIntWithDefaultValue(0);
 
-      else if (member.PropertyDataType.StorageDataType == StorageDataType.Decimal)
+      else if (member.PropertyDataType.StorageDataType == StorageDataTypes.Decimal)
         property.DecimalValue = value.ToDecimalWithDefaultValue(0m);
 
-      else if (member.PropertyDataType.StorageDataType == StorageDataType.String)
+      else if (member.PropertyDataType.StorageDataType == StorageDataTypes.String)
       {
         if (property.StringValueId == null)
         {
@@ -217,7 +217,7 @@ namespace Platformus.Website.Backend.Controllers
         this.Storage.GetRepository<int, Localization, LocalizationFilter>().Create(localization);
       }
 
-      else if (member.PropertyDataType.StorageDataType == StorageDataType.DateTime)
+      else if (member.PropertyDataType.StorageDataType == StorageDataTypes.DateTime)
         property.DateTimeValue = value.ToDateTimeWithDefaultValue(System.DateTime.Now);
 
       if (property.Id == 0)

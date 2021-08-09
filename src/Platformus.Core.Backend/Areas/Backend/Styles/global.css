@@ -4,7 +4,7 @@
 html, body {
   font: normal 15px 'PT Sans', sans-serif;
   color: #323232;
-  line-height: 20px;
+  line-height: 1.333;
   margin: 0;
   padding: 0;
   height: 100%;
@@ -16,14 +16,12 @@ h1, h2, p {
   padding: 0;
 }
 
-h1 {
+h1, .heading--h1 {
   font-size: 30px;
-  line-height: 60px;
 }
 
-h2 {
+h2, .heading--h2 {
   font-size: 20px;
-  line-height: 40px;
 }
 
 a {
@@ -32,12 +30,6 @@ a {
 
 a:hover {
   color: #5abeff;
-}
-
-input, textarea, button {
-  border: none;
-  font: normal 15px 'PT Sans', sans-serif;
-  line-height: 20px;
 }
 
 :focus {

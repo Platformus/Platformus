@@ -2,18 +2,16 @@
 // Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information.
 
 using System.Threading.Tasks;
-using Magicalizer.Data.Repositories.Abstractions;
 using Microsoft.AspNetCore.Mvc;
 using Platformus.Core.Backend.Metadata.Providers;
 
 namespace Platformus.Core.Backend.ViewComponents
 {
-  public class BackendScriptsViewComponent : ViewComponentBase
+  public class BackendScriptsViewComponent : ViewComponent
   {
     private IScriptsProvider scriptsProvider;
 
-    public BackendScriptsViewComponent(IStorage storage, IScriptsProvider scriptsProvider)
-      : base(storage)
+    public BackendScriptsViewComponent(IScriptsProvider scriptsProvider)
     {
       this.scriptsProvider = scriptsProvider;
     }

@@ -3,23 +3,25 @@
 @model Platformus.Core.Backend.ViewModels.Shared.VariableViewModel
 @inject Microsoft.AspNetCore.Mvc.Localization.IViewLocalizer Localizer
 <tree-node>
-  <div class="tree__node-header">
-    @Model.Name =
-    @if (this.Model.Value == "yes")
-    {
-      <span class="marker marker--positive">@Model.Value</span>
-    }
-    else if (this.Model.Value == "no")
-    {
-      <span class="marker marker--negative">@Model.Value</span>
-    }
-    else
-    {
-      @Model.Value
-    }
-    <div class="tree__buttons tree__buttons--node-header buttons">
+  <tree-node-header>
+    <tree-node-title>
+      @Model.Name =
+      @if (this.Model.Value == "yes")
+      {
+        <span class="marker marker--positive">@Model.Value</span>
+      }
+      else if (this.Model.Value == "no")
+      {
+        <span class="marker marker--negative">@Model.Value</span>
+      }
+      else
+      {
+        @Model.Value
+      }
+    </tree-node-title>
+    <tree-node-buttons>
       <positive-button is-minor="true" href="/backend/variables/edit/@Model.Id">@Localizer["Edit"]</positive-button>
       <delete-button href="/backend/variables/delete/@Model.Id"></delete-button>
-    </div>
-  </div>
+    </tree-node-buttons>
+  </tree-node-header>
 </tree-node>

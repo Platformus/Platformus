@@ -6,26 +6,27 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using Magicalizer.Data.Repositories.Abstractions;
 using Microsoft.AspNetCore.Mvc;
-using Platformus.Core.Frontend.ViewComponents;
 using Platformus.ECommerce.Data.Entities;
 using Platformus.ECommerce.Filters;
 using Platformus.ECommerce.Frontend.ViewModels.Shared;
 
 namespace Platformus.ECommerce.Frontend.ViewComponents
 {
-  public class PositionsViewComponent : ViewComponentBase
+  public class PositionsViewComponent : ViewComponent
   {
+    private IStorage storage;
+
     public PositionsViewComponent(IStorage storage)
-      : base(storage)
     {
+      this.storage = storage;
     }
 
-    public async Task<IViewComponentResult> InvokeAsync(string partialViewName = null, string additionalCssClass = null)
+    public async Task<IViewComponentResult> InvokeAsync(string partialViewName = "_Positions", string additionalCssClass = null)
     {
       IEnumerable<Position> positions = null;
       
       if (!string.IsNullOrEmpty(this.Request.Cookies["CartId"]) && Guid.TryParse(this.Request.Cookies["CartId"], out Guid clientSideId))
-        positions = (await this.Storage.GetRepository<int, Position, PositionFilter>().GetAllAsync(
+        positions = (await this.storage.GetRepository<int, Position, PositionFilter>().GetAllAsync(
           new PositionFilter(cart: new CartFilter(clientSideId: clientSideId)),
           inclusions: new Inclusion<Position>[] {
             new Inclusion<Position>(p => p.Product.Name.Localizations),

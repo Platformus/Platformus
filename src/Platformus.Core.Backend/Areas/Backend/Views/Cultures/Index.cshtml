@@ -9,7 +9,7 @@
 @section title {
   @ViewBag.Title
 }
-@Html.Partial("_Grid", this.Model.Grid)
-<div class="master-detail__detail-buttons buttons">
+<partial name="_Grid" for="Grid" />
+<div class="master-detail__buttons buttons">
   <positive-button href="@this.Context.Request.CombineUrl("/backend/cultures/create")">@Localizer["Create culture"]</positive-button>
 </div>

@@ -9,14 +9,14 @@
 @section title {
   @ViewBag.Title
 }
-<tree>
+<tree class="master-detail__tree">
   @foreach (var category in this.Model.Categories)
   {
-    @Html.Partial("_Category", category)
+    <partial name="_Category" for="@category" />
   }
   <tree-node>
-    <div class="tree__buttons buttons">
+    <tree-node-buttons>
       <positive-button is-minor="true" href="/backend/categories/create">@Localizer["Create category"]</positive-button>
-    </div>
+    </tree-node-buttons>
   </tree-node>
 </tree>

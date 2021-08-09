@@ -11,5 +11,6 @@ namespace Platformus.Core.Backend.Metadata
     IEnumerable<StyleSheet> GetStyleSheets(HttpContext httpContext);
     IEnumerable<Script> GetScripts(HttpContext httpContext);
     IEnumerable<MenuGroup> GetMenuGroups(HttpContext httpContext);
+    IEnumerable<DashboardWidget> GetDashboardWidgets(HttpContext httpContext);
   }
 }

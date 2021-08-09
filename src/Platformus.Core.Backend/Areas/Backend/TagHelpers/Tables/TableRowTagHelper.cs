@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Razor.TagHelpers;
 
 namespace Platformus.Core.Backend
 {
-  [RestrictChildren("table-cell", "image-table-cell", "buttons-table-cell")]
+  [RestrictChildren("table-cell", "image-table-cell", "buttons-table-cell", "partial")]
   public class TableRowTagHelper : TagHelper
   {
     public string Class { get; set; }

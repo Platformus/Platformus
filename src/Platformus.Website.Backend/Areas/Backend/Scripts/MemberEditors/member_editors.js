@@ -7,33 +7,29 @@
     var tabs = $("#tabs");
     var tabPages = $("#tabPages");
 
-    for (var i = 0; i < membersByTabs.length; i++) {
-      var tab = membersByTabs[i];
-
+    membersByTabs.forEach(function (tab) {
       createTab(tab).appendTo(tabs);
 
       var tabPage = createTabPage(tab).appendTo(tabPages);
 
-      for (var j = 0; j < tab.members.length; j++) {
-        var member = tab.members[j];
-
-        if (member.relationClass != null) {
+      tab.members.forEach(function (member) {
+        if (member.relationClass) {
           platformus.memberEditors.relation.create(tabPage, member);
         }
 
-        else if (member.propertyDataType != null) {
+        else if (member.propertyDataType) {
           var memberEditor = platformus.memberEditors[member.propertyDataType.javaScriptEditorClassName];
 
-          if (memberEditor != null) {
+          if (memberEditor) {
             var f = memberEditor["create"];
 
-            if (f != null) {
+            if (f) {
               f.call(this, tabPage, member);
             }
           }
         }
-      }
-    }
+      });
+    });
 
     platformus.ui.initializeJQueryValidation();
   };

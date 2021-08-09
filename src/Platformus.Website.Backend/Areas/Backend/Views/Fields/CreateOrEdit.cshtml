@@ -9,7 +9,7 @@
 @section title {
   @ViewBag.Title
 }
-<form class="form" method="post">
+<form class="master-detail__form form" method="post">
   <drop-down-list-field for="FieldTypeId" options="@Model.FieldTypeOptions" />
   <single-line-text-field for="Code" />
   <multilingual-single-line-text-field for="Name" localizations="@Model.NameLocalizations" />

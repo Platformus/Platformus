@@ -15,6 +15,7 @@ namespace Platformus.Core.Backend
     public string Class { get; set; }
     public ModelExpression For { get; set; }
     public Size Height { get; set; } = Size.Large;
+    public bool IsDisabled { get; set; }
 
     public override void Process(TagHelperContext context, TagHelperOutput output)
     {
@@ -51,6 +52,9 @@ namespace Platformus.Core.Backend
 
       else if (this.Height == Size.Small)
         tb.AddCssClass("field__text-area--small");
+
+      if (this.IsDisabled)
+        tb.MergeAttribute("disabled", "disabled");
 
       return tb;
     }

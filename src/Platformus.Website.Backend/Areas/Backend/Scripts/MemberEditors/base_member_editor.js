@@ -5,15 +5,14 @@
   platformus.memberEditors = platformus.memberEditors || [];
   platformus.memberEditors.base = {};
   platformus.memberEditors.base.getDataTypeParameterValue = function (member, code, defaultValue) {
-    for (var i = 0; i < member.propertyDataType.dataTypeParameters.length; i++) {
-      if (member.propertyDataType.dataTypeParameters[i].code == code) {
-        var value = member.propertyDataType.dataTypeParameters[i].value;
+    var dataTypeParameter = member.propertyDataType.dataTypeParameters.find(dtp => dtp.code == code);
 
-        if (platformus.string.isNullOrEmpty(value))
-          return defaultValue;
+    if (!dataTypeParameter) {
+      return null;
+    }
 
-        return value;
-      }
+    if (dataTypeParameter.value) {
+      return dataTypeParameter.value;
     }
 
     return defaultValue;
@@ -22,7 +21,7 @@
   platformus.memberEditors.base.getIsRequiredDataTypeParameterValue = function (member) {
     var value = platformus.memberEditors.base.getDataTypeParameterValue(member, "IsRequired", null);
 
-    if (value == null)
+    if (!value)
       return null;
 
     return value == "true";
@@ -31,7 +30,7 @@
   platformus.memberEditors.base.getMaxLengthDataTypeParameterValue = function (member) {
     var value = platformus.memberEditors.base.getDataTypeParameterValue(member, "MaxLength", null);
 
-    if (value == null)
+    if (!value)
       return null;
 
     return parseInt(value);
@@ -77,6 +76,6 @@
   };
 
   platformus.memberEditors.base.getIdentity = function (member, localization) {
-    return "propertyMember" + member.id + (localization == null ? "__" : localization.culture.id);
+    return "propertyMember" + member.id + (localization ? localization.culture.id : "__");
   };
 })(window.platformus = window.platformus || {});

@@ -16,15 +16,15 @@
       textArea.addClass("field__text-area--multilingual");
     }
 
-    if (descriptor.validation != null && (descriptor.validation.isRequired || descriptor.validation.maxLength)) {
+    if (descriptor.validation && (descriptor.validation.isRequired || descriptor.validation.maxLength)) {
       textArea.attr("data-val", true)
     }
 
-    if (descriptor.validation != null && descriptor.validation.isRequired) {
+    if (descriptor.validation && descriptor.validation.isRequired) {
       textArea.addClass("text-area--required").attr("data-val-required", true);
     }
 
-    if (descriptor.validation != null && descriptor.validation.maxLength != null) {
+    if (descriptor.validation && descriptor.validation.maxLength != null) {
       textArea.attr("maxlength", descriptor.validation.maxLength).attr("data-val-maxlength-max", descriptor.validation.maxLength);
     }
 

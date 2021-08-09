@@ -2,18 +2,16 @@
 // Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information.
 
 using System.Threading.Tasks;
-using Magicalizer.Data.Repositories.Abstractions;
 using Microsoft.AspNetCore.Mvc;
 using Platformus.Core.Backend.Metadata.Providers;
 
 namespace Platformus.Core.Backend.ViewComponents
 {
-  public class BackendMenuViewComponent : ViewComponentBase
+  public class BackendMenuViewComponent : ViewComponent
   {
     private IMenuGroupsProvider menuGroupsProvider;
 
-    public BackendMenuViewComponent(IStorage storage, IMenuGroupsProvider menuGroupsProvider)
-      : base(storage)
+    public BackendMenuViewComponent(IMenuGroupsProvider menuGroupsProvider)
     {
       this.menuGroupsProvider = menuGroupsProvider;
     }

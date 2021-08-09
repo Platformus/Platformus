@@ -5,28 +5,28 @@ using System.Linq;
 using System.Threading.Tasks;
 using Magicalizer.Data.Repositories.Abstractions;
 using Microsoft.AspNetCore.Mvc;
-using Platformus.Core.Frontend.ViewComponents;
 using Platformus.Website.Data.Entities;
 using Platformus.Website.Filters;
 using Platformus.Website.Frontend.ViewModels.Shared;
 
 namespace Platformus.Website.Frontend.ViewComponents
 {
-  public class MenuViewComponent : ViewComponentBase
+  public class MenuViewComponent : ViewComponent
   {
+    private IStorage storage;
     private ICache cache;
 
     public MenuViewComponent(IStorage storage, ICache cache)
-      : base(storage)
     {
+      this.storage = storage;
       this.cache = cache;
     }
 
-    public async Task<IViewComponentResult> InvokeAsync(string code, string partialViewName = null, string additionalCssClass = null)
+    public async Task<IViewComponentResult> InvokeAsync(string code, string partialViewName = "_Menu", string additionalCssClass = null)
     {
       Menu menu = await this.cache.GetMenuWithDefaultValue(
         code,
-        async () => (await this.Storage.GetRepository<int, Menu, MenuFilter>().GetAllAsync(
+        async () => (await this.storage.GetRepository<int, Menu, MenuFilter>().GetAllAsync(
           new MenuFilter(code: code),
           inclusions: new Inclusion<Menu>[] {
             new Inclusion<Menu>("MenuItems.Name.Localizations"),

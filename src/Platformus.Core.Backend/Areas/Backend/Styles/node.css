@@ -1,0 +1,37 @@
+﻿/* Copyright © 2021 Dmitry Sikorsky. All rights reserved. */
+/* Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information. */
+
+.node {
+}
+
+.node__header {
+  background: #f0f0f0;
+  display: flex;
+  justify-content: space-between;
+}
+
+.node__header:hover {
+  background: #ffff96;
+}
+
+.node__content {
+  border-left: 1px solid #f0f0f0;
+  margin-left: 20px;
+  padding-left: 20px;
+}
+
+.node__title {
+  padding: 5px 10px;
+}
+
+.node__buttons {
+  padding: 5px 5px 5px 0;
+}
+
+.node__context-controls {
+  visibility: hidden;
+}
+
+.node__header:hover .node__context-controls {
+  visibility: visible;
+}

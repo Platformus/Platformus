@@ -3,6 +3,9 @@
 
 .text-box {
   background-color: #f0f0f0;
+  border: none;
+  font: normal 15px 'PT Sans', sans-serif;
+  line-height: 1.333;
   padding: 5px 10px;
   resize: none;
 }

@@ -6,9 +6,7 @@
   platformus.initializers.push(
     {
       action: function () {
-        for (var i = 0; i < platformus.behaviors.length; i++) {
-          platformus.behaviors[i]();
-        }
+        platformus.behaviors.forEach(b => b());
       },
       priority: 0
     }

@@ -8,7 +8,7 @@
   <div class="menu__group-content">
     @foreach (var menuItem in this.Model.MenuItems)
     {
-      @Html.Partial("_BackendMenuItem", menuItem)
+      <partial name="_BackendMenuItem" for="@menuItem" />
     }
   </div>
 </div>

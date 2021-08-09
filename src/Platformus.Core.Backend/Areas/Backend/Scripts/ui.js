@@ -10,7 +10,7 @@
           function () {
             var menu = $(this).parent().parent();
             var menuGroup = $(this).parent();
-            var menuGroupHeader = menuGroup.find(".menu__group-header");
+            var menuGroupHeader = $(this);
             var menuGroupContent = menuGroup.find(".menu__group-content");
 
             if (menuGroupContent.is(":visible")) {
@@ -48,14 +48,14 @@
 
         var expandedMenuGroups = getExpandedMenuGroups(menu.data("code"));
 
-        for (var i = 0; i < expandedMenuGroups.length; i++) {
-          var menuGroup = $(".menu__group[data-code='" + expandedMenuGroups[i] + "']");
+        expandedMenuGroups.forEach(function (expandedMenuGroup) {
+          var menuGroup = $(".menu__group[data-code='" + expandedMenuGroup + "']");
           var menuGroupHeader = menuGroup.find(".menu__group-header");
           var menuGroupContent = menuGroup.find(".menu__group-content");
 
           menuGroupHeader.removeClass("menu__group-header--collapsed").addClass("menu__group-header--expanded");
           menuGroupContent.show();
-        }
+        });
       }
     );
   }

@@ -9,7 +9,7 @@
 @section title {
   @ViewBag.Title
 }
-<form class="form" method="post">
+<form class="master-detail__form form" method="post">
   <drop-down-list-field for="OrderStateId" options="@Model.OrderStateOptions" />
   <drop-down-list-field for="DeliveryMethodId" options="@Model.DeliveryMethodOptions" />
   <drop-down-list-field for="PaymentMethodId" options="@Model.PaymentMethodOptions" />
@@ -24,9 +24,12 @@
   </h2>
   <table class="form__table table">
     <colgroup>
-      <col>
-      <col>
-      <col>
+      <col />
+      <col />
+      <col />
+      <col />
+      <col />
+      <col class="table__cell--context-controls" />
     </colgroup>
     <tbody>
       <table-row>
@@ -44,7 +47,7 @@
           var position = this.Model.Positions.ElementAt(i);
 
           position.Index = i;
-          @Html.Partial("_Position", position)
+          <partial name="_Position" for="@position" />
         }
       }
       <table-row id="totalRow">
@@ -54,7 +57,7 @@
       </table-row>
     </tbody>
   </table>
-  <div class="master-detail__detail-buttons master-detail__detail-buttons--minor buttons">
+  <div class="form__buttons form__buttons--minor buttons">
     <positive-button is-minor="true" onclick="platformus.ui.addPosition();">@Localizer["Add position"]</positive-button>
   </div>
   <div class="form__buttons buttons">

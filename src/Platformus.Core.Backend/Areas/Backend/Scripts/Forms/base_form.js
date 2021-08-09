@@ -5,21 +5,18 @@
   platformus.forms = platformus.forms || {};
   platformus.forms.baseForm = {};
   platformus.forms.baseForm.show = function (url, callback, additionalCssClass) {
-    var modal = createModal();
-
-    showOverlay(modal);
-
-    var form = createForm(additionalCssClass);
-
-    showOverlay(form);
-    positionForm(form);
+    platformus.forms.activeModal = createModal().appendTo($(document.body));
+    showOverlay(platformus.forms.activeModal);
+    platformus.forms.activeForm = createForm(additionalCssClass).appendTo($(document.body));
+    showOverlay(platformus.forms.activeForm);
+    positionForm(platformus.forms.activeForm);
     loadForm(
-      form,
+      platformus.forms.activeForm,
       url,
       function () {
-        positionForm(form);
+        positionForm(platformus.forms.activeForm);
 
-        if (callback != null) {
+        if (callback) {
           callback();
         }
       }
@@ -35,20 +32,15 @@
   };
 
   function createModal() {
-    var modal = $("<div>").addClass("pop-up-modal").appendTo($(document.body));
-
-    platformus.forms.activeModal = modal;
-    return modal;
+    return $("<div>").addClass("pop-up-modal");
   }
 
   function createForm(additionalCssClass) {
-    var form = $("<div>");
+    var form = $("<div>").addClass("pop-up-form");
 
     if (additionalCssClass != null)
       form.addClass(additionalCssClass);
 
-    form.addClass("pop-up-form").appendTo($(document.body));
-    platformus.forms.activeForm = form;
     return form;
   }
 

@@ -3,21 +3,7 @@
 
 (function (platformus) {
   platformus.culture = platformus.culture || {};
-  platformus.culture.client = function () {
-    var culture = window.navigator.userLanguage || window.navigator.language;
-
-    if (platformus.string.isNullOrEmpty(culture)) {
-      culture = "en";
-    }
-
-    if (culture.length > 2) {
-      culture = culture.substring(0, 2);
-    }
-
-    return culture;
-  };
-
   platformus.culture.server = function () {
-    return $("html").data("culture");
+    return $("html").attr("lang");
   };
 })(window.platformus = window.platformus || {});

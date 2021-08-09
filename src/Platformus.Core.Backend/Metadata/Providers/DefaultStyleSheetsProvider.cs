@@ -12,13 +12,9 @@ namespace Platformus.Core.Backend.Metadata.Providers
   {
     public IEnumerable<StyleSheet> GetStyleSheets(HttpContext httpContext)
     {
-      List<StyleSheet> styleSheets = new List<StyleSheet>();
-
-      foreach (IMetadata metadata in ExtensionManager.GetInstances<IMetadata>())
-        foreach (StyleSheet styleSheet in metadata.GetStyleSheets(httpContext))
-          styleSheets.Add(styleSheet);
-
-      return styleSheets.OrderBy(ss => ss.Position);
+      return ExtensionManager.GetInstances<IMetadata>()
+        .SelectMany(m => m.GetStyleSheets(httpContext))
+        .OrderBy(ss => ss.Position);
     }
   }
 }

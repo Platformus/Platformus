@@ -19,29 +19,27 @@
   };
 
   platformus.url.combine = function (descriptors) {
-    var result = platformus.string.empty;
+    var result = "";
     var parameters = platformus.url.getParameters();
 
-    for (var i = 0; i < descriptors.length; i++) {
-      var descriptor = descriptors[i];
-
+    descriptors.forEach(function (descriptor) {
       if (!descriptor.skip) {
         var value = descriptor.takeFromUrl ? parameters[descriptor.name] : descriptor.value;
 
         if (value != null) {
           value = encodeURIComponent(value);
-          result += (platformus.string.isNullOrEmpty(result) ? "?" : "&") + descriptor.name + "=" + value;
+          result += (result ? "&" : "?") + descriptor.name + "=" + value;
         }
       }
-    }
+    });
 
     for (var parameter in parameters) {
       if (!containsDescriptor(descriptors, parameter)) {
         var value = parameters[parameter];
 
-        if (!platformus.string.isNullOrEmpty(value)) {
+        if (value) {
           value = encodeURIComponent(value);
-          result += (platformus.string.isNullOrEmpty(result) ? "?" : "&") + parameter + "=" + value;
+          result += (result ? "&" : "?") + parameter + "=" + value;
         }
       }
     }
@@ -50,12 +48,6 @@
   }
 
   function containsDescriptor(descriptors, parameter) {
-    for (var i = 0; i < descriptors.length; i++) {
-      if (descriptors[i].name == parameter) {
-        return true;
-      }
-    }
-
-    return false;
+    return descriptors.some(d => d.name == parameter);
   }
 })(window.platformus = window.platformus || {});

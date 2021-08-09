@@ -7,7 +7,7 @@
   <input id="formId" name="formId" type="hidden" value="@Model.Id" />
   @foreach (var field in this.Model.Fields)
   {
-    @Html.Partial("_Field", field)
+    <partial name="_Field" for="@field" />
   }
   <div class="form__buttons buttons">
     <button class="buttons__button button" type="submit">@Model.SubmitButtonTitle</button>

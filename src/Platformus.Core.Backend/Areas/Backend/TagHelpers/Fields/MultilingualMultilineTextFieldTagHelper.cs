@@ -19,6 +19,7 @@ namespace Platformus.Core.Backend
     public ModelExpression For { get; set; }
     public IEnumerable<Localization> Localizations { get; set; }
     public Size Height { get; set; } = Size.Large;
+    public bool IsDisabled { get; set; }
 
     public override void Process(TagHelperContext context, TagHelperOutput output)
     {
@@ -72,7 +73,11 @@ namespace Platformus.Core.Backend
       else if (this.Height == Size.Small)
         tb.AddCssClass("field__text-area--small");
 
-      tb.MergeAttribute("data-culture", localization.Culture.Id);
+      tb.MergeAttribute("lang", localization.Culture.Id);
+
+      if (this.IsDisabled)
+        tb.MergeAttribute("disabled", "disabled");
+
       return tb;
     }
 

@@ -31,7 +31,7 @@
 
     location.href = platformus.url.combine(
       [
-        { name: $(this).data("filteringProperty"), value: platformus.string.isNullOrEmpty(value) ? null : value, skip: platformus.string.isNullOrEmpty(value) },
+        { name: $(this).data("filteringProperty"), value: value ? value : null, skip: !value },
         { name: "orderby", takeFromUrl: true },
         { name: "direction", takeFromUrl: true },
         { name: "skip", skip: true },

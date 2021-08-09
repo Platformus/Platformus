@@ -7,8 +7,6 @@ $(document).ready(
       function (a, b) { return (a.priority > b.priority) ? 1 : ((a.priority < b.priority) ? -1 : 0); }
     );
 
-    for (var i = 0; i < platformus.initializers.length; i++) {
-      platformus.initializers[i].action();
-    }
+    platformus.initializers.forEach(i => i.action());
   }
 );

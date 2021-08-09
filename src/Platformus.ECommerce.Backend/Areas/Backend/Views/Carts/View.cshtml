@@ -18,6 +18,9 @@
       <col>
       <col>
       <col>
+      <col>
+      <col>
+      <col>
     </colgroup>
     <tbody>
       <table-row>
@@ -35,7 +38,7 @@
           var position = this.Model.Positions.ElementAt(i);
 
           position.Index = i;
-          @Html.Partial("_Position", position)
+          <partial name="_Position" for="@position" />
         }
       }
       <table-row id="totalRow">

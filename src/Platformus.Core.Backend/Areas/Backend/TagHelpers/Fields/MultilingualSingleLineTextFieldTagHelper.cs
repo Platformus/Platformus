@@ -18,6 +18,7 @@ namespace Platformus.Core.Backend
     public string Class { get; set; }
     public ModelExpression For { get; set; }
     public IEnumerable<Localization> Localizations { get; set; }
+    public bool IsDisabled { get; set; }
 
     public override void Process(TagHelperContext context, TagHelperOutput output)
     {
@@ -65,7 +66,11 @@ namespace Platformus.Core.Backend
       );
 
       tb.AddCssClass("field__text-box");
-      tb.MergeAttribute("data-culture", localization.Culture.Id);
+      tb.MergeAttribute("lang", localization.Culture.Id);
+
+      if (this.IsDisabled)
+        tb.MergeAttribute("disabled", "disabled");
+
       return tb;
     }
 

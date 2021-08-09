@@ -35,6 +35,7 @@
       "Areas/Backend/Styles/pager_current_state.css",
       "Areas/Backend/Styles/take_selector.css",
       "Areas/Backend/Styles/table.css",
+      "Areas/Backend/Styles/node.css",
       "Areas/Backend/Styles/tree.css",
       "Areas/Backend/Styles/grid.css",
       "Areas/Backend/Styles/master_detail.css",
@@ -47,7 +48,6 @@
   {
     "outputFileName": "wwwroot/areas/backend/js/platformus.core.min.js",
     "inputFiles": [
-      "Areas/Backend/Scripts/string.js",
       "Areas/Backend/Scripts/culture.js",
       "Areas/Backend/Scripts/url.js",
       "Areas/Backend/Scripts/ui.js",

@@ -3,5 +3,5 @@
 @model IEnumerable<Platformus.Core.Backend.Metadata.StyleSheet>
 @foreach (var styleSheet in this.Model)
 {
-  @Html.Partial("_BackendStyleSheet", styleSheet)
+  <partial name="_BackendStyleSheet" for="@styleSheet" />
 }

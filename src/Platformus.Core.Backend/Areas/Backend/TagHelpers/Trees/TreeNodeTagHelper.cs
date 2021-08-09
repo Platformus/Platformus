@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Razor.TagHelpers;
 
 namespace Platformus.Core.Backend
 {
+  [RestrictChildren("tree-node-header", "tree-node-content", "tree-node-buttons")]
   public class TreeNodeTagHelper : TagHelper
   {
     public string Class { get; set; }
@@ -12,7 +13,7 @@ namespace Platformus.Core.Backend
     public override void Process(TagHelperContext context, TagHelperOutput output)
     {
       output.TagName = TagNames.Div;
-      output.Attributes.SetAttribute(AttributeNames.Class, "tree__node" + (string.IsNullOrEmpty(this.Class) ? null : $" {this.Class}"));
+      output.Attributes.SetAttribute(AttributeNames.Class, "tree__node node" + (string.IsNullOrEmpty(this.Class) ? null : $" {this.Class}"));
     }
   }
 }

@@ -68,17 +68,15 @@
   }
 
   function getPrimaryIds(member) {
-    var primaryIds = platformus.string.empty;
+    var primaryIds = "";
 
-    for (var i = 0; i < member.relations.length; i++) {
-      var relation = member.relations[i];
-
-      if (!platformus.string.isNullOrEmpty(primaryIds)) {
+    member.relations.forEach(function (relation) {
+      if (primaryIds) {
         primaryIds += ",";
       }
 
       primaryIds += relation.primaryId;
-    }
+    });
 
     return primaryIds;
   }

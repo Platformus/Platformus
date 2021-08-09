@@ -17,15 +17,15 @@
       textBox.addClass("field__text-box--multilingual");
     }
 
-    if (descriptor.validation != null && (descriptor.validation.isRequired || descriptor.validation.maxLength)) {
+    if (descriptor.validation && (descriptor.validation.isRequired || descriptor.validation.maxLength)) {
       textBox.attr("data-val", true)
     }
 
-    if (descriptor.validation != null && descriptor.validation.isRequired) {
+    if (descriptor.validation && descriptor.validation.isRequired) {
       textBox.addClass("text-box--required").attr("data-val-required", true);
     }
 
-    if (descriptor.validation != null && descriptor.validation.maxLength != null) {
+    if (descriptor.validation && descriptor.validation.maxLength != null) {
       textBox.attr("maxlength", descriptor.validation.maxLength).attr("data-val-maxlength-max", descriptor.validation.maxLength);
     }
 

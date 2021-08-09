@@ -21,7 +21,7 @@
 
     var dragAndDropArea = $("#dragAndDropArea");
 
-    if (dragAndDropArea.length == 0) {
+    if (!dragAndDropArea.length) {
       return;
     }
 
@@ -40,9 +40,9 @@
 
       var formData = new FormData();
 
-      for (var i = 0; i != event.dataTransfer.files.length; i++) {
-        formData.append("files", event.dataTransfer.files[i]);
-      }
+      event.dataTransfer.files.forEach(function (file) {
+        formData.append("files", file);
+      });
 
       $.ajax(
         {

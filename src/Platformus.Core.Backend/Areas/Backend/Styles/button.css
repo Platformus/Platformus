@@ -2,7 +2,10 @@
 /* Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information. */
 
 .button {
+  border: none;
   cursor: pointer;
+  font: normal 15px 'PT Sans', sans-serif;
+  line-height: 1.333;
   display: inline-block;
   padding: 5px 10px;
 }
@@ -37,6 +40,7 @@
 
 .button--minor {
   font-size: 13px;
+  line-height: 20px;
   padding: 0 10px;
 }
 

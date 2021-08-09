@@ -33,7 +33,7 @@ namespace Platformus.Core.Data.Entities
     public string Identifier { get; set; }
 
     /// <summary>
-    /// Gets or sets the credential secret (its MD5 hash).
+    /// Gets or sets the credential secret (or its hash).
     /// </summary>
     public string Secret { get; set; }
 

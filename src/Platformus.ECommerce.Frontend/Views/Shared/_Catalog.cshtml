@@ -6,7 +6,7 @@
     @foreach (var category in this.Model.Categories)
     {
       category.Level = 1;
-      @Html.Partial("_Category", category)
+      <partial name="_Category" for="@category" />
     }
   </div>
 </div>

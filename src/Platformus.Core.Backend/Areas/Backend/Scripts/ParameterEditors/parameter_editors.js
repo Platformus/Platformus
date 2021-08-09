@@ -3,34 +3,36 @@
 
 (function (platformus) {
   platformus.parameterEditors = platformus.parameterEditors || [];
-  platformus.parameterEditors.sync = function (parameterizableTarget) {
+  platformus.parameterEditors.sync = function (target) {
     var parameterEditors = $("#parameterEditors");
 
-    parameterEditors.html(platformus.string.empty);
+    parameterEditors.html("");
 
-    if (parameterizableTarget == null) {
+    if (!target) {
       return;
     }
 
-    $("<div>").addClass("form__description").html(parameterizableTarget.description).appendTo(parameterEditors);
+    if (target.description) {
+      $("<div>").addClass("form__description").html(target.description).appendTo(parameterEditors);
+    }
 
-    for (var i = 0; i < parameterizableTarget.parameterGroups.length; i++) {
-      if (parameterizableTarget.parameterGroups[i].name) {
-        $("<h2>").addClass("form__title").html(parameterizableTarget.parameterGroups[i].name).appendTo(parameterEditors);
+    target.parameterGroups.forEach(function (parameterGroup) {
+      if (parameterGroup.name) {
+        $("<h2>").addClass("form__title").html(parameterGroup.name).appendTo(parameterEditors);
       }
 
-      for (var j = 0; j < parameterizableTarget.parameterGroups[i].parameters.length; j++) {
-        var parameterEditor = platformus.parameterEditors[parameterizableTarget.parameterGroups[i].parameters[j].javaScriptEditorClassName];
+      parameterGroup.parameters.forEach(function (parameter) {
+        var parameterEditor = platformus.parameterEditors[parameter.javaScriptEditorClassName];
 
         if (parameterEditor != null) {
           var f = parameterEditor["create"];
 
-          if (f != null) {
-            f.call(this, parameterEditors, parameterizableTarget.parameterGroups[i].parameters[j]);
+          if (f) {
+            f.call(this, parameterEditors, parameter);
           }
         }
-      }
-    }
+      });
+    });
 
     platformus.ui.initializeJQueryValidation();
   };

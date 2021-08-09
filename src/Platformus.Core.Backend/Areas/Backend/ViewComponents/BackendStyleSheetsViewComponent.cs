@@ -2,18 +2,16 @@
 // Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information.
 
 using System.Threading.Tasks;
-using Magicalizer.Data.Repositories.Abstractions;
 using Microsoft.AspNetCore.Mvc;
 using Platformus.Core.Backend.Metadata.Providers;
 
 namespace Platformus.Core.Backend.ViewComponents
 {
-  public class BackendStyleSheetsViewComponent : ViewComponentBase
+  public class BackendStyleSheetsViewComponent : ViewComponent
   {
     private IStyleSheetsProvider styleSheetsProvider;
 
-    public BackendStyleSheetsViewComponent(IStorage storage, IStyleSheetsProvider styleSheetsProvider)
-      : base(storage)
+    public BackendStyleSheetsViewComponent(IStyleSheetsProvider styleSheetsProvider)
     {
       this.styleSheetsProvider = styleSheetsProvider;
     }

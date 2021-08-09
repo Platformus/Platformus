@@ -3,24 +3,26 @@
 @model Platformus.Website.Backend.ViewModels.Shared.FormViewModel
 @inject Microsoft.AspNetCore.Mvc.Localization.IViewLocalizer Localizer
 <tree-node>
-  <div class="tree__node-header">
-    <div class="tree__buttons tree__buttons--node-header buttons">
+  <tree-node-header>
+    <tree-node-title>
+      @Model.Name
+    </tree-node-title>
+    <tree-node-buttons>
       @if (this.Model.ProduceCompletedForms)
       {
         <neutral-button is-minor="true" href="/backend/completedforms?form.id=@Model.Id">@Localizer["Completed forms"]</neutral-button>
       }
       <positive-button is-minor="true" href="/backend/forms/edit/@Model.Id">@Localizer["Edit"]</positive-button>
       <delete-button href="/backend/forms/delete/@Model.Id"></delete-button>
-    </div>
-    @Model.Name
-  </div>
-  <div class="tree__node-content">
+    </tree-node-buttons>
+  </tree-node-header>
+  <tree-node-content>
     @foreach (var field in this.Model.Fields)
     {
-      @Html.Partial("_Field", field)
+      <partial name="_Field" for="@field" />
     }
-    <div class="tree__buttons buttons">
+    <tree-node-buttons>
       <positive-button is-minor="true" href="/backend/fields/create?form.id=@Model.Id">@Localizer["Create field"]</positive-button>
-    </div>
-  </div>
+    </tree-node-buttons>
+  </tree-node-content>
 </tree-node>

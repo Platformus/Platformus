@@ -41,9 +41,9 @@
 
       var formData = new FormData();
 
-      for (var i = 0; i != event.dataTransfer.files.length; i++) {
-        formData.append("files", event.dataTransfer.files[i]);
-      }
+      event.dataTransfer.files.forEach(function (file) {
+        formData.append("files", file);
+      });
 
       $.ajax(
         {
@@ -53,7 +53,7 @@
           contentType: false,
           type: "POST",
           success: function (data) {
-            parent.platformus.forms.imageUploaderForm.uploadingFinished(data.replace("filename=", platformus.string.empty));
+            parent.platformus.forms.imageUploaderForm.uploadingFinished(data.replace("filename=", ""));
           },
           error: function (jqXHR, textStatus) {
             parent.platformus.forms.imageUploaderForm.uploadingErrorOccurred(textStatus);

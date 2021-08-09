@@ -9,26 +9,19 @@
   };
 
   platformus.parameterEditors.base.getValue = function (parameter) {
-    if (platformus.string.isNullOrEmpty($("#parameters").val())) {
+    if (!$("#parameters").val()) {
       return parameter.defaultValue;
     }
 
-    var parameters = $("#parameters").val().split(';');
-
-    for (var i = 0; i < parameters.length; i++) {
-      var code = parameters[i].split("=")[0];
-      var value = parameters[i].split("=")[1];
-     
-      if (code == parameter.code) {
-        return value;
-      }
-    }
-
-    return null;
+    return $("#parameters")
+      .val()
+      .split(";")
+      .find(p => p.split("=")[0] == parameter.code)
+      ?.split("=")[1];
   };
 
   platformus.parameterEditors.base.changed = function () {
-    var parameters = platformus.string.empty;
+    var parameters = "";
 
     $("[data-parameter-code]").each(
       function (index, element) {
@@ -36,9 +29,10 @@
 
         var value = element.val();
 
-        if (!platformus.string.isNullOrEmpty(value)) {
-          if (!platformus.string.isNullOrEmpty(parameters))
+        if (value) {
+          if (parameters) {
             parameters += ";";
+          }
 
           parameters += element.attr("data-parameter-code") + "=" + value;
         }

@@ -2,7 +2,7 @@
 @* Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information. *@
 @model Platformus.Core.Backend.ViewModels.Shared.GridViewModel
 @inject Microsoft.AspNetCore.Mvc.Localization.IViewLocalizer Localizer
-<div class="grid">
+<div class="master-detail__grid grid">
   @if (this.Model.Filters != null)
   {
     <div class="grid__row grid__filters">
@@ -27,7 +27,7 @@
     <colgroup>
       @foreach (var gridColumn in this.Model.GridColumns)
       {
-        if (gridColumn.SortingName == this.Model.SortingName)
+        if (!string.IsNullOrEmpty(gridColumn.SortingName) && gridColumn.SortingName == this.Model.SortingName)
         {
           <col class="table__cell--ordered-by" />
         }
@@ -40,7 +40,7 @@
     <table-row>
       @foreach (var gridColumn in this.Model.GridColumns)
       {
-        @Html.Partial("_GridColumn", gridColumn)
+        <partial name="_GridColumn" for="@gridColumn" />
       }
     </table-row>
     @if (this.Model.Pager.Total == 0)
@@ -53,7 +53,7 @@
     }
     @foreach (var item in this.Model.Items)
     {
-      @Html.Partial(this.Model.TemplateName, item)
+      <partial name="@Model.TemplateName" for="@item" />
     }
   </table>
   @if (this.Model.Pager.Total > this.Model.Pager.Take)

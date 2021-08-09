@@ -4,6 +4,6 @@
 <div class="menu" data-code="main">
   @foreach (var menuGroup in this.Model)
   {
-    @Html.Partial("_BackendMenuGroup", menuGroup)
+    <partial name="_BackendMenuGroup" for="@menuGroup" />
   }
 </div>

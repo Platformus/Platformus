@@ -51,7 +51,7 @@
   }
 
   function getValue(descriptor) {
-    return platformus.string.isNullOrEmpty(descriptor.value) ?
-      false : descriptor.value == true || descriptor.value == "true" || descriptor.value == 1 || descriptor.value == "1";
+    return descriptor.value ?
+      descriptor.value == true || descriptor.value == "true" || descriptor.value == 1 || descriptor.value == "1" : false;
   }
 })(window.platformus = window.platformus || {});

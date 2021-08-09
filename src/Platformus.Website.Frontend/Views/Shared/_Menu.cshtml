@@ -6,7 +6,7 @@
     @foreach (var menuItem in this.Model.MenuItems)
     {
       menuItem.Level = 1;
-      @Html.Partial("_MenuItem", menuItem)
+      <partial name="_MenuItem" for="@menuItem" />
     }
   </div>
 </div>

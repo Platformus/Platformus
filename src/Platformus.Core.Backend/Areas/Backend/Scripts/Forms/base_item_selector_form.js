@@ -16,17 +16,17 @@
   };
 
   platformus.forms.baseItemSelectorForm.select = function () {
-    var selectedItemNumber = getSelectedItemNumber();
+    var selectedItemsNumber = getSelectedItemsNumber();
 
-    if (_minItemNumber != null && _minItemNumber > selectedItemNumber) {
+    if (_minItemNumber && _minItemNumber > selectedItemsNumber) {
       return;
     }
 
-    if (_maxItemNumber != null && _maxItemNumber < selectedItemNumber) {
+    if (_maxItemNumber && _maxItemNumber < selectedItemsNumber) {
       return;
     }
 
-    if (_callback != null) {
+    if (_callback) {
       _callback(getSelectedItemValues());
     }
 
@@ -42,11 +42,11 @@
   }
 
   function rowClickHandler() {
-    if ($(this).find(".table__cell--header").length != 0) {
+    if ($(this).find(".table__cell--header").length) {
       return;
     }
 
-    var selectedItemNumber = getSelectedItemNumber();
+    var selectedItemsNumber = getSelectedItemsNumber();
     var row = $(this);
 
     if (row.hasClass("table__row--selected")) {
@@ -54,7 +54,7 @@
     }
 
     else {
-      if (_maxItemNumber != null && _maxItemNumber <= selectedItemNumber) {
+      if (_maxItemNumber && _maxItemNumber <= selectedItemsNumber) {
         if (_maxItemNumber == 1) {
           platformus.forms.activeForm.find(".table__row--selected").removeClass("table__row--selected");
         }
@@ -68,16 +68,16 @@
     }
   }
 
-  function getSelectedItemNumber() {
+  function getSelectedItemsNumber() {
     return platformus.forms.activeForm.find(".table__row--selected").length;
   }
 
   function getSelectedItemValues() {
-    var selectedItemValues = platformus.string.empty;
+    var selectedItemValues = "";
 
     platformus.forms.activeForm.find(".table__row--selected").each(
       function (index, element) {
-        if (!platformus.string.isNullOrEmpty(selectedItemValues)) {
+        if (selectedItemValues) {
           selectedItemValues += ",";
         }
 

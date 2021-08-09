@@ -22,99 +22,86 @@
   background-color: #f0f0f0;
 }
 
-.master-detail__master-header {
-  font-size: 30px;
-  line-height: 60px;
+.master-detail__detail {
+  flex: 1 1 auto;
+  padding: 20px;
+}
+
+.master-detail__heading {
+  padding: 20px;
+}
+
+.master-detail__platformus {
+  background: url(/wwwroot.areas.backend.images.platformus.png) 20px center no-repeat;
+  color: #fff;
   text-decoration: none;
   display: block;
-  padding: 0 20px;
-}
-
-.master-detail__master-header--primary {
-  color: #fff;
-}
-
-.master-detail__master-header--primary:hover {
-  color: #fff;
-}
-
-.master-detail__master-header--secondary {
-  color: #323232;
-}
-
-.master-detail__master-header--secondary:hover {
-  color: #323232;
-}
-
-.master-detail__master-header--platformus {
-  background: url(/wwwroot.areas.backend.images.platformus.png) 20px center no-repeat;
   padding-left: 52px;
 }
 
-.master-detail__master-content {
+.master-detail__platformus:hover {
+  color: #fff;
 }
 
-.master-detail__master-menu-item--primary {
+.master-detail__grid {
+  margin-top: 20px;
 }
 
-.master-detail__master-menu-item--primary:hover {
+.master-detail__tree {
+  margin-top: 20px;
+}
+
+.master-detail__form {
+  margin-top: 20px;
+}
+
+.master-detail__buttons {
+  margin-top: 20px;
+}
+
+.master-detail__buttons--minor {
+  margin-top: 5px;
+}
+
+.master-detail__primary-menu-item {
+}
+
+.master-detail__primary-menu-item:hover {
   background-color: #3c3c3c;
 }
 
-.master-detail__master-menu-item--primary-active {
+.master-detail__primary-menu-item--active {
   background: #3c3c3c url(/wwwroot.areas.backend.images.menu_item_active.png) right no-repeat;
 }
 
-.master-detail__master-menu-item--primary-active-with-secondary-master {
+.master-detail__primary-menu-item--active-with-secondary-master {
   background: #3c3c3c url(/wwwroot.areas.backend.images.menu_item_active_with_secondary_master.png) right no-repeat;
 }
 
-.master-detail__master-menu-item--secondary {
+.master-detail__secondary-menu-item {
 }
 
-.master-detail__master-menu-item--secondary:hover {
+.master-detail__secondary-menu-item:hover {
   background-color: #f5f5f5;
 }
 
-.master-detail__master-menu-item--secondary-active {
+.master-detail__secondary-menu-item--active {
   background: #f5f5f5 url(/wwwroot.areas.backend.images.menu_item_active.png) right no-repeat;
 }
 
-.master-detail__master-user-menu {
+.master-detail__user-menu {
   position: absolute;
   left: 0;
   bottom: 20px;
   width: 100%;
 }
 
-.master-detail__master-menu-item--user {
+.master-detail__user-menu-item {
   color: #666;
 }
 
-.master-detail__master-menu-item--user:hover {
-  color: #666;
-}
-
-.master-detail__detail {
-  flex: 1 1 auto;
-}
-
-.master-detail__detail-header {
-  font-size: 30px;
-  line-height: 60px;
-  padding: 0 20px;
-}
-
-.master-detail__detail-content {
-  padding: 0 20px 20px;
-}
-
-.master-detail__detail-buttons {
-  margin-top: 20px;
-}
-
-.master-detail__detail-buttons--minor {
-  margin-top: 5px;
+.master-detail__user-menu-item:hover {
+  color: #999;
 }
 
 @media
@@ -124,22 +111,22 @@ only screen and (     -o-min-device-pixel-ratio: 2/1),
 only screen and (        min-device-pixel-ratio: 2),
 only screen and (                min-resolution: 192dpi),
 only screen and (                min-resolution: 2dppx) {
-  .master-detail__master-header--platformus {
+  .master-detail__platformus {
     background: url(/wwwroot.areas.backend.images.platformus@2x.png) 20px center no-repeat;
     background-size: 22px 40px;
   }
   
-  .master-detail__master-menu-item--primary-active {
+  .master-detail__primary-menu-item--active {
     background: #3c3c3c url(/wwwroot.areas.backend.images.menu_item_active@2x.png) right no-repeat;
     background-size: 5px 10px;
   }
 
-  .master-detail__master-menu-item--primary-active-with-secondary-master {
+  .master-detail__primary-menu-item--active-with-secondary-master {
     background: #3c3c3c url(/wwwroot.areas.backend.images.menu_item_active_with_secondary_master@2x.png) right no-repeat;
     background-size: 5px 10px;
   }
 
-  .master-detail__master-menu-item--secondary-active {
+  .master-detail__secondary-menu-item--active {
     background: #f5f5f5 url(/wwwroot.areas.backend.images.menu_item_active@2x.png) right no-repeat;
     background-size: 5px 10px;
   }

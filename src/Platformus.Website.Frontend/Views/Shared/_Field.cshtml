@@ -3,5 +3,5 @@
 @model Platformus.Website.Frontend.ViewModels.Shared.FieldViewModel
 <div class="form__field field">
   <label class="field__label label" for="field@(this.Model.Code)">@Model.Name</label>
-  @Html.Partial("_" + this.Model.FieldType.Code, this.Model)
+  <partial name="_@Model.FieldType.Code" for="@Model" />
 </div>

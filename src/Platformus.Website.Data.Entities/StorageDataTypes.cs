@@ -3,7 +3,7 @@
 
 namespace Platformus.Website.Data.Entities
 {
-  public sealed class StorageDataType
+  public sealed class StorageDataTypes
   {
     public static readonly string Integer = "integer";
     public static readonly string Decimal = "decimal";

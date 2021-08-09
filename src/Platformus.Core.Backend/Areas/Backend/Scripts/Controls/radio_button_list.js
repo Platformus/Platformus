@@ -5,18 +5,20 @@
   platformus.controls = platformus.controls || [];
   platformus.controls.radioButtonList = {};
   platformus.controls.radioButtonList.create = function (descriptor) {
-    var radioButtonList = $("<div>").addClass("field__radio-button-list radio-button-list").attr("id", descriptor.identity);
+    var radioButtonList = $("<div>")
+      .addClass("field__radio-button-list radio-button-list")
+      .attr("id", descriptor.identity);
 
-    for (var i = 0; i != descriptor.options.length; i++) {
-      createRadioButton(descriptor, descriptor.options[i]).appendTo(radioButtonList);
-    }
-
+    descriptor.options.forEach(o => createRadioButton(descriptor, o).appendTo(radioButtonList));
     createInput(descriptor).appendTo(radioButtonList);
     return radioButtonList;
   };
 
   function createRadioButton(descriptor, option) {
-    var radioButton = $("<a>").addClass("radio-button-list__radio-button radio-button").attr("href", "#").attr("data-value", option.value);
+    var radioButton = $("<a>")
+      .addClass("radio-button-list__radio-button radio-button")
+      .attr("href", "#")
+      .attr("data-value", option.value);
 
     createRadioButtonIndicator(descriptor, option).appendTo(radioButton);
     createRadioButtonLabel(descriptor, option).appendTo(radioButton);

@@ -9,8 +9,8 @@
 @section title {
   @ViewBag.Title
 }
-<form class="form" method="post">
-  <single-line-text-field for="Id" />
+<form class="master-detail__form form" method="post">
+  <single-line-text-field for="Id" is-disabled="@(!string.IsNullOrEmpty(this.Model.Id))" />
   <single-line-text-field for="Name" />
   <checkbox-field class="form__field--separated" for="IsFrontendDefault" />
   <checkbox-field for="IsBackendDefault" />

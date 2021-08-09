@@ -4,6 +4,6 @@
 <div class="positions @Model.AdditionalCssClass">
   @foreach (var position in this.Model.Positions)
   {
-    @Html.Partial("_Position", position)
+    <partial name="_Position" for="@position" />
   }
 </div>

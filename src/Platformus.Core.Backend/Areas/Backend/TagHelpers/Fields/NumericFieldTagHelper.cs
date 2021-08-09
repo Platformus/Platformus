@@ -15,6 +15,7 @@ namespace Platformus.Core.Backend
     public ViewContext ViewContext { get; set; }
     public string Class { get; set; }
     public ModelExpression For { get; set; }
+    public bool IsDisabled { get; set; }
 
     public override void Process(TagHelperContext context, TagHelperOutput output)
     {
@@ -37,6 +38,10 @@ namespace Platformus.Core.Backend
       );
 
       tbTextBox.AddCssClass("field__text-box field__text-box--numeric");
+
+      if (this.IsDisabled)
+        tbTextBox.MergeAttribute("disabled", "disabled");
+
       tb.InnerHtml.AppendHtml(tbTextBox);
       tb.InnerHtml.AppendHtml(this.GenerateNumericButtons());
       tb.InnerHtml.AppendHtml(ValidationErrorMessageGenerator.Generate(this.For.GetIdentity()));

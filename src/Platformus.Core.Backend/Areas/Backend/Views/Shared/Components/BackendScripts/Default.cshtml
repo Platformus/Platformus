@@ -3,5 +3,5 @@
 @model IEnumerable<Platformus.Core.Backend.Metadata.Script>
 @foreach (var script in this.Model)
 {
-  @Html.Partial("_BackendScript", script)
+  <partial name="_BackendScript" for="@script" />
 }

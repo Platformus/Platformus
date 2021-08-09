@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Razor.TagHelpers;
 
 namespace Platformus.Core.Backend
 {
-  [RestrictChildren("tree-node")]
+  [RestrictChildren("tree-node", "partial")]
   public class TreeTagHelper : TagHelper
   {
     public string Class { get; set; }

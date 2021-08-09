@@ -109,13 +109,13 @@
     value = value.replace(/<(?:.|\n)*?>/gm, "");
 
     if (value.indexOf("filename=") != -1) {
-      var filename = value.replace("filename=", platformus.string.empty);
+      var filename = value.replace("filename=", "");
 
       platformus.forms.imageUploaderForm.uploadingFinished(filename);
     }
 
     else if (value.indexOf("error=") != -1) {
-      var error = value.replace("error=", platformus.string.empty);
+      var error = value.replace("error=", "");
 
       platformus.forms.imageUploaderForm.uploadingErrorOccurred(error);
     }

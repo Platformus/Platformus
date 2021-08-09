@@ -47,5 +47,6 @@ namespace Platformus.Website.Data.Entities
     public virtual ICollection<Tab> Tabs { get; set; }
     public virtual ICollection<Member> Members { get; set; }
     public virtual ICollection<Object> Objects { get; set; }
+    public virtual ICollection<Member> RelationMembers { get; set; }
   }
 }

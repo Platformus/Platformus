@@ -18,12 +18,12 @@
     var textBox = $(this).parent().parent().find("input");
     var value = textBox.val();
 
-    if (platformus.string.isNullOrEmpty(value)) {
-      value = 0;
+    if (value) {
+      value = parseInt(value);
     }
 
     else {
-      value = parseInt(value);
+      value = 0;
     }
 
     textBox.val(value + 1);
@@ -35,12 +35,12 @@
     var textBox = $(this).parent().parent().find("input");
     var value = textBox.val();
 
-    if (platformus.string.isNullOrEmpty(value)) {
-      value = 0;
+    if (value) {
+      value = parseInt(value);
     }
 
     else {
-      value = parseInt(value);
+      value = 0;
     }
 
     textBox.val(value - 1);
