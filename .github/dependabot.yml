@@ -1,0 +1,141 @@
+version: 2
+updates:
+  - package-ecosystem: 'nuget'
+    directory: 'src/Platformus.Core'
+    open-pull-requests-limit: 5
+    schedule:
+      interval: 'daily'
+
+  - package-ecosystem: 'nuget'
+    directory: 'src/Platformus.Core.Backend'
+    open-pull-requests-limit: 5
+    schedule:
+      interval: 'daily'
+
+  - package-ecosystem: 'nuget'
+    directory: 'src/Platformus.Core.Data.Entities'
+    open-pull-requests-limit: 5
+    schedule:
+      interval: 'daily'
+
+  - package-ecosystem: 'nuget'
+    directory: 'src/Platformus.Core.Data.EntityFramework.PostgreSql'
+    open-pull-requests-limit: 5
+    schedule:
+      interval: 'daily'
+
+  - package-ecosystem: 'nuget'
+    directory: 'src/Platformus.Core.Data.EntityFramework.Sqlite'
+    open-pull-requests-limit: 5
+    schedule:
+      interval: 'daily'
+
+  - package-ecosystem: 'nuget'
+    directory: 'src/Platformus.Core.Data.EntityFramework.SqlServer'
+    open-pull-requests-limit: 5
+    schedule:
+      interval: 'daily'
+
+  - package-ecosystem: 'nuget'
+    directory: 'src/Platformus.Core.Frontend'
+    open-pull-requests-limit: 5
+    schedule:
+      interval: 'daily'
+
+  - package-ecosystem: 'nuget'
+    directory: 'src/Platformus.ECommerce'
+    open-pull-requests-limit: 5
+    schedule:
+      interval: 'daily'
+
+  - package-ecosystem: 'nuget'
+    directory: 'src/Platformus.ECommerce.Backend'
+    open-pull-requests-limit: 5
+    schedule:
+      interval: 'daily'
+
+  - package-ecosystem: 'nuget'
+    directory: 'src/Platformus.ECommerce.Data.Entities'
+    open-pull-requests-limit: 5
+    schedule:
+      interval: 'daily'
+
+  - package-ecosystem: 'nuget'
+    directory: 'src/Platformus.ECommerce.Data.EntityFramework.PostgreSql'
+    open-pull-requests-limit: 5
+    schedule:
+      interval: 'daily'
+
+  - package-ecosystem: 'nuget'
+    directory: 'src/Platformus.ECommerce.Data.EntityFramework.Sqlite'
+    open-pull-requests-limit: 5
+    schedule:
+      interval: 'daily'
+
+  - package-ecosystem: 'nuget'
+    directory: 'src/Platformus.ECommerce.Data.EntityFramework.SqlServer'
+    open-pull-requests-limit: 5
+    schedule:
+      interval: 'daily'
+
+  - package-ecosystem: 'nuget'
+    directory: 'src/Platformus.ECommerce.Frontend'
+    open-pull-requests-limit: 5
+    schedule:
+      interval: 'daily'
+
+  - package-ecosystem: 'nuget'
+    directory: 'src/Platformus.Images'
+    open-pull-requests-limit: 5
+    schedule:
+      interval: 'daily'
+
+  - package-ecosystem: 'nuget'
+    directory: 'src/Platformus.WebApplication'
+    open-pull-requests-limit: 5
+    schedule:
+      interval: 'daily'
+
+  - package-ecosystem: 'nuget'
+    directory: 'src/Platformus.Website'
+    open-pull-requests-limit: 5
+    schedule:
+      interval: 'daily'
+
+  - package-ecosystem: 'nuget'
+    directory: 'src/Platformus.Website.Backend'
+    open-pull-requests-limit: 5
+    schedule:
+      interval: 'daily'
+
+  - package-ecosystem: 'nuget'
+    directory: 'src/Platformus.Website.Data.Entities'
+    open-pull-requests-limit: 5
+    schedule:
+      interval: 'daily'
+
+  - package-ecosystem: 'nuget'
+    directory: 'src/Platformus.Website.Data.EntityFramework.PostgreSql'
+    open-pull-requests-limit: 5
+    schedule:
+      interval: 'daily'
+
+  - package-ecosystem: 'nuget'
+    directory: 'src/Platformus.Website.Data.EntityFramework.Sqlite'
+    open-pull-requests-limit: 5
+    schedule:
+      interval: 'daily'
+
+  - package-ecosystem: 'nuget'
+    directory: 'src/Platformus.Website.Data.EntityFramework.SqlServer'
+    open-pull-requests-limit: 5
+    schedule:
+      interval: 'daily'
+
+  - package-ecosystem: 'nuget'
+    directory: 'src/Platformus.Website.Frontend'
+    open-pull-requests-limit: 5
+    schedule:
+      interval: 'daily'
+
+# Built with ❤ by [Pipeline Foundation](https://pipeline.foundation)
