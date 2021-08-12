@@ -1,0 +1,222 @@
+name: CI/CD Pipeline
+
+on: [ push, pull_request, workflow_dispatch ]
+
+jobs:
+  ci:
+    name: Continuous Integration
+    runs-on: ubuntu-latest
+    env:
+      pathToSolution: Platformus.sln
+      testResultsFolderName: Test results
+      publishOutputFolderName: Publish output
+      nugetPackagesFolderName: NuGet packages
+    outputs:
+      latest_version: ${{ steps.tag_generator.outputs.new_version }}
+      publishOutputFolderName: ${{ env.publishOutputFolderName }}
+      nugetPackagesFolderName: ${{ env.nugetPackagesFolderName }}
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      # Tooling setup
+
+      - name: Setup .NET SDK
+        uses: actions/setup-dotnet@v1
+        with:
+          dotnet-version: 2.1.525
+
+      - name: Install .NET SDK
+        uses: actions/setup-dotnet@v1
+        with:
+          dotnet-version: 5.0.302
+
+      # Information setup
+
+      - name: Pipeline data gatherer
+        id: data_gatherer
+        shell: pwsh
+        run: |
+          # Get default branch
+          $repo = "${{ github.repository }}"
+          $defaultBranch = Invoke-RestMethod -Method GET -Uri https://api.github.com/repos/$repo | Select-Object -ExpandProperty default_branch
+
+          Write-Output "::set-output name=default_branch::$(echo $defaultBranch)"
+
+      - name: Pipeline conditionals handler
+        id: conditionals_handler
+        shell: pwsh
+        run: |
+          $defaultBranch = "${{ steps.data_gatherer.outputs.default_branch }}"
+          $githubRef = "${{ github.ref }}"
+          $currentBranch = $githubRef -replace 'refs/heads/', ''
+          $githubEventName = "${{ github.event_name }}"
+          $isDefaultBranch = 'false'
+          $isPush = 'false'
+          $isPushToDefaultBranch = 'false'
+
+          if ( $currentBranch -eq $defaultBranch ) {
+            $isDefaultBranch = 'true'
+          }
+          if ( $githubEventName -eq 'push' ) {
+            $isPush = 'true'
+          }
+          if ( $currentBranch -eq $defaultBranch -and $githubEventName -eq 'push' ) {
+            $isPushToDefaultBranch = 'true'
+          }
+
+          Write-Output "::set-output name=is_default_branch::$(echo $isDefaultBranch)"
+          Write-Output "::set-output name=is_push::$(echo $isPush)"
+          Write-Output "::set-output name=is_push_to_default_branch::$(echo $isPushToDefaultBranch)"
+
+      - if: steps.conditionals_handler.outputs.is_push_to_default_branch == 'true'
+        name: GitHub tag generator
+        id: tag_generator
+        uses: mathieudutour/github-tag-action@v5.5
+        with: 
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          default_bump: false
+          release_branches: ${{ steps.data_gatherer.outputs.default_branch }}
+          tag_prefix: ''
+
+      - name: Project version determiner
+        id: version_determiner
+        shell: pwsh
+        run: |
+          $gitNewVersion = if ( "${{ steps.tag_generator.outputs.new_version }}" ) { "${{ steps.tag_generator.outputs.new_version }}" } else { $null }
+
+          # fetch all tags from remote
+          git fetch --all --tags
+
+          $gitTagsList = git tag
+          $projectCurrentVersion = ( $gitTagsList | Where-Object { $_ -notmatch "-" } | Sort-Object { [Version] $_ } -Descending )[0] -replace ' ', ''
+          $projectNewVersion = $gitNewVersion ?? $projectCurrentVersion
+
+          Write-Output "::set-output name=project_version::$(echo $projectNewVersion)"
+
+      # Build and test validation
+
+      - name: Restore solution
+        shell: pwsh
+        run: |
+          $pathToSolution = "${{ env.pathToSolution }}"
+
+          dotnet restore $pathToSolution
+
+      - name: Build solution
+        shell: pwsh
+        run: |
+          $pathToSolution = "${{ env.pathToSolution }}"
+          $configurationSetting = "Debug"
+
+          dotnet build $pathToSolution `
+          --configuration $configurationSetting `
+          --no-restore
+
+      # Artifact generation
+
+      - name: Pack solution
+        shell: pwsh
+        run: |
+          $pathToSolution = "${{ env.pathToSolution }}"
+          $configurationSetting = "Release"
+          $packOutputFolder = "${{ env.nugetPackagesFolderName }}"
+          $projectVersion = "${{ steps.version_determiner.outputs.project_version }}"
+          $githubRunNumber = ${{ github.run_number }}
+
+          dotnet pack $pathToSolution `
+          --configuration $configurationSetting `
+          --output $packOutputFolder `
+          --no-restore `
+          -property:VersionPrefix=$projectVersion `
+          -property:VersionSuffix=$githubRunNumber
+
+      # Artifact publish to pipeline
+
+      - name: Upload NuGet packages as pipeline artifact
+        uses: actions/upload-artifact@v2
+        with:
+          name: NuGet packages
+          path: "${{ env.nugetPackagesFolderName }}"
+
+  cd:
+    if: needs.ci.outputs.latest_version != ''
+    name: Continuous Deployment
+    needs: ci
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository # GH CLI requires a cloned repo
+        uses: actions/checkout@v2
+
+      # Tooling setup
+
+      - name: Setup .NET SDK
+        uses: actions/setup-dotnet@v1
+        with:
+          dotnet-version: 2.1.525
+
+      - name: Install .NET SDK
+        uses: actions/setup-dotnet@v1
+        with:
+          dotnet-version: 5.0.302
+
+      - name: Install/Update 7z
+        shell: pwsh
+        run: |
+          sudo apt update
+          sudo apt install p7zip-full p7zip-rar
+
+      # NuGet packages publish
+
+      - name: Download and extract NuGet packages artifact
+        uses: actions/download-artifact@v2
+        with:
+          name: NuGet packages
+          path: "${{ needs.ci.outputs.nugetPackagesFolderName }}"
+
+      - name: Push NuGet packages to NuGet.org
+        continue-on-error: true
+        shell: pwsh
+        run: |
+          $nugetPackagesFolder = "${{ needs.ci.outputs.nugetPackagesFolderName }}"
+          $nugetSource = "https://api.nuget.org/v3/index.json"
+          $nugetApiKey = "${{ secrets.NUGET_API_KEY }}"
+
+          Push-Location $nugetPackagesFolder
+
+          Get-ChildItem *.nupkg | ForEach-Object {
+            dotnet nuget push $_.FullName `
+            --source $nugetSource `
+            --api-key $nugetApiKey
+          }
+
+      # GitHub release preparation and publish
+
+      - name: Archive packages for release
+        shell: pwsh
+        run: |
+          $nugetPackagesFolder = "${{ needs.ci.outputs.nugetPackagesFolderName }}"
+          $latestVersion = "${{ needs.ci.outputs.latest_version }}"
+          $githubRunNumber = ${{ github.run_number }}
+          $packagesArchiveTitle = "$nugetPackagesFolder $latestVersion-$githubRunNumber.7z"
+
+          Push-Location "./$nugetPackagesFolder"
+          7z a "${{ github.workspace }}/$packagesArchiveTitle" .
+
+      - name: Create and publish release
+        shell: pwsh
+        run: |
+          $nugetPackagesFolder = "${{ needs.ci.outputs.nugetPackagesFolderName }}"
+          $latestVersion = "${{ needs.ci.outputs.latest_version }}"
+          $githubRunNumber = ${{ github.run_number }}
+          $releaseTag = $latestVersion
+          $releaseTitle = " $latestVersion"
+          $releaseAssets = "$nugetPackagesFolder $latestVersion-$githubRunNumber.7z"
+
+          gh release create $releaseTag `
+          --title $releaseTitle `
+          $releaseAssets
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+# Built with ❤ by [Pipeline Foundation](https://pipeline.foundation)
