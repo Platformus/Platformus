@@ -32,17 +32,17 @@ namespace Platformus.Core.Backend
 
     private TagBuilder CreateCheckbox()
     {
-      if (this.For != null)
+      if (this.For == null)
       {
-        bool isChecked = string.Equals(this.For.GetValue(this.ViewContext), true.ToString(), StringComparison.OrdinalIgnoreCase);
-
         return CheckboxGenerator.Generate(
-          this.For.GetIdentity(), this.For.GetLabel(), isChecked
+          this.Id, this.Label, this.IsChecked
         );
       }
 
+      bool isChecked = string.Equals(this.For.GetValue(this.ViewContext)?.ToString()?.ToString(), true.ToString(), StringComparison.OrdinalIgnoreCase);
+
       return CheckboxGenerator.Generate(
-        this.Id, this.Label, this.IsChecked
+        this.For.GetIdentity(), this.For.GetLabel(), isChecked
       );
     }
   }

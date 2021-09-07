@@ -5,8 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Localization;
-using Platformus.Core.Backend.ViewModels.Shared;
-using Platformus.Core.Extensions;
+using Platformus.Core.Backend;
 using Platformus.Website.Backend.ViewModels.Shared;
 using Platformus.Website.Data.Entities;
 
@@ -20,9 +19,9 @@ namespace Platformus.Website.Backend.ViewModels.Website
 
       return new ClassSelectorFormViewModel()
       {
-        GridColumns = new[] {
-          GridColumnViewModelFactory.Create(localizer["Parent Class"]),
-          GridColumnViewModelFactory.Create(localizer["Name"])
+        TableColumns = new[] {
+          new TableTagHelper.Column(localizer["Parent Class"]),
+          new TableTagHelper.Column(localizer["Name"])
         },
         Classes = classes.Select(ClassViewModelFactory.Create),
         ClassId = classId

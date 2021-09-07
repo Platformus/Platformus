@@ -5,7 +5,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
-using Platformus.Core.Extensions;
 using Platformus.Core.Primitives;
 using Platformus.Website.Data.Entities;
 using Platformus.Website.Filters;

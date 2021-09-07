@@ -19,9 +19,25 @@
   @section title {
     @ViewBag.Title
   }
-  <partial name="_Grid" for="Grid" />
+  <pager offset="@Model.Offset" limit="@Model.Limit" total="@Model.Total" />
+  <table sorting="@Model.Sorting">
+    <columns>
+      @foreach (var tableColumn in this.Model.TableColumns)
+      {
+        <column label="@tableColumn.Label" sorting-property-path="@tableColumn.SortingPropertyPath" />
+      }
+      <column />
+    </columns>
+    <rows>
+      @foreach (var @object in this.Model.Objects)
+      {
+        <partial name="_Object" for="@(@object)" />
+      }
+    </rows>
+  </table>
+  <pager offset="@Model.Offset" limit="@Model.Limit" total="@Model.Total" is-secondary="true" />
   <div class="master-detail__buttons buttons">
-    <positive-button href="@this.Context.Request.CombineUrl("/backend/objects/create")">@Localizer["Create"] @Model.Class.Name.ToLower()</positive-button>
+    <positive-button href="/backend/objects/create">@Localizer["Create"] @Model.Class.Name.ToLower()</positive-button>
   </div>
 }
 @section side

@@ -4,9 +4,7 @@
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using Magicalizer.Data.Repositories.Abstractions;
 using MailKit.Net.Smtp;
-using Microsoft.Extensions.Configuration;
 using MimeKit;
 using Platformus.Core.Services.Abstractions;
 
@@ -14,22 +12,22 @@ namespace Platformus.Core.Services.Defaults
 {
   public class DefaultEmailSender : IEmailSender
   {
-    private IConfiguration configuration;
+    private IConfigurationManager configurationManager;
 
-    public DefaultEmailSender(IStorage storage, IConfiguration configuration)
+    public DefaultEmailSender(IConfigurationManager configurationManager)
     {
-      this.configuration = configuration;
+      this.configurationManager = configurationManager;
     }
 
     public async Task<SendEmailResult> SendEmailAsync(string to, string subject, string body, IDictionary<string, byte[]> attachmentsByFilenames)
     {
-      string smtpServer = this.configuration["Email:SmtpServer"];
-      string smtpPort = this.configuration["Email:SmtpPort"];
-      string smtpUseSsl = this.configuration["Email:SmtpUseSsl"];
-      string smtpLogin = this.configuration["Email:SmtpLogin"];
-      string smtpPassword = this.configuration["Email:SmtpPassword"];
-      string smtpSenderEmail = this.configuration["Email:SmtpSenderEmail"];
-      string smtpSenderName = this.configuration["Email:SmtpSenderName"];
+      string smtpServer = this.configurationManager["Email", "SmtpServer"];
+      string smtpPort = this.configurationManager["Email", "SmtpPort"];
+      string smtpUseSsl = this.configurationManager["Email", "SmtpUseSsl"];
+      string smtpLogin = this.configurationManager["Email", "SmtpLogin"];
+      string smtpPassword = this.configurationManager["Email", "SmtpPassword"];
+      string smtpSenderEmail = this.configurationManager["Email", "SmtpSenderEmail"];
+      string smtpSenderName = this.configurationManager["Email", "SmtpSenderName"];
 
       if (string.IsNullOrEmpty(smtpServer) || string.IsNullOrEmpty(smtpPort) || string.IsNullOrEmpty(smtpLogin) || string.IsNullOrEmpty(smtpPassword))
         return new SendEmailResult(false, "Email parameters are not set.");

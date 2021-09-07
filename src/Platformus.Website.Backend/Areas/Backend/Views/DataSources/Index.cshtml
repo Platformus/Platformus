@@ -9,8 +9,25 @@
 @section title {
   @ViewBag.Title
 }
-<partial name="_Grid" for="Grid" />
+<filter>
+  <text-filter property-path="Code.Contains" label="@Localizer["Code"].Value" />
+</filter>
+<pager offset="@Model.Offset" limit="@Model.Limit" total="@Model.Total" />
+<table sorting="@Model.Sorting">
+  <columns>
+    <column label="@Localizer["Code"].Value" sorting-property-path="Code" />
+    <column label="@Localizer["Data provider C# class name"].Value" sorting-property-path="DataProviderCSharpClassName" />
+    <column />
+  </columns>
+  <rows>
+    @foreach (var dataSource in this.Model.DataSources)
+    {
+      <partial name="_DataSource" for="@dataSource" />
+    }
+  </rows>
+</table>
+<pager offset="@Model.Offset" limit="@Model.Limit" total="@Model.Total" is-secondary="true" />
 <div class="master-detail__buttons buttons">
-  <positive-button href="/backend/datasources/create?endpoint.id=@Model.Filter.Endpoint.Id">@Localizer["Create data source"]</positive-button>
-  <neutral-button href="/backend/endpoints">@Localizer["Back"]</neutral-button>
+  <positive-button href="/backend/datasources/create">@Localizer["Create data source"]</positive-button>
+  <neutral-button href="/backend/endpoints" skip-url-parameters="endpoint.id">@Localizer["Back"]</neutral-button>
 </div>

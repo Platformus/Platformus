@@ -47,7 +47,7 @@ namespace Platformus.Core.Backend
       return GetStringLengthAttribute(modelExpression).MaximumLength;
     }
 
-    public static string GetValue(this ModelExpression modelExpression, ViewContext viewContext, Localization localization = null)
+    public static object GetValue(this ModelExpression modelExpression, ViewContext viewContext, Localization localization = null)
     {
       ModelStateEntry modelState;
 
@@ -58,7 +58,7 @@ namespace Platformus.Core.Backend
       if (localization != null)
         return localization.Value;
 
-      return modelExpression.Model?.ToString();
+      return modelExpression.Model;
     }
 
     public static bool IsValid(this ModelExpression modelExpression, ViewContext viewContext, Localization localization = null)

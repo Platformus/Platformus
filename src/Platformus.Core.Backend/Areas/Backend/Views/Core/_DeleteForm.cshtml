@@ -7,7 +7,7 @@
 </div>
 <div class="pop-up-form__content">
   <div class="pop-up-form__buttons buttons">
-    <negative-button href="@Model.TargetUrl">@Localizer["Yes, I am"]</negative-button>
+    <negative-button href="@Model.TargetUrl" do-not-combine-url="true">@Localizer["Yes, I am"]</negative-button>
     <neutral-button onclick="return platformus.forms.deleteForm.hideAndRemove();">@Localizer["Cancel"]</neutral-button>
   </div>
 </div>

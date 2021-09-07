@@ -6,7 +6,6 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Platformus.Core.Data.Entities;
-using Platformus.Core.Extensions;
 using Platformus.Core.Filters;
 using Platformus.Core.Primitives;
 

@@ -123,6 +123,12 @@
   <data name="File Manager" xml:space="preserve">
     <value>Менеджер файлов</value>
   </data>
+  <data name="Name" xml:space="preserve">
+    <value>Имя</value>
+  </data>
+  <data name="Size" xml:space="preserve">
+    <value>Размер</value>
+  </data>
   <data name="…or select them on your device" xml:space="preserve">
     <value>…или выберите их на вашем устройстве</value>
   </data>

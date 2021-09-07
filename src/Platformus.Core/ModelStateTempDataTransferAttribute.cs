@@ -5,11 +5,14 @@ using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
+using Magicalizer.Data.Repositories.Abstractions;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
+using Platformus.Core.Data.Entities;
+using Platformus.Core.Filters;
 
 namespace Platformus
 {
@@ -37,11 +40,35 @@ namespace Platformus
             }
           );
 
-          controller.TempData[Key] = JsonConvert.SerializeObject(modelStateWrappers, Formatting.None, new JsonSerializerSettings() { ContractResolver = new NoCultureInfoResolver() });
+          ModelState modelState = this.CreateModelStateWithValue(
+            filterContext, this.SerializeModelStateWrappers(modelStateWrappers)
+          );
+
+          controller.TempData[Key] = modelState.Id;
         }
       }
 
       base.OnActionExecuted(filterContext);
+    }
+
+    private ModelState CreateModelStateWithValue(ActionExecutedContext filterContext, string value)
+    {
+      ModelState modelState = new ModelState();
+
+      modelState.Id = Guid.NewGuid();
+      modelState.Value = value;
+      modelState.Created = DateTime.Now;
+
+      IStorage storage = filterContext.HttpContext.GetStorage();
+
+      storage.GetRepository<Guid, ModelState, ModelStateFilter>().Create(modelState);
+      storage.Save();
+      return modelState;
+    }
+
+    private string SerializeModelStateWrappers(IEnumerable<ModelStateWrapper> modelStateWrappers)
+    {
+      return JsonConvert.SerializeObject(modelStateWrappers, Formatting.None, new JsonSerializerSettings() { ContractResolver = new NoCultureInfoResolver() });
     }
   }
 
@@ -53,12 +80,12 @@ namespace Platformus
 
       if (controller != null)
       {
-        string serializedModelState = controller.TempData[Key] as string;
-
-        if (!string.IsNullOrEmpty(serializedModelState))
+        if (controller.TempData.ContainsKey(Key))
         {
-          IEnumerable<ModelStateWrapper> modelStateWrappers = JsonConvert.DeserializeObject<IEnumerable<ModelStateWrapper>>(serializedModelState, new JsonSerializerSettings() { Error = DeserializationErrorHandler });
-          
+          Guid modelStateId = (Guid)controller.TempData[Key];
+          ModelState modelState = filterContext.HttpContext.GetStorage().GetRepository<Guid, ModelState, ModelStateFilter>().GetByIdAsync(modelStateId).Result;
+          IEnumerable<ModelStateWrapper> modelStateWrappers = this.DeserializeModelStateWrappers(modelState.Value);
+
           if (modelStateWrappers != null)
           {
             if (filterContext.Result is ViewResult)
@@ -80,6 +107,11 @@ namespace Platformus
       }
 
       base.OnActionExecuted(filterContext);
+    }
+
+    private IEnumerable<ModelStateWrapper> DeserializeModelStateWrappers(string value)
+    {
+      return JsonConvert.DeserializeObject<IEnumerable<ModelStateWrapper>>(value, new JsonSerializerSettings() { Error = DeserializationErrorHandler });
     }
 
     private void DeserializationErrorHandler(object sender, ErrorEventArgs errorArgs)

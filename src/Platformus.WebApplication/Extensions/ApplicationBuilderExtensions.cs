@@ -3,6 +3,9 @@
 
 using ExtCore.WebApplication.Extensions;
 using Microsoft.AspNetCore.Builder;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
+using Platformus.Core.Services.Abstractions;
 
 namespace Platformus.WebApplication.Extensions
 {
@@ -11,6 +14,14 @@ namespace Platformus.WebApplication.Extensions
     public static void UsePlatformus(this IApplicationBuilder applicationBuilder)
     {
       applicationBuilder.UseExtCore();
+
+      IHostApplicationLifetime hostApplicationLifetime = applicationBuilder.ApplicationServices.GetService<IHostApplicationLifetime>();
+
+      hostApplicationLifetime.ApplicationStarted.Register(() => {
+        ICleaningManager cleaningManager = applicationBuilder.ApplicationServices.GetService<ICleaningManager>();
+
+        cleaningManager.CleanupAsync(applicationBuilder.ApplicationServices);
+      });
     }
   }
 }

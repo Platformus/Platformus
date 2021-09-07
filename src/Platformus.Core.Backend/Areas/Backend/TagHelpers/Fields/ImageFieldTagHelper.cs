@@ -36,7 +36,7 @@ namespace Platformus.Core.Backend
     {
       TagBuilder tb = ImageViewGenerator.Generate(
         this.For.GetIdentity(),
-        this.For.GetValue(this.ViewContext)
+        this.For.GetValue(this.ViewContext)?.ToString()
       );
 
       tb.AddCssClass("field__image-view");

@@ -41,9 +41,10 @@
 
       var formData = new FormData();
 
-      event.dataTransfer.files.forEach(function (file) {
-        formData.append("files", file);
-      });
+      // forEach doesn't work here (event.dataTransfer.files is not array)
+      for (var i = 0; i != event.dataTransfer.files.length; i++) {
+        formData.append("files", event.dataTransfer.files[i]);
+      }
 
       $.ajax(
         {

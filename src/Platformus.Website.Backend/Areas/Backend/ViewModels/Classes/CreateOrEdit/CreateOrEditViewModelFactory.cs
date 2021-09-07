@@ -6,7 +6,6 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Localization;
-using Platformus.Core.Extensions;
 using Platformus.Core.Primitives;
 using Platformus.Website.Data.Entities;
 using Platformus.Website.Filters;

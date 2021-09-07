@@ -120,7 +120,19 @@
   <data name="Create data type" xml:space="preserve">
     <value>Добавить тип данных</value>
   </data>
+  <data name="Data type parameters" xml:space="preserve">
+    <value>Параметры типа данных</value>
+  </data>
   <data name="Data Types" xml:space="preserve">
     <value>Типы данных</value>
+  </data>
+  <data name="Name" xml:space="preserve">
+    <value>Название</value>
+  </data>
+  <data name="Position" xml:space="preserve">
+    <value>Позиция</value>
+  </data>
+  <data name="Storage data type" xml:space="preserve">
+    <value>Тип данных хранилища</value>
   </data>
 </root>

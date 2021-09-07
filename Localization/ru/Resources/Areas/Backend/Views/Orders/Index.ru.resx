@@ -117,10 +117,40 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="#" xml:space="preserve">
+    <value>№</value>
+  </data>
   <data name="Create order" xml:space="preserve">
     <value>Добавить заказ</value>
   </data>
+  <data name="Created" xml:space="preserve">
+    <value>Дата и время создания</value>
+  </data>
+  <data name="Created from" xml:space="preserve">
+    <value>Созданные с</value>
+  </data>
+  <data name="Customer" xml:space="preserve">
+    <value>Покупатель</value>
+  </data>
+  <data name="Customer phone" xml:space="preserve">
+    <value>Телефон покупателя</value>
+  </data>
+  <data name="Delivery method" xml:space="preserve">
+    <value>Метод доставки</value>
+  </data>
+  <data name="Order state" xml:space="preserve">
+    <value>Состояние заказа</value>
+  </data>
   <data name="Orders" xml:space="preserve">
     <value>Заказы</value>
+  </data>
+  <data name="Payment method" xml:space="preserve">
+    <value>Метод оплаты</value>
+  </data>
+  <data name="to" xml:space="preserve">
+    <value>по</value>
+  </data>
+  <data name="Total" xml:space="preserve">
+    <value>Итого</value>
   </data>
 </root>

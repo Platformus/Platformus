@@ -2,29 +2,29 @@
 @* Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information. *@
 @model Platformus.Website.Backend.ViewModels.Shared.ObjectViewModel
 @inject Microsoft.AspNetCore.Mvc.Localization.IViewLocalizer Localizer
-<table-row>
+<row>
   @foreach (var propertyByMember in this.Model.PropertiesByMembers)
   {
     if (propertyByMember.Key.PropertyDataType != null)
     {
       if (propertyByMember.Key.PropertyDataType.JavaScriptEditorClassName == "image")
       {
-        <image-table-cell url="@propertyByMember.Value" />
+        <image-cell url="@propertyByMember.Value" />
       }
       else
       {
-        <table-cell>@propertyByMember.Value</table-cell>
+        <cell>@propertyByMember.Value</cell>
       }
     }
     else if (propertyByMember.Key.RelationClass != null)
     {
-      <table-cell>
+      <cell>
         <a href="/backend/objects?class.id=@propertyByMember.Key.RelationClass.Id&primary.id=@Model.Id">@propertyByMember.Key.RelationClass.PluralizedName</a>
-      </table-cell>
+      </cell>
     }
   }
-<buttons-table-cell>
-  <positive-button is-minor="true" href="@(this.Context.Request.CombineUrl("/backend/objects/edit/" + this.Model.Id))">@Localizer["Edit"]</positive-button>
+<buttons-cell>
+  <positive-button is-minor="true" href="/backend/objects/edit/@Model.Id">@Localizer["Edit"]</positive-button>
   <delete-button href="/backend/objects/delete/@Model.Id"></delete-button>
-</buttons-table-cell>
-</table-row>
+</buttons-cell>
+</row>

@@ -6,8 +6,6 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Localization;
-using Platformus.Core.Backend.ViewModels.Shared;
-using Platformus.Core.Extensions;
 using Platformus.Core.Primitives;
 using Platformus.Website.Backend.ViewModels.Shared;
 using Platformus.Website.Data.Entities;
@@ -17,30 +15,16 @@ namespace Platformus.Website.Backend.ViewModels.Classes
 {
   public static class IndexViewModelFactory
   {
-    public static async Task<IndexViewModel> CreateAsync(HttpContext httpContext, ClassFilter filter, IEnumerable<Class> classes, string orderBy, int skip, int take, int total)
+    public static async Task<IndexViewModel> CreateAsync(HttpContext httpContext, string sorting, int offset, int limit, int total, IEnumerable<Class> classes)
     {
-      IStringLocalizer<IndexViewModel> localizer = httpContext.GetStringLocalizer<IndexViewModel>();
-
       return new IndexViewModel()
       {
-        Grid = GridViewModelFactory.Create(
-          httpContext,
-          new[] {
-            FilterViewModelFactory.Create(httpContext, "Parent.Id", localizer["Parent class"], await GetClassOptionsAsync(httpContext)),
-            FilterViewModelFactory.Create(httpContext, "Name.Contains", localizer["Name"])
-          },
-          orderBy, skip, take, total,
-          new[] {
-            GridColumnViewModelFactory.Create(localizer["Parent class"]),
-            GridColumnViewModelFactory.Create(localizer["Name"], "Name"),
-            GridColumnViewModelFactory.Create(localizer["Is abstract"], "IsAbstract"),
-            GridColumnViewModelFactory.Create(localizer["Tabs"]),
-            GridColumnViewModelFactory.Create(localizer["Members"]),
-            GridColumnViewModelFactory.CreateEmpty()
-          },
-          classes.Select(ClassViewModelFactory.Create),
-          "_Class"
-        )
+        ClassOptions = await GetClassOptionsAsync(httpContext),
+        Sorting = sorting,
+        Offset = offset,
+        Limit = limit,
+        Total = total,
+        Classes = classes.Select(ClassViewModelFactory.Create)
       };
     }
 

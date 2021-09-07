@@ -36,7 +36,7 @@
   </tab-pages>
   <div class="form__buttons buttons">
     <submit-button>@Localizer["Save"]</submit-button>
-    <neutral-button href="/backend/categories">@Localizer["Cancel"]</neutral-button>
+    <neutral-button href="/backend/categories" skip-url-parameters="owner.id.equals">@Localizer["Cancel"]</neutral-button>
   </div>
 </form>
 <script>

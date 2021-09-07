@@ -13,24 +13,16 @@
   <h2 class="form__title">
     @Localizer["Positions"]
   </h2>
-  <table class="form__table table">
-    <colgroup>
-      <col>
-      <col>
-      <col>
-      <col>
-      <col>
-      <col>
-    </colgroup>
-    <tbody>
-      <table-row>
-        <table-cell is-header="true">@Localizer["Category"]</table-cell>
-        <table-cell is-header="true">@Localizer["Product"]</table-cell>
-        <table-cell is-header="true">@Localizer["Price"]</table-cell>
-        <table-cell is-header="true">@Localizer["Quantity"]</table-cell>
-        <table-cell is-header="true">@Localizer["Subtotal"]</table-cell>
-        <table-cell is-header="true">&nbsp;</table-cell>
-      </table-row>
+  <table class="form__table">
+    <columns>
+      <column label="@Localizer["Category"].Value" />
+      <column label="@Localizer["Product"].Value" />
+      <column label="@Localizer["Price"].Value" />
+      <column label="@Localizer["Quantity"].Value" />
+      <column label="@Localizer["Subtotal"].Value" />
+      <column />
+    </columns>
+    <rows>
       @if (this.Model.Positions != null)
       {
         @for (int i = 0; i != this.Model.Positions.Count(); i++)
@@ -41,14 +33,14 @@
           <partial name="_Position" for="@position" />
         }
       }
-      <table-row id="totalRow">
-        <table-cell is-header="true" colspan="4">@Localizer["Total"]</table-cell>
-        <table-cell is-header="true" id="total">@Model.Total.ToString("0.00")</table-cell>
-        <table-cell is-header="true">&nbsp;</table-cell>
-      </table-row>
-    </tbody>
+      <row id="totalRow">
+        <cell is-header="true" colspan="4">@Localizer["Total"]</cell>
+        <cell is-header="true" id="total">@Model.Total.ToString("0.00")</cell>
+        <cell is-header="true">&nbsp;</cell>
+      </row>
+    </rows>
   </table>
   <div class="form__buttons buttons">
-    <neutral-button href="@this.Context.Request.CombineUrl("/backend/carts")">@Localizer["Back"]</neutral-button>
+    <neutral-button href="/backend/carts">@Localizer["Back"]</neutral-button>
   </div>
 </div>

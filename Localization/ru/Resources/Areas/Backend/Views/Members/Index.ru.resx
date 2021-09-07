@@ -126,4 +126,16 @@
   <data name="Members" xml:space="preserve">
     <value>Члены класса</value>
   </data>
+  <data name="Name" xml:space="preserve">
+    <value>Название</value>
+  </data>
+  <data name="Position" xml:space="preserve">
+    <value>Позиция</value>
+  </data>
+  <data name="Property Data Type" xml:space="preserve">
+    <value>Тип данных свойства</value>
+  </data>
+  <data name="Relation Class" xml:space="preserve">
+    <value>Класс отношения</value>
+  </data>
 </root>

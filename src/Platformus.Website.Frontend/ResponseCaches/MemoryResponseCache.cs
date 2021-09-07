@@ -5,7 +5,6 @@ using System;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Http.Extensions;
-using Platformus.Core.Extensions;
 using Platformus.Website.ResponseCaches;
 
 namespace Platformus.Website.Frontend

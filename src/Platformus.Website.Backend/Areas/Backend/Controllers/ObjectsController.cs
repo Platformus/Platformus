@@ -12,7 +12,6 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Platformus.Core.Data.Entities;
-using Platformus.Core.Extensions;
 using Platformus.Core.Filters;
 using Platformus.Website.Backend.ViewModels.Objects;
 using Platformus.Website.Data.Entities;
@@ -53,16 +52,15 @@ namespace Platformus.Website.Backend.Controllers
       this.webHostEnvironment = webHostEnvironment;
     }
 
-    public async Task<IActionResult> IndexAsync([FromQuery]ObjectFilter filter = null, string orderBy = null, int skip = 0, int take = 10)
+    public async Task<IActionResult> IndexAsync([FromQuery]ObjectFilter filter = null, string sorting = null, int offset = 0, int limit = 10)
     {
       return this.View(await IndexViewModelFactory.CreateAsync(
-        this.HttpContext, filter,
+        this.HttpContext, filter, sorting, offset, limit, await this.ObjectRepository.CountAsync(filter),
         filter?.Class?.Id == null ? null : await this.ObjectRepository.GetAllAsync(
-          filter, orderBy, skip, take,
+          filter, sorting, offset, limit,
           new Inclusion<Object>("Properties.Member"),
           new Inclusion<Object>("Properties.StringValue.Localizations")
-        ),
-        orderBy, skip, take, await this.ObjectRepository.CountAsync(filter)
+        )
       ));
     }
 

@@ -3,36 +3,22 @@
 
 using System.Collections.Generic;
 using System.Linq;
-using Microsoft.AspNetCore.Http;
-using Microsoft.Extensions.Localization;
-using Platformus.Core.Backend.ViewModels.Shared;
-using Platformus.Core.Extensions;
 using Platformus.ECommerce.Backend.ViewModels.Shared;
 using Platformus.ECommerce.Data.Entities;
-using Platformus.ECommerce.Filters;
 
 namespace Platformus.ECommerce.Backend.ViewModels.OrderStates
 {
   public static class IndexViewModelFactory
   {
-    public static IndexViewModel Create(HttpContext httpContext, OrderStateFilter filter, IEnumerable<OrderState> orderStates, string orderBy, int skip, int take, int total)
+    public static IndexViewModel Create(string sorting, int offset, int limit, int total, IEnumerable<OrderState> orderStates)
     {
-      IStringLocalizer<IndexViewModel> localizer = httpContext.GetStringLocalizer<IndexViewModel>();
-
       return new IndexViewModel()
       {
-        Grid = GridViewModelFactory.Create(
-          httpContext,
-          FilterViewModelFactory.Create(httpContext, "Name.Value.Contains", localizer["Name"]),
-          orderBy, skip, take, total,
-          new[] {
-            GridColumnViewModelFactory.Create(localizer["Name"], httpContext.CreateLocalizedOrderBy("Name")),
-            GridColumnViewModelFactory.Create(localizer["Position"], "Position"),
-            GridColumnViewModelFactory.CreateEmpty()
-          },
-          orderStates.Select(OrderStateViewModelFactory.Create),
-          "_OrderState"
-        )
+        Sorting = sorting,
+        Offset = offset,
+        Limit = limit,
+        Total = total,
+        OrderStates = orderStates.Select(OrderStateViewModelFactory.Create)
       };
     }
   }

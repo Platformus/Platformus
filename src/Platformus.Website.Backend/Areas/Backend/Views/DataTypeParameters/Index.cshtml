@@ -9,8 +9,24 @@
 @section title {
   @ViewBag.Title
 }
-<partial name="_Grid" for="Grid" />
+<filter>
+  <text-filter property-path="Name.Contains" label="@Localizer["Name"].Value" />
+</filter>
+<pager offset="@Model.Offset" limit="@Model.Limit" total="@Model.Total" />
+<table sorting="@Model.Sorting">
+  <columns>
+    <column label="@Localizer["Name"].Value" sorting-property-path="Name" />
+    <column />
+  </columns>
+  <rows>
+    @foreach (var dataTypeParameters in this.Model.DataTypeParameters)
+    {
+      <partial name="_DataTypeParameter" for="@dataTypeParameters" />
+    }
+  </rows>
+</table>
+<pager offset="@Model.Offset" limit="@Model.Limit" total="@Model.Total" is-secondary="true" />
 <div class="master-detail__buttons buttons">
-  <positive-button href="/backend/datatypeparameters/create?datatype.id=@this.Model.Filter.DataType.Id">@Localizer["Create data type parameter"]</positive-button>
-  <neutral-button href="/backend/datatypes">@Localizer["Back"]</neutral-button>
+  <positive-button href="/backend/datatypeparameters/create">@Localizer["Create data type parameter"]</positive-button>
+  <neutral-button href="/backend/datatypes" skip-url-parameters="datatype.id">@Localizer["Back"]</neutral-button>
 </div>

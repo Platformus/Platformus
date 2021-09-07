@@ -9,7 +9,27 @@
 @section title {
   @ViewBag.Title
 }
-<partial name="_Grid" for="Grid" />
+<filter>
+  <text-filter property-path="Name.Contains" label="@Localizer["Name"].Value" />
+  <text-filter property-path="UrlTemplate.Contains" label="@Localizer["URL template"].Value" />
+</filter>
+<pager offset="@Model.Offset" limit="@Model.Limit" total="@Model.Total" />
+<table sorting="@Model.Sorting">
+  <columns>
+    <column label="@Localizer["Name"].Value" sorting-property-path="Id" />
+    <column label="@Localizer["URL template"].Value" sorting-property-path="UrlTemplate" />
+    <column label="@Localizer["Position"].Value" sorting-property-path="Position" />
+    <column label="@Localizer["Data sources"].Value" />
+    <column />
+  </columns>
+  <rows>
+    @foreach (var endpoint in this.Model.Endpoints)
+    {
+      <partial name="_Endpoint" for="@endpoint" />
+    }
+  </rows>
+</table>
+<pager offset="@Model.Offset" limit="@Model.Limit" total="@Model.Total" is-secondary="true" />
 <div class="master-detail__buttons buttons">
-  <positive-button href="@this.Context.Request.CombineUrl("/backend/endpoints/create")">@Localizer["Create endpoint"]</positive-button>
+  <positive-button href="/backend/endpoints/create">@Localizer["Create endpoint"]</positive-button>
 </div>

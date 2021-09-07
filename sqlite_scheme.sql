@@ -1,8 +1,15 @@
 BEGIN TRANSACTION;
 --
 -- Extension: Platformus.Core
--- Version: 2.4.0
+-- Version: 2.5.0
 --
+
+-- ModelStates
+CREATE TABLE "ModelStates" (
+	"Id" TEXT NOT NULL CONSTRAINT "PK_ModelState" PRIMARY KEY,
+	"Value" TEXT NOT NULL,
+	"Created" TEXT NOT NULL
+);
 
 -- Users
 CREATE TABLE "Users" (
@@ -109,7 +116,7 @@ CREATE TABLE "Localizations" (
 
 --
 -- Extension: Platformus.Website
--- Version: 2.4.0
+-- Version: 2.5.0
 --
 
 -- Endpoints
@@ -342,7 +349,7 @@ CREATE TABLE "Files" (
 
 --
 -- Extension: Platformus.ECommerce
--- Version: 2.4.0
+-- Version: 2.5.0
 --
 
 -- Categories

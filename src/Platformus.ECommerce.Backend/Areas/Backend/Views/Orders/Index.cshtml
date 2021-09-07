@@ -9,7 +9,38 @@
 @section title {
   @ViewBag.Title
 }
-<partial name="_Grid" for="Grid" />
+<filter>
+  <drop-down-list-filter property-path="OrderState.Id.Equals" options="@Model.OrderStateOptions" />
+  <drop-down-list-filter property-path="DeliveryMethod.Id.Equals" options="@Model.DeliveryMethodOptions" />
+  <drop-down-list-filter property-path="PaymentMethod.Id.Equals" options="@Model.PaymentMethodOptions" />
+  <text-filter property-path="CustomerPhone.Contains" label="@Localizer["Customer phone"].Value" />
+  <filter-group>
+    <filter-label>@Localizer["Created from"]</filter-label>
+    <date-filter property-path="Created.From" />
+    <filter-label>@Localizer["to"]</filter-label>
+    <date-filter property-path="Created.To" />
+  </filter-group>
+</filter>
+<pager offset="@Model.Offset" limit="@Model.Limit" total="@Model.Total" />
+<table sorting="@Model.Sorting">
+  <columns>
+    <column label="@Localizer["#"].Value" sorting-property-path="Id" />
+    <column label="@Localizer["Order state"].Value" sorting-property-path="@ViewContext.HttpContext.CreateLocalizedSorting("OrderState.Name")" />
+    <column label="@Localizer["Delivery method"].Value" sorting-property-path="@ViewContext.HttpContext.CreateLocalizedSorting("DeliveryMethod.Name")" />
+    <column label="@Localizer["Payment method"].Value" sorting-property-path="@ViewContext.HttpContext.CreateLocalizedSorting("PaymentMethod.Name")" />
+    <column label="@Localizer["Customer"].Value" />
+    <column label="@Localizer["Total"].Value" />
+    <column label="@Localizer["Created"].Value" sorting-property-path="Created" />
+    <column />
+  </columns>
+  <rows>
+    @foreach (var order in this.Model.Orders)
+    {
+      <partial name="_Order" for="@order" />
+    }
+  </rows>
+</table>
+<pager offset="@Model.Offset" limit="@Model.Limit" total="@Model.Total" is-secondary="true" />
 <div class="master-detail__buttons buttons">
-  <positive-button href="@this.Context.Request.CombineUrl("/backend/orders/create")">@Localizer["Create order"]</positive-button>
+  <positive-button href="/backend/orders/create">@Localizer["Create order"]</positive-button>
 </div>

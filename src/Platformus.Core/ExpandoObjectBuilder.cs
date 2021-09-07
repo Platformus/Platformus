@@ -4,7 +4,7 @@
 using System.Collections.Generic;
 using System.Dynamic;
 
-namespace Platformus.Core
+namespace Platformus
 {
   public class ExpandoObjectBuilder
   {

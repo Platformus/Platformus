@@ -24,9 +24,9 @@ namespace Platformus.Website.Backend.Controllers
       get => this.Storage.GetRepository<int, Data.Entities.Endpoint, EndpointFilter>();
     }
 
-    private IRepository<int, int, Data.Entities.EndpointPermission, EndpointPermissionFilter> EndpointPermissionRepository
+    private IRepository<int, int, EndpointPermission, EndpointPermissionFilter> EndpointPermissionRepository
     {
-      get => this.Storage.GetRepository<int, int, Data.Entities.EndpointPermission, EndpointPermissionFilter>();
+      get => this.Storage.GetRepository<int, int, EndpointPermission, EndpointPermissionFilter>();
     }
 
     public EndpointsController(IStorage storage)
@@ -34,12 +34,11 @@ namespace Platformus.Website.Backend.Controllers
     {
     }
 
-    public async Task<IActionResult> IndexAsync([FromQuery]EndpointFilter filter = null, string orderBy = "+position", int skip = 0, int take = 10)
+    public async Task<IActionResult> IndexAsync([FromQuery]EndpointFilter filter = null, string sorting = "+position", int offset = 0, int limit = 10)
     {
       return this.View(IndexViewModelFactory.Create(
-        this.HttpContext, filter,
-        await this.EndpointRepository.GetAllAsync(filter, orderBy, skip, take),
-        orderBy, skip, take, await this.EndpointRepository.CountAsync(filter)
+        sorting, offset, limit, await this.EndpointRepository.CountAsync(filter),
+        await this.EndpointRepository.GetAllAsync(filter, sorting, offset, limit)
       ));
     }
 
@@ -103,7 +102,7 @@ namespace Platformus.Website.Backend.Controllers
       if (endpoint.EndpointPermissions != null)
         for (int i = 0; i != endpoint.EndpointPermissions.Count; i++)
         {
-          EndpointPermission endpointPermission = endpoint.EndpointPermissions.ToArray()[i];
+          EndpointPermission endpointPermission = endpoint.EndpointPermissions.ElementAt(i);
 
           this.EndpointPermissionRepository.Delete(endpointPermission.EndpointId, endpointPermission.PermissionId);
         }

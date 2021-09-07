@@ -7,7 +7,6 @@ using System.Text;
 using System.Threading.Tasks;
 using Magicalizer.Data.Repositories.Abstractions;
 using Microsoft.AspNetCore.Http;
-using Platformus.Core.Extensions;
 using Platformus.Core.Primitives;
 using Platformus.Website.Data.Entities;
 using Platformus.Website.Filters;
@@ -69,7 +68,7 @@ namespace Platformus.Website.Backend.ViewModels.Members
 
       options.Add(new Option("Property data type not specified", string.Empty));
       options.AddRange(
-        (await httpContext.GetStorage().GetRepository<int, DataType, DataTypeFilter>().GetAllAsync()).Select(
+        (await httpContext.GetStorage().GetRepository<int, DataType, DataTypeFilter>().GetAllAsync(sorting: "+position")).Select(
           dt => new Option(dt.Name, dt.Id.ToString())
         )
       );

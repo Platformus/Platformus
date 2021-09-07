@@ -120,6 +120,12 @@
   <data name="Create role" xml:space="preserve">
     <value>Добавить роль</value>
   </data>
+  <data name="Name" xml:space="preserve">
+    <value>Название</value>
+  </data>
+  <data name="Position" xml:space="preserve">
+    <value>Позиция</value>
+  </data>
   <data name="Roles" xml:space="preserve">
     <value>Роли</value>
   </data>

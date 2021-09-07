@@ -120,8 +120,14 @@
   <data name="Back" xml:space="preserve">
     <value>Назад</value>
   </data>
+  <data name="Code" xml:space="preserve">
+    <value>Код</value>
+  </data>
   <data name="Create data source" xml:space="preserve">
     <value>Добавить источник данных</value>
+  </data>
+  <data name="Data provider C# class name" xml:space="preserve">
+    <value>Название C#-класса поставщика данных</value>
   </data>
   <data name="Data Sources" xml:space="preserve">
     <value>Источники данных</value>

@@ -120,6 +120,24 @@
   <data name="Create user" xml:space="preserve">
     <value>Добавить пользователя</value>
   </data>
+  <data name="Created" xml:space="preserve">
+    <value>Дата и время создания</value>
+  </data>
+  <data name="Created from" xml:space="preserve">
+    <value>Созданные с</value>
+  </data>
+  <data name="Credential identifier" xml:space="preserve">
+    <value>Идентификатор удостоверения</value>
+  </data>
+  <data name="Credentials" xml:space="preserve">
+    <value>Удостоверения</value>
+  </data>
+  <data name="Name" xml:space="preserve">
+    <value>Имя</value>
+  </data>
+  <data name="to" xml:space="preserve">
+    <value>По</value>
+  </data>
   <data name="Users" xml:space="preserve">
     <value>Пользователи</value>
   </data>

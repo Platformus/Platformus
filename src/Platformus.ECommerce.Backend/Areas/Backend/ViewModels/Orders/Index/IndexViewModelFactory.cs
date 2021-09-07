@@ -7,8 +7,6 @@ using System.Threading.Tasks;
 using Magicalizer.Data.Repositories.Abstractions;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Localization;
-using Platformus.Core.Backend.ViewModels.Shared;
-using Platformus.Core.Extensions;
 using Platformus.Core.Primitives;
 using Platformus.ECommerce.Backend.ViewModels.Shared;
 using Platformus.ECommerce.Data.Entities;
@@ -18,34 +16,18 @@ namespace Platformus.ECommerce.Backend.ViewModels.Orders
 {
   public static class IndexViewModelFactory
   {
-    public static async Task<IndexViewModel> CreateAsync(HttpContext httpContext, OrderFilter filter, IEnumerable<Order> orders, string orderBy, int skip, int take, int total)
+    public static async Task<IndexViewModel> CreateAsync(HttpContext httpContext, string sorting, int offset, int limit, int total, IEnumerable<Order> orders)
     {
-      IStringLocalizer<IndexViewModel> localizer = httpContext.GetStringLocalizer<IndexViewModel>();
-
       return new IndexViewModel()
       {
-        Grid = GridViewModelFactory.Create(
-          httpContext,
-          new[] {
-            FilterViewModelFactory.Create(httpContext, "OrderState.Id.Equals", localizer["Order state"], await GetOrderStateOptionsAsync(httpContext)),
-            FilterViewModelFactory.Create(httpContext, "DeliveryMethod.Id.Equals", localizer["Delivery method"], await GetDeliveryMethodOptionsAsync(httpContext)),
-            FilterViewModelFactory.Create(httpContext, "PaymentMethod.Id.Equals", localizer["Payment method"], await GetPaymentMethodOptionsAsync(httpContext)),
-            FilterViewModelFactory.Create(httpContext, "Customer.Phone.Contains", localizer["Customer phone"])
-          },
-          orderBy, skip, take, total,
-          new[] {
-            GridColumnViewModelFactory.Create(localizer["#"]),
-            GridColumnViewModelFactory.Create(localizer["Order state"]),
-            GridColumnViewModelFactory.Create(localizer["Delivery method"]),
-            GridColumnViewModelFactory.Create(localizer["Payment method"]),
-            GridColumnViewModelFactory.Create(localizer["Customer"]),
-            GridColumnViewModelFactory.Create(localizer["Total"]),
-            GridColumnViewModelFactory.Create(localizer["Created"], "Created"),
-            GridColumnViewModelFactory.CreateEmpty()
-          },
-          orders.Select(OrderViewModelFactory.Create),
-          "_Order"
-        )
+        OrderStateOptions = await GetOrderStateOptionsAsync(httpContext),
+        DeliveryMethodOptions = await GetDeliveryMethodOptionsAsync(httpContext),
+        PaymentMethodOptions = await GetPaymentMethodOptionsAsync(httpContext),
+        Sorting = sorting,
+        Offset = offset,
+        Limit = limit,
+        Total = total,
+        Orders = orders.Select(OrderViewModelFactory.Create)
       };
     }
 

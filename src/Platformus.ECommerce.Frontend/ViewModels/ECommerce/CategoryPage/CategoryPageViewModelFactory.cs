@@ -5,7 +5,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
-using Platformus.Core;
 using Platformus.ECommerce.Data.Entities;
 using Platformus.ECommerce.Frontend.ViewModels.Shared;
 using Platformus.ECommerce.ProductProviders;

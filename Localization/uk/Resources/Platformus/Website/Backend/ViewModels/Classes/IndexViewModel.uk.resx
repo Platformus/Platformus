@@ -120,19 +120,4 @@
   <data name="All parent classes" xml:space="preserve">
     <value>Усі батьківські класи</value>
   </data>
-  <data name="Is abstract" xml:space="preserve">
-    <value>Абстрактний</value>
-  </data>
-  <data name="Members" xml:space="preserve">
-    <value>Члени класу</value>
-  </data>
-  <data name="Name" xml:space="preserve">
-    <value>Назва</value>
-  </data>
-  <data name="Parent class" xml:space="preserve">
-    <value>Батьківський клас</value>
-  </data>
-  <data name="Tabs" xml:space="preserve">
-    <value>Таби</value>
-  </data>
 </root>

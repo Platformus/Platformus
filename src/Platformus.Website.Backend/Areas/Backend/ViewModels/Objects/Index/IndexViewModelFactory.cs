@@ -9,8 +9,7 @@ using Magicalizer.Data.Repositories.Abstractions;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Localization;
 using Platformus.Core;
-using Platformus.Core.Backend.ViewModels.Shared;
-using Platformus.Core.Extensions;
+using Platformus.Core.Backend;
 using Platformus.Website.Backend.ViewModels.Shared;
 using Platformus.Website.Data.Entities;
 using Platformus.Website.Filters;
@@ -19,7 +18,7 @@ namespace Platformus.Website.Backend.ViewModels.Objects
 {
   public static class IndexViewModelFactory
   {
-    public static async Task<IndexViewModel> CreateAsync(HttpContext httpContext, ObjectFilter filter, IEnumerable<Object> objects, string orderBy, int skip, int take, int total)
+    public static async Task<IndexViewModel> CreateAsync(HttpContext httpContext, ObjectFilter filter, string sorting, int offset, int limit, int total, IEnumerable<Object> objects)
     {
       Class @class = filter?.Class?.Id == null ? null : await httpContext.GetStorage().GetRepository<int, Class, ClassFilter>().GetByIdAsync(
         (int)filter.Class.Id,
@@ -33,12 +32,12 @@ namespace Platformus.Website.Backend.ViewModels.Objects
       {
         Class = @class == null ? null : ClassViewModelFactory.Create(@class),
         ClassesByAbstractClasses = await GetClassesByAbstractClassesAsync(httpContext),
-        Grid = @class == null ? null : GridViewModelFactory.Create(
-          httpContext, orderBy, skip, take, total,
-          GetGridColumns(@class),
-          objects.Select(o => ObjectViewModelFactory.Create(o, @class.GetVisibleInListMembers())),
-          "_Object"
-        )
+        Sorting = sorting,
+        Offset = offset,
+        Limit = limit,
+        Total = total,
+        TableColumns = @class == null ? null : GetTableColumns(@class),
+        Objects = objects == null ? null : objects.Select(o => ObjectViewModelFactory.Create(o, @class.GetVisibleInListMembers()))
       };
     }
 
@@ -60,14 +59,13 @@ namespace Platformus.Website.Backend.ViewModels.Objects
       );
     }
 
-    private static IEnumerable<GridColumnViewModel> GetGridColumns(Class @class)
+    private static IEnumerable<TableTagHelper.Column> GetTableColumns(Class @class)
     {
-      List<GridColumnViewModel> gridColumns = @class.GetVisibleInListMembers().Select(
-        m => GridColumnViewModelFactory.Create(m.Name, GetMemberSortingName(m))
+      List<TableTagHelper.Column> tableColumns = @class.GetVisibleInListMembers().Select(
+        m => new TableTagHelper.Column(m.Name, GetMemberSortingName(m))
       ).ToList();
 
-      gridColumns.Add(GridColumnViewModelFactory.CreateEmpty());
-      return gridColumns;
+      return tableColumns;
     }
 
     private static string GetMemberSortingName(Member member)

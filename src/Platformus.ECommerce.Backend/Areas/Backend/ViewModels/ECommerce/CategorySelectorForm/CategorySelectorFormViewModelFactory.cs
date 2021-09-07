@@ -5,8 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Localization;
-using Platformus.Core.Backend.ViewModels.Shared;
-using Platformus.Core.Extensions;
+using Platformus.Core.Backend;
 using Platformus.ECommerce.Backend.ViewModels.Shared;
 using Platformus.ECommerce.Data.Entities;
 
@@ -20,8 +19,8 @@ namespace Platformus.ECommerce.Backend.ViewModels.ECommerce
 
       return new CategorySelectorFormViewModel()
       {
-        GridColumns = new[] {
-          GridColumnViewModelFactory.Create(localizer["Name"])
+        TableColumns = new[] {
+          new TableTagHelper.Column(localizer["Name"])
         },
         Categories = categories.Select(CategoryViewModelFactory.Create),
         CategoryId = categoryId

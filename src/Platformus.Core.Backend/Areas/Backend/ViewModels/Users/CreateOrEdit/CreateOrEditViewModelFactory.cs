@@ -7,7 +7,6 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Platformus.Core.Backend.ViewModels.Shared;
 using Platformus.Core.Data.Entities;
-using Platformus.Core.Extensions;
 using Platformus.Core.Filters;
 
 namespace Platformus.Core.Backend.ViewModels.Users

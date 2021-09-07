@@ -120,19 +120,4 @@
   <data name="All categories" xml:space="preserve">
     <value>Усі категорії</value>
   </data>
-  <data name="Category" xml:space="preserve">
-    <value>Категорія</value>
-  </data>
-  <data name="Code" xml:space="preserve">
-    <value>Код</value>
-  </data>
-  <data name="Name" xml:space="preserve">
-    <value>Назва</value>
-  </data>
-  <data name="Price" xml:space="preserve">
-    <value>Ціна</value>
-  </data>
-  <data name="Units" xml:space="preserve">
-    <value>Од. виміру</value>
-  </data>
 </root>

@@ -2,7 +2,7 @@ BEGIN TRANSACTION;
 
 --
 -- Extension: Platformus.Core
--- Version: 2.4.0
+-- Version: 2.5.0
 --
 
 INSERT INTO "Users" VALUES (1,'Administrator','2017-01-01 00:00:00.0000000');
@@ -36,7 +36,7 @@ INSERT INTO "Cultures" VALUES ('en','English',0,1,1);
 
 --
 -- Extension: Platformus.Website
--- Version: 2.4.0
+-- Version: 2.5.0
 --
 
 INSERT INTO "Permissions" VALUES (7,'ManageEndpoints','Manage endpoints',700);
@@ -57,8 +57,9 @@ INSERT INTO "DataTypes" VALUES (4,'integer','integerNumber','Integer number',4);
 INSERT INTO "DataTypes" VALUES (5,'decimal','decimalNumber','Decimal number',5);
 INSERT INTO "DataTypes" VALUES (6,'integer','booleanFlag','Boolean flag',6);
 INSERT INTO "DataTypes" VALUES (7,'datetime','date','Date',7);
-INSERT INTO "DataTypes" VALUES (8,'string','image','Image',8);
-INSERT INTO "DataTypes" VALUES (9,'string','sourceCode','Source code',9);
+INSERT INTO "DataTypes" VALUES (8,'datetime','dateTime','DateTime',8);
+INSERT INTO "DataTypes" VALUES (9,'string','image','Image',9);
+INSERT INTO "DataTypes" VALUES (10,'string','sourceCode','Source code',10);
 INSERT INTO "DataTypeParameters" VALUES (1,1,'checkbox','IsRequired','Is required');
 INSERT INTO "DataTypeParameters" VALUES (2,1,'numericTextBox','MaxLength','Max length');
 INSERT INTO "DataTypeParameters" VALUES (3,2,'checkbox','IsRequired','Is required');
@@ -83,7 +84,7 @@ INSERT INTO "FieldTypes" VALUES (7,'ReCAPTCHA','ReCAPTCHA',7,'Platformus.Website
 
 --
 -- Extension: Platformus.ECommerce
--- Version: 2.4.0
+-- Version: 2.5.0
 --
 
 INSERT INTO "Permissions" VALUES (14,'ManageCategories','Manage categories',1400);

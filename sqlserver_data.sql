@@ -2,7 +2,7 @@ BEGIN TRANSACTION;
 
 --
 -- Extension: Platformus.Core
--- Version: 2.4.0
+-- Version: 2.5.0
 --
 
 SET IDENTITY_INSERT [dbo].[Users] ON;
@@ -59,7 +59,7 @@ INSERT INTO [dbo].[Cultures] ([Id], [Name], [IsNeutral], [IsFrontendDefault], [I
 
 --
 -- Extension: Platformus.Website
--- Version: 2.4.0
+-- Version: 2.5.0
 --
 
 SET IDENTITY_INSERT [dbo].[Permissions] ON;
@@ -85,8 +85,9 @@ INSERT INTO [dbo].[DataTypes] ([Id], [StorageDataType], [JavaScriptEditorClassNa
 INSERT INTO [dbo].[DataTypes] ([Id], [StorageDataType], [JavaScriptEditorClassName], [Name], [Position]) VALUES (5, N'decimal', N'decimalNumber', N'Decimal number', 5);
 INSERT INTO [dbo].[DataTypes] ([Id], [StorageDataType], [JavaScriptEditorClassName], [Name], [Position]) VALUES (6, N'integer', N'booleanFlag', N'Boolean flag', 6);
 INSERT INTO [dbo].[DataTypes] ([Id], [StorageDataType], [JavaScriptEditorClassName], [Name], [Position]) VALUES (7, N'datetime', N'date', N'Date', 7);
-INSERT INTO [dbo].[DataTypes] ([Id], [StorageDataType], [JavaScriptEditorClassName], [Name], [Position]) VALUES (8, N'string', N'image', N'Image', 8);
-INSERT INTO [dbo].[DataTypes] ([Id], [StorageDataType], [JavaScriptEditorClassName], [Name], [Position]) VALUES (9, N'string', N'sourceCode', N'Source code', 9);
+INSERT INTO [dbo].[DataTypes] ([Id], [StorageDataType], [JavaScriptEditorClassName], [Name], [Position]) VALUES (8, N'datetime', N'dateTime', N'DateTime', 8);
+INSERT INTO [dbo].[DataTypes] ([Id], [StorageDataType], [JavaScriptEditorClassName], [Name], [Position]) VALUES (9, N'string', N'image', N'Image', 9);
+INSERT INTO [dbo].[DataTypes] ([Id], [StorageDataType], [JavaScriptEditorClassName], [Name], [Position]) VALUES (10, N'string', N'sourceCode', N'Source code', 10);
 SET IDENTITY_INSERT [dbo].[DataTypes] OFF;
 
 SET IDENTITY_INSERT [dbo].[DataTypeParameters] ON;
@@ -118,7 +119,7 @@ SET IDENTITY_INSERT [dbo].[FieldTypes] OFF;
 
 --
 -- Extension: Platformus.ECommerce
--- Version: 2.4.0
+-- Version: 2.5.0
 --
 
 SET IDENTITY_INSERT [dbo].[Permissions] ON;

@@ -9,7 +9,24 @@
 @section title {
   @ViewBag.Title
 }
-<partial name="_Grid" for="Grid" />
+<filter>
+  <text-filter property-path="Name.Contains" label="@Localizer["Name"].Value" />
+</filter>
+<pager offset="@Model.Offset" limit="@Model.Limit" total="@Model.Total" />
+<table sorting="@Model.Sorting">
+  <columns>
+    <column label="@Localizer["Name"].Value" sorting-property-path="Name" />
+    <column label="@Localizer["Size"].Value" sorting-property-path="Size" />
+    <column />
+  </columns>
+  <rows>
+    @foreach (var file in this.Model.Files)
+    {
+      <partial name="_File" for="@file" />
+    }
+  </rows>
+</table>
+<pager offset="@Model.Offset" limit="@Model.Limit" total="@Model.Total" is-secondary="true" />
 <div class="drag-and-drop-area" id="dragAndDropArea">
   <div class="drag-and-drop-area__description">
     @Localizer["Drag and drop files into this area…"]

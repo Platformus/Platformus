@@ -39,7 +39,7 @@ namespace Platformus.Core.Backend
     {
       TagBuilder tb = TextAreaGenerator.Generate(
         this.For.GetIdentity(),
-        this.For.GetValue(this.ViewContext),
+        this.For.GetValue(this.ViewContext)?.ToString()?.ToString(),
         this.For.HasRequiredAttribute(),
         this.For.HasStringLengthAttribute() ? this.For.GetMaxStringLength() : null,
         this.For.IsValid(this.ViewContext)
@@ -54,7 +54,7 @@ namespace Platformus.Core.Backend
         tb.AddCssClass("field__text-area--small");
 
       if (this.IsDisabled)
-        tb.MergeAttribute("disabled", "disabled");
+        tb.MergeAttribute(AttributeNames.Disabled, "disabled");
 
       return tb;
     }

@@ -9,8 +9,27 @@
 @section title {
   @ViewBag.Title
 }
-<partial name="_Grid" for="Grid" />
+<filter>
+  <text-filter property-path="Name.Contains" label="@Localizer["Name"].Value" />
+</filter>
+<pager offset="@Model.Offset" limit="@Model.Limit" total="@Model.Total" />
+<table sorting="@Model.Sorting">
+  <columns>
+    <column label="@Localizer["Name"].Value" sorting-property-path="Name" />
+    <column label="@Localizer["Property Data Type"].Value" sorting-property-path="PropertyDataType.Name" />
+    <column label="@Localizer["Relation Class"].Value" sorting-property-path="RelationClass.Name" />
+    <column label="@Localizer["Position"].Value" sorting-property-path="Position" />
+    <column />
+  </columns>
+  <rows>
+    @foreach (var member in this.Model.Members)
+    {
+      <partial name="_Member" for="@member" />
+    }
+  </rows>
+</table>
+<pager offset="@Model.Offset" limit="@Model.Limit" total="@Model.Total" is-secondary="true" />
 <div class="master-detail__buttons buttons">
-  <positive-button href="/backend/members/create?class.id=@Model.Filter.Class.Id">@Localizer["Create member"]</positive-button>
-  <neutral-button href="/backend/classes">@Localizer["Back"]</neutral-button>
+  <positive-button href="/backend/members/create">@Localizer["Create member"]</positive-button>
+  <neutral-button href="/backend/classes" skip-url-parameters="class.id">@Localizer["Back"]</neutral-button>
 </div>

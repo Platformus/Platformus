@@ -7,7 +7,6 @@ using Magicalizer.Data.Repositories.Abstractions;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Platformus.Core.Extensions;
 using Platformus.ECommerce.Backend.ViewModels.Products;
 using Platformus.ECommerce.Data.Entities;
 using Platformus.ECommerce.Events;
@@ -29,20 +28,19 @@ namespace Platformus.ECommerce.Backend.Controllers
     {
     }
 
-    public async Task<IActionResult> IndexAsync([FromQuery]ProductFilter filter = null, string orderBy = null, int skip = 0, int take = 10)
+    public async Task<IActionResult> IndexAsync([FromQuery]ProductFilter filter = null, string sorting = null, int offset = 0, int limit = 10)
     {
-      if (string.IsNullOrEmpty(orderBy))
-        orderBy = "+" + this.HttpContext.CreateLocalizedOrderBy("Name");
+      if (string.IsNullOrEmpty(sorting))
+        sorting = "+" + this.HttpContext.CreateLocalizedSorting("Name");
 
       return this.View(await IndexViewModelFactory.CreateAsync(
-        this.HttpContext, filter,
+        this.HttpContext, sorting, offset, limit, await this.Repository.CountAsync(filter),
         await this.Repository.GetAllAsync(
-          filter, orderBy, skip, take,
+          filter, sorting, offset, limit,
           new Inclusion<Product>(p => p.Category.Name.Localizations),
           new Inclusion<Product>(p => p.Name.Localizations),
           new Inclusion<Product>(p => p.Units.Localizations)
-        ),
-        orderBy, skip, take, await this.Repository.CountAsync(filter)
+        )
       ));
     }
 

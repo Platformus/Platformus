@@ -35,7 +35,7 @@ namespace Platformus.Core.Backend
 
       tb.AddCssClass("drop-down-list__item drop-down-list__item--selected");
       tb.MergeAttribute(AttributeNames.Href, "#");
-      tb.InnerHtml.AppendHtml(option.Text);
+      tb.InnerHtml.AppendHtml(option?.Text ?? "&nbsp;");
       return tb;
     }
 

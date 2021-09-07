@@ -40,7 +40,7 @@ namespace Platformus.Core.Backend
       TagBuilder tb = DropDownListGenerator.Generate(
         this.For.GetIdentity(),
         this.Options,
-        this.For.GetValue(this.ViewContext),
+        this.For.GetValue(this.ViewContext)?.ToString()?.ToString(),
         this.For.HasRequiredAttribute(),
         this.For.IsValid(this.ViewContext)
       );

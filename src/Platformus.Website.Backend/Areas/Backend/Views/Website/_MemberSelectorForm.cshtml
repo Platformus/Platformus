@@ -8,22 +8,24 @@
 <div class="pop-up-form__content">
   <div class="item-selector-pop-up-form__items">
     <table class="item-selector-pop-up-form__table table">
-      <table-row>
-        @foreach (var gridColumn in this.Model.GridColumns)
+      <columns>
+        @foreach (var tableColumn in this.Model.TableColumns)
         {
-          <table-cell is-header="true">@gridColumn.DisplayName</table-cell>
+          <column label="@tableColumn.Label" />
         }
-      </table-row>
-      @foreach (var _class in this.Model.MembersByClasses.Keys)
-      {
-        foreach (var member in this.Model.MembersByClasses[_class])
+      </columns>
+      <rows>
+        @foreach (var _class in this.Model.MembersByClasses.Keys)
         {
-          <table-row class="@(member.Id == this.Model.MemberId ? "table__row--selected" : null)" data-item-value="@member.Id">
-            <table-cell class="item-selector-pop-up-form__cell">@_class.Name</table-cell>
-            <table-cell class="item-selector-pop-up-form__cell">@member.Name</table-cell>
-          </table-row>
+          foreach (var member in this.Model.MembersByClasses[_class])
+          {
+            <row class="@(member.Id == this.Model.MemberId ? "table__row--selected" : null)" data-item-value="@member.Id">
+              <cell class="item-selector-pop-up-form__cell">@_class.Name</cell>
+              <cell class="item-selector-pop-up-form__cell">@member.Name</cell>
+            </row>
+          }
         }
-      }
+      </rows>
     </table>
   </div>
   <div class="pop-up-form__buttons buttons">

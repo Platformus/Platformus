@@ -5,7 +5,6 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.AspNetCore.Mvc.ViewFeatures;
-using Platformus.Core.Extensions;
 using Platformus.ECommerce.Data.Entities;
 using Platformus.ECommerce.Filters;
 using Platformus.ECommerce.Frontend.ViewModels.ECommerce;

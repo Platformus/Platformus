@@ -5,7 +5,6 @@ using System.Globalization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
 using Platformus.Core.Data.Entities;
-using Platformus.Core.Extensions;
 using Platformus.Core.Services.Abstractions;
 
 namespace Platformus.Core.Frontend

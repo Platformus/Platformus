@@ -8,7 +8,6 @@ using System.Threading.Tasks;
 using ExtCore.Infrastructure;
 using Microsoft.AspNetCore.Http;
 using Platformus.Core.Data.Entities;
-using Platformus.Core.Extensions;
 using Platformus.Core.Filters;
 using Platformus.Core.Primitives;
 using Platformus.Website.Backend.ViewModels.Shared;

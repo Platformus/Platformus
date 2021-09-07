@@ -8,7 +8,6 @@ using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using Magicalizer.Data.Repositories.Abstractions;
 using Microsoft.AspNetCore.Http;
-using Platformus.Core.Extensions;
 using Platformus.Website.Filters;
 using Platformus.Website.Frontend.Services.Abstractions;
 

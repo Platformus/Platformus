@@ -120,7 +120,13 @@
   <data name="Create order state" xml:space="preserve">
     <value>Добавить состояние заказа</value>
   </data>
+  <data name="Name" xml:space="preserve">
+    <value>Название</value>
+  </data>
   <data name="Order States" xml:space="preserve">
     <value>Состояния заказов</value>
+  </data>
+  <data name="Position" xml:space="preserve">
+    <value>Позиция</value>
   </data>
 </root>

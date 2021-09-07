@@ -120,7 +120,13 @@
   <data name="Create permission" xml:space="preserve">
     <value>Додати дозвіл</value>
   </data>
+  <data name="Name" xml:space="preserve">
+    <value>Назва</value>
+  </data>
   <data name="Permissions" xml:space="preserve">
     <value>Дозволи</value>
+  </data>
+  <data name="Position" xml:space="preserve">
+    <value>Позиція</value>
   </data>
 </root>

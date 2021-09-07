@@ -9,7 +9,25 @@
 @section title {
   @ViewBag.Title
 }
-<partial name="_Grid" for="Grid" />
+<filter>
+  <text-filter property-path="Id" label="@Localizer["Two letter country code (ISO 3166)"].Value" />
+  <text-filter property-path="Name.Contains" label="@Localizer["Name"].Value" />
+</filter>
+<pager offset="@Model.Offset" limit="@Model.Limit" total="@Model.Total" />
+<table sorting="@Model.Sorting">
+  <columns>
+    <column label="@Localizer["Two letter country code (ISO 3166)"].Value" sorting-property-path="Id" />
+    <column label="@Localizer["Name"].Value" sorting-property-path="Name" />
+    <column />
+  </columns>
+  <rows>
+    @foreach (var culture in this.Model.Cultures)
+    {
+      <partial name="_Culture" for="@culture" />
+    }
+  </rows>
+</table>
+<pager offset="@Model.Offset" limit="@Model.Limit" total="@Model.Total" is-secondary="true" />
 <div class="master-detail__buttons buttons">
-  <positive-button href="@this.Context.Request.CombineUrl("/backend/cultures/create")">@Localizer["Create culture"]</positive-button>
+  <positive-button href="/backend/cultures/create">@Localizer["Create culture"]</positive-button>
 </div>

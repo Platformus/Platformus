@@ -120,7 +120,19 @@
   <data name="Create endpoint" xml:space="preserve">
     <value>Додати кінцеву точку</value>
   </data>
+  <data name="Data sources" xml:space="preserve">
+    <value>Джерела даних</value>
+  </data>
   <data name="Endpoints" xml:space="preserve">
     <value>Кінцеві точки</value>
+  </data>
+  <data name="Name" xml:space="preserve">
+    <value>Назва</value>
+  </data>
+  <data name="Position" xml:space="preserve">
+    <value>Позиція</value>
+  </data>
+  <data name="URL template" xml:space="preserve">
+    <value>Шаблон URL</value>
   </data>
 </root>

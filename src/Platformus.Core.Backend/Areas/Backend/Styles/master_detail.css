@@ -43,8 +43,17 @@
   color: #fff;
 }
 
-.master-detail__grid {
+.master-detail__filter {
   margin-top: 20px;
+}
+
+.master-detail__pager {
+  margin-top: 20px;
+}
+
+.master-detail__table {
+  margin-top: 20px;
+  width: 100%;
 }
 
 .master-detail__tree {

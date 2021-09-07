@@ -4,7 +4,6 @@
 using Microsoft.AspNetCore.Http;
 using Platformus.Core.Data.Entities;
 using Platformus.Core.Events;
-using Platformus.Core.Extensions;
 
 namespace Platformus.Core.EventHandlers
 {

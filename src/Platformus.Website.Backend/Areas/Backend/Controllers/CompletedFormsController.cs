@@ -25,12 +25,11 @@ namespace Platformus.Website.Backend.Controllers
     {
     }
 
-    public async Task<IActionResult> IndexAsync([FromQuery]CompletedFormFilter filter = null, string orderBy = "-created", int skip = 0, int take = 10)
+    public async Task<IActionResult> IndexAsync([FromQuery]CompletedFormFilter filter = null, string sorting = "-created", int offset = 0, int limit = 10)
     {
       return this.View(IndexViewModelFactory.Create(
-        this.HttpContext, filter,
-        await this.Repository.GetAllAsync(filter, orderBy, skip, take, new Inclusion<CompletedForm>(cf => cf.Form.Name.Localizations)),
-        orderBy, skip, take, await this.Repository.CountAsync(filter)
+        filter, sorting, offset, limit, await this.Repository.CountAsync(filter),
+        await this.Repository.GetAllAsync(filter, sorting, offset, limit, new Inclusion<CompletedForm>(cf => cf.Form.Name.Localizations))
       ));
     }
 

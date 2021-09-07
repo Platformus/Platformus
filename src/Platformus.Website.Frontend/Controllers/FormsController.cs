@@ -8,7 +8,6 @@ using System.Threading.Tasks;
 using Magicalizer.Data.Repositories.Abstractions;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Platformus.Core;
 using Platformus.Website.Data.Entities;
 using Platformus.Website.FieldValidators;
 using Platformus.Website.Filters;

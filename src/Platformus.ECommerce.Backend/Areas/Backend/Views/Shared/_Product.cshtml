@@ -2,13 +2,13 @@
 @* Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information. *@
 @model Platformus.ECommerce.Backend.ViewModels.Shared.ProductViewModel
 @inject Microsoft.AspNetCore.Mvc.Localization.IViewLocalizer Localizer
-<table-row>
-  <table-cell>@Model.Category.Name</table-cell>
-  <table-cell>@Model.Name</table-cell>
-  <table-cell>@Model.Units</table-cell>
-  <table-cell>@Model.Price</table-cell>
-  <buttons-table-cell>
-    <positive-button is-minor="true" href="@(this.Context.Request.CombineUrl("/backend/products/edit/" + this.Model.Id))">@Localizer["Edit"]</positive-button>
+<row>
+  <cell>@Model.Category.Name</cell>
+  <cell>@Model.Name</cell>
+  <cell>@Model.Units</cell>
+  <cell>@Model.Price.ToString("0.00")</cell>
+  <buttons-cell>
+    <positive-button is-minor="true" href="/backend/products/edit/@Model.Id">@Localizer["Edit"]</positive-button>
     <delete-button href="/backend/products/delete/@Model.Id"></delete-button>
-  </buttons-table-cell>
-</table-row>
+  </buttons-cell>
+</row>

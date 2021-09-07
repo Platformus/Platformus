@@ -2,11 +2,11 @@
 @* Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information. *@
 @model Platformus.Core.Backend.ViewModels.Shared.CultureViewModel
 @inject Microsoft.AspNetCore.Mvc.Localization.IViewLocalizer Localizer
-<table-row>
-  <table-cell>@Model.Id</table-cell>
-  <table-cell>@Model.Name</table-cell>
-  <buttons-table-cell>
-    <positive-button is-minor="true" href="@(this.Context.Request.CombineUrl("/backend/cultures/edit/" + this.Model.Id))">@Localizer["Edit"]</positive-button>
+<row>
+  <cell>@Model.Id</cell>
+  <cell>@Model.Name</cell>
+  <buttons-cell>
+    <positive-button is-minor="true" href="/backend/cultures/edit/@Model.Id">@Localizer["Edit"]</positive-button>
     <delete-button href="/backend/cultures/delete/@Model.Id"></delete-button>
-  </buttons-table-cell>
-</table-row>
+  </buttons-cell>
+</row>

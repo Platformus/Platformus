@@ -25,12 +25,11 @@ namespace Platformus.Website.Backend.Controllers
     {
     }
 
-    public async Task<IActionResult> IndexAsync([FromQuery]TabFilter filter = null, string orderBy = "+position", int skip = 0, int take = 10)
+    public async Task<IActionResult> IndexAsync([FromQuery]TabFilter filter = null, string sorting = "+position", int offset = 0, int limit = 10)
     {
       return this.View(IndexViewModelFactory.Create(
-        this.HttpContext, filter,
-        await this.Repository.GetAllAsync(filter, orderBy, skip, take),
-        orderBy, skip, take, await this.Repository.CountAsync(filter)
+        filter, sorting, offset, limit, await this.Repository.CountAsync(filter),
+        await this.Repository.GetAllAsync(filter, sorting, offset, limit)
       ));
     }
 

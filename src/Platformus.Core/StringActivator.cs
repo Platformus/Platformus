@@ -5,7 +5,7 @@ using System;
 using System.Reflection;
 using ExtCore.Infrastructure;
 
-namespace Platformus.Core
+namespace Platformus
 {
   public class StringActivator
   {

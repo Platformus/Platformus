@@ -4,7 +4,7 @@
 using Microsoft.AspNetCore.Authorization;
 using Platformus.Core;
 
-namespace Platformus.Website
+namespace Platformus.Website.PolicyProviders
 {
   public class HasManageFileManagerPermissionAuthorizationPolicyProvider : Core.IAuthorizationPolicyProvider
   {

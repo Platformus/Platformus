@@ -42,7 +42,7 @@ namespace Platformus.Core.Backend
         this.DestinationBaseUrl,
         this.Width,
         this.Height,
-        this.For.GetValue(this.ViewContext)
+        this.For.GetValue(this.ViewContext)?.ToString()
       );
 
       tb.AddCssClass("field__image-uploader");

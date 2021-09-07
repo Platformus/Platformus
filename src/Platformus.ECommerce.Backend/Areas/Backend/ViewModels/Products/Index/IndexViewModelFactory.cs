@@ -7,8 +7,6 @@ using System.Threading.Tasks;
 using Magicalizer.Data.Repositories.Abstractions;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Localization;
-using Platformus.Core.Backend.ViewModels.Shared;
-using Platformus.Core.Extensions;
 using Platformus.Core.Primitives;
 using Platformus.ECommerce.Backend.ViewModels.Shared;
 using Platformus.ECommerce.Data.Entities;
@@ -18,29 +16,16 @@ namespace Platformus.ECommerce.Backend.ViewModels.Products
 {
   public static class IndexViewModelFactory
   {
-    public static async Task<IndexViewModel> CreateAsync(HttpContext httpContext, ProductFilter filter, IEnumerable<Product> products, string orderBy, int skip, int take, int total)
+    public static async Task<IndexViewModel> CreateAsync(HttpContext httpContext, string sorting, int offset, int limit, int total, IEnumerable<Product> products)
     {
-      IStringLocalizer<IndexViewModel> localizer = httpContext.GetStringLocalizer<IndexViewModel>();
-
       return new IndexViewModel()
       {
-        Grid = GridViewModelFactory.Create(
-          httpContext,
-          new[] {
-            FilterViewModelFactory.Create(httpContext, "Category.Id.Equals", localizer["Category"], await GetCategoryOptionsAsync(httpContext)),
-            FilterViewModelFactory.Create(httpContext, "Name.Value.Contains", localizer["Name"])
-          },
-          orderBy, skip, take, total,
-          new[] {
-            GridColumnViewModelFactory.Create(localizer["Category"]),
-            GridColumnViewModelFactory.Create(localizer["Name"], httpContext.CreateLocalizedOrderBy("Name")),
-            GridColumnViewModelFactory.Create(localizer["Units"], httpContext.CreateLocalizedOrderBy("Units")),
-            GridColumnViewModelFactory.Create(localizer["Price"], "Price"),
-            GridColumnViewModelFactory.CreateEmpty()
-          },
-          products.Select(ProductViewModelFactory.Create),
-          "_Product"
-        )
+        CategoryOptions = await GetCategoryOptionsAsync(httpContext),
+        Sorting = sorting,
+        Offset = offset,
+        Limit = limit,
+        Total = total,
+        Products = products.Select(ProductViewModelFactory.Create)
       };
     }
 

@@ -4,7 +4,7 @@
 using Microsoft.AspNetCore.Authorization;
 using Platformus.Core;
 
-namespace Platformus.ECommerce
+namespace Platformus.ECommerce.PolicyProviders
 {
   public class HasManageOrdersPermissionAuthorizationPolicyProvider : Platformus.Core.IAuthorizationPolicyProvider
   {

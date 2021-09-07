@@ -123,4 +123,10 @@
   <data name="Delivery Methods" xml:space="preserve">
     <value>Способы доставки</value>
   </data>
+  <data name="Name" xml:space="preserve">
+    <value>Название</value>
+  </data>
+  <data name="Position" xml:space="preserve">
+    <value>Позиция</value>
+  </data>
 </root>

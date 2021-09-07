@@ -29,18 +29,17 @@ namespace Platformus.ECommerce.Backend.Controllers
     {
     }
 
-    public async Task<IActionResult> IndexAsync([FromQuery]OrderFilter filter = null, string orderBy = "-created", int skip = 0, int take = 10)
+    public async Task<IActionResult> IndexAsync([FromQuery]OrderFilter filter = null, string sorting = "-created", int offset = 0, int limit = 10)
     {
       return this.View(await IndexViewModelFactory.CreateAsync(
-        this.HttpContext, filter,
+        this.HttpContext, sorting, offset, limit, await this.Repository.CountAsync(filter),
         await this.Repository.GetAllAsync(
-          filter, orderBy, skip, take,
+          filter, sorting, offset, limit,
           new Inclusion<Order>(o => o.OrderState.Name.Localizations),
           new Inclusion<Order>(o => o.DeliveryMethod.Name.Localizations),
           new Inclusion<Order>(o => o.PaymentMethod.Name.Localizations),
           new Inclusion<Order>(o => o.Positions)
-        ),
-        orderBy, skip, take, await this.Repository.CountAsync(filter)
+        )
       ));
     }
 

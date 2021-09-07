@@ -39,7 +39,7 @@ namespace Platformus.Core.Backend.Controllers
     {
       if (this.ModelState.IsValid)
       {
-        string newPassword = new Random().Next(10000000, 99999999).ToString();
+        string newPassword = new Random().Next(10000000, 99999999 + 1).ToString();
 
         ChangeSecretResult changeSecretResult = await this.userManager.ChangeSecretAsync("Email", resetPassword.Email, newPassword);
 

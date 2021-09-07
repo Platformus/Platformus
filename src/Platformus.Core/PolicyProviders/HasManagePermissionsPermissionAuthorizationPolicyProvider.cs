@@ -3,7 +3,7 @@
 
 using Microsoft.AspNetCore.Authorization;
 
-namespace Platformus.Core
+namespace Platformus.Core.PolicyProviders
 {
   public class HasManagePermissionsPermissionAuthorizationPolicyProvider : IAuthorizationPolicyProvider
   {

@@ -3,10 +3,6 @@
 
 using System.Collections.Generic;
 using System.Linq;
-using Microsoft.AspNetCore.Http;
-using Microsoft.Extensions.Localization;
-using Platformus.Core.Backend.ViewModels.Shared;
-using Platformus.Core.Extensions;
 using Platformus.Website.Backend.ViewModels.Shared;
 using Platformus.Website.Data.Entities;
 using Platformus.Website.Filters;
@@ -15,25 +11,16 @@ namespace Platformus.Website.Backend.ViewModels.Tabs
 {
   public static class IndexViewModelFactory
   {
-    public static IndexViewModel Create(HttpContext httpContext, TabFilter filter, IEnumerable<Tab> tabs, string orderBy, int skip, int take, int total)
+    public static IndexViewModel Create(TabFilter filter, string sorting, int offset, int limit, int total, IEnumerable<Tab> tabs)
     {
-      IStringLocalizer<IndexViewModel> localizer = httpContext.GetStringLocalizer<IndexViewModel>();
-
       return new IndexViewModel()
       {
         Filter = filter,
-        Grid = GridViewModelFactory.Create(
-          httpContext,
-          FilterViewModelFactory.Create(httpContext, "Name.Contains", localizer["Name"]),
-          orderBy, skip, take, total,
-          new[] {
-            GridColumnViewModelFactory.Create(localizer["Name"], "Name"),
-            GridColumnViewModelFactory.Create(localizer["Position"], "Position"),
-            GridColumnViewModelFactory.CreateEmpty()
-          },
-          tabs.Select(TabViewModelFactory.Create),
-          "_Tab"
-        )
+        Sorting = sorting,
+        Offset = offset,
+        Limit = limit,
+        Total = total,
+        Tabs = tabs.Select(TabViewModelFactory.Create)
       };
     }
   }

@@ -9,7 +9,28 @@
 @section title {
   @ViewBag.Title
 }
-<partial name="_Grid" for="Grid" />
+<filter>
+  <drop-down-list-filter property-path="Parent.Id" options="@Model.ClassOptions" />
+  <text-filter property-path="Name.Contains" label="@Localizer["Name"].Value" />
+</filter>
+<pager offset="@Model.Offset" limit="@Model.Limit" total="@Model.Total" />
+<table sorting="@Model.Sorting">
+  <columns>
+    <column label="@Localizer["Parent class"].Value" sorting-property-path="Parent.Name" />
+    <column label="@Localizer["Name"].Value" sorting-property-path="Name" />
+    <column label="@Localizer["Is abstract"].Value" sorting-property-path="IsAbstract" />
+    <column label="@Localizer["Tabs"].Value" />
+    <column label="@Localizer["Members"].Value" />
+    <column />
+  </columns>
+  <rows>
+    @foreach (var @class in this.Model.Classes)
+    {
+      <partial name="_Class" for="@(@class)" />
+    }
+  </rows>
+</table>
+<pager offset="@Model.Offset" limit="@Model.Limit" total="@Model.Total" is-secondary="true" />
 <div class="master-detail__buttons buttons">
-  <positive-button href="@this.Context.Request.CombineUrl("/backend/classes/create")">@Localizer["Create class"]</positive-button>
+  <positive-button href="/backend/classes/create">@Localizer["Create class"]</positive-button>
 </div>

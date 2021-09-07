@@ -3,10 +3,6 @@
 
 using System.Collections.Generic;
 using System.Linq;
-using Microsoft.AspNetCore.Http;
-using Microsoft.Extensions.Localization;
-using Platformus.Core.Backend.ViewModels.Shared;
-using Platformus.Core.Extensions;
 using Platformus.Website.Backend.ViewModels.Shared;
 using Platformus.Website.Data.Entities;
 using Platformus.Website.Filters;
@@ -15,25 +11,16 @@ namespace Platformus.Website.Backend.ViewModels.DataSources
 {
   public static class IndexViewModelFactory
   {
-    public static IndexViewModel Create(HttpContext httpContext, DataSourceFilter filter, IEnumerable<DataSource> dataSources, string orderBy, int skip, int take, int total)
+    public static IndexViewModel Create(DataSourceFilter filter, string sorting, int offset, int limit, int total, IEnumerable<DataSource> dataSources)
     {
-      IStringLocalizer<IndexViewModel> localizer = httpContext.GetStringLocalizer<IndexViewModel>();
-
       return new IndexViewModel()
       {
         Filter = filter,
-        Grid = GridViewModelFactory.Create(
-          httpContext,
-          FilterViewModelFactory.Create(httpContext, "Code.Contains", localizer["Code"]),
-          orderBy, skip, take, total,
-          new[] {
-            GridColumnViewModelFactory.Create(localizer["Code"], "Code"),
-            GridColumnViewModelFactory.Create(localizer["Data provider C# class name"], "DataProviderCSharpClassName"),
-            GridColumnViewModelFactory.CreateEmpty()
-          },
-          dataSources.Select(DataSourceViewModelFactory.Create),
-          "_DataSource"
-        )
+        Sorting = sorting,
+        Offset = offset,
+        Limit = limit,
+        Total = total,
+        DataSources = dataSources.Select(DataSourceViewModelFactory.Create)
       };
     }
   }

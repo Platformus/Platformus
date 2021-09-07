@@ -5,7 +5,6 @@ using System.Collections.Generic;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Localization;
 using Platformus.Core.Backend.Metadata;
-using Platformus.Core.Extensions;
 
 namespace Platformus.ECommerce.Backend.Metadata
 {

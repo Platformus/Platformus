@@ -51,6 +51,18 @@
   color: #fff;
 }
 
+.pager__current-state {
+  background: #f0f0f0;
+  margin-left: 1px;
+  padding: 5px 10px;
+}
+
+.pager__limit-selector {
+  background: #f0f0f0;
+  display: block;
+  margin-left: 1px;
+}
+
 @media
 only screen and (-webkit-min-device-pixel-ratio: 2),
 only screen and (   min--moz-device-pixel-ratio: 2),

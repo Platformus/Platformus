@@ -52,14 +52,14 @@ namespace Platformus.Core.Backend
 
     private TagBuilder CreateCulture(Localization localization)
     {
-      return FieldGenerator.GenerateCulture(localization, false);
+      return FieldGenerator.GenerateCulture(localization, true);
     }
 
     private TagBuilder CreateTextArea(Localization localization)
     {
       TagBuilder tb = TextAreaGenerator.Generate(
         this.For.GetIdentity(localization),
-        this.For.GetValue(this.ViewContext, localization),
+        this.For.GetValue(this.ViewContext, localization)?.ToString(),
         this.For.HasRequiredAttribute(),
         this.For.HasStringLengthAttribute() ? this.For.GetMaxStringLength() : null,
         this.For.IsValid(this.ViewContext, localization)
@@ -76,7 +76,7 @@ namespace Platformus.Core.Backend
       tb.MergeAttribute("lang", localization.Culture.Id);
 
       if (this.IsDisabled)
-        tb.MergeAttribute("disabled", "disabled");
+        tb.MergeAttribute(AttributeNames.Disabled, "disabled");
 
       return tb;
     }

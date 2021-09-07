@@ -14,7 +14,7 @@ using Microsoft.Extensions.Localization;
 using Platformus.Core.Data.Entities;
 using Platformus.Core.Services.Abstractions;
 
-namespace Platformus.Core.Extensions
+namespace Platformus
 {
   public static class HttpContextExtensions
   {
@@ -51,21 +51,21 @@ namespace Platformus.Core.Extensions
       return httpContext.RequestServices.GetService<IUserManager>();
     }
 
-    public static IEnumerable<Primitives.Localization> GetLocalizations(this HttpContext httpContext, Data.Entities.Dictionary dictionary = null)
+    public static IEnumerable<Core.Primitives.Localization> GetLocalizations(this HttpContext httpContext, Core.Data.Entities.Dictionary dictionary = null)
     {
-      List<Primitives.Localization> localizations = new List<Primitives.Localization>();
+      List<Core.Primitives.Localization> localizations = new List<Core.Primitives.Localization>();
 
       foreach (Culture culture in httpContext.GetCultureManager().GetCulturesAsync().Result)
       {
-        Primitives.Localization localization;
+        Core.Primitives.Localization localization;
 
         if (dictionary == null)
-          localization = new Primitives.Localization(
-            new Primitives.Culture(culture.Id)
+          localization = new Core.Primitives.Localization(
+            new Core.Primitives.Culture(culture.Id)
           );
 
-        else localization = new Primitives.Localization(
-          new Primitives.Culture(culture.Id),
+        else localization = new Core.Primitives.Localization(
+          new Core.Primitives.Culture(culture.Id),
           dictionary.Localizations.FirstOrDefault(l => l.CultureId == culture.Id)?.Value
         );
 
@@ -75,7 +75,7 @@ namespace Platformus.Core.Extensions
       return localizations;
     }
 
-    public static string CreateLocalizedOrderBy(this HttpContext httpContext, string propertyName)
+    public static string CreateLocalizedSorting(this HttpContext httpContext, string propertyName)
     {
       return $"{propertyName}.Localizations.First(l=>l.Culture.Id=\"{CultureInfo.CurrentUICulture.TwoLetterISOLanguageName}\").Value";
     }

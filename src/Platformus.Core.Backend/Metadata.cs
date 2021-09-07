@@ -4,7 +4,6 @@
 using System.Collections.Generic;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Localization;
-using Platformus.Core.Extensions;
 
 namespace Platformus.Core.Backend.Metadata
 {
@@ -28,8 +27,9 @@ namespace Platformus.Core.Backend.Metadata
         new Script("//ajax.aspnetcdn.com/ajax/jquery.validation.unobtrusive/3.2.6/jquery.validate.unobtrusive.min.js", 300),
         new Script("//cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js", 400),
         new Script("//cdnjs.cloudflare.com/ajax/libs/tinymce/4.9.2/tinymce.min.js", 500),
-        new Script("//cdnjs.cloudflare.com/ajax/libs/ace/1.4.12/ace.js", 600),
-        new Script("//cdnjs.cloudflare.com/ajax/libs/moment.js/2.17.1/moment-with-locales.min.js", 700),
+        new Script("//cdnjs.cloudflare.com/ajax/libs/jquery.maskedinput/1.4.1/jquery.maskedinput.min.js", 600),
+        new Script("//cdnjs.cloudflare.com/ajax/libs/ace/1.4.12/ace.js", 700),
+        new Script("//cdnjs.cloudflare.com/ajax/libs/moment.js/2.17.1/moment-with-locales.min.js", 800),
         new Script("/wwwroot.areas.backend.js.platformus.core.min.js", 1000)
       };
     }

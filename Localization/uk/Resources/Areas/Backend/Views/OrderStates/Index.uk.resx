@@ -120,7 +120,13 @@
   <data name="Create order state" xml:space="preserve">
     <value>Додати стан замовлення</value>
   </data>
+  <data name="Name" xml:space="preserve">
+    <value>Назва</value>
+  </data>
   <data name="Order States" xml:space="preserve">
     <value>Стани замовлень</value>
+  </data>
+  <data name="Position" xml:space="preserve">
+    <value>Позиція</value>
   </data>
 </root>

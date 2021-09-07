@@ -6,12 +6,22 @@
   platformus.behaviors.push(
     function () {
       defineHandlers();
+      performInitialActions();
     }
   );
 
   function defineHandlers() {
     $(document.body).on("focus click", "input[data-type='date']", textBoxFocusHandler);
     $(document.body).on("blur", "input[data-type='date']", textBoxBlurHandler);
+  }
+
+  function performInitialActions() {
+    var format = platformus.globalization.getDateFormat(true);
+
+    $("input[data-type='date']")
+      .attr("autocomplete", "off")
+      .attr("placeholder", format)
+      .mask(format);
   }
 
   function textBoxFocusHandler() {
@@ -46,10 +56,25 @@
 
     $("<div>").addClass("picker__arrow").appendTo(picker);
 
-    var today = moment();
-    var thisMonth = moment(new Date(today.year(), today.month(), 1)).locale(platformus.culture.server());
+    var today = textBox.val() ? moment(textBox.val(), platformus.globalization.getDateFormat()) : moment();
 
-    createCalendar(thisMonth, textBox).appendTo(picker);
+    if (!today.isValid()) {
+      today = moment();
+    }
+
+    var month = moment(new Date(today.year(), today.month(), 1));
+
+    platformus.controls.calendar.create(
+      {
+        month: month,
+        onMonthChange: function (month) {
+          textBox.focus();
+        },
+        onDateSelect: function (date) {
+          setDate(textBox, date);
+        }
+      }
+    ).addClass("date-picker__calendar").appendTo(picker);
     return picker;
   }
 
@@ -63,80 +88,6 @@
     picker.fadeIn("fast");
   }
 
-  function createCalendar(thisMonth, textBox) {
-    var calendar = $("<div>").addClass("date-picker__calendar").addClass("calendar");
-
-    createHeader(thisMonth, textBox).appendTo(calendar);
-    createMonth(thisMonth, textBox).appendTo(calendar);
-    return calendar;
-  }
-
-  function createHeader(thisMonth, textBox) {
-    var header = $("<div>").addClass("calendar__header").html(thisMonth.format("MMMM YYYY"));
-    var previousMonth = $("<div>").addClass("calendar__previous-month").appendTo(header).click(
-      function () {
-        getPicker().find(".calendar").replaceWith(createCalendar(thisMonth.subtract(1, "months"), textBox));
-        textBox.focus();
-        return false;
-      }
-    );
-
-    var nextMonth = $("<div>").addClass("calendar__next-month").appendTo(header).click(
-      function () {
-        getPicker().find(".calendar").replaceWith(createCalendar(thisMonth.add(1, "months"), textBox));
-        textBox.focus();
-        return false;
-      }
-    );
-
-    return header;
-  }
-
-  function createMonth(thisMonth, textBox) {
-    var month = $("<div>").addClass("calendar__month");
-    var week = $("<div>").addClass("calendar__week").appendTo(month);
-
-    for (var i = 0; i != 7; i++) {
-      $("<div>").addClass("calendar__day").html(moment().day(i + 1).format("dd")).appendTo(week);
-    }
-
-    var offset = thisMonth.isoWeekday() - 1;
-    var date = thisMonth.clone().subtract(offset, "days");
-
-    for (var i = 0; i != 6; i++) {
-      week = $("<div>").addClass("calendar__week").appendTo(month);
-
-      for (var j = 0; j != 7; j++) {
-        var day = $("<a>").addClass("calendar__day").attr("href", "#").html(date.format("DD")).appendTo(week).click(
-          function (formattedDate) {
-            return function () {
-              textBox.val(formattedDate);
-              textBox.focus();
-              hideAndRemovePicker(getPicker());
-              return false;
-            };
-          }(date.locale(platformus.culture.server()).format("L"))
-        );
-
-        if (date.month() != thisMonth.month()) {
-          day.addClass("calendar__day--outer");
-        }
-
-        else if (date.month() == moment().month() && date.date() == moment().date()) {
-          day.addClass("calendar__day--today");
-        }
-
-        date.add(1, "days");
-      }
-    }
-
-    return month;
-  }
-
-  function getPicker() {
-    return $(".picker");
-  }
-
   function hideAndRemovePicker(picker) {
     picker.fadeOut(
       "fast",
@@ -144,5 +95,16 @@
         picker.remove();
       }
     );
+  }
+
+  function setDate(textBox, date) {
+    textBox.val(date.format(platformus.globalization.getDateFormat()));
+    textBox.focus();
+    hideAndRemovePicker(getPicker());
+    textBox.change();
+  }
+
+  function getPicker() {
+    return $(".picker");
   }
 })(window.platformus = window.platformus || {});

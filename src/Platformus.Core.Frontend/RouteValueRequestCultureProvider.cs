@@ -6,7 +6,6 @@ using System.Net;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Localization;
-using Platformus.Core.Extensions;
 using Platformus.Core.Services.Abstractions;
 
 namespace Platformus.Core.Frontend

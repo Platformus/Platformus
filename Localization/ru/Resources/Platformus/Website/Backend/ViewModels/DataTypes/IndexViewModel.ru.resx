@@ -120,16 +120,4 @@
   <data name="All storage data types" xml:space="preserve">
     <value>Все типы данных хранилища</value>
   </data>
-  <data name="Data type parameters" xml:space="preserve">
-    <value>Параметры типа данных</value>
-  </data>
-  <data name="Name" xml:space="preserve">
-    <value>Название</value>
-  </data>
-  <data name="Position" xml:space="preserve">
-    <value>Позиция</value>
-  </data>
-  <data name="Storage data type" xml:space="preserve">
-    <value>Тип данных хранилища</value>
-  </data>
 </root>

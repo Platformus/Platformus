@@ -9,7 +9,24 @@
 @section title {
   @ViewBag.Title
 }
-<partial name="_Grid" for="Grid" />
+<filter>
+  <text-filter property-path="Name.Contains" label="@Localizer["Name"].Value" />
+</filter>
+<pager offset="@Model.Offset" limit="@Model.Limit" total="@Model.Total" />
+<table sorting="@Model.Sorting">
+  <columns>
+    <column label="@Localizer["Name"].Value" sorting-property-path="Name" />
+    <column label="@Localizer["Position"].Value" sorting-property-path="Position" />
+    <column />
+  </columns>
+  <rows>
+    @foreach (var role in this.Model.Roles)
+    {
+      <partial name="_Role" for="@role" />
+    }
+  </rows>
+</table>
+<pager offset="@Model.Offset" limit="@Model.Limit" total="@Model.Total" is-secondary="true" />
 <div class="master-detail__buttons buttons">
-  <positive-button href="@this.Context.Request.CombineUrl("/backend/roles/create")">@Localizer["Create role"]</positive-button>
+  <positive-button href="/backend/roles/create">@Localizer["Create role"]</positive-button>
 </div>

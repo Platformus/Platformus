@@ -8,7 +8,6 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.DependencyInjection;
-using Platformus.Core.Extensions;
 using Platformus.Core.Parameters;
 using Platformus.Core.Services.Abstractions;
 using Platformus.Website.Data.Entities;

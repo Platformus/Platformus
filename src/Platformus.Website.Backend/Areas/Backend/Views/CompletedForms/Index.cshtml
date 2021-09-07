@@ -9,7 +9,30 @@
 @section title {
   @ViewBag.Title
 }
-<partial name="_Grid" for="Grid" />
+<filter>
+  <text-filter property-path="Form.Name.Value.Contains" label="@Localizer["Form"].Value" />
+  <filter-group>
+    <filter-label>@Localizer["Created from"]</filter-label>
+    <date-filter property-path="Created.From" />
+    <filter-label>@Localizer["to"]</filter-label>
+    <date-filter property-path="Created.To" />
+  </filter-group>
+</filter>
+<pager offset="@Model.Offset" limit="@Model.Limit" total="@Model.Total" />
+<table sorting="@Model.Sorting">
+  <columns>
+    <column label="@Localizer["Form"].Value" sorting-property-path="Form.Name" />
+    <column label="@Localizer["Created"].Value" sorting-property-path="Created" />
+    <column />
+  </columns>
+  <rows>
+    @foreach (var completedForm in this.Model.CompletedForms)
+    {
+      <partial name="_CompletedForm" for="@completedForm" />
+    }
+  </rows>
+</table>
+<pager offset="@Model.Offset" limit="@Model.Limit" total="@Model.Total" is-secondary="true" />
 <div class="master-detail__buttons buttons">
   <neutral-button href="/backend/forms">@Localizer["Back"]</neutral-button>
 </div>

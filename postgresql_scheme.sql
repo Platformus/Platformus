@@ -1,7 +1,17 @@
 --
 -- Extension: Platformus.Core
--- Version: 2.4.0
+-- Version: 2.5.0
 --
+
+-- ModelStates
+CREATE TABLE "ModelStates" (
+    "Id" text NOT NULL,
+	"Value" text NOT NULL,
+    "Created" timestamp NOT NULL,
+    CONSTRAINT "PK_ModelStates" PRIMARY KEY ("Id")
+);
+
+ALTER TABLE "Carts" OWNER TO postgres;
 
 -- Users
 CREATE TABLE "Users" (
@@ -169,7 +179,7 @@ ALTER TABLE "Localizations" OWNER TO postgres;
 
 --
 -- Extension: Platformus.Website
--- Version: 2.4.0
+-- Version: 2.5.0
 --
 
 -- Endpoints
@@ -563,7 +573,7 @@ ALTER TABLE "Files" OWNER TO postgres;
 
 --
 -- Extension: Platformus.ECommerce
--- Version: 2.4.0
+-- Version: 2.5.0
 --
 
 -- Categories

@@ -39,7 +39,7 @@ namespace Platformus.Core.Backend
       TagBuilder tb = TextBoxGenerator.Generate(
         this.For.GetIdentity(),
         InputTypes.Text,
-        this.For.GetValue(this.ViewContext),
+        this.For.GetValue(this.ViewContext)?.ToString()?.ToString(),
         this.For.HasRequiredAttribute(),
         this.For.HasStringLengthAttribute() ? this.For.GetMaxStringLength() : null,
         this.For.IsValid(this.ViewContext)
@@ -48,7 +48,7 @@ namespace Platformus.Core.Backend
       tb.AddCssClass("field__text-box");
 
       if (this.IsDisabled)
-        tb.MergeAttribute("disabled", "disabled");
+        tb.MergeAttribute(AttributeNames.Disabled, "disabled");
 
       return tb;
     }

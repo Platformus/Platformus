@@ -2,10 +2,10 @@
 @* Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information. *@
 @model Platformus.Website.Backend.ViewModels.Shared.DataTypeParameterViewModel
 @inject Microsoft.AspNetCore.Mvc.Localization.IViewLocalizer Localizer
-<table-row>
-  <table-cell>@Model.Name</table-cell>
-  <buttons-table-cell>
-    <positive-button is-minor="true" href="@(this.Context.Request.CombineUrl("/backend/datatypeparameters/edit/" + Model.Id))">@Localizer["Edit"]</positive-button>
+<row>
+  <cell>@Model.Name</cell>
+  <buttons-cell>
+    <positive-button is-minor="true" href="/backend/datatypeparameters/edit/@Model.Id">@Localizer["Edit"]</positive-button>
     <delete-button href="/backend/datatypeparameters/delete/@Model.Id"></delete-button>
-  </buttons-table-cell>
-</table-row>
+  </buttons-cell>
+</row>

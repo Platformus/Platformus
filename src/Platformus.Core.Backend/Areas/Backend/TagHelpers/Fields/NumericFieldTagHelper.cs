@@ -34,13 +34,13 @@ namespace Platformus.Core.Backend
       tb.InnerHtml.AppendHtml(FieldGenerator.GenerateLabel(this.For.GetLabel(), this.For.GetIdentity()));
 
       TagBuilder tbTextBox = TextBoxGenerator.Generate(
-        this.For.GetIdentity(), "text", this.For.GetValue(this.ViewContext)
+        this.For.GetIdentity(), "text", this.For.GetValue(this.ViewContext)?.ToString()
       );
 
       tbTextBox.AddCssClass("field__text-box field__text-box--numeric");
 
       if (this.IsDisabled)
-        tbTextBox.MergeAttribute("disabled", "disabled");
+        tbTextBox.MergeAttribute(AttributeNames.Disabled, "disabled");
 
       tb.InnerHtml.AppendHtml(tbTextBox);
       tb.InnerHtml.AppendHtml(this.GenerateNumericButtons());

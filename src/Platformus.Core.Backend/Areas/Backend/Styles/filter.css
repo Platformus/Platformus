@@ -1,0 +1,31 @@
+﻿/* Copyright © 2020 Dmitry Sikorsky. All rights reserved. */
+/* Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information. */
+
+.filter {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1px;
+}
+
+.filter__group {
+  background: #f0f0f0;
+}
+
+.filter__label {
+  padding: 0 10px;
+}
+
+.filter__criterion {
+}
+
+.filter__criterion--small {
+  width: 100px;
+}
+
+.filter__criterion--medium {
+  width: 150px;
+}
+
+.filter__criterion--large {
+  width: 200px;
+}

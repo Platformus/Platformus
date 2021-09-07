@@ -123,4 +123,16 @@
   <data name="Completed Forms" xml:space="preserve">
     <value>Заповнені форми</value>
   </data>
+  <data name="Created" xml:space="preserve">
+    <value>Дата та час створення</value>
+  </data>
+  <data name="Created from" xml:space="preserve">
+    <value>Створені з</value>
+  </data>
+  <data name="Form" xml:space="preserve">
+    <value>Форма</value>
+  </data>
+  <data name="to" xml:space="preserve">
+    <value>по</value>
+  </data>
 </root>

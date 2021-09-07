@@ -114,7 +114,7 @@
 
         // TODO: add another controls change events
         $(document.body).on("change", "input, textarea", function () {
-          if ($(this).attr("type") != "file") {
+          if ($(this).attr("type") != "file" && !$(this).data("propertyPath")) {
             platformus.ui.needsSaveConfirmation = true;
           }
         });
@@ -156,4 +156,37 @@
 
     $.validator.unobtrusive.parse(form);
   };
+})(window.platformus = window.platformus || {});
+
+(function (platformus) {
+  platformus.ui = platformus.ui || {};
+  platformus.initializers = platformus.initializers || [];
+  platformus.initializers.push(
+    {
+      action: function () {
+        $.mask.definitions["D"] = "[0-9]";
+        $.mask.definitions["M"] = "[0-9]";
+        $.mask.definitions["Y"] = "[0-9]";
+        $.mask.definitions["H"] = "[0-9]";
+        $.mask.definitions["T"] = "[ampAMP]";
+      },
+      priority: 0
+    }
+  );
+})(window.platformus = window.platformus || {});
+
+(function (platformus) {
+  platformus.ui = platformus.ui || {};
+  platformus.initializers = platformus.initializers || [];
+  platformus.initializers.push(
+    {
+      action: function () {
+        moment.locale(platformus.globalization.getCultureCode());
+        moment.fn.toISOStringWithoutTimezone = function () {
+          return this.format("YYYY-MM-DD[T]HH:mm:ss");
+        };
+      },
+      priority: 0
+    }
+  );
 })(window.platformus = window.platformus || {});

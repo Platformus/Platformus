@@ -126,4 +126,7 @@
   <data name="Data Type Parameters" xml:space="preserve">
     <value>Параметры типа данных</value>
   </data>
+  <data name="Name" xml:space="preserve">
+    <value>Название</value>
+  </data>
 </root>

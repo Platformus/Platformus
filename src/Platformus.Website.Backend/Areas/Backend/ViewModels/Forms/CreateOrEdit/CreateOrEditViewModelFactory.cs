@@ -6,7 +6,6 @@ using System.Linq;
 using System.Reflection;
 using ExtCore.Infrastructure;
 using Microsoft.AspNetCore.Http;
-using Platformus.Core.Extensions;
 using Platformus.Core.Primitives;
 using Platformus.Website.Data.Entities;
 using Platformus.Website.FormHandlers;

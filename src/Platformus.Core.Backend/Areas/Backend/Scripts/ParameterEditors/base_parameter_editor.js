@@ -13,11 +13,12 @@
       return parameter.defaultValue;
     }
 
-    return $("#parameters")
+    var parameter = $("#parameters")
       .val()
       .split(";")
-      .find(p => p.split("=")[0] == parameter.code)
-      ?.split("=")[1];
+      .find(p => p.split("=")[0] == parameter.code);
+
+    return parameter ? parameter.split("=")[1] : null;
   };
 
   platformus.parameterEditors.base.changed = function () {

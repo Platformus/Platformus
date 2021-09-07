@@ -6,8 +6,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Magicalizer.Data.Repositories.Abstractions;
 using Microsoft.AspNetCore.Http;
-using Platformus.Core.Backend.ViewModels.Shared;
-using Platformus.Core.Extensions;
+using Platformus.Core.Backend;
 using Platformus.Website.Backend.ViewModels.Shared;
 using Platformus.Website.Data.Entities;
 using Platformus.Website.Filters;
@@ -29,19 +28,19 @@ namespace Platformus.Website.Backend.ViewModels.Website
       return new ObjectSelectorFormViewModel()
       {
         Class = ClassViewModelFactory.Create(@class),
-        GridColumns = GetGridColumns(@class),
+        TableColumns = GetTableColumns(@class),
         Objects = objects.Select(o => ObjectViewModelFactory.Create(o, @class.GetVisibleInListMembers())),
         ObjectIds = string.IsNullOrEmpty(objectIds) ? new int[] { } : objectIds.Split(',').Select(objectId => int.Parse(objectId))
       };
     }
 
-    private static IEnumerable<GridColumnViewModel> GetGridColumns(Class @class)
+    private static IEnumerable<TableTagHelper.Column> GetTableColumns(Class @class)
     {
-      List<GridColumnViewModel> gridColumns = @class.GetVisibleInListMembers().Select(
-        m => GridColumnViewModelFactory.Create(m.Name)
+      List<TableTagHelper.Column> tableColumns = @class.GetVisibleInListMembers().Select(
+        m => new TableTagHelper.Column(m.Name)
       ).ToList();
 
-      return gridColumns;
+      return tableColumns;
     }
   }
 }

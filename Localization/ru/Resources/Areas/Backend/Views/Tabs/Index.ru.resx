@@ -123,6 +123,12 @@
   <data name="Create tab" xml:space="preserve">
     <value>Добавить таб</value>
   </data>
+  <data name="Name" xml:space="preserve">
+    <value>Название</value>
+  </data>
+  <data name="Position" xml:space="preserve">
+    <value>Позиция</value>
+  </data>
   <data name="Tabs" xml:space="preserve">
     <value>Табы</value>
   </data>

@@ -8,19 +8,21 @@
 <div class="pop-up-form__content">
   <div class="item-selector-pop-up-form__items">
     <table class="item-selector-pop-up-form__table table">
-      <table-row>
-        @foreach (var gridColumn in this.Model.GridColumns)
+      <columns>
+        @foreach (var tableColumn in this.Model.TableColumns)
         {
-          <table-cell is-header="true">@gridColumn.DisplayName</table-cell>
+          <column label="@tableColumn.Label" />
         }
-      </table-row>
-      @foreach (var product in this.Model.Products)
-      {
-        <table-row class="@(product.Id == this.Model.ProductId ? "table__row--selected" : null)" data-item-value="@product.Id">
-          <table-cell class="item-selector-pop-up-form__cell">@product.Category.Name</table-cell>
-          <table-cell class="item-selector-pop-up-form__cell">@product.Name</table-cell>
-        </table-row>
-      }
+      </columns>
+      <rows>
+        @foreach (var product in this.Model.Products)
+        {
+          <row class="@(product.Id == this.Model.ProductId ? "table__row--selected" : null)" data-item-value="@product.Id">
+            <cell class="item-selector-pop-up-form__cell">@product.Category.Name</cell>
+            <cell class="item-selector-pop-up-form__cell">@product.Name</cell>
+          </row>
+        }
+      </rows>
     </table>
   </div>
   <div class="pop-up-form__buttons buttons">

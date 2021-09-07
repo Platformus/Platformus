@@ -2,19 +2,19 @@
 @* Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information. *@
 @model Platformus.ECommerce.Backend.ViewModels.Shared.OrderViewModel
 @inject Microsoft.AspNetCore.Mvc.Localization.IViewLocalizer Localizer
-<table-row>
-  <table-cell>@Model.Id</table-cell>
-  <table-cell>@Model.OrderState.Name</table-cell>
-  <table-cell>@Model.DeliveryMethod.Name</table-cell>
-  <table-cell>@Model.PaymentMethod.Name</table-cell>
-  <table-cell>
+<row>
+  <cell>@Model.Id</cell>
+  <cell>@Model.OrderState.Name</cell>
+  <cell>@Model.DeliveryMethod.Name</cell>
+  <cell>@Model.PaymentMethod.Name</cell>
+  <cell>
     <div>@Model.CustomerFirstName @Model.CustomerLastName</div>
     <div>@Model.CustomerPhone</div>
-  </table-cell>
-  <table-cell>@Model.Total.ToString("0.00")</table-cell>
-  <table-cell>@Model.Created</table-cell>
-  <buttons-table-cell>
-    <positive-button is-minor="true" href="@(this.Context.Request.CombineUrl("/backend/orders/edit/" + this.Model.Id))">@Localizer["Edit"]</positive-button>
+  </cell>
+  <cell>@Model.Total.ToString("0.00")</cell>
+  <cell>@Model.Created</cell>
+  <buttons-cell>
+    <positive-button is-minor="true" href="/backend/orders/edit/@Model.Id">@Localizer["Edit"]</positive-button>
     <delete-button href="/backend/orders/delete/@Model.Id"></delete-button>
-  </buttons-table-cell>
-</table-row>
+  </buttons-cell>
+</row>

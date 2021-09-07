@@ -34,12 +34,11 @@ namespace Platformus.Core.Backend.Controllers
     {
     }
 
-    public async Task<IActionResult> IndexAsync([FromQuery]UserFilter filter = null, string orderBy = "+name", int skip = 0, int take = 10)
+    public async Task<IActionResult> IndexAsync([FromQuery]UserFilter filter = null, string sorting = "+name", int offset = 0, int limit = 10)
     {
       return this.View(IndexViewModelFactory.Create(
-        this.HttpContext, filter,
-        await this.UserRepository.GetAllAsync(filter, orderBy, skip, take),
-        orderBy, skip, take, await this.UserRepository.CountAsync(filter)
+        sorting, offset, limit, await this.UserRepository.CountAsync(filter),
+        await this.UserRepository.GetAllAsync(filter, sorting, offset, limit)
       ));
     }
 
@@ -103,7 +102,7 @@ namespace Platformus.Core.Backend.Controllers
       if (user.UserRoles != null)
         for (int i = 0; i != user.UserRoles.Count; i++)
         {
-          UserRole userRole = user.UserRoles.ToArray()[i];
+          UserRole userRole = user.UserRoles.ElementAt(i);
 
           this.UserRoleRepository.Delete(userRole.UserId, userRole.RoleId);
         }

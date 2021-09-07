@@ -17,17 +17,27 @@
   }
 
   function createTextBox(member) {
+    var value = null;
+
+    if (member.property.dateTimeValue) {
+      value = moment(member.property.dateTimeValue);
+
+      if (!value.isValid()) {
+        value = moment();
+      }
+
+      value = value.format(platformus.globalization.getDateFormat());
+    }
+
     return platformus.controls.textBox.create(
       {
         identity: platformus.memberEditors.base.getIdentity(member),
-        value: member.property.dateTimeValue,
+        value: value,
         validation: {
           isRequired: platformus.memberEditors.base.getIsRequiredDataTypeParameterValue(member),
           maxLength: platformus.memberEditors.base.getMaxLengthDataTypeParameterValue(member)
         }
       }
-    ).attr("autocomplete", "off")
-      .attr("placeholder", moment().locale(platformus.culture.server()).localeData().longDateFormat("L"))
-      .attr("data-type", "date");
+    ).attr("data-type", "date");
   }
 })(window.platformus = window.platformus || {});

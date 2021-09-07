@@ -6,7 +6,6 @@ using System.Linq;
 using System.Threading.Tasks;
 using Magicalizer.Data.Repositories.Abstractions;
 using Microsoft.AspNetCore.Http;
-using Platformus.Core.Extensions;
 using Platformus.Core.Parameters;
 using Platformus.Website.Data.Entities;
 using Platformus.Website.Filters;

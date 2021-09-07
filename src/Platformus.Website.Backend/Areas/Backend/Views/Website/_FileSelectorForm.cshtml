@@ -8,17 +8,19 @@
 <div class="pop-up-form__content">
   <div class="item-selector-pop-up-form__items">
     <table class="item-selector-pop-up-form__table table">
-      <table-row>
-        <table-cell is-header="true">@Localizer["Name"]</table-cell>
-        <table-cell is-header="true">@Localizer["Size"]</table-cell>
-      </table-row>
-      @foreach (var file in this.Model.Files)
-      {
-        <table-row data-item-value="@file.Name">
-          <table-cell class="item-selector-pop-up-form__cell">@file.Name</table-cell>
-          <table-cell class="item-selector-pop-up-form__cell">@file.Size</table-cell>
-        </table-row>
-      }
+      <columns>
+        <column label="@Localizer["Name"].Value" />
+        <column label="@Localizer["Size"].Value" />
+      </columns>
+      <rows>
+        @foreach (var file in this.Model.Files)
+        {
+          <row data-item-value="@file.Name">
+            <cell class="item-selector-pop-up-form__cell">@file.Name</cell>
+            <cell class="item-selector-pop-up-form__cell">@file.Size</cell>
+          </row>
+        }
+      </rows>
     </table>
   </div>
   <div class="pop-up-form__buttons buttons">

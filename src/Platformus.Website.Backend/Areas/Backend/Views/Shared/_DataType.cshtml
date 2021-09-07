@@ -2,15 +2,15 @@
 @* Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information. *@
 @model Platformus.Website.Backend.ViewModels.Shared.DataTypeViewModel
 @inject Microsoft.AspNetCore.Mvc.Localization.IViewLocalizer Localizer
-<table-row>
-  <table-cell>@Model.StorageDataType</table-cell>
-  <table-cell>@Model.Name</table-cell>
-  <table-cell>
+<row>
+  <cell>@Model.StorageDataType</cell>
+  <cell>@Model.Name</cell>
+  <cell>
     <a href="/backend/datatypeparameters?datatype.id=@Model.Id">@Localizer["Data type parameters"]</a>
-  </table-cell>
-  <table-cell>@(Model.Position == null ? "—" : Model.Position.ToString())</table-cell>
-  <buttons-table-cell>
-    <positive-button is-minor="true" href="@(this.Context.Request.CombineUrl("/backend/datatypes/edit/" + Model.Id))">@Localizer["Edit"]</positive-button>
+  </cell>
+  <cell>@(Model.Position == null ? "—" : Model.Position.ToString())</cell>
+  <buttons-cell>
+    <positive-button is-minor="true" href="/backend/datatypes/edit/@Model.Id">@Localizer["Edit"]</positive-button>
     <delete-button href="/backend/datatypes/delete/@Model.Id"></delete-button>
-  </buttons-table-cell>
-</table-row>
+  </buttons-cell>
+</row>

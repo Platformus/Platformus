@@ -3,40 +3,22 @@
 
 using System.Collections.Generic;
 using System.Linq;
-using Microsoft.AspNetCore.Http;
-using Microsoft.Extensions.Localization;
-using Platformus.Core.Backend.ViewModels.Shared;
-using Platformus.Core.Extensions;
 using Platformus.Website.Backend.ViewModels.Shared;
-using Platformus.Website.Filters;
+using Platformus.Website.Data.Entities;
 
 namespace Platformus.Website.Backend.ViewModels.Endpoints
 {
   public static class IndexViewModelFactory
   {
-    public static IndexViewModel Create(HttpContext httpContext, EndpointFilter filter, IEnumerable<Data.Entities.Endpoint> endpoints, string orderBy, int skip, int take, int total)
+    public static IndexViewModel Create(string sorting, int offset, int limit, int total, IEnumerable<Endpoint> endpoints)
     {
-      IStringLocalizer<IndexViewModel> localizer = httpContext.GetStringLocalizer<IndexViewModel>();
-
       return new IndexViewModel()
       {
-        Grid = GridViewModelFactory.Create(
-          httpContext,
-          new[] {
-            FilterViewModelFactory.Create(httpContext, "Name.Contains", localizer["Name"]),
-            FilterViewModelFactory.Create(httpContext, "UrlTemplate.Contains", localizer["URL template"])
-          },
-          orderBy, skip, take, total,
-          new[] {
-            GridColumnViewModelFactory.Create(localizer["Name"], "Name"),
-            GridColumnViewModelFactory.Create(localizer["URL template"], "UrlTemplate"),
-            GridColumnViewModelFactory.Create(localizer["Position"], "Position"),
-            GridColumnViewModelFactory.Create(localizer["Data sources"]),
-            GridColumnViewModelFactory.CreateEmpty()
-          },
-          endpoints.Select(EndpointViewModelFactory.Create),
-          "_Endpoint"
-        )
+        Sorting = sorting,
+        Offset = offset,
+        Limit = limit,
+        Total = total,
+        Endpoints = endpoints.Select(EndpointViewModelFactory.Create)
       };
     }
   }

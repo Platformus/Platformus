@@ -120,19 +120,4 @@
   <data name="All categories" xml:space="preserve">
     <value>Все категории</value>
   </data>
-  <data name="Category" xml:space="preserve">
-    <value>Категория</value>
-  </data>
-  <data name="Code" xml:space="preserve">
-    <value>Код</value>
-  </data>
-  <data name="Name" xml:space="preserve">
-    <value>Название</value>
-  </data>
-  <data name="Price" xml:space="preserve">
-    <value>Цена</value>
-  </data>
-  <data name="Units" xml:space="preserve">
-    <value>Ед. измерения</value>
-  </data>
 </root>

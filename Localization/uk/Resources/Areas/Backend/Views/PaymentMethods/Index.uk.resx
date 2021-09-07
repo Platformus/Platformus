@@ -120,7 +120,13 @@
   <data name="Create payment method" xml:space="preserve">
     <value>Додати спосіб оплати</value>
   </data>
+  <data name="Name" xml:space="preserve">
+    <value>Назва</value>
+  </data>
   <data name="Payment Methods" xml:space="preserve">
     <value>Способи оплати</value>
+  </data>
+  <data name="Position" xml:space="preserve">
+    <value>Позиція</value>
   </data>
 </root>

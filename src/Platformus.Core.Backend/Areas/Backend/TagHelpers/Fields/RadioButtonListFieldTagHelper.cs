@@ -40,7 +40,7 @@ namespace Platformus.Core.Backend
       TagBuilder tb = RadioButtonListGenerator.Generate(
         this.For.GetIdentity(),
         this.Options,
-        this.For.GetValue(this.ViewContext)
+        this.For.GetValue(this.ViewContext)?.ToString()
       );
 
       tb.AddCssClass("field__radio-button-list");

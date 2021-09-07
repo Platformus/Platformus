@@ -11,6 +11,15 @@ namespace Platformus.Core.Data.EntityFramework.SqlServer
   {
     public void RegisterEntities(ModelBuilder modelBuilder)
     {
+      modelBuilder.Entity<ModelState>(etb =>
+        {
+          etb.HasKey(e => e.Id);
+          etb.Property(e => e.Id).ValueGeneratedNever();
+          etb.Property(e => e.Value).IsRequired();
+          etb.ToTable("ModelStates");
+        }
+      );
+
       modelBuilder.Entity<User>(etb =>
         {
           etb.HasKey(e => e.Id);

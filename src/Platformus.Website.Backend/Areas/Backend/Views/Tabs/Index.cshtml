@@ -9,8 +9,25 @@
 @section title {
   @ViewBag.Title
 }
-<partial name="_Grid" for="Grid" />
+<filter>
+  <text-filter property-path="Name.Contains" label="@Localizer["Name"].Value" />
+</filter>
+<pager offset="@Model.Offset" limit="@Model.Limit" total="@Model.Total" />
+<table sorting="@Model.Sorting">
+  <columns>
+    <column label="@Localizer["Name"].Value" sorting-property-path="Name" />
+    <column label="@Localizer["Position"].Value" sorting-property-path="Position" />
+    <column />
+  </columns>
+  <rows>
+    @foreach (var tab in this.Model.Tabs)
+    {
+      <partial name="_Tab" for="@tab" />
+    }
+  </rows>
+</table>
+<pager offset="@Model.Offset" limit="@Model.Limit" total="@Model.Total" is-secondary="true" />
 <div class="master-detail__buttons buttons">
-  <positive-button href="/backend/tabs/create?class.id=@Model.Filter.Class.Id">@Localizer["Create tab"]</positive-button>
-  <neutral-button href="/backend/classes">@Localizer["Back"]</neutral-button>
+  <positive-button href="/backend/tabs/create">@Localizer["Create tab"]</positive-button>
+  <neutral-button href="/backend/classes" skip-url-parameters="class.id">@Localizer["Back"]</neutral-button>
 </div>
