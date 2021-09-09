@@ -11,7 +11,7 @@ CREATE TABLE "ModelStates" (
     CONSTRAINT "PK_ModelStates" PRIMARY KEY ("Id")
 );
 
-ALTER TABLE "Carts" OWNER TO postgres;
+ALTER TABLE "ModelStates" OWNER TO postgres;
 
 -- Users
 CREATE TABLE "Users" (
@@ -586,7 +586,7 @@ CREATE TABLE "Categories" (
     "Position" integer,
     "TitleId" integer NOT NULL,
     "MetaDescriptionId" integer NOT NULL,
-	  "MetaKeywordsId" integer NOT NULL,
+    "MetaKeywordsId" integer NOT NULL,
     "ProductProviderCSharpClassName" text NOT NULL,
     "ProductProviderParameters" text,
     CONSTRAINT "PK_Categories" PRIMARY KEY ("Id"),
@@ -597,20 +597,20 @@ CREATE TABLE "Categories" (
     CONSTRAINT "FK_Categories_Dictionaries" FOREIGN KEY ("NameId")
         REFERENCES public."Dictionaries" ("Id") MATCH SIMPLE
         ON UPDATE NO ACTION
-        ON DELETE NO ACTION
+        ON DELETE NO ACTION,
     CONSTRAINT "FK_Categories_Dictionaries_DescriptionId" FOREIGN KEY ("DescriptionId")
         REFERENCES public."Dictionaries" ("Id") MATCH SIMPLE
         ON UPDATE NO ACTION
         ON DELETE NO ACTION,
-	  CONSTRAINT "FK_Categories_Dictionaries_TitleId" FOREIGN KEY ("TitleId")
+    CONSTRAINT "FK_Categories_Dictionaries_TitleId" FOREIGN KEY ("TitleId")
         REFERENCES public."Dictionaries" ("Id") MATCH SIMPLE
         ON UPDATE NO ACTION
         ON DELETE NO ACTION,
-	  CONSTRAINT "FK_Categories_Dictionaries_MetaDescriptionId" FOREIGN KEY ("MetaDescriptionId")
+    CONSTRAINT "FK_Categories_Dictionaries_MetaDescriptionId" FOREIGN KEY ("MetaDescriptionId")
         REFERENCES public."Dictionaries" ("Id") MATCH SIMPLE
         ON UPDATE NO ACTION
         ON DELETE NO ACTION,
-	  CONSTRAINT "FK_Categories_Dictionaries_MetaKeywordsId" FOREIGN KEY ("MetaKeywordsId")
+    CONSTRAINT "FK_Categories_Dictionaries_MetaKeywordsId" FOREIGN KEY ("MetaKeywordsId")
         REFERENCES public."Dictionaries" ("Id") MATCH SIMPLE
         ON UPDATE NO ACTION
         ON DELETE NO ACTION
