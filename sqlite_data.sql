@@ -2,7 +2,7 @@ BEGIN TRANSACTION;
 
 --
 -- Extension: Platformus.Core
--- Version: 2.5.0
+-- Version: 2.6.0
 --
 
 INSERT INTO "Users" VALUES (1,'Administrator','2017-01-01 00:00:00.0000000');
@@ -36,7 +36,7 @@ INSERT INTO "Cultures" VALUES ('en','English',0,1,1);
 
 --
 -- Extension: Platformus.Website
--- Version: 2.5.0
+-- Version: 2.6.0
 --
 
 INSERT INTO "Permissions" VALUES (7,'ManageEndpoints','Manage endpoints',700);
@@ -71,9 +71,10 @@ INSERT INTO "DataTypeParameters" VALUES (8,5,'checkbox','IsRequired','Is require
 INSERT INTO "DataTypeParameters" VALUES (9,5,'numericTextBox','MinValue','Min value');
 INSERT INTO "DataTypeParameters" VALUES (10,5,'numericTextBox','MaxValue','Max value');
 INSERT INTO "DataTypeParameters" VALUES (11,7,'checkbox','IsRequired','Is required');
-INSERT INTO "DataTypeParameters" VALUES (12,8,'numericTextBox','Width','Width');
-INSERT INTO "DataTypeParameters" VALUES (13,8,'numericTextBox','Height','Height');
-INSERT INTO "DataTypeParameters" VALUES (14,9,'textBox','Mode','Mode');
+INSERT INTO "DataTypeParameters" VALUES (12,8,'checkbox','IsRequired','Is required');
+INSERT INTO "DataTypeParameters" VALUES (13,9,'numericTextBox','Width','Width');
+INSERT INTO "DataTypeParameters" VALUES (14,9,'numericTextBox','Height','Height');
+INSERT INTO "DataTypeParameters" VALUES (15,10,'textBox','Mode','Mode');
 INSERT INTO "FieldTypes" VALUES (1,'TextBox','Text box',1,NULL);
 INSERT INTO "FieldTypes" VALUES (2,'TextArea','Text area',2,NULL);
 INSERT INTO "FieldTypes" VALUES (3,'Checkbox','Checkbox',3,NULL);
@@ -84,7 +85,7 @@ INSERT INTO "FieldTypes" VALUES (7,'ReCAPTCHA','ReCAPTCHA',7,'Platformus.Website
 
 --
 -- Extension: Platformus.ECommerce
--- Version: 2.5.0
+-- Version: 2.6.0
 --
 
 INSERT INTO "Permissions" VALUES (14,'ManageCategories','Manage categories',1400);

@@ -7,8 +7,16 @@ using Platformus.Website.Data.Entities;
 
 namespace Platformus.Website
 {
+  /// <summary>
+  /// Contains the extension methods of the <see cref="Object"/>.
+  /// </summary>
   public static class ObjectExtensions
   {
+    /// <summary>
+    /// Gets the object's properties that should be visible in list.
+    /// "Visible in list" means that the member's value should be displayed in the object list in the backend.
+    /// </summary>
+    /// <param name="object">An object to get properties of.</param>
     public static IEnumerable<object> GetVisibleInListPropertyValues(this Object @object)
     {
       return @object.Class.GetVisibleInListMembers().Select(
@@ -16,6 +24,10 @@ namespace Platformus.Website
       );
     }
 
+    /// <summary>
+    /// Creates dynamic object that contains only visible in list properties from the given one.
+    /// </summary>
+    /// <param name="object">An object to get properties of.</param>
     public static dynamic ToDisplayable(this Object @object)
     {
       ExpandoObjectBuilder expandoObjectBuilder = new ExpandoObjectBuilder();

@@ -7,8 +7,15 @@ using Platformus.Website.Data.Entities;
 
 namespace Platformus.Website
 {
+  /// <summary>
+  /// Contains the extension methods of the <see cref="Class"/>.
+  /// </summary>
   public static class ClassExtensions
   {
+    /// <summary>
+    /// Gets all the tabs of the given class and its parent one.
+    /// </summary>
+    /// <param name="class">A class to get tabs of.</param>
     public static IEnumerable<Tab> GetTabs(this Class @class)
     {
       List<Tab> tabs = new List<Tab>();
@@ -21,6 +28,10 @@ namespace Platformus.Website
       return tabs.OrderBy(m => m.Position);
     }
 
+    /// <summary>
+    /// Gets all the members of the given class and its parent one.
+    /// </summary>
+    /// <param name="class">A class to get members of.</param>
     public static IEnumerable<Member> GetMembers(this Class @class)
     {
       List<Member> members = new List<Member>();
@@ -33,6 +44,11 @@ namespace Platformus.Website
       return members.OrderBy(m => m.Position);
     }
 
+    /// <summary>
+    /// Gets all the members of the given class and its parent one that marked as visible in list.
+    /// "Visible in list" means that the member's value should be displayed in the object list in the backend.
+    /// </summary>
+    /// <param name="class">A class to get members of.</param>
     public static IEnumerable<Member> GetVisibleInListMembers(this Class @class)
     {
       List<Member> members = new List<Member>();

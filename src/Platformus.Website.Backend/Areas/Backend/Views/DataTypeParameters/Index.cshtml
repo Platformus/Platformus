@@ -6,6 +6,12 @@
   this.ViewBag.Title = this.Localizer["Data Type Parameters"];
   this.ViewBag.ActiveMenuItem = "datatypes";
 }
+@section breadcrumbs {
+  <breadcrumbs>
+    <breadcrumb href="/backend/datatypes">@Localizer["Data types"]</breadcrumb>
+    <breadcrumb href="/backend/datatypes/edit/@Model.DataType.Id">@Model.DataType.Name</breadcrumb>
+  </breadcrumbs>
+}
 @section title {
   @ViewBag.Title
 }

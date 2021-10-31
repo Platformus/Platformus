@@ -11,6 +11,7 @@ namespace Platformus.Website.Backend.ViewModels.DataSources
   public class IndexViewModel : ViewModelBase
   {
     public DataSourceFilter Filter { get; set; }
+    public EndpointViewModel Endpoint { get; set; }
     public string Sorting { get; set; }
     public int Offset { get; set; }
     public int Limit { get; set; }

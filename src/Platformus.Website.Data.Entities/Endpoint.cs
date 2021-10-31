@@ -7,7 +7,8 @@ using Magicalizer.Data.Entities.Abstractions;
 namespace Platformus.Website.Data.Entities
 {
   /// <summary>
-  /// Represents an endpoint. The endpoints are used to combine URL template with corresponding C# handler class.
+  /// Represents an endpoint.
+  /// The endpoints are used to specify which request processor should process requests with a given URL template.
   /// </summary>
   public class Endpoint : IEntity<int>
   {

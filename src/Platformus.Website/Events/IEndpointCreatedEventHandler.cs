@@ -6,6 +6,9 @@ using Microsoft.AspNetCore.Http;
 
 namespace Platformus.Website.Events
 {
+  /// <summary>
+  /// Describes an event handler that will be automatically executed just after a <see cref="Data.Entities.Endpoint"/> is created.
+  /// </summary>
   public interface IEndpointCreatedEventHandler : IEventHandler<HttpContext, Data.Entities.Endpoint>
   {
   }

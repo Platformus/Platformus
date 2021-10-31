@@ -2,6 +2,7 @@
 // Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information.
 
 using System.Collections.Generic;
+using System.Globalization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Localization;
 using Platformus.Core.Backend.Metadata;
@@ -14,7 +15,8 @@ namespace Platformus.Website.Backend.Metadata
     {
       return new Script[]
       {
-        new Script("/wwwroot.areas.backend.js.platformus.website.min.js", 2000)
+        new Script($"/wwwroot.areas.backend.js.platformus.website.localization.{CultureInfo.CurrentCulture.TwoLetterISOLanguageName}.min.js", 2000),
+        new Script("/wwwroot.areas.backend.js.platformus.website.min.js", 2010)
       };
     }
 

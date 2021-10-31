@@ -4,6 +4,7 @@
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.AspNetCore.Mvc.ViewFeatures;
 using Microsoft.AspNetCore.Razor.TagHelpers;
+using Microsoft.Extensions.Localization;
 
 namespace Platformus.Core.Backend
 {
@@ -37,12 +38,15 @@ namespace Platformus.Core.Backend
 
     private TagBuilder CreateImageUploader()
     {
+      IStringLocalizer localizer = this.ViewContext.HttpContext.GetStringLocalizer<ImageUploaderFieldTagHelper>();
       TagBuilder tb = ImageUploaderGenerator.Generate(
         this.For.GetIdentity(),
         this.DestinationBaseUrl,
         this.Width,
         this.Height,
-        this.For.GetValue(this.ViewContext)?.ToString()
+        this.For.GetValue(this.ViewContext)?.ToString(),
+        localizer["Upload…"],
+        localizer["Remove"]
       );
 
       tb.AddCssClass("field__image-uploader");

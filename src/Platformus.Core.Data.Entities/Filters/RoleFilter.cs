@@ -11,13 +11,17 @@ namespace Platformus.Core.Filters
     public string Code { get; set; }
     public StringFilter Name { get; set; }
 
+    [FilterShortcut("RolePermissions[].Permission")]
+    public PermissionFilter Permission { get; set; }
+
     public RoleFilter() { }
 
-    public RoleFilter(int? id = null, string code = null, StringFilter name = null)
+    public RoleFilter(int? id = null, string code = null, StringFilter name = null, PermissionFilter permission = null)
     {
       Id = id;
       Code = code;
       Name = name;
+      Permission = permission;
     }
   }
 }

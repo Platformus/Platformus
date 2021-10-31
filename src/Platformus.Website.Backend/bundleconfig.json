@@ -28,5 +28,38 @@
       "renameLocals": true
     },
     "sourceMap": false
+  },
+  {
+    "outputFileName": "wwwroot/areas/backend/js/platformus.website.localization.en.min.js",
+    "inputFiles": [
+      "Areas/Backend/Scripts/localization.en.js"
+    ],
+    "minify": {
+      "enabled": true,
+      "renameLocals": true
+    },
+    "sourceMap": false
+  },
+  {
+    "outputFileName": "wwwroot/areas/backend/js/platformus.website.localization.ru.min.js",
+    "inputFiles": [
+      "Areas/Backend/Scripts/localization.ru.js"
+    ],
+    "minify": {
+      "enabled": true,
+      "renameLocals": true
+    },
+    "sourceMap": false
+  },
+  {
+    "outputFileName": "wwwroot/areas/backend/js/platformus.website.localization.uk.min.js",
+    "inputFiles": [
+      "Areas/Backend/Scripts/localization.uk.js"
+    ],
+    "minify": {
+      "enabled": true,
+      "renameLocals": true
+    },
+    "sourceMap": false
   }
 ]

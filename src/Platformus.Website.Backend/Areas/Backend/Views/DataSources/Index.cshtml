@@ -6,6 +6,12 @@
   this.ViewBag.Title = this.Localizer["Data Sources"];
   this.ViewBag.ActiveMenuItem = "endpoints";
 }
+@section breadcrumbs {
+  <breadcrumbs>
+    <breadcrumb href="/backend/endpoints">@Localizer["Endpoints"]</breadcrumb>
+    <breadcrumb href="/backend/endpoints/edit/@Model.Endpoint.Id">@Model.Endpoint.Name</breadcrumb>
+  </breadcrumbs>
+}
 @section title {
   @ViewBag.Title
 }

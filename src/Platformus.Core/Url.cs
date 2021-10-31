@@ -7,15 +7,44 @@ using Microsoft.AspNetCore.Http;
 
 namespace Platformus
 {
+  /// <summary>
+  /// Helps to build the URLs using the current HTTP(S) request's query string.
+  /// </summary>
   public class Url
   {
+    /// <summary>
+    /// Specifies which parameters should be copied from the current request,
+    /// which ones should be added, replaced, or skipped.
+    /// </summary>
     public class Descriptor
     {
+      /// <summary>
+      /// Gets or sets the parameter's name.
+      /// </summary>
       public string Name { get; set; }
+
+      /// <summary>
+      /// Gets or sets the parameter's value (if parameter should be added or replaced).
+      /// </summary>
       public string Value { get; set; }
+
+      /// <summary>
+      /// Gets or sets value indicating that the parameter should be copied from the current HTTP(S) request's query string.
+      /// </summary>
       public bool TakeFromUrl { get; set; }
+
+      /// <summary>
+      /// Gets or sets value indicating that the parameter should be skipped from the current HTTP(S) request's query string.
+      /// </summary>
       public bool Skip { get; set; }
 
+      /// <summary>
+      /// Initializes a new instance of the <see cref="Descriptor"/> class.
+      /// </summary>
+      /// <param name="name">The parameter's name.</param>
+      /// <param name="value">The parameter's value (if parameter should be added or replaced).</param>
+      /// <param name="takeFromUrl">A value indicating that the parameter should be copied from the current HTTP(S) request's query string.</param>
+      /// <param name="skip">A value indicating that the parameter should be skipped from the current HTTP(S) request's query string.</param>
       public Descriptor(string name = null, object value = null, bool takeFromUrl = false, bool skip = false)
       {
         this.Name = name;
@@ -25,6 +54,14 @@ namespace Platformus
       }
     }
 
+    /// <summary>
+    /// Combines a new URL using the given path and current HTTP(S) request's query string
+    /// according to the provided descriptors.
+    /// </summary>
+    /// <param name="request">The current HTTP(S) request.</param>
+    /// <param name="path">The resulting URL's path (example: '/some/new/path').</param>
+    /// <param name="descriptors">The descriptors specifying which parameters should be copied from the current request,
+    /// which ones should be added, replaced, or skipped.</param>
     public static string Combine(HttpRequest request, string path, params Descriptor[] descriptors)
     {
       StringBuilder result = new StringBuilder();

@@ -12,7 +12,7 @@
     var field = $("<div>").addClass("form__field").addClass("field");
 
     platformus.controls.label.create({ text: member.name }).appendTo(field);
-    platformus.controls.numericTextBox.create(
+    platformus.controls.textBox.create(
       {
         identity: platformus.memberEditors.base.getIdentity(member),
         value: member.property.integerValue,
@@ -22,9 +22,9 @@
           maxValue: platformus.memberEditors.base.getMaxValueDataTypeParameterValue(member)
         }
       }
-    ).appendTo(field);
+    ).attr("data-type", "number")
+      .appendTo(field);
 
-    platformus.controls.numericTextBox.createNumericButtons().appendTo(field);
     return field;
   }
 })(window.platformus = window.platformus || {});

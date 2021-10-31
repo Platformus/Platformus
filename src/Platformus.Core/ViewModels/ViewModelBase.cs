@@ -3,6 +3,9 @@
 
 namespace Platformus.Core.ViewModels
 {
+  /// <summary>
+  /// The base class for all the view models to inherit.
+  /// </summary>
   public abstract class ViewModelBase
   {
   }

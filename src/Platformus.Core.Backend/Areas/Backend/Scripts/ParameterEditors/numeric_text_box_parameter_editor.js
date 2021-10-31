@@ -13,17 +13,17 @@
     var field = $("<div>").addClass("form__field").addClass("field");
 
     platformus.controls.label.create({ identity: identity, text: parameter.name }).appendTo(field);
-    platformus.controls.numericTextBox.create(
+    platformus.controls.textBox.create(
       {
         identity: identity,
         value: platformus.parameterEditors.base.getValue(parameter),
         validation: { isRequired: parameter.isRequired }
       }
     ).attr("data-parameter-code", parameter.code)
+      .attr("data-type", "number")
       .change(platformus.parameterEditors.base.changed)
       .appendTo(field);
 
-    platformus.controls.numericTextBox.createNumericButtons().appendTo(field);
     return field;
   }
 })(window.platformus = window.platformus || {});

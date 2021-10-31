@@ -7,8 +7,17 @@ using ExtCore.Infrastructure;
 
 namespace Platformus
 {
+  /// <summary>
+  /// Creates instances of the types described inside the assemblies discovered and loaded by the ExtCore.
+  /// </summary>
   public class StringActivator
   {
+    /// <summary>
+    /// Creates an instance of the specified type by the full name.
+    /// </summary>
+    /// <typeparam name="T">A type the created object should be cast to.</typeparam>
+    /// <param name="typeFullName">A full type name of an object to create.</param>
+    /// <returns></returns>
     public static T CreateInstance<T>(string typeFullName)
     {
       Type type = StringActivator.GetType(typeFullName);

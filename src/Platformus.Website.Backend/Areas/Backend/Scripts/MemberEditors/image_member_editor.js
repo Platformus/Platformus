@@ -76,7 +76,7 @@
       .addClass("button--positive")
       .addClass("button--minor")
       .attr("type", "button")
-      .html("Upload…");
+      .html(eval("localization.memberEditors.image.upload"));
   }
 
   function createRemoveButton(member, localization) {
@@ -88,6 +88,6 @@
       .addClass("button--negative")
       .addClass("button--minor")
       .attr("type", "button")
-      .html("Remove");
+      .html(eval("localization.memberEditors.image.remove"));
   }
 })(window.platformus = window.platformus || {});

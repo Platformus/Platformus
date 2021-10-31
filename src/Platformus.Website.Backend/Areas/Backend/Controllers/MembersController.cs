@@ -33,8 +33,8 @@ namespace Platformus.Website.Backend.Controllers
 
     public async Task<IActionResult> IndexAsync([FromQuery]MemberFilter filter = null, string sorting = "+position", int offset = 0, int limit = 10)
     {
-      return this.View(IndexViewModelFactory.Create(
-        filter, sorting, offset, limit, await this.Repository.CountAsync(filter),
+      return this.View(await IndexViewModelFactory.CreateAsync(
+        this.HttpContext, filter, sorting, offset, limit, await this.Repository.CountAsync(filter),
         await this.Repository.GetAllAsync(filter, sorting, offset, limit, new Inclusion<Member>(m => m.PropertyDataType), new Inclusion<Member>(m => m.RelationClass))
       ));
     }

@@ -43,6 +43,11 @@
   color: #fff;
 }
 
+.master-detail__breadcrumbs {
+  margin-top: -15px;
+  margin-bottom: -5px;
+}
+
 .master-detail__filter {
   margin-top: 20px;
 }

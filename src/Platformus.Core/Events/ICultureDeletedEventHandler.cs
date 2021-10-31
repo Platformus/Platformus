@@ -7,6 +7,9 @@ using Platformus.Core.Data.Entities;
 
 namespace Platformus.Core.Events
 {
+  /// <summary>
+  /// Describes an event handler that will be automatically executed just after a <see cref="Culture"/> is deleted.
+  /// </summary>
   public interface ICultureDeletedEventHandler : IEventHandler<HttpContext, Culture>
   {
   }

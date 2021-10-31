@@ -1,7 +1,6 @@
 ﻿// Copyright © 2020 Dmitry Sikorsky. All rights reserved.
 // Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information.
 
-using Microsoft.AspNetCore.Html;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.AspNetCore.Mvc.ViewFeatures;
 using Microsoft.AspNetCore.Razor.TagHelpers;
@@ -22,55 +21,35 @@ namespace Platformus.Core.Backend
       if (this.For == null)
         return;
 
-      output.SuppressOutput();
-      output.Content.AppendHtml(this.GenerateField(output.Attributes));
+      output.TagMode = TagMode.StartTagAndEndTag;
+      output.TagName = TagNames.Div;
+      output.Attributes.SetAttribute(AttributeNames.Class, "form__field field" + (string.IsNullOrEmpty(this.Class) ? null : $" {this.Class}"));
+      output.Content.AppendHtml(this.CreateLabel());
+      output.Content.AppendHtml(this.CreateTextBox());
     }
 
-    private TagBuilder GenerateField(TagHelperAttributeList attributes)
+    private TagBuilder CreateLabel()
     {
-      TagBuilder tb = new TagBuilder(TagNames.Div);
+      return FieldGenerator.GenerateLabel(this.For.GetLabel(), this.For.GetIdentity());
+    }
 
-      tb.AddCssClass("form__field field" + (string.IsNullOrEmpty(this.Class) ? null : $" {this.Class}"));
-      tb.InnerHtml.AppendHtml(FieldGenerator.GenerateLabel(this.For.GetLabel(), this.For.GetIdentity()));
+    private TagBuilder CreateTextBox()
+    {
+      TagBuilder tb = TextBoxGenerator.Generate(
+        this.For.GetIdentity(),
+        InputTypes.Text,
+        this.For.GetValue(this.ViewContext)?.ToString(),
+        this.For.HasRequiredAttribute(),
+        this.For.HasStringLengthAttribute() ? this.For.GetMaxStringLength() : null,
+        this.For.IsValid(this.ViewContext)
+      ); ;
 
-      TagBuilder tbTextBox = TextBoxGenerator.Generate(
-        this.For.GetIdentity(), "text", this.For.GetValue(this.ViewContext)?.ToString()
-      );
-
-      tbTextBox.AddCssClass("field__text-box field__text-box--numeric");
+      tb.AddCssClass("field__text-box field__text-box--numeric");
 
       if (this.IsDisabled)
-        tbTextBox.MergeAttribute(AttributeNames.Disabled, "disabled");
+        tb.MergeAttribute(AttributeNames.Disabled, "disabled");
 
-      tb.InnerHtml.AppendHtml(tbTextBox);
-      tb.InnerHtml.AppendHtml(this.GenerateNumericButtons());
-      tb.InnerHtml.AppendHtml(ValidationErrorMessageGenerator.Generate(this.For.GetIdentity()));
-      return tb;
-    }
-
-    private IHtmlContent GenerateNumericButtons()
-    {
-      TagBuilder tb = new TagBuilder(TagNames.Div);
-
-      tb.AddCssClass("field__numeric-buttons");
-      tb.InnerHtml.AppendHtml(this.GenerateNumericButtonUp());
-      tb.InnerHtml.AppendHtml(this.GenerateNumericButtonDown());
-      return tb;
-    }
-
-    private IHtmlContent GenerateNumericButtonUp()
-    {
-      TagBuilder tb = new TagBuilder(TagNames.A);
-
-      tb.AddCssClass("field__numeric-button field__numeric-button--up");
-      return tb;
-    }
-
-    private IHtmlContent GenerateNumericButtonDown()
-    {
-      TagBuilder tb = new TagBuilder(TagNames.A);
-
-      tb.AddCssClass("field__numeric-button field__numeric-button--down");
+      tb.MergeAttribute(AttributeNames.DataType, "number");
       return tb;
     }
   }

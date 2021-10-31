@@ -4,6 +4,7 @@
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.AspNetCore.Mvc.ViewFeatures;
 using Microsoft.AspNetCore.Razor.TagHelpers;
+using Microsoft.Extensions.Localization;
 
 namespace Platformus.Core.Backend
 {
@@ -35,9 +36,12 @@ namespace Platformus.Core.Backend
 
     private TagBuilder CreateFileUploader()
     {
+      IStringLocalizer localizer = this.ViewContext.HttpContext.GetStringLocalizer<FileUploaderFieldTagHelper>();
       TagBuilder tb = FileUploaderGenerator.Generate(
         this.For.GetIdentity(),
-        this.IsMultiple
+        this.IsMultiple,
+        localizer["File not selected"],
+        localizer["Browse…"]
       );
 
       tb.AddCssClass("field__file-uploader");

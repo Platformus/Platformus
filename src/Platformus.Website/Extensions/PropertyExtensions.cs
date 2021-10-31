@@ -5,8 +5,15 @@ using Platformus.Website.Data.Entities;
 
 namespace Platformus.Website
 {
+  /// <summary>
+  /// Contains the extension methods of the <see cref="Property"/>.
+  /// </summary>
   public static class PropertyExtensions
   {
+    /// <summary>
+    /// Gets a property value according to its type.
+    /// </summary>
+    /// <param name="property">A property to get the value of.</param>
     public static object GetValue(this Property property)
     {
       if (property.IntegerValue != null)

@@ -11,6 +11,7 @@
 }
 <filter>
   <text-filter property-path="Name.Contains" label="@Localizer["Name"].Value" />
+  <drop-down-list-filter property-path="Role.Id" options="@Model.RoleOptions" />
   <text-filter property-path="Credential.Identifier.Contains" label="@Localizer["Credential identifier"].Value" />
   <filter-group>
     <filter-label>@Localizer["Created from"]</filter-label>

@@ -36,8 +36,8 @@ namespace Platformus.Core.Backend.Controllers
 
     public async Task<IActionResult> IndexAsync([FromQuery]UserFilter filter = null, string sorting = "+name", int offset = 0, int limit = 10)
     {
-      return this.View(IndexViewModelFactory.Create(
-        sorting, offset, limit, await this.UserRepository.CountAsync(filter),
+      return this.View(await IndexViewModelFactory.CreateAsync(
+        this.HttpContext, sorting, offset, limit, await this.UserRepository.CountAsync(filter),
         await this.UserRepository.GetAllAsync(filter, sorting, offset, limit)
       ));
     }

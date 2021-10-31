@@ -21,6 +21,11 @@ namespace Platformus
     protected static readonly string Key = typeof(ModelStateTempDataTransferAttribute).FullName;
   }
 
+  /// <summary>
+  /// Exports and saves the current model state values (user input) to the database to make it possible to restore it
+  /// using the <see cref="ImportModelStateFromTempDataAttribute"/> attribute after the page is reloaded
+  /// to show the validation errors.
+  /// </summary>
   public class ExportModelStateToTempDataAttribute : ModelStateTempDataTransferAttribute
   {
     public override void OnActionExecuted(ActionExecutedContext filterContext)
@@ -72,6 +77,9 @@ namespace Platformus
     }
   }
 
+  /// <summary>
+  /// Restores saved by the <see cref="ExportModelStateToTempDataAttribute"/> attribute model state values (if present).
+  /// </summary>
   public class ImportModelStateFromTempDataAttribute : ModelStateTempDataTransferAttribute
   {
     public override void OnActionExecuted(ActionExecutedContext filterContext)
@@ -120,6 +128,7 @@ namespace Platformus
     }
   }
 
+  // TODO: consider making internal
   public class ModelStateWrapper
   {
     public string Key { get; set; }
@@ -128,6 +137,7 @@ namespace Platformus
     //public IEnumerable<string> Errors { get; set; }
   }
 
+  // TODO: consider making internal
   public class NoCultureInfoResolver : DefaultContractResolver
   {
     protected override IList<JsonProperty> CreateProperties(Type type, MemberSerialization memberSerialization)

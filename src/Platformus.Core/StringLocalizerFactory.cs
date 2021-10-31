@@ -11,6 +11,7 @@ using Microsoft.Extensions.Options;
 
 namespace Platformus.Core
 {
+  // TODO: consider making internal
   public class StringLocalizerFactory : IStringLocalizerFactory
   {
     private readonly IResourceNamesCache resourceNamesCache = new ResourceNamesCache();

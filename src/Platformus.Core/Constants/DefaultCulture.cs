@@ -3,8 +3,14 @@
 
 namespace Platformus.Core
 {
+  /// <summary>
+  /// Defines the default culture's ID.
+  /// </summary>
   public static class DefaultCulture
   {
+    /// <summary>
+    /// The default culture's ID.
+    /// </summary>
     public const string Id = "en";
   }
 }

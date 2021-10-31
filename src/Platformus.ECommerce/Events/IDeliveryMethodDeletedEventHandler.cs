@@ -7,6 +7,9 @@ using Platformus.ECommerce.Data.Entities;
 
 namespace Platformus.ECommerce.Events
 {
+  /// <summary>
+  /// Describes an event handler that will be automatically executed just after a <see cref="DeliveryMethod"/> is deleted.
+  /// </summary>
   public interface IDeliveryMethodDeletedEventHandler : IEventHandler<HttpContext, DeliveryMethod>
   {
   }

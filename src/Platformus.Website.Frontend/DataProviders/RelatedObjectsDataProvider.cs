@@ -38,7 +38,7 @@ namespace Platformus.Website.Frontend.DataProviders
         ),
       };
 
-    public override string Description => "Loads foreign objects (related to the current page’s one). Supports filtering, sorting, and paging.";
+    public override string Description => "Loads objects related to the current page’s one. Supports filtering, sorting, and paging.";
 
     public override async Task<dynamic> GetDataAsync(HttpContext httpContext, DataSource dataSource)
     {

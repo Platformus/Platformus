@@ -7,6 +7,9 @@ using Platformus.Core.Data.Entities;
 
 namespace Platformus.Core.Events
 {
+  /// <summary>
+  /// Describes an event handler that will be automatically executed just after a <see cref="Configuration"/> is created.
+  /// </summary>
   public interface IConfigurationCreatedEventHandler : IEventHandler<HttpContext, Configuration>
   {
   }

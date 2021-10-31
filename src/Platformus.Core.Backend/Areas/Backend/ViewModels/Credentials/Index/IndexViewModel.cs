@@ -10,6 +10,7 @@ namespace Platformus.Core.Backend.ViewModels.Credentials
   public class IndexViewModel : ViewModelBase
   {
     public CredentialFilter Filter { get; set; }
+    public UserViewModel User { get; set; }
     public string Sorting { get; set; }
     public int Offset { get; set; }
     public int Limit { get; set; }

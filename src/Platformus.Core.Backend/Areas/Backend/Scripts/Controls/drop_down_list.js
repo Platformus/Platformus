@@ -42,7 +42,7 @@
     }
 
     else {
-      dropDownListItem.html("Not selected");
+      dropDownListItem.html("&nbsp;");
     }
 
     return dropDownListItem;

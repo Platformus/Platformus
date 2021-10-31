@@ -7,6 +7,9 @@ using Platformus.Website.Data.Entities;
 
 namespace Platformus.Website.Events
 {
+  /// <summary>
+  /// Describes an event handler that will be automatically executed just after a <see cref="Object"/> is deleted.
+  /// </summary>
   public interface IObjectDeletedEventHandler : IEventHandler<HttpContext, Object>
   {
   }

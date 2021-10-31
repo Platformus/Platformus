@@ -3,8 +3,14 @@
 
 namespace Platformus.Core
 {
+  /// <summary>
+  /// Defines the neutral culture's ID.
+  /// </summary>
   public static class NeutralCulture
   {
+    /// <summary>
+    /// The neutral culture's ID.
+    /// </summary>
     public const string Id = "__";
   }
 }

@@ -3,7 +3,6 @@
 
 using System.Collections.Generic;
 using Platformus.Core.Backend.ViewModels;
-using Platformus.Core.Backend.ViewModels.Shared;
 using Platformus.Website.Backend.ViewModels.Shared;
 using Platformus.Website.Filters;
 
@@ -12,6 +11,7 @@ namespace Platformus.Website.Backend.ViewModels.DataTypeParameters
   public class IndexViewModel : ViewModelBase
   {
     public DataTypeParameterFilter Filter { get; set; }
+    public DataTypeViewModel DataType { get; set; }
     public string Sorting { get; set; }
     public int Offset { get; set; }
     public int Limit { get; set; }

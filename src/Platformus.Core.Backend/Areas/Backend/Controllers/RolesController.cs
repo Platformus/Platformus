@@ -36,8 +36,8 @@ namespace Platformus.Core.Backend.Controllers
 
     public async Task<IActionResult> IndexAsync([FromQuery]RoleFilter filter = null, string sorting = "+position", int offset = 0, int limit = 10)
     {
-      return this.View(IndexViewModelFactory.Create(
-        sorting, offset, limit, await this.RoleRepository.CountAsync(filter),
+      return this.View(await IndexViewModelFactory.CreateAsync(
+        this.HttpContext, sorting, offset, limit, await this.RoleRepository.CountAsync(filter),
         await this.RoleRepository.GetAllAsync(filter, sorting, offset, limit)
       ));
     }

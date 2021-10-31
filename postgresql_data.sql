@@ -2,7 +2,7 @@ BEGIN TRANSACTION;
 
 --
 -- Extension: Platformus.Core
--- Version: 2.5.0
+-- Version: 2.6.0
 --
 
 INSERT INTO public."Users" ("Id","Name","Created") VALUES (1,'Administrator','2017-01-01 00:00:00.000000');
@@ -43,7 +43,7 @@ INSERT INTO public."Cultures" ("Id","Name","IsNeutral","IsFrontendDefault","IsBa
 
 --
 -- Extension: Platformus.Website
--- Version: 2.5.0
+-- Version: 2.6.0
 --
 
 INSERT INTO public."Permissions" ("Id","Code","Name","Position") VALUES (7,'ManageEndpoints','Manage endpoints',700);
@@ -79,9 +79,10 @@ INSERT INTO public."DataTypeParameters" ("Id","DataTypeId","JavaScriptEditorClas
 INSERT INTO public."DataTypeParameters" ("Id","DataTypeId","JavaScriptEditorClassName","Code","Name") VALUES (9,5,'numericTextBox','MinValue','Min value');
 INSERT INTO public."DataTypeParameters" ("Id","DataTypeId","JavaScriptEditorClassName","Code","Name") VALUES (10,5,'numericTextBox','MaxValue','Max value');
 INSERT INTO public."DataTypeParameters" ("Id","DataTypeId","JavaScriptEditorClassName","Code","Name") VALUES (11,7,'checkbox','IsRequired','Is required');
-INSERT INTO public."DataTypeParameters" ("Id","DataTypeId","JavaScriptEditorClassName","Code","Name") VALUES (12,8,'numericTextBox','Width','Width');
-INSERT INTO public."DataTypeParameters" ("Id","DataTypeId","JavaScriptEditorClassName","Code","Name") VALUES (13,8,'numericTextBox','Height','Height');
-INSERT INTO public."DataTypeParameters" ("Id","DataTypeId","JavaScriptEditorClassName","Code","Name") VALUES (14,9,'textBox','Mode','Mode');
+INSERT INTO public."DataTypeParameters" ("Id","DataTypeId","JavaScriptEditorClassName","Code","Name") VALUES (12,8,'checkbox','IsRequired','Is required');
+INSERT INTO public."DataTypeParameters" ("Id","DataTypeId","JavaScriptEditorClassName","Code","Name") VALUES (13,9,'numericTextBox','Width','Width');
+INSERT INTO public."DataTypeParameters" ("Id","DataTypeId","JavaScriptEditorClassName","Code","Name") VALUES (14,9,'numericTextBox','Height','Height');
+INSERT INTO public."DataTypeParameters" ("Id","DataTypeId","JavaScriptEditorClassName","Code","Name") VALUES (15,10,'textBox','Mode','Mode');
 ALTER SEQUENCE "DataTypeParameters_Id_seq" RESTART WITH 8;
 INSERT INTO public."FieldTypes" ("Id","Code","Name","Position","ValidatorCSharpClassName") VALUES (1,'TextBox','Text box',1,NULL);
 INSERT INTO public."FieldTypes" ("Id","Code","Name","Position","ValidatorCSharpClassName") VALUES (2,'TextArea','Text area',2,NULL);
@@ -94,7 +95,7 @@ ALTER SEQUENCE "FieldTypes_Id_seq" RESTART WITH 8;
 
 --
 -- Extension: Platformus.ECommerce
--- Version: 2.5.0
+-- Version: 2.6.0
 --
 
 INSERT INTO public."Permissions" ("Id","Code","Name","Position") VALUES (14,'ManageCategories','Manage categories',1400);

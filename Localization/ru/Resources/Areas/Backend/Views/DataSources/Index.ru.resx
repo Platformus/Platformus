@@ -132,4 +132,7 @@
   <data name="Data Sources" xml:space="preserve">
     <value>Источники данных</value>
   </data>
+  <data name="Endpoints" xml:space="preserve">
+    <value>Конечные точки</value>
+  </data>
 </root>

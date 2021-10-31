@@ -7,7 +7,7 @@ namespace Platformus.Core.Backend
 {
   public static class ImageUploaderGenerator
   {
-    public static TagBuilder Generate(string identity, string destinationBaseUrl = null, int? width = null, int? height = null, string value = null)
+    public static TagBuilder Generate(string identity, string destinationBaseUrl = null, int? width = null, int? height = null, string value = null, string uploadLabel = "Upload…", string removeLabel = "Remove")
     {
       TagBuilder tb = new TagBuilder(TagNames.Div);
 
@@ -24,7 +24,7 @@ namespace Platformus.Core.Backend
       }
 
       tb.InnerHtml.AppendHtml(GenerateImage(value));
-      tb.InnerHtml.AppendHtml(GenerateButtons());
+      tb.InnerHtml.AppendHtml(GenerateButtons(uploadLabel, removeLabel));
       tb.InnerHtml.AppendHtml(GenerageInput(identity, value));
       return tb;
     }
@@ -43,33 +43,33 @@ namespace Platformus.Core.Backend
       return tb;
     }
 
-    private static TagBuilder GenerateButtons()
+    private static TagBuilder GenerateButtons(string uploadLabel, string removeLabel)
     {
       TagBuilder tb = new TagBuilder(TagNames.Div);
 
       tb.AddCssClass("form__buttons form__buttons--minor buttons");
-      tb.InnerHtml.AppendHtml(GenerateUploadButton());
-      tb.InnerHtml.AppendHtml(GenerateRemoveButton());
+      tb.InnerHtml.AppendHtml(GenerateUploadButton(uploadLabel));
+      tb.InnerHtml.AppendHtml(GenerateRemoveButton(removeLabel));
       return tb;
     }
 
-    private static TagBuilder GenerateUploadButton()
+    private static TagBuilder GenerateUploadButton(string uploadLabel)
     {
       TagBuilder tb = new TagBuilder(TagNames.Button);
 
       tb.AddCssClass("image-uploader__upload-button buttons__button buttons__button--minor button button--positive button--minor");
       tb.MergeAttribute(AttributeNames.Type, "button");
-      tb.InnerHtml.AppendHtml("Upload…");
+      tb.InnerHtml.AppendHtml(uploadLabel);
       return tb;
     }
 
-    private static TagBuilder GenerateRemoveButton()
+    private static TagBuilder GenerateRemoveButton(string removeLabel)
     {
       TagBuilder tb = new TagBuilder(TagNames.Button);
 
       tb.AddCssClass("image-uploader__remove-button buttons__button buttons__button--minor button button--negative button--minor");
       tb.MergeAttribute(AttributeNames.Type, "button");
-      tb.InnerHtml.AppendHtml("Remove");
+      tb.InnerHtml.AppendHtml(removeLabel);
       return tb;
     }
 

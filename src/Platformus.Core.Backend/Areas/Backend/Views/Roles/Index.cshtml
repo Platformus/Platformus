@@ -11,6 +11,7 @@
 }
 <filter>
   <text-filter property-path="Name.Contains" label="@Localizer["Name"].Value" />
+  <drop-down-list-filter property-path="Permission.Id" options="@Model.PermissionOptions" />
 </filter>
 <pager offset="@Model.Offset" limit="@Model.Limit" total="@Model.Total" />
 <table sorting="@Model.Sorting">

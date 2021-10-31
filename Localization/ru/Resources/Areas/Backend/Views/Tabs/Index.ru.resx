@@ -120,6 +120,9 @@
   <data name="Back" xml:space="preserve">
     <value>Назад</value>
   </data>
+  <data name="Classes" xml:space="preserve">
+    <value>Классы</value>
+  </data>
   <data name="Create tab" xml:space="preserve">
     <value>Добавить таб</value>
   </data>

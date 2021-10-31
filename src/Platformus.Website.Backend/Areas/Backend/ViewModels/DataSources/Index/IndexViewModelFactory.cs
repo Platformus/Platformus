@@ -3,6 +3,8 @@
 
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http;
 using Platformus.Website.Backend.ViewModels.Shared;
 using Platformus.Website.Data.Entities;
 using Platformus.Website.Filters;
@@ -11,11 +13,14 @@ namespace Platformus.Website.Backend.ViewModels.DataSources
 {
   public static class IndexViewModelFactory
   {
-    public static IndexViewModel Create(DataSourceFilter filter, string sorting, int offset, int limit, int total, IEnumerable<DataSource> dataSources)
+    public static async Task<IndexViewModel> CreateAsync(HttpContext httpContext, DataSourceFilter filter, string sorting, int offset, int limit, int total, IEnumerable<DataSource> dataSources)
     {
+      Data.Entities.Endpoint endpoint = await httpContext.GetStorage().GetRepository<int, Data.Entities.Endpoint, EndpointFilter>().GetByIdAsync((int)filter.Endpoint.Id);
+
       return new IndexViewModel()
       {
         Filter = filter,
+        Endpoint = EndpointViewModelFactory.Create(endpoint),
         Sorting = sorting,
         Offset = offset,
         Limit = limit,

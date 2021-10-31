@@ -25,7 +25,7 @@ namespace Platformus.Core.Backend
 
       output.TagMode = TagMode.StartTagAndEndTag;
       output.TagName = TagNames.Div;
-      output.Attributes.SetAttribute(AttributeNames.Class, "date-time-editor form__field field" + (string.IsNullOrEmpty(this.Class) ? null : $" {this.Class}"));
+      output.Attributes.SetAttribute(AttributeNames.Class, "form__field field" + (string.IsNullOrEmpty(this.Class) ? null : $" {this.Class}"));
       output.Content.AppendHtml(this.CreateLabel());
       output.Content.AppendHtml(this.CreateTextBox());
       output.Content.AppendHtml(this.CreateValidationErrorMessage());

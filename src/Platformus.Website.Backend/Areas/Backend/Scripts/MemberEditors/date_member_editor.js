@@ -9,7 +9,7 @@
   };
 
   function createField(member) {
-    var field = $("<div>").addClass("date-editor").addClass("form__field").addClass("field");
+    var field = $("<div>").addClass("form__field").addClass("field");
 
     platformus.controls.label.create({ text: member.name }).appendTo(field);
     createTextBox(member).appendTo(field);

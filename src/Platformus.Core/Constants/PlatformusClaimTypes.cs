@@ -3,8 +3,14 @@
 
 namespace Platformus.Core
 {
+  /// <summary>
+  /// Defines the claim type names.
+  /// </summary>
   public static class PlatformusClaimTypes
   {
+    /// <summary>
+    /// Permission claim type name. It is used for validating user permissions.
+    /// </summary>
     public const string Permission = "Permission";
   }
 }
