@@ -3,145 +3,147 @@
 
 .master-detail {
   display: flex;
+  position: relative;
   min-height: 100%;
 }
 
 .master-detail__master {
-  padding-bottom: 100px;
-  flex: 0 0 250px;
+  background: #f8f8f8;
+  border-right: 1px solid #f0f0f0;
+  box-sizing: border-box;
+  flex: 0 0 20rem;
+  padding-bottom: 7.5rem;
+  width: 20rem;
   position: relative;
-  width: 250px;
-}
-
-.master-detail__master--primary {
-  background-color: #323232;
-  color: #fff;
+  transition: all ease 0.25s;
 }
 
 .master-detail__master--secondary {
-  background-color: #f0f0f0;
+}
+
+.master-detail__master--expanded {
+  transition: all ease 0.25s;
+}
+
+.master-detail__master--collapsed {
+  flex: 0 0 4rem;
+  width: 4rem;
+  transition: all ease 0.25s;
+}
+
+.master-detail__master--collapsed .platformus__title {
+  opacity: 0;
+  transition: all ease 0.25s;
+}
+
+.master-detail__master--collapsed .menu-item {
+  color: transparent;
+  padding-right: 0;
+}
+
+.master-detail__master--collapsed .menu-group__title {
+  opacity: 0;
+  pointer-events: none;
+  padding-top: 0;
+  padding-bottom: 0;
+  transition: all ease 0.25s;
+}
+
+.master-detail__master--collapsed .menu-group__menu-items {
+  display: block !important;
+}
+
+.master-detail__master--collapsed .menu__menu-group {
+  margin-top: 0;
+  transition: all ease 0.25s;
 }
 
 .master-detail__detail {
+  box-sizing: border-box;
   flex: 1 1 auto;
-  padding: 20px;
+  padding: 1.5rem;
+}
+
+.master-detail__edge {
+  background-color: #ffffa0;
+  cursor: pointer;
+  opacity: 0;
+  position: absolute;
+  right: -0.5rem;
+  top: 0;
+  width: 1rem;
+  height: 100%;
+  z-index: 1;
+  transition: all linear 0.25s;
+}
+
+.master-detail__edge:hover {
+  opacity: 0.75;
+  transition: all linear 0.25s;
+  transition-delay: 0.25s;
 }
 
 .master-detail__heading {
-  padding: 20px;
-}
-
-.master-detail__platformus {
-  background: url(/wwwroot.areas.backend.images.platformus.png) 20px center no-repeat;
-  color: #fff;
-  text-decoration: none;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
   display: block;
-  padding-left: 52px;
+  padding: 1.5rem;
+  transition: all linear 0.25s;
 }
 
-.master-detail__platformus:hover {
-  color: #fff;
+.master-detail__heading--platformus {
+  background: url(/wwwroot.areas.backend.images.platformus.png) 1.5rem center no-repeat;
+  background-size: 1.5rem;
+  padding-left: 3.575rem;
 }
 
-.master-detail__breadcrumbs {
-  margin-top: -15px;
-  margin-bottom: -5px;
-}
-
-.master-detail__filter {
-  margin-top: 20px;
-}
-
-.master-detail__pager {
-  margin-top: 20px;
-}
-
-.master-detail__table {
-  margin-top: 20px;
-  width: 100%;
-}
-
-.master-detail__tree {
-  margin-top: 20px;
-}
-
-.master-detail__form {
-  margin-top: 20px;
-}
-
-.master-detail__buttons {
-  margin-top: 20px;
-}
-
-.master-detail__buttons--minor {
-  margin-top: 5px;
-}
-
-.master-detail__primary-menu-item {
-}
-
-.master-detail__primary-menu-item:hover {
-  background-color: #3c3c3c;
-}
-
-.master-detail__primary-menu-item--active {
-  background: #3c3c3c url(/wwwroot.areas.backend.images.menu_item_active.png) right no-repeat;
-}
-
-.master-detail__primary-menu-item--active-with-secondary-master {
-  background: #3c3c3c url(/wwwroot.areas.backend.images.menu_item_active_with_secondary_master.png) right no-repeat;
-}
-
-.master-detail__secondary-menu-item {
-}
-
-.master-detail__secondary-menu-item:hover {
-  background-color: #f5f5f5;
-}
-
-.master-detail__secondary-menu-item--active {
-  background: #f5f5f5 url(/wwwroot.areas.backend.images.menu_item_active.png) right no-repeat;
+.master-detail__master--collapsed .master-detail__heading--platformus {
+  color: transparent;
+  transition: all linear 0.25s;
 }
 
 .master-detail__user-menu {
   position: absolute;
   left: 0;
-  bottom: 20px;
+  bottom: 1rem;
   width: 100%;
 }
 
-.master-detail__user-menu-item {
-  color: #666;
-}
-
-.master-detail__user-menu-item:hover {
-  color: #999;
-}
-
-@media
-only screen and (-webkit-min-device-pixel-ratio: 2),
-only screen and (   min--moz-device-pixel-ratio: 2),
-only screen and (     -o-min-device-pixel-ratio: 2/1),
-only screen and (        min-device-pixel-ratio: 2),
-only screen and (                min-resolution: 192dpi),
-only screen and (                min-resolution: 2dppx) {
-  .master-detail__platformus {
-    background: url(/wwwroot.areas.backend.images.platformus@2x.png) 20px center no-repeat;
-    background-size: 22px 40px;
-  }
-  
-  .master-detail__primary-menu-item--active {
-    background: #3c3c3c url(/wwwroot.areas.backend.images.menu_item_active@2x.png) right no-repeat;
-    background-size: 5px 10px;
+@media screen and (max-width: 1000px) {
+  .master-detail {
+    display: block;
   }
 
-  .master-detail__primary-menu-item--active-with-secondary-master {
-    background: #3c3c3c url(/wwwroot.areas.backend.images.menu_item_active_with_secondary_master@2x.png) right no-repeat;
-    background-size: 5px 10px;
+  .master-detail__master {
+    border: none;
+    position: absolute;
+    left: -100%;
+    top: 0;
+    width: 100%;
+    min-height: 100%;
+    z-index: 5;
   }
 
-  .master-detail__secondary-menu-item--active {
-    background: #f5f5f5 url(/wwwroot.areas.backend.images.menu_item_active@2x.png) right no-repeat;
-    background-size: 5px 10px;
+  .master-detail__master--secondary {
+    border-left: 1px solid #f0f0f0;
+    transition-delay: 0.25s;
+  }
+
+  .master-detail__master--expanded {
+    left: 0;
+  }
+
+  .master-detail__master--secondary.master-detail__master--expanded {
+    left: 5.75rem;
+    transition-delay: 0.25s;
+  }
+
+  .master-detail__edge {
+    display: none;
+  }
+
+  .master-detail__heading--platformus {
+    margin-left: 4.25rem;
   }
 }

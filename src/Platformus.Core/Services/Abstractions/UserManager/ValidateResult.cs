@@ -6,16 +6,6 @@ using Platformus.Core.Data.Entities;
 namespace Platformus.Core.Services.Abstractions
 {
   /// <summary>
-  /// Describes possible user validation errors.
-  /// </summary>
-  public enum ValidateResultError
-  {
-    CredentialTypeNotFound,
-    CredentialNotFound,
-    SecretNotValid
-  }
-
-  /// <summary>
   /// Describes a user validation result.
   /// </summary>
   public class ValidateResult
@@ -33,7 +23,7 @@ namespace Platformus.Core.Services.Abstractions
     /// <summary>
     /// A user validation error details.
     /// </summary>
-    public ValidateResultError? Error { get; }
+    public ValidateError? Error { get; }
 
     /// <summary>
     /// Initializes a new instance of the <see cref="ValidateResult"/> class.
@@ -41,7 +31,7 @@ namespace Platformus.Core.Services.Abstractions
     /// <param name="user">The validated user.</param>
     /// <param name="success">Indicates if a user validation was successful.</param>
     /// <param name="error">A user validation error details.</param>
-    public ValidateResult(User user = null, bool success = false, ValidateResultError? error = null)
+    public ValidateResult(User user = null, bool success = false, ValidateError? error = null)
     {
       this.User = user;
       this.Success = success;

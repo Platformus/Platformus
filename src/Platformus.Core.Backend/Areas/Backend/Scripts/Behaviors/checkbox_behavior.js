@@ -16,33 +16,19 @@
     $.fn.val = function (value) {
       if (arguments.length == 0) {
         if (this.hasClass("checkbox")) {
-          var value = this.find("input").val();
-
-          if (this.data("useIntegerNumber")) {
-            return value == "1";
-          }
-
-          return value == "true";
+          return JSON.parse(this.find("input").val());
         }
 
         return $val.call(this);
       }
 
       if (this.hasClass("checkbox")) {
-        var result = null;
-        var input = this.find("input");
+        var checkbox = this, input = checkbox.find("input");
+        var result = input.val(JSON.parse(value));
 
-        value = value == true || value == "true" || value == 1 || value == "1";
-
-        if (this.data("useIntegerNumber")) {
-          input.val(value ? 1 : 0);
-        }
-
-        else {
-          input.val(value ? true : false);
-        }
-
-        this.trigger("change");
+        updateIndicator(checkbox);
+        checkbox.trigger("change");
+        input.trigger("change");
         return result;
       }
 
@@ -51,22 +37,22 @@
   }
 
   function defineHandlers() {
-    $(document.body).on("click", ".checkbox", checkboxClickHandler);
+    $(document.body).on("click", ".checkbox", onClick);
   }
 
-  function checkboxClickHandler() {
-    $(this).find(".checkbox__indicator").toggleClass("checkbox__indicator--checked");
+  function onClick() {
+    $(this).val(!$(this).val());
+    updateIndicator($(this));
+    return false;
+  }
 
-    var value = $(this).val();
-
-    if ($(this).data("useIntegerNumber")) {
-      $(this).val(value ? "0" : "1");
+  function updateIndicator(checkbox) {
+    if (checkbox.val()) {
+      checkbox.find(".checkbox__indicator").addClass("checkbox__indicator--checked");
     }
 
     else {
-      $(this).val(value ? "false" : "true");
+      checkbox.find(".checkbox__indicator").removeClass("checkbox__indicator--checked");
     }
-
-    return false;
   }
 })(window.platformus = window.platformus || {});

@@ -14,7 +14,6 @@ using Platformus.Website.Filters;
 
 namespace Platformus.Website.Backend
 {
-  [Area("Backend")]
   [Authorize(Policy = Policies.HasManageMenusPermission)]
   public class MenuItemsController : Core.Backend.Controllers.ControllerBase
   {
@@ -48,17 +47,21 @@ namespace Platformus.Website.Backend
       {
         MenuItem menuItem = CreateOrEditViewModelMapper.Map(
           filter,
-          createOrEdit.Id == null ? new MenuItem() : await this.Repository.GetByIdAsync((int)createOrEdit.Id),
+          createOrEdit.Id == null ?
+            new MenuItem() :
+            await this.Repository.GetByIdAsync(
+              (int)createOrEdit.Id,
+              new Inclusion<MenuItem>(mi => mi.Name.Localizations)
+            ),
           createOrEdit
         );
-
-        await this.CreateOrEditEntityLocalizationsAsync(menuItem);
 
         if (createOrEdit.Id == null)
           this.Repository.Create(menuItem);
 
         else this.Repository.Edit(menuItem);
 
+        await this.MergeEntityLocalizationsAsync(menuItem);
         await this.Storage.SaveAsync();
         Event<IMenuEditedEventHandler, HttpContext, Menu>.Broadcast(this.HttpContext, await this.GetMenuAsync(menuItem));
         return this.RedirectToAction("Index", "Menus");

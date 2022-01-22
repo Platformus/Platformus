@@ -2,24 +2,22 @@
 @* Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information. *@
 @model Platformus.ECommerce.Backend.ViewModels.ECommerce.ProductSelectorFormViewModel
 @inject Microsoft.AspNetCore.Mvc.Localization.IViewLocalizer Localizer
-<div class="pop-up-form__header">
+<div class="pop-up-form__title heading heading--h1">
   @Localizer["Product Selector"]
 </div>
 <div class="pop-up-form__content">
   <div class="item-selector-pop-up-form__items">
-    <table class="item-selector-pop-up-form__table table">
+    <table class="item-selector-pop-up-form__table">
       <columns>
-        @foreach (var tableColumn in this.Model.TableColumns)
-        {
-          <column label="@tableColumn.Label" />
-        }
+        <column label="@Localizer["Category"].Value" />
+        <column label="@Localizer["Name"].Value" />
       </columns>
       <rows>
         @foreach (var product in this.Model.Products)
         {
-          <row class="@(product.Id == this.Model.ProductId ? "table__row--selected" : null)" data-item-value="@product.Id">
-            <cell class="item-selector-pop-up-form__cell">@product.Category.Name</cell>
-            <cell class="item-selector-pop-up-form__cell">@product.Name</cell>
+          <row class="table__row--interactive@(product.Id == this.Model.ProductId ? " table__row--selected" : null)" data-item-value="@product.Id">
+            <cell>@product.Category.Name</cell>
+            <cell>@product.Name</cell>
           </row>
         }
       </rows>

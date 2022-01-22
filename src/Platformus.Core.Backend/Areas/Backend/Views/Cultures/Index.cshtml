@@ -6,19 +6,17 @@
   this.ViewBag.Title = this.Localizer["Cultures"];
   this.ViewBag.ActiveMenuItem = "cultures";
 }
-@section title {
-  @ViewBag.Title
-}
+<title-bar>
+  <neutral-button icon="Icons.Create" href="/backend/cultures/create">@Localizer["Create culture"]</neutral-button>
+</title-bar>
 <filter>
-  <text-filter property-path="Id" label="@Localizer["Two letter country code (ISO 3166)"].Value" />
+  <text-filter property-path="Id" label="@Localizer["Two-letter language code (ISO 639‑1)"].Value" />
   <text-filter property-path="Name.Contains" label="@Localizer["Name"].Value" />
 </filter>
-<pager offset="@Model.Offset" limit="@Model.Limit" total="@Model.Total" />
 <table sorting="@Model.Sorting">
   <columns>
-    <column label="@Localizer["Two letter country code (ISO 3166)"].Value" sorting-property-path="Id" />
+    <column label="@Localizer["Two-letter language code (ISO 639‑1)"].Value" sorting-property-path="Id" />
     <column label="@Localizer["Name"].Value" sorting-property-path="Name" />
-    <column />
   </columns>
   <rows>
     @foreach (var culture in this.Model.Cultures)
@@ -27,7 +25,4 @@
     }
   </rows>
 </table>
-<pager offset="@Model.Offset" limit="@Model.Limit" total="@Model.Total" is-secondary="true" />
-<div class="master-detail__buttons buttons">
-  <positive-button href="/backend/cultures/create">@Localizer["Create culture"]</positive-button>
-</div>
+<pager offset="@Model.Offset" limit="@Model.Limit" total="@Model.Total" />

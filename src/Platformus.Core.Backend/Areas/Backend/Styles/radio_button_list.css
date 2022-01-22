@@ -3,13 +3,5 @@
 
 .radio-button-list {
   display: flex;
-  padding-top: 5px;
-}
-
-.radio-button-list__radio-button {
-  margin-left: 20px;
-}
-
-.radio-button-list__radio-button:first-child {
-  margin: 0;
+  gap: 1.5rem;
 }

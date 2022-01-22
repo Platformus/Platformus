@@ -7,6 +7,8 @@ using Magicalizer.Data.Repositories.Abstractions;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Localization;
+using Platformus.Core.Backend;
 using Platformus.Website.Backend.ViewModels.Forms;
 using Platformus.Website.Data.Entities;
 using Platformus.Website.Events;
@@ -14,18 +16,20 @@ using Platformus.Website.Filters;
 
 namespace Platformus.Website.Backend.Controllers
 {
-  [Area("Backend")]
   [Authorize(Policy = Policies.HasManageFormsPermission)]
   public class FormsController : Core.Backend.Controllers.ControllerBase
   {
+    private IStringLocalizer localizer;
+
     private IRepository<int, Form, FormFilter> Repository
     {
       get => this.Storage.GetRepository<int, Form, FormFilter>();
     }
 
-    public FormsController(IStorage storage)
+    public FormsController(IStorage storage, IStringLocalizer<SharedResource> localizer)
       : base(storage)
     {
+      this.localizer = localizer;
     }
 
     public async Task<IActionResult> IndexAsync()
@@ -60,22 +64,27 @@ namespace Platformus.Website.Backend.Controllers
     public async Task<IActionResult> CreateOrEditAsync(CreateOrEditViewModel createOrEdit)
     {
       if (createOrEdit.Id == null && !await this.IsCodeUniqueAsync(createOrEdit.Code))
-        this.ModelState.AddModelError("code", string.Empty);
+        this.ModelState.AddModelError("code", this.localizer["Value is already in use"]);
 
       if (this.ModelState.IsValid)
       {
         Form form = CreateOrEditViewModelMapper.Map(
-          createOrEdit.Id == null ? new Form() : await this.Repository.GetByIdAsync((int)createOrEdit.Id),
+          createOrEdit.Id == null ?
+            new Form() :
+            await this.Repository.GetByIdAsync(
+              (int)createOrEdit.Id,
+              new Inclusion<Form>(f => f.Name.Localizations),
+              new Inclusion<Form>(f => f.SubmitButtonTitle.Localizations)
+            ),
           createOrEdit
         );
-
-        await this.CreateOrEditEntityLocalizationsAsync(form);
 
         if (createOrEdit.Id == null)
           this.Repository.Create(form);
 
         else this.Repository.Edit(form);
 
+        await this.MergeEntityLocalizationsAsync(form);
         await this.Storage.SaveAsync();
 
         if (createOrEdit.Id == null)

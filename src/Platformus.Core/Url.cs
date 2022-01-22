@@ -16,7 +16,7 @@ namespace Platformus
     /// Specifies which parameters should be copied from the current request,
     /// which ones should be added, replaced, or skipped.
     /// </summary>
-    public class Descriptor
+    public class Parameter
     {
       /// <summary>
       /// Gets or sets the parameter's name.
@@ -39,13 +39,13 @@ namespace Platformus
       public bool Skip { get; set; }
 
       /// <summary>
-      /// Initializes a new instance of the <see cref="Descriptor"/> class.
+      /// Initializes a new instance of the <see cref="Parameter"/> class.
       /// </summary>
       /// <param name="name">The parameter's name.</param>
       /// <param name="value">The parameter's value (if parameter should be added or replaced).</param>
       /// <param name="takeFromUrl">A value indicating that the parameter should be copied from the current HTTP(S) request's query string.</param>
       /// <param name="skip">A value indicating that the parameter should be skipped from the current HTTP(S) request's query string.</param>
-      public Descriptor(string name = null, object value = null, bool takeFromUrl = false, bool skip = false)
+      public Parameter(string name = null, object value = null, bool takeFromUrl = false, bool skip = false)
       {
         this.Name = name;
         this.Value = value == null ? null : value.ToString();
@@ -56,30 +56,30 @@ namespace Platformus
 
     /// <summary>
     /// Combines a new URL using the given path and current HTTP(S) request's query string
-    /// according to the provided descriptors.
+    /// according to the provided parameters.
     /// </summary>
     /// <param name="request">The current HTTP(S) request.</param>
     /// <param name="path">The resulting URL's path (example: '/some/new/path').</param>
-    /// <param name="descriptors">The descriptors specifying which parameters should be copied from the current request,
+    /// <param name="parameters">Specifies which parameters should be copied from the current request,
     /// which ones should be added, replaced, or skipped.</param>
-    public static string Combine(HttpRequest request, string path, params Descriptor[] descriptors)
+    public static string Combine(HttpRequest request, string path, params Parameter[] parameters)
     {
       StringBuilder result = new StringBuilder();
 
-      foreach (Descriptor descriptor in descriptors)
+      foreach (Parameter parameter in parameters)
       {
-        if (!descriptor.Skip)
+        if (!parameter.Skip)
         {
-          string value = descriptor.TakeFromUrl ? request.Query[descriptor.Name].ToString() : descriptor.Value;
+          string value = parameter.TakeFromUrl ? request.Query[parameter.Name].ToString() : parameter.Value;
 
           if (!string.IsNullOrEmpty(value))
-            result.AppendFormat("{0}{1}={2}", result.Length == 0 ? '?' : '&', descriptor.Name, value);
+            result.AppendFormat("{0}{1}={2}", result.Length == 0 ? '?' : '&', parameter.Name, value);
         }
       }
 
       foreach (string key in request.Query.Keys)
       {
-        if (!descriptors.Any(d => d.Name == key))
+        if (!parameters.Any(p => p.Name == key))
         {
           string value = request.Query[key];
 

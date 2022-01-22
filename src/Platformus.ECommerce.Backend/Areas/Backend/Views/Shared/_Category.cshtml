@@ -2,23 +2,22 @@
 @* Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information. *@
 @model Platformus.ECommerce.Backend.ViewModels.Shared.CategoryViewModel
 @inject Microsoft.AspNetCore.Mvc.Localization.IViewLocalizer Localizer
-<tree-node>
-  <tree-node-header>
-    <tree-node-title>
+<node>
+  <node-header  href="/backend/categories/edit/@Model.Id">
+    <node-title>
       @Model.Name
-    </tree-node-title>
-    <tree-node-buttons>
-      <positive-button is-minor="true" href="/backend/categories/edit/@Model.Id">@Localizer["Edit"]</positive-button>
-      <delete-button href="/backend/categories/delete/@Model.Id"></delete-button>
-    </tree-node-buttons>
-  </tree-node-header>
-  <tree-node-content>
+    </node-title>
+    <node-controls>
+      <delete-button href="/backend/categories/delete/@Model.Id" />
+    </node-controls>
+  </node-header>
+  <node-content>
     @foreach (var category in this.Model.Categories)
     {
       <partial name="_Category" for="@category" />
     }
-    <tree-node-buttons>
-      <positive-button is-minor="true" href="/backend/categories/create?owner.id.equals=@Model.Id">@Localizer["Create category"]</positive-button>
-    </tree-node-buttons>
-  </tree-node-content>
-</tree-node>
+    <node-controls>
+      <neutral-button is-minor="true" icon="Icons.Create" href="/backend/categories/create?owner.id.equals=@Model.Id">@Localizer["Create category"]</neutral-button>
+    </node-controls>
+  </node-content>
+</node>

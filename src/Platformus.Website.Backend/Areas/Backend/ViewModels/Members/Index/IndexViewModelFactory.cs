@@ -25,7 +25,7 @@ namespace Platformus.Website.Backend.ViewModels.Members
         Offset = offset,
         Limit = limit,
         Total = total,
-        Members = members.Select(MemberViewModelFactory.Create)
+        Members = members.Select(MemberViewModelFactory.Create).ToList()
       };
     }
   }

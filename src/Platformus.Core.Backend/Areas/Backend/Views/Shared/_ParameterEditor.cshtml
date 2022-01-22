@@ -1,0 +1,23 @@
+﻿@* Copyright © 2021 Dmitry Sikorsky. All rights reserved. *@
+@* Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information. *@
+@model Platformus.Core.Backend.ViewModels.Shared.ParameterEditorViewModel
+@if (!string.IsNullOrEmpty(this.Model.Description))
+{
+  <div class="content__description">
+    @Model.Description
+  </div>
+}
+@if (this.Model.ParameterGroups != null)
+{
+  foreach (var parameterGroup in this.Model.ParameterGroups)
+  {
+    if (parameterGroup.Parameters.Count() != 0)
+    {
+      <h2 class="content__subtitle heading heading--h2">@parameterGroup.Name</h2>
+      foreach (var parameter in parameterGroup.Parameters)
+      {
+        <partial name="ParameterEditors/_@parameter.ParameterEditorCode" for="@parameter" />
+      }
+    }
+  }
+}

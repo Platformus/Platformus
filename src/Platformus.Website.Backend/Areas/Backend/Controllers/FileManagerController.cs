@@ -18,7 +18,6 @@ using Platformus.Website.Filters;
 
 namespace Platformus.Website.Backend.Controllers
 {
-  [Area("Backend")]
   [Authorize(Policy = Policies.HasManageFileManagerPermission)]
   public class FileManagerController : Core.Backend.Controllers.ControllerBase
   {
@@ -50,7 +49,7 @@ namespace Platformus.Website.Backend.Controllers
     {
       foreach (IFormFile source in files)
       {
-        string filename = ContentDispositionHeaderValue.Parse(source.ContentDisposition).FileName.ToString().Trim('"');
+        string filename = source.FileName;
 
         filename = Path.GetFileName(filename);
         filename = this.filenameSanitizer.SanitizeFilename(filename);

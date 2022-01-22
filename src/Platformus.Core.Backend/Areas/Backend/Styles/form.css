@@ -4,33 +4,26 @@
 .form {
 }
 
-.form__title {
-  margin-top: 20px;
-}
-
 .form__field {
-  margin-top: 10px;
+  margin-top: 1.5rem;
+  position: relative;
+  width: 35rem;
 }
 
-.form__field--separated {
-  margin-top: 20px;
+.form__field--unlimited {
+  width: auto;
 }
 
 .form__buttons {
-  margin-top: 20px;
+  margin-top: 1.5rem;
 }
 
 .form__buttons--minor {
-  margin-top: 5px;
+  margin-top: 0.75rem;
 }
 
-.form__description {
-  color: #ccc;
-  font-style: italic;
-  margin-top: 10px;
-}
-
-.form__table {
-  margin-top: 10px;
-  width: 100%;
+@media screen and (max-width: 1000px) {
+  .form__field {
+    width: auto;
+  }
 }

@@ -12,6 +12,7 @@ namespace Platformus.Core.Backend.ViewModels.Shared
       return new VariableViewModel()
       {
         Id = variable.Id,
+        ConfigurationId = variable.ConfigurationId,
         Name = variable.Name,
         Value = variable.Value
       };

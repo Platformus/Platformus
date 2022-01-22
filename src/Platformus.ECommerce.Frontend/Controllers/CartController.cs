@@ -7,14 +7,13 @@ using System.Threading.Tasks;
 using Magicalizer.Data.Repositories.Abstractions;
 using Microsoft.AspNetCore.Mvc;
 using Platformus.ECommerce.Data.Entities;
-using Platformus.ECommerce.Extensions;
 using Platformus.ECommerce.Filters;
 
 namespace Platformus.ECommerce.Frontend.Controllers
 {
   public class CartController : Core.Frontend.Controllers.ControllerBase
   {
-    private const string CartId = "CartId";
+    private const string cartId = "cart_id";
 
     private IRepository<int, Product, ProductFilter> ProductRepository
     {
@@ -46,7 +45,6 @@ namespace Platformus.ECommerce.Frontend.Controllers
       position.ProductId = productId;
       position.Price = product.Price;
       position.Quantity = 1m;
-      position.Subtotal = position.GetSubtotal();
       this.PositionRepository.Create(position);
       await this.Storage.SaveAsync();
       return this.Ok();
@@ -68,7 +66,7 @@ namespace Platformus.ECommerce.Frontend.Controllers
 
             this.CartRepository.Delete(cart.Id);
             await this.Storage.SaveAsync();
-            this.Response.Cookies.Delete(CartId);
+            this.Response.Cookies.Delete(cartId);
           }
 
           return this.Ok();
@@ -95,7 +93,7 @@ namespace Platformus.ECommerce.Frontend.Controllers
         cart.Created = DateTime.Now;
         this.CartRepository.Create(cart);
         await this.Storage.SaveAsync();
-        this.Response.Cookies.Append(CartId, cart.ClientSideId.ToString());
+        this.Response.Cookies.Append(cartId, cart.ClientSideId.ToString());
         return cart;
       }
     }

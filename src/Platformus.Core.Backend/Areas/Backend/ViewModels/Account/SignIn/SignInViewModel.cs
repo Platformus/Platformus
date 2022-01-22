@@ -7,7 +7,7 @@ namespace Platformus.Core.Backend.ViewModels.Account
 {
   public class SignInViewModel : ViewModelBase
   {
-    public string Next { get; set; }
+    public string TargetUrl { get; set; }
 
     [Display(Name = "Email")]
     [Required]

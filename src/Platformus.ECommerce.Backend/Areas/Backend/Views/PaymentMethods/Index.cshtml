@@ -6,18 +6,16 @@
   this.ViewBag.Title = this.Localizer["Payment Methods"];
   this.ViewBag.ActiveMenuItem = "paymentmethods";
 }
-@section title {
-  @ViewBag.Title
-}
+<title-bar>
+  <neutral-button icon="Icons.Create" href="/backend/paymentmethods/create">@Localizer["Create payment method"]</neutral-button>
+</title-bar>
 <filter>
   <text-filter property-path="Name.Value.Contains" label="@Localizer["Name"].Value" />
 </filter>
-<pager offset="@Model.Offset" limit="@Model.Limit" total="@Model.Total" />
 <table sorting="@Model.Sorting">
   <columns>
     <column label="@Localizer["Name"].Value" sorting-property-path="@ViewContext.HttpContext.CreateLocalizedSorting("Name")" />
     <column label="@Localizer["Position"].Value" sorting-property-path="Position" />
-    <column />
   </columns>
   <rows>
     @foreach (var paymentMethod in this.Model.PaymentMethods)
@@ -26,7 +24,4 @@
     }
   </rows>
 </table>
-<pager offset="@Model.Offset" limit="@Model.Limit" total="@Model.Total" is-secondary="true" />
-<div class="master-detail__buttons buttons">
-  <positive-button href="/backend/paymentmethods/create">@Localizer["Create payment method"]</positive-button>
-</div>
+<pager offset="@Model.Offset" limit="@Model.Limit" total="@Model.Total" />

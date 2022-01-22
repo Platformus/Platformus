@@ -17,7 +17,9 @@ namespace Platformus.Website.Backend.ViewModels.Shared
         Name = menuItem.Name.GetLocalizationValue(),
         MenuItems = menuItem.MenuItems == null ?
           Array.Empty<MenuItemViewModel>() :
-          menuItem.MenuItems.Select(MenuItemViewModelFactory.Create).ToList()
+          menuItem.MenuItems
+            .OrderBy(mi => mi.Position)
+            .Select(MenuItemViewModelFactory.Create).ToList()
       };
     }
   }

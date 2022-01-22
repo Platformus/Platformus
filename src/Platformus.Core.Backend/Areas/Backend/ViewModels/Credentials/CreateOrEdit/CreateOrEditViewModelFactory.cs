@@ -34,7 +34,7 @@ namespace Platformus.Core.Backend.ViewModels.Credentials
     {
       return (await httpContext.GetStorage().GetRepository<int, CredentialType, CredentialTypeFilter>().GetAllAsync()).Select(
         ct => new Option(ct.Name, ct.Id.ToString())
-      );
+      ).ToList();
     }
   }
 }

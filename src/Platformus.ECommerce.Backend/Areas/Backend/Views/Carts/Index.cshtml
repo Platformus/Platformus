@@ -6,9 +6,7 @@
   this.ViewBag.Title = this.Localizer["Carts"];
   this.ViewBag.ActiveMenuItem = "carts";
 }
-@section title {
-  @ViewBag.Title
-}
+<title-bar />
 <filter>
   <filter-group>
     <filter-label>@Localizer["Created from"]</filter-label>
@@ -17,13 +15,11 @@
     <date-filter property-path="Created.To" />
   </filter-group>
 </filter>
-<pager offset="@Model.Offset" limit="@Model.Limit" total="@Model.Total" />
 <table sorting="@Model.Sorting">
   <columns>
     <column label="@Localizer["#"].Value" sorting-property-path="Id" />
     <column label="@Localizer["Total"].Value" />
     <column label="@Localizer["Created"].Value" sorting-property-path="Created" />
-    <column />
   </columns>
   <rows>
     @foreach (var cart in this.Model.Carts)
@@ -32,4 +28,4 @@
     }
   </rows>
 </table>
-<pager offset="@Model.Offset" limit="@Model.Limit" total="@Model.Total" is-secondary="true" />
+<pager offset="@Model.Offset" limit="@Model.Limit" total="@Model.Total" />

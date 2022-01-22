@@ -120,8 +120,14 @@
   <data name="Cancel" xml:space="preserve">
     <value>Отмена</value>
   </data>
+  <data name="Class" xml:space="preserve">
+    <value>Класс</value>
+  </data>
   <data name="Member Selector" xml:space="preserve">
     <value>Выбор члена класса</value>
+  </data>
+  <data name="Name" xml:space="preserve">
+    <value>Название</value>
   </data>
   <data name="Select" xml:space="preserve">
     <value>Выбрать</value>

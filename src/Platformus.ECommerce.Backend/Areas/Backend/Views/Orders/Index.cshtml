@@ -6,13 +6,13 @@
   this.ViewBag.Title = this.Localizer["Orders"];
   this.ViewBag.ActiveMenuItem = "orders";
 }
-@section title {
-  @ViewBag.Title
-}
+<title-bar>
+  <neutral-button icon="Icons.Create" href="/backend/orders/create">@Localizer["Create order"]</neutral-button>
+</title-bar>
 <filter>
-  <drop-down-list-filter property-path="OrderState.Id.Equals" options="@Model.OrderStateOptions" />
-  <drop-down-list-filter property-path="DeliveryMethod.Id.Equals" options="@Model.DeliveryMethodOptions" />
-  <drop-down-list-filter property-path="PaymentMethod.Id.Equals" options="@Model.PaymentMethodOptions" />
+  <drop-down-list-filter property-path="OrderState.Id" options="@Model.OrderStateOptions" />
+  <drop-down-list-filter property-path="DeliveryMethod.Id" options="@Model.DeliveryMethodOptions" />
+  <drop-down-list-filter property-path="PaymentMethod.Id" options="@Model.PaymentMethodOptions" />
   <text-filter property-path="CustomerPhone.Contains" label="@Localizer["Customer phone"].Value" />
   <filter-group>
     <filter-label>@Localizer["Created from"]</filter-label>
@@ -21,7 +21,6 @@
     <date-filter property-path="Created.To" />
   </filter-group>
 </filter>
-<pager offset="@Model.Offset" limit="@Model.Limit" total="@Model.Total" />
 <table sorting="@Model.Sorting">
   <columns>
     <column label="@Localizer["#"].Value" sorting-property-path="Id" />
@@ -31,7 +30,6 @@
     <column label="@Localizer["Customer"].Value" />
     <column label="@Localizer["Total"].Value" />
     <column label="@Localizer["Created"].Value" sorting-property-path="Created" />
-    <column />
   </columns>
   <rows>
     @foreach (var order in this.Model.Orders)
@@ -40,7 +38,4 @@
     }
   </rows>
 </table>
-<pager offset="@Model.Offset" limit="@Model.Limit" total="@Model.Total" is-secondary="true" />
-<div class="master-detail__buttons buttons">
-  <positive-button href="/backend/orders/create">@Localizer["Create order"]</positive-button>
-</div>
+<pager offset="@Model.Offset" limit="@Model.Limit" total="@Model.Total" />

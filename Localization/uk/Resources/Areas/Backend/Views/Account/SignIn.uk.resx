@@ -117,9 +117,6 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="Forgot your password?" xml:space="preserve">
-    <value>Забули свій пароль?</value>
-  </data>
   <data name="Reset password" xml:space="preserve">
     <value>Скинути пароль</value>
   </data>

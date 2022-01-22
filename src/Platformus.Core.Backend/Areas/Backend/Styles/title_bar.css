@@ -1,0 +1,30 @@
+﻿/* Copyright © 2021 Dmitry Sikorsky. All rights reserved. */
+/* Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information. */
+
+.title-bar {
+  display: flex;
+  justify-content: space-between;
+}
+
+.title-bar__title {
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+}
+
+.title-bar__buttons {
+}
+
+@media screen and (max-width: 1000px) {
+  .title-bar {
+    flex-direction: column;
+  }
+
+  .title-bar__title {
+    padding-left: 4.25rem;
+  }
+
+  .title-bar__buttons {
+    margin-top: 1.5rem;
+  }
+}

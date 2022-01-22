@@ -13,6 +13,7 @@ namespace Platformus.Core.Backend
     public override void Process(TagHelperContext context, TagHelperOutput output)
     {
       output.TagName = TagNames.A;
+      output.TagMode = TagMode.StartTagAndEndTag;
       output.Attributes.SetAttribute(AttributeNames.Class, "breadcrumbs__breadcrumb");
       output.Attributes.SetAttribute(AttributeNames.Href, this.Href);
       output.PostElement.SetHtmlContent(this.CreateSeparator());

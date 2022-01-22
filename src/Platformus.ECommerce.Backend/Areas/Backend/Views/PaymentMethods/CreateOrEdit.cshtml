@@ -3,18 +3,15 @@
 @model Platformus.ECommerce.Backend.ViewModels.PaymentMethods.CreateOrEditViewModel
 @inject Microsoft.AspNetCore.Mvc.Localization.IViewLocalizer Localizer
 @{
-  this.ViewBag.Title = (this.Model.Id == null ? this.Localizer["Create Payment Method"].Value : this.Localizer["Edit Payment Method"].Value);
+  this.ViewBag.Title = (this.Model.Id == null ? this.Localizer["Create Payment Method"] : this.Localizer["Edit Payment Method"]);
   this.ViewBag.ActiveMenuItem = "paymentmethods";
 }
-@section title {
-  @ViewBag.Title
-}
-<form class="master-detail__form form" method="post">
-  <single-line-text-field for="Code" />
-  <multilingual-single-line-text-field for="Name" localizations="this.Model.NameLocalizations" />
-  <numeric-field for="Position" />
-  <div class="form__buttons buttons">
+<form class="form" method="post">
+  <title-bar>
     <submit-button>@Localizer["Save"]</submit-button>
     <neutral-button href="/backend/paymentmethods">@Localizer["Cancel"]</neutral-button>
-  </div>
+  </title-bar>
+  <single-line-text-field for="Code" />
+  <multilingual-single-line-text-field for="Name" localizations="this.Model.NameLocalizations" />
+  <integer-field for="Position" />
 </form>

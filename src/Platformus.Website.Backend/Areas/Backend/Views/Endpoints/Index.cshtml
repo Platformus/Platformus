@@ -6,21 +6,18 @@
   this.ViewBag.Title = this.Localizer["Endpoints"];
   this.ViewBag.ActiveMenuItem = "endpoints";
 }
-@section title {
-  @ViewBag.Title
-}
+<title-bar>
+  <neutral-button icon="Icons.Create" href="/backend/endpoints/create">@Localizer["Create endpoint"]</neutral-button>
+</title-bar>
 <filter>
   <text-filter property-path="Name.Contains" label="@Localizer["Name"].Value" />
   <text-filter property-path="UrlTemplate.Contains" label="@Localizer["URL template"].Value" />
 </filter>
-<pager offset="@Model.Offset" limit="@Model.Limit" total="@Model.Total" />
 <table sorting="@Model.Sorting">
   <columns>
     <column label="@Localizer["Name"].Value" sorting-property-path="Id" />
     <column label="@Localizer["URL template"].Value" sorting-property-path="UrlTemplate" />
     <column label="@Localizer["Position"].Value" sorting-property-path="Position" />
-    <column label="@Localizer["Data sources"].Value" />
-    <column />
   </columns>
   <rows>
     @foreach (var endpoint in this.Model.Endpoints)
@@ -29,7 +26,4 @@
     }
   </rows>
 </table>
-<pager offset="@Model.Offset" limit="@Model.Limit" total="@Model.Total" is-secondary="true" />
-<div class="master-detail__buttons buttons">
-  <positive-button href="/backend/endpoints/create">@Localizer["Create endpoint"]</positive-button>
-</div>
+<pager offset="@Model.Offset" limit="@Model.Limit" total="@Model.Total" />

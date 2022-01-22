@@ -6,7 +6,15 @@
 }
 
 .image-view__image {
+  border: 1px solid #f0f0f0;
+  border-radius: 0.25rem;
   display: block;
-  max-width: 450px;
-  max-height: 450px;
+  max-width: 35rem;
+  max-height: 35rem;
+}
+
+@media screen and (max-width: 1000px) {
+  .image-view__image {
+    max-width: 100%;
+  }
 }

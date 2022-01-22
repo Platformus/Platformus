@@ -16,7 +16,7 @@ namespace Platformus.Core.Services.Defaults
 {
   public class DefaultCleaningManager : ICleaningManager
   {
-    public async Task CleanupAsync(IServiceProvider serviceProvider)
+    public async Task CleanUpAsync(IServiceProvider serviceProvider)
     {
       IStorage storage = serviceProvider.CreateScope().ServiceProvider.GetService<IStorage>();
       IRepository<Guid, ModelState, ModelStateFilter> repository = storage.GetRepository<Guid, ModelState, ModelStateFilter>();

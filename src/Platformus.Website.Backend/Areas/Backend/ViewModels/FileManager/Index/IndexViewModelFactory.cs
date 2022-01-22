@@ -18,7 +18,7 @@ namespace Platformus.Website.Backend.ViewModels.FileManager
         Offset = offset,
         Limit = limit,
         Total = total,
-        Files = files.Select(FileViewModelFactory.Create)
+        Files = files.Select(FileViewModelFactory.Create).ToList()
       };
     }
   }

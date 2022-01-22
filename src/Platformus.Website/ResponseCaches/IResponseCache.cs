@@ -4,13 +4,14 @@
 using System;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
+using Platformus.Core;
 
 namespace Platformus.Website.ResponseCaches
 {
   /// <summary>
   /// Describes a HTTP(S) response cache.
   /// </summary>
-  public interface IResponseCache
+  public interface IResponseCache : IParameterized
   {
     /// <summary>
     /// Gets a cached HTTP(S) response for the current HTTP(S) request's URL.

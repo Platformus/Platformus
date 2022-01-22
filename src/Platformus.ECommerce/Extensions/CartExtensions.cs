@@ -17,7 +17,7 @@ namespace Platformus.ECommerce
     /// <param name="cart">A cart to sum up positions' subtotals of.</param>
     public static decimal GetTotal(this Cart cart)
     {
-      return cart.Positions.Sum(p => p.Subtotal);
+      return cart.Positions.Sum(p => p.Price * p.Quantity);
     }
   }
 }

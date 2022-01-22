@@ -22,16 +22,16 @@ namespace Platformus.Website.Frontend.DataProviders
       {
         new ParameterGroup(
           "General",
-          new Parameter("RelationMemberId", "Relation member", JavaScriptEditorClassNames.MemberSelector),
+          new Parameter("RelationMemberId", "Relation member", ParameterEditorCodes.MemberSelector),
           new Parameter(
             "RelationType",
             "Relation type",
+            Core.ParameterEditorCodes.RadioButtonList,
             new Option[]
             {
               new Option("Primary", "Primary"),
               new Option("Foreign", "Foreign")
             },
-            "radioButtonList",
             "Primary",
             true
           )
@@ -61,7 +61,7 @@ namespace Platformus.Website.Frontend.DataProviders
       };
 
       Object @object = (await httpContext.GetStorage().GetRepository<int, Object, ObjectFilter>().GetAllAsync(
-        new ObjectFilter(stringValue: new LocalizationFilter(value: new StringFilter(equals: httpContext.Request.GetUrl()))),
+        new ObjectFilter(stringValue: new LocalizationFilter(value: new StringFilter(equals: httpContext.Request.GetUrlWithoutCultureSegment()))),
         inclusions: inclusions
       )).FirstOrDefault();
 

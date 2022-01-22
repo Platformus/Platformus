@@ -20,7 +20,6 @@ using Platformus.Website.Filters;
 
 namespace Platformus.Website.Backend.Controllers
 {
-  [Area("Backend")]
   [Authorize(Policy = Policies.HasManageObjectsPermission)]
   public class ObjectsController : Core.Backend.Controllers.ControllerBase
   {
@@ -46,6 +45,16 @@ namespace Platformus.Website.Backend.Controllers
       get => this.Storage.GetRepository<int, Relation, RelationFilter>();
     }
 
+    private IRepository<int, Dictionary, DictionaryFilter> DictionaryRepository
+    {
+      get => this.Storage.GetRepository<int, Dictionary, DictionaryFilter>();
+    }
+
+    private IRepository<int, Localization, LocalizationFilter> LocalizationRepository
+    {
+      get => this.Storage.GetRepository<int, Localization, LocalizationFilter>();
+    }
+
     public ObjectsController(IStorage storage, IWebHostEnvironment webHostEnvironment)
       : base(storage)
     {
@@ -58,7 +67,6 @@ namespace Platformus.Website.Backend.Controllers
         this.HttpContext, filter, sorting, offset, limit, await this.ObjectRepository.CountAsync(filter),
         filter?.Class?.Id == null ? null : await this.ObjectRepository.GetAllAsync(
           filter, sorting, offset, limit,
-          new Inclusion<Object>("Properties.Member"),
           new Inclusion<Object>("Properties.StringValue.Localizations")
         )
       ));
@@ -70,7 +78,7 @@ namespace Platformus.Website.Backend.Controllers
     {
       Object @object = id == null ? null : await this.ObjectRepository.GetByIdAsync(
         (int)id,
-        new Inclusion<Object>("Properties.Member"),
+        new Inclusion<Object>("Properties.Member.PropertyDataType"),
         new Inclusion<Object>("Properties.StringValue.Localizations"),
         new Inclusion<Object>("PrimaryRelations.Member"),
         new Inclusion<Object>("ForeignRelations.Member")
@@ -87,9 +95,19 @@ namespace Platformus.Website.Backend.Controllers
     {
       if (this.ModelState.IsValid)
       {
+        Class @class = await this.ClassRepository.GetByIdAsync(
+          (int)filter.Class.Id,
+          new Inclusion<Class>(c => c.Tabs),
+          new Inclusion<Class>(c => c.Parent.Tabs),
+          new Inclusion<Class>("Members.PropertyDataType"),
+          new Inclusion<Class>("Members.RelationClass"),
+          new Inclusion<Class>("Parent.Members.PropertyDataType"),
+          new Inclusion<Class>("Parent.Members.RelationClass")
+        );
+
         Object @object = CreateOrEditViewModelMapper.Map(
           filter,
-          createOrEdit.Id == null ? new Object() : await this.ObjectRepository.GetByIdAsync(
+          createOrEdit.Id == null ? new Object() { Properties = new List<Property>() } : await this.ObjectRepository.GetByIdAsync(
             (int)createOrEdit.Id,
             new Inclusion<Object>("Properties.Member"),
             new Inclusion<Object>("Properties.StringValue.Localizations"),
@@ -103,20 +121,9 @@ namespace Platformus.Website.Backend.Controllers
 
         else this.ObjectRepository.Edit(@object);
 
+        this.MergeProperties(@class, @object);
+        await this.MergeRelationsAsync(@object, filter.Primary?.Id);
         await this.Storage.SaveAsync();
-
-        Class @class = await this.ClassRepository.GetByIdAsync(
-          (int)filter.Class.Id,
-          new Inclusion<Class>(c => c.Tabs),
-          new Inclusion<Class>(c => c.Parent.Tabs),
-          new Inclusion<Class>("Members.PropertyDataType"),
-          new Inclusion<Class>("Members.RelationClass"),
-          new Inclusion<Class>("Parent.Members.PropertyDataType"),
-          new Inclusion<Class>("Parent.Members.RelationClass")
-        );
-
-        await this.CreateOrEditPropertiesAsync(@class, @object);
-        await this.CreateOrEditRelationsAsync(filter, @object);
 
         if (createOrEdit.Id == null)
           Event<IObjectCreatedEventHandler, HttpContext, Object>.Broadcast(this.HttpContext, @object);
@@ -148,47 +155,46 @@ namespace Platformus.Website.Backend.Controllers
       return this.Redirect(this.Request.CombineUrl("/backend/objects"));
     }
 
-    private async Task CreateOrEditPropertiesAsync(Class @class, Object @object)
-    {
-      if (@object.Properties != null)
-        await this.DeletePropertiesAsync(@object);
-
-      await this.CreatePropertiesAsync(@class, @object);
-    }
-
-    private async Task DeletePropertiesAsync(Object @object)
-    {
-      foreach (Property property in @object.Properties)
-        this.PropertyRepository.Delete(property.Id);
-
-      await this.Storage.SaveAsync();
-      @object.Properties = null;
-    }
-
-    private async Task CreatePropertiesAsync(Class @class, Object @object)
+    private void MergeProperties(Class @class, Object @object)
     {
       foreach (string key in this.Request.Form.Keys)
       {
         if (key.StartsWith("propertyMember"))
         {
-          string memberIdAndCultureCode = key.Replace("propertyMember", string.Empty);
-          string memberId = memberIdAndCultureCode.Remove(memberIdAndCultureCode.Length - 2);
-          string cultureId = memberIdAndCultureCode.Substring(memberIdAndCultureCode.Length - 2);
+          int memberId;
+          string cultureId = null;
 
-          await this.CreatePropertyAsync(@class, @object, int.Parse(memberId), cultureId, this.Request.Form[key]);
+          if (char.IsDigit(key[key.Length - 1]))
+            memberId = int.Parse(key.Replace("propertyMember", string.Empty));
+
+          else
+          {
+            memberId = int.Parse(key.Remove(key.Length - 2).Replace("propertyMember", string.Empty));
+            cultureId = key.Substring(key.Length - 2);
+          }
+
+          this.MergeProperty(@class, @object, memberId, cultureId, this.Request.Form[key]);
         }
       }
-
-      await this.Storage.SaveAsync();
     }
 
-    private async Task CreatePropertyAsync(Class @class, Object @object, int memberId, string cultureId, string value)
+    private void MergeProperty(Class @class, Object @object, int memberId, string cultureId, string value)
     {
-      Member member = @class.GetMembers().FirstOrDefault(m => m.Id == memberId);
-      Property property = @object.Properties?.FirstOrDefault(p => p.MemberId == memberId) ?? new Property();
+      Property property = @object.Properties.FirstOrDefault(p => p.MemberId == memberId);
 
-      property.ObjectId = @object.Id;
-      property.MemberId = memberId;
+      if (property == null)
+      {
+        property = new Property();
+        property.Object = @object;
+        property.MemberId = memberId;
+        this.PropertyRepository.Create(property);
+        @object.Properties.Add(property);
+      }
+
+      else if (property.Id != 0)
+        this.PropertyRepository.Edit(property);
+
+      Member member = @class.Members.FirstOrDefault(m => m.Id == memberId) ?? @class.Parent.Members.First(m => m.Id == memberId);
 
       if (member.PropertyDataType.StorageDataType == StorageDataTypes.Integer)
         property.IntegerValue = value.ToIntWithDefaultValue(0);
@@ -198,65 +204,53 @@ namespace Platformus.Website.Backend.Controllers
 
       else if (member.PropertyDataType.StorageDataType == StorageDataTypes.String)
       {
-        if (property.StringValueId == null)
+        if (property.StringValue == null)
         {
-          Dictionary stringValue = new Dictionary();
-
-          this.Storage.GetRepository<int, Dictionary, DictionaryFilter>().Create(stringValue);
-          await this.Storage.SaveAsync();
-          property.StringValueId = stringValue.Id;
+          property.StringValue = new Dictionary();
+          this.DictionaryRepository.Create(property.StringValue);
         }
 
-        Localization localization = new Localization();
+        Localization localization = property.StringValue.Localizations?.FirstOrDefault(l => l.CultureId == cultureId);
 
-        localization.DictionaryId = (int)property.StringValueId;
-        localization.CultureId = (await this.HttpContext.GetCultureManager().GetCultureAsync(cultureId)).Id;
-        localization.Value = value;
-        this.Storage.GetRepository<int, Localization, LocalizationFilter>().Create(localization);
+        if (localization == null)
+        {
+          localization = new Localization();
+          localization.Dictionary = property.StringValue;
+          localization.CultureId = cultureId;
+          localization.Value = value;
+          this.LocalizationRepository.Create(localization);
+        }
+
+        else
+        {
+          localization.Value = value;
+          this.LocalizationRepository.Edit(localization);
+        }
       }
 
       else if (member.PropertyDataType.StorageDataType == StorageDataTypes.DateTime)
         property.DateTimeValue = value.ToDateTimeWithDefaultValue(System.DateTime.Now);
+    }
 
-      if (property.Id == 0)
-        this.PropertyRepository.Create(property);
+    private async Task MergeRelationsAsync(Object @object, int? primaryId)
+    {
+      List<Relation> relations = new List<Relation>();
 
-      else
+      foreach (string key in this.Request.Form.Keys)
       {
-        List<Property> properties = new List<Property>();
+        if (key.StartsWith("relationMember") && !string.IsNullOrEmpty(this.Request.Form[key]))
+        {
+          int memberId = int.Parse(key.Replace("relationMember", string.Empty));
 
-        if (@object.Properties != null)
-          properties.AddRange(@object.Properties);
-
-        @object.Properties = properties;
+          foreach (int id in this.Request.Form[key].ToString().Split(',').Select(id => int.Parse(id)))
+            relations.Add(new Relation() { MemberId = memberId, Foreign = @object, PrimaryId = id });
+        }
       }
 
-      await this.Storage.SaveAsync();
-    }
-
-    private async Task CreateOrEditRelationsAsync(ObjectFilter filter, Object @object)
-    {
-      if (@object.ForeignRelations != null)
-        await this.DeleteRelationsAsync(@object);
-
-      await this.CreateRelationsAsync(filter, @object);
-    }
-
-    private async Task DeleteRelationsAsync(Object @object)
-    {
-      foreach (Relation relation in @object.ForeignRelations)
-        this.RelationRepository.Delete(relation.Id);
-
-      await this.Storage.SaveAsync();
-      @object.ForeignRelations = null;
-    }
-
-    private async Task CreateRelationsAsync(ObjectFilter filter, Object @object)
-    {
-      if (filter.Primary?.Id != null)
+      if (primaryId != null)
       {
         Object primaryObject = await this.Storage.GetRepository<int, Object, ObjectFilter>().GetByIdAsync(
-          (int)filter.Primary.Id,
+          (int)primaryId,
           new Inclusion<Object>(o => o.Class.Members),
           new Inclusion<Object>(o => o.Class.Parent.Members)
         );
@@ -264,31 +258,16 @@ namespace Platformus.Website.Backend.Controllers
         int? memberId = primaryObject.Class.GetMembers().FirstOrDefault(m => m.IsRelationSingleParent == true)?.Id;
 
         if (memberId != null)
-          await this.CreateRelationAsync((int)memberId, (int)filter.Primary.Id, @object.Id);
+          relations.Add(new Relation() { MemberId = (int)memberId, Foreign = @object, PrimaryId = (int)primaryId });
       }
+      
+      IEnumerable<Relation> currentRelations = @object.ForeignRelations ?? System.Array.Empty<Relation>();
 
-      foreach (string key in this.Request.Form.Keys)
-      {
-        if (key.StartsWith("relationMember") && !string.IsNullOrEmpty(this.Request.Form[key]))
-        {
-          string memberId = key.Replace("relationMember", string.Empty);
-          IEnumerable<int> primaryIds = this.Request.Form[key].ToString().Split(',').Select(id => int.Parse(id));
+      foreach (Relation relation in currentRelations.Where(cr => !relations.Any(r => r.MemberId == cr.MemberId && r.PrimaryId == cr.PrimaryId)))
+        this.RelationRepository.Delete(relation.Id);
 
-          foreach (int primaryId in primaryIds)
-            await this.CreateRelationAsync(int.Parse(memberId), primaryId, @object.Id);
-        }
-      }
-    }
-
-    private async Task CreateRelationAsync(int memberId, int primaryId, int foreignId)
-    {
-      Relation relation = new Relation();
-
-      relation.MemberId = memberId;
-      relation.PrimaryId = primaryId;
-      relation.ForeignId = foreignId;
-      this.RelationRepository.Create(relation);
-      await this.Storage.SaveAsync();
+      foreach (Relation relation in relations.Where(r => !currentRelations.Any(cr => cr.MemberId == r.MemberId && cr.PrimaryId == r.PrimaryId)))
+        this.RelationRepository.Create(relation);
     }
   }
 }

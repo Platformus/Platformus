@@ -40,11 +40,6 @@ namespace Platformus.ECommerce.Data.Entities
     /// </summary>
     public decimal Quantity { get; set; }
 
-    /// <summary>
-    /// Gets or sets the position subtotal (price multiplied by quantity).
-    /// </summary>
-    public decimal Subtotal { get; set; }
-
     public virtual Cart Cart { get; set; }
     public virtual Order Order { get; set; }
     public virtual Product Product { get; set; }

@@ -1,0 +1,47 @@
+﻿/* Copyright © 2021 Dmitry Sikorsky. All rights reserved. */
+/* Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information. */
+
+.menu-group {
+}
+
+.menu-group__title {
+  cursor: pointer;
+  font-size: 1.25rem;
+  font-weight: 700;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  padding: 0.75rem 3rem 0.75rem 1.5rem;
+  position: relative;
+  overflow: hidden;
+  transition: all ease 0.25s;
+}
+
+.menu-group__title:hover, .menu-group__title:focus {
+  background-color: #ffffa0;
+  transition: all ease 0.25s;
+}
+
+.menu-group__title::after {
+  content: '';
+  background: url(/wwwroot.areas.backend.images.down_arrow.svg) center no-repeat;
+  background-size: 1rem;
+  position: absolute;
+  right: 1.5rem;
+  top: 1rem;
+  width: 1rem;
+  height: 1rem;
+  transition: all ease 0.25s;
+}
+
+.menu-group--expanded .menu-group__title::after {
+  transform: rotate(180deg);
+  transition: all ease 0.25s;
+}
+
+.menu-group__menu-item {
+  display: block;
+}
+
+.menu-group__menu-items {
+  display: none;
+}

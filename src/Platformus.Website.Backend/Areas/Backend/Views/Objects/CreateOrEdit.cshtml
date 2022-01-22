@@ -2,36 +2,38 @@
 @* Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information. *@
 @model Platformus.Website.Backend.ViewModels.Objects.CreateOrEditViewModel
 @inject Microsoft.AspNetCore.Mvc.Localization.IViewLocalizer Localizer
+@using Platformus.Website.Backend.ViewModels.Shared
 @{
-  this.ViewBag.Title = (this.Model.Id == null ? this.Localizer["Create"].Value : this.Localizer["Edit"].Value) + " " + this.Model.Class.Name;
+  this.ViewBag.Title = (this.Model.Id == null ? this.Localizer["Create"] : this.Localizer["Edit"]).Value + " " + this.Model.Class.Name;
   this.ViewBag.ActiveMenuItem = "objects";
 }
-@section title {
-  @ViewBag.Title
-}
-<form class="master-detail__form form" method="post">
-  <tabs id="tabs"></tabs>
-  <tab-pages id="tabPages">
-    <tab-page id="tabPage0"></tab-page>
-  </tab-pages>
-  <div class="form__buttons buttons">
+<form class="form" method="post">
+  <title-bar>
     <submit-button>@Localizer["Save"]</submit-button>
     <neutral-button href="/backend/objects">@Localizer["Cancel"]</neutral-button>
-  </div>
+  </title-bar>
+  <tabs>
+    @foreach (var tab in this.Model.MembersByTabs.Keys)
+    {
+      <tab code="tab@(tab.Id)">@tab.Name</tab>
+    }
+  </tabs>
+  <tab-pages>
+    @foreach (var membersByTabs in this.Model.MembersByTabs)
+    {
+      <tab-page code="tab@(membersByTabs.Key.Id.ToString())">
+        @foreach (var member in membersByTabs.Value)
+        {
+          if (member is PropertyViewModel property)
+          {
+            <partial name="PropertyEditors/_@property.Member.PropertyDataType.ParameterEditorCode" for="@property" />
+          }
+          else if (member is RelationSetViewModel relationSet)
+          {
+            <partial name="_RelationEditor" for="@relationSet" />
+          }
+        }
+      </tab-page>
+    }
+  </tab-pages>
 </form>
-<script>
-  var membersByTabs = @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(this.Model.MembersByTabs).Replace("<script>", "<scr\" + \"ipt>").Replace("</script>", "</scr\" + \"ipt>"));
-</script>
-<script>
-  (function (platformus) {
-    platformus.initializers = platformus.initializers || [];
-    platformus.initializers.push(
-      {
-        action: function () {
-          platformus.memberEditors.create();
-        },
-        priority: -1000
-      }
-    );
-  })(window.platformus = window.platformus || {});
-</script>

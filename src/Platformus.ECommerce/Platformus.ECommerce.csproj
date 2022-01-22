@@ -4,13 +4,18 @@
     <Authors>Dmitry Sikorsky</Authors>
     <Copyright>Copyright © 2015 Dmitry Sikorsky</Copyright>
     <Description>The Platformus.ECommerce extension component.</Description>
-    <VersionPrefix>2.6.0</VersionPrefix>
-    <TargetFramework>net5.0</TargetFramework>
+    <VersionPrefix>3.0.0-beta1</VersionPrefix>
+    <TargetFramework>net6.0</TargetFramework>
     <AssemblyName>Platformus.ECommerce</AssemblyName>
     <PackageId>Platformus.ECommerce</PackageId>
-    <PackageIconUrl>http://platformus.net/platformus_nuget_icon.png</PackageIconUrl>
-    <PackageProjectUrl>http://platformus.net/</PackageProjectUrl>
+    <PackageIcon>icon.png</PackageIcon>
+    <PackageProjectUrl>https://platformus.net/</PackageProjectUrl>
+    <PackageLicenseExpression>Apache-2.0</PackageLicenseExpression>
   </PropertyGroup>
+
+  <ItemGroup>
+    <None Include="icon.png" Pack="true" PackagePath="\" />
+  </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\Platformus.Core\Platformus.Core.csproj" />

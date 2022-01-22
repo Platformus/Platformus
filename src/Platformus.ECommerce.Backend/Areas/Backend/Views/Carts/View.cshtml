@@ -6,13 +6,10 @@
   this.ViewBag.Title = this.Localizer["View Cart"].Value;
   this.ViewBag.ActiveMenuItem = "carts";
 }
-@section title {
-  @ViewBag.Title
-}
 <div class="form">
-  <h2 class="form__title">
-    @Localizer["Positions"]
-  </h2>
+  <title-bar>
+    <neutral-button href="/backend/carts">@Localizer["Back"]</neutral-button>
+  </title-bar>
   <table class="form__table">
     <columns>
       <column label="@Localizer["Category"].Value" />
@@ -20,27 +17,16 @@
       <column label="@Localizer["Price"].Value" />
       <column label="@Localizer["Quantity"].Value" />
       <column label="@Localizer["Subtotal"].Value" />
-      <column />
     </columns>
     <rows>
-      @if (this.Model.Positions != null)
+      @foreach (var position in this.Model.Positions)
       {
-        @for (int i = 0; i != this.Model.Positions.Count(); i++)
-        {
-          var position = this.Model.Positions.ElementAt(i);
-
-          position.Index = i;
-          <partial name="_Position" for="@position" />
-        }
+        <partial name="_Position" for="@position" />
       }
       <row id="totalRow">
         <cell is-header="true" colspan="4">@Localizer["Total"]</cell>
         <cell is-header="true" id="total">@Model.Total.ToString("0.00")</cell>
-        <cell is-header="true">&nbsp;</cell>
       </row>
     </rows>
   </table>
-  <div class="form__buttons buttons">
-    <neutral-button href="/backend/carts">@Localizer["Back"]</neutral-button>
-  </div>
 </div>

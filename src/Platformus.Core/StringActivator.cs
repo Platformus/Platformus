@@ -20,10 +20,10 @@ namespace Platformus
     /// <returns></returns>
     public static T CreateInstance<T>(string typeFullName)
     {
-      Type type = StringActivator.GetType(typeFullName);
+      Type type = GetType(typeFullName);
 
       if (type == null)
-        throw new System.ArgumentException("Type " + typeFullName + " not found");
+        throw new ArgumentException("Type " + typeFullName + " not found");
 
       return (T)Activator.CreateInstance(type);
     }

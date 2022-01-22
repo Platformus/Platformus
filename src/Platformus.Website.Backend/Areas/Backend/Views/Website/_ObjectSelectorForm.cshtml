@@ -2,12 +2,12 @@
 @* Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information. *@
 @model Platformus.Website.Backend.ViewModels.Website.ObjectSelectorFormViewModel
 @inject Microsoft.AspNetCore.Mvc.Localization.IViewLocalizer Localizer
-<div class="pop-up-form__header">
+<div class="pop-up-form__title heading heading--h1">
   @Model.Class.PluralizedName @Localizer["Object Selector"]
 </div>
 <div class="pop-up-form__content">
   <div class="item-selector-pop-up-form__items">
-    <table class="item-selector-pop-up-form__table table">
+    <table class="item-selector-pop-up-form__table">
       <columns>
         @foreach (var tableColumn in this.Model.TableColumns)
         {
@@ -17,10 +17,10 @@
       <rows>
         @foreach (var _object in this.Model.Objects)
         {
-          <row class="@(this.Model.ObjectIds.Contains(_object.Id) ? "table__row--selected" : null)" data-item-value="@_object.Id">
-            @foreach (var propertyByMember in _object.PropertiesByMembers)
+          <row class="table__row--interactive@(this.Model.ObjectIds.Contains(_object.Id) ? " table__row--selected" : null)" data-item-value="@_object.Id">
+            @foreach (var property in _object.Properties)
             {
-              <cell class="item-selector-pop-up-form__cell">@propertyByMember.Value</cell>
+              <cell>@property.Value</cell>
             }
           </row>
         }

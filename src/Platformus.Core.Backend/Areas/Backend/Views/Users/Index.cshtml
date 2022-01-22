@@ -6,9 +6,9 @@
   this.ViewBag.Title = this.Localizer["Users"];
   this.ViewBag.ActiveMenuItem = "users";
 }
-@section title {
-  @ViewBag.Title
-}
+<title-bar>
+  <neutral-button icon="Icons.Create" href="/backend/users/create">@Localizer["Create user"]</neutral-button>
+</title-bar>
 <filter>
   <text-filter property-path="Name.Contains" label="@Localizer["Name"].Value" />
   <drop-down-list-filter property-path="Role.Id" options="@Model.RoleOptions" />
@@ -20,13 +20,10 @@
     <date-filter property-path="Created.To" />
   </filter-group>
 </filter>
-<pager offset="@Model.Offset" limit="@Model.Limit" total="@Model.Total" />
 <table sorting="@Model.Sorting">
   <columns>
     <column label="@Localizer["Name"].Value" sorting-property-path="Name" />
-    <column label="@Localizer["Credentials"].Value" />
     <column label="@Localizer["Created"].Value" sorting-property-path="Created" />
-    <column />
   </columns>
   <rows>
     @foreach (var user in this.Model.Users)
@@ -35,7 +32,4 @@
     }
   </rows>
 </table>
-<pager offset="@Model.Offset" limit="@Model.Limit" total="@Model.Total" is-secondary="true" />
-<div class="master-detail__buttons buttons">
-  <positive-button href="/backend/users/create">@Localizer["Create user"]</positive-button>
-</div>
+<pager offset="@Model.Offset" limit="@Model.Limit" total="@Model.Total" />

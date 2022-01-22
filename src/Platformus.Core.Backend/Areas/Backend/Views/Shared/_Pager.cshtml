@@ -5,71 +5,72 @@
 @{
   int maxPagesCount = 5;
 }
-@if (this.Model.Total != 0 && (this.Model.Total > this.Model.Limit || !this.Model.IsSecondary))
+@if (this.Model.Total != 0 @*&& (this.Model.Total > this.Model.Limit || !this.Model.IsSecondary)*@)
 {
-<div class="master-detail__pager pager">
-  @if (this.Model.Total > this.Model.Limit)
-  {
-    if (this.Model.Offset > 0)
-    {
-      <a class="pager__page pager__page--first" href="@this.Context.Request.CombineUrl(
-          new Url.Descriptor(name: "sorting", takeFromUrl: true),
-          new Url.Descriptor(name: "offset", skip: true),
-          new Url.Descriptor(name: "limit", skip: true)
-        )" title="First page"></a>
-      <a class="pager__page  pager__page--previous" href="@this.Context.Request.CombineUrl(
-          new Url.Descriptor(name: "sorting", takeFromUrl: true),
-          new Url.Descriptor(name: "offset", value: this.Model.Offset - this.Model.Limit),
-          new Url.Descriptor(name: "limit", value: this.Model.Limit)
-        )" title="Previous page"></a>
-    }
-    @if (this.Model.Offset - maxPagesCount * this.Model.Limit > 0)
-    {
-      <div class="pager__page pager__page--skipped"></div>
-    }
-    @for (int i = 0; i * this.Model.Limit < this.Model.Total; i++)
-    {
-      if (this.Model.Offset == i * this.Model.Limit)
+  <div class="content__pager pager">
+    <div class="pager__pages">
+      @if (this.Model.Total > this.Model.Limit)
       {
-        <div class="pager__page pager__page--current">@(i + 1)</div>
+          @if (this.Model.Offset > 0)
+          {
+            <a class="pager__page pager__page--first" href="@this.Context.Request.CombineUrl(
+                  new Url.Parameter(name: "sorting", takeFromUrl: true),
+                  new Url.Parameter(name: "offset", skip: true),
+                  new Url.Parameter(name: "limit", skip: true)
+                )" title="First page"></a>
+            <a class="pager__page  pager__page--previous" href="@this.Context.Request.CombineUrl(
+                  new Url.Parameter(name: "sorting", takeFromUrl: true),
+                  new Url.Parameter(name: "offset", value: this.Model.Offset - this.Model.Limit),
+                  new Url.Parameter(name: "limit", value: this.Model.Limit)
+                )" title="Previous page"></a>
+          }
+          @if (this.Model.Offset - maxPagesCount * this.Model.Limit > 0)
+          {
+            <div class="pager__page pager__page--skipped"></div>
+          }
+          @for (int i = 0; i * this.Model.Limit < this.Model.Total; i++)
+          {
+            if (this.Model.Offset == i * this.Model.Limit)
+            {
+              <div class="pager__page pager__page--current">@(i + 1)</div>
+            }
+            else if (i * this.Model.Limit >= this.Model.Offset - maxPagesCount * this.Model.Limit && i * this.Model.Limit <= this.Model.Offset + maxPagesCount * this.Model.Limit)
+            {
+              <a class="pager__page" href="@this.Context.Request.CombineUrl(
+                  new Url.Parameter(name: "sorting", takeFromUrl: true),
+                  new Url.Parameter(name: "offset", value: i * this.Model.Limit),
+                  new Url.Parameter(name: "limit", value: this.Model.Limit)
+                )">@(i + 1)</a>
+            }
+          }
+          @if (this.Model.Total == 0)
+          {
+            <div class="pager__page pager__page--current">1<div class="pager__page-arrow-placeholder"><div class="pager__page-arrow"></div></div></div>
+          }
+          @if (this.Model.Offset + maxPagesCount * this.Model.Limit < this.Model.Total)
+          {
+            <div class="pager__page pager__page--skipped"></div>
+          }
+          @if (this.Model.Offset + this.Model.Limit < this.Model.Total)
+          {
+            <a class="pager__page pager__page--next" href="@this.Context.Request.CombineUrl(
+                new Url.Parameter(name: "sorting", takeFromUrl: true),
+                new Url.Parameter(name: "offset", value: this.Model.Offset + this.Model.Limit),
+                new Url.Parameter(name: "limit", value: this.Model.Limit)
+              )" title="Next page"></a>
+            <a class="pager__page pager__page--last" href="@this.Context.Request.CombineUrl(
+                new Url.Parameter(name: "sorting", takeFromUrl: true),
+                new Url.Parameter(name: "offset", value: this.Model.Total - (this.Model.Total % this.Model.Limit == 0 ? this.Model.Limit : this.Model.Total % this.Model.Limit)),
+                new Url.Parameter(name: "limit", value: this.Model.Limit)
+              )" title="Last page"></a>
+          }
       }
-      else if (i * this.Model.Limit >= this.Model.Offset - maxPagesCount * this.Model.Limit && i * this.Model.Limit <= this.Model.Offset + maxPagesCount * this.Model.Limit)
-      {
-        <a class="pager__page" href="@this.Context.Request.CombineUrl(
-            new Url.Descriptor(name: "sorting", takeFromUrl: true),
-            new Url.Descriptor(name: "offset", value: i * this.Model.Limit),
-            new Url.Descriptor(name: "limit", value: this.Model.Limit)
-          )">@(i + 1)</a>
-      }
-    }
-    @if (this.Model.Total == 0)
-    {
-      <div class="pager__page pager__page--current">1<div class="pager__page-arrow-placeholder"><div class="pager__page-arrow"></div></div></div>
-    }
-    @if (this.Model.Offset + maxPagesCount * this.Model.Limit < this.Model.Total)
-    {
-      <div class="pager__page pager__page--skipped"></div>
-    }
-    @if (this.Model.Offset + this.Model.Limit < this.Model.Total)
-    {
-      <a class="pager__page pager__page--next" href="@this.Context.Request.CombineUrl(
-          new Url.Descriptor(name: "sorting", takeFromUrl: true),
-          new Url.Descriptor(name: "offset", value: this.Model.Offset + this.Model.Limit),
-          new Url.Descriptor(name: "limit", value: this.Model.Limit)
-        )" title="Next page"></a>
-      <a class="pager__page pager__page--last" href="@this.Context.Request.CombineUrl(
-          new Url.Descriptor(name: "sorting", takeFromUrl: true),
-          new Url.Descriptor(name: "offset", value: this.Model.Total - (this.Model.Total % this.Model.Limit == 0 ? this.Model.Limit : this.Model.Total % this.Model.Limit)),
-          new Url.Descriptor(name: "limit", value: this.Model.Limit)
-        )" title="Last page"></a>
-    }
-  }
-  @if (this.Model.Total > this.Model.Limit || !this.Model.IsSecondary)
-  {
-    <div class="pager__current-state">
-      @(this.Model.Offset + 1) — @(this.Model.Offset + this.Model.Limit > this.Model.Total ? this.Model.Total : this.Model.Offset + this.Model.Limit) @Localizer["from"] @Model.Total
     </div>
-    <drop-down-list class="pager__limit-selector" for="Limit" options="@Model.LimitOptions" />
-  }
-</div>
+    <div class="pager__current-state-and-limit-selector">
+      <div class="pager__current-state">
+        @(this.Model.Offset + 1) — @(this.Model.Offset + this.Model.Limit > this.Model.Total ? this.Model.Total : this.Model.Offset + this.Model.Limit) @Localizer["from"] @Model.Total
+      </div>
+      <drop-down-list class="pager__limit-selector" for="Limit" options="@Model.LimitOptions" />
+    </div>
+  </div>
 }

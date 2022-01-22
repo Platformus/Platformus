@@ -16,9 +16,9 @@ namespace Platformus.Core.Backend
 
     public override void Process(TagHelperContext context, TagHelperOutput output)
     {
-      output.TagMode = TagMode.StartTagAndEndTag;
       output.TagName = TagNames.TD;
-      output.Attributes.SetAttribute(AttributeNames.Class, "table__cell table__cell--context-controls" + (string.IsNullOrEmpty(this.Class) ? null : $" {this.Class}"));
+      output.TagMode = TagMode.StartTagAndEndTag;
+      output.Attributes.SetAttribute(AttributeNames.Class, "table__cell" + (string.IsNullOrEmpty(this.Class) ? null : $" {this.Class}"));
       output.Content.AppendHtml(this.CreateImage());
     }
 

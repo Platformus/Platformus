@@ -14,7 +14,7 @@ namespace Platformus.Website.Backend.ViewModels.Website
     {
       return new FileSelectorFormViewModel()
       {
-        Files = files.Select(FileViewModelFactory.Create)
+        Files = files.Select(FileViewModelFactory.Create).ToList()
       };
     }
   }

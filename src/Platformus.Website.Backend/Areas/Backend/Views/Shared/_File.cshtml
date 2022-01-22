@@ -1,10 +1,10 @@
 ﻿@* Copyright © 2020 Dmitry Sikorsky. All rights reserved. *@
 @* Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information. *@
 @model Platformus.Website.Backend.ViewModels.Shared.FileViewModel
-<row>
-  <cell><a href="~/files/@Model.Name">@Model.Name</a></cell>
+<row href="/files/@Model.Name">
+  <cell is-highlighted="true">@Model.Name</cell>
   <cell>@Model.Size</cell>
-  <buttons-cell>
-    <delete-button href="/backend/filemanager/delete/@Model.Id"></delete-button>
-  </buttons-cell>
+  <row-controls>
+    <delete-button href="/backend/filemanager/delete/@Model.Id" />
+  </row-controls>
 </row>

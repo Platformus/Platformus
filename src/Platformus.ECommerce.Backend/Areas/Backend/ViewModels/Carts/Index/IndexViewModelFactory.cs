@@ -18,7 +18,7 @@ namespace Platformus.ECommerce.Backend.ViewModels.Carts
         Offset = offset,
         Limit = limit,
         Total = total,
-        Carts = carts.Select(CartViewModelFactory.Create)
+        Carts = carts.Select(CartViewModelFactory.Create).ToList()
       };
     }
   }

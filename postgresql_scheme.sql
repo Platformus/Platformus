@@ -1,11 +1,11 @@
 --
 -- Extension: Platformus.Core
--- Version: 2.6.0
+-- Version: 3.0.0
 --
 
 -- ModelStates
 CREATE TABLE "ModelStates" (
-    "Id" text NOT NULL,
+    "Id" uuid NOT NULL,
 	"Value" text NOT NULL,
     "Created" timestamp NOT NULL,
     CONSTRAINT "PK_ModelStates" PRIMARY KEY ("Id")
@@ -179,7 +179,7 @@ ALTER TABLE "Localizations" OWNER TO postgres;
 
 --
 -- Extension: Platformus.Website
--- Version: 2.6.0
+-- Version: 3.0.0
 --
 
 -- Endpoints
@@ -268,7 +268,7 @@ ALTER TABLE "Tabs" OWNER TO postgres;
 CREATE TABLE "DataTypes" (
     "Id" serial NOT NULL,
     "StorageDataType" text NOT NULL,
-    "JavaScriptEditorClassName" text NOT NULL,
+    "ParameterEditorCode" text NOT NULL,
     "Name" text NOT NULL,
     "Position" integer,
     CONSTRAINT "PK_DataTypes" PRIMARY KEY ("Id")
@@ -280,7 +280,7 @@ ALTER TABLE "DataTypes" OWNER TO postgres;
 CREATE TABLE "DataTypeParameters" (
     "Id" serial NOT NULL,
     "DataTypeId" integer NOT NULL,
-    "JavaScriptEditorClassName" text NOT NULL,
+    "ParameterEditorCode" text NOT NULL,
     "Code" text NOT NULL,
     "Name" text,
     CONSTRAINT "PK_DataTypeParameters" PRIMARY KEY ("Id"),
@@ -291,6 +291,20 @@ CREATE TABLE "DataTypeParameters" (
 );
 
 ALTER TABLE "DataTypeParameters" OWNER TO postgres;
+
+-- DataTypeParameterOptions
+CREATE TABLE "DataTypeParameterOptions" (
+    "Id" serial NOT NULL,
+    "DataTypeParameterId" integer NOT NULL,
+    "Value" text NOT NULL,
+    CONSTRAINT "PK_DataTypeParameterOptions" PRIMARY KEY ("Id"),
+	CONSTRAINT "FK_DataTypeParameterOptions_DataTypeParameters_DataTypeParameterId" FOREIGN KEY ("DataTypeParameterId")
+        REFERENCES public."DataTypeParameters" ("Id") MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE CASCADE
+);
+
+ALTER TABLE "DataTypeParameterOptions" OWNER TO postgres;
 
 -- Members
 CREATE TABLE "Members" (
@@ -303,6 +317,7 @@ CREATE TABLE "Members" (
     "PropertyDataTypeId" integer,
     "IsPropertyLocalizable" boolean,
     "IsPropertyVisibleInList" boolean,
+    "PropertyDataTypeParameters" text,
     "RelationClassId" integer,
     "IsRelationSingleParent" boolean,
     "MinRelatedObjectsNumber" integer,
@@ -327,25 +342,6 @@ CREATE TABLE "Members" (
 );
 
 ALTER TABLE "Members" OWNER TO postgres;
-
--- DataTypeParameterValues
-CREATE TABLE "DataTypeParameterValues" (
-    "Id" serial NOT NULL,
-    "DataTypeParameterId" integer NOT NULL,
-    "MemberId" integer NOT NULL,
-    "Value" text NOT NULL,
-    CONSTRAINT "PK_DataTypeParameterValues" PRIMARY KEY ("Id"),
-	CONSTRAINT "FK_DataTypeParameterValues_DataTypeParameters_DataTypeParameterId" FOREIGN KEY ("DataTypeParameterId")
-        REFERENCES public."DataTypeParameters" ("Id") MATCH SIMPLE
-        ON UPDATE NO ACTION
-        ON DELETE CASCADE,
-    CONSTRAINT "FK_DataTypeParameterValues_Members_MemberId" FOREIGN KEY ("MemberId")
-        REFERENCES public."Members" ("Id") MATCH SIMPLE
-        ON UPDATE NO ACTION
-        ON DELETE CASCADE
-);
-
-ALTER TABLE "DataTypeParameterValues" OWNER TO postgres;
 
 -- Objects
 CREATE TABLE "Objects" (
@@ -573,7 +569,7 @@ ALTER TABLE "Files" OWNER TO postgres;
 
 --
 -- Extension: Platformus.ECommerce
--- Version: 2.6.0
+-- Version: 3.0.0
 --
 
 -- Categories
@@ -623,7 +619,7 @@ CREATE TABLE "Products" (
     "Id" serial NOT NULL,
     "CategoryId" integer NOT NULL,
     "Url" text NOT NULL,
-    "Code" text NOT NULL,
+    "Code" text,
     "NameId" integer NOT NULL,
     "DescriptionId" integer NOT NULL,
     "UnitsId" integer NOT NULL,
@@ -773,7 +769,6 @@ CREATE TABLE "Positions" (
     "ProductId" integer NOT NULL,
     "Price" numeric NOT NULL,
     "Quantity" numeric NOT NULL,
-    "Subtotal" numeric NOT NULL,
     CONSTRAINT "PK_Positions" PRIMARY KEY ("Id"),
     CONSTRAINT "FK_Positions_Carts" FOREIGN KEY ("CartId")
         REFERENCES public."Carts" ("Id") MATCH SIMPLE

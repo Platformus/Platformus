@@ -6,11 +6,14 @@
   this.ViewBag.Title = this.Localizer["Completed Forms"];
   this.ViewBag.ActiveMenuItem = "forms";
 }
-@section title {
-  @ViewBag.Title
-}
+<breadcrumbs>
+  <breadcrumb href="/backend/forms">@Localizer["Forms"]</breadcrumb>
+  <breadcrumb href="/backend/forms/edit/@Model.Form.Id">@Model.Form.Name</breadcrumb>
+</breadcrumbs>
+<title-bar>
+  <neutral-button href="/backend/forms" skip-url-parameters="form.id">@Localizer["Back"]</neutral-button>
+</title-bar>
 <filter>
-  <text-filter property-path="Form.Name.Value.Contains" label="@Localizer["Form"].Value" />
   <filter-group>
     <filter-label>@Localizer["Created from"]</filter-label>
     <date-filter property-path="Created.From" />
@@ -18,12 +21,9 @@
     <date-filter property-path="Created.To" />
   </filter-group>
 </filter>
-<pager offset="@Model.Offset" limit="@Model.Limit" total="@Model.Total" />
 <table sorting="@Model.Sorting">
   <columns>
-    <column label="@Localizer["Form"].Value" sorting-property-path="Form.Name" />
     <column label="@Localizer["Created"].Value" sorting-property-path="Created" />
-    <column />
   </columns>
   <rows>
     @foreach (var completedForm in this.Model.CompletedForms)
@@ -32,7 +32,4 @@
     }
   </rows>
 </table>
-<pager offset="@Model.Offset" limit="@Model.Limit" total="@Model.Total" is-secondary="true" />
-<div class="master-detail__buttons buttons">
-  <neutral-button href="/backend/forms">@Localizer["Back"]</neutral-button>
-</div>
+<pager offset="@Model.Offset" limit="@Model.Limit" total="@Model.Total" />

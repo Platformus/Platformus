@@ -14,7 +14,6 @@ using Platformus.ECommerce.Filters;
 
 namespace Platformus.ECommerce.Backend.Controllers
 {
-  [Area("Backend")]
   [Authorize(Policy = Policies.HasManageCartsPermission)]
   public class CartsController : Core.Backend.Controllers.ControllerBase
   {

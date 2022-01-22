@@ -1,12 +1,15 @@
 ﻿// Copyright © 2020 Dmitry Sikorsky. All rights reserved.
 // Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information.
 
+using System.Linq;
 using System.Threading.Tasks;
 using ExtCore.Events;
 using Magicalizer.Data.Repositories.Abstractions;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Localization;
+using Platformus.Core.Backend;
 using Platformus.ECommerce.Backend.ViewModels.DeliveryMethods;
 using Platformus.ECommerce.Data.Entities;
 using Platformus.ECommerce.Events;
@@ -14,18 +17,20 @@ using Platformus.ECommerce.Filters;
 
 namespace Platformus.ECommerce.Backend.Controllers
 {
-  [Area("Backend")]
   [Authorize(Policy = Policies.HasManageDeliveryMethodsPermission)]
   public class DeliveryMethodsController : Core.Backend.Controllers.ControllerBase
   {
+    private IStringLocalizer localizer;
+
     private IRepository<int, DeliveryMethod, DeliveryMethodFilter> Repository
     {
       get => this.Storage.GetRepository<int, DeliveryMethod, DeliveryMethodFilter>();
     }
 
-    public DeliveryMethodsController(IStorage storage)
+    public DeliveryMethodsController(IStorage storage, IStringLocalizer<SharedResource> localizer)
       : base(storage)
     {
+      this.localizer = localizer;
     }
 
     public async Task<IActionResult> IndexAsync([FromQuery]DeliveryMethodFilter filter = null, string sorting = "+position", int offset = 0, int limit = 10)
@@ -51,23 +56,27 @@ namespace Platformus.ECommerce.Backend.Controllers
     [ExportModelStateToTempData]
     public async Task<IActionResult> CreateOrEditAsync(CreateOrEditViewModel createOrEdit)
     {
-      if (createOrEdit.Id == null && !await this.IsCodeUniqueAsync(createOrEdit.Code))
-        this.ModelState.AddModelError("code", string.Empty);
+      if (!await this.IsCodeUniqueAsync(createOrEdit))
+        this.ModelState.AddModelError("code", this.localizer["Value is already in use"]);
 
       if (this.ModelState.IsValid)
       {
         DeliveryMethod deliveryMethod = CreateOrEditViewModelMapper.Map(
-          createOrEdit.Id == null ? new DeliveryMethod() : await this.Repository.GetByIdAsync((int)createOrEdit.Id),
+          createOrEdit.Id == null ?
+            new DeliveryMethod() :
+            await this.Repository.GetByIdAsync(
+              (int)createOrEdit.Id,
+              new Inclusion<DeliveryMethod>(dm => dm.Name.Localizations)
+            ),
           createOrEdit
         );
-
-        await this.CreateOrEditEntityLocalizationsAsync(deliveryMethod);
 
         if (createOrEdit.Id == null)
           this.Repository.Create(deliveryMethod);
 
         else this.Repository.Edit(deliveryMethod);
 
+        await this.MergeEntityLocalizationsAsync(deliveryMethod);
         await this.Storage.SaveAsync();
 
         if (createOrEdit.Id == null)
@@ -91,9 +100,11 @@ namespace Platformus.ECommerce.Backend.Controllers
       return this.Redirect(this.Request.CombineUrl("/backend/deliverymethods"));
     }
 
-    private async Task<bool> IsCodeUniqueAsync(string code)
+    private async Task<bool> IsCodeUniqueAsync(CreateOrEditViewModel createOrEdit)
     {
-      return await this.Repository.CountAsync(new DeliveryMethodFilter(code: code)) == 0;
+      DeliveryMethod deliveryMethod = (await this.Repository.GetAllAsync(new DeliveryMethodFilter(code: createOrEdit.Code))).FirstOrDefault();
+
+      return deliveryMethod == null || deliveryMethod.Id == createOrEdit.Id;
     }
   }
 }

@@ -12,13 +12,13 @@ using Platformus.Website.FieldValidators;
 
 namespace Platformus.Website.Frontend.FieldValidators
 {
-  public class VerificationResult
-  {
-    public bool Success { get; set; }
-  }
-
   public class ReCaptchaFieldValidator : IFieldValidator
   {
+    public class VerificationResult
+    {
+      public bool Success { get; set; }
+    }
+
     public async Task<bool> ValidateAsync(HttpContext httpContext, Form form, Field field, string value)
     {
       ReCaptchaOptions options = httpContext.RequestServices.GetService<IOptions<ReCaptchaOptions>>()?.Value;

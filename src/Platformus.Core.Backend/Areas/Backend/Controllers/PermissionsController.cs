@@ -1,12 +1,14 @@
 ﻿// Copyright © 2020 Dmitry Sikorsky. All rights reserved.
 // Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information.
 
+using System.Linq;
 using System.Threading.Tasks;
 using ExtCore.Events;
 using Magicalizer.Data.Repositories.Abstractions;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Localization;
 using Platformus.Core.Backend.ViewModels.Permissions;
 using Platformus.Core.Data.Entities;
 using Platformus.Core.Events;
@@ -14,18 +16,20 @@ using Platformus.Core.Filters;
 
 namespace Platformus.Core.Backend.Controllers
 {
-  [Area("Backend")]
   [Authorize(Policy = Policies.HasManagePermissionsPermission)]
   public class PermissionsController : ControllerBase
   {
+    private IStringLocalizer localizer;
+
     private IRepository<int, Permission, PermissionFilter> Repository
     {
       get => this.Storage.GetRepository<int, Permission, PermissionFilter>();
     }
 
-    public PermissionsController(IStorage storage)
+    public PermissionsController(IStorage storage, IStringLocalizer<SharedResource> localizer)
       : base(storage)
     {
+      this.localizer = localizer;
     }
 
     public async Task<IActionResult> IndexAsync([FromQuery]PermissionFilter filter = null, string sorting = "+position", int offset = 0, int limit = 10)
@@ -49,8 +53,8 @@ namespace Platformus.Core.Backend.Controllers
     [ExportModelStateToTempData]
     public async Task<IActionResult> CreateOrEditAsync(CreateOrEditViewModel createOrEdit)
     {
-      if (createOrEdit.Id == null && !await this.IsCodeUniqueAsync(createOrEdit.Code))
-        this.ModelState.AddModelError("code", string.Empty);
+      if (!await this.IsCodeUniqueAsync(createOrEdit))
+        this.ModelState.AddModelError("code", this.localizer["Value is already in use"]);
 
       if (this.ModelState.IsValid)
       {
@@ -87,9 +91,11 @@ namespace Platformus.Core.Backend.Controllers
       return this.Redirect(this.Request.CombineUrl("/backend/permissions"));
     }
 
-    private async Task<bool> IsCodeUniqueAsync(string code)
+    private async Task<bool> IsCodeUniqueAsync(CreateOrEditViewModel createOrEdit)
     {
-      return await this.Repository.CountAsync(new PermissionFilter(code: code)) == 0;
+      Permission permission = (await this.Repository.GetAllAsync(new PermissionFilter(code: createOrEdit.Code))).FirstOrDefault();
+
+      return permission == null || permission.Id == createOrEdit.Id;
     }
   }
 }

@@ -6,27 +6,25 @@
   this.ViewBag.Title = this.Localizer["Products"];
   this.ViewBag.ActiveMenuItem = "products";
 }
-@section title {
-  @ViewBag.Title
-}
+<title-bar>
+  <neutral-button icon="Icons.Create" href="/backend/products/create">@Localizer["Create product"]</neutral-button>
+</title-bar>
 <filter>
   <drop-down-list-filter property-path="Category.Id.Equals" options="@Model.CategoryOptions" />
   <text-filter property-path="Name.Value.Contains" label="@Localizer["Name"].Value" />
   <filter-group>
     <filter-label>@Localizer["Price from"]</filter-label>
-    <text-filter property-path="Price.From" width="Small" />
+    <decimal-filter property-path="Price.From" />
     <filter-label>@Localizer["to"]</filter-label>
-    <text-filter property-path="Price.To" width="Small" />
+    <decimal-filter property-path="Price.To" />
   </filter-group>
 </filter>
-<pager offset="@Model.Offset" limit="@Model.Limit" total="@Model.Total" />
 <table sorting="@Model.Sorting">
   <columns>
     <column label="@Localizer["Category"].Value" sorting-property-path="@ViewContext.HttpContext.CreateLocalizedSorting("Category.Name")" />
     <column label="@Localizer["Name"].Value" sorting-property-path="@ViewContext.HttpContext.CreateLocalizedSorting("Name")" />
     <column label="@Localizer["Units"].Value" sorting-property-path="@ViewContext.HttpContext.CreateLocalizedSorting("Units")" />
     <column label="@Localizer["Price"].Value" sorting-property-path="Price" />
-    <column />
   </columns>
   <rows>
     @foreach (var product in this.Model.Products)
@@ -35,7 +33,4 @@
     }
   </rows>
 </table>
-<pager offset="@Model.Offset" limit="@Model.Limit" total="@Model.Total" is-secondary="true" />
-<div class="master-detail__buttons buttons">
-  <positive-button href="/backend/products/create">@Localizer["Create product"]</positive-button>
-</div>
+<pager offset="@Model.Offset" limit="@Model.Limit" total="@Model.Total" />

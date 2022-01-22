@@ -19,7 +19,7 @@ namespace Platformus.Website.Frontend.DataProviders
       {
         new ParameterGroup(
           "General",
-          new Parameter("ClassId", "Class of the objects to load", JavaScriptEditorClassNames.ClassSelector, null, true)
+          new Parameter("ClassId", "Class of the objects to load", ParameterEditorCodes.ClassSelector, null, true)
         ),
       };
 

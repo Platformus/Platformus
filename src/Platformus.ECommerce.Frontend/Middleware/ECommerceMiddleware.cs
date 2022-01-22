@@ -36,7 +36,7 @@ namespace Platformus.ECommerce.Frontend.Middleware
     private async Task<IActionResult> GetCatalogActionResultAsync(HttpContext httpContext)
     {
       Category category = (await httpContext.GetStorage().GetRepository<int, Category, CategoryFilter>().GetAllAsync(
-        new CategoryFilter(url: httpContext.Request.GetUrl()),
+        new CategoryFilter(url: httpContext.Request.GetUrlWithoutCultureSegment()),
         inclusions: new Inclusion<Category>[]
         {
           new Inclusion<Category>(c => c.Name.Localizations),
@@ -62,7 +62,7 @@ namespace Platformus.ECommerce.Frontend.Middleware
     private async Task<IActionResult> GetProductActionResultAsync(HttpContext httpContext)
     {
       Product product = (await httpContext.GetStorage().GetRepository<int, Product, ProductFilter>().GetAllAsync(
-        new ProductFilter(url: httpContext.Request.GetUrl()),
+        new ProductFilter(url: httpContext.Request.GetUrlWithoutCultureSegment()),
         inclusions: new Inclusion<Product>[]
         {
           new Inclusion<Product>(p => p.Category.Name.Localizations),

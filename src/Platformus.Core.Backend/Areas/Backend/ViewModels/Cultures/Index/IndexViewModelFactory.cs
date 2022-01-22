@@ -18,7 +18,7 @@ namespace Platformus.Core.Backend.ViewModels.Cultures
         Offset = offset,
         Limit = limit,
         Total = total,
-        Cultures = cultures.Select(CultureViewModelFactory.Create)
+        Cultures = cultures.Select(CultureViewModelFactory.Create).ToList()
       };
     }
   }

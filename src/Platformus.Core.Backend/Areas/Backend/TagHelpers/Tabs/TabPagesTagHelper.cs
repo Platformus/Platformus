@@ -11,6 +11,7 @@ namespace Platformus.Core.Backend
     public override void Process(TagHelperContext context, TagHelperOutput output)
     {
       output.TagName = TagNames.Div;
+      output.TagMode = TagMode.StartTagAndEndTag;
       output.Attributes.SetAttribute(AttributeNames.Class, "tab-pages");
     }
   }

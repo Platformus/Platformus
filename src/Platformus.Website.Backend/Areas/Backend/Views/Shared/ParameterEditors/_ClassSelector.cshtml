@@ -1,0 +1,17 @@
+﻿@* Copyright © 2021 Dmitry Sikorsky. All rights reserved. *@
+@* Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information. *@
+@model Platformus.Core.Parameters.Parameter
+@inject Microsoft.AspNetCore.Mvc.Localization.IViewLocalizer Localizer
+<div class="item-selector form__field field" data-parameter-code="@Model.Code">
+  <label class="field__label label">@Model.Name</label>
+  <input id="parameter@(this.Model.Code)" name="parameter@(this.Model.Code)" type="hidden">
+  <div class="item-selector__keys item-selector__keys--required" id="parameter@(this.Model.Code)Keys">
+    <div class="item-selector__key">Not selected</div>
+  </div>
+  <div class="form__buttons form__buttons--minor buttons">
+    <neutral-button is-minor="true" onclick="return platformus.parameterEditor.classSelector.showClassSelectorForm('@Model.Code');">@Localizer["Select…"]</neutral-button>
+  </div>
+</div>
+<script>
+  setTimeout(function () { platformus.parameterEditor.classSelector.sync('@Model.Code'); }, 500);
+</script>

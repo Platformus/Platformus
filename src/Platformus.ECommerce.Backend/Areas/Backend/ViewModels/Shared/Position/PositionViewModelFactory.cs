@@ -15,7 +15,7 @@ namespace Platformus.ECommerce.Backend.ViewModels.Shared
         Product = ProductViewModelFactory.Create(position.Product),
         Price = position.Price,
         Quantity = position.Quantity,
-        Subtotal = position.Price * position.Quantity
+        Subtotal = position.GetSubtotal()
       };
     }
   }

@@ -25,12 +25,14 @@ namespace Platformus.Website.Backend.ViewModels.Website
         new Inclusion<Class>("Parent.Members.RelationClass")
       );
 
+      objects.ToList().ForEach(o => o.Class = @class);
+
       return new ObjectSelectorFormViewModel()
       {
         Class = ClassViewModelFactory.Create(@class),
         TableColumns = GetTableColumns(@class),
-        Objects = objects.Select(o => ObjectViewModelFactory.Create(o, @class.GetVisibleInListMembers())),
-        ObjectIds = string.IsNullOrEmpty(objectIds) ? new int[] { } : objectIds.Split(',').Select(objectId => int.Parse(objectId))
+        Objects = objects.Select(o => ObjectViewModelFactory.Create(httpContext, o)).ToList(),
+        ObjectIds = string.IsNullOrEmpty(objectIds) ? new int[] { } : objectIds.Split(',').Select(objectId => int.Parse(objectId)).ToList()
       };
     }
 

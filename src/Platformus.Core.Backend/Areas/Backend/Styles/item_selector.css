@@ -5,17 +5,18 @@
 }
 
 .item-selector__keys {
-  background: #f0f0f0;
-  width: 450px;
-  max-height: 300px;
+  background-color: #f8f8f8;
+  border: 1px solid #f0f0f0;
+  border-radius: 0.25rem;
+  max-height: 20rem;
   overflow: auto;
 }
 
-.item-selector__keys--required {
-  box-shadow: 5px 0 0 #ff4100;
-}
-
 .item-selector__key {
+  text-decoration: none;
+  text-overflow: ellipsis;
+  white-space: nowrap;
   display: block;
-  padding: 5px 10px;
+  padding: 0.75rem;
+  overflow: hidden;
 }

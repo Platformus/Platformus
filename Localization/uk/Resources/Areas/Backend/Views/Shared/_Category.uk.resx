@@ -120,7 +120,4 @@
   <data name="Create category" xml:space="preserve">
     <value>Додати категорію</value>
   </data>
-  <data name="Edit" xml:space="preserve">
-    <value>Редагувати</value>
-  </data>
 </root>

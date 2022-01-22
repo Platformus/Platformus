@@ -39,7 +39,7 @@ namespace Platformus.Website.Backend.ViewModels.Fields
     {
       return (await httpContext.GetStorage().GetRepository<int, FieldType, FieldTypeFilter>().GetAllAsync()).Select(
         ft => new Option(ft.Name, ft.Id.ToString())
-      );
+      ).ToList();
     }
   }
 }

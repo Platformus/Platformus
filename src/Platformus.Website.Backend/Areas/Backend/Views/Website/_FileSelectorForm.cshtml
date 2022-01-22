@@ -2,12 +2,12 @@
 @* Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information. *@
 @model Platformus.Website.Backend.ViewModels.Website.FileSelectorFormViewModel
 @inject Microsoft.AspNetCore.Mvc.Localization.IViewLocalizer Localizer
-<div class="pop-up-form__header">
+<div class="pop-up-form__title heading heading--h1">
   @Localizer["File Selector"]
 </div>
 <div class="pop-up-form__content">
   <div class="item-selector-pop-up-form__items">
-    <table class="item-selector-pop-up-form__table table">
+    <table class="item-selector-pop-up-form__table">
       <columns>
         <column label="@Localizer["Name"].Value" />
         <column label="@Localizer["Size"].Value" />
@@ -15,9 +15,9 @@
       <rows>
         @foreach (var file in this.Model.Files)
         {
-          <row data-item-value="@file.Name">
-            <cell class="item-selector-pop-up-form__cell">@file.Name</cell>
-            <cell class="item-selector-pop-up-form__cell">@file.Size</cell>
+          <row class="table__row--interactive" data-item-value="@file.Name">
+            <cell>@file.Name</cell>
+            <cell>@file.Size</cell>
           </row>
         }
       </rows>

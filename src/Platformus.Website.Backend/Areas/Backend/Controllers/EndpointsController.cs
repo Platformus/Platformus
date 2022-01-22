@@ -1,13 +1,18 @@
 ﻿// Copyright © 2020 Dmitry Sikorsky. All rights reserved.
 // Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information.
 
+using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using ExtCore.Events;
 using Magicalizer.Data.Repositories.Abstractions;
+using Magicalizer.Filters.Abstractions;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Localization;
+using Platformus.Core.Backend;
 using Platformus.Website.Backend.ViewModels.Endpoints;
 using Platformus.Website.Data.Entities;
 using Platformus.Website.Events;
@@ -15,10 +20,11 @@ using Platformus.Website.Filters;
 
 namespace Platformus.Website.Backend.Controllers
 {
-  [Area("Backend")]
   [Authorize(Policy = Policies.HasManageEndpointsPermission)]
   public class EndpointsController : Core.Backend.Controllers.ControllerBase
   {
+    private IStringLocalizer localizer;
+
     private IRepository<int, Data.Entities.Endpoint, EndpointFilter> EndpointRepository
     {
       get => this.Storage.GetRepository<int, Data.Entities.Endpoint, EndpointFilter>();
@@ -29,9 +35,10 @@ namespace Platformus.Website.Backend.Controllers
       get => this.Storage.GetRepository<int, int, EndpointPermission, EndpointPermissionFilter>();
     }
 
-    public EndpointsController(IStorage storage)
+    public EndpointsController(IStorage storage, IStringLocalizer<SharedResource> localizer)
       : base(storage)
     {
+      this.localizer = localizer;
     }
 
     public async Task<IActionResult> IndexAsync([FromQuery]EndpointFilter filter = null, string sorting = "+position", int offset = 0, int limit = 10)
@@ -55,6 +62,9 @@ namespace Platformus.Website.Backend.Controllers
     [ExportModelStateToTempData]
     public async Task<IActionResult> CreateOrEditAsync(CreateOrEditViewModel createOrEdit)
     {
+      if (!await this.IsUrlTemplateUniqueAsync(createOrEdit))
+        this.ModelState.AddModelError("urlTemplate", this.localizer["Value is already in use"]);
+
       if (this.ModelState.IsValid)
       {
         Data.Entities.Endpoint endpoint = CreateOrEditViewModelMapper.Map(
@@ -67,8 +77,8 @@ namespace Platformus.Website.Backend.Controllers
 
         else this.EndpointRepository.Edit(endpoint);
 
+        this.MergeEndpointPermissions(endpoint);
         await this.Storage.SaveAsync();
-        await this.CreateOrEditEndpointPermissionsAsync(endpoint);
 
         if (createOrEdit.Id == null)
           Event<IEndpointCreatedEventHandler, HttpContext, Data.Entities.Endpoint>.Broadcast(this.HttpContext, endpoint);
@@ -91,47 +101,38 @@ namespace Platformus.Website.Backend.Controllers
       return this.Redirect(this.Request.CombineUrl("/backend/endpoints"));
     }
 
-    private async Task CreateOrEditEndpointPermissionsAsync(Data.Entities.Endpoint endpoint)
+    private async Task<bool> IsUrlTemplateUniqueAsync(CreateOrEditViewModel createOrEdit)
     {
-      await this.DeleteEndpointPermissionsAsync(endpoint);
-      await this.CreateEndpointPermissionsAsync(endpoint);
+      StringFilter urlTemplate = new StringFilter();
+
+      if (string.IsNullOrEmpty(createOrEdit.UrlTemplate))
+        urlTemplate.IsNull = true;
+
+      else urlTemplate.Equals = createOrEdit.UrlTemplate;
+
+      Data.Entities.Endpoint endpoint = (await this.EndpointRepository.GetAllAsync(new EndpointFilter(urlTemplate: urlTemplate))).FirstOrDefault();
+
+      return endpoint == null || endpoint.Id == createOrEdit.Id;
     }
 
-    private async Task DeleteEndpointPermissionsAsync(Data.Entities.Endpoint endpoint)
+    private void MergeEndpointPermissions(Data.Entities.Endpoint endpoint)
     {
-      if (endpoint.EndpointPermissions != null)
-        for (int i = 0; i != endpoint.EndpointPermissions.Count; i++)
-        {
-          EndpointPermission endpointPermission = endpoint.EndpointPermissions.ElementAt(i);
+      List<int> permissionIds = new List<int>();
 
-          this.EndpointPermissionRepository.Delete(endpointPermission.EndpointId, endpointPermission.PermissionId);
-        }
-
-      await this.Storage.SaveAsync();
-    }
-
-    private async Task CreateEndpointPermissionsAsync(Data.Entities.Endpoint endpoint)
-    {
       foreach (string key in this.Request.Form.Keys)
-      {
-        if (key.StartsWith("permission") && this.Request.Form[key] == true.ToString().ToLower())
-        {
-          string permissionId = key.Replace("permission", string.Empty);
+        if (key.StartsWith("permission") && this.Request.Form[key].FirstOrDefault().ToBoolWithDefaultValue(false))
+          permissionIds.Add(int.Parse(key.Replace("permission", string.Empty)));
 
-          this.CreateEndpointPermission(endpoint, int.Parse(permissionId));
-        }
-      }
+      if (!endpoint.DisallowAnonymous)
+        permissionIds.Clear();
 
-      await this.Storage.SaveAsync();
-    }
+      IEnumerable<EndpointPermission> currentEndpointPermissions = endpoint.EndpointPermissions ?? Array.Empty<EndpointPermission>();
 
-    private void CreateEndpointPermission(Data.Entities.Endpoint endpoint, int permissionId)
-    {
-      EndpointPermission endpointPermission = new EndpointPermission();
+      foreach (EndpointPermission endpointPermission in currentEndpointPermissions.Where(cep => !permissionIds.Any(id => id == cep.PermissionId)).ToList())
+        this.EndpointPermissionRepository.Delete(endpointPermission.EndpointId, endpointPermission.PermissionId);
 
-      endpointPermission.EndpointId = endpoint.Id;
-      endpointPermission.PermissionId = permissionId;
-      this.EndpointPermissionRepository.Create(endpointPermission);
+      foreach (int permissionId in permissionIds.Where(id => !currentEndpointPermissions.Any(cep => cep.PermissionId == id)))
+        this.EndpointPermissionRepository.Create(new EndpointPermission() { Endpoint = endpoint, PermissionId = permissionId });
     }
   }
 }

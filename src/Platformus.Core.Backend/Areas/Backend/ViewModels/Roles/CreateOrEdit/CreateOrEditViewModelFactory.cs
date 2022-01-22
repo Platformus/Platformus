@@ -35,7 +35,7 @@ namespace Platformus.Core.Backend.ViewModels.Roles
     {
       return (await httpContext.GetStorage().GetRepository<int, Permission, PermissionFilter>().GetAllAsync()).Select(
         p => RolePermissionViewModelFactory.Create(p, role != null && role.RolePermissions.Any(rp => rp.PermissionId == p.Id))
-      );
+      ).ToList();
     }
   }
 }

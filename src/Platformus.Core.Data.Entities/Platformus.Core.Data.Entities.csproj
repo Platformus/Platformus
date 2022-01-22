@@ -4,17 +4,22 @@
     <Authors>Dmitry Sikorsky</Authors>
     <Copyright>Copyright © 2015 Dmitry Sikorsky</Copyright>
     <Description>The Platformus.Core extension component.</Description>
-    <VersionPrefix>2.6.0</VersionPrefix>
+    <VersionPrefix>3.0.0-beta1</VersionPrefix>
     <TargetFramework>netstandard2.0</TargetFramework>
     <AssemblyName>Platformus.Core.Data.Entities</AssemblyName>
     <PackageId>Platformus.Core.Data.Entities</PackageId>
-    <PackageIconUrl>http://platformus.net/platformus_nuget_icon.png</PackageIconUrl>
-    <PackageProjectUrl>http://platformus.net/</PackageProjectUrl>
+    <PackageIcon>icon.png</PackageIcon>
+    <PackageProjectUrl>https://platformus.net/</PackageProjectUrl>
+    <PackageLicenseExpression>Apache-2.0</PackageLicenseExpression>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Magicalizer.Data.Entities.Abstractions" Version="1.1.0" />
-    <PackageReference Include="Magicalizer.Filters.Abstractions" Version="1.1.0" />
+    <None Include="icon.png" Pack="true" PackagePath="\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Magicalizer.Data.Entities.Abstractions" Version="2.0.0" />
+    <PackageReference Include="Magicalizer.Filters.Abstractions" Version="2.0.0" />
   </ItemGroup>
 
 </Project>

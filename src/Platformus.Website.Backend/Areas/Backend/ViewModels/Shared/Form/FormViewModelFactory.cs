@@ -18,7 +18,9 @@ namespace Platformus.Website.Backend.ViewModels.Shared
         ProduceCompletedForms = form.ProduceCompletedForms,
         Fields = form.Fields == null ?
           Array.Empty<FieldViewModel>() :
-          form.Fields.Select(FieldViewModelFactory.Create).ToList()
+          form.Fields
+            .OrderBy(f => f.Position)
+            .Select(FieldViewModelFactory.Create).ToList()
       };
     }
   }

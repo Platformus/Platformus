@@ -16,6 +16,7 @@ namespace Platformus.ECommerce.Backend.ViewModels.Categories
     [Display(Name = "URL")]
     [Required]
     [StringLength(128)]
+    [RegularExpression(@"^\/$|^(\/[a-z0-9-]+)*$")]
     public string Url { get; set; }
 
     [Multilingual]
@@ -56,8 +57,6 @@ namespace Platformus.ECommerce.Backend.ViewModels.Categories
     [StringLength(128)]
     public string ProductProviderCSharpClassName { get; set; }
     public IEnumerable<Option> ProductProviderCSharpClassNameOptions { get; set; }
-
     public string ProductProviderParameters { get; set; }
-    public IEnumerable<dynamic> ProductProviders { get; set; }
   }
 }

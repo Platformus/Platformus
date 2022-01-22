@@ -14,7 +14,8 @@ namespace Platformus.Core.Backend
       tb.AddCssClass("file-uploader");
       tb.MergeAttribute(AttributeNames.Id, identity);
       tb.InnerHtml.AppendHtml(GenerateFilename(fileNotSelectedLabel));
-      tb.InnerHtml.AppendHtml(GenerateButtons(identity, isMultiple, browseLabel));
+      tb.InnerHtml.AppendHtml(GenerateButtons(identity, browseLabel));
+      tb.InnerHtml.AppendHtml(GenerateInput(identity, isMultiple));
       return tb;
     }
 
@@ -27,33 +28,33 @@ namespace Platformus.Core.Backend
       return tb;
     }
 
-    private static TagBuilder GenerateButtons(string identity, bool isMultiple, string browseLabel)
+    private static TagBuilder GenerateButtons(string identity, string browseLabel)
     {
       TagBuilder tb = new TagBuilder(TagNames.Div);
 
-      tb.AddCssClass("form__buttons form__buttons--minor buttons");
-      tb.InnerHtml.AppendHtml(GenerateBrowseButton(identity, isMultiple, browseLabel));
+      tb.AddCssClass("form__buttons form__buttons--minor buttons buttons--minor");
+      tb.InnerHtml.AppendHtml(GenerateBrowseButton(identity, browseLabel));
       return tb;
     }
 
-    private static TagBuilder GenerateBrowseButton(string identity, bool isMultiple, string browseLabel)
+    private static TagBuilder GenerateBrowseButton(string identity, string browseLabel)
     {
-      TagBuilder tb = new TagBuilder(TagNames.Div);
+      TagBuilder tb = new TagBuilder(TagNames.Label);
 
-      tb.AddCssClass("file-uploader__browse-button buttons__button button button--positive button--minor");
+      tb.AddCssClass("buttons__button button button--neutral button--minor button--icon icon icon--browse");
+      tb.MergeAttribute(AttributeNames.For, $"{identity}FileInput");
       tb.InnerHtml.AppendHtml(browseLabel);
-      tb.InnerHtml.AppendHtml(GenerateBrowseInput(identity, isMultiple));
       return tb;
     }
 
-    private static TagBuilder GenerateBrowseInput(string identity, bool isMultiple)
+    private static TagBuilder GenerateInput(string identity, bool isMultiple)
     {
       TagBuilder tb = new TagBuilder(TagNames.Input);
 
-      tb.AddCssClass("file-uploader__browse-input");
+      tb.AddCssClass("file-uploader__input");
+      tb.MergeAttribute(AttributeNames.Id, $"{identity}FileInput");
       tb.MergeAttribute(AttributeNames.Name, identity);
-      tb.MergeAttribute(AttributeNames.Type, "file");
-      tb.MergeAttribute("size", "1");
+      tb.MergeAttribute(AttributeNames.Type, InputTypes.File);
 
       if (isMultiple)
         tb.MergeAttribute("multiple", string.Empty);

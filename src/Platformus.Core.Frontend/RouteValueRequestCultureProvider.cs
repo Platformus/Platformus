@@ -15,9 +15,23 @@ namespace Platformus.Core.Frontend
     public override async Task<ProviderCultureResult> DetermineProviderCultureResult(HttpContext httpContext)
     {
       string cultureId = await this.GetDefaultCultureCodeAsync(httpContext);
+      bool specifyCultureInUrl = httpContext.GetConfigurationManager()["Globalization", "SpecifyCultureInUrl"] == "yes";
+
+      if (!specifyCultureInUrl)
+        return new ProviderCultureResult(cultureId);
+      
       string url = httpContext.Request.Path;
 
-      if (url.Length >= 4 && url[0] == '/' && url[3] == '/')
+      if (url == "/")
+        ;
+
+      else if (url.Length < 4)
+        throw new HttpException(HttpStatusCode.NotFound);
+
+      else if (url[0] != '/' || url[3] != '/')
+        throw new HttpException(HttpStatusCode.NotFound);
+
+      else
       {
         cultureId = httpContext.Request.Path.Value.Substring(1, 2);
 
@@ -34,10 +48,7 @@ namespace Platformus.Core.Frontend
     {
       Data.Entities.Culture frontendDefaultCulture = await httpContext.GetCultureManager().GetFrontendDefaultCultureAsync();
 
-      if (frontendDefaultCulture == null)
-        return DefaultCulture.Id;
-
-      return frontendDefaultCulture.Id;
+      return frontendDefaultCulture?.Id ?? DefaultCulture.Id;
     }
 
     private async Task<bool> CheckCultureAsync(HttpContext httpContext, string cultureId)

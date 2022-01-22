@@ -9,14 +9,14 @@ namespace Platformus.Core.Primitives
   public class Culture
   {
     /// <summary>
-    /// A culture ID. Two letter country code (ISO 3166, example: en, ru, uk).
+    /// A culture ID. Two-letter language code (ISO 639‑1, example: en, ru, uk).
     /// </summary>
     public string Id { get; set; }
 
     /// <summary>
     /// Initializes a new instance of the <see cref="Culture"/> class.
     /// </summary>
-    /// <param name="id">A culture ID. Two letter country code (ISO 3166, example: en, ru, uk).</param>
+    /// <param name="id">A culture ID. Two-letter language code (ISO 639‑1, example: en, ru, uk).</param>
     public Culture(string id)
     {
       this.Id = id;

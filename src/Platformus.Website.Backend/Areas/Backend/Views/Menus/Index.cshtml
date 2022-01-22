@@ -6,17 +6,15 @@
   this.ViewBag.Title = this.Localizer["Menus"];
   this.ViewBag.ActiveMenuItem = "menus";
 }
-@section title {
-  @ViewBag.Title
-}
-<tree class="master-detail__tree">
+<title-bar />
+<tree>
   @foreach (var menu in this.Model.Menus)
   {
     <partial name="_Menu" for="@menu" />
   }
-  <tree-node>
-    <tree-node-buttons>
-      <positive-button is-minor="true" href="/backend/menus/create">@Localizer["Create menu"]</positive-button>
-    </tree-node-buttons>
-  </tree-node>
+  <node>
+    <node-controls>
+      <neutral-button is-minor="true" icon="Icons.Create" href="/backend/menus/create">@Localizer["Create menu"]</neutral-button>
+    </node-controls>
+  </node>
 </tree>

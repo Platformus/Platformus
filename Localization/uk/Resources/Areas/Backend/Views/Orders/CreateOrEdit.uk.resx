@@ -123,37 +123,16 @@
   <data name="Cancel" xml:space="preserve">
     <value>Скасувати</value>
   </data>
-  <data name="Category" xml:space="preserve">
-    <value>Категорія</value>
-  </data>
   <data name="Create Order" xml:space="preserve">
     <value>Додавання замовлення</value>
   </data>
   <data name="Edit Order" xml:space="preserve">
     <value>Редагування замовлення</value>
   </data>
-  <data name="Name" xml:space="preserve">
-    <value>Назва</value>
-  </data>
   <data name="Positions" xml:space="preserve">
     <value>Позиції</value>
   </data>
-  <data name="Price" xml:space="preserve">
-    <value>Ціна</value>
-  </data>
-  <data name="Product" xml:space="preserve">
-    <value>Товар</value>
-  </data>
-  <data name="Quantity" xml:space="preserve">
-    <value>Кількість</value>
-  </data>
   <data name="Save" xml:space="preserve">
     <value>Зберегти</value>
-  </data>
-  <data name="Subtotal" xml:space="preserve">
-    <value>Сума</value>
-  </data>
-  <data name="Total" xml:space="preserve">
-    <value>Загалом</value>
   </data>
 </root>

@@ -18,12 +18,12 @@ namespace Platformus.Website
     /// <summary>
     /// Gets the URL of the extension.
     /// </summary>
-    public override string Url => "http://platformus.net/";
+    public override string Url => "https://platformus.net/";
 
     /// <summary>
     /// Gets the version of the extension.
     /// </summary>
-    public override string Version => "2.6.0";
+    public override string Version => "3.0.0-beta1";
 
     /// <summary>
     /// Gets the authors of the extension (separated by commas).

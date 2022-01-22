@@ -14,7 +14,7 @@ namespace Platformus.ECommerce.Services.Defaults
 {
   public class DefaultCartManager : ICartManager
   {
-    private const string CartId = "CartId";
+    private const string cartId = "cart_id";
 
     private IHttpContextAccessor httpContextAccessor;
 
@@ -27,7 +27,7 @@ namespace Platformus.ECommerce.Services.Defaults
     {
       get
       {
-        return string.IsNullOrEmpty(this.httpContextAccessor.HttpContext.Request.Cookies[CartId]);
+        return string.IsNullOrEmpty(this.httpContextAccessor.HttpContext.Request.Cookies[cartId]);
       }
     }
 
@@ -38,12 +38,12 @@ namespace Platformus.ECommerce.Services.Defaults
       if (this.IsEmpty)
         return false;
 
-      return Guid.TryParse(this.httpContextAccessor.HttpContext.Request.Cookies[CartId], out clientSideId);
+      return Guid.TryParse(this.httpContextAccessor.HttpContext.Request.Cookies[cartId], out clientSideId);
     }
 
     public async Task<int> GetQuantityAsync()
     {
-      if (!this.IsEmpty && Guid.TryParse(this.httpContextAccessor.HttpContext.Request.Cookies[CartId], out Guid clientSideId))
+      if (!this.IsEmpty && Guid.TryParse(this.httpContextAccessor.HttpContext.Request.Cookies[cartId], out Guid clientSideId))
         return await this.httpContextAccessor.HttpContext.GetStorage().GetRepository<int, Position, PositionFilter>().CountAsync(
           new PositionFilter(cart: new CartFilter(clientSideId: clientSideId))
         );
@@ -53,7 +53,7 @@ namespace Platformus.ECommerce.Services.Defaults
 
     public async Task<decimal> GetTotalAsync()
     {
-      if (!this.IsEmpty && Guid.TryParse(this.httpContextAccessor.HttpContext.Request.Cookies[CartId], out Guid clientSideId))
+      if (!this.IsEmpty && Guid.TryParse(this.httpContextAccessor.HttpContext.Request.Cookies[cartId], out Guid clientSideId))
       {
         Cart cart = (await this.httpContextAccessor.HttpContext.GetStorage().GetRepository<int, Cart, CartFilter>().GetAllAsync(
           new CartFilter(clientSideId: clientSideId),

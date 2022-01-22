@@ -2,16 +2,30 @@
 // Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information.
 
 (function (platformus) {
-  platformus.parameterEditors = platformus.parameterEditors || [];
-  platformus.parameterEditors.classSelector = {};
-  platformus.parameterEditors.classSelector.create = function (container, parameter) {
-    platformus.parameterEditors.baseItemSelector.create(
-      container,
-      parameter,
-      platformus.forms.classSelectorForm,
-      "/backend/website/class/",
+  platformus.parameterEditor = platformus.parameterEditor || [];
+  platformus.parameterEditor.classSelector = {};
+  platformus.parameterEditor.classSelector.showClassSelectorForm = function (code) {
+    var valueElement = $("#parameter" + code);
+
+    return platformus.forms.classSelectorForm.show(
+      valueElement.val(),
+      function (classId) {
+        valueElement.val(classId).trigger("change");
+        platformus.parameterEditor.classSelector.sync(code);
+      }
+    );
+  };
+
+  platformus.parameterEditor.classSelector.sync = function (code) {
+    var identity = "parameter" + code;
+    var value = $("#" + identity).val();
+
+    if (!value) return;
+
+    $.get(
+      "/backend/website/class/" + value,
       function ($class) {
-        return $("<div>").addClass("item-selector__key").html($class.name);
+        $("#" + identity + "Keys").empty().append($("<div>").addClass("item-selector__key").html($class.name));
       }
     );
   };

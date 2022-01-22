@@ -120,7 +120,4 @@
   <data name="Create menu item" xml:space="preserve">
     <value>Додати елемент меню</value>
   </data>
-  <data name="Edit" xml:space="preserve">
-    <value>Редагувати</value>
-  </data>
 </root>

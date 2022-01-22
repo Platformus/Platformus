@@ -28,9 +28,9 @@ namespace Platformus
     /// <param name="key"></param>
     /// <param name="value"></param>
     /// <returns></returns>
-    public ExpandoObjectBuilder AddProperty(string key, dynamic value)
+    public ExpandoObjectBuilder AddProperty(string key, object value)
     {
-      (this.expandoObject as IDictionary<string, dynamic>).Add(key, value);
+      (this.expandoObject as IDictionary<string, object>).Add(key, value);
       return this;
     }
 

@@ -3,17 +3,14 @@
 @model Platformus.Core.Backend.ViewModels.Configurations.CreateOrEditViewModel
 @inject Microsoft.AspNetCore.Mvc.Localization.IViewLocalizer Localizer
 @{
-  this.ViewBag.Title = (this.Model.Id == null ? this.Localizer["Create Configuration"].Value : this.Localizer["Edit Configuration"].Value);
+  this.ViewBag.Title = (this.Model.Id == null ? this.Localizer["Create Configuration"] : this.Localizer["Edit Configuration"]);
   this.ViewBag.ActiveMenuItem = "configurations";
 }
-@section title {
-  @ViewBag.Title
-}
-<form class="master-detail__form form" method="post">
-  <single-line-text-field for="Code" />
-  <single-line-text-field for="Name" />
-  <div class="form__buttons buttons">
+<form class="form" method="post">
+  <title-bar>
     <submit-button>@Localizer["Save"]</submit-button>
     <neutral-button href="/backend/configurations">@Localizer["Cancel"]</neutral-button>
-  </div>
+  </title-bar>
+  <single-line-text-field for="Code" />
+  <single-line-text-field for="Name" />
 </form>

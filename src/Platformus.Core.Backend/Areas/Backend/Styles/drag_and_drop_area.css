@@ -2,38 +2,36 @@
 /* Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information. */
 
 .drag-and-drop-area {
-  background-color: #f0f0f0;
-  padding: 50px 0;
+  background: #f8f8f8 url(/wwwroot.areas.backend.images.upload.svg) right 0.75rem top 0.75rem no-repeat;
+  background-size: 1rem;
+  border: 1px solid #f0f0f0;
+  border-radius: 0.25rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 10rem;
 }
 
 .drag-and-drop-area--dragging {
-  background-color: #f5f5f5;
+  border-color: #000;
 }
 
 .drag-and-drop-area__description {
-  color: #ccc;
-  font-style: italic;
-  text-align: center;
+  color: #aaa;
+  font-weight: 400;
 }
 
 .drag-and-drop-area__buttons {
-  text-align: center;
-  display: block;
-  margin-top: 20px;
+  margin-top: 1.5rem;
 }
 
-.drag-and-drop-area__browse-button {
-  text-align: center;
-  width: 300px;
-  height: 20px;
-  overflow: hidden;
+.drag-and-drop-area__input {
+  display: none;
 }
 
-.drag-and-drop-area__browse-input {
-  cursor: pointer;
-  font-size: 150px;
-  opacity: 0;
-  margin: -100px 0 0 -500px;
-  width: 1000px;
-  height: 100px;
+@media screen and (max-width: 1000px) {
+  .drag-and-drop-area {
+    padding: 1.5rem;
+  }
 }

@@ -3,47 +3,38 @@
 
 using System.Collections.Generic;
 using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.AspNetCore.Mvc.ViewFeatures;
 using Microsoft.AspNetCore.Razor.TagHelpers;
 using Platformus.Core.Primitives;
 
 namespace Platformus.Core.Backend
 {
-  public class RadioButtonListFieldTagHelper : TagHelper
+  public class RadioButtonListFieldTagHelper : FieldTagHelperBase<string>
   {
-    [HtmlAttributeNotBound]
-    [ViewContext]
-    public ViewContext ViewContext { get; set; }
-    public string Class { get; set; }
-    public ModelExpression For { get; set; }
     public IEnumerable<Option> Options { get; set; }
 
     public override void Process(TagHelperContext context, TagHelperOutput output)
     {
-      if (this.For == null || this.Options == null)
+      if ((this.For == null && string.IsNullOrEmpty(this.Id)) || this.Options == null)
         return;
 
-      output.TagMode = TagMode.StartTagAndEndTag;
-      output.TagName = TagNames.Div;
-      output.Attributes.SetAttribute(AttributeNames.Class, "form__field field" + (string.IsNullOrEmpty(this.Class) ? null : $" {this.Class}"));
-      output.Content.AppendHtml(this.CreateLabel());
+      base.Process(context, output);
       output.Content.AppendHtml(this.CreateRadioButtonList());
-    }
-
-    private TagBuilder CreateLabel()
-    {
-      return FieldGenerator.GenerateLabel(this.For.GetLabel(), this.For.GetIdentity());
     }
 
     private TagBuilder CreateRadioButtonList()
     {
       TagBuilder tb = RadioButtonListGenerator.Generate(
-        this.For.GetIdentity(),
+        this.GetIdentity(),
         this.Options,
-        this.For.GetValue(this.ViewContext)?.ToString()
+        value: this.GetValue()
       );
 
       tb.AddCssClass("field__radio-button-list");
+
+      // TODO: merge all the attributes, not only "onchange"
+      if (!string.IsNullOrEmpty(this.OnChange))
+        tb.MergeAttribute(AttributeNames.OnChange, this.OnChange);
+
       return tb;
     }
   }

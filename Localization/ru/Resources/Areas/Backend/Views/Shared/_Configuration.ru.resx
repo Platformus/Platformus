@@ -120,7 +120,4 @@
   <data name="Create variable" xml:space="preserve">
     <value>Добавить переменную</value>
   </data>
-  <data name="Edit" xml:space="preserve">
-    <value>Редактировать</value>
-  </data>
 </root>

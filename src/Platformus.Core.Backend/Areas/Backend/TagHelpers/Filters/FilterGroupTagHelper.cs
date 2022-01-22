@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Razor.TagHelpers;
 
 namespace Platformus.Core.Backend
 {
-  [RestrictChildren("filter-label", "text-filter", "drop-down-list-filter", "date-filter", "date-time-filter")]
+  [RestrictChildren("filter-label", "text-filter", "integer-filter", "decimal-filter", "drop-down-list-filter", "date-filter", "date-time-filter")]
   public class FilterGroupTagHelper : TagHelper
   {
     public override void Process(TagHelperContext context, TagHelperOutput output)

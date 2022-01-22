@@ -5,20 +5,13 @@
 @{ 
   this.ViewBag.Title = this.Localizer["Sign  In"];
 }
-@section title {
-  @ViewBag.Title
-}
-<form class="master-detail__form form" method="post">
+<form class="form" method="post">
+  <title-bar />
   <single-line-text-field for="Email" />
   <secret-field for="Password" />
-  <checkbox-field class="form__field--separated" for="RememberMe" />
+  <checkbox-field for="RememberMe" />
   <div class="form__buttons buttons">
     <submit-button>@Localizer["Sign in"]</submit-button>
-  </div>
-  <h2 class="form__title">
-    @Localizer["Forgot your password?"]
-  </h2>
-  <div class="form__buttons buttons">
     <neutral-button href="/backend/account/resetpassword">@Localizer["Reset password"]</neutral-button>
   </div>
 </form>

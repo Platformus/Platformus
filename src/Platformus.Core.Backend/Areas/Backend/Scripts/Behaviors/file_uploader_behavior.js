@@ -10,12 +10,12 @@
   );
 
   function defineHandlers() {
-    $(document.body).on("change", ".file-uploader__browse-input", fileSelected);
+    $(document.body).on("change", ".file-uploader__input", onChange);
   }
 
-  function fileSelected() {
+  function onChange() {
     var input = $(this);
-    var filename = input.parent().parent().parent().find(".file-uploader__filename");
+    var filename = input.closest(".file-uploader").find(".file-uploader__filename");
     var size = this.files[0].size;
 
     filename.removeClass("file-uploader__filename--not-selected");

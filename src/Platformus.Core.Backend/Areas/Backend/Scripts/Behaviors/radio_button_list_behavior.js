@@ -23,9 +23,16 @@
       }
 
       if (this.hasClass("radio-button-list")) {
-        var radioButtonList = this, input = radioButtonList.find("input");
+        var radioButtonList = this,
+          radioButton = radioButtonList.find(".radio-button-list__radio-button[data-value='" + value + "']"),
+          input = radioButtonList.find("input");
+
+        radioButtonList.find(".radio-button__indicator").removeClass("radio-button__indicator--checked");
+        radioButton.find(".radio-button__indicator").addClass("radio-button__indicator--checked");
+
         var result = input.val(value);
 
+        input.trigger("change");
         radioButtonList.trigger("change");
         return result;
       }
@@ -35,12 +42,12 @@
   }
 
   function defineHandlers() {
-    $(document.body).on("click", ".radio-button", radioButtonClickHandler);
+    $(document.body).on("click", ".radio-button", onRadioButtonClick);
   }
 
-  function radioButtonClickHandler() {
+  function onRadioButtonClick() {
     var radioButton = $(this),
-      radioButtonList = radioButton.parent();
+      radioButtonList = radioButton.closest(".radio-button-list");
 
     radioButtonList.find(".radio-button__indicator").removeClass("radio-button__indicator--checked");
     radioButton.find(".radio-button__indicator").addClass("radio-button__indicator--checked");

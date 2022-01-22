@@ -6,7 +6,6 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Platformus.Core.Backend.Controllers
 {
-  [Area("Backend")]
   public class DefaultController : ControllerBase
   {
     public DefaultController(IStorage storage)

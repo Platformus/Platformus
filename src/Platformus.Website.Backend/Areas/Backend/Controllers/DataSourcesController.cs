@@ -1,12 +1,15 @@
 ﻿// Copyright © 2020 Dmitry Sikorsky. All rights reserved.
 // Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information.
 
+using System.Linq;
 using System.Threading.Tasks;
 using ExtCore.Events;
 using Magicalizer.Data.Repositories.Abstractions;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Localization;
+using Platformus.Core.Backend;
 using Platformus.Website.Backend.ViewModels.DataSources;
 using Platformus.Website.Data.Entities;
 using Platformus.Website.Events;
@@ -14,18 +17,20 @@ using Platformus.Website.Filters;
 
 namespace Platformus.Website.Backend.Controllers
 {
-  [Area("Backend")]
   [Authorize(Policy = Policies.HasManageEndpointsPermission)]
   public class DataSourcesController : Core.Backend.Controllers.ControllerBase
   {
+    private IStringLocalizer localizer;
+
     private IRepository<int, DataSource, DataSourceFilter> Repository
     {
       get => this.Storage.GetRepository<int, DataSource, DataSourceFilter>();
     }
 
-    public DataSourcesController(IStorage storage)
+    public DataSourcesController(IStorage storage, IStringLocalizer<SharedResource> localizer)
       : base(storage)
     {
+      this.localizer = localizer;
     }
 
     public async Task<IActionResult> IndexAsync([FromQuery]DataSourceFilter filter = null, string sorting = "+code", int offset = 0, int limit = 10)
@@ -49,8 +54,8 @@ namespace Platformus.Website.Backend.Controllers
     [ExportModelStateToTempData]
     public async Task<IActionResult> CreateOrEditAsync([FromQuery]DataSourceFilter filter, CreateOrEditViewModel createOrEdit)
     {
-      if (createOrEdit.Id == null && !await this.IsCodeUniqueAsync(filter, createOrEdit.Code))
-        this.ModelState.AddModelError("code", string.Empty);
+      if (!await this.IsCodeUniqueAsync(filter, createOrEdit))
+        this.ModelState.AddModelError("code", this.localizer["Value is already in use"]);
 
       if (this.ModelState.IsValid)
       {
@@ -88,10 +93,13 @@ namespace Platformus.Website.Backend.Controllers
       return this.Redirect(this.Request.CombineUrl("/backend/datasources"));
     }
 
-    private async Task<bool> IsCodeUniqueAsync(DataSourceFilter filter, string code)
+    private async Task<bool> IsCodeUniqueAsync(DataSourceFilter filter, CreateOrEditViewModel createOrEdit)
     {
-      filter.Code = code;
-      return await this.Repository.CountAsync(filter) == 0;
+      filter.Code = createOrEdit.Code;
+
+      DataSource dataSource = (await this.Repository.GetAllAsync(filter)).FirstOrDefault();
+
+      return dataSource == null || dataSource.Id == createOrEdit.Id;
     }
   }
 }

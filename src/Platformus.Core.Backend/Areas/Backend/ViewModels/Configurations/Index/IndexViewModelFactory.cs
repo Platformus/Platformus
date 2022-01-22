@@ -14,7 +14,7 @@ namespace Platformus.Core.Backend.ViewModels.Configurations
     {
       return new IndexViewModel()
       {
-        Configurations = configurations.Select(ConfigurationViewModelFactory.Create)
+        Configurations = configurations.Select(ConfigurationViewModelFactory.Create).ToList()
       };
     }
   }

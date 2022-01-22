@@ -9,6 +9,7 @@ namespace Platformus.Website.Backend.ViewModels.Shared
   public class FieldViewModel : ViewModelBase
   {
     public int Id { get; set; }
+    public int FormId { get; set; }
     public FieldTypeViewModel FieldType { get; set; }
     public string Name { get; set; }
     public IEnumerable<FieldOptionViewModel> FieldOptions { get; set; }

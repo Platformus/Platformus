@@ -1,11 +1,9 @@
 ﻿@* Copyright © 2020 Dmitry Sikorsky. All rights reserved. *@
 @* Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information. *@
 @model Platformus.Core.Backend.Metadata.MenuGroup
-<div class="menu__group" data-code="main-@(this.Model.Position)">
-  <div class="menu__group-header menu__group-header--collapsed" tabindex="0">
-    @Model.Name
-  </div>
-  <div class="menu__group-content">
+<div class="menu__menu-group menu-group" data-code="menuGroup@(this.Model.Position)">
+  <div class="menu-group__title" tabindex="0">@Model.Name</div>
+  <div class="menu-group__menu-items">
     @foreach (var menuItem in this.Model.MenuItems)
     {
       <partial name="_BackendMenuItem" for="@menuItem" />

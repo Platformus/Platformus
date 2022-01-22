@@ -11,6 +11,7 @@ namespace Platformus.Website.Backend.ViewModels.CompletedForms
   public class IndexViewModel : ViewModelBase
   {
     public CompletedFormFilter Filter { get; set; }
+    public FormViewModel Form { get; set; }
     public string Sorting { get; set; }
     public int Offset { get; set; }
     public int Limit { get; set; }

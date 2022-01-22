@@ -19,7 +19,7 @@ namespace Platformus.Core.Backend.Actions
             options.AccessDeniedPath = "/backend/account/accessdenied";
             options.LoginPath = "/backend/account/signin";
             options.LogoutPath = "/backend/account/signout";
-            options.ReturnUrlParameter = "next";
+            options.ReturnUrlParameter = "targeturl";
             options.ExpireTimeSpan = TimeSpan.FromDays(7);
           }
         );

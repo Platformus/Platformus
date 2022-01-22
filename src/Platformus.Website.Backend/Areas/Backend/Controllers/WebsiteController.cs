@@ -12,7 +12,6 @@ using Platformus.Website.Filters;
 
 namespace Platformus.Website.Backend.Controllers
 {
-  [Area("Backend")]
   public class WebsiteController : Core.Backend.Controllers.ControllerBase
   {
     public WebsiteController(IStorage storage)
@@ -20,10 +19,19 @@ namespace Platformus.Website.Backend.Controllers
     {
     }
 
+    public async Task<IActionResult> ParameterEditorAsync(int dataTypeId)
+    {
+      IEnumerable<DataTypeParameter> dataTypeParameters = await this.Storage.GetRepository<int, DataTypeParameter, DataTypeParameterFilter>().GetAllAsync(
+        new DataTypeParameterFilter(dataType: new DataTypeFilter(id: dataTypeId)),
+        inclusions: new Inclusion<DataTypeParameter>(dtp => dtp.DataTypeParameterOptions)
+      );
+
+      return this.PartialView("_ParameterEditor", ParameterEditorViewModelFactory.Create(dataTypeParameters));
+    }
+
     public async Task<IActionResult> ClassSelectorFormAsync(int? classId)
     {
       return this.PartialView("_ClassSelectorForm", ClassSelectorFormViewModelFactory.Create(
-        this.HttpContext,
         await this.Storage.GetRepository<int, Class, ClassFilter>().GetAllAsync(
           inclusions: new Inclusion<Class>(c => c.Parent)
         ),
@@ -31,6 +39,7 @@ namespace Platformus.Website.Backend.Controllers
       ));
     }
 
+    // TODO: move to an API controller
     public async Task<IActionResult> ClassAsync(int id)
     {
       return this.Json(await this.Storage.GetRepository<int, Class, ClassFilter>().GetByIdAsync(id));
@@ -39,7 +48,6 @@ namespace Platformus.Website.Backend.Controllers
     public async Task<IActionResult> MemberSelectorFormAsync(int? memberId)
     {
       return this.PartialView("_MemberSelectorForm", MemberSelectorFormViewModelFactory.Create(
-        this.HttpContext,
         await this.Storage.GetRepository<int, Class, ClassFilter>().GetAllAsync(
           inclusions: new Inclusion<Class>(c => c.Members)
         ),
@@ -47,6 +55,7 @@ namespace Platformus.Website.Backend.Controllers
       ));
     }
 
+    // TODO: move to an API controller
     public async Task<IActionResult> MemberAsync(int id)
     {
       Member member = await this.Storage.GetRepository<int, Member, MemberFilter>().GetByIdAsync(
@@ -75,6 +84,7 @@ namespace Platformus.Website.Backend.Controllers
       ));
     }
 
+    // TODO: move to an API controller
     public async Task<IActionResult> DisplayableObjectsAsync(string ids)
     {
       List<dynamic> objects = new List<dynamic>();

@@ -132,6 +132,9 @@
   <data name="Response cache C# class name" xml:space="preserve">
     <value>Название C#-класса кэша ответов</value>
   </data>
+  <data name="Response cache C# class name not specified" xml:space="preserve">
+    <value>Название C#-класса кэша ответов не указано</value>
+  </data>
   <data name="Sign in URL" xml:space="preserve">
     <value>URL входа</value>
   </data>

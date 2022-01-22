@@ -4,9 +4,9 @@
 (function (platformus) {
   platformus.forms = platformus.forms || {};
   platformus.forms.objectSelectorForm = {};
-  platformus.forms.objectSelectorForm.show = function (relationClassId, objectIds, minRelatedObjectsNumber, maxRelatedObjectsNumber, callback) {
+  platformus.forms.objectSelectorForm.show = function (classId, objectIds, minRelatedObjectsNumber, maxRelatedObjectsNumber, callback) {
     return platformus.forms.baseItemSelectorForm.show(
-      "/backend/website/objectselectorform?class.id=" + relationClassId + "&objectids=" + objectIds, minRelatedObjectsNumber, maxRelatedObjectsNumber, callback
+      "/backend/website/objectselectorform?class.id=" + classId + "&objectids=" + objectIds, minRelatedObjectsNumber, maxRelatedObjectsNumber, callback
     );
   };
 

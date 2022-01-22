@@ -1,7 +1,6 @@
 ﻿// Copyright © 2020 Dmitry Sikorsky. All rights reserved.
 // Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information.
 
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using ExtCore.Events;
@@ -9,7 +8,8 @@ using Magicalizer.Data.Repositories.Abstractions;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Platformus.Core.Parameters;
+using Microsoft.Extensions.Localization;
+using Platformus.Core.Backend;
 using Platformus.Website.Backend.ViewModels.Members;
 using Platformus.Website.Data.Entities;
 using Platformus.Website.Events;
@@ -17,25 +17,31 @@ using Platformus.Website.Filters;
 
 namespace Platformus.Website.Backend.Controllers
 {
-  [Area("Backend")]
   [Authorize(Policy = Policies.HasManageClassesPermission)]
   public class MembersController : Core.Backend.Controllers.ControllerBase
   {
+    private IStringLocalizer localizer;
+
     private IRepository<int, Member, MemberFilter> Repository
     {
       get => this.Storage.GetRepository<int, Member, MemberFilter>();
     }
 
-    public MembersController(IStorage storage)
+    public MembersController(IStorage storage, IStringLocalizer<SharedResource> localizer)
       : base(storage)
     {
+      this.localizer = localizer;
     }
 
     public async Task<IActionResult> IndexAsync([FromQuery]MemberFilter filter = null, string sorting = "+position", int offset = 0, int limit = 10)
     {
       return this.View(await IndexViewModelFactory.CreateAsync(
         this.HttpContext, filter, sorting, offset, limit, await this.Repository.CountAsync(filter),
-        await this.Repository.GetAllAsync(filter, sorting, offset, limit, new Inclusion<Member>(m => m.PropertyDataType), new Inclusion<Member>(m => m.RelationClass))
+        await this.Repository.GetAllAsync(
+          filter, sorting, offset, limit,
+          new Inclusion<Member>(m => m.PropertyDataType),
+          new Inclusion<Member>(m => m.RelationClass)
+        )
       ));
     }
 
@@ -52,8 +58,8 @@ namespace Platformus.Website.Backend.Controllers
     [ExportModelStateToTempData]
     public async Task<IActionResult> CreateOrEditAsync([FromQuery]MemberFilter filter, CreateOrEditViewModel createOrEdit)
     {
-      if (createOrEdit.Id == null && !await this.IsCodeUniqueAsync(filter, createOrEdit.Code))
-        this.ModelState.AddModelError("code", string.Empty);
+      if (!await this.IsCodeUniqueAsync(filter, createOrEdit))
+        this.ModelState.AddModelError("code", this.localizer["Value is already in use"]);
 
       if (this.ModelState.IsValid)
       {
@@ -69,7 +75,6 @@ namespace Platformus.Website.Backend.Controllers
         else this.Repository.Edit(member);
 
         await this.Storage.SaveAsync();
-        await this.CreateOrEditDataTypeParameterValuesAsync(member, createOrEdit.Parameters);
 
         if (createOrEdit.Id == null)
           Event<IMemberCreatedEventHandler, HttpContext, Member>.Broadcast(this.HttpContext, member);
@@ -92,47 +97,13 @@ namespace Platformus.Website.Backend.Controllers
       return this.Redirect(this.Request.CombineUrl("/backend/members"));
     }
 
-    private async Task<bool> IsCodeUniqueAsync(MemberFilter filter, string code)
+    private async Task<bool> IsCodeUniqueAsync(MemberFilter filter, CreateOrEditViewModel createOrEdit)
     {
-      filter.Code = code;
-      return await this.Repository.CountAsync(filter) == 0 &&
-        await this.Repository.CountAsync(new MemberFilter(@class: new ClassFilter(parent: new ClassFilter(id: filter.Class.Id)), code: code)) == 0;
-    }
+      filter.Code = createOrEdit.Code;
 
-    private async Task CreateOrEditDataTypeParameterValuesAsync(Member member, string parameters)
-    {
-      if (member.PropertyDataTypeId == null || string.IsNullOrEmpty(parameters))
-        return;
+      Member member = (await this.Repository.GetAllAsync(filter)).FirstOrDefault();
 
-      IRepository<int, DataTypeParameter, DataTypeParameterFilter> dataTypeParameterRepository = this.Storage.GetRepository<int, DataTypeParameter, DataTypeParameterFilter>();
-      IRepository<int, DataTypeParameterValue, DataTypeParameterValueFilter> dataTypeParameterValueRepository = this.Storage.GetRepository<int, DataTypeParameterValue, DataTypeParameterValueFilter>();
-
-      foreach (KeyValuePair<string, string> valueByCode in new ParametersParser(parameters).ParsedParameters)
-      {
-        DataTypeParameter dataTypeParameter = (await dataTypeParameterRepository.GetAllAsync(new DataTypeParameterFilter(dataType: new DataTypeFilter(id: (int)member.PropertyDataTypeId), code: valueByCode.Key), inclusions: new Inclusion<DataTypeParameter>(dtp => dtp.DataTypeParameterValues))).FirstOrDefault();
-
-        if (dataTypeParameter != null)
-        {
-          DataTypeParameterValue dataTypeParameterValue = dataTypeParameter.DataTypeParameterValues.FirstOrDefault(dtpv => dtpv.MemberId == member.Id);
-
-          if (dataTypeParameterValue == null)
-          {
-            dataTypeParameterValue = new DataTypeParameterValue();
-            dataTypeParameterValue.DataTypeParameterId = dataTypeParameter.Id;
-            dataTypeParameterValue.MemberId = member.Id;
-            dataTypeParameterValue.Value = valueByCode.Value;
-            dataTypeParameterValueRepository.Create(dataTypeParameterValue);
-          }
-
-          else
-          {
-            dataTypeParameterValue.Value = valueByCode.Value;
-            dataTypeParameterValueRepository.Edit(dataTypeParameterValue);
-          }
-        }
-      }
-
-      await this.Storage.SaveAsync();
+      return member == null || member.Id == createOrEdit.Id;
     }
   }
 }

@@ -19,6 +19,7 @@ namespace Platformus.Website.Backend.ViewModels.Members
     [Display(Name = "Code")]
     [Required]
     [StringLength(32)]
+    [RegularExpression(@"^[a-zA-Z_][a-zA-Z0-9_]*$")]
     public string Code { get; set; }
 
     [Display(Name = "Name")]
@@ -38,7 +39,7 @@ namespace Platformus.Website.Backend.ViewModels.Members
 
     [Display(Name = "Is property visible in list")]
     public bool IsPropertyVisibleInList { get; set; }
-    public string Parameters { get; set; }
+    public string PropertyDataTypeParameters { get; set; }
 
     [Display(Name = "Relation class")]
     public int? RelationClassId { get; set; }
@@ -52,7 +53,5 @@ namespace Platformus.Website.Backend.ViewModels.Members
 
     [Display(Name = "Max related objects number")]
     public int? MaxRelatedObjectsNumber { get; set; }
-
-    public IEnumerable<dynamic> DataTypes { get; set; }
   }
 }

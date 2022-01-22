@@ -25,7 +25,7 @@ namespace Platformus.Website.Backend.ViewModels.Tabs
         Offset = offset,
         Limit = limit,
         Total = total,
-        Tabs = tabs.Select(TabViewModelFactory.Create)
+        Tabs = tabs.Select(TabViewModelFactory.Create).ToList()
       };
     }
   }

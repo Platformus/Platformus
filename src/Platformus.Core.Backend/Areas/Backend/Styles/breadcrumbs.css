@@ -2,22 +2,16 @@
 /* Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information. */
 
 .breadcrumbs {
+  font-size: 0.75rem;
+  font-weight: 400;
   display: flex;
-  position: relative;
-  z-index: 10;
+  gap: 0.25rem;
 }
 
 .breadcrumbs__breadcrumb {
-  color: #666;
-  font-size: 13px;
-  line-height: 20px;
-}
-
-.breadcrumbs__breadcrumb:hover {
-  color: #999;
+  color: #aaa; 
 }
 
 .breadcrumbs__separator {
-  color: #999;
-  padding: 0 5px;
+  color: #aaa;
 }

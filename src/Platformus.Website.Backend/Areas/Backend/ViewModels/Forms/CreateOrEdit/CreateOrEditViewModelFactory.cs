@@ -21,8 +21,7 @@ namespace Platformus.Website.Backend.ViewModels.Forms
         {
           NameLocalizations = httpContext.GetLocalizations(),
           SubmitButtonTitleLocalizations = httpContext.GetLocalizations(),
-          FormHandlerCSharpClassNameOptions = GetFormHandlerCSharpClassNameOptions(),
-          FormHandlers = GetFormHandlers()
+          FormHandlerCSharpClassNameOptions = GetFormHandlerCSharpClassNameOptions()
         };
 
       return new CreateOrEditViewModel()
@@ -34,8 +33,7 @@ namespace Platformus.Website.Backend.ViewModels.Forms
         ProduceCompletedForms = form.ProduceCompletedForms,
         FormHandlerCSharpClassName = form.FormHandlerCSharpClassName,
         FormHandlerCSharpClassNameOptions = GetFormHandlerCSharpClassNameOptions(),
-        FormHandlerParameters = form.FormHandlerParameters,
-        FormHandlers = GetFormHandlers()
+        FormHandlerParameters = form.FormHandlerParameters
       };
     }
 
@@ -43,36 +41,7 @@ namespace Platformus.Website.Backend.ViewModels.Forms
     {
       return ExtensionManager.GetImplementations<IFormHandler>().Where(t => !t.GetTypeInfo().IsAbstract).Select(
         t => new Option(t.FullName)
-      );
-    }
-
-    private static IEnumerable<dynamic> GetFormHandlers()
-    {
-      return ExtensionManager.GetInstances<IFormHandler>().Where(fh => !fh.GetType().GetTypeInfo().IsAbstract).Select(
-        fh => new {
-          cSharpClassName = fh.GetType().FullName,
-          parameterGroups = fh.ParameterGroups.Select(
-            fhpg => new
-            {
-              name = fhpg.Name,
-              parameters = fhpg.Parameters.Select(
-                fhp => new
-                {
-                  code = fhp.Code,
-                  name = fhp.Name,
-                  javaScriptEditorClassName = fhp.JavaScriptEditorClassName,
-                  options = fhp.Options == null ? null : fhp.Options.Select(
-                    o => new { text = o.Text, value = o.Value }
-                  ),
-                  defaultValue = fhp.DefaultValue,
-                  isRequired = fhp.IsRequired
-                }
-              )
-            }
-          ),
-          description = fh.Description
-        }
-      );
+      ).ToList();
     }
   }
 }

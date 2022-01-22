@@ -16,15 +16,9 @@
   );
 
   function defineHandlers() {
-    if (typeof(window["FileReader"]) == "undefined") {
-      return;
-    }
-
     var imageDragAndDropArea = $("#imageDragAndDropArea");
 
-    if (imageDragAndDropArea.length == 0) {
-      return;
-    }
+    if (!imageDragAndDropArea.length) return;
 
     imageDragAndDropArea[0].ondragover = function () {
       imageDragAndDropArea.addClass("drag-and-drop-area--dragging");

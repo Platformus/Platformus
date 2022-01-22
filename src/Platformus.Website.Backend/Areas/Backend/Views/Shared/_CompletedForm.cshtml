@@ -1,12 +1,9 @@
 ﻿@* Copyright © 2020 Dmitry Sikorsky. All rights reserved. *@
 @* Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information. *@
 @model Platformus.Website.Backend.ViewModels.Shared.CompletedFormViewModel
-@inject Microsoft.AspNetCore.Mvc.Localization.IViewLocalizer Localizer
-<row>
-  <cell>@Model.Form.Name</cell>
-  <cell>@Model.Created.ToString()</cell>
-  <buttons-cell>
-    <positive-button is-minor="true" href="/backend/completedforms/view/@Model.Id">@Localizer["View"]</positive-button>
-    <delete-button href="/backend/completedforms/delete/@Model.Id"></delete-button>
-  </buttons-cell>
+<row href="/backend/completedforms/view/@Model.Id">
+  <cell is-highlighted="true">@Model.Created.ToString()</cell>
+  <row-controls>
+    <delete-button href="/backend/completedforms/delete/@Model.Id" />
+  </row-controls>
 </row>

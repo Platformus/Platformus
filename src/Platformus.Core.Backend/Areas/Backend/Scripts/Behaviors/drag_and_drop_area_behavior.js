@@ -13,17 +13,11 @@
       defineHandlers();
     }
   );
-
+  
   function defineHandlers() {
-    if (typeof(window["FileReader"]) == "undefined") {
-      return;
-    }
-
     var dragAndDropArea = $("#dragAndDropArea");
 
-    if (!dragAndDropArea.length) {
-      return;
-    }
+    if (!dragAndDropArea.length) return;
 
     dragAndDropArea[0].ondragover = function () {
       dragAndDropArea.addClass("drag-and-drop-area--dragging");

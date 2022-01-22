@@ -21,11 +21,11 @@ namespace Platformus.ECommerce.Backend.ViewModels.Products
     [Display(Name = "URL")]
     [Required]
     [StringLength(128)]
+    [RegularExpression(@"^\/$|^(\/[a-z0-9-]+)*$")]
     public string Url { get; set; }
 
     [Display(Name = "Code")]
-    [Required]
-    [StringLength(32)]
+    [StringLength(64)]
     public string Code { get; set; }
 
     [Multilingual]
@@ -52,19 +52,19 @@ namespace Platformus.ECommerce.Backend.ViewModels.Products
     public decimal Price { get; set; }
 
     [Display(Name = "Photo 1 (cover)")]
-    public string Photo1Filename { get; set; }
+    public string Photo1Url { get; set; }
 
     [Display(Name = "Photo 2")]
-    public string Photo2Filename { get; set; }
+    public string Photo2Url { get; set; }
 
     [Display(Name = "Photo 3")]
-    public string Photo3Filename { get; set; }
+    public string Photo3Url { get; set; }
 
     [Display(Name = "Photo 4")]
-    public string Photo4Filename { get; set; }
+    public string Photo4Url { get; set; }
 
     [Display(Name = "Photo 5")]
-    public string Photo5Filename { get; set; }
+    public string Photo5Url { get; set; }
 
     [Multilingual]
     [Display(Name = "Title")]

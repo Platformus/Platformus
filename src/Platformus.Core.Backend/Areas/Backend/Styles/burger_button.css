@@ -1,0 +1,51 @@
+﻿/* Copyright © 2020 Dmitry Sikorsky. All rights reserved. */
+/* Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information. */
+
+.burger-button {
+  position: relative;
+}
+
+.burger-button div {
+  background-color: #000;
+  position: absolute;
+  left: 0;
+  width: 100%;
+  height: 1px;
+  transition: all .25s linear;
+}
+
+.burger-button--active div {
+  transition: all .25s linear;
+}
+
+.burger-button div:nth-child(1) {
+  top: 20%;
+}
+
+.burger-button--active div:nth-child(1) {
+  left: 50%;
+  top: 50%;
+  width: 0;
+}
+
+.burger-button div:nth-child(2), .burger-button div:nth-child(3) {
+  top: 50%;
+}
+
+.burger-button--active div:nth-child(2) {
+  transform: rotate(45deg);
+}
+
+.burger-button--active div:nth-child(3) {
+  transform: rotate(-45deg);
+}
+
+.burger-button div:nth-child(4) {
+  top: 80%;
+}
+
+.burger-button--active div:nth-child(4) {
+  left: 50%;
+  top: 50%;
+  width: 0;
+}

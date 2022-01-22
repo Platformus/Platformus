@@ -24,7 +24,7 @@ namespace Platformus.Core.Backend.ViewModels.Roles
         Offset = offset,
         Limit = limit,
         Total = total,
-        Roles = roles.Select(RoleViewModelFactory.Create)
+        Roles = roles.Select(RoleViewModelFactory.Create).ToList()
       };
     }
 

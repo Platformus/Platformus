@@ -3,7 +3,7 @@
 @model Platformus.Website.Frontend.ViewModels.Shared.FormViewModel
 @using Platformus 
 <form class="form @Model.AdditionalCssClass" action="/@System.Globalization.CultureInfo.CurrentUICulture.TwoLetterISOLanguageName/forms/send" method="post" enctype="multipart/form-data">
-  <input id="origin" name="origin" type="hidden" value="@Context.Request.GetUrl()" />
+  <input id="origin" name="origin" type="hidden" value="@Context.Request.GetUrlWithoutCultureSegment()" />
   <input id="formId" name="formId" type="hidden" value="@Model.Id" />
   @foreach (var field in this.Model.Fields)
   {

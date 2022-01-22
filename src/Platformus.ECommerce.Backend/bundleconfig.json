@@ -2,6 +2,7 @@
   {
     "outputFileName": "wwwroot/areas/backend/css/platformus.ecommerce.min.css",
     "inputFiles": [
+      "Areas/Backend/Styles/icon.css"
     ]
   },
   {
@@ -10,7 +11,8 @@
       "Areas/Backend/Scripts/ui.js",
       "Areas/Backend/Scripts/Forms/category_selector_form.js",
       "Areas/Backend/Scripts/Forms/product_selector_form.js",
-      "Areas/Backend/Scripts/ParameterEditors/category_selector_parameter_editor.js"
+      "Areas/Backend/Scripts/ParameterEditors/category_selector_parameter_editor.js",
+      "Areas/Backend/Scripts/ParameterEditors/product_selector_parameter_editor.js"
     ],
     "minify": {
       "enabled": true,

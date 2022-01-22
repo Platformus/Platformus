@@ -8,7 +8,7 @@ namespace Platformus.Core.Controllers
 {
   public abstract class ControllerBase : Controller
   {
-    public IStorage Storage { get; private set; }
+    public IStorage Storage { get; }
 
     public ControllerBase(IStorage storage)
     {

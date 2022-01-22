@@ -3,39 +3,41 @@
 
 using System.Collections.Generic;
 using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.AspNetCore.Mvc.ViewFeatures;
 using Microsoft.AspNetCore.Razor.TagHelpers;
 using Platformus.Core.Primitives;
 
 namespace Platformus.Core.Backend
 {
-  public class DropDownListTagHelper : TagHelper
+  public class DropDownListTagHelper : TagHelperBase<string>
   {
-    [HtmlAttributeNotBound]
-    [ViewContext]
-    public ViewContext ViewContext { get; set; }
-    public string Class { get; set; }
-    public ModelExpression For { get; set; }
     public IEnumerable<Option> Options { get; set; }
 
     public override void Process(TagHelperContext context, TagHelperOutput output)
     {
-      if (this.For == null || this.Options == null)
+      if ((this.For == null && string.IsNullOrEmpty(this.Id)) || this.Options == null)
         return;
 
+      output.SuppressOutput();
+      output.Content.AppendHtml(this.CreateDropDownList());
+    }
+
+    private TagBuilder CreateDropDownList()
+    {
       TagBuilder tb = DropDownListGenerator.Generate(
-        this.For.GetIdentity(),
+        this.GetIdentity(),
         this.Options,
-        this.For.GetValue(this.ViewContext)?.ToString()?.ToString(),
-        this.For.HasRequiredAttribute(),
-        this.For.IsValid(this.ViewContext)
+        value: this.GetValue(),
+        validation: this.GetValidation()
       );
 
       if (!string.IsNullOrEmpty(this.Class))
         tb.AddCssClass(this.Class);
 
-      output.SuppressOutput();
-      output.Content.AppendHtml(tb);
+      // TODO: merge all the attributes, not only "onchange"
+      if (!string.IsNullOrEmpty(this.OnChange))
+        tb.MergeAttribute(AttributeNames.OnChange, this.OnChange);
+
+      return tb;
     }
   }
 }

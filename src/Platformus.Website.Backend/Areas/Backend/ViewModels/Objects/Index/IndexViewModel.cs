@@ -10,6 +10,7 @@ namespace Platformus.Website.Backend.ViewModels.Objects
 {
   public class IndexViewModel : ViewModelBase
   {
+    public ClassViewModel ParentClass { get; set; }
     public ClassViewModel Class { get; set; }
     public IDictionary<ClassViewModel, IEnumerable<ClassViewModel>> ClassesByAbstractClasses { get; set; }
     public string Sorting { get; set; }

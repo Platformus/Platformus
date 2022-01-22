@@ -40,11 +40,11 @@ namespace Platformus.ECommerce.Backend.ViewModels.Products
         DescriptionLocalizations = httpContext.GetLocalizations(product.Description),
         UnitsLocalizations = httpContext.GetLocalizations(product.Units),
         Price = product.Price,
-        Photo1Filename = product.Photos.FirstOrDefault(p => p.Position == 1)?.Filename,
-        Photo2Filename = product.Photos.FirstOrDefault(p => p.Position == 2)?.Filename,
-        Photo3Filename = product.Photos.FirstOrDefault(p => p.Position == 3)?.Filename,
-        Photo4Filename = product.Photos.FirstOrDefault(p => p.Position == 4)?.Filename,
-        Photo5Filename = product.Photos.FirstOrDefault(p => p.Position == 5)?.Filename,
+        Photo1Url = GetPhotoUrl(product.Photos.FirstOrDefault(p => p.Position == 1)?.Filename),
+        Photo2Url = GetPhotoUrl(product.Photos.FirstOrDefault(p => p.Position == 2)?.Filename),
+        Photo3Url = GetPhotoUrl(product.Photos.FirstOrDefault(p => p.Position == 3)?.Filename),
+        Photo4Url = GetPhotoUrl(product.Photos.FirstOrDefault(p => p.Position == 4)?.Filename),
+        Photo5Url = GetPhotoUrl(product.Photos.FirstOrDefault(p => p.Position == 5)?.Filename),
         TitleLocalizations = httpContext.GetLocalizations(product.Title),
         MetaDescriptionLocalizations = httpContext.GetLocalizations(product.MetaDescription),
         MetaKeywordsLocalizations = httpContext.GetLocalizations(product.MetaKeywords)
@@ -55,7 +55,15 @@ namespace Platformus.ECommerce.Backend.ViewModels.Products
     {
       return (await httpContext.GetStorage().GetRepository<int, Category, CategoryFilter>().GetAllAsync(inclusions: new Inclusion<Category>(c => c.Name.Localizations))).Select(
         c => new Option(c.Name.GetLocalizationValue(), c.Id.ToString())
-      );
+      ).ToList();
+    }
+
+    private static string GetPhotoUrl(string filename)
+    {
+      if (string.IsNullOrEmpty(filename))
+        return null;
+
+      return "/images/products/" + filename;
     }
   }
 }

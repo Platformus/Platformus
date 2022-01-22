@@ -9,7 +9,9 @@ namespace Platformus.Core.Backend.ViewModels.Cultures
   {
     public static Culture Map(Culture culture, CreateOrEditViewModel createOrEdit)
     {
-      culture.Id = createOrEdit.Id;
+      if (culture.Id == null)
+        culture.Id = createOrEdit.Id;
+
       culture.Name = createOrEdit.Name;
       culture.IsFrontendDefault = createOrEdit.IsFrontendDefault;
       culture.IsBackendDefault = createOrEdit.IsBackendDefault;

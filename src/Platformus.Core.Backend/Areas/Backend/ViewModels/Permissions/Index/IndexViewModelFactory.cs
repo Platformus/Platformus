@@ -18,7 +18,7 @@ namespace Platformus.Core.Backend.ViewModels.Permissions
         Offset = offset,
         Limit = limit,
         Total = total,
-        Permissions = permissions.Select(PermissionViewModelFactory.Create)
+        Permissions = permissions.Select(PermissionViewModelFactory.Create).ToList()
       };
     }
   }

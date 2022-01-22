@@ -14,7 +14,7 @@ namespace Platformus.Website.Backend.ViewModels.Forms
     {
       return new IndexViewModel()
       {
-        Forms = forms.Select(FormViewModelFactory.Create)
+        Forms = forms.Select(FormViewModelFactory.Create).ToList()
       };
     }
   }

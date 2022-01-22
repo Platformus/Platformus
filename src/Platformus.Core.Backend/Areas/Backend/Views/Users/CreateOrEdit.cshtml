@@ -3,13 +3,14 @@
 @model Platformus.Core.Backend.ViewModels.Users.CreateOrEditViewModel
 @inject Microsoft.AspNetCore.Mvc.Localization.IViewLocalizer Localizer
 @{
-  this.ViewBag.Title = (this.Model.Id == null ? this.Localizer["Create User"].Value : this.Localizer["Edit User"].Value);
+  this.ViewBag.Title = (this.Model.Id == null ? this.Localizer["Create User"] : this.Localizer["Edit User"]);
   this.ViewBag.ActiveMenuItem = "users";
 }
-@section title {
-  @ViewBag.Title
-}
-<form class="master-detail__form form" method="post">
+<form class="form" method="post">
+  <title-bar>
+    <submit-button>@Localizer["Save"]</submit-button>
+    <neutral-button href="/backend/users">@Localizer["Cancel"]</neutral-button>
+  </title-bar>
   <tabs>
     <tab code="General">@Localizer["General"]</tab>
     <tab code="Roles">@Localizer["Roles"]</tab>
@@ -21,12 +22,8 @@
     <tab-page code="Roles">
       @foreach (var userRole in this.Model.UserRoles)
       {
-        <checkbox-field class="@(userRole.Role.Id == this.Model.UserRoles.First().Role.Id ? "form__field--separated" : null)" id="role@(userRole.Role.Id)" label="@userRole.Role.Name" is-checked="@userRole.IsAssigned" />
+        <checkbox-field id="role@(userRole.Role.Id)" label="@userRole.Role.Name" value="@userRole.IsAssigned" />
       }
     </tab-page>
   </tab-pages>
-  <div class="form__buttons buttons">
-    <submit-button>@Localizer["Save"]</submit-button>
-    <neutral-button href="/backend/users">@Localizer["Cancel"]</neutral-button>
-  </div>
 </form>

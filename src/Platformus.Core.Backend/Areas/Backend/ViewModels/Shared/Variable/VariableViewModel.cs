@@ -6,6 +6,7 @@ namespace Platformus.Core.Backend.ViewModels.Shared
   public class VariableViewModel : ViewModelBase
   {
     public int Id { get; set; }
+    public int ConfigurationId { get; set; }
     public string Name { get; set; }
     public string Value { get; set; }
   }

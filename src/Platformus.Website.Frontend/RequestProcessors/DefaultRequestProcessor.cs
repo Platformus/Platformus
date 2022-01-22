@@ -21,7 +21,7 @@ namespace Platformus.Website.Frontend.RequestProcessors
       {
         new ParameterGroup(
           "General",
-          new Parameter("ViewName", "View name", Core.JavaScriptEditorClassNames.TextBox, null, true)
+          new Parameter("ViewName", "View name", Core.ParameterEditorCodes.TextBox, null, true)
         )
       };
 

@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Platformus.Core.Parameters;
+using Platformus.Core;
 using Platformus.Website.Data.Entities;
 
 namespace Platformus.Website.FormHandlers
@@ -15,18 +15,8 @@ namespace Platformus.Website.FormHandlers
   /// A form handler takes the information entered into a form by a user and handles it in some way
   /// (sends somewhere, creates a database record etc.).
   /// </summary>
-  public interface IFormHandler
+  public interface IFormHandler : IParameterized
   {
-    /// <summary>
-    /// Gets the parameter groups with the parameters the form handler needs from the users.
-    /// </summary>
-    IEnumerable<ParameterGroup> ParameterGroups { get; }
-
-    /// <summary>
-    /// Gets description that is shown to a user to describe the form handler.
-    /// </summary>
-    string Description { get; }
-
     /// <summary>
     /// Handles the form.
     /// </summary>

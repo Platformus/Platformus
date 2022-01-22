@@ -22,6 +22,7 @@ namespace Platformus.Core.Backend
       foreach (Option option in options)
         tb.InnerHtml.AppendHtml(GenerateRadioButton(option, option.Value == selectedOption.Value));
 
+      tb.InnerHtml.AppendHtml(GenerateInput(identity, options, value));
       return tb;
     }
 
@@ -55,6 +56,17 @@ namespace Platformus.Core.Backend
 
       tb.AddCssClass("radio-button__label");
       tb.InnerHtml.AppendHtml(option.Text);
+      return tb;
+    }
+
+    private static TagBuilder GenerateInput(string identity, IEnumerable<Option> options, string value)
+    {
+      TagBuilder tb = new TagBuilder(TagNames.Input);
+
+      tb.TagRenderMode = TagRenderMode.SelfClosing;
+      tb.MergeAttribute(AttributeNames.Name, identity);
+      tb.MergeAttribute(AttributeNames.Type, InputTypes.Hidden);
+      tb.MergeAttribute(AttributeNames.Value, GetSelectedOption(options, value)?.Value);
       return tb;
     }
 

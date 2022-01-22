@@ -5,9 +5,7 @@
 @{
   this.ViewBag.Title = this.Localizer["Dashboard"];
 }
-@section title {
-  @ViewBag.Title
-}
+<title-bar />
 @foreach (var dashboardWidget in DashboardWidgetsProvider.GetDashboardWidgets(this.Context))
 {
   @await Component.InvokeAsync(dashboardWidget.ViewComponentName)

@@ -24,7 +24,7 @@ namespace Platformus.ECommerce.Data.EntityFramework.SqlServer
           etb.HasKey(e => e.Id);
           etb.Property(e => e.Id).ValueGeneratedOnAdd();
           etb.Property(e => e.Url).IsRequired().HasMaxLength(128);
-          etb.Property(e => e.Code).IsRequired().HasMaxLength(32);
+          etb.Property(e => e.Code).HasMaxLength(64);
           etb.ToTable("Products");
         }
       );

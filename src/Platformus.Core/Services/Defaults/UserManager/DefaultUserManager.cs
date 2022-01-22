@@ -48,22 +48,21 @@ namespace Platformus.Core.Services.Defaults
 
     public async Task<SignUpResult> SignUpAsync(string name, string credentialTypeCode, string identifier, string secret)
     {
+      CredentialType credentialType = (await this.credentialTypeRepository.GetAllAsync(new CredentialTypeFilter(code: credentialTypeCode))).FirstOrDefault();
+
+      if (credentialType == null)
+        return new SignUpResult(success: false, error: SignUpError.CredentialTypeNotFound);
+
       User user = new User();
 
       user.Name = name;
       user.Created = DateTime.Now;
       this.userRepository.Create(user);
-      await this.storage.SaveAsync();
-
-      CredentialType credentialType = (await this.credentialTypeRepository.GetAllAsync(new CredentialTypeFilter(code: credentialTypeCode))).FirstOrDefault();
-
-      if (credentialType == null)
-        return new SignUpResult(success: false, error: SignUpResultError.CredentialTypeNotFound);
 
       Credential credential = new Credential();
 
-      credential.UserId = user.Id;
-      credential.CredentialTypeId = credentialType.Id;
+      credential.User = user;
+      credential.CredentialType = credentialType;
       credential.Identifier = identifier;
 
       if (!string.IsNullOrEmpty(secret))
@@ -130,7 +129,7 @@ namespace Platformus.Core.Services.Defaults
       Credential credential = (await this.credentialRepository.GetAllAsync(new CredentialFilter(credentialType: new CredentialTypeFilter(code: credentialTypeCode), identifier: new StringFilter(equals: identifier)))).FirstOrDefault();
 
       if (credential == null)
-        return new ChangeSecretResult(success: false, error: ChangeSecretResultError.CredentialNotFound);
+        return new ChangeSecretResult(success: false, error: ChangeSecretError.CredentialNotFound);
 
       byte[] salt = Pbkdf2Hasher.GenerateRandomSalt();
       string hash = Pbkdf2Hasher.ComputeHash(secret, salt);
@@ -152,7 +151,7 @@ namespace Platformus.Core.Services.Defaults
       Credential credential = (await this.credentialRepository.GetAllAsync(new CredentialFilter(credentialType: new CredentialTypeFilter(code: credentialTypeCode), identifier: new StringFilter(equals: identifier)), inclusions: new Inclusion<Credential>(c => c.User))).FirstOrDefault();
 
       if (credential == null)
-        return new ValidateResult(success: false, error: ValidateResultError.CredentialNotFound);
+        return new ValidateResult(success: false, error: ValidateError.CredentialNotFound);
 
       if (!string.IsNullOrEmpty(secret))
       {
@@ -160,7 +159,7 @@ namespace Platformus.Core.Services.Defaults
         string hash = Pbkdf2Hasher.ComputeHash(secret, salt);
 
         if (credential.Secret != hash)
-          return new ValidateResult(success: false, error: ValidateResultError.SecretNotValid);
+          return new ValidateResult(success: false, error: ValidateError.SecretNotValid);
       }
 
       return new ValidateResult(user: credential.User, success: true);

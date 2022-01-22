@@ -2,6 +2,13 @@
 /* Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information. */
 
 .field-validation-error {
-  color: #ff4100;
-  font-size: 13px;
+  background: #e04030;
+  color: #fff;
+  display: block;
+  font-size: 0.75rem;
+  padding: 0.25rem;
+}
+
+.field-validation-error:last-child {
+  border-radius: 0 0 0.25rem 0.25rem;
 }

@@ -83,9 +83,9 @@ namespace Platformus
     }
 
     /// <summary>
-    /// Gets the localizations for all the non-neutral cultures for a given dictionary.
+    /// Gets the localizations for all the cultures for a given dictionary.
     /// If the dictionary doesn't contain a localization for a specific culture, an empty localization will be created.
-    /// If the dictionary is null, new localizations will be created for all the non-neutral cultures.
+    /// If the dictionary is null, new localizations will be created for all the cultures.
     /// </summary>
     /// <param name="httpContext">Current <see cref="HttpContext"/> to get the culture manager service from.</param>
     /// <param name="dictionary">A <see cref="Dictionary"/> to get the localizations from.</param>

@@ -3,14 +3,12 @@
 
 using System;
 using System.Collections.Generic;
-using System.Globalization;
 using System.Linq;
 using Magicalizer.Data.Repositories.Abstractions;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Newtonsoft.Json;
-using Newtonsoft.Json.Serialization;
 using Platformus.Core.Data.Entities;
 using Platformus.Core.Filters;
 
@@ -40,8 +38,8 @@ namespace Platformus
             ms => new ModelStateWrapper() {
               Key = ms.Key,
               Value = ms.Value.AttemptedValue,
-              ValidationState = ms.Value.ValidationState
-              //Errors = ms.Value.Errors.Select(e => e.ErrorMessage)
+              ValidationState = ms.Value.ValidationState,
+              Errors = ms.Value.Errors.Select(e => e.ErrorMessage).Where(e => !string.IsNullOrEmpty(e)).ToList()
             }
           );
 
@@ -73,7 +71,7 @@ namespace Platformus
 
     private string SerializeModelStateWrappers(IEnumerable<ModelStateWrapper> modelStateWrappers)
     {
-      return JsonConvert.SerializeObject(modelStateWrappers, Formatting.None, new JsonSerializerSettings() { ContractResolver = new NoCultureInfoResolver() });
+      return JsonConvert.SerializeObject(modelStateWrappers);
     }
   }
 
@@ -94,23 +92,20 @@ namespace Platformus
           ModelState modelState = filterContext.HttpContext.GetStorage().GetRepository<Guid, ModelState, ModelStateFilter>().GetByIdAsync(modelStateId).Result;
           IEnumerable<ModelStateWrapper> modelStateWrappers = this.DeserializeModelStateWrappers(modelState.Value);
 
-          if (modelStateWrappers != null)
+          if (filterContext.Result is ViewResult)
           {
-            if (filterContext.Result is ViewResult)
+            foreach (ModelStateWrapper modelStateWrapper in modelStateWrappers)
             {
-              foreach (ModelStateWrapper modelStateWrapper in modelStateWrappers)
-              {
-                controller.ViewData.ModelState.SetModelValue(modelStateWrapper.Key, modelStateWrapper.Value, modelStateWrapper.Value);
-                controller.ViewData.ModelState[modelStateWrapper.Key].ValidationState = modelStateWrapper.ValidationState;
+              controller.ViewData.ModelState.SetModelValue(modelStateWrapper.Key, modelStateWrapper.Value, modelStateWrapper.Value);
+              controller.ViewData.ModelState[modelStateWrapper.Key].ValidationState = modelStateWrapper.ValidationState;
 
-                //if (modelStateWrapper.ValidationState == ModelValidationState.Invalid)
-                //  foreach (string error in modelStateWrapper.Errors)
-                //    controller.ViewData.ModelState[modelStateWrapper.Key].Errors.Add(new ModelError(error));
-              }
+              if (modelStateWrapper.ValidationState == ModelValidationState.Invalid)
+                foreach (string error in modelStateWrapper.Errors)
+                  controller.ViewData.ModelState[modelStateWrapper.Key].Errors.Add(new ModelError(error));
             }
-
-            else controller.TempData.Remove(Key);
           }
+
+          else controller.TempData.Remove(Key);
         }
       }
 
@@ -119,32 +114,15 @@ namespace Platformus
 
     private IEnumerable<ModelStateWrapper> DeserializeModelStateWrappers(string value)
     {
-      return JsonConvert.DeserializeObject<IEnumerable<ModelStateWrapper>>(value, new JsonSerializerSettings() { Error = DeserializationErrorHandler });
-    }
-
-    private void DeserializationErrorHandler(object sender, ErrorEventArgs errorArgs)
-    {
-      errorArgs.ErrorContext.Handled = true;
+      return JsonConvert.DeserializeObject<IEnumerable<ModelStateWrapper>>(value);
     }
   }
 
-  // TODO: consider making internal
-  public class ModelStateWrapper
+  internal sealed class ModelStateWrapper
   {
     public string Key { get; set; }
     public string Value { get; set; }
     public ModelValidationState ValidationState { get; set; }
-    //public IEnumerable<string> Errors { get; set; }
-  }
-
-  // TODO: consider making internal
-  public class NoCultureInfoResolver : DefaultContractResolver
-  {
-    protected override IList<JsonProperty> CreateProperties(Type type, MemberSerialization memberSerialization)
-    {
-      IList<JsonProperty> properties = base.CreateProperties(type, memberSerialization);
-
-      return properties.Where(p => p.PropertyType != typeof(CultureInfo)).ToList();
-    }
+    public IEnumerable<string> Errors { get; set; }
   }
 }

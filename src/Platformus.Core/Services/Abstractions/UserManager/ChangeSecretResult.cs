@@ -4,15 +4,6 @@
 namespace Platformus.Core.Services.Abstractions
 {
   /// <summary>
-  /// Describes possible secret changing errors.
-  /// </summary>
-  public enum ChangeSecretResultError
-  {
-    CredentialTypeNotFound,
-    CredentialNotFound
-  }
-
-  /// <summary>
   /// Describes a secret changing result.
   /// </summary>
   public class ChangeSecretResult
@@ -25,14 +16,14 @@ namespace Platformus.Core.Services.Abstractions
     /// <summary>
     /// A secret changing error details.
     /// </summary>
-    public ChangeSecretResultError? Error { get; }
+    public ChangeSecretError? Error { get; }
 
     /// <summary>
     /// Initializes a new instance of the <see cref="ChangeSecretResult"/> class.
     /// </summary>
     /// <param name="success">Indicates if a secret was changed successfully.</param>
     /// <param name="error">A secret changing error details.</param>
-    public ChangeSecretResult(bool success = true, ChangeSecretResultError? error = null)
+    public ChangeSecretResult(bool success = true, ChangeSecretError? error = null)
     {
       this.Success = success;
       this.Error = error;

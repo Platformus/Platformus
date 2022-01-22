@@ -4,51 +4,51 @@
 using System.Collections.Generic;
 using System.Linq;
 using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.AspNetCore.Mvc.ViewFeatures;
 using Microsoft.AspNetCore.Razor.TagHelpers;
 using Platformus.Core.Primitives;
 
 namespace Platformus.Core.Backend
 {
-  public class DropDownListFilterTagHelper : TagHelper
+  public class DropDownListFilterTagHelper : CriterionTagHelperBase
   {
-    [HtmlAttributeNotBound]
-    [ViewContext]
-    public ViewContext ViewContext { get; set; }
-    public string PropertyPath { get; set; }
     public IEnumerable<Option> Options { get; set; }
-    public Size Width { get; set; } = Size.Large;
+    public Sizes Width { get; set; } = Sizes.Large;
 
     public override void Process(TagHelperContext context, TagHelperOutput output)
     {
       if (this.Options == null)
         return;
 
+      base.Process(context, output);
+      output.Content.AppendHtml(this.CreateDropDownList());
+    }
+
+    protected override string GetValue()
+    {
+      return (this.Options.FirstOrDefault(o => o.Value == base.GetValue()) ?? this.Options.FirstOrDefault())?.Value;
+    }
+
+    private TagBuilder CreateDropDownList()
+    {
       TagBuilder tb = DropDownListGenerator.Generate(
         string.Empty,
         this.Options,
-        this.GetValue()
+        value: this.GetValue()
       );
 
       tb.AddCssClass("filter__criterion");
 
-      if (this.Width == Size.Small)
+      if (this.Width == Sizes.Small)
         tb.AddCssClass("filter__criterion--small");
 
-      else if (this.Width == Size.Medium)
+      else if (this.Width == Sizes.Medium)
         tb.AddCssClass("filter__criterion--medium");
 
-      else if (this.Width == Size.Large)
+      else if (this.Width == Sizes.Large)
         tb.AddCssClass("filter__criterion--large");
 
       tb.MergeAttribute("data-property-path", this.PropertyPath?.ToLower());
-      output.SuppressOutput();
-      output.Content.AppendHtml(tb);
-    }
-
-    private string GetValue()
-    {
-      return (this.Options.FirstOrDefault(o => o.Value == this.ViewContext.HttpContext.Request.Query[this.PropertyPath]) ?? this.Options.FirstOrDefault())?.Value;
+      return tb;
     }
   }
 }

@@ -22,10 +22,10 @@ namespace Platformus.Website.Backend.ViewModels.Objects
         new Inclusion<Class>(c => c.Tabs),
         new Inclusion<Class>(c => c.Parent.Tabs),
         new Inclusion<Class>("Members.Tab"),
-        new Inclusion<Class>("Members.PropertyDataType.DataTypeParameters.DataTypeParameterValues"),
+        new Inclusion<Class>("Members.PropertyDataType"),
         new Inclusion<Class>("Members.RelationClass"),
         new Inclusion<Class>("Parent.Members.Tab"),
-        new Inclusion<Class>("Parent.Members.PropertyDataType.DataTypeParameters.DataTypeParameterValues"),
+        new Inclusion<Class>("Parent.Members.PropertyDataType"),
         new Inclusion<Class>("Parent.Members.RelationClass")
       );
 
@@ -44,77 +44,44 @@ namespace Platformus.Website.Backend.ViewModels.Objects
       };
     }
 
-    private static List<dynamic> GetMembersByTabs(HttpContext httpContext, Class @class, Object @object = null)
+    private static IDictionary<TabViewModel, IEnumerable<object>> GetMembersByTabs(HttpContext httpContext, Class @class, Object @object = null)
     {
-      List<dynamic> membersByTabs = new List<dynamic>();
+      Dictionary<TabViewModel, IEnumerable<object>> membersByTabs = new Dictionary<TabViewModel, IEnumerable<object>>();
       IStringLocalizer<CreateOrEditViewModel> localizer = httpContext.GetStringLocalizer<CreateOrEditViewModel>();
 
-      membersByTabs.Add(new { id = 0, name = localizer["General"].Value, members = GetMembersByTab(httpContext, @class, null, @object) });
+      membersByTabs.Add(new TabViewModel() { Name = localizer["General"] }, GetMembersByTab(httpContext, @class, null, @object));
 
       foreach (Tab tab in @class.GetTabs())
-        membersByTabs.Add(new { id = tab.Id, name = tab.Name, members = GetMembersByTab(httpContext, @class, tab, @object) });
+        membersByTabs.Add(TabViewModelFactory.Create(tab), GetMembersByTab(httpContext, @class, tab, @object));
 
       return membersByTabs;
     }
 
-    private static dynamic GetMembersByTab(HttpContext httpContext, Class @class, Tab tab, Object @object)
+    private static IEnumerable<object> GetMembersByTab(HttpContext httpContext, Class @class, Tab tab, Object @object)
     {
-      return @class.GetMembers().Where(m => m.Tab?.Id == tab?.Id).Select(
-        m => new
-        {
-          id = m.Id,
-          name = m.Name,
-          propertyDataType = m.PropertyDataType == null ? null : new
-          {
-            javaScriptEditorClassName = m.PropertyDataType.JavaScriptEditorClassName,
-            dataTypeParameters = m.PropertyDataType.DataTypeParameters.Select(
-              dtp => new { code = dtp.Code, value = dtp.DataTypeParameterValues.FirstOrDefault(dtpv => dtpv.MemberId == m.Id)?.Value }
-            )
-          },
-          isPropertyLocalizable = m.IsPropertyLocalizable,
-          property = m.PropertyDataType == null ? null : GetProperty(httpContext, m, @object),
-          relationClass = m.RelationClass == null ? null : new
-          {
-            id = m.RelationClass.Id
-          },
-          isRelationSingleParent = m.IsRelationSingleParent,
-          minRelatedObjectsNumber = m.MinRelatedObjectsNumber,
-          maxRelatedObjectsNumber = m.MaxRelatedObjectsNumber,
-          relations = m.RelationClass == null ? null : GetRelations(m, @object)
-        }
-      );
-    }
+      List<object> members = new List<object>();
 
-    private static dynamic GetProperty(HttpContext httpContext, Member member, Object @object)
-    {
-      Property property = @object?.Properties.FirstOrDefault(p => p.MemberId == member.Id);
-
-      return new
+      foreach (Member member in @class.GetMembers().Where(m => m.Tab?.Id == tab?.Id))
       {
-        integerValue = property?.IntegerValue,
-        decimalValue = property?.DecimalValue,
-        stringValue = new
+        if (member.PropertyDataTypeId != null)
         {
-          localizations = httpContext.GetCultureManager().GetCulturesAsync().Result.Select(
-            c => new
-            {
-              culture = new { id = c.Id },
-              value = property?.StringValue == null ? null : property.StringValue.Localizations.FirstOrDefault(l => l.CultureId == c.Id)?.Value
-            }
-          )
-        },
-        dateTimeValue = property?.DateTimeValue
-      };
-    }
+          Property property = @object?.Properties.FirstOrDefault(p => p.MemberId == member.Id);
 
-    private static IEnumerable<object> GetRelations(Member m, Object @object)
-    {
-      if (@object == null)
-        return new object[] { };
+          if (property == null)
+            property = new Property() { Member = member };
 
-      return @object.ForeignRelations
-        .Where(r => r.MemberId == m.Id)
-        .Select(r => new { primaryId = r.PrimaryId });
+          members.Add(PropertyViewModelFactory.Create(httpContext, property));
+        }
+
+        else if (member.RelationClassId != null && member.IsRelationSingleParent != true)
+        {
+          IEnumerable<Relation> relations = @object?.ForeignRelations.Where(r => r.MemberId == member.Id).ToList();
+
+          members.Add(RelationSetViewModelFactory.Create(member, relations ?? System.Array.Empty<Relation>()));
+        }
+      }
+
+      return members;
     }
   }
 }

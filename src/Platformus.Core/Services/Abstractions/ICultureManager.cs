@@ -15,7 +15,7 @@ namespace Platformus.Core.Services.Abstractions
     /// <summary>
     /// Gets a culture by ID.
     /// </summary>
-    /// <param name="id">A culture ID. Two letter country code (ISO 3166, example: en, ru, uk).</param>
+    /// <param name="id">A culture ID. Two-letter language code (ISO 639‑1, example: en, ru, uk).</param>
     Task<Culture> GetCultureAsync(string id);
 
     /// <summary>

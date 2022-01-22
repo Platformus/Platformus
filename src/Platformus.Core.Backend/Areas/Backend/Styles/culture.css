@@ -2,20 +2,28 @@
 /* Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information. */
 
 .culture {
-  position: relative;
-  z-index: 10;
 }
 
 .culture__flag {
-  background-color: #323232;
-  color: #fff;
-  font-size: 7.5px;
-  line-height: 15px;
-  text-align: center;
-  text-transform: uppercase;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: 1rem;
+  pointer-events: none;
   position: absolute;
-  top: 7.5px;
-  right: 7.5px;
-  width: 15px;
-  height: 15px;
+  right: 0.75rem;
+  top: 0.75rem;
+  width: 1.25rem;
+  height: 1.25rem;
+}
+
+.culture__flag--en {
+  background-image: url(/wwwroot.areas.backend.images.flag_en.svg);
+}
+
+.culture__flag--ru {
+  background-image: url(/wwwroot.areas.backend.images.flag_ru.svg);
+}
+
+.culture__flag--uk {
+  background-image: url(/wwwroot.areas.backend.images.flag_uk.svg);
 }

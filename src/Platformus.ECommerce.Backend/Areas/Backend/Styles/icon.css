@@ -1,0 +1,30 @@
+﻿/* Copyright © 2021 Dmitry Sikorsky. All rights reserved. */
+/* Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information. */
+
+.icon--categories {
+  background-image: url(/wwwroot.areas.backend.images.categories.svg);
+}
+
+.icon--products {
+  background-image: url(/wwwroot.areas.backend.images.products.svg);
+}
+
+.icon--carts {
+  background-image: url(/wwwroot.areas.backend.images.carts.svg);
+}
+
+.icon--orders {
+  background-image: url(/wwwroot.areas.backend.images.orders.svg);
+}
+
+.icon--order-states {
+  background-image: url(/wwwroot.areas.backend.images.order_states.svg);
+}
+
+.icon--delivery-methods {
+  background-image: url(/wwwroot.areas.backend.images.delivery_methods.svg);
+}
+
+.icon--payment-methods {
+  background-image: url(/wwwroot.areas.backend.images.payment_methods.svg);
+}

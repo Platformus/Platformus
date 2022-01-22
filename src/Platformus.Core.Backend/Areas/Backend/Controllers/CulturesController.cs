@@ -7,6 +7,7 @@ using Magicalizer.Data.Repositories.Abstractions;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Localization;
 using Platformus.Core.Backend.ViewModels.Cultures;
 using Platformus.Core.Data.Entities;
 using Platformus.Core.Events;
@@ -14,18 +15,20 @@ using Platformus.Core.Filters;
 
 namespace Platformus.Core.Backend.Controllers
 {
-  [Area("Backend")]
   [Authorize(Policy = Policies.HasManageCulturesPermission)]
   public class CulturesController : ControllerBase
   {
+    private IStringLocalizer localizer;
+
     private IRepository<string, Culture, CultureFilter> Repository
     {
       get => this.Storage.GetRepository<string, Culture, CultureFilter>();
     }
 
-    public CulturesController(IStorage storage)
+    public CulturesController(IStorage storage, IStringLocalizer<SharedResource> localizer)
       : base(storage)
     {
+      this.localizer = localizer;
     }
 
     public async Task<IActionResult> IndexAsync([FromQuery]CultureFilter filter = null, string sorting = "+name", int offset = 0, int limit = 10)
@@ -50,7 +53,7 @@ namespace Platformus.Core.Backend.Controllers
     public async Task<IActionResult> CreateOrEditAsync([FromRoute]string id, CreateOrEditViewModel createOrEdit)
     {
       if (string.IsNullOrEmpty(id) && !await this.IsIdUniqueAsync(createOrEdit.Id))
-        this.ModelState.AddModelError("code", string.Empty);
+        this.ModelState.AddModelError("id", this.localizer["Value is already in use"]);
 
       if (this.ModelState.IsValid)
       {

@@ -1,12 +1,10 @@
 ﻿@* Copyright © 2020 Dmitry Sikorsky. All rights reserved. *@
 @* Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information. *@
 @model Platformus.Core.Backend.ViewModels.Shared.CultureViewModel
-@inject Microsoft.AspNetCore.Mvc.Localization.IViewLocalizer Localizer
-<row>
+<row href="/backend/cultures/edit/@Model.Id">
   <cell>@Model.Id</cell>
-  <cell>@Model.Name</cell>
-  <buttons-cell>
-    <positive-button is-minor="true" href="/backend/cultures/edit/@Model.Id">@Localizer["Edit"]</positive-button>
-    <delete-button href="/backend/cultures/delete/@Model.Id"></delete-button>
-  </buttons-cell>
+  <cell is-highlighted="true">@Model.Name</cell>
+  <row-controls>
+    <delete-button href="/backend/cultures/delete/@Model.Id" />
+  </row-controls>
 </row>

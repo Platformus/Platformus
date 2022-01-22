@@ -5,33 +5,52 @@
 }
 
 .node__header {
-  background: #f0f0f0;
+  background-color: #f8f8f8;
+  border: 1px solid #f0f0f0;
   display: flex;
   justify-content: space-between;
+  position: relative;
+  overflow: hidden;
+  transition: all ease 0.25s;
 }
 
 .node__header:hover {
-  background: #ffff96;
+  background-color: #ffffa0;
+  transition: all ease 0.25s;
+}
+
+.node__header--interactive {
+  cursor: pointer;
 }
 
 .node__content {
   border-left: 1px solid #f0f0f0;
-  margin-left: 20px;
-  padding-left: 20px;
+  margin-left: 1.5rem;
+  padding-left: 1.5rem;
 }
 
 .node__title {
-  padding: 5px 10px;
+  padding: 0.75rem;
 }
 
 .node__buttons {
-  padding: 5px 5px 5px 0;
+  padding: 0.75rem 0.75rem 0.75rem 0;
 }
 
-.node__context-controls {
-  visibility: hidden;
+.node__controls {
+  background: linear-gradient(90deg, transparent, #ffffa0 1rem);
+  box-sizing: border-box;
+  opacity: 0;
+  gap: 0.625rem;
+  padding: 0.625rem 0.625rem 0.625rem 1.625rem;
+  position: absolute;
+  right: 0;
+  top: 0;
+  height: 100%;
+  transition: all ease 0.25s;
 }
 
-.node__header:hover .node__context-controls {
-  visibility: visible;
+.node__header:hover .node__controls {
+  opacity: 1;
+  transition: all ease 0.25s;
 }

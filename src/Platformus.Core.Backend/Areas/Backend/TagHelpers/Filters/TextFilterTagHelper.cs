@@ -2,43 +2,42 @@
 // Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information.
 
 using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.AspNetCore.Mvc.ViewFeatures;
 using Microsoft.AspNetCore.Razor.TagHelpers;
 
 namespace Platformus.Core.Backend
 {
-  public class TextFilterTagHelper : TagHelper
+  public class TextFilterTagHelper : CriterionTagHelperBase
   {
-    [HtmlAttributeNotBound]
-    [ViewContext]
-    public ViewContext ViewContext { get; set; }
-    public string PropertyPath { get; set; }
-    public string Label { get; set; }
-    public Size Width { get; set; } = Size.Large;
+    public Sizes Width { get; set; } = Sizes.Large;
 
     public override void Process(TagHelperContext context, TagHelperOutput output)
     {
+      base.Process(context, output);
+      output.Content.AppendHtml(this.CreateTextBox());
+    }
+
+    private TagBuilder CreateTextBox()
+    {
       TagBuilder tb = TextBoxGenerator.Generate(
         string.Empty,
-        InputTypes.Text
+        InputTypes.Text,
+        value: this.GetValue()
       );
 
       tb.AddCssClass("filter__criterion");
 
-      if (this.Width == Size.Small)
+      if (this.Width == Sizes.Small)
         tb.AddCssClass("filter__criterion--small");
 
-      else if (this.Width == Size.Medium)
+      else if (this.Width == Sizes.Medium)
         tb.AddCssClass("filter__criterion--medium");
 
-      else if (this.Width == Size.Large)
+      else if (this.Width == Sizes.Large)
         tb.AddCssClass("filter__criterion--large");
 
       tb.MergeAttribute("data-property-path", this.PropertyPath?.ToLower());
       tb.MergeAttribute(AttributeNames.Placeholder, this.Label);
-      tb.MergeAttribute(AttributeNames.Value, this.ViewContext.HttpContext.Request.Query[this.PropertyPath]);
-      output.SuppressOutput();
-      output.Content.AppendHtml(tb);
+      return tb;
     }
   }
 }

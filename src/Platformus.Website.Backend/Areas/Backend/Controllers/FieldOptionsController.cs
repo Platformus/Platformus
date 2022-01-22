@@ -14,7 +14,6 @@ using Platformus.Website.Filters;
 
 namespace Platformus.Website.Backend.Controllers
 {
-  [Area("Backend")]
   [Authorize(Policy = Policies.HasManageFormsPermission)]
   public class FieldOptionsController : Core.Backend.Controllers.ControllerBase
   {
@@ -48,17 +47,21 @@ namespace Platformus.Website.Backend.Controllers
       {
         FieldOption fieldOption = CreateOrEditViewModelMapper.Map(
           filter,
-          createOrEdit.Id == null ? new FieldOption() : await this.Repository.GetByIdAsync((int)createOrEdit.Id),
+          createOrEdit.Id == null ?
+            new FieldOption() :
+            await this.Repository.GetByIdAsync(
+              (int)createOrEdit.Id,
+              new Inclusion<FieldOption>(fo => fo.Value.Localizations)
+            ),
           createOrEdit
         );
-
-        await this.CreateOrEditEntityLocalizationsAsync(fieldOption);
 
         if (createOrEdit.Id == null)
           this.Repository.Create(fieldOption);
 
         else this.Repository.Edit(fieldOption);
 
+        await this.MergeEntityLocalizationsAsync(fieldOption);
         await this.Storage.SaveAsync();
         Event<IFormEditedEventHandler, HttpContext, Form>.Broadcast(this.HttpContext, await this.GetFormAsync(fieldOption));
         return this.RedirectToAction("Index", "Forms");

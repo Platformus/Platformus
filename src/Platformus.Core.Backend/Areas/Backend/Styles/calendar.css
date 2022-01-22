@@ -2,42 +2,40 @@
 /* Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information. */
 
 .calendar {
-  background: #323232;
+  background: #fff;
+  border: 1px solid #000;
+  border-radius: 0 0.25rem 0.25rem 0.25rem;
   text-align: center;
+  overflow: hidden;
 }
 
 .calendar__header {
-  color: #fff;
-  padding: 5px 0;
+  background-color: #f8f8f8;
+  border-bottom: 1px solid #f0f0f0;
+  padding: 0.75rem;
   position: relative;
 }
 
 .calendar__previous-month {
-  background: url(/wwwroot.areas.backend.images.previous_month.png) no-repeat;
+  background: url(/wwwroot.areas.backend.images.left_arrow.svg) no-repeat center;
+  background-size: 1rem;
   cursor: pointer;
   position: absolute;
   left: 0;
   top: 0;
-  width: 30px;
-  height: 30px;
-}
-
-.calendar__previous-month:hover {
-  background-color: #3c3c3c;
+  width: 2.75rem;
+  height: 2.75rem;
 }
 
 .calendar__next-month {
-  background: url(/wwwroot.areas.backend.images.next_month.png) no-repeat;
+  background: url(/wwwroot.areas.backend.images.right_arrow.svg) no-repeat center;
+  background-size: 1rem;
   cursor: pointer;
   position: absolute;
   right: 0;
   top: 0;
-  width: 30px;
-  height: 30px;
-}
-
-.calendar__next-month:hover {
-  background-color: #3c3c3c;
+  width: 2.75rem;
+  height: 2.75rem;
 }
 
 .calendar__month {
@@ -50,47 +48,22 @@
 }
 
 .calendar__day {
-  text-decoration: none;
-  color: #fff;
+  border-radius: 0.25rem;
   display: table-cell;
-  padding: 5px 0;
+  padding: 0.75rem 0;
+  transition: all ease 0.25s;
 }
 
 .calendar__day:hover {
-  background-color: #3c3c3c;
+  background-color: #ffffa0;
+  transition: all ease 0.25s;
+}
+
+.calendar__day--today, .calendar__day--today:hover {
+  background: #e04030;
   color: #fff;
 }
 
-.calendar__day--today {
-  background: #0096fa;
-}
-
-.calendar__day--today:hover {
-  background: #5abeff;
-}
-
-.calendar__day--outer {
-  color: #666;
-}
-
-.calendar__day--outer:hover {
-  color: #666;
-}
-
-@media
-only screen and (-webkit-min-device-pixel-ratio: 2),
-only screen and (   min--moz-device-pixel-ratio: 2),
-only screen and (     -o-min-device-pixel-ratio: 2/1),
-only screen and (        min-device-pixel-ratio: 2),
-only screen and (                min-resolution: 192dpi),
-only screen and (                min-resolution: 2dppx) {
-  .calendar__previous-month {
-    background-image: url(/wwwroot.areas.backend.images.previous_month@2x.png);
-    background-size: 30px;
-  }
-
-  .calendar__next-month {
-    background-image: url(/wwwroot.areas.backend.images.next_month@2x.png);
-    background-size: 30px;
-  }
+.calendar__day--outer, .calendar__day--outer:hover {
+  color: #aaa;
 }

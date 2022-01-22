@@ -3,35 +3,34 @@
 
 using System.Collections.Generic;
 using System.Linq;
+using Microsoft.AspNetCore.Http;
 using Platformus.Website.Data.Entities;
 
 namespace Platformus.Website.Backend.ViewModels.Shared
 {
   public static class ObjectViewModelFactory
   {
-    public static ObjectViewModel Create(Object @object, IEnumerable<Member> members)
+    public static ObjectViewModel Create(HttpContext httpContext, Object @object)
     {
-      Dictionary<MemberViewModel, object> propertiesByMembers = new Dictionary<MemberViewModel, object>();
-      
-      foreach (Member member in members)
+      List<PropertyViewModel> properties = new List<PropertyViewModel>();
+
+      foreach (Member member in @object.Class.GetVisibleInListMembers())
       {
-        MemberViewModel memberViewModel = MemberViewModelFactory.Create(member);
+        Property property = @object.Properties.FirstOrDefault(p => p.MemberId == member.Id) ?? new Property();
 
-        if (member.PropertyDataType != null)
-        {
-          Property property = @object.Properties.FirstOrDefault(p => p.MemberId == member.Id);
-
-          propertiesByMembers.Add(memberViewModel, property?.GetValue());
-        }
-
-        else if (member.RelationClass != null)
-          propertiesByMembers.Add(memberViewModel, null);
+        property.Member = member;
+        properties.Add(PropertyViewModelFactory.Create(httpContext, property));
       }
 
       return new ObjectViewModel()
       {
         Id = @object.Id,
-        PropertiesByMembers = propertiesByMembers
+        Properties = properties,
+        RelationSingleParentMembers = @object
+          .Class
+          .GetRelationSingleParentMembers()
+          .Select(m => MemberViewModelFactory.Create(m))
+          .ToList()
       };
     }
   }

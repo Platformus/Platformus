@@ -8,7 +8,7 @@ namespace Platformus.Core.Backend.ViewModels.Cultures
 {
   public class CreateOrEditViewModel : ViewModelBase
   {
-    [Display(Name = "Two letter country code (ISO 3166)")]
+    [Display(Name = "Two-letter language code (ISO 639‑1)")]
     [Required]
     [StringLength(2)]
     public string Id { get; set; }

@@ -1,13 +1,11 @@
 ﻿@* Copyright © 2020 Dmitry Sikorsky. All rights reserved. *@
 @* Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information. *@
 @model Platformus.ECommerce.Backend.ViewModels.Shared.CartViewModel
-@inject Microsoft.AspNetCore.Mvc.Localization.IViewLocalizer Localizer
-<row>
-  <cell>@Model.Id</cell>
-  <cell>@Model.Total</cell>
+<row href="/backend/carts/view/@Model.Id">
+  <cell is-highlighted="true">@Model.Id</cell>
+  <cell>@Model.Total.ToString("0.00")</cell>
   <cell>@Model.Created</cell>
-  <buttons-cell>
-    <positive-button is-minor="true" href="/backend/carts/view/@Model.Id">@Localizer["View"]</positive-button>
-    <delete-button href="/backend/carts/delete/@Model.Id"></delete-button>
-  </buttons-cell>
+  <row-controls>
+    <delete-button href="/backend/carts/delete/@Model.Id" />
+  </row-controls>
 </row>

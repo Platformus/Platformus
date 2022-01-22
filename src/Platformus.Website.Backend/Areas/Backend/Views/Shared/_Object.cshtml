@@ -1,30 +1,23 @@
 ﻿@* Copyright © 2020 Dmitry Sikorsky. All rights reserved. *@
 @* Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information. *@
 @model Platformus.Website.Backend.ViewModels.Shared.ObjectViewModel
-@inject Microsoft.AspNetCore.Mvc.Localization.IViewLocalizer Localizer
-<row>
-  @foreach (var propertyByMember in this.Model.PropertiesByMembers)
+<row href="/backend/objects/edit/@Model.Id">
+  @foreach (var property in this.Model.Properties)
   {
-    if (propertyByMember.Key.PropertyDataType != null)
+    if (property.Member?.PropertyDataType.ParameterEditorCode == "image")
     {
-      if (propertyByMember.Key.PropertyDataType.JavaScriptEditorClassName == "image")
-      {
-        <image-cell url="@propertyByMember.Value" />
-      }
-      else
-      {
-        <cell>@propertyByMember.Value</cell>
-      }
+      <image-cell url="@property.Value" />
     }
-    else if (propertyByMember.Key.RelationClass != null)
+    else
     {
-      <cell>
-        <a href="/backend/objects?class.id=@propertyByMember.Key.RelationClass.Id&primary.id=@Model.Id">@propertyByMember.Key.RelationClass.PluralizedName</a>
-      </cell>
+      <cell>@property.Value</cell>
     }
   }
-<buttons-cell>
-  <positive-button is-minor="true" href="/backend/objects/edit/@Model.Id">@Localizer["Edit"]</positive-button>
-  <delete-button href="/backend/objects/delete/@Model.Id"></delete-button>
-</buttons-cell>
+  <row-controls>
+    @foreach (var member in this.Model.RelationSingleParentMembers)
+    {
+      <neutral-button is-minor="true" href="/backend/objects?class.id=@member.RelationClass.Id&primary.id=@Model.Id" skip-url-parameters="class.id">@member.RelationClass.PluralizedName</neutral-button>
+    }
+    <delete-button href="/backend/objects/delete/@Model.Id" />
+  </row-controls>
 </row>

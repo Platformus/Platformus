@@ -5,6 +5,14 @@ namespace Platformus.Core.Backend
 {
   public class NeutralButtonTagHelper : ButtonTagHelperBase
   {
-    public NeutralButtonTagHelper() : base("neutral") { }
+    public Icons? Icon { get; set; }
+
+    protected override string GetClass()
+    {
+      if (this.Icon == null)
+        return base.GetClass() + " button--neutral";
+
+      return base.GetClass() + $" button--neutral button--icon icon icon--{this.Icon.ToString().ToLower()}";
+    }
   }
 }

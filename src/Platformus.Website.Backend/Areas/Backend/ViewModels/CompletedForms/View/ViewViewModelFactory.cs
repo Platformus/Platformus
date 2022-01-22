@@ -14,7 +14,7 @@ namespace Platformus.Website.Backend.ViewModels.CompletedForms
       return new ViewViewModel()
       {
         Id = completedForm.Id,
-        CompletedFields = completedForm.CompletedFields.Select(CompletedFieldViewModelFactory.Create)
+        CompletedFields = completedForm.CompletedFields.Select(CompletedFieldViewModelFactory.Create).ToList()
       };
     }
   }

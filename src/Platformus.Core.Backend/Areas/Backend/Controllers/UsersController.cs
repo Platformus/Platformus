@@ -1,13 +1,17 @@
 ﻿// Copyright © 2020 Dmitry Sikorsky. All rights reserved.
 // Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information.
 
+using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using ExtCore.Events;
 using Magicalizer.Data.Repositories.Abstractions;
+using Magicalizer.Filters.Abstractions;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Localization;
 using Platformus.Core.Backend.ViewModels.Users;
 using Platformus.Core.Data.Entities;
 using Platformus.Core.Events;
@@ -15,10 +19,11 @@ using Platformus.Core.Filters;
 
 namespace Platformus.Core.Backend.Controllers
 {
-  [Area("Backend")]
   [Authorize(Policy = Policies.HasManageUsersPermission)]
   public class UsersController : ControllerBase
   {
+    private IStringLocalizer localizer;
+
     private IRepository<int, User, UserFilter> UserRepository
     {
       get => this.Storage.GetRepository<int, User, UserFilter>();
@@ -29,9 +34,10 @@ namespace Platformus.Core.Backend.Controllers
       get => this.Storage.GetRepository<int, int, UserRole, UserRoleFilter>();
     }
 
-    public UsersController(IStorage storage)
+    public UsersController(IStorage storage, IStringLocalizer<SharedResource> localizer)
       : base(storage)
     {
+      this.localizer = localizer;
     }
 
     public async Task<IActionResult> IndexAsync([FromQuery]UserFilter filter = null, string sorting = "+name", int offset = 0, int limit = 10)
@@ -55,6 +61,9 @@ namespace Platformus.Core.Backend.Controllers
     [ExportModelStateToTempData]
     public async Task<IActionResult> CreateOrEditAsync(CreateOrEditViewModel createOrEdit)
     {
+      if (!await this.IsNameUniqueAsync(createOrEdit))
+        this.ModelState.AddModelError("name", this.localizer["Value is already in use"]);
+
       if (this.ModelState.IsValid)
       {
         User user = CreateOrEditViewModelMapper.Map(
@@ -67,8 +76,8 @@ namespace Platformus.Core.Backend.Controllers
 
         else this.UserRepository.Edit(user);
 
+        this.MergeUserRoles(user);
         await this.Storage.SaveAsync();
-        await this.CreateOrEditUserRolesAsync(user);
 
         if (createOrEdit.Id == null)
           Event<IUserCreatedEventHandler, HttpContext, User>.Broadcast(this.HttpContext, user);
@@ -91,47 +100,28 @@ namespace Platformus.Core.Backend.Controllers
       return this.Redirect(this.Request.CombineUrl("/backend/users"));
     }
 
-    private async Task CreateOrEditUserRolesAsync(User user)
+    private async Task<bool> IsNameUniqueAsync(CreateOrEditViewModel createOrEdit)
     {
-      await this.DeleteUserRolesAsync(user);
-      await this.CreateUserRolesAsync(user);
+      User user = (await this.UserRepository.GetAllAsync(new UserFilter(name: new StringFilter(equals: createOrEdit.Name)))).FirstOrDefault();
+
+      return user == null || user.Id == createOrEdit.Id;
     }
 
-    private async Task DeleteUserRolesAsync(User user)
+    private void MergeUserRoles(User user)
     {
-      if (user.UserRoles != null)
-        for (int i = 0; i != user.UserRoles.Count; i++)
-        {
-          UserRole userRole = user.UserRoles.ElementAt(i);
+      List<int> roleIds = new List<int>();
 
-          this.UserRoleRepository.Delete(userRole.UserId, userRole.RoleId);
-        }
-
-      await this.Storage.SaveAsync();
-    }
-
-    private async Task CreateUserRolesAsync(User user)
-    {
       foreach (string key in this.Request.Form.Keys)
-      {
-        if (key.StartsWith("role") && this.Request.Form[key] == true.ToString().ToLower())
-        {
-          string roleId = key.Replace("role", string.Empty);
+        if (key.StartsWith("role") && this.Request.Form[key].FirstOrDefault().ToBoolWithDefaultValue(false))
+          roleIds.Add(int.Parse(key.Replace("role", string.Empty)));
 
-          this.CreateUserRole(user, int.Parse(roleId));
-        }
-      }
+      IEnumerable<UserRole> currentUserRoles = user.UserRoles ?? Array.Empty<UserRole>();
 
-      await this.Storage.SaveAsync();
-    }
+      foreach (UserRole userRole in currentUserRoles.Where(cur => !roleIds.Any(id => id == cur.RoleId)).ToList())
+        this.UserRoleRepository.Delete(userRole.UserId, userRole.RoleId);
 
-    private void CreateUserRole(User user, int roleId)
-    {
-      UserRole userRole = new UserRole();
-
-      userRole.UserId = user.Id;
-      userRole.RoleId = roleId;
-      this.UserRoleRepository.Create(userRole);
+      foreach (int roleId in roleIds.Where(id => !currentUserRoles.Any(cur => cur.RoleId == id)))
+        this.UserRoleRepository.Create(new UserRole() { User = user, RoleId = roleId });
     }
   }
 }

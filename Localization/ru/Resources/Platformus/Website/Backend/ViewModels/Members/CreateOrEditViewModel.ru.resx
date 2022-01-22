@@ -144,10 +144,19 @@
   <data name="Property data type" xml:space="preserve">
     <value>Тип данных свойства</value>
   </data>
+  <data name="Property data type not specified" xml:space="preserve">
+    <value>Тип данных свойства не указан</value>
+  </data>
   <data name="Relation class" xml:space="preserve">
     <value>Класс отношения</value>
   </data>
+  <data name="Relation class not specified" xml:space="preserve">
+    <value>Класс отношения не указан</value>
+  </data>
   <data name="Tab" xml:space="preserve">
     <value>Таб</value>
+  </data>
+  <data name="Tab not specified" xml:space="preserve">
+    <value>Таб не указан</value>
   </data>
 </root>

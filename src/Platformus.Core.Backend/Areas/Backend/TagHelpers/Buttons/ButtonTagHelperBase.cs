@@ -19,14 +19,9 @@ namespace Platformus.Core.Backend
     public string Href { get; set; }
     public bool DoNotCombineUrl { get; set; }
     public string SkipUrlParameters { get; set; }
-    public string Onclick { get; set; }
 
-    protected string CssClassModifier { get; }
-
-    public ButtonTagHelperBase(string cssClassModifier)
-    {
-      this.CssClassModifier = cssClassModifier;
-    }
+    [HtmlAttributeName(AttributeNames.OnClick)]
+    public string OnClick { get; set; }
 
     public override void Process(TagHelperContext context, TagHelperOutput output)
     {
@@ -34,36 +29,40 @@ namespace Platformus.Core.Backend
         output.TagName = TagNames.A;
 
       else output.TagName = TagNames.Button;
-      
-      if (this.IsMinor)
-        output.Attributes.SetAttribute(AttributeNames.Class, $"buttons__button buttons__button--minor button button--{this.CssClassModifier} button--minor" + (string.IsNullOrEmpty(this.Class) ? null : $" {this.Class}"));
 
-      else output.Attributes.SetAttribute(AttributeNames.Class, $"buttons__button button button--{this.CssClassModifier}" + (string.IsNullOrEmpty(this.Class) ? null : $" {this.Class}"));
+      output.TagMode = TagMode.StartTagAndEndTag;
+      output.Attributes.SetAttribute(AttributeNames.Class, this.GetClass());
 
       if (string.IsNullOrEmpty(this.Href))
         output.Attributes.SetAttribute(AttributeNames.Type, "button");
 
-      else
-      {
-        string href;
+      else output.Attributes.SetAttribute(AttributeNames.Href, this.GetHref());
 
-        if (this.DoNotCombineUrl)
-          href = this.Href;
-
-        else href = this.ViewContext.HttpContext.Request.CombineUrl(this.Href, this.CreateUrlDescriptors());
-
-        output.Attributes.SetAttribute(AttributeNames.Href, href);
-      }
-
-      output.Attributes.SetAttribute(AttributeNames.OnClick, this.Onclick);
+      output.Attributes.SetAttribute(AttributeNames.OnClick, this.OnClick);
     }
 
-    private Url.Descriptor[] CreateUrlDescriptors()
+    protected virtual string GetClass()
+    {
+      if (this.IsMinor)
+        return $"buttons__button buttons__button--minor button button--minor" + (string.IsNullOrEmpty(this.Class) ? null : $" {this.Class}");
+
+      return $"buttons__button button" + (string.IsNullOrEmpty(this.Class) ? null : $" {this.Class}");
+    }
+
+    private string GetHref()
+    {
+      if (this.DoNotCombineUrl)
+        return this.Href;
+
+      return this.ViewContext.HttpContext.Request.CombineUrl(this.Href, this.CreateUrlParameters());
+    }
+
+    private Url.Parameter[] CreateUrlParameters()
     {
       if (string.IsNullOrEmpty(this.SkipUrlParameters))
-        return Array.Empty<Url.Descriptor>();
+        return Array.Empty<Url.Parameter>();
 
-      return this.SkipUrlParameters.Split(',').Select(p => new Url.Descriptor(name: p, skip: true)).ToArray();
+      return this.SkipUrlParameters.Split(',').Select(p => new Url.Parameter(name: p, skip: true)).ToArray();
     }
   }
 }

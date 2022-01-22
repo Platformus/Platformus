@@ -18,15 +18,14 @@ namespace Platformus.Website.Data.Entities
     public int Id { get; set; }
 
     /// <summary>
-    /// Gets or sets the data type storage data type. See the <see cref="Entities.StorageDataTypes"/>
-    /// class for the predefined constants.
+    /// Gets or sets the data type storage data type. See the <see cref="StorageDataTypes"/> class for the predefined constants.
     /// </summary>
     public string StorageDataType { get; set; }
 
     /// <summary>
-    /// Gets or sets the JavaScript editor class name (name of the JavaScript function that is used to build the editor).
+    /// Gets or sets the parameter editor code (name of the partial view without underscore that is used to build the editor).
     /// </summary>
-    public string JavaScriptEditorClassName { get; set; }
+    public string ParameterEditorCode { get; set; }
 
     /// <summary>
     /// Gets or sets the data type name.

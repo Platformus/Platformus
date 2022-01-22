@@ -54,10 +54,7 @@ namespace Platformus.Core.Backend.Actions
 
       applicationBuilder.UseWhen(
         context => context.Request.Path.StartsWithSegments(new PathString("/backend")),
-        backendApplicationBuilder =>
-        {
-          backendApplicationBuilder.UseRequestLocalization(requestLocalizationOptions);
-        }
+        backendApplicationBuilder => backendApplicationBuilder.UseRequestLocalization(requestLocalizationOptions)
       );
     }
   }

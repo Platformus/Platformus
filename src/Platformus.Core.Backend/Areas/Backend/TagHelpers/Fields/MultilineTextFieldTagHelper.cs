@@ -2,66 +2,49 @@
 // Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information.
 
 using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.AspNetCore.Mvc.ViewFeatures;
 using Microsoft.AspNetCore.Razor.TagHelpers;
 
 namespace Platformus.Core.Backend
 {
-  public class MultilineTextFieldTagHelper : TagHelper
+  public class MultilineTextFieldTagHelper : TextFieldTagHelperBase<string>
   {
-    [HtmlAttributeNotBound]
-    [ViewContext]
-    public ViewContext ViewContext { get; set; }
-    public string Class { get; set; }
-    public ModelExpression For { get; set; }
-    public Size Height { get; set; } = Size.Large;
-    public bool IsDisabled { get; set; }
+    public Sizes Height { get; set; } = Sizes.Large;
 
     public override void Process(TagHelperContext context, TagHelperOutput output)
     {
-      if (this.For == null)
+      if (this.For == null && string.IsNullOrEmpty(this.Id))
         return;
 
-      output.TagMode = TagMode.StartTagAndEndTag;
-      output.TagName = TagNames.Div;
-      output.Attributes.SetAttribute(AttributeNames.Class, "form__field field" + (string.IsNullOrEmpty(this.Class) ? null : $" {this.Class}"));
-      output.Content.AppendHtml(this.CreateLabel());
+      this.Class += " form__field--unlimited";
+      base.Process(context, output);
       output.Content.AppendHtml(this.CreateTextArea());
       output.Content.AppendHtml(this.CreateValidationErrorMessage());
-    }
-
-    private TagBuilder CreateLabel()
-    {
-      return FieldGenerator.GenerateLabel(this.For.GetLabel(), this.For.GetIdentity());
     }
 
     private TagBuilder CreateTextArea()
     {
       TagBuilder tb = TextAreaGenerator.Generate(
-        this.For.GetIdentity(),
-        this.For.GetValue(this.ViewContext)?.ToString()?.ToString(),
-        this.For.HasRequiredAttribute(),
-        this.For.HasStringLengthAttribute() ? this.For.GetMaxStringLength() : null,
-        this.For.IsValid(this.ViewContext)
+        this.GetIdentity(),
+        value: this.GetValue(),
+        validation: this.GetValidation()
       );
 
       tb.AddCssClass("field__text-area");
 
-      if (this.Height == Size.Medium)
+      if (this.Height == Sizes.Medium)
         tb.AddCssClass("field__text-area--medium");
 
-      else if (this.Height == Size.Small)
+      else if (this.Height == Sizes.Small)
         tb.AddCssClass("field__text-area--small");
 
-      if (this.IsDisabled)
+      if (this.IsDisabled())
         tb.MergeAttribute(AttributeNames.Disabled, "disabled");
 
-      return tb;
-    }
+      // TODO: merge all the attributes, not only "onchange"
+      if (!string.IsNullOrEmpty(this.OnChange))
+        tb.MergeAttribute(AttributeNames.OnChange, this.OnChange);
 
-    private TagBuilder CreateValidationErrorMessage()
-    {
-      return ValidationErrorMessageGenerator.Generate(this.For.GetIdentity());
+      return tb;
     }
   }
 }

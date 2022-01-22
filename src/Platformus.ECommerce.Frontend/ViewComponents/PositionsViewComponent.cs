@@ -14,6 +14,7 @@ namespace Platformus.ECommerce.Frontend.ViewComponents
 {
   public class PositionsViewComponent : ViewComponent
   {
+    private const string cartId = "cart_id";
     private IStorage storage;
 
     public PositionsViewComponent(IStorage storage)
@@ -25,7 +26,7 @@ namespace Platformus.ECommerce.Frontend.ViewComponents
     {
       IEnumerable<Position> positions = null;
       
-      if (!string.IsNullOrEmpty(this.Request.Cookies["CartId"]) && Guid.TryParse(this.Request.Cookies["CartId"], out Guid clientSideId))
+      if (!string.IsNullOrEmpty(this.Request.Cookies[cartId]) && Guid.TryParse(this.Request.Cookies[cartId], out Guid clientSideId))
         positions = (await this.storage.GetRepository<int, Position, PositionFilter>().GetAllAsync(
           new PositionFilter(cart: new CartFilter(clientSideId: clientSideId)),
           inclusions: new Inclusion<Position>[] {

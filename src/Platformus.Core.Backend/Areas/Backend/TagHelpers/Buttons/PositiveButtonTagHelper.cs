@@ -5,6 +5,9 @@ namespace Platformus.Core.Backend
 {
   public class PositiveButtonTagHelper : ButtonTagHelperBase
   {
-    public PositiveButtonTagHelper() : base("positive") { }
+    protected override string GetClass()
+    {
+      return base.GetClass() + " button--positive";
+    }
   }
 }

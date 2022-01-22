@@ -1,7 +1,7 @@
 BEGIN TRANSACTION;
 --
 -- Extension: Platformus.Core
--- Version: 2.6.0
+-- Version: 3.0.0
 --
 
 -- ModelStates
@@ -116,7 +116,7 @@ CREATE TABLE "Localizations" (
 
 --
 -- Extension: Platformus.Website
--- Version: 2.6.0
+-- Version: 3.0.0
 --
 
 -- Endpoints
@@ -129,8 +129,8 @@ CREATE TABLE "Endpoints" (
 	"SignInUrl" TEXT,
 	"RequestProcessorCSharpClassName" TEXT NOT NULL,
 	"RequestProcessorParameters" TEXT,
-  "ResponseCacheCSharpClassName" TEXT,
-  "ResponseCacheParameters" TEXT
+	"ResponseCacheCSharpClassName" TEXT,
+	"ResponseCacheParameters" TEXT
 );
 
 -- EndpointPermissions
@@ -176,7 +176,7 @@ CREATE TABLE "Tabs" (
 CREATE TABLE "DataTypes" (
 	"Id" INTEGER NOT NULL CONSTRAINT "PK_DataType" PRIMARY KEY AUTOINCREMENT,
 	"StorageDataType" TEXT NOT NULL,
-	"JavaScriptEditorClassName" TEXT NOT NULL,
+	"ParameterEditorCode" TEXT NOT NULL,
 	"Name" TEXT NOT NULL,
 	"Position" INTEGER
 );
@@ -185,10 +185,18 @@ CREATE TABLE "DataTypes" (
 CREATE TABLE "DataTypeParameters" (
 	"Id" INTEGER NOT NULL CONSTRAINT "PK_DataTypeParameter" PRIMARY KEY AUTOINCREMENT,
 	"DataTypeId" INT NOT NULL,
-	"JavaScriptEditorClassName" TEXT NOT NULL,
+	"ParameterEditorCode" TEXT NOT NULL,
 	"Code" TEXT NOT NULL,
 	"Name" TEXT NOT NULL,
 	CONSTRAINT "FK_DataTypeParameter_DataType_DataTypeId" FOREIGN KEY("DataTypeId") REFERENCES "DataTypes" ("Id") ON DELETE CASCADE
+);
+
+-- DataTypeParameterOptions
+CREATE TABLE "DataTypeParameterOptions" (
+	"Id" INTEGER NOT NULL CONSTRAINT "PK_DataTypeParameterOption" PRIMARY KEY AUTOINCREMENT,
+	"DataTypeParameterId" INT NOT NULL,
+	"Value" TEXT NOT NULL,
+	CONSTRAINT "FK_DataTypeParameterOption_DataTypeParameter_DataTypeParameterId" FOREIGN KEY("DataTypeParameterId") REFERENCES "DataTypeParameters" ("Id") ON DELETE CASCADE
 );
 
 -- Members
@@ -202,24 +210,15 @@ CREATE TABLE "Members" (
 	"PropertyDataTypeId" INTEGER,
 	"IsPropertyLocalizable" INTEGER,
 	"IsPropertyVisibleInList" INTEGER,
+	"PropertyDataTypeParameters" TEXT,
 	"RelationClassId" INTEGER,
 	"IsRelationSingleParent" INTEGER,
-  "MinRelatedObjectsNumber" INTEGER,
-  "MaxRelatedObjectsNumber" INTEGER,
+	"MinRelatedObjectsNumber" INTEGER,
+	"MaxRelatedObjectsNumber" INTEGER,
 	CONSTRAINT "FK_Member_Class_ClassId" FOREIGN KEY("ClassId") REFERENCES "Classes" ("Id") ON DELETE CASCADE,
 	CONSTRAINT "FK_Member_Tab_TabId" FOREIGN KEY("TabId") REFERENCES "Tabs" ("Id") ON DELETE SET NULL,
 	CONSTRAINT "FK_Member_DataType_PropertyDataTypeId" FOREIGN KEY("PropertyDataTypeId") REFERENCES "DataTypes" ("Id") ON DELETE SET NULL,
 	CONSTRAINT "FK_Member_Class_RelationClassId" FOREIGN KEY("RelationClassId") REFERENCES "Classes" ("Id") ON DELETE SET NULL
-);
-
--- DataTypeParameterValues
-CREATE TABLE "DataTypeParameterValues" (
-	"Id" INTEGER NOT NULL CONSTRAINT "PK_DataTypeParameterValue" PRIMARY KEY AUTOINCREMENT,
-	"DataTypeParameterId" INT NOT NULL,
-	"MemberId" INT NOT NULL,
-	"Value" TEXT NOT NULL,
-	CONSTRAINT "FK_DataTypeParameterValue_DataTypeParameter_DataTypeParameterId" FOREIGN KEY("DataTypeParameterId") REFERENCES "DataTypeParameters" ("Id") ON DELETE CASCADE,
-	CONSTRAINT "FK_DataTypeParameterValue_Member_MemberId" FOREIGN KEY("MemberId") REFERENCES "Members" ("Id") ON DELETE CASCADE
 );
 
 -- Objects
@@ -294,7 +293,7 @@ CREATE TABLE "FieldTypes" (
 	"Code" TEXT NOT NULL,
 	"Name" TEXT NOT NULL,
 	"Position" INTEGER,
-  "ValidatorCSharpClassName" TEXT
+	"ValidatorCSharpClassName" TEXT
 );
 
 -- Fields
@@ -349,26 +348,26 @@ CREATE TABLE "Files" (
 
 --
 -- Extension: Platformus.ECommerce
--- Version: 2.6.0
+-- Version: 3.0.0
 --
 
 -- Categories
 CREATE TABLE "Categories" (
 	"Id" INTEGER NOT NULL CONSTRAINT "PK_Category" PRIMARY KEY AUTOINCREMENT,
 	"CategoryId" INTEGER,
-  "Url" TEXT,
+	"Url" TEXT,
 	"NameId" INTEGER NOT NULL,
-  "DescriptionId" INTEGER NOT NULL,
-  "Position" INTEGER,
-  "TitleId" INTEGER NOT NULL,
+	"DescriptionId" INTEGER NOT NULL,
+	"Position" INTEGER,
+	"TitleId" INTEGER NOT NULL,
 	"MetaDescriptionId" INTEGER NOT NULL,
 	"MetaKeywordsId" INTEGER NOT NULL,
-  "ProductProviderCSharpClassName" TEXT NOT NULL,
-  "ProductProviderParameters" TEXT,
+	"ProductProviderCSharpClassName" TEXT NOT NULL,
+	"ProductProviderParameters" TEXT,
 	CONSTRAINT "FK_Category_Category_CategoryId" FOREIGN KEY("CategoryId") REFERENCES "Categories" ("Id") ON DELETE CASCADE,
 	CONSTRAINT "FK_Category_Dictionary_NameId" FOREIGN KEY("NameId") REFERENCES "Dictionaries" ("Id"),
-  CONSTRAINT "FK_Category_Dictionary_DescriptionId" FOREIGN KEY("DescriptionId") REFERENCES "Dictionaries" ("Id"),
-  CONSTRAINT "FK_Category_Dictionary_TitleId" FOREIGN KEY("TitleId") REFERENCES "Dictionaries" ("Id"),
+	CONSTRAINT "FK_Category_Dictionary_DescriptionId" FOREIGN KEY("DescriptionId") REFERENCES "Dictionaries" ("Id"),
+	CONSTRAINT "FK_Category_Dictionary_TitleId" FOREIGN KEY("TitleId") REFERENCES "Dictionaries" ("Id"),
 	CONSTRAINT "FK_Category_Dictionary_MetaDescriptionId" FOREIGN KEY("MetaDescriptionId") REFERENCES "Dictionaries" ("Id"),
 	CONSTRAINT "FK_Category_Dictionary_MetaKeywordsId" FOREIGN KEY("MetaKeywordsId") REFERENCES "Dictionaries" ("Id")
 );
@@ -377,11 +376,11 @@ CREATE TABLE "Categories" (
 CREATE TABLE "Products" (
 	"Id" INTEGER NOT NULL CONSTRAINT "PK_Product" PRIMARY KEY AUTOINCREMENT,
 	"CategoryId" INTEGER NOT NULL,
-	"Url" TEXT,
-	"Code" TEXT NOT NULL,
+	"Url" TEXT NOT NULL,
+	"Code" TEXT,
 	"NameId" INTEGER NOT NULL,
 	"DescriptionId" INTEGER NOT NULL,
-  "UnitsId" INTEGER NOT NULL,
+	"UnitsId" INTEGER NOT NULL,
 	"Price" REAL NOT NULL,
 	"TitleId" INTEGER NOT NULL,
 	"MetaDescriptionId" INTEGER NOT NULL,
@@ -389,7 +388,7 @@ CREATE TABLE "Products" (
 	CONSTRAINT "FK_Product_Category_CategoryId" FOREIGN KEY("CategoryId") REFERENCES "Categories" ("Id") ON DELETE CASCADE,
 	CONSTRAINT "FK_Product_Dictionary_NameId" FOREIGN KEY("NameId") REFERENCES "Dictionaries" ("Id"),
 	CONSTRAINT "FK_Product_Dictionary_DescriptionId" FOREIGN KEY("DescriptionId") REFERENCES "Dictionaries" ("Id"),
-  CONSTRAINT "FK_Product_Dictionary_UnitsId" FOREIGN KEY("UnitsId") REFERENCES "Dictionaries" ("Id"),
+	CONSTRAINT "FK_Product_Dictionary_UnitsId" FOREIGN KEY("UnitsId") REFERENCES "Dictionaries" ("Id"),
 	CONSTRAINT "FK_Product_Dictionary_TitleId" FOREIGN KEY("TitleId") REFERENCES "Dictionaries" ("Id"),
 	CONSTRAINT "FK_Product_Dictionary_MetaDescriptionId" FOREIGN KEY("MetaDescriptionId") REFERENCES "Dictionaries" ("Id"),
 	CONSTRAINT "FK_Product_Dictionary_MetaKeywordsId" FOREIGN KEY("MetaKeywordsId") REFERENCES "Dictionaries" ("Id")
@@ -461,13 +460,12 @@ CREATE TABLE "Orders" (
 CREATE TABLE "Positions" (
 	"Id" INTEGER NOT NULL CONSTRAINT "PK_Position" PRIMARY KEY AUTOINCREMENT,
 	"CartId" INTEGER,
-  "OrderId" INTEGER,
+	"OrderId" INTEGER,
 	"ProductId" INTEGER NOT NULL,
-  "Price" REAL NOT NULL,
-  "Quantity" REAL NOT NULL,
-  "Subtotal" REAL NOT NULL,
+	"Price" REAL NOT NULL,
+	"Quantity" REAL NOT NULL,
 	CONSTRAINT "FK_Position_Cart_CartId" FOREIGN KEY("CartId") REFERENCES "Carts" ("Id") ON DELETE CASCADE,
-  CONSTRAINT "FK_Position_Order_OrderId" FOREIGN KEY("OrderId") REFERENCES "Orders" ("Id") ON DELETE CASCADE,
+	CONSTRAINT "FK_Position_Order_OrderId" FOREIGN KEY("OrderId") REFERENCES "Orders" ("Id") ON DELETE CASCADE,
 	CONSTRAINT "FK_Position_Product_ProductId" FOREIGN KEY("ProductId") REFERENCES "Products" ("Id") ON DELETE CASCADE
 );
 

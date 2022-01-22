@@ -6,38 +6,30 @@
 }
 
 .file-uploader__filename {
-  background-color: #f0f0f0;
-  box-sizing: border-box;
-  padding: 5px 10px;
-  width: 100%;
+  background: #f8f8f8 url(/wwwroot.areas.backend.images.upload.svg) right 0.75rem center no-repeat;
+  background-size: 1rem;
+  border: 1px solid #f0f0f0;
+  border-radius: 0.25rem;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  padding: 0.75rem 2.5rem 0.75rem 0.75rem;
+  overflow: hidden;
+  transition: all ease .25s;
 }
 
-.file-uploader__filename:hover {
-  background-color: #f5f5f5;
+.file-uploader__filename:hover, .file-uploader__filename:focus {
+  border-color: #000;
+  transition: all ease .25s;
 }
 
 .file-uploader__filename--not-selected {
-  color: #ccc;
-  font-style: italic;
+  color: #aaa;
 }
 
 .file-uploader__filename--size {
-  color: #ccc;
-  font-style: italic;
+  color: #aaa;
 }
 
-.file-uploader__browse-button {
-  text-align: center;
-  width: 80px;
-  height: 20px;
-  overflow: hidden;
-}
-
-.file-uploader__browse-input {
-  cursor: pointer;
-  font-size: 150px;
-  opacity: 0;
-  margin: -100px 0 0 -500px;
-  width: 1000px;
-  height: 100px;
+.file-uploader__input {
+  display: none;
 }

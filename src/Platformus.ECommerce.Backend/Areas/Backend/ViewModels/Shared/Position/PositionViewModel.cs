@@ -12,6 +12,5 @@ namespace Platformus.ECommerce.Backend.ViewModels.Shared
     public decimal Price { get; set; }
     public decimal Quantity { get; set; }
     public decimal Subtotal { get; set; }
-    public int Index { get; set; }
   }
 }

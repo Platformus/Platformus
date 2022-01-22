@@ -12,8 +12,8 @@ namespace Platformus.Website.Frontend.DataProviders
 {
   public abstract class DataProviderBase : IDataProvider
   {
-    public abstract IEnumerable<ParameterGroup> ParameterGroups { get; }
     public abstract string Description { get; }
+    public abstract IEnumerable<ParameterGroup> ParameterGroups { get; }
 
     public abstract Task<dynamic> GetDataAsync(HttpContext httpContext, DataSource dataSource);
 

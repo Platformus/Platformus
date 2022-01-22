@@ -2,7 +2,7 @@ BEGIN TRANSACTION;
 
 --
 -- Extension: Platformus.Core
--- Version: 2.6.0
+-- Version: 3.0.0
 --
 
 SET IDENTITY_INSERT [dbo].[Users] ON;
@@ -59,53 +59,52 @@ INSERT INTO [dbo].[Cultures] ([Id], [Name], [IsNeutral], [IsFrontendDefault], [I
 
 --
 -- Extension: Platformus.Website
--- Version: 2.6.0
+-- Version: 3.0.0
 --
 
 SET IDENTITY_INSERT [dbo].[Permissions] ON;
 INSERT INTO [dbo].[Permissions] ([Id], [Code], [Name], [Position]) VALUES (7, N'ManageEndpoints', N'Manage endpoints',700);
 INSERT INTO [dbo].[Permissions] ([Id], [Code], [Name], [Position]) VALUES (8, N'ManageObjects', N'Manage objects',800);
-INSERT INTO [dbo].[Permissions] ([Id], [Code], [Name], [Position]) VALUES (9, N'ManageDataTypes', N'Manage data types',900);
-INSERT INTO [dbo].[Permissions] ([Id], [Code], [Name], [Position]) VALUES (10, N'ManageClasses', N'Manage classes',1000);
-INSERT INTO [dbo].[Permissions] ([Id], [Code], [Name], [Position]) VALUES (11, N'ManageMenus', N'Manage menus',1100);
-INSERT INTO [dbo].[Permissions] ([Id], [Code], [Name], [Position]) VALUES (12, N'ManageForms', N'Manage forms',1200);
-INSERT INTO [dbo].[Permissions] ([Id], [Code], [Name], [Position]) VALUES (13, N'ManageFileManager', N'Manage file manager',1300);
+INSERT INTO [dbo].[Permissions] ([Id], [Code], [Name], [Position]) VALUES (9, N'ManageClasses', N'Manage classes',900);
+INSERT INTO [dbo].[Permissions] ([Id], [Code], [Name], [Position]) VALUES (10, N'ManageMenus', N'Manage menus',1000);
+INSERT INTO [dbo].[Permissions] ([Id], [Code], [Name], [Position]) VALUES (11, N'ManageForms', N'Manage forms',1100);
+INSERT INTO [dbo].[Permissions] ([Id], [Code], [Name], [Position]) VALUES (12, N'ManageFileManager', N'Manage file manager',1200);
 SET IDENTITY_INSERT [dbo].[Permissions] OFF;
 
 INSERT INTO [dbo].[RolePermissions] ([RoleId], [PermissionId]) VALUES (3, 8);
+INSERT INTO [dbo].[RolePermissions] ([RoleId], [PermissionId]) VALUES (3, 10);
 INSERT INTO [dbo].[RolePermissions] ([RoleId], [PermissionId]) VALUES (3, 11);
 INSERT INTO [dbo].[RolePermissions] ([RoleId], [PermissionId]) VALUES (3, 12);
-INSERT INTO [dbo].[RolePermissions] ([RoleId], [PermissionId]) VALUES (3, 13);
 
 SET IDENTITY_INSERT [dbo].[DataTypes] ON;
-INSERT INTO [dbo].[DataTypes] ([Id], [StorageDataType], [JavaScriptEditorClassName], [Name], [Position]) VALUES (1, N'string', N'singleLinePlainText', N'Single line plain text', 1);
-INSERT INTO [dbo].[DataTypes] ([Id], [StorageDataType], [JavaScriptEditorClassName], [Name], [Position]) VALUES (2, N'string', N'multilinePlainText', N'Multiline plain text', 2);
-INSERT INTO [dbo].[DataTypes] ([Id], [StorageDataType], [JavaScriptEditorClassName], [Name], [Position]) VALUES (3, N'string', N'html', N'Html', 3);
-INSERT INTO [dbo].[DataTypes] ([Id], [StorageDataType], [JavaScriptEditorClassName], [Name], [Position]) VALUES (4, N'integer', N'integerNumber', N'Integer number', 4);
-INSERT INTO [dbo].[DataTypes] ([Id], [StorageDataType], [JavaScriptEditorClassName], [Name], [Position]) VALUES (5, N'decimal', N'decimalNumber', N'Decimal number', 5);
-INSERT INTO [dbo].[DataTypes] ([Id], [StorageDataType], [JavaScriptEditorClassName], [Name], [Position]) VALUES (6, N'integer', N'booleanFlag', N'Boolean flag', 6);
-INSERT INTO [dbo].[DataTypes] ([Id], [StorageDataType], [JavaScriptEditorClassName], [Name], [Position]) VALUES (7, N'datetime', N'date', N'Date', 7);
-INSERT INTO [dbo].[DataTypes] ([Id], [StorageDataType], [JavaScriptEditorClassName], [Name], [Position]) VALUES (8, N'datetime', N'dateTime', N'DateTime', 8);
-INSERT INTO [dbo].[DataTypes] ([Id], [StorageDataType], [JavaScriptEditorClassName], [Name], [Position]) VALUES (9, N'string', N'image', N'Image', 9);
-INSERT INTO [dbo].[DataTypes] ([Id], [StorageDataType], [JavaScriptEditorClassName], [Name], [Position]) VALUES (10, N'string', N'sourceCode', N'Source code', 10);
+INSERT INTO [dbo].[DataTypes] ([Id], [StorageDataType], [ParameterEditorCode], [Name], [Position]) VALUES (1, N'string', N'singleLinePlainText', N'Single line plain text', 1);
+INSERT INTO [dbo].[DataTypes] ([Id], [StorageDataType], [ParameterEditorCode], [Name], [Position]) VALUES (2, N'string', N'multilinePlainText', N'Multiline plain text', 2);
+INSERT INTO [dbo].[DataTypes] ([Id], [StorageDataType], [ParameterEditorCode], [Name], [Position]) VALUES (3, N'string', N'html', N'Html', 3);
+INSERT INTO [dbo].[DataTypes] ([Id], [StorageDataType], [ParameterEditorCode], [Name], [Position]) VALUES (4, N'integer', N'integerNumber', N'Integer number', 4);
+INSERT INTO [dbo].[DataTypes] ([Id], [StorageDataType], [ParameterEditorCode], [Name], [Position]) VALUES (5, N'decimal', N'decimalNumber', N'Decimal number', 5);
+INSERT INTO [dbo].[DataTypes] ([Id], [StorageDataType], [ParameterEditorCode], [Name], [Position]) VALUES (6, N'integer', N'booleanFlag', N'Boolean flag', 6);
+INSERT INTO [dbo].[DataTypes] ([Id], [StorageDataType], [ParameterEditorCode], [Name], [Position]) VALUES (7, N'datetime', N'date', N'Date', 7);
+INSERT INTO [dbo].[DataTypes] ([Id], [StorageDataType], [ParameterEditorCode], [Name], [Position]) VALUES (8, N'datetime', N'dateTime', N'DateTime', 8);
+INSERT INTO [dbo].[DataTypes] ([Id], [StorageDataType], [ParameterEditorCode], [Name], [Position]) VALUES (9, N'string', N'image', N'Image', 9);
+INSERT INTO [dbo].[DataTypes] ([Id], [StorageDataType], [ParameterEditorCode], [Name], [Position]) VALUES (10, N'string', N'sourceCode', N'Source code', 10);
 SET IDENTITY_INSERT [dbo].[DataTypes] OFF;
 
 SET IDENTITY_INSERT [dbo].[DataTypeParameters] ON;
-INSERT INTO [dbo].[DataTypeParameters] ([Id], [DataTypeId], [JavaScriptEditorClassName], [Code], [Name]) VALUES (1, 1, N'checkbox', N'IsRequired', N'Is required');
-INSERT INTO [dbo].[DataTypeParameters] ([Id], [DataTypeId], [JavaScriptEditorClassName], [Code], [Name]) VALUES (2, 1, N'numericTextBox', N'MaxLength', N'Max length');
-INSERT INTO [dbo].[DataTypeParameters] ([Id], [DataTypeId], [JavaScriptEditorClassName], [Code], [Name]) VALUES (3, 2, N'checkbox', N'IsRequired', N'Is required');
-INSERT INTO [dbo].[DataTypeParameters] ([Id], [DataTypeId], [JavaScriptEditorClassName], [Code], [Name]) VALUES (4, 2, N'numericTextBox', N'MaxLength', N'Max length');
-INSERT INTO [dbo].[DataTypeParameters] ([Id], [DataTypeId], [JavaScriptEditorClassName], [Code], [Name]) VALUES (5, 4, N'checkbox', N'IsRequired', N'Is required');
-INSERT INTO [dbo].[DataTypeParameters] ([Id], [DataTypeId], [JavaScriptEditorClassName], [Code], [Name]) VALUES (6, 4, N'numericTextBox', N'MinValue', N'Min value');
-INSERT INTO [dbo].[DataTypeParameters] ([Id], [DataTypeId], [JavaScriptEditorClassName], [Code], [Name]) VALUES (7, 4, N'numericTextBox', N'MaxValue', N'Max value');
-INSERT INTO [dbo].[DataTypeParameters] ([Id], [DataTypeId], [JavaScriptEditorClassName], [Code], [Name]) VALUES (8, 5, N'checkbox', N'IsRequired', N'Is required');
-INSERT INTO [dbo].[DataTypeParameters] ([Id], [DataTypeId], [JavaScriptEditorClassName], [Code], [Name]) VALUES (9, 5, N'numericTextBox', N'MinValue', N'Min value');
-INSERT INTO [dbo].[DataTypeParameters] ([Id], [DataTypeId], [JavaScriptEditorClassName], [Code], [Name]) VALUES (10, 5, N'numericTextBox', N'MaxValue', N'Max value');
-INSERT INTO [dbo].[DataTypeParameters] ([Id], [DataTypeId], [JavaScriptEditorClassName], [Code], [Name]) VALUES (11, 7, N'checkbox', N'IsRequired', N'Is required');
-INSERT INTO [dbo].[DataTypeParameters] ([Id], [DataTypeId], [JavaScriptEditorClassName], [Code], [Name]) VALUES (12, 8, N'checkbox', N'IsRequired', N'Is required');
-INSERT INTO [dbo].[DataTypeParameters] ([Id], [DataTypeId], [JavaScriptEditorClassName], [Code], [Name]) VALUES (13, 9, N'numericTextBox', N'Width', N'Width');
-INSERT INTO [dbo].[DataTypeParameters] ([Id], [DataTypeId], [JavaScriptEditorClassName], [Code], [Name]) VALUES (14, 9, N'numericTextBox', N'Height', N'Height');
-INSERT INTO [dbo].[DataTypeParameters] ([Id], [DataTypeId], [JavaScriptEditorClassName], [Code], [Name]) VALUES (15, 10, N'textBox', N'Mode', N'Mode');
+INSERT INTO [dbo].[DataTypeParameters] ([Id], [DataTypeId], [ParameterEditorCode], [Code], [Name]) VALUES (1, 1, N'checkbox', N'IsRequired', N'Is required');
+INSERT INTO [dbo].[DataTypeParameters] ([Id], [DataTypeId], [ParameterEditorCode], [Code], [Name]) VALUES (2, 1, N'integerBox', N'MaxLength', N'Max length');
+INSERT INTO [dbo].[DataTypeParameters] ([Id], [DataTypeId], [ParameterEditorCode], [Code], [Name]) VALUES (3, 2, N'checkbox', N'IsRequired', N'Is required');
+INSERT INTO [dbo].[DataTypeParameters] ([Id], [DataTypeId], [ParameterEditorCode], [Code], [Name]) VALUES (4, 2, N'integerBox', N'MaxLength', N'Max length');
+INSERT INTO [dbo].[DataTypeParameters] ([Id], [DataTypeId], [ParameterEditorCode], [Code], [Name]) VALUES (5, 4, N'checkbox', N'IsRequired', N'Is required');
+INSERT INTO [dbo].[DataTypeParameters] ([Id], [DataTypeId], [ParameterEditorCode], [Code], [Name]) VALUES (6, 4, N'integerBox', N'MinValue', N'Min value');
+INSERT INTO [dbo].[DataTypeParameters] ([Id], [DataTypeId], [ParameterEditorCode], [Code], [Name]) VALUES (7, 4, N'integerBox', N'MaxValue', N'Max value');
+INSERT INTO [dbo].[DataTypeParameters] ([Id], [DataTypeId], [ParameterEditorCode], [Code], [Name]) VALUES (8, 5, N'checkbox', N'IsRequired', N'Is required');
+INSERT INTO [dbo].[DataTypeParameters] ([Id], [DataTypeId], [ParameterEditorCode], [Code], [Name]) VALUES (9, 5, N'integerBox', N'MinValue', N'Min value');
+INSERT INTO [dbo].[DataTypeParameters] ([Id], [DataTypeId], [ParameterEditorCode], [Code], [Name]) VALUES (10, 5, N'integerBox', N'MaxValue', N'Max value');
+INSERT INTO [dbo].[DataTypeParameters] ([Id], [DataTypeId], [ParameterEditorCode], [Code], [Name]) VALUES (11, 7, N'checkbox', N'IsRequired', N'Is required');
+INSERT INTO [dbo].[DataTypeParameters] ([Id], [DataTypeId], [ParameterEditorCode], [Code], [Name]) VALUES (12, 8, N'checkbox', N'IsRequired', N'Is required');
+INSERT INTO [dbo].[DataTypeParameters] ([Id], [DataTypeId], [ParameterEditorCode], [Code], [Name]) VALUES (13, 9, N'integerBox', N'Width', N'Width');
+INSERT INTO [dbo].[DataTypeParameters] ([Id], [DataTypeId], [ParameterEditorCode], [Code], [Name]) VALUES (14, 9, N'integerBox', N'Height', N'Height');
+INSERT INTO [dbo].[DataTypeParameters] ([Id], [DataTypeId], [ParameterEditorCode], [Code], [Name]) VALUES (15, 10, N'textBox', N'Mode', N'Mode');
 SET IDENTITY_INSERT [dbo].[DataTypeParameters] OFF;
 
 SET IDENTITY_INSERT [dbo].[FieldTypes] ON;
@@ -120,17 +119,17 @@ SET IDENTITY_INSERT [dbo].[FieldTypes] OFF;
 
 --
 -- Extension: Platformus.ECommerce
--- Version: 2.6.0
+-- Version: 3.0.0
 --
 
 SET IDENTITY_INSERT [dbo].[Permissions] ON;
-INSERT INTO [dbo].[Permissions] ([Id], [Code], [Name], [Position]) VALUES (14, N'ManageCategories', N'Manage categories',1400);
-INSERT INTO [dbo].[Permissions] ([Id], [Code], [Name], [Position]) VALUES (15, N'ManageProducts', N'Manage products',1500);
-INSERT INTO [dbo].[Permissions] ([Id], [Code], [Name], [Position]) VALUES (16, N'ManageOrderStates', N'Manage order states',1600);
-INSERT INTO [dbo].[Permissions] ([Id], [Code], [Name], [Position]) VALUES (17, N'ManagePaymentMethods', N'Manage payment methods',1700);
-INSERT INTO [dbo].[Permissions] ([Id], [Code], [Name], [Position]) VALUES (18, N'ManageDeliveryMethods', N'Manage delivery methods',1800);
-INSERT INTO [dbo].[Permissions] ([Id], [Code], [Name], [Position]) VALUES (19, N'ManageCarts', N'Manage carts',1900);
-INSERT INTO [dbo].[Permissions] ([Id], [Code], [Name], [Position]) VALUES (20, N'ManageOrders', N'Manage orders',2000);
+INSERT INTO [dbo].[Permissions] ([Id], [Code], [Name], [Position]) VALUES (13, N'ManageCategories', N'Manage categories',1300);
+INSERT INTO [dbo].[Permissions] ([Id], [Code], [Name], [Position]) VALUES (14, N'ManageProducts', N'Manage products',1400);
+INSERT INTO [dbo].[Permissions] ([Id], [Code], [Name], [Position]) VALUES (15, N'ManageOrderStates', N'Manage order states',1500);
+INSERT INTO [dbo].[Permissions] ([Id], [Code], [Name], [Position]) VALUES (16, N'ManagePaymentMethods', N'Manage payment methods',1600);
+INSERT INTO [dbo].[Permissions] ([Id], [Code], [Name], [Position]) VALUES (17, N'ManageDeliveryMethods', N'Manage delivery methods',1700);
+INSERT INTO [dbo].[Permissions] ([Id], [Code], [Name], [Position]) VALUES (18, N'ManageCarts', N'Manage carts',1800);
+INSERT INTO [dbo].[Permissions] ([Id], [Code], [Name], [Position]) VALUES (19, N'ManageOrders', N'Manage orders',1900);
 SET IDENTITY_INSERT [dbo].[Permissions] OFF;
 
 COMMIT;

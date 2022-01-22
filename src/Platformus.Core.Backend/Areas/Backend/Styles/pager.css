@@ -2,96 +2,83 @@
 /* Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information. */
 
 .pager {
+  font-weight: 400;
   display: flex;
+  justify-content: space-between;
+}
+
+.pager__pages {
+  display: flex;
+  gap: 1px;
 }
 
 .pager__page {
-  background: #f0f0f0;
-  background-position: center top;
+  background-position: center;
   background-repeat: no-repeat;
-  box-sizing: border-box;
+  background-size: 1rem;
+  border-radius: 0.25rem;
   text-align: center;
-  display: block;
-  margin-left: 1px;
-  padding: 5px 10px;
-  min-width: 30px;
-  height: 30px;
-}
-
-.pager__page:first-child {
-  margin: 0;
+  padding: 0.75rem;
+  min-width: 1.5rem;
 }
 
 .pager__page:hover {
-  background-position: center bottom;
+  background-color: #ffffa0;
+  transition: all ease 0.25s;
 }
 
 .pager__page--first {
-  background-image: url(/wwwroot.areas.backend.images.first_page.png);
+  background-image: url(/wwwroot.areas.backend.images.double_left_arrow.svg);
 }
 
 .pager__page--previous {
-  background-image: url(/wwwroot.areas.backend.images.previous_page.png);
+  background-image: url(/wwwroot.areas.backend.images.left_arrow.svg);
 }
 
 .pager__page--skipped {
-  background-image: url(/wwwroot.areas.backend.images.skipped_pages.png);
+  background-image: url(/wwwroot.areas.backend.images.skipped.svg);
 }
 
 .pager__page--next {
-  background-image: url(/wwwroot.areas.backend.images.next_page.png);
+  background-image: url(/wwwroot.areas.backend.images.right_arrow.svg);
 }
 
 .pager__page--last {
-  background-image: url(/wwwroot.areas.backend.images.last_page.png);
+  background-image: url(/wwwroot.areas.backend.images.double_right_arrow.svg);
 }
 
 .pager__page--current {
-  background: #323232;
-  color: #fff;
+  background-color: #f8f8f8;
+  border: 1px solid #f0f0f0;
+  font-weight: 700;
+}
+
+.pager__page--current:hover, .pager__page--current:focus {
+  background-color: #f8f8f8;
+} 
+
+.pager__current-state-and-limit-selector {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
 }
 
 .pager__current-state {
-  background: #f0f0f0;
-  margin-left: 1px;
-  padding: 5px 10px;
 }
 
 .pager__limit-selector {
-  background: #f0f0f0;
-  display: block;
-  margin-left: 1px;
 }
 
-@media
-only screen and (-webkit-min-device-pixel-ratio: 2),
-only screen and (   min--moz-device-pixel-ratio: 2),
-only screen and (     -o-min-device-pixel-ratio: 2/1),
-only screen and (        min-device-pixel-ratio: 2),
-only screen and (                min-resolution: 192dpi),
-only screen and (                min-resolution: 2dppx) {
-  .pager__page--first {
-    background-image: url(/wwwroot.areas.backend.images.first_page@2x.png);
-    background-size: 30px 60px;
+@media screen and (max-width: 1000px) {
+  .pager__page {
+    display: none;
   }
 
   .pager__page--previous {
-    background-image: url(/wwwroot.areas.backend.images.previous_page@2x.png);
-    background-size: 30px 60px;
-  }
-
-  .pager__page--skipped {
-    background-image: url(/wwwroot.areas.backend.images.skipped_pages@2x.png);
-    background-size: 30px;
+    display: block;
   }
 
   .pager__page--next {
-    background-image: url(/wwwroot.areas.backend.images.next_page@2x.png);
-    background-size: 30px 60px;
-  }
-
-  .pager__page--last {
-    background-image: url(/wwwroot.areas.backend.images.last_page@2x.png);
-    background-size: 30px 60px;
+    display: block;
   }
 }

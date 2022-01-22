@@ -123,6 +123,12 @@
   <data name="Class Selector" xml:space="preserve">
     <value>Вибір класу</value>
   </data>
+  <data name="Name" xml:space="preserve">
+    <value>Назва</value>
+  </data>
+  <data name="Parent class" xml:space="preserve">
+    <value>Батьківський клас</value>
+  </data>
   <data name="Select" xml:space="preserve">
     <value>Обрати</value>
   </data>

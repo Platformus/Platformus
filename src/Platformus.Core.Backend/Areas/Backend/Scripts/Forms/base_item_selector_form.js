@@ -38,10 +38,10 @@
   };
 
   function defineHandlers() {
-    platformus.forms.activeForm.find(".table__row").bind("click", rowClickHandler);
+    platformus.forms.activeForm.find(".table__row").bind("click", onRowClick);
   }
 
-  function rowClickHandler() {
+  function onRowClick() {
     if ($(this).find(".table__cell--header").length) {
       return;
     }

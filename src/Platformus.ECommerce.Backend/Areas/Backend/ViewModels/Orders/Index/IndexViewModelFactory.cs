@@ -27,7 +27,7 @@ namespace Platformus.ECommerce.Backend.ViewModels.Orders
         Offset = offset,
         Limit = limit,
         Total = total,
-        Orders = orders.Select(OrderViewModelFactory.Create)
+        Orders = orders.Select(OrderViewModelFactory.Create).ToList()
       };
     }
 

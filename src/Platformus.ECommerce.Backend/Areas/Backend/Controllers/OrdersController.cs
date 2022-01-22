@@ -1,6 +1,8 @@
 ﻿// Copyright © 2020 Dmitry Sikorsky. All rights reserved.
 // Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information.
 
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using ExtCore.Events;
 using Magicalizer.Data.Repositories.Abstractions;
@@ -15,13 +17,17 @@ using Platformus.ECommerce.Filters;
 
 namespace Platformus.ECommerce.Backend.Controllers
 {
-  [Area("Backend")]
   [Authorize(Policy = Policies.HasManageOrdersPermission)]
   public class OrdersController : Core.Backend.Controllers.ControllerBase
   {
-    private IRepository<int, Order, OrderFilter> Repository
+    private IRepository<int, Order, OrderFilter> OrderRepository
     {
       get => this.Storage.GetRepository<int, Order, OrderFilter>();
+    }
+
+    private IRepository<int, Position, PositionFilter> PositionRepository
+    {
+      get => this.Storage.GetRepository<int, Position, PositionFilter>();
     }
 
     public OrdersController(IStorage storage)
@@ -32,8 +38,8 @@ namespace Platformus.ECommerce.Backend.Controllers
     public async Task<IActionResult> IndexAsync([FromQuery]OrderFilter filter = null, string sorting = "-created", int offset = 0, int limit = 10)
     {
       return this.View(await IndexViewModelFactory.CreateAsync(
-        this.HttpContext, sorting, offset, limit, await this.Repository.CountAsync(filter),
-        await this.Repository.GetAllAsync(
+        this.HttpContext, sorting, offset, limit, await this.OrderRepository.CountAsync(filter),
+        await this.OrderRepository.GetAllAsync(
           filter, sorting, offset, limit,
           new Inclusion<Order>(o => o.OrderState.Name.Localizations),
           new Inclusion<Order>(o => o.DeliveryMethod.Name.Localizations),
@@ -48,7 +54,7 @@ namespace Platformus.ECommerce.Backend.Controllers
     public async Task<IActionResult> CreateOrEditAsync(int? id)
     {
       return this.View(await CreateOrEditViewModelFactory.CreateAsync(
-        this.HttpContext, id == null ? null : await this.Repository.GetByIdAsync(
+        this.HttpContext, id == null ? null : await this.OrderRepository.GetByIdAsync(
           (int)id,
           new Inclusion<Order>(o => o.OrderState.Name.Localizations),
           new Inclusion<Order>(o => o.DeliveryMethod.Name.Localizations),
@@ -66,17 +72,17 @@ namespace Platformus.ECommerce.Backend.Controllers
       if (this.ModelState.IsValid)
       {
         Order order = CreateOrEditViewModelMapper.Map(
-          createOrEdit.Id == null ? new Order() : await this.Repository.GetByIdAsync((int)createOrEdit.Id, new Inclusion<Order>("Positions")),
+          createOrEdit.Id == null ? new Order() { Positions = new List<Position>() } : await this.OrderRepository.GetByIdAsync((int)createOrEdit.Id, new Inclusion<Order>("Positions")),
           createOrEdit
         );
 
         if (createOrEdit.Id == null)
-          this.Repository.Create(order);
+          this.OrderRepository.Create(order);
 
-        else this.Repository.Edit(order);
+        else this.OrderRepository.Edit(order);
 
+        this.MergePositions(order, createOrEdit);
         await this.Storage.SaveAsync();
-        await this.CreateOrEditPositionsAsync(order, createOrEdit);
 
         if (createOrEdit.Id == null)
           Event<IOrderCreatedEventHandler, HttpContext, Order>.Broadcast(this.HttpContext, order);
@@ -89,46 +95,43 @@ namespace Platformus.ECommerce.Backend.Controllers
       return this.CreateRedirectToSelfResult();
     }
 
+    [HttpPost]
+    public IActionResult Positions([FromBody] IEnumerable<PositionViewModel> positions)
+    {
+      return this.PartialView("_Positions", positions);
+    }
+
     public async Task<ActionResult> DeleteAsync(int id)
     {
-      Order order = await this.Repository.GetByIdAsync(id);
+      Order order = await this.OrderRepository.GetByIdAsync(id);
 
-      this.Repository.Delete(order.Id);
+      this.OrderRepository.Delete(order.Id);
       await this.Storage.SaveAsync();
       Event<IOrderCreatedEventHandler, HttpContext, Order>.Broadcast(this.HttpContext, order);
       return this.Redirect(this.Request.CombineUrl("/backend/orders"));
     }
 
-    private async Task CreateOrEditPositionsAsync(Order order, CreateOrEditViewModel createOrEdit)
+    private void MergePositions(Order order, CreateOrEditViewModel createOrEdit)
     {
-      await this.DeletePositionsAsync(order);
-      await this.CreatePositionsAsync(order, createOrEdit);
-    }
+      IEnumerable<Position> currentPositions = order.Positions;
 
-    private async Task DeletePositionsAsync(Order order)
-    {
-      if (order.Positions != null)
-        foreach (Position position in order.Positions)
-          this.Storage.GetRepository<int, Position, PositionFilter>().Delete(position.Id);
+      foreach (Position currentPosition in currentPositions.Where(cp => !createOrEdit.Positions.Any(p => p.Id == cp.Id)))
+        this.PositionRepository.Delete(currentPosition.Id);
 
-      await this.Storage.SaveAsync();
-    }
-
-    private async Task CreatePositionsAsync(Order order, CreateOrEditViewModel createOrEdit)
-    {
-      foreach (PositionViewModel positionViewModel in createOrEdit.Positions)
+      foreach (Position currentPosition in currentPositions)
       {
-        Position position = new Position();
+        PositionViewModel position = createOrEdit.Positions.FirstOrDefault(p => p.Id == currentPosition.Id);
 
-        position.OrderId = order.Id;
-        position.ProductId = positionViewModel.Product.Id;
-        position.Price = positionViewModel.Price;
-        position.Quantity = positionViewModel.Quantity;
-        position.Subtotal = position.GetSubtotal();
-        this.Storage.GetRepository<int, Position, PositionFilter>().Create(position);
+        if (position != null)
+        {
+          currentPosition.Price = position.Price;
+          currentPosition.Quantity = position.Quantity;
+          this.PositionRepository.Edit(currentPosition);
+        }
       }
 
-      await this.Storage.SaveAsync();
+      foreach (Position position in createOrEdit.Positions.Where(p => p.Id == 0).Select(p => new Position() { Order = order, ProductId = p.Product.Id, Price = p.Price, Quantity = p.Quantity }))
+        this.PositionRepository.Create(position);
     }
   }
 }

@@ -1,10 +1,9 @@
 ﻿@* Copyright © 2020 Dmitry Sikorsky. All rights reserved. *@
 @* Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information. *@
 @model Platformus.Core.Backend.ViewModels.Shared.VariableViewModel
-@inject Microsoft.AspNetCore.Mvc.Localization.IViewLocalizer Localizer
-<tree-node>
-  <tree-node-header>
-    <tree-node-title>
+<node>
+  <node-header href="/backend/variables/edit/@Model.Id?configuration.id=@Model.ConfigurationId">
+    <node-title>
       @Model.Name =
       @if (this.Model.Value == "yes")
       {
@@ -18,10 +17,9 @@
       {
         @Model.Value
       }
-    </tree-node-title>
-    <tree-node-buttons>
-      <positive-button is-minor="true" href="/backend/variables/edit/@Model.Id">@Localizer["Edit"]</positive-button>
-      <delete-button href="/backend/variables/delete/@Model.Id"></delete-button>
-    </tree-node-buttons>
-  </tree-node-header>
-</tree-node>
+    </node-title>
+    <node-controls>
+      <delete-button href="/backend/variables/delete/@Model.Id" />
+    </node-controls>
+  </node-header>
+</node>

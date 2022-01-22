@@ -120,7 +120,4 @@
   <data name="Create field option" xml:space="preserve">
     <value>Добавить опцию поля</value>
   </data>
-  <data name="Edit" xml:space="preserve">
-    <value>Редактировать</value>
-  </data>
 </root>

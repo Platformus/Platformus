@@ -12,6 +12,7 @@ namespace Platformus.Core.Backend.ViewModels.Variables
     [Display(Name = "Code")]
     [Required]
     [StringLength(32)]
+    [RegularExpression(@"^[a-zA-Z_][a-zA-Z0-9_]*$")]
     public string Code { get; set; }
 
     [Display(Name = "Name")]

@@ -3,13 +3,14 @@
 @model Platformus.Core.Backend.ViewModels.Roles.CreateOrEditViewModel
 @inject Microsoft.AspNetCore.Mvc.Localization.IViewLocalizer Localizer
 @{
-  this.ViewBag.Title = (this.Model.Id == null ? this.Localizer["Create Role"].Value : this.Localizer["Edit Role"].Value);
+  this.ViewBag.Title = (this.Model.Id == null ? this.Localizer["Create Role"] : this.Localizer["Edit Role"]);
   this.ViewBag.ActiveMenuItem = "roles";
 }
-@section title {
-  @ViewBag.Title
-}
-<form class="master-detail__form form" method="post">
+<form class="form" method="post">
+  <title-bar>
+    <submit-button>@Localizer["Save"]</submit-button>
+    <neutral-button href="/backend/roles">@Localizer["Cancel"]</neutral-button>
+  </title-bar>
   <tabs>
     <tab code="General">@Localizer["General"]</tab>
     <tab code="Permissions">@Localizer["Permissions"]</tab>
@@ -18,17 +19,13 @@
     <tab-page code="General">
       <single-line-text-field for="Code" />
       <single-line-text-field for="Name" />
-      <numeric-field for="Position" />
+      <integer-field for="Position" />
     </tab-page>
     <tab-page code="Permissions">
       @foreach (var rolePermission in this.Model.RolePermissions)
       {
-        <checkbox-field class="@(rolePermission.Permission.Id == this.Model.RolePermissions.First().Permission.Id ? "form__field--separated" : null)" id="permission@(rolePermission.Permission.Id)" label="@rolePermission.Permission.Name" is-checked="@rolePermission.IsAssigned" />
+        <checkbox-field id="permission@(rolePermission.Permission.Id)" label="@rolePermission.Permission.Name" value="@rolePermission.IsAssigned" />
       }
     </tab-page>
   </tab-pages>
-  <div class="form__buttons buttons">
-    <submit-button>@Localizer["Save"]</submit-button>
-    <neutral-button href="/backend/roles">@Localizer["Cancel"]</neutral-button>
-  </div>
 </form>

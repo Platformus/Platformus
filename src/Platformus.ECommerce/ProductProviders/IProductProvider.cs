@@ -4,7 +4,7 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
-using Platformus.Core.Parameters;
+using Platformus.Core;
 using Platformus.ECommerce.Data.Entities;
 
 namespace Platformus.ECommerce.ProductProviders
@@ -14,18 +14,8 @@ namespace Platformus.ECommerce.ProductProviders
   /// Product provider can have any logic of how (and where) to get the products, how to filter them, and how to sort them.
   /// Example: new products, best sellers, products of the week, or just products of the given category.
   /// </summary>
-  public interface IProductProvider
+  public interface IProductProvider : IParameterized
   {
-    /// <summary>
-    /// Gets the parameter groups with the parameters the product provider needs from the users.
-    /// </summary>
-    IEnumerable<ParameterGroup> ParameterGroups { get; }
-
-    /// <summary>
-    /// Gets description that is shown to a user to describe the product provider.
-    /// </summary>
-    string Description { get; }
-
     /// <summary>
     /// Gets the products.
     /// </summary>

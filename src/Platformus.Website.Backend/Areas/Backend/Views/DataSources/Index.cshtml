@@ -6,24 +6,21 @@
   this.ViewBag.Title = this.Localizer["Data Sources"];
   this.ViewBag.ActiveMenuItem = "endpoints";
 }
-@section breadcrumbs {
-  <breadcrumbs>
-    <breadcrumb href="/backend/endpoints">@Localizer["Endpoints"]</breadcrumb>
-    <breadcrumb href="/backend/endpoints/edit/@Model.Endpoint.Id">@Model.Endpoint.Name</breadcrumb>
-  </breadcrumbs>
-}
-@section title {
-  @ViewBag.Title
-}
+<breadcrumbs>
+  <breadcrumb href="/backend/endpoints">@Localizer["Endpoints"]</breadcrumb>
+  <breadcrumb href="/backend/endpoints/edit/@Model.Endpoint.Id">@Model.Endpoint.Name</breadcrumb>
+</breadcrumbs>
+<title-bar>
+  <neutral-button icon="Icons.Create" href="/backend/datasources/create">@Localizer["Create data source"]</neutral-button>
+  <neutral-button href="/backend/endpoints" skip-url-parameters="endpoint.id">@Localizer["Back"]</neutral-button>
+</title-bar>
 <filter>
-  <text-filter property-path="Code.Contains" label="@Localizer["Code"].Value" />
+  <text-filter property-path="Code" label="@Localizer["Code"].Value" />
 </filter>
-<pager offset="@Model.Offset" limit="@Model.Limit" total="@Model.Total" />
 <table sorting="@Model.Sorting">
   <columns>
     <column label="@Localizer["Code"].Value" sorting-property-path="Code" />
     <column label="@Localizer["Data provider C# class name"].Value" sorting-property-path="DataProviderCSharpClassName" />
-    <column />
   </columns>
   <rows>
     @foreach (var dataSource in this.Model.DataSources)
@@ -32,8 +29,4 @@
     }
   </rows>
 </table>
-<pager offset="@Model.Offset" limit="@Model.Limit" total="@Model.Total" is-secondary="true" />
-<div class="master-detail__buttons buttons">
-  <positive-button href="/backend/datasources/create">@Localizer["Create data source"]</positive-button>
-  <neutral-button href="/backend/endpoints" skip-url-parameters="endpoint.id">@Localizer["Back"]</neutral-button>
-</div>
+<pager offset="@Model.Offset" limit="@Model.Limit" total="@Model.Total" />

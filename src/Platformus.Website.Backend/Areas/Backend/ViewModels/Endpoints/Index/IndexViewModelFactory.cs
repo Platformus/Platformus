@@ -18,7 +18,7 @@ namespace Platformus.Website.Backend.ViewModels.Endpoints
         Offset = offset,
         Limit = limit,
         Total = total,
-        Endpoints = endpoints.Select(EndpointViewModelFactory.Create)
+        Endpoints = endpoints.Select(EndpointViewModelFactory.Create).ToList()
       };
     }
   }

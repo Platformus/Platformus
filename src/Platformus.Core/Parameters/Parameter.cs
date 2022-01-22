@@ -24,12 +24,12 @@ namespace Platformus.Core.Parameters
     public string Name { get; set; }
 
     /// <summary>
-    /// One of the supported JavaScript editor class names listed in <see cref=" JavaScriptEditorClassNames"/> class.
+    /// One of the supported parameter editor codes listed in <see cref="ParameterEditorCodes"/> class.
     /// </summary>
-    public string JavaScriptEditorClassName { get; set; }
+    public string ParameterEditorCode { get; set; }
 
     /// <summary>
-    /// Possible options for controls like drop down lists or radio button lists.
+    /// Possible options for the controls like drop down lists or radio button lists.
     /// </summary>
     public IEnumerable<Option> Options { get; set; }
 
@@ -48,14 +48,14 @@ namespace Platformus.Core.Parameters
     /// </summary>
     /// <param name="code">Used as the control's ID and name on the client-side.</param>
     /// <param name="name">Used as the control's label on the client-side.</param>
-    /// <param name="javaScriptEditorClassName">One of the supported JavaScript editor class names listed in <see cref=" JavaScriptEditorClassNames"/> class.</param>
+    /// <param name="parameterEditorCode">One of the supported parameter editor codes listed in <see cref="ParameterEditorCodes"/> class.</param>
     /// <param name="defaultValue">A default value visible to a user before a different one is selected.</param>
     /// <param name="isRequired">A value indicating that the parameter is required and should be set by a user.</param>
-    public Parameter(string code, string name, string javaScriptEditorClassName, string defaultValue = null, bool isRequired = false)
+    public Parameter(string code, string name, string parameterEditorCode, string defaultValue = null, bool isRequired = false)
     {
       this.Code = code;
       this.Name = name;
-      this.JavaScriptEditorClassName = javaScriptEditorClassName;
+      this.ParameterEditorCode = parameterEditorCode;
       this.DefaultValue = defaultValue;
       this.IsRequired = isRequired;
     }
@@ -65,12 +65,12 @@ namespace Platformus.Core.Parameters
     /// </summary>
     /// <param name="code">Used as the control's ID and name on the client-side.</param>
     /// <param name="name">Used as the control's label on the client-side.</param>
-    /// <param name="options">Possible options for controls like drop down lists or radio button lists.</param>
-    /// <param name="javaScriptEditorClassName">One of the supported JavaScript editor class names listed in <see cref=" JavaScriptEditorClassNames"/> class.</param>
+    /// <param name="parameterEditorCode">One of the supported parameter editor codes listed in <see cref="ParameterEditorCodes"/> class.</param>
+    /// <param name="options">Possible options for the controls like drop down lists or radio button lists.</param>
     /// <param name="defaultValue">A default value visible to a user before a different one is selected.</param>
     /// <param name="isRequired">A value indicating that the parameter is required and should be set by a user.</param>
-    public Parameter(string code, string name, IEnumerable<Option> options, string javaScriptEditorClassName, string defaultValue = null, bool isRequired = false)
-      : this(code, name, javaScriptEditorClassName, defaultValue, isRequired)
+    public Parameter(string code, string name, string parameterEditorCode, IEnumerable<Option> options, string defaultValue = null, bool isRequired = false)
+      : this(code, name, parameterEditorCode, defaultValue, isRequired)
     {
       this.Options = options;
     }

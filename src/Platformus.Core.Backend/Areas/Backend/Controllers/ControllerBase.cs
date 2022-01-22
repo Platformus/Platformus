@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using ExtCore.Data.Entities.Abstractions;
 using Magicalizer.Data.Repositories.Abstractions;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Platformus.Core.Backend.ViewModels;
@@ -17,6 +18,7 @@ using Platformus.Core.Filters;
 
 namespace Platformus.Core.Backend.Controllers
 {
+  [Area("Backend")]
   [Authorize(AuthenticationSchemes = BackendCookieAuthenticationDefaults.AuthenticationScheme)]
   public abstract class ControllerBase : Core.Controllers.ControllerBase
   {
@@ -41,74 +43,54 @@ namespace Platformus.Core.Backend.Controllers
       base.OnActionExecuting(actionExecutingContext);
     }
 
-    protected async Task CreateOrEditEntityLocalizationsAsync(IEntity entity)
+    protected async Task MergeEntityLocalizationsAsync(IEntity entity)
     {
-      foreach (PropertyInfo propertyInfo in this.GetDictionaryPropertiesFromEntity(entity))
+      foreach (PropertyInfo propertyInfo in entity.GetType().GetProperties().Where(pi => pi.PropertyType == typeof(Dictionary)))
       {
-        Dictionary dictionary = await this.GetOrCreateDictionaryForPropertyAsync(entity, propertyInfo);
+        Dictionary dictionary = propertyInfo.GetValue(entity) as Dictionary;
 
-        await this.DeleteLocalizationsAsync(dictionary);
-        await this.CreateLocalizationsAsync(propertyInfo, dictionary);
+        if (dictionary == null)
+        {
+          dictionary = new Dictionary();
+          this.DictionaryRepository.Create(dictionary);
+          propertyInfo.SetValue(entity, dictionary);
+        }
+
+        await this.MergeDictionaryLocalizationsAsync(dictionary, propertyInfo);
       }
     }
 
-    private IEnumerable<PropertyInfo> GetDictionaryPropertiesFromEntity(IEntity entity)
-    {
-      return entity.GetType().GetProperties().Where(pi => pi.PropertyType == typeof(Dictionary));
-    }
-
-    private async Task<Dictionary> GetOrCreateDictionaryForPropertyAsync(IEntity entity, PropertyInfo propertyInfo)
-    {
-      PropertyInfo dictionaryIdPropertyInfo = entity.GetType().GetProperty(propertyInfo.Name + "Id");
-      int? dictionaryId = (int?)dictionaryIdPropertyInfo.GetValue(entity);
-      Dictionary dictionary = null;
-
-      if (dictionaryId == null || dictionaryId == 0)
-      {
-        dictionary = new Dictionary();
-        this.DictionaryRepository.Create(dictionary);
-        await this.Storage.SaveAsync();
-        dictionaryIdPropertyInfo.SetValue(entity, dictionary.Id);
-      }
-
-      else dictionary = await this.DictionaryRepository.GetByIdAsync((int)dictionaryId);
-
-      return dictionary;
-    }
-
-    private async Task DeleteLocalizationsAsync(Dictionary dictionary)
-    {
-      foreach (Localization localization in await this.LocalizationRepository.GetAllAsync(new LocalizationFilter(dictionary: new DictionaryFilter(id: dictionary.Id))))
-        this.LocalizationRepository.Delete(localization.Id);
-
-      await this.Storage.SaveAsync();
-    }
-
-    private async Task CreateLocalizationsAsync(PropertyInfo propertyInfo, Dictionary dictionary)
+    private async Task MergeDictionaryLocalizationsAsync(Dictionary dictionary, PropertyInfo propertyInfo)
     {
       foreach (Culture culture in await this.HttpContext.GetCultureManager().GetNotNeutralCulturesAsync())
       {
-        Localization localization = new Localization();
-
-        localization.DictionaryId = dictionary.Id;
-        localization.CultureId = culture.Id;
-
         string identity = propertyInfo.Name + culture.Id;
         string value = this.Request.Form[identity];
 
-        localization.Value = value;
-        this.LocalizationRepository.Create(localization);
-      }
+        Localization localization = dictionary.Localizations?.FirstOrDefault(l => l.CultureId == culture.Id);
 
-      await this.Storage.SaveAsync();
+        if (localization == null)
+        {
+          localization = new Localization();
+          localization.Dictionary = dictionary;
+          localization.CultureId = culture.Id;
+          localization.Value = value;
+          this.LocalizationRepository.Create(localization);
+        }
+
+        else if (localization.Value != value)
+        {
+          localization.Value = value;
+          this.LocalizationRepository.Edit(localization);
+        }
+      }
     }
 
     private void HandleViewModelMultilingualProperties(ActionExecutingContext actionExecutingContext)
     {
       ViewModelBase viewModel = this.GetViewModelFromActionExecutingContext(actionExecutingContext);
 
-      if (viewModel == null)
-        return;
+      if (viewModel == null) return;
 
       try
       {
@@ -116,22 +98,23 @@ namespace Platformus.Core.Backend.Controllers
         {
           this.ModelState.Remove(propertyInfo.Name);
 
-          bool hasRequiredAttribute = propertyInfo.CustomAttributes.Any(ca => ca.AttributeType == typeof(RequiredAttribute));
-
           foreach (Culture culture in this.HttpContext.GetCultureManager().GetNotNeutralCulturesAsync().Result)
           {
             string identity = propertyInfo.Name + culture.Id;
             string value = this.Request.Form[identity];
 
             this.ModelState.SetModelValue(identity, value, value);
+            this.ModelState[identity].ValidationState = ModelValidationState.Valid;
 
-            if (hasRequiredAttribute && string.IsNullOrEmpty(value))
+            foreach (ValidationAttribute validationAttribute in propertyInfo.GetCustomAttributes<ValidationAttribute>())
             {
-              this.ModelState[identity].ValidationState = ModelValidationState.Invalid;
-              this.ModelState[identity].Errors.Add(string.Empty);
+              if (!validationAttribute.IsValid(value))
+              {
+                ValidationAttributeLocalizer.Localize(validationAttribute, this.HttpContext.GetStringLocalizer<SharedResource>());
+                this.ModelState[identity].ValidationState = ModelValidationState.Invalid;
+                this.ModelState[identity].Errors.Add(validationAttribute.ErrorMessage);
+              }
             }
-
-            else this.ModelState[identity].ValidationState = ModelValidationState.Valid;
           }
         }
       }
@@ -141,16 +124,16 @@ namespace Platformus.Core.Backend.Controllers
 
     private ViewModelBase GetViewModelFromActionExecutingContext(ActionExecutingContext actionExecutingContext)
     {
-      foreach (KeyValuePair<string, object> actionArgument in actionExecutingContext.ActionArguments)
-        if (actionArgument.Value is ViewModelBase)
-          return actionArgument.Value as ViewModelBase;
-
-      return null;
+      return actionExecutingContext.ActionArguments.Values.FirstOrDefault(v => v is ViewModelBase) as ViewModelBase;
     }
 
     private IEnumerable<PropertyInfo> GetMultilingualPropertiesFromViewModel(ViewModelBase viewModel)
     {
-      return viewModel.GetType().GetProperties().Where(pi => pi.CustomAttributes.Any(ca => ca.AttributeType == typeof(MultilingualAttribute)));
+      return viewModel
+        .GetType()
+        .GetProperties()
+        .Where(pi => pi.CustomAttributes.Any(ca => ca.AttributeType == typeof(MultilingualAttribute)))
+        .ToList();
     }
   }
 }

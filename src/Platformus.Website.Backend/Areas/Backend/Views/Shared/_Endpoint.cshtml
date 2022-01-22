@@ -2,15 +2,12 @@
 @* Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information. *@
 @model Platformus.Website.Backend.ViewModels.Shared.EndpointViewModel
 @inject Microsoft.AspNetCore.Mvc.Localization.IViewLocalizer Localizer
-<row>
-  <cell>@Model.Name</cell>
+<row href="/backend/endpoints/edit/@Model.Id">
+  <cell is-highlighted="true">@Model.Name</cell>
   <cell>@Model.UrlTemplate</cell>
   <cell>@(this.Model.Position == null ? "—" : this.Model.Position.ToString())</cell>
-  <cell>
-    <a href="/backend/datasources?endpoint.id=@Model.Id">@Localizer["Data sources"]</a>
-  </cell>
-  <buttons-cell>
-    <positive-button is-minor="true" href="/backend/endpoints/edit/@Model.Id">@Localizer["Edit"]</positive-button>
-    <delete-button href="/backend/endpoints/delete/@Model.Id"></delete-button>
-  </buttons-cell>
+  <row-controls>
+    <neutral-button is-minor="true" href="/backend/datasources?endpoint.id=@Model.Id">@Localizer["Data sources"]</neutral-button>
+    <delete-button href="/backend/endpoints/delete/@Model.Id" />
+  </row-controls>
 </row>

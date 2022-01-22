@@ -2,19 +2,18 @@
 /* Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information. */
 
 .text-area {
-  background-color: #f0f0f0;
-  border: none;
-  font: normal 15px 'PT Sans', sans-serif;
-  line-height: 1.333;
-  padding: 5px 10px;
-  overflow: auto;
+  background-color: #f8f8f8;
+  border: 1px solid #f0f0f0;
+  border-radius: 0.25rem;
+  font: 500 1rem 'Montserrat', sans-serif;
   resize: none;
+  display: inline-block;
+  padding: 0.75rem;
+  overflow: auto;
+  transition: all ease .25s;
 }
 
-.text-area:hover {
-  background-color: #f5f5f5;
-}
-
-.text-area--required {
-  box-shadow: 5px 0 0 #ff4100;
+.text-area:hover, .text-area:focus {
+  border-color: #000;
+  transition: all ease .25s;
 }

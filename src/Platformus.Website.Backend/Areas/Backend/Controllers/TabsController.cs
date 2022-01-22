@@ -11,7 +11,6 @@ using Platformus.Website.Filters;
 
 namespace Platformus.Website.Backend.Controllers
 {
-  [Area("Backend")]
   [Authorize(Policy = Policies.HasManageClassesPermission)]
   public class TabsController : Core.Backend.Controllers.ControllerBase
   {

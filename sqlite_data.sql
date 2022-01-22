@@ -2,7 +2,7 @@ BEGIN TRANSACTION;
 
 --
 -- Extension: Platformus.Core
--- Version: 2.6.0
+-- Version: 3.0.0
 --
 
 INSERT INTO "Users" VALUES (1,'Administrator','2017-01-01 00:00:00.0000000');
@@ -36,20 +36,19 @@ INSERT INTO "Cultures" VALUES ('en','English',0,1,1);
 
 --
 -- Extension: Platformus.Website
--- Version: 2.6.0
+-- Version: 3.0.0
 --
 
 INSERT INTO "Permissions" VALUES (7,'ManageEndpoints','Manage endpoints',700);
 INSERT INTO "Permissions" VALUES (8,'ManageObjects','Manage objects',800);
-INSERT INTO "Permissions" VALUES (9,'ManageDataTypes','Manage data types',900);
-INSERT INTO "Permissions" VALUES (10,'ManageClasses','Manage classes',1000);
-INSERT INTO "Permissions" VALUES (11,'ManageMenus','Manage menus',1100);
-INSERT INTO "Permissions" VALUES (12,'ManageForms','Manage forms',1200);
-INSERT INTO "Permissions" VALUES (13,'ManageFileManager','Manage file manager',1300);
+INSERT INTO "Permissions" VALUES (9,'ManageClasses','Manage classes',900);
+INSERT INTO "Permissions" VALUES (10,'ManageMenus','Manage menus',1000);
+INSERT INTO "Permissions" VALUES (11,'ManageForms','Manage forms',1100);
+INSERT INTO "Permissions" VALUES (12,'ManageFileManager','Manage file manager',1200);
 INSERT INTO "RolePermissions" VALUES (3,8);
+INSERT INTO "RolePermissions" VALUES (3,10);
 INSERT INTO "RolePermissions" VALUES (3,11);
 INSERT INTO "RolePermissions" VALUES (3,12);
-INSERT INTO "RolePermissions" VALUES (3,13);
 INSERT INTO "DataTypes" VALUES (1,'string','singleLinePlainText','Single line plain text',1);
 INSERT INTO "DataTypes" VALUES (2,'string','multilinePlainText','Multiline plain text',2);
 INSERT INTO "DataTypes" VALUES (3,'string','html','Html',3);
@@ -61,19 +60,19 @@ INSERT INTO "DataTypes" VALUES (8,'datetime','dateTime','DateTime',8);
 INSERT INTO "DataTypes" VALUES (9,'string','image','Image',9);
 INSERT INTO "DataTypes" VALUES (10,'string','sourceCode','Source code',10);
 INSERT INTO "DataTypeParameters" VALUES (1,1,'checkbox','IsRequired','Is required');
-INSERT INTO "DataTypeParameters" VALUES (2,1,'numericTextBox','MaxLength','Max length');
+INSERT INTO "DataTypeParameters" VALUES (2,1,'integerBox','MaxLength','Max length');
 INSERT INTO "DataTypeParameters" VALUES (3,2,'checkbox','IsRequired','Is required');
-INSERT INTO "DataTypeParameters" VALUES (4,2,'numericTextBox','MaxLength','Max length');
+INSERT INTO "DataTypeParameters" VALUES (4,2,'integerBox','MaxLength','Max length');
 INSERT INTO "DataTypeParameters" VALUES (5,4,'checkbox','IsRequired','Is required');
-INSERT INTO "DataTypeParameters" VALUES (6,4,'numericTextBox','MinValue','Min value');
-INSERT INTO "DataTypeParameters" VALUES (7,4,'numericTextBox','MaxValue','Max value');
+INSERT INTO "DataTypeParameters" VALUES (6,4,'integerBox','MinValue','Min value');
+INSERT INTO "DataTypeParameters" VALUES (7,4,'integerBox','MaxValue','Max value');
 INSERT INTO "DataTypeParameters" VALUES (8,5,'checkbox','IsRequired','Is required');
-INSERT INTO "DataTypeParameters" VALUES (9,5,'numericTextBox','MinValue','Min value');
-INSERT INTO "DataTypeParameters" VALUES (10,5,'numericTextBox','MaxValue','Max value');
+INSERT INTO "DataTypeParameters" VALUES (9,5,'integerBox','MinValue','Min value');
+INSERT INTO "DataTypeParameters" VALUES (10,5,'integerBox','MaxValue','Max value');
 INSERT INTO "DataTypeParameters" VALUES (11,7,'checkbox','IsRequired','Is required');
 INSERT INTO "DataTypeParameters" VALUES (12,8,'checkbox','IsRequired','Is required');
-INSERT INTO "DataTypeParameters" VALUES (13,9,'numericTextBox','Width','Width');
-INSERT INTO "DataTypeParameters" VALUES (14,9,'numericTextBox','Height','Height');
+INSERT INTO "DataTypeParameters" VALUES (13,9,'integerBox','Width','Width');
+INSERT INTO "DataTypeParameters" VALUES (14,9,'integerBox','Height','Height');
 INSERT INTO "DataTypeParameters" VALUES (15,10,'textBox','Mode','Mode');
 INSERT INTO "FieldTypes" VALUES (1,'TextBox','Text box',1,NULL);
 INSERT INTO "FieldTypes" VALUES (2,'TextArea','Text area',2,NULL);
@@ -85,15 +84,15 @@ INSERT INTO "FieldTypes" VALUES (7,'ReCAPTCHA','ReCAPTCHA',7,'Platformus.Website
 
 --
 -- Extension: Platformus.ECommerce
--- Version: 2.6.0
+-- Version: 3.0.0
 --
 
-INSERT INTO "Permissions" VALUES (14,'ManageCategories','Manage categories',1400);
-INSERT INTO "Permissions" VALUES (15,'ManageProducts','Manage products',1500);
-INSERT INTO "Permissions" VALUES (16,'ManageOrderStates','Manage order states',1600);
-INSERT INTO "Permissions" VALUES (17,'ManagePaymentMethods','Manage payment methods',1700);
-INSERT INTO "Permissions" VALUES (18,'ManageDeliveryMethods','Manage delivery methods',1800);
-INSERT INTO "Permissions" VALUES (19,'ManageCarts','Manage carts',1900);
-INSERT INTO "Permissions" VALUES (20,'ManageOrders','Manage orders',2000);
+INSERT INTO "Permissions" VALUES (13,'ManageCategories','Manage categories',1300);
+INSERT INTO "Permissions" VALUES (14,'ManageProducts','Manage products',1400);
+INSERT INTO "Permissions" VALUES (15,'ManageOrderStates','Manage order states',1500);
+INSERT INTO "Permissions" VALUES (16,'ManagePaymentMethods','Manage payment methods',1600);
+INSERT INTO "Permissions" VALUES (17,'ManageDeliveryMethods','Manage delivery methods',1700);
+INSERT INTO "Permissions" VALUES (18,'ManageCarts','Manage carts',1800);
+INSERT INTO "Permissions" VALUES (19,'ManageOrders','Manage orders',1900);
 
 COMMIT;

@@ -3,11 +3,14 @@
 @model Platformus.Website.Backend.ViewModels.Members.CreateOrEditViewModel
 @inject Microsoft.AspNetCore.Mvc.Localization.IViewLocalizer Localizer
 @{
-  this.ViewBag.Title = (this.Model.Id == null ? this.Localizer["Create Member"].Value : this.Localizer["Edit Member"].Value);
+  this.ViewBag.Title = (this.Model.Id == null ? this.Localizer["Create Member"] : this.Localizer["Edit Member"]);
   this.ViewBag.ActiveMenuItem = "classes";
 }
-<h1>@ViewBag.Title</h1>
-<form class="master-detail__form form" method="post">
+<form class="form" method="post">
+  <title-bar>
+    <submit-button>@Localizer["Save"]</submit-button>
+    <neutral-button href="/backend/members">@Localizer["Cancel"]</neutral-button>
+  </title-bar>
   <tabs>
     <tab code="General">@Localizer["General"]</tab>
     <tab code="Property">@Localizer["Property"]</tab>
@@ -18,30 +21,29 @@
       <drop-down-list-field for="TabId" options="@Model.TabOptions" />
       <single-line-text-field for="Code" />
       <single-line-text-field for="Name" />
-      <numeric-field for="Position" />
+      <integer-field for="Position" />
     </tab-page>
     <tab-page code="Property">
       <drop-down-list-field for="PropertyDataTypeId" options="@Model.PropertyDataTypeOptions" onchange="platformus.ui.propertyDataTypeIdChanged();" />
-      <checkbox-field class="form__field--separated" for="IsPropertyLocalizable" />
-      <checkbox-field for="IsPropertyVisibleInList" />
-      <div id="parameterEditors"></div>
-      <input id="parameters" name="parameters" type="hidden" value="@Model.Parameters" />
+      <div id="propertyDataTypeOptions">
+        <checkbox-field for="IsPropertyLocalizable" />
+        <checkbox-field for="IsPropertyVisibleInList" />
+        <div id="propertyDataTypeParameterEditor"></div>
+        <input id="propertyDataTypeParameters" name="propertyDataTypeParameters" type="hidden" value="@Model.PropertyDataTypeParameters" />
+      </div>
     </tab-page>
     <tab-page code="Relation">
       <drop-down-list-field for="RelationClassId" options="@Model.RelationClassOptions" onchange="platformus.ui.relationClassIdChanged();" />
-      <checkbox-field class="form__field--separated" for="IsRelationSingleParent" onchange="platformus.ui.isRelationSingleParentChanged();" />
-      <single-line-text-field for="MinRelatedObjectsNumber" />
-      <single-line-text-field for="MaxRelatedObjectsNumber" />
+      <div id="relationClassOptions">
+        <checkbox-field for="IsRelationSingleParent" onchange="platformus.ui.isRelationSingleParentChanged();" />
+        <div id="isRelationSingleParentOptions">
+          <single-line-text-field for="MinRelatedObjectsNumber" />
+          <single-line-text-field for="MaxRelatedObjectsNumber" />
+        </div>
+      </div>
     </tab-page>
   </tab-pages>
-  <div class="form__buttons buttons">
-    <submit-button>@Localizer["Save"]</submit-button>
-    <neutral-button href="/backend/members">@Localizer["Cancel"]</neutral-button>
-  </div>
 </form>
-<script>
-  var dataTypes = @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(this.Model.DataTypes));
-</script>
 @section startUpScript {
   platformus.ui.propertyDataTypeIdChanged();
   platformus.ui.relationClassIdChanged();

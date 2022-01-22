@@ -2,23 +2,22 @@
 @* Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information. *@
 @model Platformus.Core.Backend.ViewModels.Shared.ConfigurationViewModel
 @inject Microsoft.AspNetCore.Mvc.Localization.IViewLocalizer Localizer
-<tree-node>
-  <tree-node-header>
-    <tree-node-title>
+<node>
+  <node-header href="/backend/configurations/edit/@Model.Id">
+    <node-title>
       @Model.Name
-    </tree-node-title>
-    <tree-node-buttons>
-      <positive-button is-minor="true" href="/backend/configurations/edit/@Model.Id">@Localizer["Edit"]</positive-button>
-      <delete-button href="/backend/configurations/delete/@Model.Id"></delete-button>
-    </tree-node-buttons>
-  </tree-node-header>
-  <tree-node-content>
+    </node-title>
+    <node-controls>
+      <delete-button href="/backend/configurations/delete/@Model.Id" />
+    </node-controls>
+  </node-header>
+  <node-content>
     @foreach (var variable in this.Model.Variables)
     {
       <partial name="_Variable" for="@variable" />
     }
-    <tree-node-buttons>
-      <positive-button is-minor="true" href="/backend/variables/create?configuration.id=@Model.Id">@Localizer["Create variable"]</positive-button>
-    </tree-node-buttons>
-  </tree-node-content>
-</tree-node>
+    <node-controls>
+      <neutral-button is-minor="true" icon="Icons.Create" href="/backend/variables/create?configuration.id=@Model.Id">@Localizer["Create variable"]</neutral-button>
+    </node-controls>
+  </node-content>
+</node>

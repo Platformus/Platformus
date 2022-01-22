@@ -2,18 +2,14 @@
 /* Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information. */
 
 .item-selector-pop-up-form {
-  width: 800px;
+  width: 60rem;
 }
 
 .item-selector-pop-up-form__items {
-  height: 400px;
+  height: 40rem;
   overflow: auto;
 }
 
 .item-selector-pop-up-form__table {
-  width: 100%;
-}
-
-.item-selector-pop-up-form__cell {
-  cursor: pointer;
+  margin: 0;
 }

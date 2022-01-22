@@ -9,7 +9,7 @@ namespace Platformus.Core.Backend.ViewModels.Shared
 {
   public static class PagerViewModelFactory
   {
-    public static PagerViewModel Create(HttpContext httpContext, int offset, int limit, int total, bool isSecondary)
+    public static PagerViewModel Create(HttpContext httpContext, int offset, int limit, int total)
     {
       IStringLocalizer<PagerViewModel> localizer = httpContext.GetStringLocalizer<PagerViewModel>();
 
@@ -23,8 +23,7 @@ namespace Platformus.Core.Backend.ViewModels.Shared
         },
         Offset = offset,
         Limit = limit,
-        Total = total,
-        IsSecondary = isSecondary
+        Total = total
       };
     }
   }

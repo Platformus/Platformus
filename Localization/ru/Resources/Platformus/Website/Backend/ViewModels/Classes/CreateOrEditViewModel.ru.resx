@@ -129,6 +129,9 @@
   <data name="Parent class (abstract only)" xml:space="preserve">
     <value>Родительский класс (только абстрактные)</value>
   </data>
+  <data name="Parent class not specified" xml:space="preserve">
+    <value>Родительский класс не указан</value>
+  </data>
   <data name="Pluralized name" xml:space="preserve">
     <value>Название во множественном числе</value>
   </data>

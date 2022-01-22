@@ -1,0 +1,17 @@
+﻿@* Copyright © 2021 Dmitry Sikorsky. All rights reserved. *@
+@* Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information. *@
+@model Platformus.Website.Backend.ViewModels.Shared.RelationSetViewModel
+@inject Microsoft.AspNetCore.Mvc.Localization.IViewLocalizer Localizer
+<div class="item-selector form__field field">
+  <label class="field__label label">@Model.Member.Name</label>
+  <input id="relationMember@(this.Model.Member.Id)" name="relationMember@(this.Model.Member.Id)" type="hidden" value="@string.Join(',', this.Model.PrimaryIds)">
+  <div class="item-selector__keys item-selector__keys--required" id="relationMember@(this.Model.Member.Id)DisplayableValues">
+    <div class="item-selector__key">Not selected</div>
+  </div>
+  <div class="form__buttons form__buttons--minor buttons">
+    <neutral-button is-minor="true" onclick="return platformus.relationEditor.showObjectSelectorForm(@Model.Member.Id, @Model.Member.RelationClass.Id, @(this.Model.Member.MinRelatedObjectsNumber ?? 0), @(this.Model.Member.MaxRelatedObjectsNumber ?? 0));">@Localizer["Select…"]</neutral-button>
+  </div>
+</div>
+<script>
+  setTimeout(function () { platformus.relationEditor.sync(@Model.Member.Id); }, 500);
+</script>

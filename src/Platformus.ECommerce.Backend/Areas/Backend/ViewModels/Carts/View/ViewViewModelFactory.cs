@@ -14,7 +14,7 @@ namespace Platformus.ECommerce.Backend.ViewModels.Carts
       return new ViewViewModel()
       {
         Id = cart.Id,
-        Positions = cart.Positions.Select(PositionViewModelFactory.Create),
+        Positions = cart.Positions.Select(PositionViewModelFactory.Create).ToList(),
         Total = cart.GetTotal()
       };
     }

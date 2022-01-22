@@ -6,18 +6,14 @@
   this.ViewBag.Title = this.Localizer["File Manager"];
   this.ViewBag.ActiveMenuItem = "filemanager";
 }
-@section title {
-  @ViewBag.Title
-}
+<title-bar />
 <filter>
   <text-filter property-path="Name.Contains" label="@Localizer["Name"].Value" />
 </filter>
-<pager offset="@Model.Offset" limit="@Model.Limit" total="@Model.Total" />
 <table sorting="@Model.Sorting">
   <columns>
     <column label="@Localizer["Name"].Value" sorting-property-path="Name" />
     <column label="@Localizer["Size"].Value" sorting-property-path="Size" />
-    <column />
   </columns>
   <rows>
     @foreach (var file in this.Model.Files)
@@ -26,17 +22,17 @@
     }
   </rows>
 </table>
-<pager offset="@Model.Offset" limit="@Model.Limit" total="@Model.Total" is-secondary="true" />
-<div class="drag-and-drop-area" id="dragAndDropArea">
+<pager offset="@Model.Offset" limit="@Model.Limit" total="@Model.Total" />
+<div class="content__drag_and_drop_area drag-and-drop-area" id="dragAndDropArea">
   <div class="drag-and-drop-area__description">
     @Localizer["Drag and drop files into this area…"]
   </div>
-  <form class="master-detail__form form" id="form" name="form" action="/backend/filemanager/create" enctype="multipart/form-data" method="post">
+  <form class="form" id="form" name="form" action="/backend/filemanager/create" enctype="multipart/form-data" method="post">
     <div class="drag-and-drop-area__buttons form__buttons buttons">
-      <div class="drag-and-drop-area__browse-button buttons__button button button--positive">
-        <div>@Localizer["…or select them on your device"]</div>
-        <input class="drag-and-drop-area__browse-input" id="files" name="files" type="file" size="1" multiple onchange="platformus.dragAndDropArea.selected();" />
-      </div>
+      <label class="buttons__button button button--neutral button--icon icon icon--browse" for="files">
+        @Localizer["…or select them on your device"]
+      </label>
+      <input class="drag-and-drop-area__input" id="files" name="files" type="file" size="1" multiple onchange="platformus.dragAndDropArea.selected();" />
     </div>
   </form>
 </div>

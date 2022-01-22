@@ -25,7 +25,7 @@ namespace Platformus.ECommerce.Backend.ViewModels.Products
         Offset = offset,
         Limit = limit,
         Total = total,
-        Products = products.Select(ProductViewModelFactory.Create)
+        Products = products.Select(ProductViewModelFactory.Create).ToList()
       };
     }
 

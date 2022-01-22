@@ -7,7 +7,7 @@ namespace Platformus.Core.Backend
 {
   public static class TextBoxGenerator
   {
-    public static TagBuilder Generate(string identity, string type, string value = null, bool isRequired = false, int? maxLength = null, bool isValid = true)
+    public static TagBuilder Generate(string identity, string type, string value = null, Validation validation = null)
     {
       TagBuilder tb = new TagBuilder(TagNames.Input);
 
@@ -20,13 +20,13 @@ namespace Platformus.Core.Backend
       if (!string.IsNullOrEmpty(value))
         tb.MergeAttribute(AttributeNames.Value, value);
 
-      if (isRequired)
-        tb.AddRequiredAttributes("text-box--required");
+      if (validation?.IsRequired == true)
+        tb.AddRequiredAttributes(validation.IsRequiredValidationErrorMessage);
 
-      if (maxLength != null)
-        tb.AddMaxLengthAttributes((int)maxLength);
+      if (validation?.MinLength != null || validation?.MaxLength != null)
+        tb.AddStringLengthAttributes(validation?.MinLength, validation?.MaxLength, validation.StringLengthValidationErrorMessage);
 
-      if (!isValid)
+      if (validation?.IsValid == false)
         tb.AddCssClass("input-validation-error");
 
       return tb;

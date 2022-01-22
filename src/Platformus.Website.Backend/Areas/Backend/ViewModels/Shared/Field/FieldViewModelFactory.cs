@@ -14,11 +14,14 @@ namespace Platformus.Website.Backend.ViewModels.Shared
       return new FieldViewModel()
       {
         Id = field.Id,
+        FormId = field.FormId,
         FieldType = field.FieldType == null ? null : FieldTypeViewModelFactory.Create(field.FieldType),
         Name = field.Name.GetLocalizationValue(),
         FieldOptions = field.FieldOptions == null ?
           Array.Empty<FieldOptionViewModel>() :
-          field.FieldOptions.Select(FieldOptionViewModelFactory.Create).ToList()
+          field.FieldOptions
+            .OrderBy(fo => fo.Position)
+            .Select(FieldOptionViewModelFactory.Create).ToList()
       };
     }
   }

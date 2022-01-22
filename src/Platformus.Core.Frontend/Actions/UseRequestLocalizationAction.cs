@@ -47,7 +47,7 @@ namespace Platformus.Core.Frontend.Actions
         requestLocalizationOptions.RequestCultureProviders.Insert(0, new RouteValueRequestCultureProvider());
 
       applicationBuilder.UseWhen(
-        context => !context.Request.Path.StartsWithSegments(new PathString("/backend")),
+        context => !context.Request.Path.StartsWithSegments(new PathString("/backend")) && !context.Request.Path.StartsWithSegments(new PathString("/img")),
         frontendApplicationBuilder =>
         {
           frontendApplicationBuilder.UseRequestLocalization(requestLocalizationOptions);

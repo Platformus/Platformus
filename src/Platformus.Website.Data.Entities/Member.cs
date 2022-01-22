@@ -58,6 +58,11 @@ namespace Platformus.Website.Data.Entities
     public bool? IsPropertyVisibleInList { get; set; }
 
     /// <summary>
+    /// Gets or sets the parameters (key=value pairs separated by commas) for the property data type.
+    /// </summary>
+    public string PropertyDataTypeParameters { get; set; }
+
+    /// <summary>
     /// Gets or sets the class identifier this member relations should have.
     /// </summary>
     public int? RelationClassId { get; set; }

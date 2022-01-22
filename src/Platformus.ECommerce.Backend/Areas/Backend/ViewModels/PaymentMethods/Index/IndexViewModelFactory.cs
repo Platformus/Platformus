@@ -18,7 +18,7 @@ namespace Platformus.ECommerce.Backend.ViewModels.PaymentMethods
         Offset = offset,
         Limit = limit,
         Total = total,
-        PaymentMethods = paymentMethods.Select(PaymentMethodViewModelFactory.Create)
+        PaymentMethods = paymentMethods.Select(PaymentMethodViewModelFactory.Create).ToList()
       };
     }
   }

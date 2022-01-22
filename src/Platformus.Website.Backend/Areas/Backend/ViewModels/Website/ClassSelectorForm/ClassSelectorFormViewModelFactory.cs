@@ -3,9 +3,6 @@
 
 using System.Collections.Generic;
 using System.Linq;
-using Microsoft.AspNetCore.Http;
-using Microsoft.Extensions.Localization;
-using Platformus.Core.Backend;
 using Platformus.Website.Backend.ViewModels.Shared;
 using Platformus.Website.Data.Entities;
 
@@ -13,17 +10,11 @@ namespace Platformus.Website.Backend.ViewModels.Website
 {
   public static class ClassSelectorFormViewModelFactory
   {
-    public static ClassSelectorFormViewModel Create(HttpContext httpContext, IEnumerable<Class> classes, int? classId)
+    public static ClassSelectorFormViewModel Create(IEnumerable<Class> classes, int? classId)
     {
-      IStringLocalizer<ClassSelectorFormViewModel> localizer = httpContext.GetStringLocalizer<ClassSelectorFormViewModel>();
-
       return new ClassSelectorFormViewModel()
       {
-        TableColumns = new[] {
-          new TableTagHelper.Column(localizer["Parent Class"]),
-          new TableTagHelper.Column(localizer["Name"])
-        },
-        Classes = classes.Select(ClassViewModelFactory.Create),
+        Classes = classes.Select(ClassViewModelFactory.Create).ToList(),
         ClassId = classId
       };
     }

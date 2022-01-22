@@ -14,7 +14,7 @@ namespace Platformus.ECommerce.Backend.ViewModels.Categories
     {
       return new IndexViewModel()
       {
-        Categories = categories.Select(CategoryViewModelFactory.Create)
+        Categories = categories.Select(CategoryViewModelFactory.Create).ToList()
       };
     }
   }

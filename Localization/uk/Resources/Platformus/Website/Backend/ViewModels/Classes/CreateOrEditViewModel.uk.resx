@@ -129,6 +129,9 @@
   <data name="Parent class (abstract only)" xml:space="preserve">
     <value>Батьківський клас (тільки абстрактні)</value>
   </data>
+  <data name="Parent class not specified" xml:space="preserve">
+    <value>Батьківський клас не вказано</value>
+  </data>
   <data name="Pluralized name" xml:space="preserve">
     <value>Назва у множині</value>
   </data>

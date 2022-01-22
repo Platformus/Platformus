@@ -2,117 +2,174 @@
 /* Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information. */
 
 .table {
-  border-collapse: collapse;
+  border: 1px solid #f0f0f0;
+  border-radius: 0.25rem;
 }
 
 .table__row {
 }
 
+.table__row--interactive {
+  cursor: pointer;
+}
+
 .table__cell {
-  font-weight: normal;
+  border: 1px solid #f0f0f0;
+  border-right: none;
+  border-bottom: none;
   text-align: left;
   vertical-align: top;
-  padding: 5px 10px;
+  padding: 0.75rem;
+  transition: all ease 0.25s;
 }
 
 .table__row:hover .table__cell {
-  background-color: #ffff96;
+  background-color: #ffffa0;
+  transition: all ease 0.25s;
 }
 
-.table__cell--ordered-by {
-  background-color: #f0f0f0;
+.table__row .table__cell:first-child {
+  border-left: none;
 }
 
-.table__row:hover .table__cell--ordered-by {
-  background-color: #ffff96;
+.table__row:first-child .table__cell {
+  border-top: none;
+}
+
+.table__row:first-child .table__cell:first-child {
+  border-radius: 0.25rem 0 0 0;
+}
+
+.table__row:first-child .table__cell:last-child {
+  border-radius: 0 0.25rem 0 0;
+}
+
+.table__row:last-child .table__cell:first-child {
+  border-radius: 0 0 0 0.25rem;
+}
+
+.table__row:last-child .table__cell:last-child {
+  border-radius: 0 0 0.25rem 0;
+}
+
+.table__cell:last-child {
+  position: relative;
 }
 
 .table__cell--header {
-  background-color: #f0f0f0;
+  background-color: #f8f8f8;
+  font-weight: 700;
 }
 
 .table__row:hover .table__cell--header {
-  background-color: #f0f0f0;
+  background-color: #f8f8f8;
 }
 
-.table__cell--header-ordered-by {
-  background-color: #323232;
-  background-position: right;
+.table__cell--header-sorted-by {
+  background-position: right 0.75rem center;
   background-repeat: no-repeat;
+  background-size: 1rem;
 }
 
-.table__row:hover .table__cell--header-ordered-by {
-  background-color: #323232;
+.table__row:hover .table__cell--header-sorted-by {
 }
 
-.table__cell--header-ordered-by-asc {
-  background-image: url(/wwwroot.areas.backend.images.ordered_by_asc.png);
+.table__cell--header-sorted-by-asc {
+  background-image: url(/wwwroot.areas.backend.images.down_arrow.svg);
 }
 
-.table__cell--header-ordered-by-desc {
-  background-image: url(/wwwroot.areas.backend.images.ordered_by_desc.png);
+.table__cell--header-sorted-by-desc {
+  background-image: url(/wwwroot.areas.backend.images.up_arrow.svg);
 }
 
-.table__row--selected .table__cell {
-  background-color: #0096fa;
-  color: #fff;
-}
-
-.table__row--selected:hover .table__cell {
-  background-color: #5abeff;
-  color: #fff;
-}
-
-.table__cell--context-controls {
-  padding: 0;
-  width: 0;
+.table__cell--sorted-by {
+  background-color: #f8f8f8;
 }
 
 .table__cell--no-records {
-  color: #ccc;
-  font-style: italic;
+  background-color: #fff;
+  color: #aaa;
 }
 
-.table__order-by {
+.table__cell--interactive {
+  cursor: pointer;
 }
 
-.table__order-by--ordered-by {
+.table__cell--interactive:hover {
+  background-color: #ffffa0 !important;
+}
+
+.table__row--selected .table__cell, .table__row--selected:hover .table__cell {
+  background: #e04030;
   color: #fff;
+  transition: all ease 0.25s;
 }
 
-.table__order-by--ordered-by:hover {
-  color: #fff;
+.table__row-controls {
+  background: linear-gradient(90deg, transparent, #ffffa0 1rem);
+  box-sizing: border-box;
+  opacity: 0;
+  padding: 0.625rem 0.625rem 0.625rem 1.625rem;
+  position: absolute;
+  right: 0;
+  top: 0;
+  height: 100%;
+  transition: all ease 0.25s;
+}
+
+.table__row:hover .table__row-controls {
+  opacity: 1;
+  transition: all ease 0.25s;
 }
 
 .table__image {
+  border: 1px solid #f0f0f0;
+  border-radius: 0.25rem;
   display: block;
-  max-width: 100px;
-  max-height: 100px;
+  max-width: 7.5rem;
+  max-height: 7.5rem;
 }
 
-.table__buttons {
-  visibility: hidden;
-  padding: 5px;
-}
-
-.table__row:hover .table__buttons {
-  visibility: visible;
-}
-
-@media
-only screen and (-webkit-min-device-pixel-ratio: 2),
-only screen and (   min--moz-device-pixel-ratio: 2),
-only screen and (     -o-min-device-pixel-ratio: 2/1),
-only screen and (        min-device-pixel-ratio: 2),
-only screen and (                min-resolution: 192dpi),
-only screen and (                min-resolution: 2dppx) {
-  .table__cell--header-ordered-by-asc {
-    background-image: url(/wwwroot.areas.backend.images.ordered_by_asc@2x.png);
-    background-size: 20px 5px;
+@media screen and (max-width: 1000px) {
+  .table {
+    border: none;
+    display: block;
   }
 
-  .table__cell--header-ordered-by-desc {
-    background-image: url(/wwwroot.areas.backend.images.ordered_by_desc@2x.png);
-    background-size: 20px 5px;
+  tbody {
+    display: block;
+  }
+
+  .table__row {
+    border: 1px solid #f0f0f0;
+    border-radius: 0.25rem;
+    display: block;
+    margin-top: 1.5rem;
+  }
+
+  .table__row:first-child {
+    display: none;
+  }
+
+  .table__row:nth-child(2) {
+    margin: 0;
+  }
+
+  .table__cell {
+    border: none;
+    border-top: 1px solid #f0f0f0;
+    display: block;
+  }
+
+  .table__cell:first-child {
+    border: none;
+  }
+
+  .table__cell--header {
+    display: none;
+  }
+
+  .table__cell--highlighted {
+    font-weight: bold;
   }
 }

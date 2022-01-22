@@ -1,0 +1,4 @@
+﻿@* Copyright © 2021 Dmitry Sikorsky. All rights reserved. *@
+@* Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information. *@
+@model Platformus.Core.Parameters.Parameter
+<drop-down-list-field id="parameter@(this.Model.Code)" label="@this.Model.Name" options="this.Model.Options" data-parameter-code="@this.Model.Code" />

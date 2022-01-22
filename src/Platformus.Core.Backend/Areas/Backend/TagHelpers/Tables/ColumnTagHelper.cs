@@ -13,11 +13,10 @@ namespace Platformus.Core.Backend
 
     public override void Process(TagHelperContext context, TagHelperOutput output)
     {
-      output.SuppressOutput();
-
       TableTagHelper.Column column = new TableTagHelper.Column(this.Label, this.SortingPropertyPath);
 
       (context.Items["Columns"] as List<TableTagHelper.Column>).Add(column);
+      output.SuppressOutput();
     }
   }
 }

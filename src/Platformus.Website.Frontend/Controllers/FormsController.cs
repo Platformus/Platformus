@@ -21,7 +21,8 @@ namespace Platformus.Website.Frontend.Controllers
       : base(storage)
     {
     }
-
+    
+    // TODO: do not return bad request
     [HttpPost]
     public async Task<IActionResult> SendAsync(int formId, string origin)
     {

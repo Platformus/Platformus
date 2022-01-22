@@ -2,8 +2,15 @@
 /* Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information. */
 
 .date-picker {
+  transition: all ease .25s;
+}
+
+.date-picker--expanded {
+  border-radius: 0.25rem 0.25rem 0 0;
+  transition: all ease .25s;
 }
 
 .date-picker__calendar {
-  width: 210px;
+  position: absolute;
+  width: 19.25rem;
 }

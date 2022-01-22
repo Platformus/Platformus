@@ -38,7 +38,7 @@ namespace Platformus.Website.Data.EntityFramework.SqlServer
           etb.HasKey(e => e.Id);
           etb.Property(e => e.Id).UseIdentityColumn();
           etb.Property(e => e.StorageDataType).IsRequired().HasMaxLength(32);
-          etb.Property(e => e.JavaScriptEditorClassName).IsRequired().HasMaxLength(128);
+          etb.Property(e => e.ParameterEditorCode).IsRequired().HasMaxLength(128);
           etb.Property(e => e.Name).IsRequired().HasMaxLength(64);
           etb.ToTable("DataTypes");
         }
@@ -48,19 +48,19 @@ namespace Platformus.Website.Data.EntityFramework.SqlServer
         {
           etb.HasKey(e => e.Id);
           etb.Property(e => e.Id).ValueGeneratedOnAdd();
-          etb.Property(e => e.JavaScriptEditorClassName).IsRequired().HasMaxLength(128);
+          etb.Property(e => e.ParameterEditorCode).IsRequired().HasMaxLength(128);
           etb.Property(e => e.Code).IsRequired().HasMaxLength(32);
           etb.Property(e => e.Name).IsRequired().HasMaxLength(64);
           etb.ToTable("DataTypeParameters");
         }
       );
 
-      modelBuilder.Entity<DataTypeParameterValue>(etb =>
+      modelBuilder.Entity<DataTypeParameterOption>(etb =>
         {
           etb.HasKey(e => e.Id);
           etb.Property(e => e.Id).ValueGeneratedOnAdd();
           etb.Property(e => e.Value).IsRequired().HasMaxLength(1024);
-          etb.ToTable("DataTypeParameterValues");
+          etb.ToTable("DataTypeParameterOptions");
         }
       );
 

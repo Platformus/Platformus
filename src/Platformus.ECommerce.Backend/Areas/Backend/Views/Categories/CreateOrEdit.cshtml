@@ -4,13 +4,14 @@
 @inject Microsoft.AspNetCore.Mvc.Localization.IViewLocalizer Localizer
 @inject Platformus.Core.Services.Abstractions.ICultureManager CultureManager
 @{
-  this.ViewBag.Title = (this.Model.Id == null ? this.Localizer["Create Category"].Value : this.Localizer["Edit Category"].Value);
+  this.ViewBag.Title = (this.Model.Id == null ? this.Localizer["Create Category"] : this.Localizer["Edit Category"]);
   this.ViewBag.ActiveMenuItem = "categories";
 }
-@section title {
-  @ViewBag.Title
-}
-<form class="master-detail__form form" method="post">
+<form class="form" method="post">
+  <title-bar>
+    <submit-button>@Localizer["Save"]</submit-button>
+    <neutral-button href="/backend/categories" skip-url-parameters="owner.id.equals">@Localizer["Cancel"]</neutral-button>
+  </title-bar>
   <tabs>
     <tab code="General">@Localizer["General"]</tab>
     <tab code="Seo">@Localizer["SEO"]</tab>
@@ -20,8 +21,8 @@
     <tab-page code="General">
       <single-line-text-field for="Url" />
       <multilingual-single-line-text-field for="Name" localizations="@Model.NameLocalizations" />
-      <multilingual-multiline-text-field for="Description" localizations="this.Model.DescriptionLocalizations" />
-      <numeric-field for="Position" />
+      <multilingual-html-field for="Description" localizations="this.Model.DescriptionLocalizations" />
+      <integer-field for="Position" />
     </tab-page>
     <tab-page code="Seo">
       <multilingual-single-line-text-field for="Title" localizations="this.Model.TitleLocalizations" />
@@ -30,22 +31,11 @@
     </tab-page>
     <tab-page code="Products">
       <drop-down-list-field for="ProductProviderCSharpClassName" options="@Model.ProductProviderCSharpClassNameOptions" onchange="platformus.ui.productProviderCSharpClassNameChanged();" />
-      <div id="parameterEditors"></div>
-      <input id="parameters" name="productProviderParameters" type="hidden" value="@Model.ProductProviderParameters" />
+      <div id="productProviderParameterEditor"></div>
+      <input id="productProviderParameters" name="productProviderParameters" type="hidden" value="@Model.ProductProviderParameters" />
     </tab-page>
   </tab-pages>
-  <div class="form__buttons buttons">
-    <submit-button>@Localizer["Save"]</submit-button>
-    <neutral-button href="/backend/categories" skip-url-parameters="owner.id.equals">@Localizer["Cancel"]</neutral-button>
-  </div>
 </form>
-<script>
-  var productProviders = @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(this.Model.ProductProviders));
-</script>
 @section startUpScript {
   platformus.ui.productProviderCSharpClassNameChanged();
-  @foreach (var culture in await this.CultureManager.GetNotNeutralCulturesAsync())
-  {
-    @:platformus.ui.initializeTinyMce("description@(culture.Id)");
-  }
 }

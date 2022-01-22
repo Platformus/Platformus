@@ -57,7 +57,9 @@ namespace Platformus.Core.Backend
     {
       TagBuilder tb = new TagBuilder(TagNames.Table);
 
-      tb.AddCssClass("master-detail__table table" + (string.IsNullOrEmpty(this.Class) ? null : $" {this.Class}"));
+      tb.AddCssClass("content__table table" + (string.IsNullOrEmpty(this.Class) ? null : $" {this.Class}"));
+      tb.MergeAttribute("cellpadding", "0");
+      tb.MergeAttribute("cellspacing", "0");
       tb.InnerHtml.AppendHtml(this.CreateColGroups(columns));
       tb.InnerHtml.AppendHtml(this.CreateTBody(columns, rows));
       return tb;
@@ -80,7 +82,7 @@ namespace Platformus.Core.Backend
       tb.TagRenderMode = TagRenderMode.SelfClosing;
 
       if (this.IsSortedByColumn(column))
-        tb.AddCssClass("table__cell--ordered-by");
+        tb.AddCssClass("table__cell--sorted-by");
 
       return tb;
     }
@@ -137,52 +139,39 @@ namespace Platformus.Core.Backend
       TagBuilder tb = new TagBuilder(TagNames.TD);
 
       tb.AddCssClass("table__cell table__cell--header");
+      tb.InnerHtml.AppendHtml(column.Label);
 
-      if (string.IsNullOrEmpty(column.SortingPropertyPath))
-        tb.InnerHtml.AppendHtml(column.Label);
-
-      else
+      if (!string.IsNullOrEmpty(column.SortingPropertyPath))
       {
+        tb.AddCssClass("table__cell--interactive");
+
         if (this.IsSortedByColumn(column))
         {
-          tb.AddCssClass("table__cell--header-ordered-by");
-          tb.AddCssClass(this.GetSortingDirection() == SortingDirection.Ascending ? "table__cell--header-ordered-by-asc" : "table__cell--header-ordered-by-desc");
+          tb.AddCssClass("table__cell--header-sorted-by");
+          tb.AddCssClass(this.GetSortingDirection() == SortingDirection.Ascending ? "table__cell--header-sorted-by-asc" : "table__cell--header-sorted-by-desc");
         }
 
-        tb.InnerHtml.AppendHtml(this.CreateSortingLink(column));
+        tb.MergeAttribute(AttributeNames.OnClick, $"location.href = '{this.GetSoringUrl(column)}';");
       }
 
       return tb;
     }
 
-    private TagBuilder CreateSortingLink(Column column)
+    private string GetSoringUrl(Column column)
     {
-      TagBuilder tb = new TagBuilder(TagNames.A);
-
-      tb.AddCssClass("table__order-by");
-
       string sorting;
 
       if (string.Equals(column.SortingPropertyPath, this.GetSortingPropertyPath(), StringComparison.OrdinalIgnoreCase))
-      {
-        tb.AddCssClass("table__order-by--ordered-by");
         sorting = (this.GetSortingDirection() == SortingDirection.Ascending ? "-" : "%2B") + column.SortingPropertyPath.ToLower();
-      }
 
       else sorting = "%2B" + column.SortingPropertyPath.ToLower();
 
-      tb.MergeAttribute(
-        AttributeNames.Href,
-        this.ViewContext.HttpContext.Request.CombineUrl(
-          new Url.Descriptor(name: "filter", takeFromUrl: true),
-          new Url.Descriptor(name: "sorting", value: sorting),
-          new Url.Descriptor(name: "offset", takeFromUrl: true),
-          new Url.Descriptor(name: "limit", takeFromUrl: true)
-        )
+      return this.ViewContext.HttpContext.Request.CombineUrl(
+        new Url.Parameter(name: "filter", takeFromUrl: true),
+        new Url.Parameter(name: "sorting", value: sorting),
+        new Url.Parameter(name: "offset", takeFromUrl: true),
+        new Url.Parameter(name: "limit", takeFromUrl: true)
       );
-
-      tb.InnerHtml.AppendHtml(column.Label);
-      return tb;
     }
 
     private string GetSortingPropertyPath()

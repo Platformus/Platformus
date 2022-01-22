@@ -2,9 +2,11 @@
 // Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information.
 
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Http.Extensions;
+using Platformus.Core.Parameters;
 using Platformus.Website.ResponseCaches;
 
 namespace Platformus.Website.Frontend
@@ -12,6 +14,9 @@ namespace Platformus.Website.Frontend
   public class MemoryResponseCache : IResponseCache
   {
     private const string response = "response:";
+
+    public string Description => "Caches responses in memory.";
+    public IEnumerable<ParameterGroup> ParameterGroups => new ParameterGroup[] { };
 
     public async Task<byte[]> GetWithDefaultValueAsync(HttpContext httpContext, Func<Task<byte[]>> defaultValueFunc)
     {

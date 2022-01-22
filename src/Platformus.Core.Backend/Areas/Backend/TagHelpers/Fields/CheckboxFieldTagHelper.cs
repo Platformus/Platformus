@@ -1,49 +1,37 @@
 ﻿// Copyright © 2020 Dmitry Sikorsky. All rights reserved.
 // Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information.
 
-using System;
 using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.AspNetCore.Mvc.ViewFeatures;
 using Microsoft.AspNetCore.Razor.TagHelpers;
 
 namespace Platformus.Core.Backend
 {
-  public class CheckboxFieldTagHelper : TagHelper
+  public class CheckboxFieldTagHelper : EmptyFieldTagHelperBase<bool>
   {
-    [HtmlAttributeNotBound]
-    [ViewContext]
-    public ViewContext ViewContext { get; set; }
-    public string Class { get; set; }
-    public ModelExpression For { get; set; }
-    public string Id { get; set; }
-    public string Label { get; set; }
-    public bool IsChecked { get; set; }
-
     public override void Process(TagHelperContext context, TagHelperOutput output)
     {
       if (this.For == null && string.IsNullOrEmpty(this.Id))
         return;
 
-      output.TagMode = TagMode.StartTagAndEndTag;
-      output.TagName = TagNames.Div;
-      output.Attributes.SetAttribute(AttributeNames.Class, "form__field field" + (string.IsNullOrEmpty(this.Class) ? null : $" {this.Class}"));
+      base.Process(context, output);
       output.Content.AppendHtml(this.CreateCheckbox());
     }
 
     private TagBuilder CreateCheckbox()
     {
-      if (this.For == null)
-      {
-        return CheckboxGenerator.Generate(
-          this.Id, this.Label, this.IsChecked
-        );
-      }
+      bool.TryParse(this.GetValue(), out bool value);
 
-      bool isChecked = string.Equals(this.For.GetValue(this.ViewContext)?.ToString()?.ToString(), true.ToString(), StringComparison.OrdinalIgnoreCase);
-
-      return CheckboxGenerator.Generate(
-        this.For.GetIdentity(), this.For.GetLabel(), isChecked
+      TagBuilder tb = CheckboxGenerator.Generate(
+        this.GetIdentity(),
+        this.GetLabel(),
+        value: value
       );
+
+      // TODO: merge all the attributes, not only "onchange"
+      if (!string.IsNullOrEmpty(this.OnChange))
+        tb.MergeAttribute(AttributeNames.OnChange, this.OnChange);
+
+      return tb;
     }
   }
 }

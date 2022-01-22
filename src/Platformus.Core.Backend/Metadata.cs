@@ -14,7 +14,7 @@ namespace Platformus.Core.Backend.Metadata
       return new StyleSheet[]
       {
         new StyleSheet("/wwwroot.areas.backend.css.platformus.core.min.css", 1000),
-        new StyleSheet("//fonts.googleapis.com/css?family=PT+Sans:400,400italic&subset=latin,cyrillic", 10000)
+        new StyleSheet("https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;700&display=swap", 10000)
       };
     }
 
@@ -22,14 +22,14 @@ namespace Platformus.Core.Backend.Metadata
     {
       return new Script[]
       {
-        new Script("//ajax.aspnetcdn.com/ajax/jquery/jquery-1.11.3.min.js", 100),
-        new Script("//ajax.aspnetcdn.com/ajax/jquery.validate/1.14.0/jquery.validate.min.js", 200),
-        new Script("//ajax.aspnetcdn.com/ajax/jquery.validation.unobtrusive/3.2.6/jquery.validate.unobtrusive.min.js", 300),
+        new Script("//cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js", 100),
+        new Script("//cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.3/jquery.validate.min.js", 200),
+        new Script("//cdnjs.cloudflare.com/ajax/libs/jquery-validation-unobtrusive/3.2.12/jquery.validate.unobtrusive.min.js", 300),
         new Script("//cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js", 400),
-        new Script("//cdnjs.cloudflare.com/ajax/libs/tinymce/4.9.2/tinymce.min.js", 500),
+        new Script("//cdnjs.cloudflare.com/ajax/libs/tinymce/4.9.11/tinymce.min.js", 500),
         new Script("//cdnjs.cloudflare.com/ajax/libs/jquery.maskedinput/1.4.1/jquery.maskedinput.min.js", 600),
-        new Script("//cdnjs.cloudflare.com/ajax/libs/ace/1.4.12/ace.js", 700),
-        new Script("//cdnjs.cloudflare.com/ajax/libs/moment.js/2.17.1/moment-with-locales.min.js", 800),
+        new Script("//cdnjs.cloudflare.com/ajax/libs/ace/1.4.13/ace.js", 700),
+        new Script("//cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment-with-locales.min.js", 800),
         new Script("/wwwroot.areas.backend.js.platformus.core.min.js", 1000)
       };
     }
@@ -42,21 +42,21 @@ namespace Platformus.Core.Backend.Metadata
       {
         new MenuGroup(
           localizer["Audience"],
-          2000,
+          3000,
           new MenuItem[]
           {
-            new MenuItem("/backend/permissions", localizer["Permissions"], 1000, new string[] { Permissions.ManagePermissions }),
-            new MenuItem("/backend/roles", localizer["Roles"], 2000, new string[] { Permissions.ManageRoles }),
-            new MenuItem("/backend/users", localizer["Users"], 3000, new string[] { Permissions.ManageUsers })
+            new MenuItem("icon--permissions", "/backend/permissions", localizer["Permissions"], 1000, Permissions.ManagePermissions),
+            new MenuItem("icon--roles", "/backend/roles", localizer["Roles"], 2000, Permissions.ManageRoles),
+            new MenuItem("icon--users", "/backend/users", localizer["Users"], 3000, Permissions.ManageUsers)
           }
         ),
         new MenuGroup(
           localizer["Administration"],
-          3000,
+          4000,
           new MenuItem[]
           {
-            new MenuItem("/backend/configurations", localizer["Configurations"], 1000, new string[] { Permissions.ManageConfigurations }),
-            new MenuItem("/backend/cultures", localizer["Cultures"], 2000, new string[] { Permissions.ManageCultures })
+            new MenuItem("icon--configurations", "/backend/configurations", localizer["Configurations"], 1000, Permissions.ManageConfigurations),
+            new MenuItem("icon--cultures", "/backend/cultures", localizer["Cultures"], 2000, Permissions.ManageCultures)
           }
         )
       };

@@ -25,14 +25,14 @@
       if (this.hasClass("drop-down-list")) {
         var dropDownList = this,
           selectedDropDownListItem = dropDownList.find(".drop-down-list__item--selected"),
-          dropDownListItems = dropDownList.find(".drop-down-list__items"),
-          dropDownListItem = dropDownListItems.find(".drop-down-list__item[data-value='" + value + "']"),
+          dropDownListItem = dropDownList.find(".drop-down-list__item[data-value='" + value + "']"),
           input = dropDownList.find("input");
 
         selectedDropDownListItem.html(dropDownListItem.html());
 
         var result = input.val(value);
 
+        input.trigger("change");
         dropDownList.trigger("change");
         return result;
       }
@@ -42,28 +42,26 @@
   }
 
   function defineHandlers() {
-    $(document.body).on("click", globalClickHandler);
-    $(document.body).on("click", ".drop-down-list__item--selected", selectedDropDownListItemClickHandler);
-    $(document.body).on("click", ".drop-down-list__item:not(.drop-down-list__item--selected)", dropDownListItemClickHandler);
+    $(document.body).on("click", onGlobalClick);
+    $(document.body).on("click", ".drop-down-list__item--selected", onSelectedDropDownListItemClick);
+    $(document.body).on("click", ".drop-down-list__item:not(.drop-down-list__item--selected)", onDropDownListItemClick);
   }
 
-  function globalClickHandler() {
-    $(".drop-down-list__items").slideUp("fast");
+  function onGlobalClick() {
+    $(".drop-down-list").removeClass("drop-down-list--expanded");
     return true;
   }
 
-  function selectedDropDownListItemClickHandler() {
-    $(this).parent().find(".drop-down-list__items").slideDown("fast");
+  function onSelectedDropDownListItemClick() {
+    $(this).closest(".drop-down-list").toggleClass("drop-down-list--expanded");
     return false;
   }
 
-  function dropDownListItemClickHandler() {
+  function onDropDownListItemClick() {
     var dropDownListItem = $(this),
-      dropDownListItems = dropDownListItem.parent(),
-      dropDownList = dropDownListItems.parent();
+      dropDownList = dropDownListItem.closest(".drop-down-list");
 
-    dropDownList.val(dropDownListItem.data("value"));
-    dropDownListItems.fadeOut("fast");
+    dropDownList.removeClass("drop-down-list--expanded").val(dropDownListItem.data("value"));
     return false;
   }
 })(window.platformus = window.platformus || {});

@@ -33,7 +33,7 @@ namespace Platformus.Core.Backend.ViewModels.Users
     {
       return (await httpContext.GetStorage().GetRepository<int, Role, RoleFilter>().GetAllAsync()).Select(
         r => UserRoleViewModelFactory.Create(r, user != null && user.UserRoles.Any(ur => ur.RoleId == r.Id))
-      );
+      ).ToList();
     }
   }
 }

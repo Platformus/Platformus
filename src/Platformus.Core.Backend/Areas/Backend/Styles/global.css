@@ -2,47 +2,56 @@
 /* Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information. */
 
 html, body {
-  font: normal 15px 'PT Sans', sans-serif;
-  color: #323232;
-  line-height: 1.333;
+  font: 500 13px 'Montserrat', sans-serif;
+  color: #000;
+  line-height: 1.25;
   margin: 0;
   padding: 0;
   height: 100%;
 }
 
-h1, h2, p {
-  font-weight: normal;
+body.prevent-animation *, body.prevent-animation *::after {
+  transition: none !important;
+}
+
+body.prevent-scroll {
+  overflow: hidden;
+}
+
+h1, h2, .heading {
+  font-weight: 700;
   margin: 0;
   padding: 0;
 }
 
 h1, .heading--h1 {
-  font-size: 30px;
+  font-size: 2rem;
 }
 
 h2, .heading--h2 {
-  font-size: 20px;
+  font-size: 1.25rem;
 }
 
 a {
-  color: #0096fa;
+  color: #000;
+  text-decoration: none;
 }
 
-a:hover {
-  color: #5abeff;
+img {
+  border-radius: 0.25rem;
 }
 
 :focus {
-  outline: 1px dashed #0096fa;
+  outline: none;
   z-index: 1;
 }
 
-::-moz-focus-inner { 
-	border: 0;
-	padding: 0;
+::-moz-focus-inner {
+  border: 0;
+  padding: 0;
 }
 
-::-ms-clear { 
+::-ms-clear {
   display: none;
 }
 
@@ -51,17 +60,27 @@ a:hover {
 }
 
 ::-webkit-input-placeholder {
-  color: #ccc;
+  color: #aaa;
+  font-weight: 400;
 }
 
 ::-moz-placeholder {
-  color: #ccc;
+  color: #aaa;
+  font-weight: 400;
 }
 
 :-ms-input-placeholder {
-  color: #ccc;
+  color: #aaa;
+  font-weight: 400;
 }
 
 :-moz-placeholder {
-  color: #ccc;
+  color: #aaa;
+  font-weight: 400;
+}
+
+@media screen and (max-width: 1000px) {
+  html, body {
+    font-size: 11px;
+  }
 }

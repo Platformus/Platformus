@@ -13,7 +13,6 @@ using Platformus.Core.Services.Abstractions;
 
 namespace Platformus.Core.Backend.Controllers
 {
-  [Area("Backend")]
   public class ImageUploaderController : ControllerBase
   {
     private IWebHostEnvironment webHostEnvironment;

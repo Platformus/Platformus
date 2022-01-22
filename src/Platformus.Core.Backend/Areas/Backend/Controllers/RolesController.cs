@@ -1,6 +1,8 @@
 ﻿// Copyright © 2020 Dmitry Sikorsky. All rights reserved.
 // Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information.
 
+using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using ExtCore.Events;
@@ -8,6 +10,7 @@ using Magicalizer.Data.Repositories.Abstractions;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Localization;
 using Platformus.Core.Backend.ViewModels.Roles;
 using Platformus.Core.Data.Entities;
 using Platformus.Core.Events;
@@ -15,10 +18,11 @@ using Platformus.Core.Filters;
 
 namespace Platformus.Core.Backend.Controllers
 {
-  [Area("Backend")]
   [Authorize(Policy = Policies.HasManageRolesPermission)]
   public class RolesController : ControllerBase
   {
+    private IStringLocalizer localizer;
+
     private IRepository<int, Role, RoleFilter> RoleRepository
     {
       get => this.Storage.GetRepository<int, Role, RoleFilter>();
@@ -29,9 +33,10 @@ namespace Platformus.Core.Backend.Controllers
       get => this.Storage.GetRepository<int, int, RolePermission, RolePermissionFilter>();
     }
 
-    public RolesController(IStorage storage)
+    public RolesController(IStorage storage, IStringLocalizer<SharedResource> localizer)
       : base(storage)
     {
+      this.localizer = localizer;
     }
 
     public async Task<IActionResult> IndexAsync([FromQuery]RoleFilter filter = null, string sorting = "+position", int offset = 0, int limit = 10)
@@ -55,8 +60,8 @@ namespace Platformus.Core.Backend.Controllers
     [ExportModelStateToTempData]
     public async Task<IActionResult> CreateOrEditAsync(CreateOrEditViewModel createOrEdit)
     {
-      if (createOrEdit.Id == null && !await this.IsCodeUniqueAsync(createOrEdit.Code))
-        this.ModelState.AddModelError("code", string.Empty);
+      if (!await this.IsCodeUniqueAsync(createOrEdit))
+        this.ModelState.AddModelError("code", this.localizer["Value is already in use"]);
 
       if (this.ModelState.IsValid)
       {
@@ -70,8 +75,8 @@ namespace Platformus.Core.Backend.Controllers
 
         else this.RoleRepository.Edit(role);
 
+        this.MergeRolePermissions(role);
         await this.Storage.SaveAsync();
-        await this.CreateOrEditRolePermissionsAsync(role);
 
         if (createOrEdit.Id == null)
           Event<IRoleCreatedEventHandler, HttpContext, Role>.Broadcast(this.HttpContext, role);
@@ -94,52 +99,28 @@ namespace Platformus.Core.Backend.Controllers
       return this.Redirect(this.Request.CombineUrl("/backend/roles"));
     }
 
-    private async Task<bool> IsCodeUniqueAsync(string code)
+    private async Task<bool> IsCodeUniqueAsync(CreateOrEditViewModel createOrEdit)
     {
-      return await this.RoleRepository.CountAsync(new RoleFilter(code: code)) == 0;
+      Role role = (await this.RoleRepository.GetAllAsync(new RoleFilter(code: createOrEdit.Code))).FirstOrDefault();
+
+      return role == null || role.Id == createOrEdit.Id;
     }
 
-    private async Task CreateOrEditRolePermissionsAsync(Role role)
+    private void MergeRolePermissions(Role role)
     {
-      await this.DeleteRolePermissionsAsync(role);
-      await this.CreateRolePermissionsAsync(role);
-    }
+      List<int> permissionIds = new List<int>();
 
-    private async Task DeleteRolePermissionsAsync(Role role)
-    {
-      if (role.RolePermissions != null)
-        for (int i = 0; i != role.RolePermissions.Count; i++)
-        {
-          RolePermission rolePermission = role.RolePermissions.ElementAt(i);
-
-          this.RolePermissionRepository.Delete(rolePermission.RoleId, rolePermission.PermissionId);
-        }
-
-      await this.Storage.SaveAsync();
-    }
-
-    private async Task CreateRolePermissionsAsync(Role role)
-    {
       foreach (string key in this.Request.Form.Keys)
-      {
-        if (key.StartsWith("permission") && this.Request.Form[key] == true.ToString().ToLower())
-        {
-          string permissionId = key.Replace("permission", string.Empty);
+        if (key.StartsWith("permission") && this.Request.Form[key].FirstOrDefault().ToBoolWithDefaultValue(false))
+          permissionIds.Add(int.Parse(key.Replace("permission", string.Empty)));
 
-          this.CreateRolePermission(role, int.Parse(permissionId));
-        }
-      }
+      IEnumerable<RolePermission> currentRolePermissions = role.RolePermissions ?? Array.Empty<RolePermission>();
 
-      await this.Storage.SaveAsync();
-    }
+      foreach (RolePermission rolePermission in currentRolePermissions.Where(crp => !permissionIds.Any(id => id == crp.PermissionId)).ToList())
+        this.RolePermissionRepository.Delete(rolePermission.RoleId, rolePermission.PermissionId);
 
-    private void CreateRolePermission(Role role, int permissionId)
-    {
-      RolePermission rolePermission = new RolePermission();
-
-      rolePermission.RoleId = role.Id;
-      rolePermission.PermissionId = permissionId;
-      this.RolePermissionRepository.Create(rolePermission);
+      foreach (int permissionId in permissionIds.Where(id => !currentRolePermissions.Any(crp => crp.PermissionId == id)))
+        this.RolePermissionRepository.Create(new RolePermission() { Role = role, PermissionId = permissionId });
     }
   }
 }

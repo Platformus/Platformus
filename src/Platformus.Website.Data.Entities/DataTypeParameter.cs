@@ -23,9 +23,9 @@ namespace Platformus.Website.Data.Entities
     public int DataTypeId { get; set; }
 
     /// <summary>
-    /// Gets or sets the JavaScript editor class name (name of the JavaScript function that is used to build the editor).
+    /// Gets or sets the parameter editor code (name of the partial view without underscore that is used to build the editor).
     /// </summary>
-    public string JavaScriptEditorClassName { get; set; }
+    public string ParameterEditorCode { get; set; }
 
     /// <summary>
     /// Gets or sets the unique code of the data type parameter. It is set by the user and might be used for the data type parameter retrieval.
@@ -38,6 +38,6 @@ namespace Platformus.Website.Data.Entities
     public string Name { get; set; }
 
     public virtual DataType DataType { get; set; }
-    public virtual ICollection<DataTypeParameterValue> DataTypeParameterValues { get; set; }
+    public virtual ICollection<DataTypeParameterOption> DataTypeParameterOptions { get; set; }
   }
 }

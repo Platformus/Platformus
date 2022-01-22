@@ -31,22 +31,21 @@ namespace Platformus.Website.Backend.ViewModels.Endpoints
 
     [Display(Name = "Sign in URL")]
     [StringLength(128)]
+    [RegularExpression(@"^\/$|^(\/[a-z0-9-]+)*$")]
     public string SignInUrl { get; set; }
+    public IEnumerable<EndpointPermissionViewModel> EndpointPermissions { get; set; }
 
     [Display(Name = "Request processor C# class name")]
     [Required]
     [StringLength(128)]
     public string RequestProcessorCSharpClassName { get; set; }
     public IEnumerable<Option> RequestProcessorCSharpClassNameOptions { get; set; }
-
     public string RequestProcessorParameters { get; set; }
-    public IEnumerable<dynamic> RequestProcessors { get; set; }
 
     [Display(Name = "Response cache C# class name")]
     [StringLength(128)]
     public string ResponseCacheCSharpClassName { get; set; }
     public IEnumerable<Option> ResponseCacheCSharpClassNameOptions { get; set; }
-
-    public IEnumerable<EndpointPermissionViewModel> EndpointPermissions { get; set; }
+    public string ResponseCacheParameters { get; set; }
   }
 }

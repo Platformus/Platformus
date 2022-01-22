@@ -7,26 +7,26 @@ namespace Platformus.Core.Backend
 {
   public static class CheckboxGenerator
   {
-    public static TagBuilder Generate(string identity, string label, bool isChecked)
+    public static TagBuilder Generate(string identity, string label, bool value = false)
     {
       TagBuilder tb = new TagBuilder(TagNames.A);
 
       tb.AddCssClass("checkbox");
       tb.MergeAttribute(AttributeNames.Id, identity);
       tb.MergeAttribute(AttributeNames.Href, "#");
-      tb.InnerHtml.AppendHtml(GenerateIndicator(isChecked));
+      tb.InnerHtml.AppendHtml(GenerateIndicator(value));
       tb.InnerHtml.AppendHtml(GenerateLabel(label));
-      tb.InnerHtml.AppendHtml(GenerateInput(identity, isChecked));
+      tb.InnerHtml.AppendHtml(GenerateInput(identity, value));
       return tb;
     }
 
-    private static TagBuilder GenerateIndicator(bool isChecked)
+    private static TagBuilder GenerateIndicator(bool value)
     {
       TagBuilder tb = new TagBuilder(TagNames.Div);
 
       tb.AddCssClass("checkbox__indicator");
 
-      if (isChecked)
+      if (value)
         tb.AddCssClass("checkbox__indicator--checked");
 
       return tb;
@@ -41,14 +41,14 @@ namespace Platformus.Core.Backend
       return tb;
     }
 
-    private static TagBuilder GenerateInput(string identity, bool isChecked)
+    private static TagBuilder GenerateInput(string identity, bool value)
     {
       TagBuilder tb = new TagBuilder(TagNames.Input);
 
       tb.TagRenderMode = TagRenderMode.SelfClosing;
       tb.MergeAttribute(AttributeNames.Name, identity);
-      tb.MergeAttribute(AttributeNames.Type, "hidden");
-      tb.MergeAttribute(AttributeNames.Value, isChecked.ToString().ToLower());
+      tb.MergeAttribute(AttributeNames.Type, InputTypes.Hidden);
+      tb.MergeAttribute(AttributeNames.Value, value.ToString().ToLower());
       return tb;
     }
   }

@@ -10,10 +10,10 @@
   );
 
   function defineHandlers() {
-    $(document.body).on("change", "[data-property-path]", filterChangeHandler);
+    $(document.body).on("change", "[data-property-path]", onChange);
   }
 
-  function filterChangeHandler(e) {
+  function onChange() {
     var criterion = $(this);
     var value = criterion.val();
 

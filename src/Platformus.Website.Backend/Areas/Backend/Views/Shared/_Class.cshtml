@@ -2,9 +2,9 @@
 @* Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information. *@
 @model Platformus.Website.Backend.ViewModels.Shared.ClassViewModel
 @inject Microsoft.AspNetCore.Mvc.Localization.IViewLocalizer Localizer
-<row>
+<row href="/backend/classes/edit/@Model.Id">
   <cell>@(this.Model.Parent == null ? "—" : this.Model.Parent.Name)</cell>
-  <cell>@Model.Name</cell>
+  <cell is-highlighted="true">@Model.Name</cell>
   <cell>
     @if (this.Model.IsAbstract)
     {
@@ -15,14 +15,9 @@
       <span class="marker marker--neutral">@Localizer["No"]</span>
     }
   </cell>
-  <cell>
-    <a href="/backend/tabs?class.id=@Model.Id">@Localizer["Tabs"]</a>
-  </cell>
-  <cell>
-    <a href="/backend/members?class.id=@Model.Id">@Localizer["Members"]</a>
-  </cell>
-  <buttons-cell>
-    <positive-button is-minor="true" href="/backend/classes/edit/@Model.Id">@Localizer["Edit"]</positive-button>
-    <delete-button href="/backend/classes/delete/@Model.Id"></delete-button>
-  </buttons-cell>
+  <row-controls>
+    <neutral-button is-minor="true" href="/backend/tabs?class.id=@Model.Id">@Localizer["Tabs"]</neutral-button>
+    <neutral-button is-minor="true" href="/backend/members?class.id=@Model.Id">@Localizer["Members"]</neutral-button>
+    <delete-button href="/backend/classes/delete/@Model.Id" />
+  </row-controls>
 </row>

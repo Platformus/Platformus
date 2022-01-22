@@ -25,7 +25,7 @@ namespace Platformus.Website.Backend.ViewModels.DataSources
         Offset = offset,
         Limit = limit,
         Total = total,
-        DataSources = dataSources.Select(DataSourceViewModelFactory.Create)
+        DataSources = dataSources.Select(DataSourceViewModelFactory.Create).ToList()
       };
     }
   }

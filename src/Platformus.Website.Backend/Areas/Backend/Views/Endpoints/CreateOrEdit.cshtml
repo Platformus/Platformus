@@ -3,16 +3,17 @@
 @model Platformus.Website.Backend.ViewModels.Endpoints.CreateOrEditViewModel
 @inject Microsoft.AspNetCore.Mvc.Localization.IViewLocalizer Localizer
 @{
-  this.ViewBag.Title = (this.Model.Id == null ? this.Localizer["Create Endpoint"].Value : this.Localizer["Edit Endpoint"].Value);
+  this.ViewBag.Title = (this.Model.Id == null ? this.Localizer["Create Endpoint"] : this.Localizer["Edit Endpoint"]);
   this.ViewBag.ActiveMenuItem = "endpoints";
 }
-@section title {
-  @ViewBag.Title
-}
-<form class="master-detail__form form" method="post">
+<form class="form" method="post">
+  <title-bar>
+    <submit-button>@Localizer["Save"]</submit-button>
+    <neutral-button href="/backend/endpoints">@Localizer["Cancel"]</neutral-button>
+  </title-bar>
   <tabs>
     <tab code="General">@Localizer["General"]</tab>
-    <tab code="RequiredPermissions">@Localizer["Required permissions"]</tab>
+    <tab code="Access">@Localizer["Access"]</tab>
     <tab code="RequestProcessing">@Localizer["Request processing"]</tab>
     <tab code="ResponseCaching">@Localizer["Response caching"]</tab>
   </tabs>
@@ -20,33 +21,33 @@
     <tab-page code="General">
       <single-line-text-field for="Name" />
       <single-line-text-field for="UrlTemplate" />
-      <numeric-field for="Position" />
-      <checkbox-field class="form__field--separated" for="DisallowAnonymous" />
-      <single-line-text-field for="SignInUrl" />
+      <integer-field for="Position" />
     </tab-page>
-    <tab-page code="RequiredPermissions">
-      @foreach (var endpointPermission in this.Model.EndpointPermissions)
-      {
-        <checkbox-field class="@(endpointPermission.Permission.Id == this.Model.EndpointPermissions.First().Permission.Id ? "form__field--separated" : null)" id="permission@(endpointPermission.Permission.Id)" label="@endpointPermission.Permission.Name" is-checked="@endpointPermission.IsAssigned" />
-      }
+    <tab-page code="Access">
+      <checkbox-field for="DisallowAnonymous" onchange="platformus.ui.disallowAnonymousChanged();" />
+      <div id="disallowAnonymousOptions">
+        <single-line-text-field for="SignInUrl" />
+        <h2 class="content__subtitle heading heading--h2">@Localizer["Required permissions"]</h2>
+        @foreach (var endpointPermission in this.Model.EndpointPermissions)
+        {
+          <checkbox-field id="permission@(endpointPermission.Permission.Id)" label="@endpointPermission.Permission.Name" value="@endpointPermission.IsAssigned" />
+        }
+      </div>
     </tab-page>
     <tab-page code="RequestProcessing">
-      <drop-down-list-field for="RequestProcessorCSharpClassName" options="@Model.RequestProcessorCSharpClassNameOptions" />
-      <div id="parameterEditors"></div>
-      <input id="parameters" name="requestProcessorParameters" type="hidden" value="@Model.RequestProcessorParameters" />
+      <drop-down-list-field for="RequestProcessorCSharpClassName" options="@Model.RequestProcessorCSharpClassNameOptions" onchange="platformus.ui.requestProcessorCSharpClassNameChanged();" />
+      <div id="requestProcessorParameterEditor"></div>
+      <input id="requestProcessorParameters" name="requestProcessorParameters" type="hidden" value="@Model.RequestProcessorParameters" />
     </tab-page>
     <tab-page code="ResponseCaching">
-      <drop-down-list-field for="ResponseCacheCSharpClassName" options="@Model.ResponseCacheCSharpClassNameOptions" />
+      <drop-down-list-field for="ResponseCacheCSharpClassName" options="@Model.ResponseCacheCSharpClassNameOptions" onchange="platformus.ui.responseCacheCSharpClassNameChanged();" />
+      <div id="responseCacheParameterEditor"></div>
+      <input id="responseCacheParameters" name="responseCacheParameters" type="hidden" value="@Model.ResponseCacheParameters" />
     </tab-page>
   </tab-pages>
-  <div class="form__buttons buttons">
-    <submit-button>@Localizer["Save"]</submit-button>
-    <neutral-button href="/backend/endpoints">@Localizer["Cancel"]</neutral-button>
-  </div>
 </form>
-<script>
-  var requestProcessors = @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(this.Model.RequestProcessors));
-</script>
 @section startUpScript {
+  platformus.ui.disallowAnonymousChanged();
   platformus.ui.requestProcessorCSharpClassNameChanged();
+  platformus.ui.responseCacheCSharpClassNameChanged();
 }

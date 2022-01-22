@@ -1,10 +1,9 @@
 ﻿// Copyright © 2021 Dmitry Sikorsky. All rights reserved.
 // Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information.
 
-using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
-using Platformus.Core.Parameters;
+using Platformus.Core;
 using Platformus.Website.Data.Entities;
 
 namespace Platformus.Website.DataProviders
@@ -14,18 +13,8 @@ namespace Platformus.Website.DataProviders
   /// Data provider optionally takes any information from the HTTP(S) request (URL, cookies etc.), from the external services,
   /// some hardcoded data, and builds a dynamic model object.
   /// </summary>
-  public interface IDataProvider
+  public interface IDataProvider : IParameterized
   {
-    /// <summary>
-    /// Gets the parameter groups with the parameters the data provider needs from the users.
-    /// </summary>
-    IEnumerable<ParameterGroup> ParameterGroups { get; }
-
-    /// <summary>
-    /// Gets description that is shown to a user to describe the data provider.
-    /// </summary>
-    string Description { get; }
-
     /// <summary>
     /// Returns a dynamic model object.
     /// </summary>

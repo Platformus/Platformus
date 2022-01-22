@@ -3,85 +3,70 @@
 
 (function (platformus) {
   platformus.ui = platformus.ui || {};
+  platformus.ui.formHandlerCSharpClassNameChanged = function () {
+    platformus.parameterEditor.load("formHandler", "/backend/core/parametereditor?csharpclassname=" + $("#formHandlerCSharpClassName").val());
+  };
+
   platformus.ui.propertyDataTypeIdChanged = function () {
-    var propertyDataTypeId = getSelectedPropertyDataTypeId();
+    var propertyDataTypeId = $("#propertyDataTypeId").val();
 
     if (propertyDataTypeId) {
-      if (getDataTypeById(propertyDataTypeId).storageDataType == "string") {
-        $("#isPropertyLocalizable").show();
-      }
-
-      else {
-        $("#isPropertyLocalizable").hide();
-      }
-
-      $("#isPropertyVisibleInList").show();
+      $("#propertyDataTypeOptions").show();
     }
 
     else {
-      $("#isPropertyLocalizable").hide();
-      $("#isPropertyVisibleInList").hide();
+      $("#propertyDataTypeOptions").hide();
     }
 
-    platformus.parameterEditors.sync(getDataTypeById(propertyDataTypeId));
+    platformus.parameterEditor.load("propertyDataType", "/backend/website/parametereditor?datatypeid=" + propertyDataTypeId);
   };
 
   platformus.ui.relationClassIdChanged = function () {
-    var relationClassId = getSelectedRelationClassId();
-
-    if (relationClassId) {
-      $("#isRelationSingleParent").show();
-      $("#minRelatedObjectsNumber").parent().show();
-      $("#maxRelatedObjectsNumber").parent().show();
+    if ($("#relationClassId").val()) {
+      $("#relationClassOptions").show();
     }
 
     else {
-      $("#isRelationSingleParent").hide();
-      $("#minRelatedObjectsNumber").parent().hide();
-      $("#maxRelatedObjectsNumber").parent().hide();
+      $("#relationClassOptions").hide();
     }
   };
 
   platformus.ui.isRelationSingleParentChanged = function () {
-    var isRelationSingleParent = $("#isRelationSingleParent").val();
-
-    if (isRelationSingleParent) {
-      $("#minRelatedObjectsNumber").parent().hide();
-      $("#maxRelatedObjectsNumber").parent().hide();
+    if ($("#isRelationSingleParent").val()) {
+      $("#isRelationSingleParentOptions").hide();
     }
 
     else {
-      $("#minRelatedObjectsNumber").parent().show();
-      $("#maxRelatedObjectsNumber").parent().show();
+      $("#isRelationSingleParentOptions").show();
     }
   };
 
-  function getSelectedPropertyDataTypeId() {
-    return $("#propertyDataTypeId").val();
-  }
+  platformus.ui.disallowAnonymousChanged = function () {
+    if ($("#disallowAnonymous").val()) {
+      $("#disallowAnonymousOptions").show();
+    }
 
-  function getSelectedRelationClassId() {
-    return $("#relationClassId").val();
-  }
-
-  function getDataTypeById(dataTypeId) {
-    return dataTypes.find(dt => dt.id == dataTypeId);
-  }
-})(window.platformus = window.platformus || {});
-
-(function (platformus) {
-  platformus.ui = platformus.ui || {};
-  platformus.ui.formHandlerCSharpClassNameChanged = function () {
-    platformus.parameterEditors.sync(getFormHandlerByCSharpClassName(getSelectedFormHandlerCSharpClassName()));
+    else {
+      $("#disallowAnonymousOptions").hide();
+    }
   };
 
-  function getSelectedFormHandlerCSharpClassName() {
-    return $("#formHandlerCSharpClassName").val();
-  }
+  platformus.ui.requestProcessorCSharpClassNameChanged = function () {
+    platformus.parameterEditor.load("requestProcessor", "/backend/core/parametereditor?csharpclassname=" + $("#requestProcessorCSharpClassName").val());
+  };
 
-  function getFormHandlerByCSharpClassName(cSharpClassName) {
-    return formHandlers.find(fh => fh.cSharpClassName == cSharpClassName);
-  }
+  platformus.ui.responseCacheCSharpClassNameChanged = function () {
+    if (!$("#responseCacheCSharpClassName").val()) {
+      $("#responseCacheParameterEditor").html("");
+      return;
+    }
+
+    platformus.parameterEditor.load("responseCache", "/backend/core/parametereditor?csharpclassname=" + $("#responseCacheCSharpClassName").val());
+  };
+
+  platformus.ui.dataProviderCSharpClassNameChanged = function () {
+    platformus.parameterEditor.load("dataProvider", "/backend/core/parametereditor?csharpclassname=" + $("#dataProviderCSharpClassName").val());
+  };
 })(window.platformus = window.platformus || {});
 
 (function (platformus) {
@@ -93,31 +78,4 @@
       }
     );
   };
-})(window.platformus = window.platformus || {});
-
-(function (platformus) {
-  platformus.ui = platformus.ui || {};
-  platformus.ui.requestProcessorCSharpClassNameChanged = function () {
-    platformus.parameterEditors.sync(getRequestProcessorByCSharpClassName(getSelectedRequestProcessorCSharpClassName()));
-  };
-
-  platformus.ui.dataProviderCSharpClassNameChanged = function () {
-    platformus.parameterEditors.sync(getDataProviderByCSharpClassName(getSelectedDataProviderCSharpClassName()));
-  };
-
-  function getSelectedRequestProcessorCSharpClassName() {
-    return $("#requestProcessorCSharpClassName").val();
-  }
-
-  function getSelectedDataProviderCSharpClassName() {
-    return $("#dataProviderCSharpClassName").val();
-  }
-
-  function getRequestProcessorByCSharpClassName(cSharpClassName) {
-    return requestProcessors.find(rp => rp.cSharpClassName == cSharpClassName);
-  }
-
-  function getDataProviderByCSharpClassName(cSharpClassName) {
-    return dataProviders.find(dp => dp.cSharpClassName == cSharpClassName);
-  }
 })(window.platformus = window.platformus || {});

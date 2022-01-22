@@ -14,7 +14,7 @@ namespace Platformus.Website.Backend.ViewModels.Menus
     {
       return new IndexViewModel()
       {
-        Menus = menus.Select(MenuViewModelFactory.Create)
+        Menus = menus.Select(MenuViewModelFactory.Create).ToList()
       };
     }
   }

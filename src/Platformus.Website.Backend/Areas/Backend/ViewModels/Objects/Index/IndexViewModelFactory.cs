@@ -20,6 +20,11 @@ namespace Platformus.Website.Backend.ViewModels.Objects
   {
     public static async Task<IndexViewModel> CreateAsync(HttpContext httpContext, ObjectFilter filter, string sorting, int offset, int limit, int total, IEnumerable<Object> objects)
     {
+      Class parentClass = (filter?.Primary?.Id == null ? null : await httpContext.GetStorage().GetRepository<int, Object, ObjectFilter>().GetByIdAsync(
+        (int)filter?.Primary?.Id,
+        new Inclusion<Object>(o => o.Class)
+      ))?.Class;
+
       Class @class = filter?.Class?.Id == null ? null : await httpContext.GetStorage().GetRepository<int, Class, ClassFilter>().GetByIdAsync(
         (int)filter.Class.Id,
         new Inclusion<Class>("Members.PropertyDataType"),
@@ -28,8 +33,12 @@ namespace Platformus.Website.Backend.ViewModels.Objects
         new Inclusion<Class>("Parent.Members.RelationClass")
       );
 
+      if (objects != null)
+        objects.ToList().ForEach(o => o.Class = @class);
+
       return new IndexViewModel()
       {
+        ParentClass = parentClass == null ? null : ClassViewModelFactory.Create(parentClass),
         Class = @class == null ? null : ClassViewModelFactory.Create(@class),
         ClassesByAbstractClasses = await GetClassesByAbstractClassesAsync(httpContext),
         Sorting = sorting,
@@ -37,7 +46,7 @@ namespace Platformus.Website.Backend.ViewModels.Objects
         Limit = limit,
         Total = total,
         TableColumns = @class == null ? null : GetTableColumns(@class),
-        Objects = objects == null ? null : objects.Select(o => ObjectViewModelFactory.Create(o, @class.GetVisibleInListMembers()))
+        Objects = objects == null ? null : objects.Select(o => ObjectViewModelFactory.Create(httpContext, o)).ToList()
       };
     }
 

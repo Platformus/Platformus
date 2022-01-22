@@ -10,13 +10,12 @@
   );
 
   function defineHandlers() {
-    $(document.body).on("click", ".image-uploader__upload-button", uploadButtonClicked);
-    $(document.body).on("click", ".image-uploader__remove-button", removeButtonClicked);
+    $(document.body).on("click", ".image-uploader__upload-button", onUploadButtonClick);
+    $(document.body).on("click", ".image-uploader__remove-button", onRemoveButtonClick);
   }
 
-  function uploadButtonClicked() {
-    var button = $(this);
-    var imageUploader = button.parent().parent();
+  function onUploadButtonClick() {
+    var imageUploader = $(this).closest(".image-uploader");
     var input = imageUploader.find("input");
     var image = imageUploader.find("img");
 
@@ -31,9 +30,8 @@
     );
   }
 
-  function removeButtonClicked() {
-    var button = $(this);
-    var imageUploader = button.parent().parent();
+  function onRemoveButtonClick() {
+    var imageUploader = $(this).closest(".image-uploader");
     var input = imageUploader.find("input");
     var image = imageUploader.find("img");
 

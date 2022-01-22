@@ -2,24 +2,22 @@
 @* Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information. *@
 @model Platformus.Website.Backend.ViewModels.Website.ClassSelectorFormViewModel
 @inject Microsoft.AspNetCore.Mvc.Localization.IViewLocalizer Localizer
-<div class="pop-up-form__header">
+<div class="pop-up-form__title heading heading--h1">
   @Localizer["Class Selector"]
 </div>
 <div class="pop-up-form__content">
   <div class="item-selector-pop-up-form__items">
-    <table class="item-selector-pop-up-form__table table">
+    <table class="item-selector-pop-up-form__table">
       <columns>
-        @foreach (var tableColumn in this.Model.TableColumns)
-        {
-          <column label="@tableColumn.Label" />
-        }
+        <column label="@Localizer["Parent class"].Value" />
+        <column label="@Localizer["Name"].Value" />
       </columns>
       <rows>
         @foreach (var _class in this.Model.Classes)
         {
-          <row class="@(_class.Id == this.Model.ClassId ? "table__row--selected" : null)" data-item-value="@_class.Id">
-            <cell class="item-selector-pop-up-form__cell">@(_class.Parent == null ? "—" : _class.Parent.Name)</cell>
-            <cell class="item-selector-pop-up-form__cell">@_class.Name</cell>
+          <row class="table__row--interactive@(_class.Id == this.Model.ClassId ? " table__row--selected" : null)" data-item-value="@_class.Id">
+            <cell>@(_class.Parent == null ? "—" : _class.Parent.Name)</cell>
+            <cell>@_class.Name</cell>
           </row>
         }
       </rows>

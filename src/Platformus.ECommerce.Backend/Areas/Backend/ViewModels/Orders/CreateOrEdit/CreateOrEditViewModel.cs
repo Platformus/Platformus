@@ -55,6 +55,5 @@ namespace Platformus.ECommerce.Backend.ViewModels.Orders
     public string Note { get; set; }
 
     public IEnumerable<PositionViewModel> Positions { get; set; }
-    public decimal Total { get; set; }
   }
 }

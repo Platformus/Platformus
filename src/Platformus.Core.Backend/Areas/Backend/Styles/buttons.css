@@ -3,20 +3,21 @@
 
 .buttons {
   display: flex;
+  align-items: start;
+  gap: 1.5rem;
 }
 
-.buttons__button {
-  margin-left: 1px;
+.buttons--minor {
+  gap: 0.625rem;
 }
 
-.buttons__button:first-child {
-  margin: 0;
-}
+@media screen and (max-width: 1000px) {
+  .buttons__button {
+    text-align: center;
+    flex: 1;
+  }
 
-.buttons__button--minor {
-  margin-left: 5px;
-}
-
-.buttons__button--minor:first-child {
-  margin: 0;
+  .buttons__button--minor {
+    flex: 0;
+  }
 }

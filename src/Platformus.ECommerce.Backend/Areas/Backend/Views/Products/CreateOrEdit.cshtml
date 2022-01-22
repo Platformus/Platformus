@@ -4,13 +4,14 @@
 @inject Microsoft.AspNetCore.Mvc.Localization.IViewLocalizer Localizer
 @inject Platformus.Core.Services.Abstractions.ICultureManager CultureManager
 @{
-  this.ViewBag.Title = (this.Model.Id == null ? this.Localizer["Create Product"].Value : this.Localizer["Edit Product"].Value);
+  this.ViewBag.Title = (this.Model.Id == null ? this.Localizer["Create Product"] : this.Localizer["Edit Product"]);
   this.ViewBag.ActiveMenuItem = "products";
 }
-@section title {
-  @ViewBag.Title
-}
-<form class="master-detail__form form" method="post">
+<form class="form" method="post">
+  <title-bar>
+    <submit-button>@Localizer["Save"]</submit-button>
+    <neutral-button href="/backend/products">@Localizer["Cancel"]</neutral-button>
+  </title-bar>
   <tabs>
     <tab code="General">@Localizer["General"]</tab>
     <tab code="Photos">@Localizer["Photos"]</tab>
@@ -22,16 +23,16 @@
       <single-line-text-field for="Url" />
       <single-line-text-field for="Code" />
       <multilingual-single-line-text-field for="Name" localizations="this.Model.NameLocalizations" />
-      <multilingual-multiline-text-field for="Description" localizations="this.Model.DescriptionLocalizations" />
+      <multilingual-html-field for="Description" localizations="this.Model.DescriptionLocalizations" />
       <multilingual-single-line-text-field for="Units" localizations="this.Model.UnitsLocalizations" />
-      <numeric-field for="Price" />
+      <decimal-field for="Price" />
     </tab-page>
     <tab-page code="Photos">
-      <image-uploader-field for="Photo1Filename" destination-base-url="/images/products/" width="1080" height="1080" />
-      <image-uploader-field for="Photo2Filename" destination-base-url="/images/products/" width="1080" height="1080" />
-      <image-uploader-field for="Photo3Filename" destination-base-url="/images/products/" width="1080" height="1080" />
-      <image-uploader-field for="Photo4Filename" destination-base-url="/images/products/" width="1080" height="1080" />
-      <image-uploader-field for="Photo5Filename" destination-base-url="/images/products/" width="1080" height="1080" />
+      <image-uploader-field for="Photo1Url" destination-base-url="/images/products/" width="1080" height="1080" />
+      <image-uploader-field for="Photo2Url" destination-base-url="/images/products/" width="1080" height="1080" />
+      <image-uploader-field for="Photo3Url" destination-base-url="/images/products/" width="1080" height="1080" />
+      <image-uploader-field for="Photo4Url" destination-base-url="/images/products/" width="1080" height="1080" />
+      <image-uploader-field for="Photo5Url" destination-base-url="/images/products/" width="1080" height="1080" />
     </tab-page>
     <tab-page code="Seo">
       <multilingual-single-line-text-field for="Title" localizations="this.Model.TitleLocalizations" />
@@ -39,15 +40,4 @@
       <multilingual-single-line-text-field for="MetaKeywords" localizations="this.Model.MetaKeywordsLocalizations" />
     </tab-page>
   </tab-pages>
-  <div class="form__buttons buttons">
-    <submit-button>@Localizer["Save"]</submit-button>
-    <neutral-button href="/backend/products">@Localizer["Cancel"]</neutral-button>
-  </div>
 </form>
-
-@section startUpScript {
-  @foreach (var culture in await this.CultureManager.GetNotNeutralCulturesAsync())
-  {
-    @:platformus.ui.initializeTinyMce("description@(culture.Id)");
-  }
-}

@@ -15,6 +15,6 @@ namespace Platformus.Core.Services.Abstractions
     /// Cleans up the unused resources.
     /// </summary>
     /// <param name="serviceProvider">A service provider to take the required services from.</param>
-    Task CleanupAsync(IServiceProvider serviceProvider);
+    Task CleanUpAsync(IServiceProvider serviceProvider);
   }
 }

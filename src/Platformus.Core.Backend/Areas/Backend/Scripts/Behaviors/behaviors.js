@@ -8,7 +8,7 @@
       action: function () {
         platformus.behaviors.forEach(b => b());
       },
-      priority: 0
+      priority: 10
     }
   );
 })(window.platformus = window.platformus || {});

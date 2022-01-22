@@ -5,43 +5,58 @@
   platformus.initializers = platformus.initializers || [];
   platformus.initializers.push(
     {
-      action: function() {
-        $(".menu__group-header").click(
-          function () {
-            var menu = $(this).parent().parent();
-            var menuGroup = $(this).parent();
-            var menuGroupHeader = $(this);
-            var menuGroupContent = menuGroup.find(".menu__group-content");
-
-            if (menuGroupContent.is(":visible")) {
-              removeFromExpandedMenuGroups(menu.data("code"), menuGroup.data("code"));
-              menuGroupHeader.removeClass("menu__group-header--expanded").addClass("menu__group-header--collapsed");
-              menuGroupContent.slideUp("fast");
-              
-            }
-
-            else {
-              addToExpandedMenuGroups(menu.data("code"), menuGroup.data("code"));
-              menuGroupHeader.removeClass("menu__group-header--collapsed").addClass("menu__group-header--expanded");
-              menuGroupContent.slideDown("fast");
-            }
-          }
-        );
-
+      action: function () {
+        $(document.body).on("click", ".master-detail__edge", onEdgeClick);
+        $(document.body).on("click", ".burger-button", onBurgerButtonClick);
+        $(document.body).on("click", ".menu-group__title", onMenuGroupTitleClick);
+        syncCollapsedMaster();
         syncExpandedMenuGroups();
       },
       priority: 0
     }
   );
 
+  function onEdgeClick() {
+    $(".master-detail__master").not(".master-detail__master--secondary").toggleClass("master-detail__master--collapsed");
+    $.cookie("collapse_master", $(".master-detail__master").not(".master-detail__master--secondary").hasClass("master-detail__master--collapsed"));
+    syncExpandedMenuGroups();
+  }
+
+  function onBurgerButtonClick() {
+    $(".burger-button").toggleClass("burger-button--active");
+    $(".master-detail__master").toggleClass("master-detail__master--expanded");
+  }
+
+  function onMenuGroupTitleClick() {
+    var menuGroup = $(this).closest(".menu-group");
+    var menu = menuGroup.closest(".menu");
+
+    menuGroup.toggleClass("menu-group--expanded");
+
+    if (menuGroup.hasClass("menu-group--expanded")) {
+      addToExpandedMenuGroups(menu.data("code"), menuGroup.data("code"));
+      menuGroup.find(".menu-group__menu-items").slideDown("fast");
+    }
+
+    else {
+      removeFromExpandedMenuGroups(menu.data("code"), menuGroup.data("code"));
+      menuGroup.find(".menu-group__menu-items").slideUp("fast");
+    }
+  }
+
+  function syncCollapsedMaster() {
+    if ($.cookie("collapse_master") && JSON.parse($.cookie("collapse_master"))) {
+      $(".master-detail__master").not(".master-detail__master--secondary").addClass("master-detail__master--collapsed");
+    }
+  }
+
   function syncExpandedMenuGroups() {
-    $(".menu__group-header").removeClass("menu__group-header--expanded").addClass("menu__group-header--collapsed");
     $(".menu").each(
       function () {
         var menu = $(this);
 
-        if ($.cookie(getExpandedMenuGroupsCookieKey(menu.data("code"))) == null) {
-          var menuGroup = menu.find(".menu__group").first();
+        if (!$.cookie(getExpandedMenuGroupsCookieKey(menu.data("code")))) {
+          var menuGroup = menu.find(".menu__menu-group").first();
 
           addToExpandedMenuGroups(menu.data("code"), menuGroup.data("code"));
         }
@@ -49,12 +64,11 @@
         var expandedMenuGroups = getExpandedMenuGroups(menu.data("code"));
 
         expandedMenuGroups.forEach(function (expandedMenuGroup) {
-          var menuGroup = $(".menu__group[data-code='" + expandedMenuGroup + "']");
-          var menuGroupHeader = menuGroup.find(".menu__group-header");
-          var menuGroupContent = menuGroup.find(".menu__group-content");
+          var menuGroup = $(".menu__menu-group[data-code='" + expandedMenuGroup + "']");
+          var menuGroupMenuItems = menuGroup.find(".menu-group__menu-items");
 
-          menuGroupHeader.removeClass("menu__group-header--collapsed").addClass("menu__group-header--expanded");
-          menuGroupContent.show();
+          menuGroup.addClass("menu-group--expanded");
+          menuGroupMenuItems.show();
         });
       }
     );
@@ -84,7 +98,7 @@
   function getExpandedMenuGroups(menuCode) {
     var key = getExpandedMenuGroupsCookieKey(menuCode);
 
-    return $.cookie(key) == null ? [] : $.cookie(key).split(",");
+    return !$.cookie(key) ? [] : $.cookie(key).split(",");
   }
 
   function setExpandedMenuGroups(menuCode, expandedMenuGroups) {
@@ -92,59 +106,8 @@
   }
 
   function getExpandedMenuGroupsCookieKey(menuCode) {
-    return "expanded-" + menuCode + "-menu-groups";
+    return "expanded_" + menuCode + "_menu_groups";
   }
-})(window.platformus = window.platformus || {});
-
-(function (platformus) {
-  platformus.ui = platformus.ui || {};
-  platformus.initializers = platformus.initializers || [];
-  platformus.initializers.push(
-    {
-      action: function () {
-        if ($("form").length == 0) {
-          return;
-        }
-
-        $(window).on("beforeunload", function () {
-          if (platformus.ui.needsSaveConfirmation) {
-            return confirm("Your changes might be lost!");
-          }
-        });
-
-        // TODO: add another controls change events
-        $(document.body).on("change", "input, textarea", function () {
-          if ($(this).attr("type") != "file" && !$(this).data("propertyPath")) {
-            platformus.ui.needsSaveConfirmation = true;
-          }
-        });
-
-        $(document.body).on("click", "button[type='submit']", function () {
-          platformus.ui.needsSaveConfirmation = null;
-        });
-      },
-      priority: 0
-    }
-  );
-})(window.platformus = window.platformus || {});
-
-(function (platformus) {
-  platformus.ui = platformus.ui || {};
-  platformus.ui.initializeTinyMce = function (identity) {
-    tinymce.init(
-      {
-        selector: "#" + identity,
-        plugins: [
-          "advlist anchor autolink charmap code contextmenu fullscreen image insertdatetime link lists media paste preview print searchreplace table visualblocks",
-        ],
-        menubar: "edit insert view format table tools",
-        toolbar: "insertfile undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist | outdent indent | link image",
-        statusbar: false,
-        convert_urls: false,
-        file_browser_callback: platformus.ui.tinyMceFileBrowserCallback
-      }
-    );
-  };
 })(window.platformus = window.platformus || {});
 
 (function (platformus) {
@@ -156,37 +119,4 @@
 
     $.validator.unobtrusive.parse(form);
   };
-})(window.platformus = window.platformus || {});
-
-(function (platformus) {
-  platformus.ui = platformus.ui || {};
-  platformus.initializers = platformus.initializers || [];
-  platformus.initializers.push(
-    {
-      action: function () {
-        $.mask.definitions["D"] = "[0-9]";
-        $.mask.definitions["M"] = "[0-9]";
-        $.mask.definitions["Y"] = "[0-9]";
-        $.mask.definitions["H"] = "[0-9]";
-        $.mask.definitions["T"] = "[ampAMP]";
-      },
-      priority: 0
-    }
-  );
-})(window.platformus = window.platformus || {});
-
-(function (platformus) {
-  platformus.ui = platformus.ui || {};
-  platformus.initializers = platformus.initializers || [];
-  platformus.initializers.push(
-    {
-      action: function () {
-        moment.locale(platformus.globalization.getCultureCode());
-        moment.fn.toISOStringWithoutTimezone = function () {
-          return this.format("YYYY-MM-DD[T]HH:mm:ss");
-        };
-      },
-      priority: 0
-    }
-  );
 })(window.platformus = window.platformus || {});

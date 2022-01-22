@@ -1,0 +1,40 @@
+﻿/* Copyright © 2021 Dmitry Sikorsky. All rights reserved. */
+/* Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information. */
+
+.icon {
+  background-image: url(/wwwroot.areas.backend.images.anything.svg);
+  background-repeat: no-repeat;
+  background-size: 1rem;
+}
+
+.icon--create {
+  background-image: url(/wwwroot.areas.backend.images.create.svg);
+}
+
+.icon--browse {
+  background-image: url(/wwwroot.areas.backend.images.browse.svg);
+}
+
+.icon--permissions {
+  background-image: url(/wwwroot.areas.backend.images.permissions.svg);
+}
+
+.icon--roles {
+  background-image: url(/wwwroot.areas.backend.images.roles.svg);
+}
+
+.icon--users {
+  background-image: url(/wwwroot.areas.backend.images.users.svg);
+}
+
+.icon--cultures {
+  background-image: url(/wwwroot.areas.backend.images.cultures.svg);
+}
+
+.icon--configurations {
+  background-image: url(/wwwroot.areas.backend.images.configurations.svg);
+}
+
+.icon--sign-out {
+  background-image: url(/wwwroot.areas.backend.images.sign_out.svg);
+}

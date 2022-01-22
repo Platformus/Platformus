@@ -15,7 +15,11 @@ namespace Platformus.Website.Backend.ViewModels.Shared
         Name = member.Name,
         Position = member.Position,
         PropertyDataType = member.PropertyDataType == null ? null : DataTypeViewModelFactory.Create(member.PropertyDataType),
-        RelationClass = member.RelationClass == null ? null : ClassViewModelFactory.Create(member.RelationClass)
+        IsPropertyLocalizable = member.IsPropertyLocalizable,
+        RelationClass = member.RelationClass == null ? null : ClassViewModelFactory.Create(member.RelationClass),
+        IsRelationSingleParent = member.IsRelationSingleParent,
+        MinRelatedObjectsNumber = member.MinRelatedObjectsNumber,
+        MaxRelatedObjectsNumber = member.MaxRelatedObjectsNumber
       };
     }
   }

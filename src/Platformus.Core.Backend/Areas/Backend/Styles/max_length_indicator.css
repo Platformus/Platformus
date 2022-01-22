@@ -2,38 +2,16 @@
 /* Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information. */
 
 .max-length-indicator {
-  background: #ffff96;
-  cursor: default;
+  background-color: rgba(255, 255, 160, 0.75);
+  border-radius: 0.25rem;
+  font-size: 0.75rem;
+  pointer-events: none;
   display: none;
+  padding: 0.25rem;
   position: absolute;
-  min-width: 50px;
-  z-index: 10;
+  z-index: 5;
 }
 
-.max-length-indicator__arrow {
-  background: url(/wwwroot.areas.backend.images.max_length_indicator.png) center no-repeat;
-  position: absolute;
-  left: -5px;
-  top: 0;
-  width: 5px;
-  height: 100%;
-}
-
-.max-length-indicator__remaining-length {
-  font-style: italic;
-  line-height: 30px;
-  text-align: center;
-}
-
-@media
-only screen and (-webkit-min-device-pixel-ratio: 2),
-only screen and (   min--moz-device-pixel-ratio: 2),
-only screen and (     -o-min-device-pixel-ratio: 2/1),
-only screen and (        min-device-pixel-ratio: 2),
-only screen and (                min-resolution: 192dpi),
-only screen and (                min-resolution: 2dppx) {
-  .max-length-indicator__arrow {
-    background: url(/wwwroot.areas.backend.images.max_length_indicator@2x.png) center no-repeat;
-    background-size: 5px 10px;
-  }
+.max-length-indicator--highlighted {
+  color: #e04030;
 }

@@ -1,12 +1,10 @@
 ﻿@* Copyright © 2020 Dmitry Sikorsky. All rights reserved. *@
 @* Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information. *@
 @model Platformus.Core.Backend.ViewModels.Shared.RoleViewModel
-@inject Microsoft.AspNetCore.Mvc.Localization.IViewLocalizer Localizer
-<row>
-  <cell>@Model.Name</cell>
+<row href="/backend/roles/edit/@Model.Id">
+  <cell is-highlighted="true">@Model.Name</cell>
   <cell>@(this.Model.Position == null ? "—" : this.Model.Position.ToString())</cell>
-  <buttons-cell>
-    <positive-button is-minor="true" href="/backend/roles/edit/@Model.Id">@Localizer["Edit"]</positive-button>
-    <delete-button href="/backend/roles/delete/@Model.Id"></delete-button>
-  </buttons-cell>
+  <row-controls>
+    <delete-button href="/backend/roles/delete/@Model.Id" />
+  </row-controls>
 </row>

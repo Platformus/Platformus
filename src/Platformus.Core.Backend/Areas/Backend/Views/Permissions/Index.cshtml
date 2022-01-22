@@ -6,18 +6,16 @@
   this.ViewBag.Title = this.Localizer["Permissions"];
   this.ViewBag.ActiveMenuItem = "permissions";
 }
-@section title {
-  @ViewBag.Title
-}
+<title-bar>
+  <neutral-button icon="Icons.Create" href="/backend/permissions/create">@Localizer["Create permission"]</neutral-button>
+</title-bar>
 <filter>
   <text-filter property-path="Name.Contains" label="@Localizer["Name"].Value" />
 </filter>
-<pager offset="@Model.Offset" limit="@Model.Limit" total="@Model.Total" />
 <table sorting="@Model.Sorting">
   <columns>
     <column label="@Localizer["Name"].Value" sorting-property-path="Name" />
     <column label="@Localizer["Position"].Value" sorting-property-path="Position" />
-    <column />
   </columns>
   <rows>
     @foreach (var permission in this.Model.Permissions)
@@ -26,7 +24,4 @@
     }
   </rows>
 </table>
-<pager offset="@Model.Offset" limit="@Model.Limit" total="@Model.Total" is-secondary="true" />
-<div class="master-detail__buttons buttons">
-  <positive-button href="/backend/permissions/create">@Localizer["Create permission"]</positive-button>
-</div>
+<pager offset="@Model.Offset" limit="@Model.Limit" total="@Model.Total" />

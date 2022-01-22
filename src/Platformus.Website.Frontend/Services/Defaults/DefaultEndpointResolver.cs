@@ -23,7 +23,7 @@ namespace Platformus.Website.Frontend.Services.Defaults
       IEnumerable<Data.Entities.Endpoint> endpoints = await this.GetEndpointsAsync(httpContext);
 
       foreach (Data.Entities.Endpoint endpoint in endpoints)
-        if (this.IsMatch(endpoint.UrlTemplate, httpContext.Request.GetUrl().Substring(1)))
+        if (this.IsMatch(endpoint.UrlTemplate, httpContext.Request.GetUrlWithoutCultureSegment().Substring(1)))
           return endpoint;
 
       return null;

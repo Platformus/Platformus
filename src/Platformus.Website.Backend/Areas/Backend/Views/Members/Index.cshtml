@@ -6,26 +6,23 @@
   this.ViewBag.Title = this.Localizer["Members"];
   this.ViewBag.ActiveMenuItem = "classes";
 }
-@section breadcrumbs {
-  <breadcrumbs>
-    <breadcrumb href="/backend/classes">@Localizer["Classes"]</breadcrumb>
-    <breadcrumb href="/backend/classes/edit/@Model.Class.Id">@Model.Class.Name</breadcrumb>
-  </breadcrumbs>
-}
-@section title {
-  @ViewBag.Title
-}
+<breadcrumbs>
+  <breadcrumb href="/backend/classes">@Localizer["Classes"]</breadcrumb>
+  <breadcrumb href="/backend/classes/edit/@Model.Class.Id">@Model.Class.Name</breadcrumb>
+</breadcrumbs>
+<title-bar>
+  <neutral-button icon="Icons.Create" href="/backend/members/create">@Localizer["Create member"]</neutral-button>
+  <neutral-button href="/backend/classes" skip-url-parameters="class.id">@Localizer["Back"]</neutral-button>
+</title-bar>
 <filter>
   <text-filter property-path="Name.Contains" label="@Localizer["Name"].Value" />
 </filter>
-<pager offset="@Model.Offset" limit="@Model.Limit" total="@Model.Total" />
 <table sorting="@Model.Sorting">
   <columns>
     <column label="@Localizer["Name"].Value" sorting-property-path="Name" />
     <column label="@Localizer["Property Data Type"].Value" sorting-property-path="PropertyDataType.Name" />
     <column label="@Localizer["Relation Class"].Value" sorting-property-path="RelationClass.Name" />
     <column label="@Localizer["Position"].Value" sorting-property-path="Position" />
-    <column />
   </columns>
   <rows>
     @foreach (var member in this.Model.Members)
@@ -34,8 +31,4 @@
     }
   </rows>
 </table>
-<pager offset="@Model.Offset" limit="@Model.Limit" total="@Model.Total" is-secondary="true" />
-<div class="master-detail__buttons buttons">
-  <positive-button href="/backend/members/create">@Localizer["Create member"]</positive-button>
-  <neutral-button href="/backend/classes" skip-url-parameters="class.id">@Localizer["Back"]</neutral-button>
-</div>
+<pager offset="@Model.Offset" limit="@Model.Limit" total="@Model.Total" />

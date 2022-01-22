@@ -1,15 +1,13 @@
 ﻿@* Copyright © 2020 Dmitry Sikorsky. All rights reserved. *@
 @* Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information. *@
 @model Platformus.Website.Backend.ViewModels.Shared.FieldOptionViewModel
-@inject Microsoft.AspNetCore.Mvc.Localization.IViewLocalizer Localizer
-<tree-node>
-  <tree-node-header>
-    <tree-node-title>
+<node>
+  <node-header href="/backend/fieldoptions/edit/@Model.Id">
+    <node-title>
       @Model.Value
-    </tree-node-title>
-    <tree-node-buttons>
-      <positive-button is-minor="true" href="/backend/fieldoptions/edit/@Model.Id">@Localizer["Edit"]</positive-button>
-      <delete-button href="/backend/fieldoptions/delete/@Model.Id"></delete-button>
-    </tree-node-buttons>
-  </tree-node-header>
-</tree-node>
+    </node-title>
+    <node-controls>
+      <delete-button href="/backend/fieldoptions/delete/@Model.Id" />
+    </node-controls>
+  </node-header>
+</node>

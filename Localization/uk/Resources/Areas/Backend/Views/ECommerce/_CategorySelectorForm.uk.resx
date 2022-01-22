@@ -123,6 +123,9 @@
   <data name="Category Selector" xml:space="preserve">
     <value>Вибір категорії</value>
   </data>
+  <data name="Name" xml:space="preserve">
+    <value>Назва</value>
+  </data>
   <data name="Select" xml:space="preserve">
     <value>Обрати</value>
   </data>

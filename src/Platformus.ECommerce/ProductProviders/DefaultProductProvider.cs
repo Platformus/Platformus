@@ -14,8 +14,8 @@ namespace Platformus.ECommerce.ProductProviders
 {
   public class DefaultProductProvider : IProductProvider
   {
-    public IEnumerable<ParameterGroup> ParameterGroups => new ParameterGroup[] { };
     public string Description => "Returns products of the current category.";
+    public IEnumerable<ParameterGroup> ParameterGroups => new ParameterGroup[] { };
 
     public async Task<IEnumerable<Product>> GetProductsAsync(HttpContext httpContext, Category category)
     {

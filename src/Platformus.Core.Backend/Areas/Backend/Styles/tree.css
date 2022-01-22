@@ -5,4 +5,17 @@
 }
 
 .tree__node {
+  margin-top: -1px;
+}
+
+.tree__node:first-child {
+  margin: 0;
+}
+
+.tree > .tree__node:first-child > .node__header {
+  border-radius: 0.25rem 0.25rem 0 0;
+}
+
+.tree__node .tree__node:first-child {
+  margin-top: -1px;
 }

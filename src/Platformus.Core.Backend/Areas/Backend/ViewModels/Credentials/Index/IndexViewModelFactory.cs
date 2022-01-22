@@ -25,7 +25,7 @@ namespace Platformus.Core.Backend.ViewModels.Credentials
         Offset = offset,
         Limit = limit,
         Total = total,
-        Credentials = credentials.Select(CredentialViewModelFactory.Create)
+        Credentials = credentials.Select(CredentialViewModelFactory.Create).ToList()
       };
     }
   }

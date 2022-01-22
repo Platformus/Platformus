@@ -3,17 +3,16 @@
 
 using System.Globalization;
 using Microsoft.AspNetCore.Http;
-using Microsoft.Extensions.DependencyInjection;
 using Platformus.Core.Data.Entities;
-using Platformus.Core.Services.Abstractions;
 
 namespace Platformus.Core.Frontend
 {
+  // TODO: consider moving to HttpContextExtensions
   public static class GlobalizedUrlFormatter
   {
     public static string Format(HttpContext httpContext, string url)
     {
-      bool specifyCultureInUrl = httpContext.RequestServices.GetService<IConfigurationManager>()["Globalization", "SpecifyCultureInUrl"] == "yes";
+      bool specifyCultureInUrl = httpContext.GetConfigurationManager()["Globalization", "SpecifyCultureInUrl"] == "yes";
 
       if (!specifyCultureInUrl)
         return url;

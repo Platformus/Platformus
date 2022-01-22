@@ -1,34 +1,20 @@
 ﻿// Copyright © 2020 Dmitry Sikorsky. All rights reserved.
 // Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information.
 
-using System.Collections.Generic;
-using System.Linq;
 using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.AspNetCore.Mvc.ViewFeatures;
 using Microsoft.AspNetCore.Razor.TagHelpers;
 using Platformus.Core.Primitives;
 
 namespace Platformus.Core.Backend
 {
-  public class MultilingualSingleLineTextFieldTagHelper : TagHelper
+  public class MultilingualSingleLineTextFieldTagHelper : MultilingualFieldTagHelperBase<string>
   {
-    [HtmlAttributeNotBound]
-    [ViewContext]
-    public ViewContext ViewContext { get; set; }
-    public string Class { get; set; }
-    public ModelExpression For { get; set; }
-    public IEnumerable<Localization> Localizations { get; set; }
-    public bool IsDisabled { get; set; }
-
     public override void Process(TagHelperContext context, TagHelperOutput output)
     {
-      if (this.For == null)
+      if ((this.For == null && string.IsNullOrEmpty(this.Id)) || this.Localizations == null)
         return;
 
-      output.TagMode = TagMode.StartTagAndEndTag;
-      output.TagName = TagNames.Div;
-      output.Attributes.SetAttribute(AttributeNames.Class, "form__field field field--multilingual" + (string.IsNullOrEmpty(this.Class) ? null : $" {this.Class}"));
-      output.Content.AppendHtml(this.CreateLabel());
+      base.Process(context, output);
 
       foreach (Localization localization in this.Localizations)
       {
@@ -37,51 +23,30 @@ namespace Platformus.Core.Backend
           output.Content.AppendHtml(this.CreateCulture(localization));
           output.Content.AppendHtml(this.CreateTextBox(localization));
           output.Content.AppendHtml(this.CreateValidationErrorMessage(localization));
-
-          if (localization != this.Localizations.Last())
-            output.Content.AppendHtml(this.CreateMultilingualSeparator());
         }
       }
-    }
-
-    private TagBuilder CreateLabel()
-    {
-      return FieldGenerator.GenerateLabel(this.For.GetLabel(), this.For.GetIdentity());
-    }
-
-    private TagBuilder CreateCulture(Localization localization)
-    {
-      return FieldGenerator.GenerateCulture(localization);
     }
 
     private TagBuilder CreateTextBox(Localization localization)
     {
       TagBuilder tb = TextBoxGenerator.Generate(
-        this.For.GetIdentity(localization),
+        this.GetIdentity(localization),
         InputTypes.Text,
-        this.For.GetValue(this.ViewContext, localization)?.ToString(),
-        this.For.HasRequiredAttribute(),
-        this.For.HasStringLengthAttribute() ? this.For.GetMaxStringLength() : null,
-        this.For.IsValid(this.ViewContext, localization)
+        value: this.GetValue(localization),
+        validation: this.GetValidation(localization)
       );
 
-      tb.AddCssClass("field__text-box");
-      tb.MergeAttribute("lang", localization.Culture.Id);
+      tb.AddCssClass("field__text-box field__multilingual");
+      tb.MergeAttribute(AttributeNames.Lang, localization.Culture.Id);
 
-      if (this.IsDisabled)
+      if (this.IsDisabled())
         tb.MergeAttribute(AttributeNames.Disabled, "disabled");
 
+      // TODO: merge all the attributes, not only "onchange"
+      if (!string.IsNullOrEmpty(this.OnChange))
+        tb.MergeAttribute(AttributeNames.OnChange, this.OnChange);
+
       return tb;
-    }
-
-    private TagBuilder CreateValidationErrorMessage(Localization localization)
-    {
-      return ValidationErrorMessageGenerator.Generate(this.For.GetIdentity(localization));
-    }
-
-    private TagBuilder CreateMultilingualSeparator()
-    {
-      return FieldGenerator.GenerateMultilingualSeparator();
     }
   }
 }

@@ -22,7 +22,7 @@ namespace Platformus.Website.Frontend.DataProviders
     public override async Task<dynamic> GetDataAsync(HttpContext httpContext, DataSource dataSource)
     {
       Object @object = (await httpContext.GetStorage().GetRepository<int, Object, ObjectFilter>().GetAllAsync(
-        new ObjectFilter(stringValue: new LocalizationFilter(value: new StringFilter(equals: httpContext.Request.GetUrl()))),
+        new ObjectFilter(stringValue: new LocalizationFilter(value: new StringFilter(equals: httpContext.Request.GetUrlWithoutCultureSegment()))),
         inclusions: new Inclusion<Object>[]
         {
           new Inclusion<Object>("Properties.Member"),

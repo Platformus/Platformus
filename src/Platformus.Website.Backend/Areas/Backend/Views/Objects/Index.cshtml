@@ -16,17 +16,19 @@
 }
 @if (this.Model.Class != null)
 {
-  @section title {
-    @ViewBag.Title
-  }
-  <pager offset="@Model.Offset" limit="@Model.Limit" total="@Model.Total" />
+  <title-bar>
+    <neutral-button icon="Icons.Create" href="/backend/objects/create">@Localizer["Create"] @Model.Class.Name.ToLower()</neutral-button>
+    @if (this.Model.ParentClass != null)
+    {
+      <neutral-button href="/backend/objects/?class.id=@Model.ParentClass.Id" skip-url-parameters="class.id,primary.id">@Localizer["Back"]</neutral-button>
+    }
+  </title-bar>
   <table sorting="@Model.Sorting">
     <columns>
       @foreach (var tableColumn in this.Model.TableColumns)
       {
         <column label="@tableColumn.Label" sorting-property-path="@tableColumn.SortingPropertyPath" />
       }
-      <column />
     </columns>
     <rows>
       @foreach (var @object in this.Model.Objects)
@@ -35,12 +37,9 @@
       }
     </rows>
   </table>
-  <pager offset="@Model.Offset" limit="@Model.Limit" total="@Model.Total" is-secondary="true" />
-  <div class="master-detail__buttons buttons">
-    <positive-button href="/backend/objects/create">@Localizer["Create"] @Model.Class.Name.ToLower()</positive-button>
-  </div>
+  <pager offset="@Model.Offset" limit="@Model.Limit" total="@Model.Total" />
 }
-@section side
+@section secondaryMaster
 {
   <div class="master-detail__master master-detail__master--secondary">
     <div class="master-detail__heading heading heading--h1">
@@ -49,14 +48,12 @@
     <div class="menu" data-code="classes">
       @foreach (var abstractClass in this.Model.ClassesByAbstractClasses.Keys)
       {
-        <div class="menu__group" data-code="class-@(abstractClass.Id)">
-          <div class="menu__group-header">
-            @abstractClass.PluralizedName
-          </div>
-          <div class="menu__group-content">
+        <div class="menu__menu-group menu-group" data-code="menuGroupClass@(abstractClass.Id)">
+          <div class="menu-group__title" tabindex="0">@abstractClass.PluralizedName</div>
+          <div class="menu-group__menu-items">
             @foreach (var @class in this.Model.ClassesByAbstractClasses[abstractClass])
             {
-              <a class="master-detail__secondary-menu-item @(this.Model.Class != null && this.Model.Class.Id == @class.Id ? "master-detail__secondary-menu-item--active" : null) menu__item" href="/backend/objects?class.id=@(@class.Id)">
+              <a class="menu-group__menu-item menu-item icon @(this.Model.Class != null && this.Model.Class.Id == @class.Id ? "menu-item--active" : null)" href="/backend/objects?class.id=@(@class.Id)">
                 @(@class.PluralizedName)
               </a>
             }

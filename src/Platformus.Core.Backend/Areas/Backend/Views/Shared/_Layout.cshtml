@@ -4,36 +4,44 @@
 <!DOCTYPE html>
 <html lang="@System.Globalization.CultureInfo.CurrentCulture.TwoLetterISOLanguageName">
 <head>
-  <meta charset="utf-8" />
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=yes">
   <title>@ViewBag.Title | @Localizer["Platformus"]</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <vc:backend-style-sheets />
   <vc:backend-scripts />
 </head>
-<body>
+<body class="prevent-animation">
   <div class="master-detail">
-    <div class="master-detail__master master-detail__master--primary">
-      <a class="master-detail__platformus master-detail__heading heading heading--h1" href="/backend/">@Localizer["Platformus"]</a>
+    <div class="master-detail__master">
+      <a class="master-detail__heading master-detail__heading--platformus heading heading--h1" href="/backend">
+        @Localizer["Platformus"]
+      </a>
       @if (this.User.Identity.IsAuthenticated)
       {
         <vc:backend-menu />
         <div class="master-detail__user-menu menu" data-code="user">
-          <div class="menu__group" data-code="user">
-            <div class="menu__group-header menu__group-header--collapsed" tabindex="0">
-              @User.Identity.Name
-            </div>
-            <div class="menu__group-content">
-              <a class="master-detail__primary-menu-item master-detail__user-menu-item menu__item" href="/backend/account/signout">@Localizer["Sign out"]</a>
+          <div class="menu__menu-group menu-group" data-code="menuGroupUser">
+            <div class="menu-group__title" tabindex="0">@User.Identity.Name</div>
+            <div class="menu-group__menu-items">
+              <a class="menu-group__menu-item menu-item icon icon--sign-out" href="/backend/account/signout" title="@Localizer["Sign out"]">
+                @Localizer["Sign out"]
+              </a>
             </div>
           </div>
         </div>
       }
+      <div class="master-detail__edge"></div>
     </div>
-    @RenderSection("side", false)
-    <div class="master-detail__detail">
-      @RenderSection("breadcrumbs", false)
-      <h1 class="heading heading--h1">
-        @RenderSection("title", false)
-      </h1>
+    @RenderSection("secondaryMaster", false)
+    <div class="master-detail__detail content">
+      <div class="content__burger-button burger-button">
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+      </div>
       @RenderBody()
     </div>
   </div>
@@ -49,6 +57,7 @@
         }
       );
     })(window.platformus = window.platformus || {});
+    setTimeout(function () { $(document.body).removeClass("prevent-animation") }, 500);
   </script>
 </body>
 </html>

@@ -9,6 +9,7 @@ namespace Platformus.Website.Backend.ViewModels.Shared
   public class ObjectViewModel : ViewModelBase
   {
     public int Id { get; set; }
-    public IDictionary<MemberViewModel, dynamic> PropertiesByMembers { get; set; }
+    public IEnumerable<PropertyViewModel> Properties { get; set; }
+    public IEnumerable<MemberViewModel> RelationSingleParentMembers { get; set; }
   }
 }

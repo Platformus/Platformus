@@ -2,7 +2,7 @@
 using Microsoft.Extensions.DependencyInjection;
 using Platformus.ECommerce.Services.Abstractions;
 
-namespace Platformus.ECommerce.Extensions
+namespace Platformus.ECommerce
 {
   /// <summary>
   /// Contains the extension methods of the <see cref="HttpContext"/>.

@@ -11,7 +11,6 @@ using Platformus.Website.Filters;
 
 namespace Platformus.Website.Backend.Controllers
 {
-  [Area("Backend")]
   [Authorize(Policy = Policies.HasManageFormsPermission)]
   public class CompletedFormsController : Core.Backend.Controllers.ControllerBase
   {
@@ -27,8 +26,8 @@ namespace Platformus.Website.Backend.Controllers
 
     public async Task<IActionResult> IndexAsync([FromQuery]CompletedFormFilter filter = null, string sorting = "-created", int offset = 0, int limit = 10)
     {
-      return this.View(IndexViewModelFactory.Create(
-        filter, sorting, offset, limit, await this.Repository.CountAsync(filter),
+      return this.View(await IndexViewModelFactory.CreateAsync(
+        this.HttpContext, filter, sorting, offset, limit, await this.Repository.CountAsync(filter),
         await this.Repository.GetAllAsync(filter, sorting, offset, limit, new Inclusion<CompletedForm>(cf => cf.Form.Name.Localizations))
       ));
     }

@@ -2,7 +2,7 @@ BEGIN TRANSACTION;
 
 --
 -- Extension: Platformus.Core
--- Version: 2.6.0
+-- Version: 3.0.0
 --
 
 INSERT INTO public."Users" ("Id","Name","Created") VALUES (1,'Administrator','2017-01-01 00:00:00.000000');
@@ -23,7 +23,6 @@ INSERT INTO public."Permissions" ("Id","Code","Name","Position") VALUES (3,'Mana
 INSERT INTO public."Permissions" ("Id","Code","Name","Position") VALUES (4,'ManageUsers','Manage users',400);
 INSERT INTO public."Permissions" ("Id","Code","Name","Position") VALUES (5,'ManageConfigurations','Manage configurations',500);
 INSERT INTO public."Permissions" ("Id","Code","Name","Position") VALUES (6,'ManageCultures','Manage cultures',600);
-ALTER SEQUENCE "Permissions_Id_seq" RESTART WITH 27;
 INSERT INTO public."RolePermissions" ("RoleId","PermissionId") VALUES (1,1);
 INSERT INTO public."RolePermissions" ("RoleId","PermissionId") VALUES (2,1);
 INSERT INTO public."Configurations" ("Id","Code","Name") VALUES (1,'Email','Email');
@@ -37,53 +36,52 @@ INSERT INTO public."Variables" ("Id","ConfigurationId","Code","Name","Value","Po
 INSERT INTO public."Variables" ("Id","ConfigurationId","Code","Name","Value","Position") VALUES (6,1,'SmtpSenderEmail','SMTP sender email','test',6);
 INSERT INTO public."Variables" ("Id","ConfigurationId","Code","Name","Value","Position") VALUES (7,1,'SmtpSenderName','SMTP sender name','test',7);
 INSERT INTO public."Variables" ("Id","ConfigurationId","Code","Name","Value","Position") VALUES (8,2,'SpecifyCultureInUrl','Specify culture in URL','yes',1);
-ALTER SEQUENCE "Variables_Id_seq" RESTART WITH 8;
+ALTER SEQUENCE "Variables_Id_seq" RESTART WITH 9;
 INSERT INTO public."Cultures" ("Id","Name","IsNeutral","IsFrontendDefault","IsBackendDefault") VALUES ('__','Neutral',TRUE,FALSE,FALSE);
 INSERT INTO public."Cultures" ("Id","Name","IsNeutral","IsFrontendDefault","IsBackendDefault") VALUES ('en','English',FALSE,TRUE,TRUE);
 
 --
 -- Extension: Platformus.Website
--- Version: 2.6.0
+-- Version: 3.0.0
 --
 
 INSERT INTO public."Permissions" ("Id","Code","Name","Position") VALUES (7,'ManageEndpoints','Manage endpoints',700);
 INSERT INTO public."Permissions" ("Id","Code","Name","Position") VALUES (8,'ManageObjects','Manage objects',800);
-INSERT INTO public."Permissions" ("Id","Code","Name","Position") VALUES (9,'ManageDataTypes','Manage data types',900);
-INSERT INTO public."Permissions" ("Id","Code","Name","Position") VALUES (10,'ManageClasses','Manage classes',1000);
-INSERT INTO public."Permissions" ("Id","Code","Name","Position") VALUES (11,'ManageMenus','Manage menus',1100);
-INSERT INTO public."Permissions" ("Id","Code","Name","Position") VALUES (12,'ManageForms','Manage forms',1200);
-INSERT INTO public."Permissions" ("Id","Code","Name","Position") VALUES (13,'ManageFileManager','Manage file manager',1300);
+INSERT INTO public."Permissions" ("Id","Code","Name","Position") VALUES (9,'ManageClasses','Manage classes',900);
+INSERT INTO public."Permissions" ("Id","Code","Name","Position") VALUES (10,'ManageMenus','Manage menus',1000);
+INSERT INTO public."Permissions" ("Id","Code","Name","Position") VALUES (11,'ManageForms','Manage forms',1100);
+INSERT INTO public."Permissions" ("Id","Code","Name","Position") VALUES (12,'ManageFileManager','Manage file manager',1200);
 INSERT INTO public."RolePermissions" ("RoleId","PermissionId") VALUES (3,8);
+INSERT INTO public."RolePermissions" ("RoleId","PermissionId") VALUES (3,10);
 INSERT INTO public."RolePermissions" ("RoleId","PermissionId") VALUES (3,11);
 INSERT INTO public."RolePermissions" ("RoleId","PermissionId") VALUES (3,12);
-INSERT INTO public."RolePermissions" ("RoleId","PermissionId") VALUES (3,13);
-INSERT INTO public."DataTypes" ("Id","StorageDataType","JavaScriptEditorClassName","Name","Position") VALUES (1,'string','singleLinePlainText','Single line plain text',1);
-INSERT INTO public."DataTypes" ("Id","StorageDataType","JavaScriptEditorClassName","Name","Position") VALUES (2,'string','multilinePlainText','Multiline plain text',2);
-INSERT INTO public."DataTypes" ("Id","StorageDataType","JavaScriptEditorClassName","Name","Position") VALUES (3,'string','html','Html',3);
-INSERT INTO public."DataTypes" ("Id","StorageDataType","JavaScriptEditorClassName","Name","Position") VALUES (4,'integer','integerNumber','Integer number',4);
-INSERT INTO public."DataTypes" ("Id","StorageDataType","JavaScriptEditorClassName","Name","Position") VALUES (5,'decimal','decimalNumber','Decimal number',5);
-INSERT INTO public."DataTypes" ("Id","StorageDataType","JavaScriptEditorClassName","Name","Position") VALUES (6,'integer','booleanFlag','Boolean flag',6);
-INSERT INTO public."DataTypes" ("Id","StorageDataType","JavaScriptEditorClassName","Name","Position") VALUES (7,'datetime','date','Date',7);
-INSERT INTO public."DataTypes" ("Id","StorageDataType","JavaScriptEditorClassName","Name","Position") VALUES (8,'datetime','dateTime','DateTime',8);
-INSERT INTO public."DataTypes" ("Id","StorageDataType","JavaScriptEditorClassName","Name","Position") VALUES (9,'string','image','Image',9);
-INSERT INTO public."DataTypes" ("Id","StorageDataType","JavaScriptEditorClassName","Name","Position") VALUES (10,'string','sourceCode','Source code',10);
-ALTER SEQUENCE "DataTypes_Id_seq" RESTART WITH 9;
-INSERT INTO public."DataTypeParameters" ("Id","DataTypeId","JavaScriptEditorClassName","Code","Name") VALUES (1,1,'checkbox','IsRequired','Is required');
-INSERT INTO public."DataTypeParameters" ("Id","DataTypeId","JavaScriptEditorClassName","Code","Name") VALUES (2,1,'numericTextBox','MaxLength','Max length');
-INSERT INTO public."DataTypeParameters" ("Id","DataTypeId","JavaScriptEditorClassName","Code","Name") VALUES (3,2,'checkbox','IsRequired','Is required');
-INSERT INTO public."DataTypeParameters" ("Id","DataTypeId","JavaScriptEditorClassName","Code","Name") VALUES (4,2,'numericTextBox','MaxLength','Max length');
-INSERT INTO public."DataTypeParameters" ("Id","DataTypeId","JavaScriptEditorClassName","Code","Name") VALUES (5,4,'checkbox','IsRequired','Is required');
-INSERT INTO public."DataTypeParameters" ("Id","DataTypeId","JavaScriptEditorClassName","Code","Name") VALUES (6,4,'numericTextBox','MinValue','Min value');
-INSERT INTO public."DataTypeParameters" ("Id","DataTypeId","JavaScriptEditorClassName","Code","Name") VALUES (7,4,'numericTextBox','MaxValue','Max value');
-INSERT INTO public."DataTypeParameters" ("Id","DataTypeId","JavaScriptEditorClassName","Code","Name") VALUES (8,5,'checkbox','IsRequired','Is required');
-INSERT INTO public."DataTypeParameters" ("Id","DataTypeId","JavaScriptEditorClassName","Code","Name") VALUES (9,5,'numericTextBox','MinValue','Min value');
-INSERT INTO public."DataTypeParameters" ("Id","DataTypeId","JavaScriptEditorClassName","Code","Name") VALUES (10,5,'numericTextBox','MaxValue','Max value');
-INSERT INTO public."DataTypeParameters" ("Id","DataTypeId","JavaScriptEditorClassName","Code","Name") VALUES (11,7,'checkbox','IsRequired','Is required');
-INSERT INTO public."DataTypeParameters" ("Id","DataTypeId","JavaScriptEditorClassName","Code","Name") VALUES (12,8,'checkbox','IsRequired','Is required');
-INSERT INTO public."DataTypeParameters" ("Id","DataTypeId","JavaScriptEditorClassName","Code","Name") VALUES (13,9,'numericTextBox','Width','Width');
-INSERT INTO public."DataTypeParameters" ("Id","DataTypeId","JavaScriptEditorClassName","Code","Name") VALUES (14,9,'numericTextBox','Height','Height');
-INSERT INTO public."DataTypeParameters" ("Id","DataTypeId","JavaScriptEditorClassName","Code","Name") VALUES (15,10,'textBox','Mode','Mode');
-ALTER SEQUENCE "DataTypeParameters_Id_seq" RESTART WITH 8;
+INSERT INTO public."DataTypes" ("Id","StorageDataType","ParameterEditorCode","Name","Position") VALUES (1,'string','singleLinePlainText','Single line plain text',1);
+INSERT INTO public."DataTypes" ("Id","StorageDataType","ParameterEditorCode","Name","Position") VALUES (2,'string','multilinePlainText','Multiline plain text',2);
+INSERT INTO public."DataTypes" ("Id","StorageDataType","ParameterEditorCode","Name","Position") VALUES (3,'string','html','Html',3);
+INSERT INTO public."DataTypes" ("Id","StorageDataType","ParameterEditorCode","Name","Position") VALUES (4,'integer','integerNumber','Integer number',4);
+INSERT INTO public."DataTypes" ("Id","StorageDataType","ParameterEditorCode","Name","Position") VALUES (5,'decimal','decimalNumber','Decimal number',5);
+INSERT INTO public."DataTypes" ("Id","StorageDataType","ParameterEditorCode","Name","Position") VALUES (6,'integer','booleanFlag','Boolean flag',6);
+INSERT INTO public."DataTypes" ("Id","StorageDataType","ParameterEditorCode","Name","Position") VALUES (7,'datetime','date','Date',7);
+INSERT INTO public."DataTypes" ("Id","StorageDataType","ParameterEditorCode","Name","Position") VALUES (8,'datetime','dateTime','DateTime',8);
+INSERT INTO public."DataTypes" ("Id","StorageDataType","ParameterEditorCode","Name","Position") VALUES (9,'string','image','Image',9);
+INSERT INTO public."DataTypes" ("Id","StorageDataType","ParameterEditorCode","Name","Position") VALUES (10,'string','sourceCode','Source code',10);
+ALTER SEQUENCE "DataTypes_Id_seq" RESTART WITH 11;
+INSERT INTO public."DataTypeParameters" ("Id","DataTypeId","ParameterEditorCode","Code","Name") VALUES (1,1,'checkbox','IsRequired','Is required');
+INSERT INTO public."DataTypeParameters" ("Id","DataTypeId","ParameterEditorCode","Code","Name") VALUES (2,1,'integerBox','MaxLength','Max length');
+INSERT INTO public."DataTypeParameters" ("Id","DataTypeId","ParameterEditorCode","Code","Name") VALUES (3,2,'checkbox','IsRequired','Is required');
+INSERT INTO public."DataTypeParameters" ("Id","DataTypeId","ParameterEditorCode","Code","Name") VALUES (4,2,'integerBox','MaxLength','Max length');
+INSERT INTO public."DataTypeParameters" ("Id","DataTypeId","ParameterEditorCode","Code","Name") VALUES (5,4,'checkbox','IsRequired','Is required');
+INSERT INTO public."DataTypeParameters" ("Id","DataTypeId","ParameterEditorCode","Code","Name") VALUES (6,4,'integerBox','MinValue','Min value');
+INSERT INTO public."DataTypeParameters" ("Id","DataTypeId","ParameterEditorCode","Code","Name") VALUES (7,4,'integerBox','MaxValue','Max value');
+INSERT INTO public."DataTypeParameters" ("Id","DataTypeId","ParameterEditorCode","Code","Name") VALUES (8,5,'checkbox','IsRequired','Is required');
+INSERT INTO public."DataTypeParameters" ("Id","DataTypeId","ParameterEditorCode","Code","Name") VALUES (9,5,'integerBox','MinValue','Min value');
+INSERT INTO public."DataTypeParameters" ("Id","DataTypeId","ParameterEditorCode","Code","Name") VALUES (10,5,'integerBox','MaxValue','Max value');
+INSERT INTO public."DataTypeParameters" ("Id","DataTypeId","ParameterEditorCode","Code","Name") VALUES (11,7,'checkbox','IsRequired','Is required');
+INSERT INTO public."DataTypeParameters" ("Id","DataTypeId","ParameterEditorCode","Code","Name") VALUES (12,8,'checkbox','IsRequired','Is required');
+INSERT INTO public."DataTypeParameters" ("Id","DataTypeId","ParameterEditorCode","Code","Name") VALUES (13,9,'integerBox','Width','Width');
+INSERT INTO public."DataTypeParameters" ("Id","DataTypeId","ParameterEditorCode","Code","Name") VALUES (14,9,'integerBox','Height','Height');
+INSERT INTO public."DataTypeParameters" ("Id","DataTypeId","ParameterEditorCode","Code","Name") VALUES (15,10,'textBox','Mode','Mode');
+ALTER SEQUENCE "DataTypeParameters_Id_seq" RESTART WITH 16;
 INSERT INTO public."FieldTypes" ("Id","Code","Name","Position","ValidatorCSharpClassName") VALUES (1,'TextBox','Text box',1,NULL);
 INSERT INTO public."FieldTypes" ("Id","Code","Name","Position","ValidatorCSharpClassName") VALUES (2,'TextArea','Text area',2,NULL);
 INSERT INTO public."FieldTypes" ("Id","Code","Name","Position","ValidatorCSharpClassName") VALUES (3,'Checkbox','Checkbox',3,NULL);
@@ -95,15 +93,16 @@ ALTER SEQUENCE "FieldTypes_Id_seq" RESTART WITH 8;
 
 --
 -- Extension: Platformus.ECommerce
--- Version: 2.6.0
+-- Version: 3.0.0
 --
 
-INSERT INTO public."Permissions" ("Id","Code","Name","Position") VALUES (14,'ManageCategories','Manage categories',1400);
-INSERT INTO public."Permissions" ("Id","Code","Name","Position") VALUES (15,'ManageProducts','Manage products',1500);
-INSERT INTO public."Permissions" ("Id","Code","Name","Position") VALUES (16,'ManageOrderStates','Manage order states',1600);
-INSERT INTO public."Permissions" ("Id","Code","Name","Position") VALUES (17,'ManagePaymentMethods','Manage payment methods',1700);
-INSERT INTO public."Permissions" ("Id","Code","Name","Position") VALUES (18,'ManageDeliveryMethods','Manage delivery methods',1800);
-INSERT INTO public."Permissions" ("Id","Code","Name","Position") VALUES (19,'ManageCarts','Manage carts',1900);
-INSERT INTO public."Permissions" ("Id","Code","Name","Position") VALUES (20,'ManageOrders','Manage orders',2000);
+INSERT INTO public."Permissions" ("Id","Code","Name","Position") VALUES (13,'ManageCategories','Manage categories',1300);
+INSERT INTO public."Permissions" ("Id","Code","Name","Position") VALUES (14,'ManageProducts','Manage products',1400);
+INSERT INTO public."Permissions" ("Id","Code","Name","Position") VALUES (15,'ManageOrderStates','Manage order states',1500);
+INSERT INTO public."Permissions" ("Id","Code","Name","Position") VALUES (16,'ManagePaymentMethods','Manage payment methods',1600);
+INSERT INTO public."Permissions" ("Id","Code","Name","Position") VALUES (17,'ManageDeliveryMethods','Manage delivery methods',1700);
+INSERT INTO public."Permissions" ("Id","Code","Name","Position") VALUES (18,'ManageCarts','Manage carts',1800);
+INSERT INTO public."Permissions" ("Id","Code","Name","Position") VALUES (19,'ManageOrders','Manage orders',1900);
+ALTER SEQUENCE "Permissions_Id_seq" RESTART WITH 20;
 
 COMMIT;

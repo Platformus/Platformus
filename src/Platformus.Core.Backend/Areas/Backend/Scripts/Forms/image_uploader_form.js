@@ -30,7 +30,7 @@
 
   platformus.forms.imageUploaderForm.uploadingStarted = function (checkIsFinished) {
     $("#imageUploader").hide();
-    $("#imageUploadingIndicator").show();
+    $("#imageUploadingIndicator").css({ display: "flex" });
 
     if (checkIsFinished) {
       setTimeout(function () { platformus.forms.imageUploaderForm.isFinished(); }, 100);

@@ -6,10 +6,10 @@
   this.ViewBag.Title = this.Localizer["View Completed Form"];
   this.ViewBag.ActiveMenuItem = "forms";
 }
-@section title {
-  @ViewBag.Title
-}
 <div class="form">
+  <title-bar>
+    <neutral-button href="/backend/completedforms">@Localizer["Back"]</neutral-button>
+  </title-bar>
   @foreach (var completedField in this.Model.CompletedFields)
   {
     <div class="form__field field">
@@ -17,7 +17,4 @@
       <input class="field__text-box text-box" readonly="readonly" type="text" value="@completedField.Value" />
     </div>
   }
-  <div class="form__buttons buttons">
-    <neutral-button href="/backend/completedforms">@Localizer["Back"]</neutral-button>
-  </div>
 </div>

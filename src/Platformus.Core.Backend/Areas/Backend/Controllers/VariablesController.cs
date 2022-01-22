@@ -1,12 +1,14 @@
 ﻿// Copyright © 2020 Dmitry Sikorsky. All rights reserved.
 // Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information.
 
+using System.Linq;
 using System.Threading.Tasks;
 using ExtCore.Events;
 using Magicalizer.Data.Repositories.Abstractions;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Localization;
 using Platformus.Core.Backend.ViewModels.Variables;
 using Platformus.Core.Data.Entities;
 using Platformus.Core.Events;
@@ -14,18 +16,20 @@ using Platformus.Core.Filters;
 
 namespace Platformus.Core.Backend.Controllers
 {
-  [Area("Backend")]
   [Authorize(Policy = Policies.HasManageConfigurationsPermission)]
   public class VariablesController : ControllerBase
   {
+    private IStringLocalizer localizer;
+
     private IRepository<int, Variable, VariableFilter> Repository
     {
       get => this.Storage.GetRepository<int, Variable, VariableFilter>();
     }
 
-    public VariablesController(IStorage storage)
+    public VariablesController(IStorage storage, IStringLocalizer<SharedResource> localizer)
       : base(storage)
     {
+      this.localizer = localizer;
     }
 
     [HttpGet]
@@ -41,8 +45,8 @@ namespace Platformus.Core.Backend.Controllers
     [ExportModelStateToTempData]
     public async Task<IActionResult> CreateOrEditAsync([FromQuery]VariableFilter filter, CreateOrEditViewModel createOrEdit)
     {
-      if (createOrEdit.Id == null && !await this.IsCodeUniqueAsync(filter, createOrEdit.Code))
-        this.ModelState.AddModelError("code", string.Empty);
+      if (!await this.IsCodeUniqueAsync(filter, createOrEdit))
+        this.ModelState.AddModelError("code", this.localizer["Value is already in use"]);
 
       if (this.ModelState.IsValid)
       {
@@ -80,10 +84,13 @@ namespace Platformus.Core.Backend.Controllers
       return this.RedirectToAction("Index", "Configurations");
     }
 
-    private async Task<bool> IsCodeUniqueAsync(VariableFilter filter, string code)
+    private async Task<bool> IsCodeUniqueAsync(VariableFilter filter, CreateOrEditViewModel createOrEdit)
     {
-      filter.Code = code;
-      return await this.Repository.CountAsync(filter) == 0;
+      filter.Code = createOrEdit.Code;
+
+      Variable variable = (await this.Repository.GetAllAsync(filter)).FirstOrDefault();
+
+      return variable == null || variable.Id == createOrEdit.Id;
     }
   }
 }

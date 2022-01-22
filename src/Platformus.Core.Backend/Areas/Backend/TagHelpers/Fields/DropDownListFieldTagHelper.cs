@@ -3,49 +3,40 @@
 
 using System.Collections.Generic;
 using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.AspNetCore.Mvc.ViewFeatures;
 using Microsoft.AspNetCore.Razor.TagHelpers;
 using Platformus.Core.Primitives;
 
 namespace Platformus.Core.Backend
 {
-  public class DropDownListFieldTagHelper : TagHelper
+  public class DropDownListFieldTagHelper : FieldTagHelperBase<string>
   {
-    [HtmlAttributeNotBound]
-    [ViewContext]
-    public ViewContext ViewContext { get; set; }
-    public string Class { get; set; }
-    public ModelExpression For { get; set; }
     public IEnumerable<Option> Options { get; set; }
 
     public override void Process(TagHelperContext context, TagHelperOutput output)
     {
-      if (this.For == null || this.Options == null)
+      if ((this.For == null && string.IsNullOrEmpty(this.Id)) || this.Options == null)
         return;
 
-      output.TagMode = TagMode.StartTagAndEndTag;
-      output.TagName = TagNames.Div;
-      output.Attributes.SetAttribute(AttributeNames.Class, "form__field field" + (string.IsNullOrEmpty(this.Class) ? null : $" {this.Class}"));
-      output.Content.AppendHtml(this.CreateLabel());
+      base.Process(context, output);
       output.Content.AppendHtml(this.CreateDropDownList());
-    }
-
-    private TagBuilder CreateLabel()
-    {
-      return FieldGenerator.GenerateLabel(this.For.GetLabel(), this.For.GetIdentity());
+      output.Content.AppendHtml(this.CreateValidationErrorMessage());
     }
 
     private TagBuilder CreateDropDownList()
     {
       TagBuilder tb = DropDownListGenerator.Generate(
-        this.For.GetIdentity(),
+        this.GetIdentity(),
         this.Options,
-        this.For.GetValue(this.ViewContext)?.ToString()?.ToString(),
-        this.For.HasRequiredAttribute(),
-        this.For.IsValid(this.ViewContext)
+        value: this.GetValue(),
+        validation: this.GetValidation()
       );
 
       tb.AddCssClass("field__drop-down-list");
+
+      // TODO: merge all the attributes, not only "onchange"
+      if (!string.IsNullOrEmpty(this.OnChange))
+        tb.MergeAttribute(AttributeNames.OnChange, this.OnChange);
+
       return tb;
     }
   }

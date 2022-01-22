@@ -47,7 +47,7 @@ namespace Platformus.Core.Backend
     {
       TagBuilder tb = new TagBuilder(TagNames.Div);
 
-      tb.AddCssClass("form__buttons form__buttons--minor buttons");
+      tb.AddCssClass("form__buttons form__buttons--minor buttons buttons--minor");
       tb.InnerHtml.AppendHtml(GenerateUploadButton(uploadLabel));
       tb.InnerHtml.AppendHtml(GenerateRemoveButton(removeLabel));
       return tb;
@@ -57,7 +57,7 @@ namespace Platformus.Core.Backend
     {
       TagBuilder tb = new TagBuilder(TagNames.Button);
 
-      tb.AddCssClass("image-uploader__upload-button buttons__button buttons__button--minor button button--positive button--minor");
+      tb.AddCssClass("image-uploader__upload-button buttons__button buttons__button--minor button button--neutral button--minor");
       tb.MergeAttribute(AttributeNames.Type, "button");
       tb.InnerHtml.AppendHtml(uploadLabel);
       return tb;
@@ -67,7 +67,7 @@ namespace Platformus.Core.Backend
     {
       TagBuilder tb = new TagBuilder(TagNames.Button);
 
-      tb.AddCssClass("image-uploader__remove-button buttons__button buttons__button--minor button button--negative button--minor");
+      tb.AddCssClass("image-uploader__remove-button buttons__button buttons__button--minor button button--negative button--minor button--delete");
       tb.MergeAttribute(AttributeNames.Type, "button");
       tb.InnerHtml.AppendHtml(removeLabel);
       return tb;
@@ -79,7 +79,7 @@ namespace Platformus.Core.Backend
 
       tb.TagRenderMode = TagRenderMode.SelfClosing;
       tb.MergeAttribute(AttributeNames.Name, identity);
-      tb.MergeAttribute(AttributeNames.Type, "hidden");
+      tb.MergeAttribute(AttributeNames.Type, InputTypes.Hidden);
 
       if (!string.IsNullOrEmpty(value))
         tb.MergeAttribute(AttributeNames.Value, value);

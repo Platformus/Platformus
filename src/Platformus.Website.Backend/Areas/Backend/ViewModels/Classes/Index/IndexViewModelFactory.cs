@@ -24,7 +24,7 @@ namespace Platformus.Website.Backend.ViewModels.Classes
         Offset = offset,
         Limit = limit,
         Total = total,
-        Classes = classes.Select(ClassViewModelFactory.Create)
+        Classes = classes.Select(ClassViewModelFactory.Create).ToList()
       };
     }
 

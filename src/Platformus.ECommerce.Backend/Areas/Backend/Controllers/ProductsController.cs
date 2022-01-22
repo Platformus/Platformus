@@ -1,12 +1,15 @@
 ﻿// Copyright © 2020 Dmitry Sikorsky. All rights reserved.
 // Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information.
 
+using System.Linq;
 using System.Threading.Tasks;
 using ExtCore.Events;
 using Magicalizer.Data.Repositories.Abstractions;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Localization;
+using Platformus.Core.Backend;
 using Platformus.ECommerce.Backend.ViewModels.Products;
 using Platformus.ECommerce.Data.Entities;
 using Platformus.ECommerce.Events;
@@ -14,18 +17,25 @@ using Platformus.ECommerce.Filters;
 
 namespace Platformus.ECommerce.Backend.Controllers
 {
-  [Area("Backend")]
   [Authorize(Policy = Policies.HasManageProductsPermission)]
   public class ProductsController : Core.Backend.Controllers.ControllerBase
   {
-    private IRepository<int, Product, ProductFilter> Repository
+    private IStringLocalizer localizer;
+
+    private IRepository<int, Product, ProductFilter> ProductRepository
     {
       get => this.Storage.GetRepository<int, Product, ProductFilter>();
     }
 
-    public ProductsController(IStorage storage)
+    private IRepository<int, Photo, PhotoFilter> PhotoRepository
+    {
+      get => this.Storage.GetRepository<int, Photo, PhotoFilter>();
+    }
+
+    public ProductsController(IStorage storage, IStringLocalizer<SharedResource> localizer)
       : base(storage)
     {
+      this.localizer = localizer;
     }
 
     public async Task<IActionResult> IndexAsync([FromQuery]ProductFilter filter = null, string sorting = null, int offset = 0, int limit = 10)
@@ -34,8 +44,8 @@ namespace Platformus.ECommerce.Backend.Controllers
         sorting = "+" + this.HttpContext.CreateLocalizedSorting("Name");
 
       return this.View(await IndexViewModelFactory.CreateAsync(
-        this.HttpContext, sorting, offset, limit, await this.Repository.CountAsync(filter),
-        await this.Repository.GetAllAsync(
+        this.HttpContext, sorting, offset, limit, await this.ProductRepository.CountAsync(filter),
+        await this.ProductRepository.GetAllAsync(
           filter, sorting, offset, limit,
           new Inclusion<Product>(p => p.Category.Name.Localizations),
           new Inclusion<Product>(p => p.Name.Localizations),
@@ -49,7 +59,7 @@ namespace Platformus.ECommerce.Backend.Controllers
     public async Task<IActionResult> CreateOrEditAsync(int? id)
     {
       return this.View(await CreateOrEditViewModelFactory.CreateAsync(
-        this.HttpContext, id == null ? null : await this.Repository.GetByIdAsync(
+        this.HttpContext, id == null ? null : await this.ProductRepository.GetByIdAsync(
           (int)id,
           new Inclusion<Product>(p => p.Category.Name.Localizations),
           new Inclusion<Product>(p => p.Name.Localizations),
@@ -67,25 +77,38 @@ namespace Platformus.ECommerce.Backend.Controllers
     [ExportModelStateToTempData]
     public async Task<IActionResult> CreateOrEditAsync(CreateOrEditViewModel createOrEdit)
     {
-      if (createOrEdit.Id == null && !await this.IsCodeUniqueAsync(createOrEdit.Code))
-        this.ModelState.AddModelError("code", string.Empty);
+      if (!await this.IsUrlUniqueAsync(createOrEdit))
+        this.ModelState.AddModelError("url", this.localizer["Value is already in use"]);
+
+      if (!await this.IsCodeUniqueAsync(createOrEdit))
+        this.ModelState.AddModelError("code", this.localizer["Value is already in use"]);
 
       if (this.ModelState.IsValid)
       {
         Product product = CreateOrEditViewModelMapper.Map(
-          createOrEdit.Id == null ? new Product() : await this.Repository.GetByIdAsync((int)createOrEdit.Id, new Inclusion<Product>(p => p.Photos)),
+          createOrEdit.Id == null ?
+            new Product() :
+            await this.ProductRepository.GetByIdAsync(
+              (int)createOrEdit.Id,
+              new Inclusion<Product>(p => p.Name.Localizations),
+              new Inclusion<Product>(p => p.Description.Localizations),
+              new Inclusion<Product>(p => p.Units.Localizations),
+              new Inclusion<Product>(p => p.Title.Localizations),
+              new Inclusion<Product>(p => p.MetaDescription.Localizations),
+              new Inclusion<Product>(p => p.MetaKeywords.Localizations),
+              new Inclusion<Product>(p => p.Photos)
+            ),
           createOrEdit
         );
 
-        await this.CreateOrEditEntityLocalizationsAsync(product);
-
         if (createOrEdit.Id == null)
-          this.Repository.Create(product);
+          this.ProductRepository.Create(product);
 
-        else this.Repository.Edit(product);
+        else this.ProductRepository.Edit(product);
 
+        await this.MergeEntityLocalizationsAsync(product);
+        this.MergePhotos(product, createOrEdit);
         await this.Storage.SaveAsync();
-        await this.CreateOrEditPhotosAsync(product, createOrEdit);
 
         if (createOrEdit.Id == null)
           Event<IProductCreatedEventHandler, HttpContext, Product>.Broadcast(this.HttpContext, product);
@@ -100,88 +123,71 @@ namespace Platformus.ECommerce.Backend.Controllers
 
     public async Task<ActionResult> DeleteAsync(int id)
     {
-      Product product = await this.Repository.GetByIdAsync(id);
+      Product product = await this.ProductRepository.GetByIdAsync(id);
 
-      this.Repository.Delete(product.Id);
+      this.ProductRepository.Delete(product.Id);
       await this.Storage.SaveAsync();
       Event<IProductCreatedEventHandler, HttpContext, Product>.Broadcast(this.HttpContext, product);
       return this.Redirect(this.Request.CombineUrl("/backend/products"));
     }
 
-    private async Task<bool> IsCodeUniqueAsync(string code)
+    private async Task<bool> IsUrlUniqueAsync(CreateOrEditViewModel createOrEdit)
     {
-      return await this.Repository.CountAsync(new ProductFilter(code: code)) == 0;
+      Product product = (await this.ProductRepository.GetAllAsync(new ProductFilter(url: createOrEdit.Url))).FirstOrDefault();
+
+      return product == null || product.Id == createOrEdit.Id;
     }
 
-    private async Task CreateOrEditPhotosAsync(Product product, CreateOrEditViewModel createOrEdit)
+    private async Task<bool> IsCodeUniqueAsync(CreateOrEditViewModel createOrEdit)
     {
-      await this.DeletePhotosAsync(product);
-      await this.CreatePhotosAsync(product, createOrEdit);
+      Product product = (await this.ProductRepository.GetAllAsync(new ProductFilter(code: createOrEdit.Code))).FirstOrDefault();
+
+      return product == null || product.Id == createOrEdit.Id;
     }
 
-    private async Task DeletePhotosAsync(Product product)
+    private void MergePhotos(Product product, CreateOrEditViewModel createOrEdit)
     {
-      if (product.Photos != null)
-        foreach (Photo photo in product.Photos)
-          this.Storage.GetRepository<int, Photo, PhotoFilter>().Delete(photo.Id);
-
-      await this.Storage.SaveAsync();
+      this.MergePhoto(product, createOrEdit.Photo1Url, 1);
+      this.MergePhoto(product, createOrEdit.Photo2Url, 2);
+      this.MergePhoto(product, createOrEdit.Photo3Url, 3);
+      this.MergePhoto(product, createOrEdit.Photo4Url, 4);
+      this.MergePhoto(product, createOrEdit.Photo5Url, 5);
     }
 
-    private async Task CreatePhotosAsync(Product product, CreateOrEditViewModel createOrEdit)
+    private void MergePhoto(Product product, string url, int position)
     {
-      if (!string.IsNullOrEmpty(createOrEdit.Photo1Filename))
-      {
-        Photo photo = new Photo();
+      Photo photo = product.Photos?.FirstOrDefault(p => p.Position == position);
 
-        photo.ProductId = product.Id;
-        photo.Filename = createOrEdit.Photo1Filename;
-        photo.IsCover = true;
-        photo.Position = 1;
-        this.Storage.GetRepository<int, Photo, PhotoFilter>().Create(photo);
+      if (string.IsNullOrEmpty(url))
+      {
+        if (photo != null)
+          this.PhotoRepository.Delete(photo.Id);
       }
 
-      if (!string.IsNullOrEmpty(createOrEdit.Photo2Filename))
+      else
       {
-        Photo photo = new Photo();
+        string filename = this.GetPhotoFilename(url);
 
-        photo.ProductId = product.Id;
-        photo.Filename = createOrEdit.Photo2Filename;
-        photo.Position = 2;
-        this.Storage.GetRepository<int, Photo, PhotoFilter>().Create(photo);
+        if (photo == null)
+        {
+          photo = new Photo();
+          photo.Product = product;
+          photo.Filename = filename;
+          photo.Position = position;
+          this.PhotoRepository.Create(photo);
+        }
+
+        else if (photo.Filename != filename)
+        {
+          photo.Filename = filename;
+          this.PhotoRepository.Edit(photo);
+        }
       }
+    }
 
-      if (!string.IsNullOrEmpty(createOrEdit.Photo3Filename))
-      {
-        Photo photo = new Photo();
-
-        photo.ProductId = product.Id;
-        photo.Filename = createOrEdit.Photo3Filename;
-        photo.Position = 3;
-        this.Storage.GetRepository<int, Photo, PhotoFilter>().Create(photo);
-      }
-
-      if (!string.IsNullOrEmpty(createOrEdit.Photo4Filename))
-      {
-        Photo photo = new Photo();
-
-        photo.ProductId = product.Id;
-        photo.Filename = createOrEdit.Photo4Filename;
-        photo.Position = 4;
-        this.Storage.GetRepository<int, Photo, PhotoFilter>().Create(photo);
-      }
-
-      if (!string.IsNullOrEmpty(createOrEdit.Photo5Filename))
-      {
-        Photo photo = new Photo();
-
-        photo.ProductId = product.Id;
-        photo.Filename = createOrEdit.Photo5Filename;
-        photo.Position = 5;
-        this.Storage.GetRepository<int, Photo, PhotoFilter>().Create(photo);
-      }
-
-      await this.Storage.SaveAsync();
+    private string GetPhotoFilename(string url)
+    {
+      return url.Substring(url.LastIndexOf("/") + 1);
     }
   }
 }

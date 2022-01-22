@@ -1,0 +1,11 @@
+﻿@* Copyright © 2021 Dmitry Sikorsky. All rights reserved. *@
+@* Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information. *@
+@model Platformus.Website.Backend.ViewModels.Shared.PropertyViewModel
+@if (this.Model.Member.IsPropertyLocalizable == true)
+{
+  <multilingual-single-line-text-field id="propertyMember@(this.Model.Member.Id)" label="@Model.Member.Name" localizations="@Model.LocalizedStringValues" />
+}
+else
+{
+  <single-line-text-field id="propertyMember@(this.Model.Member.Id)__" label="@Model.Member.Name" value="@Model.NeutralStringValue.Value" />
+}

@@ -8,7 +8,6 @@ using Magicalizer.Data.Repositories.Abstractions;
 using Microsoft.AspNetCore.Mvc;
 using Platformus.Core.Frontend;
 using Platformus.ECommerce.Data.Entities;
-using Platformus.ECommerce.Extensions;
 using Platformus.ECommerce.Filters;
 using Platformus.ECommerce.Frontend.ViewModels.ECommerce;
 
@@ -16,7 +15,7 @@ namespace Platformus.ECommerce.Frontend.Controllers
 {
   public class ECommerceController : Core.Frontend.Controllers.ControllerBase
   {
-    private const string CartId = "CartId";
+    private const string cartId = "cart_id";
 
     private IRepository<int, Position, PositionFilter> PositionRepository
     {
@@ -54,8 +53,8 @@ namespace Platformus.ECommerce.Frontend.Controllers
         Order order = new Order();
 
         order.OrderStateId = 1;
-        order.DeliveryMethodId = checkoutPageViewModel.PaymentMethodId;
-        order.PaymentMethodId = checkoutPageViewModel.DeliveryMethodId;
+        order.DeliveryMethodId = checkoutPageViewModel.DeliveryMethodId;
+        order.PaymentMethodId = checkoutPageViewModel.PaymentMethodId;
         order.CustomerFirstName = checkoutPageViewModel.FirstName;
         order.CustomerLastName = checkoutPageViewModel.LastName;
         order.CustomerPhone = checkoutPageViewModel.Phone;
@@ -86,7 +85,7 @@ namespace Platformus.ECommerce.Frontend.Controllers
             await this.Storage.SaveAsync();
           }
 
-          this.Response.Cookies.Delete(CartId);
+          this.Response.Cookies.Delete(cartId);
         }
 
         return this.Redirect(GlobalizedUrlFormatter.Format(this.HttpContext, $"/ecommerce/thank-you/{order.Id}"));

@@ -1,15 +1,18 @@
 ﻿@* Copyright © 2020 Dmitry Sikorsky. All rights reserved. *@
 @* Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information. *@
 @model Platformus.ECommerce.Backend.ViewModels.Orders.CreateOrEditViewModel
+@using Newtonsoft.Json
+@using Newtonsoft.Json.Serialization
 @inject Microsoft.AspNetCore.Mvc.Localization.IViewLocalizer Localizer
 @{
-  this.ViewBag.Title = (this.Model.Id == null ? this.Localizer["Create Order"].Value : this.Localizer["Edit Order"].Value);
+  this.ViewBag.Title = (this.Model.Id == null ? this.Localizer["Create Order"] : this.Localizer["Edit Order"]);
   this.ViewBag.ActiveMenuItem = "orders";
 }
-@section title {
-  @ViewBag.Title
-}
-<form class="master-detail__form form" method="post">
+<form class="form" method="post">
+  <title-bar>
+    <submit-button>@Localizer["Save"]</submit-button>
+    <neutral-button href="/backend/orders">@Localizer["Cancel"]</neutral-button>
+  </title-bar>
   <drop-down-list-field for="OrderStateId" options="@Model.OrderStateOptions" />
   <drop-down-list-field for="DeliveryMethodId" options="@Model.DeliveryMethodOptions" />
   <drop-down-list-field for="PaymentMethodId" options="@Model.PaymentMethodOptions" />
@@ -19,41 +22,21 @@
   <single-line-text-field for="CustomerEmail" />
   <single-line-text-field for="CustomerAddress" />
   <multiline-text-field for="Note" height="Small" />
-  <h2 class="form__title">
+  <h2 class="content__subtitle heading heading--h2">
     @Localizer["Positions"]
   </h2>
-  <table class="form__table">
-    <columns>
-      <column label="@Localizer["Category"].Value" />
-      <column label="@Localizer["Product"].Value" />
-      <column label="@Localizer["Price"].Value" />
-      <column label="@Localizer["Quantity"].Value" />
-      <column label="@Localizer["Subtotal"].Value" />
-      <column />
-    </columns>
-    <rows>
-      @if (this.Model.Positions != null)
-      {
-        @for (int i = 0; i != this.Model.Positions.Count(); i++)
-        {
-          var position = this.Model.Positions.ElementAt(i);
-
-          position.Index = i;
-          <partial name="_Position" for="@position" />
-        }
-      }
-      <row id="totalRow">
-        <cell is-header="true" colspan="4">@Localizer["Total"]</cell>
-        <cell is-header="true" id="total">@Model.Total.ToString("0.00")</cell>
-        <cell is-header="true">&nbsp;</cell>
-      </row>
-    </rows>
-  </table>
-  <div class="form__buttons form__buttons--minor buttons">
+  <partial name="_Positions" for="@Model.Positions" />
+  <div class="form__buttons form__buttons--minor buttons buttons--minor">
     <positive-button is-minor="true" onclick="platformus.ui.addPosition();">@Localizer["Add position"]</positive-button>
   </div>
-  <div class="form__buttons buttons">
-    <submit-button>@Localizer["Save"]</submit-button>
-    <neutral-button href="/backend/orders">@Localizer["Cancel"]</neutral-button>
-  </div>
 </form>
+<script>
+  var positions = @Html.Raw(
+    JsonConvert.SerializeObject(
+      this.Model.Positions,
+      new JsonSerializerSettings { 
+          ContractResolver = new CamelCasePropertyNamesContractResolver() 
+      }
+    )
+  );
+</script>

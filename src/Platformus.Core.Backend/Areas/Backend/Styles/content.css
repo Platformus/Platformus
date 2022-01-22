@@ -1,0 +1,62 @@
+﻿/* Copyright © 2021 Dmitry Sikorsky. All rights reserved. */
+/* Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information. */
+
+.content {
+  position: relative;
+}
+
+.content__burger-button {
+  display: none;
+  position: absolute;
+  left: 1.5rem;
+  top: 1.5rem;
+  width: 2.75rem;
+  height: 2.75rem;
+}
+
+.content__breadcrumbs {
+  position: absolute;
+  left: 1.5rem;
+  top: 0.75rem;
+}
+
+.content__subtitle {
+  margin-top: 1.5rem;
+}
+
+.content__description {
+  color: #aaa;
+  margin-top: 0.75rem;
+}
+
+.content__filter {
+  margin-top: 1.5rem;
+}
+
+.content__table {
+  margin-top: 1.5rem;
+  width: 100%;
+}
+
+.content__tree {
+  margin-top: 1.5rem;
+}
+
+.content__pager {
+  margin-top: 1.5rem;
+}
+
+.content__tabs {
+  margin-top: 1.5rem;
+}
+
+.content__drag_and_drop_area {
+  margin-top: 1.5rem;
+}
+
+@media screen and (max-width: 1000px) {
+  .content__burger-button {
+    display: block;
+    z-index: 10;
+  }
+}

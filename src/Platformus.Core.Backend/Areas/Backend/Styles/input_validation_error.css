@@ -1,6 +1,8 @@
 ﻿/* Copyright © 2020 Dmitry Sikorsky. All rights reserved. */
 /* Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information. */
 
-.input-validation-error, .input-validation-error:hover {
-  background: #ffff96;
+.input-validation-error, .input-validation-error:hover, .input-validation-error:focus {
+  border-color: #e04030;
+  border-bottom-left-radius: 0 !important;
+  border-bottom-right-radius: 0 !important;
 }

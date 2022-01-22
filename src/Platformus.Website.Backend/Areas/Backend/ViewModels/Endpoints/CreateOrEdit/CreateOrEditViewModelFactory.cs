@@ -7,6 +7,7 @@ using System.Reflection;
 using System.Threading.Tasks;
 using ExtCore.Infrastructure;
 using Microsoft.AspNetCore.Http;
+using Microsoft.Extensions.Localization;
 using Platformus.Core.Data.Entities;
 using Platformus.Core.Filters;
 using Platformus.Core.Primitives;
@@ -25,8 +26,7 @@ namespace Platformus.Website.Backend.ViewModels.Endpoints
         {
           EndpointPermissions = await GetEndpointPermissionsAsync(httpContext),
           RequestProcessorCSharpClassNameOptions = GetRequestProcessorCSharpClassNameOptions(),
-          RequestProcessors = GetRequestProcessors(),
-          ResponseCacheCSharpClassNameOptions = GetResponseCacheCSharpClassNameOptions()
+          ResponseCacheCSharpClassNameOptions = GetResponseCacheCSharpClassNameOptions(httpContext)
         };
 
       return new CreateOrEditViewModel()
@@ -41,9 +41,9 @@ namespace Platformus.Website.Backend.ViewModels.Endpoints
         RequestProcessorCSharpClassName = endpoint.RequestProcessorCSharpClassName,
         RequestProcessorCSharpClassNameOptions = GetRequestProcessorCSharpClassNameOptions(),
         RequestProcessorParameters = endpoint.RequestProcessorParameters,
-        RequestProcessors = GetRequestProcessors(),
         ResponseCacheCSharpClassName = endpoint.ResponseCacheCSharpClassName,
-        ResponseCacheCSharpClassNameOptions = GetResponseCacheCSharpClassNameOptions()
+        ResponseCacheCSharpClassNameOptions = GetResponseCacheCSharpClassNameOptions(httpContext),
+        ResponseCacheParameters = endpoint.ResponseCacheParameters
       };
     }
 
@@ -51,50 +51,22 @@ namespace Platformus.Website.Backend.ViewModels.Endpoints
     {
       return (await httpContext.GetStorage().GetRepository<int, Permission, PermissionFilter>().GetAllAsync()).Select(
         p => EndpointPermissionViewModelFactory.Create(p, endpoint != null && endpoint.EndpointPermissions.Any(ep => ep.PermissionId == p.Id))
-      );
+      ).ToList();
     }
 
     private static IEnumerable<Option> GetRequestProcessorCSharpClassNameOptions()
     {
       return ExtensionManager.GetImplementations<IRequestProcessor>().Where(t => !t.GetTypeInfo().IsAbstract).Select(
         t => new Option(t.FullName)
-      );
+      ).ToList();
     }
 
-    private static IEnumerable<dynamic> GetRequestProcessors()
+    private static IEnumerable<Option> GetResponseCacheCSharpClassNameOptions(HttpContext httpContext)
     {
-      return ExtensionManager.GetInstances<IRequestProcessor>().Where(rp => !rp.GetType().GetTypeInfo().IsAbstract).Select(
-        rp => new {
-          cSharpClassName = rp.GetType().FullName,
-          parameterGroups = rp.ParameterGroups.Select(
-            rppg => new
-            {
-              name = rppg.Name,
-              parameters = rppg.Parameters.Select(
-                rpp => new
-                {
-                  code = rpp.Code,
-                  name = rpp.Name,
-                  javaScriptEditorClassName = rpp.JavaScriptEditorClassName,
-                  options = rpp.Options == null ? null : rpp.Options.Select(
-                    o => new { text = o.Text, value = o.Value }
-                  ),
-                  defaultValue = rpp.DefaultValue,
-                  isRequired = rpp.IsRequired
-                }
-              )
-            }
-          ),
-          description = rp.Description
-        }
-      );
-    }
-
-    private static IEnumerable<Option> GetResponseCacheCSharpClassNameOptions()
-    {
+      IStringLocalizer localizer = httpContext.GetStringLocalizer<CreateOrEditViewModel>();
       List<Option> options = new List<Option>();
 
-      options.Add(new Option("Response cache C# class name not specified", string.Empty));
+      options.Add(new Option(localizer["Response cache C# class name not specified"], string.Empty));
       options.AddRange(
         ExtensionManager.GetImplementations<IResponseCache>().Where(t => !t.GetTypeInfo().IsAbstract).Select(
           t => new Option(t.FullName)

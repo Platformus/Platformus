@@ -9,20 +9,23 @@ namespace Platformus.Core.Backend
   {
     public string Class { get; set; }
     public bool IsHeader { get; set; }
+    public bool IsHighlighted { get; set; }
 
     public override void Process(TagHelperContext context, TagHelperOutput output)
     {
       if (this.IsHeader)
-      {
         output.TagName = TagNames.TH;
-        output.Attributes.SetAttribute(AttributeNames.Class, "table__cell table__cell--header" + (string.IsNullOrEmpty(this.Class) ? null : $" {this.Class}"));
-      }
 
-      else
-      {
-        output.TagName = TagNames.TD;
-        output.Attributes.SetAttribute(AttributeNames.Class, "table__cell" + (string.IsNullOrEmpty(this.Class) ? null : $" {this.Class}"));
-      }
+      else output.TagName = TagNames.TD;
+
+      output.TagMode = TagMode.StartTagAndEndTag;
+      output.Attributes.SetAttribute(
+        AttributeNames.Class,
+        "table__cell" +
+        (this.IsHeader ? " table__cell--header" : null) +
+        (this.IsHighlighted ? " table__cell--highlighted" : null) +
+        (string.IsNullOrEmpty(this.Class) ? null : $" {this.Class}")
+      );
     }
   }
 }

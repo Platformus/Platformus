@@ -10,6 +10,14 @@ namespace Platformus.ECommerce.Backend.Metadata
 {
   public class Metadata : MetadataBase
   {
+    public override IEnumerable<StyleSheet> GetStyleSheets(HttpContext httpContext)
+    {
+      return new StyleSheet[]
+      {
+        new StyleSheet("/wwwroot.areas.backend.css.platformus.ecommerce.min.css", 1000)
+      };
+    }
+
     public override IEnumerable<Script> GetScripts(HttpContext httpContext)
     {
       return new Script[]
@@ -26,23 +34,23 @@ namespace Platformus.ECommerce.Backend.Metadata
       {
         new MenuGroup(
           localizer["Ecommerce"],
-          1500,
+          2000,
           new MenuItem[]
           {
-            new MenuItem("/backend/categories", localizer["Categories"], 1000, new string[] { Permissions.ManageCategories }),
-            new MenuItem("/backend/products", localizer["Products"], 2000, new string[] { Permissions.ManageProducts }),
-            new MenuItem("/backend/carts", localizer["Carts"], 3000, new string[] { Permissions.ManageCarts }),
-            new MenuItem("/backend/orders", localizer["Orders"], 4000, new string[] { Permissions.ManageOrders }),
+            new MenuItem("icon--categories", "/backend/categories", localizer["Categories"], 1000, Permissions.ManageCategories),
+            new MenuItem("icon--products", "/backend/products", localizer["Products"], 2000, Permissions.ManageProducts),
+            new MenuItem("icon--carts", "/backend/carts", localizer["Carts"], 3000, Permissions.ManageCarts),
+            new MenuItem("icon--orders", "/backend/orders", localizer["Orders"], 4000, Permissions.ManageOrders),
           }
         ),
         new MenuGroup(
           localizer["Administration"],
-          3000,
+          4000,
           new MenuItem[]
           {
-            new MenuItem("/backend/orderstates", localizer["Order states"], 3000, new string[] { Permissions.ManageOrderStates }),
-            new MenuItem("/backend/deliverymethods", localizer["Delivery methods"], 4000, new string[] { Permissions.ManageDeliveryMethods }),
-            new MenuItem("/backend/paymentmethods", localizer["Payment methods"], 5000, new string[] { Permissions.ManagePaymentMethods }),
+            new MenuItem("icon--order-states", "/backend/orderstates", localizer["Order states"], 3000, Permissions.ManageOrderStates),
+            new MenuItem("icon--delivery-methods", "/backend/deliverymethods", localizer["Delivery methods"], 4000, Permissions.ManageDeliveryMethods),
+            new MenuItem("icon--payment-methods", "/backend/paymentmethods", localizer["Payment methods"], 5000, Permissions.ManagePaymentMethods),
           }
         )
       };

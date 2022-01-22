@@ -3,28 +3,22 @@
 @model Platformus.Website.Backend.ViewModels.Forms.CreateOrEditViewModel
 @inject Microsoft.AspNetCore.Mvc.Localization.IViewLocalizer Localizer
 @{
-  this.ViewBag.Title = (this.Model.Id == null ? this.Localizer["Create Form"].Value : this.Localizer["Edit Form"].Value);
+  this.ViewBag.Title = (this.Model.Id == null ? this.Localizer["Create Form"] : this.Localizer["Edit Form"]);
   this.ViewBag.ActiveMenuItem = "forms";
 }
-@section title {
-  @ViewBag.Title
-}
-<form class="master-detail__form form" method="post">
+<form class="form" method="post">
+  <title-bar>
+    <submit-button>@Localizer["Save"]</submit-button>
+    <neutral-button href="/backend/forms">@Localizer["Cancel"]</neutral-button>
+  </title-bar>
   <single-line-text-field for="Code" />
   <multilingual-single-line-text-field for="Name" localizations="@Model.NameLocalizations" />
   <multilingual-single-line-text-field for="SubmitButtonTitle" localizations="@Model.SubmitButtonTitleLocalizations" />
-  <checkbox-field class="form__field--separated" for="ProduceCompletedForms" />
+  <checkbox-field for="ProduceCompletedForms" />
   <drop-down-list-field for="FormHandlerCSharpClassName" options="@Model.FormHandlerCSharpClassNameOptions" onchange="platformus.ui.formHandlerCSharpClassNameChanged();" />
-  <div id="parameterEditors"></div>
-  <input id="parameters" name="formHandlerParameters" type="hidden" value="@Model.FormHandlerParameters" />
-  <div class="form__buttons buttons">
-    <submit-button>@Localizer["Save"]</submit-button>
-    <neutral-button href="/backend/forms">@Localizer["Cancel"]</neutral-button>
-  </div>
+  <div id="formHandlerParameterEditor"></div>
+  <input id="formHandlerParameters" name="formHandlerParameters" type="hidden" value="@Model.FormHandlerParameters" />
 </form>
-<script>
-  var formHandlers = @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(this.Model.FormHandlers));
-</script>
 @section startUpScript {
   platformus.ui.formHandlerCSharpClassNameChanged();
 }

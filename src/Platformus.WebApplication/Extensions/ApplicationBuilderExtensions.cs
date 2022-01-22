@@ -20,7 +20,7 @@ namespace Platformus.WebApplication.Extensions
       hostApplicationLifetime.ApplicationStarted.Register(() => {
         ICleaningManager cleaningManager = applicationBuilder.ApplicationServices.GetService<ICleaningManager>();
 
-        cleaningManager.CleanupAsync(applicationBuilder.ApplicationServices);
+        cleaningManager.CleanUpAsync(applicationBuilder.ApplicationServices);
       });
     }
   }

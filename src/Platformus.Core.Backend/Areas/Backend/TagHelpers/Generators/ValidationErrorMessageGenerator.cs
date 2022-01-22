@@ -7,15 +7,21 @@ namespace Platformus.Core.Backend
 {
   public static class ValidationErrorMessageGenerator
   {
-    public static TagBuilder Generate(string identity)
+    public static TagBuilder Generate(string identity, bool isValid, string text = null)
     {
-      TagBuilder tb = new TagBuilder("span");
+      TagBuilder tb = new TagBuilder(TagNames.Span);
 
-      tb.AddCssClass("field__validation-error");
-      tb.AddCssClass("field-validation-valid");
-      tb.AddCssClass("validation-error");
+      if (isValid)
+        tb.AddCssClass("field-validation-valid");
+
+      else tb.AddCssClass("field-validation-error");
+
       tb.MergeAttribute("data-valmsg-for", identity);
       tb.MergeAttribute("data-valmsg-replace", "true");
+
+      if (!string.IsNullOrEmpty(text))
+        tb.InnerHtml.AppendHtml(text);
+
       return tb;
     }
   }

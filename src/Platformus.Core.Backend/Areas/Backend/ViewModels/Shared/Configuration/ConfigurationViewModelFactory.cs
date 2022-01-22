@@ -14,7 +14,9 @@ namespace Platformus.Core.Backend.ViewModels.Shared
       {
         Id = configuration.Id,
         Name = configuration.Name,
-        Variables = configuration.Variables.Select(VariableViewModelFactory.Create)
+        Variables = configuration.Variables
+          .OrderBy(v => v.Position)
+          .Select(VariableViewModelFactory.Create).ToList()
       };
     }
   }

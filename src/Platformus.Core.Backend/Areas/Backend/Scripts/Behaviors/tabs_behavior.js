@@ -11,14 +11,14 @@
   );
 
   function defineHandlers() {
-    $(document.body).on("click", ".tabs__tab", tabClickHandler);
+    $(document.body).on("click", ".tabs__tab", onTabClick);
   }
 
   function performInitialActions() {
     $(".tabs__tab").first().click();
   }
 
-  function tabClickHandler() {
+  function onTabClick() {
     $(".tabs__tab").removeClass("tabs__tab--active");
     $(".tab-pages__tab-page").hide();
     $(this).addClass("tabs__tab--active");

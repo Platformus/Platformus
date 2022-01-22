@@ -10,11 +10,11 @@
   );
 
   function defineHandlers() {
-    $(document.body).on("focus", "input[maxlength], textarea[maxlength]", controlFocusHandler);
-    $(document.body).on("blur", "input[maxlength], textarea[maxlength]", controlBlurHandler);
+    $(document.body).on("focus", "input[maxlength], textarea[maxlength]", onControlFocus);
+    $(document.body).on("blur", "input[maxlength], textarea[maxlength]", onControlBlur);
   }
 
-  function controlFocusHandler() {
+  function onControlFocus() {
     var control = $(this);
     var maxLengthIndicator = createMaxLengthIndicator(control);
 
@@ -23,7 +23,7 @@
     bindMaxLengthIndicatorToControl(maxLengthIndicator, control);
   }
 
-  function controlBlurHandler() {
+  function onControlBlur() {
     var control = $(this);
     var maxLengthIndicator = getMaxLengthIndicator();
 
@@ -32,18 +32,19 @@
   }
 
   function createMaxLengthIndicator(control) {
-    var maxLengthIndicator = $("<div>").addClass("max-length-indicator").appendTo($(document.body));
+    var maxLengthIndicator = $("<div>")
+      .addClass("max-length-indicator")
+      .html(getRemainingLength(control).toString())
+      .appendTo($(document.body));
 
-    $("<div>").addClass("max-length-indicator__arrow").appendTo(maxLengthIndicator);
-    $("<div>").addClass("max-length-indicator__remaining-length").html(getRemainingLength(control).toString()).appendTo(maxLengthIndicator);
     return maxLengthIndicator;
   }
 
   function positionMaxLengthIndicator(maxLengthIndicator, control) {
     maxLengthIndicator.css(
       {
-        left: control.offset().left + control.outerWidth() + 20,
-        top: control.offset().top
+        left: control.offset().left + control.outerWidth() - maxLengthIndicator.outerWidth() - 1,
+        top: control.offset().top + 1
       }
     );
   }
@@ -53,22 +54,23 @@
   }
 
   function bindMaxLengthIndicatorToControl(maxLengthIndicator, control) {
-    var remainingLength = maxLengthIndicator.find(".max-length-indicator__remaining-length");
-
     control.bind(
       "input keyup paste propertychange",
       function () {
-        remainingLength.html(getRemainingLength(control).toString());
+        var remainingLength = getRemainingLength(control);
+
+        if (remainingLength <= 10) {
+          maxLengthIndicator.addClass("max-length-indicator--highlighted");
+        }
+
+        else {
+          maxLengthIndicator.removeClass("max-length-indicator--highlighted");
+        }
+
+        maxLengthIndicator.html(remainingLength.toString());
+        positionMaxLengthIndicator(maxLengthIndicator, control);
       }
     );
-  }
-
-  function getRemainingLength(control) {
-    return parseInt(control.attr("maxlength")) - control.val().length;
-  }
-
-  function getMaxLengthIndicator() {
-    return $(".max-length-indicator");
   }
 
   function hideAndRemoveMaxLengthIndicator(maxLengthIndicator) {
@@ -82,5 +84,13 @@
 
   function unbindMaxLengthIndicatorFromControl(control) {
     control.unbind("input keyup paste propertychange");
+  }
+
+  function getRemainingLength(control) {
+    return parseInt(control.attr("maxlength")) - control.val().length;
+  }
+
+  function getMaxLengthIndicator() {
+    return $(".max-length-indicator");
   }
 })(window.platformus = window.platformus || {});

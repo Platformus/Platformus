@@ -2,6 +2,7 @@
 // Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information.
 
 using System;
+using System.Collections.Generic;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
@@ -9,12 +10,16 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
 using Newtonsoft.Json;
+using Platformus.Core.Parameters;
 using Platformus.Website.ResponseCaches;
 
 namespace Platformus.Website.Frontend
 {
   public class CloudflareResponseCache : IResponseCache
   {
+    public string Description => "Caches responses on the Cloudflare side.";
+    public IEnumerable<ParameterGroup> ParameterGroups => new ParameterGroup[] { };
+
     public async Task<byte[]> GetWithDefaultValueAsync(HttpContext httpContext, Func<Task<byte[]>> defaultValueFunc)
     {
       return await defaultValueFunc();

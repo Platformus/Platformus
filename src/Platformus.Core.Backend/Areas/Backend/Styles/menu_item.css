@@ -1,0 +1,24 @@
+﻿/* Copyright © 2021 Dmitry Sikorsky. All rights reserved. */
+/* Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information. */
+
+.menu-item {
+  background-position: 1.5rem center;
+  background-size: 1rem;
+  font-weight: 400;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  padding: 0.75rem 1.5rem 0.75rem 3rem;
+  overflow: hidden;
+  transition: all ease 0.25s;
+}
+
+.menu-item:hover, .menu-item:focus {
+  background-color: #ffffa0;
+  transition: all ease 0.25s;
+}
+
+.menu-item--active {
+  background-color: #fff;
+  font-weight: 700;
+  position: relative;
+}

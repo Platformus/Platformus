@@ -11,7 +11,6 @@ using Platformus.ECommerce.Filters;
 
 namespace Platformus.ECommerce.Backend.Controllers
 {
-  [Area("Backend")]
   public class ECommerceController : Core.Backend.Controllers.ControllerBase
   {
     public ECommerceController(IStorage storage)
@@ -22,7 +21,6 @@ namespace Platformus.ECommerce.Backend.Controllers
     public async Task<IActionResult> CategorySelectorFormAsync(int? categoryId)
     {
       return this.PartialView("_CategorySelectorForm", CategorySelectorFormViewModelFactory.Create(
-        this.HttpContext,
         await this.Storage.GetRepository<int, Category, CategoryFilter>().GetAllAsync(
           inclusions: new Inclusion<Category>(c => c.Name.Localizations)
         ),
@@ -30,6 +28,7 @@ namespace Platformus.ECommerce.Backend.Controllers
       ));
     }
 
+    // TODO: move to an API controller
     public async Task<IActionResult> CategoryAsync(int id)
     {
       Category category = await this.Storage.GetRepository<int, Category, CategoryFilter>().GetByIdAsync(
@@ -43,7 +42,6 @@ namespace Platformus.ECommerce.Backend.Controllers
     public async Task<IActionResult> ProductSelectorFormAsync(int? productId)
     {
       return this.PartialView("_ProductSelectorForm", ProductSelectorFormViewModelFactory.Create(
-        this.HttpContext,
         await this.Storage.GetRepository<int, Product, ProductFilter>().GetAllAsync(
           inclusions: new Inclusion<Product>[]
           {
@@ -55,6 +53,7 @@ namespace Platformus.ECommerce.Backend.Controllers
       ));
     }
 
+    // TODO: move to an API controller
     public async Task<IActionResult> ProductAsync(int id)
     {
       Product product = await this.Storage.GetRepository<int, Product, ProductFilter>().GetByIdAsync(

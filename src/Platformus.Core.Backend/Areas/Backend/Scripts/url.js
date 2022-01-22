@@ -18,24 +18,24 @@
     return result;
   };
 
-  platformus.url.combine = function (descriptors) {
+  platformus.url.combine = function (parameters) {
     var result = "";
-    var parameters = platformus.url.getParameters();
+    var currentParameters = platformus.url.getParameters();
 
-    descriptors.forEach(function (descriptor) {
-      if (!descriptor.skip) {
-        var value = descriptor.takeFromUrl ? parameters[descriptor.name] : descriptor.value;
+    parameters.forEach(function (parameter) {
+      if (!parameter.skip) {
+        var value = parameter.takeFromUrl ? currentParameters[parameter.name] : parameter.value;
 
         if (value != null) {
           value = encodeURIComponent(value);
-          result += (result ? "&" : "?") + descriptor.name + "=" + value;
+          result += (result ? "&" : "?") + parameter.name + "=" + value;
         }
       }
     });
 
-    for (var parameter in parameters) {
-      if (!containsDescriptor(descriptors, parameter)) {
-        var value = parameters[parameter];
+    for (var parameter in currentParameters) {
+      if (!containsParameter(parameters, parameter)) {
+        var value = currentParameters[parameter];
 
         if (value) {
           value = encodeURIComponent(value);
@@ -47,7 +47,7 @@
     return location.pathname + result;
   }
 
-  function containsDescriptor(descriptors, parameter) {
-    return descriptors.some(d => d.name == parameter);
+  function containsParameter(parameters, parameter) {
+    return parameters.some(p => p.name == parameter);
   }
 })(window.platformus = window.platformus || {});

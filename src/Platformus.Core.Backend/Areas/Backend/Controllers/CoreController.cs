@@ -4,15 +4,20 @@
 using Magicalizer.Data.Repositories.Abstractions;
 using Microsoft.AspNetCore.Mvc;
 using Platformus.Core.Backend.ViewModels.Core;
+using Platformus.Core.Backend.ViewModels.Shared;
 
 namespace Platformus.Core.Backend.Controllers
 {
-  [Area("Backend")]
   public class CoreController : ControllerBase
   {
     public CoreController(IStorage storage)
       : base(storage)
     {
+    }
+
+    public IActionResult ParameterEditor(string cSharpClassName)
+    {
+      return this.PartialView("_ParameterEditor", ParameterEditorViewModelFactory.Create(cSharpClassName));
     }
 
     public IActionResult DeleteForm(string targetUrl)

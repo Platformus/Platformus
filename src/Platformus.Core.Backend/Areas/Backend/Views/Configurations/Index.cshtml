@@ -6,17 +6,15 @@
   this.ViewBag.Title = this.Localizer["Configurations"];
   this.ViewBag.ActiveMenuItem = "configurations";
 }
-@section title {
-  @ViewBag.Title
-}
-<tree class="master-detail__tree">
+<title-bar />
+<tree>
   @foreach (var configuration in this.Model.Configurations)
   {
     <partial name="_Configuration" for="@configuration" />
   }
-  <tree-node>
-    <tree-node-buttons>
-      <positive-button is-minor="true" href="/backend/configurations/create">@Localizer["Create configuration"]</positive-button>
-    </tree-node-buttons>
-  </tree-node>
+  <node>
+    <node-controls>
+      <neutral-button is-minor="true" icon="Icons.Create" href="/backend/configurations/create">@Localizer["Create configuration"]</neutral-button>
+    </node-controls>
+  </node>
 </tree>

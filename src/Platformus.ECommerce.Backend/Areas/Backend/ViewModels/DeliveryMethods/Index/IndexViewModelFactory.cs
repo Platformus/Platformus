@@ -18,7 +18,7 @@ namespace Platformus.ECommerce.Backend.ViewModels.DeliveryMethods
         Offset = offset,
         Limit = limit,
         Total = total,
-        DeliveryMethods = deliveryMethods.Select(DeliveryMethodViewModelFactory.Create)
+        DeliveryMethods = deliveryMethods.Select(DeliveryMethodViewModelFactory.Create).ToList()
       };
     }
   }

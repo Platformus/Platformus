@@ -19,7 +19,6 @@ namespace Platformus.Core.Backend
     public int Offset { get; set; }
     public int Limit { get; set; }
     public int Total { get; set; }
-    public bool IsSecondary { get; set; }
 
     public PagerTagHelper(IHtmlHelper htmlHelper)
     {
@@ -30,7 +29,7 @@ namespace Platformus.Core.Backend
     {
       (this.htmlHelper as IViewContextAware).Contextualize(this.ViewContext);
       output.SuppressOutput();
-      output.Content.SetHtmlContent(await this.htmlHelper.PartialAsync("_Pager", PagerViewModelFactory.Create(this.ViewContext.HttpContext, this.Offset, this.Limit, this.Total, this.IsSecondary)));
+      output.Content.SetHtmlContent(await this.htmlHelper.PartialAsync("_Pager", PagerViewModelFactory.Create(this.ViewContext.HttpContext, this.Offset, this.Limit, this.Total)));
     }
   }
 }

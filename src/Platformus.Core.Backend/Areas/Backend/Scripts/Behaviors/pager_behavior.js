@@ -10,10 +10,10 @@
   );
 
   function defineHandlers() {
-    $(document.body).on("change", "#limit", limitChangeHandler);
+    $(document.body).on("change", "#limit", onLimitChange);
   }
 
-  function limitChangeHandler() {
+  function onLimitChange() {
     location.href = platformus.url.combine(
       [
         { name: "sorting", takeFromUrl: true },

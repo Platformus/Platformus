@@ -1,28 +1,33 @@
 ﻿// Copyright © 2020 Dmitry Sikorsky. All rights reserved.
 // Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information.
 
+using System.Linq;
 using System.Threading.Tasks;
 using Magicalizer.Data.Repositories.Abstractions;
+using Magicalizer.Filters.Abstractions;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Localization;
 using Platformus.Core.Backend.ViewModels.Credentials;
 using Platformus.Core.Data.Entities;
 using Platformus.Core.Filters;
 
 namespace Platformus.Core.Backend.Controllers
 {
-  [Area("Backend")]
   [Authorize(Policy = Policies.HasManageUsersPermission)]
   public class CredentialsController : ControllerBase
   {
+    private IStringLocalizer localizer;
+
     private IRepository<int, Credential, CredentialFilter> Repository
     {
       get => this.Storage.GetRepository<int, Credential, CredentialFilter>();
     }
 
-    public CredentialsController(IStorage storage)
+    public CredentialsController(IStorage storage, IStringLocalizer<SharedResource> localizer)
       : base(storage)
     {
+      this.localizer = localizer;
     }
 
     public async Task<IActionResult> IndexAsync([FromQuery]CredentialFilter filter = null, string sorting = "+identifier", int offset = 0, int limit = 10)
@@ -46,6 +51,9 @@ namespace Platformus.Core.Backend.Controllers
     [ExportModelStateToTempData]
     public async Task<IActionResult> CreateOrEditAsync(CredentialFilter filter, CreateOrEditViewModel createOrEdit)
     {
+      if (!await this.IsIdentifierUniqueAsync(createOrEdit))
+        this.ModelState.AddModelError("identifier", this.localizer["Value is already in use"]);
+
       if (this.ModelState.IsValid)
       {
         Credential credential = CreateOrEditViewModelMapper.Map(
@@ -73,6 +81,13 @@ namespace Platformus.Core.Backend.Controllers
       this.Repository.Delete(credential.Id);
       await this.Storage.SaveAsync();
       return this.Redirect(this.Request.CombineUrl("/backend/credentials"));
+    }
+
+    private async Task<bool> IsIdentifierUniqueAsync(CreateOrEditViewModel createOrEdit)
+    {
+      Credential credential = (await this.Repository.GetAllAsync(new CredentialFilter(credentialType: new CredentialTypeFilter(id: createOrEdit.CredentialTypeId), identifier: new StringFilter(equals: createOrEdit.Identifier)))).FirstOrDefault();
+
+      return credential == null || credential.Id == createOrEdit.Id;
     }
   }
 }

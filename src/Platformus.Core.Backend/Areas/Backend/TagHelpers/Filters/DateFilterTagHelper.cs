@@ -3,39 +3,38 @@
 
 using System;
 using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.AspNetCore.Mvc.ViewFeatures;
 using Microsoft.AspNetCore.Razor.TagHelpers;
 
 namespace Platformus.Core.Backend
 {
-  public class DateFilterTagHelper : TagHelper
+  public class DateFilterTagHelper : CriterionTagHelperBase
   {
-    [HtmlAttributeNotBound]
-    [ViewContext]
-    public ViewContext ViewContext { get; set; }
-    public string PropertyPath { get; set; }
-
     public override void Process(TagHelperContext context, TagHelperOutput output)
+    {
+      base.Process(context, output);
+      output.Content.AppendHtml(this.CreateTextBox());
+    }
+
+    protected override string GetValue()
+    {
+      if (DateTime.TryParse(base.GetValue(), out DateTime value))
+        return value.ToFixedLengthDateString();
+
+      return null;
+    }
+
+    private TagBuilder CreateTextBox()
     {
       TagBuilder tb = TextBoxGenerator.Generate(
         string.Empty,
-        InputTypes.Text
+        InputTypes.Text,
+        value: this.GetValue()
       );
 
       tb.AddCssClass("filter__criterion filter__criterion--small");
       tb.MergeAttribute(AttributeNames.DataType, "date");
       tb.MergeAttribute("data-property-path", this.PropertyPath?.ToLower());
-      tb.MergeAttribute(AttributeNames.Value, this.GetValue());
-      output.SuppressOutput();
-      output.Content.AppendHtml(tb);
-    }
-
-    private string GetValue()
-    {
-      if (DateTime.TryParse(this.ViewContext.HttpContext.Request.Query[this.PropertyPath], out DateTime value))
-        return value.ToFixedLengthDateString();
-
-      return null;
+      return tb;
     }
   }
 }

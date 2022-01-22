@@ -1,0 +1,43 @@
+﻿@* Copyright © 2022 Dmitry Sikorsky. All rights reserved. *@
+@* Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information. *@
+@model IEnumerable<Platformus.ECommerce.Backend.ViewModels.Shared.PositionViewModel>
+@inject Microsoft.AspNetCore.Mvc.Localization.IViewLocalizer Localizer
+<table class="form__table">
+  <columns>
+    <column label="@Localizer["Category"].Value" />
+    <column label="@Localizer["Product"].Value" />
+    <column label="@Localizer["Price"].Value" />
+    <column label="@Localizer["Quantity"].Value" />
+    <column label="@Localizer["Subtotal"].Value" />
+  </columns>
+  <rows>
+    @for (int i = 0; i != this.Model.Count(); i++)
+    {
+      var position = this.Model.ElementAt(i);
+
+      <row>
+        <cell>@position.Product.Category.Name</cell>
+        <cell>
+          @position.Product.Name
+          <input name="positions[@i].id" type="hidden" value="@position.Id" />
+          <input name="positions[@i].product.id" type="hidden" value="@position.Product.Id" />
+        </cell>
+        <cell>
+          @position.Price.ToString("0.00")
+          <input name="positions[@i].price" type="hidden" value="@position.Product.Price" />
+        </cell>
+        <cell>
+          <decimal-box id="positions[@i].quantity" value="@position.Quantity" onchange="platformus.ui.onPositionQuantityChange(this);" />
+        </cell>
+        <cell>@position.Subtotal.ToString("0.00")</cell>
+        <row-controls>
+          <delete-button onclick="return platformus.ui.removePosition(this);" />
+        </row-controls>
+      </row>
+    }
+    <row id="totalRow">
+      <cell is-header="true" colspan="4">@Localizer["Total"]</cell>
+      <cell is-header="true" id="total">@Model.Sum(p => p.Subtotal).ToString("0.00")</cell>
+    </row>
+  </rows>
+</table>

@@ -16,6 +16,7 @@ namespace Platformus.Website.Backend.ViewModels.Forms
     [Display(Name = "Code")]
     [Required]
     [StringLength(32)]
+    [RegularExpression(@"^[a-zA-Z_][a-zA-Z0-9_]*$")]
     public string Code { get; set; }
 
     [Multilingual]
@@ -41,8 +42,6 @@ namespace Platformus.Website.Backend.ViewModels.Forms
     [StringLength(128)]
     public string FormHandlerCSharpClassName { get; set; }
     public IEnumerable<Option> FormHandlerCSharpClassNameOptions { get; set; }
-
     public string FormHandlerParameters { get; set; }
-    public IEnumerable<dynamic> FormHandlers { get; set; }
   }
 }

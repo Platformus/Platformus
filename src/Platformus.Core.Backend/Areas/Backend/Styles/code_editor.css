@@ -3,10 +3,11 @@
 
 .code-editor {
   border: 1px solid #f0f0f0;
-  width: 100%;
+  border-radius: 0.25rem;
+  width: 100%; /* TODO: should be moved to an element */
 }
 
 .code-editor__widget {
   width: 100%;
-  height: 600px;
+  height: 50rem;
 }

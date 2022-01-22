@@ -13,10 +13,11 @@ namespace Platformus.Website.Backend.ViewModels.Endpoints
       endpoint.UrlTemplate = createOrEdit.UrlTemplate;
       endpoint.Position = createOrEdit.Position;
       endpoint.DisallowAnonymous = createOrEdit.DisallowAnonymous;
-      endpoint.SignInUrl = createOrEdit.SignInUrl;
+      endpoint.SignInUrl = createOrEdit.DisallowAnonymous ? createOrEdit.SignInUrl : null;
       endpoint.RequestProcessorCSharpClassName = createOrEdit.RequestProcessorCSharpClassName;
       endpoint.RequestProcessorParameters = createOrEdit.RequestProcessorParameters;
       endpoint.ResponseCacheCSharpClassName = createOrEdit.ResponseCacheCSharpClassName;
+      endpoint.ResponseCacheParameters = createOrEdit.ResponseCacheParameters;
       return endpoint;
     }
   }

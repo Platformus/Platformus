@@ -1,11 +1,10 @@
 ﻿// Copyright © 2021 Dmitry Sikorsky. All rights reserved.
 // Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information.
 
-using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Platformus.Core.Parameters;
+using Platformus.Core;
 
 namespace Platformus.Website.RequestProcessors
 {
@@ -13,18 +12,8 @@ namespace Platformus.Website.RequestProcessors
   /// Describes a request processor. Endpoints use request processors selected by the users to process requests.
   /// Request processor takes any information from the HTTP(S) request (URL, cookies etc.) and returns action result.
   /// </summary>
-  public interface IRequestProcessor
+  public interface IRequestProcessor : IParameterized
   {
-    /// <summary>
-    /// Gets the parameter groups with the parameters the request processor needs from the users.
-    /// </summary>
-    IEnumerable<ParameterGroup> ParameterGroups { get; }
-
-    /// <summary>
-    /// Gets description that is shown to a user to describe the request processor.
-    /// </summary>
-    string Description { get; }
-
     /// <summary>
     /// Processes the HTTP(S) request and returns the response.
     /// </summary>

@@ -8,5 +8,6 @@ namespace Platformus.Core
     public const string Text = "text";
     public const string Password = "password";
     public const string Hidden = "hidden";
+    public const string File = "file";
   }
 }

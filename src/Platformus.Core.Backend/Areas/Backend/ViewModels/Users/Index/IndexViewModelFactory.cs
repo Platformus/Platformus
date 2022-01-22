@@ -24,7 +24,7 @@ namespace Platformus.Core.Backend.ViewModels.Users
         Offset = offset,
         Limit = limit,
         Total = total,
-        Users = users.Select(UserViewModelFactory.Create)
+        Users = users.Select(UserViewModelFactory.Create).ToList()
       };
     }
 
