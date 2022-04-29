@@ -43,11 +43,15 @@ namespace Platformus.Core.Frontend.Actions
           cultureManager.GetNotNeutralCulturesAsync().Result.Select(c => new CultureInfo(c.Id)).ToList();
       }
 
+      requestLocalizationOptions.RequestCultureProviders.Remove(
+        requestLocalizationOptions.RequestCultureProviders.OfType<AcceptLanguageHeaderRequestCultureProvider>().First()
+      );
+
       if (serviceProvider.GetService<IConfigurationManager>()["Globalization", "SpecifyCultureInUrl"] == "yes")
         requestLocalizationOptions.RequestCultureProviders.Insert(0, new RouteValueRequestCultureProvider());
 
       applicationBuilder.UseWhen(
-        context => !context.Request.Path.StartsWithSegments(new PathString("/backend")) && !context.Request.Path.StartsWithSegments(new PathString("/img")),
+        context => !context.Request.Path.StartsWithSegments(new PathString("/backend")),
         frontendApplicationBuilder =>
         {
           frontendApplicationBuilder.UseRequestLocalization(requestLocalizationOptions);
