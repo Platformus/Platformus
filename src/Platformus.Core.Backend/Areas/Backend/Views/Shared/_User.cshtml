@@ -6,7 +6,7 @@
   <cell is-highlighted="true">@Model.Name</cell>
   <cell>@Model.Created.ToString()</cell>
   <row-controls>
-    <neutral-button is-minor="true" href="/backend/credentials?user.id=@Model.Id">@Localizer["Credentials"]</neutral-button>
+    <neutral-button is-minor="true" href="/backend/credentials?user.id=@Model.Id" do-not-combine-url="true">@Localizer["Credentials"]</neutral-button>
     <delete-button href="/backend/users/delete/@Model.Id" />
   </row-controls>
 </row>

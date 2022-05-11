@@ -215,7 +215,7 @@ namespace Platformus.Website.Backend.Controllers
         if (localization == null)
         {
           localization = new Localization();
-          localization.Dictionary = property.StringValue;
+          localization.DictionaryId = property.StringValue.Id;
           localization.CultureId = cultureId;
           localization.Value = value;
           this.LocalizationRepository.Create(localization);

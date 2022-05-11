@@ -16,7 +16,7 @@
   <row-controls>
     @foreach (var member in this.Model.RelationSingleParentMembers)
     {
-      <neutral-button is-minor="true" href="/backend/objects?class.id=@member.RelationClass.Id&primary.id=@Model.Id" skip-url-parameters="class.id">@member.RelationClass.PluralizedName</neutral-button>
+      <neutral-button is-minor="true" href="/backend/objects?class.id=@member.RelationClass.Id&primary.id=@Model.Id" do-not-combine-url="true">@member.RelationClass.PluralizedName</neutral-button>
     }
     <delete-button href="/backend/objects/delete/@Model.Id" />
   </row-controls>

@@ -7,7 +7,7 @@
   <cell>@Model.UrlTemplate</cell>
   <cell>@(this.Model.Position == null ? "—" : this.Model.Position.ToString())</cell>
   <row-controls>
-    <neutral-button is-minor="true" href="/backend/datasources?endpoint.id=@Model.Id">@Localizer["Data sources"]</neutral-button>
+    <neutral-button is-minor="true" href="/backend/datasources?endpoint.id=@Model.Id" do-not-combine-url="true">@Localizer["Data sources"]</neutral-button>
     <delete-button href="/backend/endpoints/delete/@Model.Id" />
   </row-controls>
 </row>

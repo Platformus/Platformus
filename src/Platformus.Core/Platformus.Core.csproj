@@ -4,7 +4,7 @@
     <Authors>Dmitry Sikorsky</Authors>
     <Copyright>Copyright © 2015 Dmitry Sikorsky</Copyright>
     <Description>The Platformus.Core extension component.</Description>
-    <VersionPrefix>3.0.0-beta2</VersionPrefix>
+    <VersionPrefix>3.0.0-beta3</VersionPrefix>
     <TargetFramework>net6.0</TargetFramework>
     <AssemblyName>Platformus.Core</AssemblyName>
     <PackageId>Platformus.Core</PackageId>
@@ -18,8 +18,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="ExtCore.Events" Version="7.0.0" />
-    <PackageReference Include="ExtCore.Mvc" Version="7.0.0" />
+    <PackageReference Include="ExtCore.Events" Version="7.0.1" />
+    <PackageReference Include="ExtCore.Mvc" Version="7.0.1" />
     <PackageReference Include="Magicalizer.Data.Repositories.Abstractions" Version="2.0.0" />
     <PackageReference Include="MailKit" Version="3.0.0" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />

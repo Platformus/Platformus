@@ -4,7 +4,7 @@
     <Authors>Dmitry Sikorsky</Authors>
     <Copyright>Copyright © 2015 Dmitry Sikorsky</Copyright>
     <Description>The Platformus.Website extension component.</Description>
-    <VersionPrefix>3.0.0-beta2</VersionPrefix>
+    <VersionPrefix>3.0.0-beta3</VersionPrefix>
     <TargetFramework>net6.0</TargetFramework>
     <AssemblyName>Platformus.Website.Data.EntityFramework.Sqlite</AssemblyName>
     <PackageId>Platformus.Website.Data.EntityFramework.Sqlite</PackageId>
@@ -18,7 +18,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="ExtCore.Data.EntityFramework.Sqlite" Version="7.0.0" />
+    <PackageReference Include="ExtCore.Data.EntityFramework.Sqlite" Version="7.0.1" />
   </ItemGroup>
 
   <ItemGroup>

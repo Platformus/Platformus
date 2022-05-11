@@ -1,4 +1,4 @@
-# Platformus 3.0.0-beta2
+# Platformus 3.0.0-beta3
 
 [![Join the chat at https://gitter.im/Platformus/Platformus](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/Platformus/Platformus?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 

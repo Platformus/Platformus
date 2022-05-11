@@ -16,8 +16,8 @@
     }
   </cell>
   <row-controls>
-    <neutral-button is-minor="true" href="/backend/tabs?class.id=@Model.Id">@Localizer["Tabs"]</neutral-button>
-    <neutral-button is-minor="true" href="/backend/members?class.id=@Model.Id">@Localizer["Members"]</neutral-button>
+    <neutral-button is-minor="true" href="/backend/tabs?class.id=@Model.Id" do-not-combine-url="true">@Localizer["Tabs"]</neutral-button>
+    <neutral-button is-minor="true" href="/backend/members?class.id=@Model.Id" do-not-combine-url="true">@Localizer["Members"]</neutral-button>
     <delete-button href="/backend/classes/delete/@Model.Id" />
   </row-controls>
 </row>

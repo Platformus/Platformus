@@ -72,7 +72,7 @@ namespace Platformus.Core.Backend.Controllers
         if (localization == null)
         {
           localization = new Localization();
-          localization.Dictionary = dictionary;
+          localization.DictionaryId = dictionary.Id;
           localization.CultureId = culture.Id;
           localization.Value = value;
           this.LocalizationRepository.Create(localization);
