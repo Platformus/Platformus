@@ -78,6 +78,8 @@ namespace Platformus.Images.Controllers
     private void ProcessImage(Image image, Rectangle source, Size destination)
     {
         image.Mutate(i => {
+          i.AutoOrient();
+
           if (!source.IsEmpty())
             i.Crop(new SixLabors.ImageSharp.Rectangle(source.X, source.Y, source.Width, source.Height));
 
