@@ -4,7 +4,7 @@
     <Authors>Dmitry Sikorsky</Authors>
     <Copyright>Copyright © 2015 Dmitry Sikorsky</Copyright>
     <Description>The Platformus.Core extension component.</Description>
-    <VersionPrefix>3.0.0</VersionPrefix>
+    <VersionPrefix>3.0.1</VersionPrefix>
     <TargetFramework>net6.0</TargetFramework>
     <AddRazorSupportForMvc>true</AddRazorSupportForMvc>
     <AssemblyName>Platformus.Core.Frontend</AssemblyName>
