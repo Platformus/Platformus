@@ -11,7 +11,7 @@ namespace Platformus.Core.Backend.ViewModels.Users
     public static User Map(User user, CreateOrEditViewModel createOrEdit)
     {
       if (user.Id == 0)
-        user.Created = DateTime.Now;
+        user.Created = DateTime.Now.ToUniversalTime();
 
       user.Name = createOrEdit.Name;
       return user;

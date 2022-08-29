@@ -20,7 +20,7 @@ namespace Platformus.Core.Services.Defaults
     {
       IStorage storage = serviceProvider.CreateScope().ServiceProvider.GetService<IStorage>();
       IRepository<Guid, ModelState, ModelStateFilter> repository = storage.GetRepository<Guid, ModelState, ModelStateFilter>();
-      IEnumerable<ModelState> oldModelStates = await repository.GetAllAsync(new ModelStateFilter(created: new DateTimeFilter(to: DateTime.Now.AddDays(-1))));
+      IEnumerable<ModelState> oldModelStates = await repository.GetAllAsync(new ModelStateFilter(created: new DateTimeFilter(to: DateTime.Now.AddDays(-1).ToUniversalTime())));
 
       for (int i = 0; i != oldModelStates.Count(); i++)
         repository.Delete(oldModelStates.ElementAt(i).Id);

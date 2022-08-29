@@ -11,7 +11,7 @@
     <div>@Model.CustomerPhone</div>
   </cell>
   <cell>@Model.Total.ToString("0.00")</cell>
-  <cell>@Model.Created</cell>
+  <cell>@Model.Created.ToLocalTime().ToString()</cell>
   <row-controls>
     <delete-button href="/backend/orders/delete/@Model.Id" />
   </row-controls>

@@ -16,22 +16,6 @@ $(document).ready(
   platformus.initializers.push(
     {
       action: function () {
-        window.oncontextmenu = function (event) {
-          event.preventDefault();
-          event.stopPropagation();
-          return false;
-        };
-      },
-      priority: 0
-    }
-  );
-})(window.platformus = window.platformus || {});
-
-(function (platformus) {
-  platformus.initializers = platformus.initializers || [];
-  platformus.initializers.push(
-    {
-      action: function () {
         moment.locale(platformus.globalization.getCultureCode());
         moment.fn.toISOStringWithoutTimezone = function () {
           return this.format("YYYY-MM-DD[T]HH:mm:ss");

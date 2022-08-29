@@ -23,7 +23,7 @@ namespace Platformus.Images
     /// <summary>
     /// Gets the version of the extension.
     /// </summary>
-    public override string Version => "3.0.1";
+    public override string Version => "3.0.2";
 
     /// <summary>
     /// Gets the authors of the extension (separated by commas).

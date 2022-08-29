@@ -4,7 +4,7 @@
     <Authors>Dmitry Sikorsky</Authors>
     <Copyright>Copyright © 2018 Dmitry Sikorsky</Copyright>
     <Description>The Platformus.Images extension component.</Description>
-    <VersionPrefix>3.0.1</VersionPrefix>
+    <VersionPrefix>3.0.2</VersionPrefix>
     <TargetFramework>net6.0</TargetFramework>
     <AssemblyName>Platformus.Images</AssemblyName>
     <PackageId>Platformus.Images</PackageId>
@@ -18,7 +18,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="SixLabors.ImageSharp" Version="2.1.1" />
+    <PackageReference Include="SixLabors.ImageSharp" Version="2.1.3" />
   </ItemGroup>
 
   <ItemGroup>

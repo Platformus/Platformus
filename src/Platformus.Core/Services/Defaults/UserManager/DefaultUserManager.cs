@@ -56,7 +56,7 @@ namespace Platformus.Core.Services.Defaults
       User user = new User();
 
       user.Name = name;
-      user.Created = DateTime.Now;
+      user.Created = DateTime.Now.ToUniversalTime();
       this.userRepository.Create(user);
 
       Credential credential = new Credential();

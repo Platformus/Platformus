@@ -61,7 +61,7 @@ namespace Platformus.ECommerce.Frontend.Controllers
         order.CustomerEmail = checkoutPageViewModel.Email;
         order.CustomerAddress = checkoutPageViewModel.Address;
         order.Note = checkoutPageViewModel.Note;
-        order.Created = DateTime.Now;
+        order.Created = DateTime.Now.ToUniversalTime();
         this.OrderRepository.Create(order);
         await this.Storage.SaveAsync();
 

@@ -1,8 +1,10 @@
 ﻿// Copyright © 2020 Dmitry Sikorsky. All rights reserved.
 // Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information.
 
+using System;
 using System.Linq;
 using System.Text;
+using System.Web;
 using Microsoft.AspNetCore.Http;
 
 namespace Platformus
@@ -73,7 +75,7 @@ namespace Platformus
           string value = parameter.TakeFromUrl ? request.Query[parameter.Name].ToString() : parameter.Value;
 
           if (!string.IsNullOrEmpty(value))
-            result.AppendFormat("{0}{1}={2}", result.Length == 0 ? '?' : '&', parameter.Name, value);
+            result.AppendFormat("{0}{1}={2}", result.Length == 0 ? '?' : '&', parameter.Name, HttpUtility.UrlEncode(value));
         }
       }
 
@@ -84,7 +86,7 @@ namespace Platformus
           string value = request.Query[key];
 
           if (!string.IsNullOrEmpty(value))
-            result.AppendFormat("{0}{1}={2}", result.Length == 0 ? '?' : '&', key, value);
+            result.AppendFormat("{0}{1}={2}", result.Length == 0 ? '?' : '&', key, HttpUtility.UrlEncode(value));
         }
       }
 

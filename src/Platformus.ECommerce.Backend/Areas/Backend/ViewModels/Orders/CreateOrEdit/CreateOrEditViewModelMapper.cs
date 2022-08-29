@@ -11,7 +11,7 @@ namespace Platformus.ECommerce.Backend.ViewModels.Orders
     public static Order Map(Order order, CreateOrEditViewModel createOrEdit)
     {
       if (order.Id == 0)
-        order.Created = DateTime.Now;
+        order.Created = DateTime.Now.ToUniversalTime();
 
       order.OrderStateId = createOrEdit.OrderStateId;
       order.DeliveryMethodId = createOrEdit.DeliveryMethodId;

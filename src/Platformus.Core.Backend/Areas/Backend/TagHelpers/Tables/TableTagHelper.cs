@@ -162,9 +162,9 @@ namespace Platformus.Core.Backend
       string sorting;
 
       if (string.Equals(column.SortingPropertyPath, this.GetSortingPropertyPath(), StringComparison.OrdinalIgnoreCase))
-        sorting = (this.GetSortingDirection() == SortingDirection.Ascending ? "-" : "%2B") + column.SortingPropertyPath.ToLower();
+        sorting = (this.GetSortingDirection() == SortingDirection.Ascending ? "-" : "+") + column.SortingPropertyPath.ToLower();
 
-      else sorting = "%2B" + column.SortingPropertyPath.ToLower();
+      else sorting = "+" + column.SortingPropertyPath.ToLower();
 
       return this.ViewContext.HttpContext.Request.CombineUrl(
         new Url.Parameter(name: "filter", takeFromUrl: true),

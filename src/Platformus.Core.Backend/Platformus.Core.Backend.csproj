@@ -4,7 +4,7 @@
     <Authors>Dmitry Sikorsky</Authors>
     <Copyright>Copyright © 2015 Dmitry Sikorsky</Copyright>
     <Description>The Platformus.Core extension component.</Description>
-    <VersionPrefix>3.0.1</VersionPrefix>
+    <VersionPrefix>3.0.2</VersionPrefix>
     <TargetFramework>net6.0</TargetFramework>
     <AddRazorSupportForMvc>true</AddRazorSupportForMvc>
     <AssemblyName>Platformus.Core.Backend</AssemblyName>
@@ -36,11 +36,6 @@
 
   <ItemGroup>
     <DotNetCliToolReference Include="BundlerMinifier.Core" Version="3.2.449" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="wwwroot\areas\backend\css\" />
-    <Folder Include="wwwroot\areas\backend\js\" />
   </ItemGroup>
 
 </Project>

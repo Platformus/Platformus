@@ -60,7 +60,7 @@ namespace Platformus
 
       modelState.Id = Guid.NewGuid();
       modelState.Value = value;
-      modelState.Created = DateTime.Now;
+      modelState.Created = DateTime.Now.ToUniversalTime();
 
       IStorage storage = filterContext.HttpContext.GetStorage();
 

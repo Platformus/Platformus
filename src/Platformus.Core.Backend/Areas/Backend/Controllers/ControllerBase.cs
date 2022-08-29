@@ -1,6 +1,7 @@
 ﻿// Copyright © 2020 Dmitry Sikorsky. All rights reserved.
 // Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information.
 
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -39,6 +40,7 @@ namespace Platformus.Core.Backend.Controllers
 
     public override void OnActionExecuting(ActionExecutingContext actionExecutingContext)
     {
+      this.ConvertDateTimeToUniversalTime(actionExecutingContext);
       this.HandleViewModelMultilingualProperties(actionExecutingContext);
       base.OnActionExecuting(actionExecutingContext);
     }
@@ -84,6 +86,42 @@ namespace Platformus.Core.Backend.Controllers
           localization.Value = value;
           this.LocalizationRepository.Edit(localization);
         }
+      }
+    }
+
+    private void ConvertDateTimeToUniversalTime(ActionExecutingContext actionExecutingContext)
+    {
+      foreach (string key in actionExecutingContext.ActionArguments.Keys)
+      {
+        if (actionExecutingContext.ActionArguments[key] is DateTime?)
+        {
+          DateTime? value = actionExecutingContext.ActionArguments[key] as DateTime?;
+
+          if (value != null)
+            actionExecutingContext.ActionArguments[key] = value.Value.ToUniversalTime();
+        }
+
+        else this.ProcessArgument(actionExecutingContext.ActionArguments[key]);
+      }
+    }
+
+    private void ProcessArgument(object argument)
+    {
+      if (argument == null) return;
+
+      if (argument.GetType().IsPrimitive || argument is string) return;
+
+      foreach (PropertyInfo propertyInfo in argument.GetType().GetProperties().Where(p => p.GetIndexParameters().Length == 0))
+      {
+        if (propertyInfo.PropertyType == typeof(DateTime?))
+        {
+          DateTime? value = (DateTime?)propertyInfo.GetValue(argument);
+
+          if (value != null)
+            propertyInfo.SetValue(argument, value.Value.ToUniversalTime());
+        }
+
+        else this.ProcessArgument(propertyInfo.GetValue(argument));
       }
     }
 

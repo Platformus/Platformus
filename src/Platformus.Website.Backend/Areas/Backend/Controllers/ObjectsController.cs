@@ -230,7 +230,7 @@ namespace Platformus.Website.Backend.Controllers
       }
 
       else if (member.PropertyDataType.StorageDataType == StorageDataTypes.DateTime)
-        property.DateTimeValue = value.ToDateTimeWithDefaultValue(System.DateTime.Now);
+        property.DateTimeValue = value.ToDateTimeWithDefaultValue(System.DateTime.Now).ToUniversalTime();
     }
 
     private async Task MergeRelationsAsync(Object @object, int? primaryId)

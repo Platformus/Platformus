@@ -2,7 +2,7 @@
 @* Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information. *@
 @model Platformus.Website.Backend.ViewModels.Shared.CompletedFormViewModel
 <row href="/backend/completedforms/view/@Model.Id">
-  <cell is-highlighted="true">@Model.Created.ToString()</cell>
+  <cell is-highlighted="true">@Model.Created.ToLocalTime().ToString()</cell>
   <row-controls>
     <delete-button href="/backend/completedforms/delete/@Model.Id" />
   </row-controls>

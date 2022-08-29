@@ -90,7 +90,7 @@ namespace Platformus.ECommerce.Frontend.Controllers
         Cart cart = new Cart();
 
         cart.ClientSideId = Guid.NewGuid();
-        cart.Created = DateTime.Now;
+        cart.Created = DateTime.Now.ToUniversalTime();
         this.CartRepository.Create(cart);
         await this.Storage.SaveAsync();
         this.Response.Cookies.Append(cartId, cart.ClientSideId.ToString());

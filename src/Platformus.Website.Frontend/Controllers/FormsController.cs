@@ -99,7 +99,7 @@ namespace Platformus.Website.Frontend.Controllers
       CompletedForm completedForm = new CompletedForm();
 
       completedForm.FormId = form.Id;
-      completedForm.Created = DateTime.Now;
+      completedForm.Created = DateTime.Now.ToUniversalTime();
       this.Storage.GetRepository<int, CompletedForm, CompletedFormFilter>().Create(completedForm);
       await this.Storage.SaveAsync();
 

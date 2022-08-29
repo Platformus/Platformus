@@ -4,7 +4,7 @@
 @inject Microsoft.AspNetCore.Mvc.Localization.IViewLocalizer Localizer
 <row href="/backend/users/edit/@Model.Id">
   <cell is-highlighted="true">@Model.Name</cell>
-  <cell>@Model.Created.ToString()</cell>
+  <cell>@Model.Created.ToLocalTime().ToString()</cell>
   <row-controls>
     <neutral-button is-minor="true" href="/backend/credentials?user.id=@Model.Id" do-not-combine-url="true">@Localizer["Credentials"]</neutral-button>
     <delete-button href="/backend/users/delete/@Model.Id" />

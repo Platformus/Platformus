@@ -4,7 +4,7 @@
 <row href="/backend/carts/view/@Model.Id">
   <cell is-highlighted="true">@Model.Id</cell>
   <cell>@Model.Total.ToString("0.00")</cell>
-  <cell>@Model.Created</cell>
+  <cell>@Model.Created.ToLocalTime().ToString()</cell>
   <row-controls>
     <delete-button href="/backend/carts/delete/@Model.Id" />
   </row-controls>
