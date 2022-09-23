@@ -111,6 +111,15 @@ namespace Platformus.Core.Backend.Controllers
 
       if (argument.GetType().IsPrimitive || argument is string) return;
 
+      IEnumerable enumerable = (argument as IEnumerable);
+      if (enumerable != null)
+      {
+        foreach (object item in enumerable)
+          this.ProcessArgument(item);
+
+        return;
+      }
+
       foreach (PropertyInfo propertyInfo in argument.GetType().GetProperties().Where(p => p.GetIndexParameters().Length == 0))
       {
         if (propertyInfo.PropertyType == typeof(DateTime?))
