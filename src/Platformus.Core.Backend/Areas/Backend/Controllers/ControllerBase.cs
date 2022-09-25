@@ -2,6 +2,7 @@
 // Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information.
 
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -111,11 +112,10 @@ namespace Platformus.Core.Backend.Controllers
 
       if (argument.GetType().IsPrimitive || argument is string) return;
 
-      IEnumerable enumerable = (argument as IEnumerable);
-      if (enumerable != null)
+      if (argument is IEnumerable arguments)
       {
-        foreach (object item in enumerable)
-          this.ProcessArgument(item);
+        foreach (object a in arguments)
+          this.ProcessArgument(a);
 
         return;
       }
