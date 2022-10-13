@@ -122,7 +122,7 @@ namespace Platformus.Core.Backend.Controllers
 
       foreach (PropertyInfo propertyInfo in argument.GetType().GetProperties().Where(p => p.GetIndexParameters().Length == 0))
       {
-        if (propertyInfo.PropertyType == typeof(DateTime?))
+        if (propertyInfo.PropertyType.IsAssignableTo(typeof(DateTime?)))
         {
           DateTime? value = (DateTime?)propertyInfo.GetValue(argument);
 
