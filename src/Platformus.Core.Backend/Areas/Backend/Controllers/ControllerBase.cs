@@ -124,7 +124,7 @@ namespace Platformus.Core.Backend.Controllers
       {
         if (propertyInfo.PropertyType.IsAssignableTo(typeof(DateTime?)))
         {
-          DateTime? value = (DateTime?)propertyInfo.GetValue(argument);
+          DateTime? value = propertyInfo.GetValue(argument) as DateTime?;
 
           if (value != null)
             propertyInfo.SetValue(argument, value.Value.ToUniversalTime());

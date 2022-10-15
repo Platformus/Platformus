@@ -4,7 +4,7 @@
     <Authors>Dmitry Sikorsky</Authors>
     <Copyright>Copyright © 2015 Dmitry Sikorsky</Copyright>
     <Description>The Platformus.Website extension component.</Description>
-    <VersionPrefix>3.0.3</VersionPrefix>
+    <VersionPrefix>3.0.4</VersionPrefix>
     <TargetFramework>net6.0</TargetFramework>
     <AssemblyName>Platformus.Website.Data.EntityFramework.PostgreSql</AssemblyName>
     <PackageId>Platformus.Website.Data.EntityFramework.PostgreSql</PackageId>

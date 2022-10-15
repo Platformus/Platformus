@@ -23,7 +23,7 @@ namespace Platformus.Website
     /// <summary>
     /// Gets the version of the extension.
     /// </summary>
-    public override string Version => "3.0.3";
+    public override string Version => "3.0.4";
 
     /// <summary>
     /// Gets the authors of the extension (separated by commas).
