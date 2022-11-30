@@ -1,7 +1,7 @@
 BEGIN TRANSACTION;
 --
 -- Extension: Platformus.Core
--- Version: 3.0.0
+-- Version: 4.0.0
 --
 
 -- ModelStates
@@ -116,7 +116,7 @@ CREATE TABLE "Localizations" (
 
 --
 -- Extension: Platformus.Website
--- Version: 3.0.0
+-- Version: 4.0.0
 --
 
 -- Endpoints
@@ -348,7 +348,7 @@ CREATE TABLE "Files" (
 
 --
 -- Extension: Platformus.ECommerce
--- Version: 3.0.0
+-- Version: 4.0.0
 --
 
 -- Categories

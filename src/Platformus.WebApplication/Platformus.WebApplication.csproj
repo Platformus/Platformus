@@ -4,8 +4,8 @@
     <Authors>Dmitry Sikorsky</Authors>
     <Copyright>Copyright © 2015 Dmitry Sikorsky</Copyright>
     <Description>Free, open source and cross-platform CMS based on ASP.NET Core and ExtCore framework.</Description>
-    <VersionPrefix>3.0.4</VersionPrefix>
-    <TargetFramework>net6.0</TargetFramework>
+    <VersionPrefix>4.0.0</VersionPrefix>
+    <TargetFramework>net7.0</TargetFramework>
     <AssemblyName>Platformus.WebApplication</AssemblyName>
     <PackageId>Platformus.WebApplication</PackageId>
     <PackageIcon>icon.png</PackageIcon>
@@ -18,10 +18,10 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="ExtCore.Data" Version="7.0.1" />
-    <PackageReference Include="ExtCore.Data.EntityFramework" Version="7.0.1" />
-    <PackageReference Include="ExtCore.WebApplication" Version="7.0.1" />
-    <PackageReference Include="Magicalizer.Data.Repositories.EntityFramework" Version="2.0.0" />
+    <PackageReference Include="ExtCore.Data" Version="8.0.0" />
+    <PackageReference Include="ExtCore.Data.EntityFramework" Version="8.0.0" />
+    <PackageReference Include="ExtCore.WebApplication" Version="8.0.0" />
+    <PackageReference Include="Magicalizer.Data.Repositories.EntityFramework" Version="3.0.0" />
   </ItemGroup>
 
   <ItemGroup>

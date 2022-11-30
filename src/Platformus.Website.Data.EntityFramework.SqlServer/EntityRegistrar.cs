@@ -20,7 +20,7 @@ namespace Platformus.Website.Data.EntityFramework.SqlServer
           etb.Property(e => e.Name).IsRequired().HasMaxLength(64);
           etb.Property(e => e.PluralizedName).IsRequired().HasMaxLength(64);
           etb.HasMany(e => e.Members).WithOne(e => e.Class).HasForeignKey(e => e.ClassId);
-          etb.ToTable("Classes");
+          etb.ToTable("Classes", tb => tb.HasTrigger("DELETE_Classes"));
         }
       );
 
@@ -70,7 +70,7 @@ namespace Platformus.Website.Data.EntityFramework.SqlServer
           etb.Property(e => e.Id).UseIdentityColumn();
           etb.Property(e => e.Code).IsRequired().HasMaxLength(32);
           etb.Property(e => e.Name).IsRequired().HasMaxLength(64);
-          etb.ToTable("Members");
+          etb.ToTable("Members", tb => tb.HasTrigger("DELETE_Members"));
         }
       );
 
@@ -78,7 +78,7 @@ namespace Platformus.Website.Data.EntityFramework.SqlServer
         {
           etb.HasKey(e => e.Id);
           etb.Property(e => e.Id).UseIdentityColumn();
-          etb.ToTable("Objects");
+          etb.ToTable("Objects", tb => tb.HasTrigger("DELETE_Objects"));
         }
       );
 
@@ -105,7 +105,7 @@ namespace Platformus.Website.Data.EntityFramework.SqlServer
           etb.HasKey(e => e.Id);
           etb.Property(e => e.Id).UseIdentityColumn();
           etb.Property(e => e.Code).IsRequired().HasMaxLength(32);
-          etb.ToTable("Menus");
+          etb.ToTable("Menus", tb => tb.HasTrigger("DELETE_Menus"));
         }
       );
 
@@ -114,7 +114,7 @@ namespace Platformus.Website.Data.EntityFramework.SqlServer
           etb.HasKey(e => e.Id);
           etb.Property(e => e.Id).UseIdentityColumn();
           etb.Property(e => e.Url).HasMaxLength(128);
-          etb.ToTable("MenuItems");
+          etb.ToTable("MenuItems", tb => tb.HasTrigger("DELETE_MenuItems"));
         }
       );
 

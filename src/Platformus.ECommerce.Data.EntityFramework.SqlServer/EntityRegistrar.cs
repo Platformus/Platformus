@@ -15,7 +15,7 @@ namespace Platformus.ECommerce.Data.EntityFramework.SqlServer
         {
           etb.HasKey(e => e.Id);
           etb.Property(e => e.Id).ValueGeneratedOnAdd();
-          etb.ToTable("Categories");
+          etb.ToTable("Categories", tb => tb.HasTrigger("DELETE_Categories"));
         }
       );
 

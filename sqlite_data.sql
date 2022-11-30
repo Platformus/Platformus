@@ -2,7 +2,7 @@ BEGIN TRANSACTION;
 
 --
 -- Extension: Platformus.Core
--- Version: 3.0.0
+-- Version: 4.0.0
 --
 
 INSERT INTO "Users" VALUES (1,'Administrator','2017-01-01 00:00:00.0000000');
@@ -36,7 +36,7 @@ INSERT INTO "Cultures" VALUES ('en','English',0,1,1);
 
 --
 -- Extension: Platformus.Website
--- Version: 3.0.0
+-- Version: 4.0.0
 --
 
 INSERT INTO "Permissions" VALUES (7,'ManageEndpoints','Manage endpoints',700);
@@ -84,7 +84,7 @@ INSERT INTO "FieldTypes" VALUES (7,'ReCAPTCHA','ReCAPTCHA',7,'Platformus.Website
 
 --
 -- Extension: Platformus.ECommerce
--- Version: 3.0.0
+-- Version: 4.0.0
 --
 
 INSERT INTO "Permissions" VALUES (13,'ManageCategories','Manage categories',1300);

@@ -4,8 +4,8 @@
     <Authors>Dmitry Sikorsky</Authors>
     <Copyright>Copyright © 2015 Dmitry Sikorsky</Copyright>
     <Description>The Platformus.ECommerce extension component.</Description>
-    <VersionPrefix>3.0.4</VersionPrefix>
-    <TargetFramework>net6.0</TargetFramework>
+    <VersionPrefix>4.0.0</VersionPrefix>
+    <TargetFramework>net7.0</TargetFramework>
     <AssemblyName>Platformus.ECommerce.Data.EntityFramework.Sqlite</AssemblyName>
     <PackageId>Platformus.ECommerce.Data.EntityFramework.Sqlite</PackageId>
     <PackageIcon>icon.png</PackageIcon>
@@ -18,7 +18,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="ExtCore.Data.EntityFramework.Sqlite" Version="7.0.1" />
+    <PackageReference Include="ExtCore.Data.EntityFramework.Sqlite" Version="8.0.0" />
   </ItemGroup>
 
   <ItemGroup>
