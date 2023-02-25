@@ -3,14 +3,13 @@
 
 using Platformus.Core.Backend.ViewModels;
 
-namespace Platformus.Website.Backend.ViewModels.Shared
+namespace Platformus.Website.Backend.ViewModels.Shared;
+
+public class DataTypeViewModel : ViewModelBase
 {
-  public class DataTypeViewModel : ViewModelBase
-  {
-    public int Id { get; set; }
-    public string StorageDataType { get; set; }
-    public string ParameterEditorCode { get; set; }
-    public string Name { get; set; }
-    public int? Position { get; set; }
-  }
+  public int Id { get; set; }
+  public string StorageDataType { get; set; }
+  public string ParameterEditorCode { get; set; }
+  public string Name { get; set; }
+  public int? Position { get; set; }
 }

@@ -7,48 +7,47 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.AspNetCore.Razor.TagHelpers;
 using Platformus.Core.Primitives;
 
-namespace Platformus.Core.Backend
+namespace Platformus.Core.Backend;
+
+public class DropDownListFilterTagHelper : CriterionTagHelperBase
 {
-  public class DropDownListFilterTagHelper : CriterionTagHelperBase
+  public IEnumerable<Option> Options { get; set; }
+  public Sizes Width { get; set; } = Sizes.Large;
+
+  public override void Process(TagHelperContext context, TagHelperOutput output)
   {
-    public IEnumerable<Option> Options { get; set; }
-    public Sizes Width { get; set; } = Sizes.Large;
+    if (this.Options == null)
+      return;
 
-    public override void Process(TagHelperContext context, TagHelperOutput output)
-    {
-      if (this.Options == null)
-        return;
+    base.Process(context, output);
+    output.Content.AppendHtml(this.CreateDropDownList());
+  }
 
-      base.Process(context, output);
-      output.Content.AppendHtml(this.CreateDropDownList());
-    }
+  protected override string GetValue()
+  {
+    return (this.Options.FirstOrDefault(o => o.Value == base.GetValue()) ?? this.Options.FirstOrDefault())?.Value;
+  }
 
-    protected override string GetValue()
-    {
-      return (this.Options.FirstOrDefault(o => o.Value == base.GetValue()) ?? this.Options.FirstOrDefault())?.Value;
-    }
+  private TagBuilder CreateDropDownList()
+  {
+    TagBuilder tb = DropDownListGenerator.Generate(
+      string.Empty,
+      this.Options,
+      value: this.GetValue()
+    );
 
-    private TagBuilder CreateDropDownList()
-    {
-      TagBuilder tb = DropDownListGenerator.Generate(
-        string.Empty,
-        this.Options,
-        value: this.GetValue()
-      );
+    tb.AddCssClass("filter__criterion");
 
-      tb.AddCssClass("filter__criterion");
+    if (this.Width == Sizes.Small)
+      tb.AddCssClass("filter__criterion--small");
 
-      if (this.Width == Sizes.Small)
-        tb.AddCssClass("filter__criterion--small");
+    else if (this.Width == Sizes.Medium)
+      tb.AddCssClass("filter__criterion--medium");
 
-      else if (this.Width == Sizes.Medium)
-        tb.AddCssClass("filter__criterion--medium");
+    else if (this.Width == Sizes.Large)
+      tb.AddCssClass("filter__criterion--large");
 
-      else if (this.Width == Sizes.Large)
-        tb.AddCssClass("filter__criterion--large");
-
-      tb.MergeAttribute("data-property-path", this.PropertyPath?.ToLower());
-      return tb;
-    }
+    tb.MergeAttribute("data-property-path", this.PropertyPath?.ToLower());
+    return tb;
   }
 }

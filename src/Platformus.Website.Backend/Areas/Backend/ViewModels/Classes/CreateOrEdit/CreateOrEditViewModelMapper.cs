@@ -3,18 +3,17 @@
 
 using Platformus.Website.Data.Entities;
 
-namespace Platformus.Website.Backend.ViewModels.Classes
+namespace Platformus.Website.Backend.ViewModels.Classes;
+
+public static class CreateOrEditViewModelMapper
 {
-  public static class CreateOrEditViewModelMapper
+  public static Class Map(Class @class, CreateOrEditViewModel createOrEdit)
   {
-    public static Class Map(Class @class, CreateOrEditViewModel createOrEdit)
-    {
-      @class.ClassId = createOrEdit.ClassId;
-      @class.Code = createOrEdit.Code;
-      @class.Name = createOrEdit.Name;
-      @class.PluralizedName = createOrEdit.PluralizedName;
-      @class.IsAbstract = createOrEdit.IsAbstract;
-      return @class;
-    }
+    @class.ClassId = createOrEdit.ClassId;
+    @class.Code = createOrEdit.Code;
+    @class.Name = createOrEdit.Name;
+    @class.PluralizedName = createOrEdit.PluralizedName;
+    @class.IsAbstract = createOrEdit.IsAbstract;
+    return @class;
   }
 }

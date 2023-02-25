@@ -9,69 +9,68 @@ using Platformus.Website.Backend.ViewModels.Tabs;
 using Platformus.Website.Data.Entities;
 using Platformus.Website.Filters;
 
-namespace Platformus.Website.Backend.Controllers
+namespace Platformus.Website.Backend.Controllers;
+
+[Authorize(Policy = Policies.HasManageClassesPermission)]
+public class TabsController : Core.Backend.Controllers.ControllerBase
 {
-  [Authorize(Policy = Policies.HasManageClassesPermission)]
-  public class TabsController : Core.Backend.Controllers.ControllerBase
+  private IRepository<int, Tab, TabFilter> Repository
   {
-    private IRepository<int, Tab, TabFilter> Repository
+    get => this.Storage.GetRepository<int, Tab, TabFilter>();
+  }
+
+  public TabsController(IStorage storage)
+    : base(storage)
+  {
+  }
+
+  public async Task<IActionResult> IndexAsync([FromQuery] TabFilter filter = null, string sorting = "+position", int offset = 0, int limit = 10)
+  {
+    return this.View(await IndexViewModelFactory.CreateAsync(
+      this.HttpContext, filter, sorting, offset, limit, await this.Repository.CountAsync(filter),
+      await this.Repository.GetAllAsync(filter, sorting, offset, limit)
+    ));
+  }
+
+  [HttpGet]
+  [ImportModelStateFromTempData]
+  public async Task<IActionResult> CreateOrEditAsync(int? id)
+  {
+    return this.View(CreateOrEditViewModelFactory.Create(
+      id == null ? null : await this.Repository.GetByIdAsync((int)id)
+    ));
+  }
+
+  [HttpPost]
+  [ExportModelStateToTempData]
+  public async Task<IActionResult> CreateOrEditAsync([FromQuery] TabFilter filter, CreateOrEditViewModel createOrEdit)
+  {
+    if (this.ModelState.IsValid)
     {
-      get => this.Storage.GetRepository<int, Tab, TabFilter>();
-    }
+      Tab tab = CreateOrEditViewModelMapper.Map(
+        filter,
+        createOrEdit.Id == null ? new Tab() : await this.Repository.GetByIdAsync((int)createOrEdit.Id),
+        createOrEdit
+      );
 
-    public TabsController(IStorage storage)
-      : base(storage)
-    {
-    }
+      if (createOrEdit.Id == null)
+        this.Repository.Create(tab);
 
-    public async Task<IActionResult> IndexAsync([FromQuery]TabFilter filter = null, string sorting = "+position", int offset = 0, int limit = 10)
-    {
-      return this.View(await IndexViewModelFactory.CreateAsync(
-        this.HttpContext, filter, sorting, offset, limit, await this.Repository.CountAsync(filter),
-        await this.Repository.GetAllAsync(filter, sorting, offset, limit)
-      ));
-    }
+      else this.Repository.Edit(tab);
 
-    [HttpGet]
-    [ImportModelStateFromTempData]
-    public async Task<IActionResult> CreateOrEditAsync(int? id)
-    {
-      return this.View(CreateOrEditViewModelFactory.Create(
-        id == null ? null : await this.Repository.GetByIdAsync((int)id)
-      ));
-    }
-
-    [HttpPost]
-    [ExportModelStateToTempData]
-    public async Task<IActionResult> CreateOrEditAsync([FromQuery]TabFilter filter, CreateOrEditViewModel createOrEdit)
-    {
-      if (this.ModelState.IsValid)
-      {
-        Tab tab = CreateOrEditViewModelMapper.Map(
-          filter,
-          createOrEdit.Id == null ? new Tab() : await this.Repository.GetByIdAsync((int)createOrEdit.Id),
-          createOrEdit
-        );
-
-        if (createOrEdit.Id == null)
-          this.Repository.Create(tab);
-
-        else this.Repository.Edit(tab);
-
-        await this.Storage.SaveAsync();
-        return this.Redirect(this.Request.CombineUrl("/backend/tabs"));
-      }
-
-      return this.CreateRedirectToSelfResult();
-    }
-
-    public async Task<IActionResult> DeleteAsync(int id)
-    {
-      Tab tab = await this.Repository.GetByIdAsync(id);
-
-      this.Repository.Delete(tab.Id);
       await this.Storage.SaveAsync();
       return this.Redirect(this.Request.CombineUrl("/backend/tabs"));
     }
+
+    return this.CreateRedirectToSelfResult();
+  }
+
+  public async Task<IActionResult> DeleteAsync(int id)
+  {
+    Tab tab = await this.Repository.GetByIdAsync(id);
+
+    this.Repository.Delete(tab.Id);
+    await this.Storage.SaveAsync();
+    return this.Redirect(this.Request.CombineUrl("/backend/tabs"));
   }
 }

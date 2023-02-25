@@ -3,23 +3,22 @@
 
 using Platformus.Core.Data.Entities;
 
-namespace Platformus.Core.Backend.ViewModels.Configurations
-{
-  public static class CreateOrEditViewModelFactory
-  {
-    public static CreateOrEditViewModel Create(Configuration configuration)
-    {
-      if (configuration == null)
-        return new CreateOrEditViewModel()
-        {
-        };
+namespace Platformus.Core.Backend.ViewModels.Configurations;
 
+public static class CreateOrEditViewModelFactory
+{
+  public static CreateOrEditViewModel Create(Configuration configuration)
+  {
+    if (configuration == null)
       return new CreateOrEditViewModel()
       {
-        Id = configuration.Id,
-        Code = configuration.Code,
-        Name = configuration.Name
       };
-    }
+
+    return new CreateOrEditViewModel()
+    {
+      Id = configuration.Id,
+      Code = configuration.Code,
+      Name = configuration.Name
+    };
   }
 }

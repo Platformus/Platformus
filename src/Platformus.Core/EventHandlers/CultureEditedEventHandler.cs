@@ -5,15 +5,14 @@ using Microsoft.AspNetCore.Http;
 using Platformus.Core.Data.Entities;
 using Platformus.Core.Events;
 
-namespace Platformus.Core.EventHandlers
-{
-  public class CultureEditedEventHandler : ICultureEditedEventHandler
-  {
-    public int Priority => 1000;
+namespace Platformus.Core.EventHandlers;
 
-    public void HandleEvent(HttpContext httpContext, Culture culture)
-    {
-      httpContext.GetCultureManager().InvalidateCache();
-    }
+public class CultureEditedEventHandler : ICultureEditedEventHandler
+{
+  public int Priority => 1000;
+
+  public void HandleEvent(HttpContext httpContext, Culture culture)
+  {
+    httpContext.GetCultureManager().InvalidateCache();
   }
 }

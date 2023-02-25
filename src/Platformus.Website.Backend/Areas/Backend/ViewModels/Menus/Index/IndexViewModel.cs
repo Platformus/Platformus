@@ -5,10 +5,9 @@ using System.Collections.Generic;
 using Platformus.Core.Backend.ViewModels;
 using Platformus.Website.Backend.ViewModels.Shared;
 
-namespace Platformus.Website.Backend.ViewModels.Menus
+namespace Platformus.Website.Backend.ViewModels.Menus;
+
+public class IndexViewModel : ViewModelBase
 {
-  public class IndexViewModel : ViewModelBase
-  {
-    public IEnumerable<MenuViewModel> Menus { get; set; }
-  }
+  public IEnumerable<MenuViewModel> Menus { get; set; }
 }

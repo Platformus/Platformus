@@ -4,28 +4,27 @@
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.AspNetCore.Razor.TagHelpers;
 
-namespace Platformus.Core.Backend
+namespace Platformus.Core.Backend;
+
+public class BreadcrumbTagHelper : TagHelper
 {
-  public class BreadcrumbTagHelper : TagHelper
+  public string Href { get; set; }
+
+  public override void Process(TagHelperContext context, TagHelperOutput output)
   {
-    public string Href { get; set; }
+    output.TagName = TagNames.A;
+    output.TagMode = TagMode.StartTagAndEndTag;
+    output.Attributes.SetAttribute(AttributeNames.Class, "breadcrumbs__breadcrumb");
+    output.Attributes.SetAttribute(AttributeNames.Href, this.Href);
+    output.PostElement.SetHtmlContent(this.CreateSeparator());
+  }
 
-    public override void Process(TagHelperContext context, TagHelperOutput output)
-    {
-      output.TagName = TagNames.A;
-      output.TagMode = TagMode.StartTagAndEndTag;
-      output.Attributes.SetAttribute(AttributeNames.Class, "breadcrumbs__breadcrumb");
-      output.Attributes.SetAttribute(AttributeNames.Href, this.Href);
-      output.PostElement.SetHtmlContent(this.CreateSeparator());
-    }
+  private TagBuilder CreateSeparator()
+  {
+    TagBuilder tb = new TagBuilder(TagNames.Div);
 
-    private TagBuilder CreateSeparator()
-    {
-      TagBuilder tb = new TagBuilder(TagNames.Div);
-
-      tb.AddCssClass("breadcrumbs__separator");
-      tb.InnerHtml.AppendHtml("/");
-      return tb;
-    }
+    tb.AddCssClass("breadcrumbs__separator");
+    tb.InnerHtml.AppendHtml("/");
+    return tb;
   }
 }

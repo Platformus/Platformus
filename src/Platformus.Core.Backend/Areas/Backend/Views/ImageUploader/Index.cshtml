@@ -11,8 +11,8 @@
   <title>@Localizer["Image Uploader"] | @Localizer["Platformus"]</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <vc:backend-style-sheets />
-  <vc:backend-scripts />
+  @(await Component.InvokeAsync<BackendStyleSheetsViewComponent>())
+  @(await Component.InvokeAsync<BackendScriptsViewComponent>())
 </head>
 <body>
   <div class="image-uploader-pop-up-form__drag-and-drop-area drag-and-drop-area" id="imageDragAndDropArea">

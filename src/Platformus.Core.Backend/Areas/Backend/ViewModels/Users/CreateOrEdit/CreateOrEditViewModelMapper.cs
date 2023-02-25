@@ -4,17 +4,16 @@
 using System;
 using Platformus.Core.Data.Entities;
 
-namespace Platformus.Core.Backend.ViewModels.Users
-{
-  public static class CreateOrEditViewModelMapper
-  {
-    public static User Map(User user, CreateOrEditViewModel createOrEdit)
-    {
-      if (user.Id == 0)
-        user.Created = DateTime.Now.ToUniversalTime();
+namespace Platformus.Core.Backend.ViewModels.Users;
 
-      user.Name = createOrEdit.Name;
-      return user;
-    }
+public static class CreateOrEditViewModelMapper
+{
+  public static User Map(User user, CreateOrEditViewModel createOrEdit)
+  {
+    if (user.Id == 0)
+      user.Created = DateTime.Now.ToUniversalTime();
+
+    user.Name = createOrEdit.Name;
+    return user;
   }
 }

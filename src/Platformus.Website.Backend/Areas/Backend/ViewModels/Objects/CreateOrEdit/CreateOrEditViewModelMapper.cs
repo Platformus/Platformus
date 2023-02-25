@@ -4,16 +4,15 @@
 using Platformus.Website.Data.Entities;
 using Platformus.Website.Filters;
 
-namespace Platformus.Website.Backend.ViewModels.Objects
-{
-  public static class CreateOrEditViewModelMapper
-  {
-    public static Object Map(ObjectFilter filter, Object @object, CreateOrEditViewModel createOrEdit)
-    {
-      if (@object.Id == 0)
-        @object.ClassId = (int)filter.Class.Id;
+namespace Platformus.Website.Backend.ViewModels.Objects;
 
-      return @object;
-    }
+public static class CreateOrEditViewModelMapper
+{
+  public static Object Map(ObjectFilter filter, Object @object, CreateOrEditViewModel createOrEdit)
+  {
+    if (@object.Id == 0)
+      @object.ClassId = (int)filter.Class.Id;
+
+    return @object;
   }
 }

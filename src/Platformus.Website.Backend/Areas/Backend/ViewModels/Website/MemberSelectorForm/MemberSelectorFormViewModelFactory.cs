@@ -6,25 +6,24 @@ using System.Linq;
 using Platformus.Website.Backend.ViewModels.Shared;
 using Platformus.Website.Data.Entities;
 
-namespace Platformus.Website.Backend.ViewModels.Website
+namespace Platformus.Website.Backend.ViewModels.Website;
+
+public static class MemberSelectorFormViewModelFactory
 {
-  public static class MemberSelectorFormViewModelFactory
+  public static MemberSelectorFormViewModel Create(IEnumerable<Class> classes, int? memberId)
   {
-    public static MemberSelectorFormViewModel Create(IEnumerable<Class> classes, int? memberId)
+    Dictionary<ClassViewModel, IEnumerable<MemberViewModel>> membersByClasses = new Dictionary<ClassViewModel, IEnumerable<MemberViewModel>>();
+
+    foreach (Class @class in classes)
+      membersByClasses.Add(
+        ClassViewModelFactory.Create(@class),
+        @class.Members.Select(MemberViewModelFactory.Create).ToList()
+      );
+
+    return new MemberSelectorFormViewModel()
     {
-      Dictionary<ClassViewModel, IEnumerable<MemberViewModel>> membersByClasses = new Dictionary<ClassViewModel, IEnumerable<MemberViewModel>>();
-
-      foreach (Class @class in classes)
-        membersByClasses.Add(
-          ClassViewModelFactory.Create(@class),
-          @class.Members.Select(MemberViewModelFactory.Create).ToList()
-        );
-
-      return new MemberSelectorFormViewModel()
-      {
-        MembersByClasses = membersByClasses,
-        MemberId = memberId
-      };
-    }
+      MembersByClasses = membersByClasses,
+      MemberId = memberId
+    };
   }
 }

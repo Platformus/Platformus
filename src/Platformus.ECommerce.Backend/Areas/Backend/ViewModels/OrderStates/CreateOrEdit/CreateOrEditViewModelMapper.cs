@@ -3,15 +3,14 @@
 
 using Platformus.ECommerce.Data.Entities;
 
-namespace Platformus.ECommerce.Backend.ViewModels.OrderStates
+namespace Platformus.ECommerce.Backend.ViewModels.OrderStates;
+
+public static class CreateOrEditViewModelMapper
 {
-  public static class CreateOrEditViewModelMapper
+  public static OrderState Map(OrderState orderState, CreateOrEditViewModel createOrEdit)
   {
-    public static OrderState Map(OrderState orderState, CreateOrEditViewModel createOrEdit)
-    {
-      orderState.Code = createOrEdit.Code;
-      orderState.Position = createOrEdit.Position;
-      return orderState;
-    }
+    orderState.Code = createOrEdit.Code;
+    orderState.Position = createOrEdit.Position;
+    return orderState;
   }
 }

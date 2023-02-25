@@ -13,61 +13,60 @@ using Microsoft.Extensions.DependencyInjection;
 using Platformus.Core.Parameters;
 using Platformus.Website.ResponseCaches;
 
-namespace Platformus.Website.Frontend
+namespace Platformus.Website.Frontend;
+
+public class FileSystemResponseCache : IResponseCache
 {
-  public class FileSystemResponseCache : IResponseCache
+  private const string cache = "Cache";
+  private readonly ConcurrentDictionary<string, object> locks = new ConcurrentDictionary<string, object>();
+
+  public string Description => "Caches responses in filesystem.";
+  public IEnumerable<ParameterGroup> ParameterGroups => new ParameterGroup[] { };
+
+  public async Task<byte[]> GetWithDefaultValueAsync(HttpContext httpContext, Func<Task<byte[]>> defaultValueFunc)
   {
-    private const string cache = "Cache";
-    private readonly ConcurrentDictionary<string, object> locks = new ConcurrentDictionary<string, object>();
+    IWebHostEnvironment webHostEnvironment = httpContext.RequestServices.GetService<IWebHostEnvironment>();
+    string path = Path.Combine(webHostEnvironment.ContentRootPath, cache, this.GenerateUniqueKeyForUrl(httpContext.Request.GetEncodedPathAndQuery()));
+    byte[] responseBody = null;
 
-    public string Description => "Caches responses in filesystem.";
-    public IEnumerable<ParameterGroup> ParameterGroups => new ParameterGroup[] { };
-
-    public async Task<byte[]> GetWithDefaultValueAsync(HttpContext httpContext, Func<Task<byte[]>> defaultValueFunc)
+    await Task.Factory.StartNew(() =>
     {
-      IWebHostEnvironment webHostEnvironment = httpContext.RequestServices.GetService<IWebHostEnvironment>();
-      string path = Path.Combine(webHostEnvironment.ContentRootPath, cache, this.GenerateUniqueKeyForUrl(httpContext.Request.GetEncodedPathAndQuery()));
-      byte[] responseBody = null;
-
-      await Task.Factory.StartNew(() =>
+      lock (this.locks.GetOrAdd(path, () => new object()))
       {
-        lock (this.locks.GetOrAdd(path, () => new object()))
+        if (File.Exists(path))
+          responseBody = File.ReadAllBytes(path);
+
+        else
         {
-          if (File.Exists(path))
-            responseBody = File.ReadAllBytes(path);
+          responseBody = defaultValueFunc().Result;
 
-          else
-          {
-            responseBody = defaultValueFunc().Result;
-
-            if (responseBody != null)
-              File.WriteAllBytes(path, responseBody);
-          }
+          if (responseBody != null)
+            File.WriteAllBytes(path, responseBody);
         }
-      });
-      
-      return responseBody;
-    }
+      }
+    });
 
-    public async Task RemoveAllAsync(HttpContext httpContext)
+    return responseBody;
+  }
+
+  public async Task RemoveAllAsync(HttpContext httpContext)
+  {
+    IWebHostEnvironment webHostEnvironment = httpContext.RequestServices.GetService<IWebHostEnvironment>();
+    string path = Path.Combine(webHostEnvironment.ContentRootPath, cache);
+
+    await Task.Factory.StartNew(() =>
     {
-      IWebHostEnvironment webHostEnvironment = httpContext.RequestServices.GetService<IWebHostEnvironment>();
-      string path = Path.Combine(webHostEnvironment.ContentRootPath, cache);
-
-      await Task.Factory.StartNew(() =>
+      lock (this.locks.GetOrAdd(path, () => new object()))
       {
-        lock (this.locks.GetOrAdd(path, () => new object()))
-        {
-          if (Directory.Exists(path))
-            foreach (string filepath in Directory.EnumerateFiles(path))
-              File.Delete(filepath);
-        }
-      });
-    }
+        if (Directory.Exists(path))
+          foreach (string filepath in Directory.EnumerateFiles(path))
+            File.Delete(filepath);
+      }
+    });
+  }
 
-    private string GenerateUniqueKeyForUrl(string url)
-    {
-      return url.Replace('/', '_').Replace('?', '_').Replace('&', '_').Replace('=', '_');
-    }
+  private string GenerateUniqueKeyForUrl(string url)
+  {
+    return url.Replace('/', '_').Replace('?', '_').Replace('&', '_').Replace('=', '_');
   }
 }

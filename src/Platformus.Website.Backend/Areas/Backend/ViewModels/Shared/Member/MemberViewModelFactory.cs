@@ -3,24 +3,23 @@
 
 using Platformus.Website.Data.Entities;
 
-namespace Platformus.Website.Backend.ViewModels.Shared
+namespace Platformus.Website.Backend.ViewModels.Shared;
+
+public static class MemberViewModelFactory
 {
-  public static class MemberViewModelFactory
+  public static MemberViewModel Create(Member member)
   {
-    public static MemberViewModel Create(Member member)
+    return new MemberViewModel()
     {
-      return new MemberViewModel()
-      {
-        Id = member.Id,
-        Name = member.Name,
-        Position = member.Position,
-        PropertyDataType = member.PropertyDataType == null ? null : DataTypeViewModelFactory.Create(member.PropertyDataType),
-        IsPropertyLocalizable = member.IsPropertyLocalizable,
-        RelationClass = member.RelationClass == null ? null : ClassViewModelFactory.Create(member.RelationClass),
-        IsRelationSingleParent = member.IsRelationSingleParent,
-        MinRelatedObjectsNumber = member.MinRelatedObjectsNumber,
-        MaxRelatedObjectsNumber = member.MaxRelatedObjectsNumber
-      };
-    }
+      Id = member.Id,
+      Name = member.Name,
+      Position = member.Position,
+      PropertyDataType = member.PropertyDataType == null ? null : DataTypeViewModelFactory.Create(member.PropertyDataType),
+      IsPropertyLocalizable = member.IsPropertyLocalizable,
+      RelationClass = member.RelationClass == null ? null : ClassViewModelFactory.Create(member.RelationClass),
+      IsRelationSingleParent = member.IsRelationSingleParent,
+      MinRelatedObjectsNumber = member.MinRelatedObjectsNumber,
+      MaxRelatedObjectsNumber = member.MaxRelatedObjectsNumber
+    };
   }
 }

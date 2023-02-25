@@ -4,16 +4,15 @@
 using Platformus.ECommerce.Data.Entities;
 using Platformus.ECommerce.Frontend.ViewModels.Shared;
 
-namespace Platformus.ECommerce.Frontend.ViewModels.ECommerce
+namespace Platformus.ECommerce.Frontend.ViewModels.ECommerce;
+
+public static class ThankYouPageViewModelFactory
 {
-  public static class ThankYouPageViewModelFactory
+  public static ThankYouPageViewModel Create(Order order)
   {
-    public static ThankYouPageViewModel Create(Order order)
+    return new ThankYouPageViewModel()
     {
-      return new ThankYouPageViewModel()
-      {
-        Order = OrderViewModelFactory.Create(order)
-      };
-    }
+      Order = OrderViewModelFactory.Create(order)
+    };
   }
 }

@@ -6,15 +6,14 @@ using Platformus.Core.Backend.ViewModels;
 using Platformus.Core.Primitives;
 using Platformus.Website.Backend.ViewModels.Shared;
 
-namespace Platformus.Website.Backend.ViewModels.Classes
+namespace Platformus.Website.Backend.ViewModels.Classes;
+
+public class IndexViewModel : ViewModelBase
 {
-  public class IndexViewModel : ViewModelBase
-  {
-    public IEnumerable<Option> ClassOptions { get; set; }
-    public string Sorting { get; set; }
-    public int Offset { get; set; }
-    public int Limit { get; set; }
-    public int Total { get; set; }
-    public IEnumerable<ClassViewModel> Classes { get; set; }
-  }
+  public IEnumerable<Option> ClassOptions { get; set; }
+  public string Sorting { get; set; }
+  public int Offset { get; set; }
+  public int Limit { get; set; }
+  public int Total { get; set; }
+  public IEnumerable<ClassViewModel> Classes { get; set; }
 }

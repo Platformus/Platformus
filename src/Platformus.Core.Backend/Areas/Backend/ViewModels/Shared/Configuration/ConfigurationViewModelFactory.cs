@@ -4,20 +4,19 @@
 using System.Linq;
 using Platformus.Core.Data.Entities;
 
-namespace Platformus.Core.Backend.ViewModels.Shared
+namespace Platformus.Core.Backend.ViewModels.Shared;
+
+public static class ConfigurationViewModelFactory
 {
-  public static class ConfigurationViewModelFactory
+  public static ConfigurationViewModel Create(Configuration configuration)
   {
-    public static ConfigurationViewModel Create(Configuration configuration)
+    return new ConfigurationViewModel()
     {
-      return new ConfigurationViewModel()
-      {
-        Id = configuration.Id,
-        Name = configuration.Name,
-        Variables = configuration.Variables
-          .OrderBy(v => v.Position)
-          .Select(VariableViewModelFactory.Create).ToList()
-      };
-    }
+      Id = configuration.Id,
+      Name = configuration.Name,
+      Variables = configuration.Variables
+        .OrderBy(v => v.Position)
+        .Select(VariableViewModelFactory.Create).ToList()
+    };
   }
 }

@@ -3,14 +3,13 @@
 
 using Microsoft.AspNetCore.Razor.TagHelpers;
 
-namespace Platformus.Core.Backend
+namespace Platformus.Core.Backend;
+
+[RestrictChildren("row", "partial")]
+public class RowsTagHelper : TagHelper
 {
-  [RestrictChildren("row", "partial")]
-  public class RowsTagHelper : TagHelper
+  public override void Process(TagHelperContext context, TagHelperOutput output)
   {
-    public override void Process(TagHelperContext context, TagHelperOutput output)
-    {
-      output.TagName = null;
-    }
+    output.TagName = null;
   }
 }

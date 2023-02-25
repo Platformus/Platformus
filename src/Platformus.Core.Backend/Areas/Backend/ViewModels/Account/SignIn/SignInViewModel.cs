@@ -3,23 +3,22 @@
 
 using System.ComponentModel.DataAnnotations;
 
-namespace Platformus.Core.Backend.ViewModels.Account
+namespace Platformus.Core.Backend.ViewModels.Account;
+
+public class SignInViewModel : ViewModelBase
 {
-  public class SignInViewModel : ViewModelBase
-  {
-    public string TargetUrl { get; set; }
+  public string TargetUrl { get; set; }
 
-    [Display(Name = "Email")]
-    [Required]
-    [StringLength(64)]
-    public string Email { get; set; }
+  [Display(Name = "Email")]
+  [Required]
+  [StringLength(64)]
+  public string Email { get; set; }
 
-    [Display(Name = "Password")]
-    [Required]
-    [StringLength(64)]
-    public string Password { get; set; }
+  [Display(Name = "Password")]
+  [Required]
+  [StringLength(64)]
+  public string Password { get; set; }
 
-    [Display(Name = "Remember me")]
-    public bool RememberMe { get; set; }
-  }
+  [Display(Name = "Remember me")]
+  public bool RememberMe { get; set; }
 }

@@ -5,15 +5,14 @@ using System;
 using ExtCore.Infrastructure.Actions;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace Platformus.Core.Actions
-{
-  public class AddHttpContextAccessorAction : IConfigureServicesAction
-  {
-    public int Priority => 1000;
+namespace Platformus.Core.Actions;
 
-    public void Execute(IServiceCollection services, IServiceProvider serviceProvider)
-    {
-      services.AddHttpContextAccessor();
-    }
+public class AddHttpContextAccessorAction : IConfigureServicesAction
+{
+  public int Priority => 1000;
+
+  public void Execute(IServiceCollection services, IServiceProvider serviceProvider)
+  {
+    services.AddHttpContextAccessor();
   }
 }

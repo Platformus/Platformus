@@ -4,25 +4,24 @@
 using Microsoft.AspNetCore.Http;
 using Platformus.ECommerce.Data.Entities;
 
-namespace Platformus.ECommerce.Backend.ViewModels.DeliveryMethods
-{
-  public static class CreateOrEditViewModelFactory
-  {
-    public static CreateOrEditViewModel Create(HttpContext httpContext, DeliveryMethod deliveryMethod)
-    {
-      if (deliveryMethod == null)
-        return new CreateOrEditViewModel()
-        {
-          NameLocalizations = httpContext.GetLocalizations()
-        };
+namespace Platformus.ECommerce.Backend.ViewModels.DeliveryMethods;
 
+public static class CreateOrEditViewModelFactory
+{
+  public static CreateOrEditViewModel Create(HttpContext httpContext, DeliveryMethod deliveryMethod)
+  {
+    if (deliveryMethod == null)
       return new CreateOrEditViewModel()
       {
-        Id = deliveryMethod.Id,
-        Code = deliveryMethod.Code,
-        NameLocalizations = httpContext.GetLocalizations(deliveryMethod.Name),
-        Position = deliveryMethod.Position
+        NameLocalizations = httpContext.GetLocalizations()
       };
-    }
+
+    return new CreateOrEditViewModel()
+    {
+      Id = deliveryMethod.Id,
+      Code = deliveryMethod.Code,
+      NameLocalizations = httpContext.GetLocalizations(deliveryMethod.Name),
+      Position = deliveryMethod.Position
+    };
   }
 }

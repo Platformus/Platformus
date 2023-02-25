@@ -3,19 +3,18 @@
 
 using System.Collections.Generic;
 
-namespace Platformus.Core.Backend.Metadata
-{
-  public class MenuGroup
-  {
-    public string Name { get; set; }
-    public int Position { get; set; }
-    public IEnumerable<MenuItem> MenuItems { get; set; }
+namespace Platformus.Core.Backend.Metadata;
 
-    public MenuGroup(string name, int position, IEnumerable<MenuItem> MenuItems)
-    {
-      this.Name = name;
-      this.Position = position;
-      this.MenuItems = MenuItems;
-    }
+public class MenuGroup
+{
+  public string Name { get; set; }
+  public int Position { get; set; }
+  public IEnumerable<MenuItem> MenuItems { get; set; }
+
+  public MenuGroup(string name, int position, IEnumerable<MenuItem> MenuItems)
+  {
+    this.Name = name;
+    this.Position = position;
+    this.MenuItems = MenuItems;
   }
 }

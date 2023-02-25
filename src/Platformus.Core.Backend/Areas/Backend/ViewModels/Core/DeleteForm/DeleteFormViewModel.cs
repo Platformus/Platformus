@@ -1,10 +1,9 @@
 ﻿// Copyright © 2020 Dmitry Sikorsky. All rights reserved.
 // Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information.
 
-namespace Platformus.Core.Backend.ViewModels.Core
+namespace Platformus.Core.Backend.ViewModels.Core;
+
+public class DeleteFormViewModel : ViewModelBase
 {
-  public class DeleteFormViewModel : ViewModelBase
-  {
-    public string TargetUrl { get; set; }
-  }
+  public string TargetUrl { get; set; }
 }

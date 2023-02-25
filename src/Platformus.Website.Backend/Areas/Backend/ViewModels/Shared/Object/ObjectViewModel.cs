@@ -4,12 +4,11 @@
 using System.Collections.Generic;
 using Platformus.Core.Backend.ViewModels;
 
-namespace Platformus.Website.Backend.ViewModels.Shared
+namespace Platformus.Website.Backend.ViewModels.Shared;
+
+public class ObjectViewModel : ViewModelBase
 {
-  public class ObjectViewModel : ViewModelBase
-  {
-    public int Id { get; set; }
-    public IEnumerable<PropertyViewModel> Properties { get; set; }
-    public IEnumerable<MemberViewModel> RelationSingleParentMembers { get; set; }
-  }
+  public int Id { get; set; }
+  public IEnumerable<PropertyViewModel> Properties { get; set; }
+  public IEnumerable<MemberViewModel> RelationSingleParentMembers { get; set; }
 }

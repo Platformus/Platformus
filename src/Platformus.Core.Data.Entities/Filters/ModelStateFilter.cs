@@ -4,19 +4,18 @@
 using System;
 using Magicalizer.Filters.Abstractions;
 
-namespace Platformus.Core.Filters
+namespace Platformus.Core.Filters;
+
+public class ModelStateFilter : IFilter
 {
-  public class ModelStateFilter : IFilter
+  public Guid? Id { get; set; }
+  public DateTimeFilter Created { get; set; }
+
+  public ModelStateFilter() { }
+
+  public ModelStateFilter(Guid? id = null, DateTimeFilter created = null)
   {
-    public Guid? Id { get; set; }
-    public DateTimeFilter Created { get; set; }
-
-    public ModelStateFilter() { }
-
-    public ModelStateFilter(Guid? id = null, DateTimeFilter created = null)
-    {
-      Id = id;
-      Created = created;
-    }
+    Id = id;
+    Created = created;
   }
 }

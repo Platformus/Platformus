@@ -3,20 +3,19 @@
 
 using Platformus.Website.Data.Entities;
 
-namespace Platformus.Website.Backend.ViewModels.Shared
+namespace Platformus.Website.Backend.ViewModels.Shared;
+
+public static class ClassViewModelFactory
 {
-  public static class ClassViewModelFactory
+  public static ClassViewModel Create(Class @class)
   {
-    public static ClassViewModel Create(Class @class)
+    return new ClassViewModel()
     {
-      return new ClassViewModel()
-      {
-        Id = @class.Id,
-        Parent = @class.Parent == null ? null : ClassViewModelFactory.Create(@class.Parent),
-        Name = @class.Name,
-        PluralizedName = @class.PluralizedName,
-        IsAbstract = @class.IsAbstract
-      };
-    }
+      Id = @class.Id,
+      Parent = @class.Parent == null ? null : ClassViewModelFactory.Create(@class.Parent),
+      Name = @class.Name,
+      PluralizedName = @class.PluralizedName,
+      IsAbstract = @class.IsAbstract
+    };
   }
 }

@@ -3,21 +3,20 @@
 
 using Magicalizer.Filters.Abstractions;
 
-namespace Platformus.ECommerce.Filters
+namespace Platformus.ECommerce.Filters;
+
+public class PhotoFilter : IFilter
 {
-  public class PhotoFilter : IFilter
+  public int? Id { get; set; }
+  public ProductFilter Product { get; set; }
+  public bool? IsCover { get; set; }
+
+  public PhotoFilter() { }
+
+  public PhotoFilter(int? id = null, ProductFilter product = null, bool? isCover = null)
   {
-    public int? Id { get; set; }
-    public ProductFilter Product { get; set; }
-    public bool? IsCover { get; set; }
-
-    public PhotoFilter() { }
-
-    public PhotoFilter(int? id = null, ProductFilter product = null, bool? isCover = null)
-    {
-      Id = id;
-      Product = product;
-      IsCover = isCover;
-    }
+    Id = id;
+    Product = product;
+    IsCover = isCover;
   }
 }

@@ -5,12 +5,11 @@ using ExtCore.Events;
 using Microsoft.AspNetCore.Http;
 using Platformus.Core.Data.Entities;
 
-namespace Platformus.Core.Events
+namespace Platformus.Core.Events;
+
+/// <summary>
+/// Describes an event handler that will be automatically executed just after a <see cref="Permission"/> is deleted.
+/// </summary>
+public interface IPermissionDeletedEventHandler : IEventHandler<HttpContext, Permission>
 {
-  /// <summary>
-  /// Describes an event handler that will be automatically executed just after a <see cref="Permission"/> is deleted.
-  /// </summary>
-  public interface IPermissionDeletedEventHandler : IEventHandler<HttpContext, Permission>
-  {
-  }
 }

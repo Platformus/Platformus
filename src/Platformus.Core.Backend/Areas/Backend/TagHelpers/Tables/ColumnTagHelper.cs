@@ -4,19 +4,18 @@
 using System.Collections.Generic;
 using Microsoft.AspNetCore.Razor.TagHelpers;
 
-namespace Platformus.Core.Backend
+namespace Platformus.Core.Backend;
+
+public class ColumnTagHelper : TagHelper
 {
-  public class ColumnTagHelper : TagHelper
+  public string Label { get; set; }
+  public string SortingPropertyPath { get; set; }
+
+  public override void Process(TagHelperContext context, TagHelperOutput output)
   {
-    public string Label { get; set; }
-    public string SortingPropertyPath { get; set; }
+    TableTagHelper.Column column = new TableTagHelper.Column(this.Label, this.SortingPropertyPath);
 
-    public override void Process(TagHelperContext context, TagHelperOutput output)
-    {
-      TableTagHelper.Column column = new TableTagHelper.Column(this.Label, this.SortingPropertyPath);
-
-      (context.Items["Columns"] as List<TableTagHelper.Column>).Add(column);
-      output.SuppressOutput();
-    }
+    (context.Items["Columns"] as List<TableTagHelper.Column>).Add(column);
+    output.SuppressOutput();
   }
 }

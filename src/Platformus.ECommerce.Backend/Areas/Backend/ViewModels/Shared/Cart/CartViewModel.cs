@@ -4,12 +4,11 @@
 using System;
 using Platformus.Core.Backend.ViewModels;
 
-namespace Platformus.ECommerce.Backend.ViewModels.Shared
+namespace Platformus.ECommerce.Backend.ViewModels.Shared;
+
+public class CartViewModel : ViewModelBase
 {
-  public class CartViewModel : ViewModelBase
-  {
-    public int Id { get; set; }
-    public decimal Total { get; set; }
-    public DateTime Created { get; set; }
-  }
+  public int Id { get; set; }
+  public decimal Total { get; set; }
+  public DateTime Created { get; set; }
 }

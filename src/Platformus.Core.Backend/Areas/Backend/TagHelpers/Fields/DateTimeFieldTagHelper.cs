@@ -5,46 +5,45 @@ using System;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.AspNetCore.Razor.TagHelpers;
 
-namespace Platformus.Core.Backend
+namespace Platformus.Core.Backend;
+
+public class DateTimeFieldTagHelper : FieldTagHelperBase<DateTime?>
 {
-  public class DateTimeFieldTagHelper : FieldTagHelperBase<DateTime?>
+  public override void Process(TagHelperContext context, TagHelperOutput output)
   {
-    public override void Process(TagHelperContext context, TagHelperOutput output)
-    {
-      if (this.For == null && string.IsNullOrEmpty(this.Id))
-        return;
+    if (this.For == null && string.IsNullOrEmpty(this.Id))
+      return;
 
-      base.Process(context, output);
-      output.Content.AppendHtml(this.CreateTextBox());
-      output.Content.AppendHtml(this.CreateValidationErrorMessage());
-    }
+    base.Process(context, output);
+    output.Content.AppendHtml(this.CreateTextBox());
+    output.Content.AppendHtml(this.CreateValidationErrorMessage());
+  }
 
-    protected override string FormatValue(object value)
-    {
-      return value == null ? null : ((DateTime)value).ToFixedLengthDateTimeString();
-    }
+  protected override string FormatValue(object value)
+  {
+    return value == null ? null : ((DateTime)value).ToFixedLengthDateTimeString();
+  }
 
-    private TagBuilder CreateTextBox()
-    {
-      TagBuilder tb = TextBoxGenerator.Generate(
-        this.GetIdentity(),
-        InputTypes.Text,
-        value: this.GetValue(),
-        validation: this.GetValidation()
-      );
+  private TagBuilder CreateTextBox()
+  {
+    TagBuilder tb = TextBoxGenerator.Generate(
+      this.GetIdentity(),
+      InputTypes.Text,
+      value: this.GetValue(),
+      validation: this.GetValidation()
+    );
 
-      tb.AddCssClass("field__text-box");
+    tb.AddCssClass("field__text-box");
 
-      if (this.Disabled)
-        tb.MergeAttribute(AttributeNames.Disabled, "disabled");
+    if (this.Disabled)
+      tb.MergeAttribute(AttributeNames.Disabled, "disabled");
 
-      tb.MergeAttribute(AttributeNames.DataType, "date-time");
+    tb.MergeAttribute(AttributeNames.DataType, "date-time");
 
-      // TODO: merge all the attributes, not only "onchange"
-      if (!string.IsNullOrEmpty(this.OnChange))
-        tb.MergeAttribute(AttributeNames.OnChange, this.OnChange);
+    // TODO: merge all the attributes, not only "onchange"
+    if (!string.IsNullOrEmpty(this.OnChange))
+      tb.MergeAttribute(AttributeNames.OnChange, this.OnChange);
 
-      return tb;
-    }
+    return tb;
   }
 }

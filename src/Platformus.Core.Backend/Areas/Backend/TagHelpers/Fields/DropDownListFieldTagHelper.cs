@@ -6,38 +6,37 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.AspNetCore.Razor.TagHelpers;
 using Platformus.Core.Primitives;
 
-namespace Platformus.Core.Backend
+namespace Platformus.Core.Backend;
+
+public class DropDownListFieldTagHelper : FieldTagHelperBase<string>
 {
-  public class DropDownListFieldTagHelper : FieldTagHelperBase<string>
+  public IEnumerable<Option> Options { get; set; }
+
+  public override void Process(TagHelperContext context, TagHelperOutput output)
   {
-    public IEnumerable<Option> Options { get; set; }
+    if ((this.For == null && string.IsNullOrEmpty(this.Id)) || this.Options == null)
+      return;
 
-    public override void Process(TagHelperContext context, TagHelperOutput output)
-    {
-      if ((this.For == null && string.IsNullOrEmpty(this.Id)) || this.Options == null)
-        return;
+    base.Process(context, output);
+    output.Content.AppendHtml(this.CreateDropDownList());
+    output.Content.AppendHtml(this.CreateValidationErrorMessage());
+  }
 
-      base.Process(context, output);
-      output.Content.AppendHtml(this.CreateDropDownList());
-      output.Content.AppendHtml(this.CreateValidationErrorMessage());
-    }
+  private TagBuilder CreateDropDownList()
+  {
+    TagBuilder tb = DropDownListGenerator.Generate(
+      this.GetIdentity(),
+      this.Options,
+      value: this.GetValue(),
+      validation: this.GetValidation()
+    );
 
-    private TagBuilder CreateDropDownList()
-    {
-      TagBuilder tb = DropDownListGenerator.Generate(
-        this.GetIdentity(),
-        this.Options,
-        value: this.GetValue(),
-        validation: this.GetValidation()
-      );
+    tb.AddCssClass("field__drop-down-list");
 
-      tb.AddCssClass("field__drop-down-list");
+    // TODO: merge all the attributes, not only "onchange"
+    if (!string.IsNullOrEmpty(this.OnChange))
+      tb.MergeAttribute(AttributeNames.OnChange, this.OnChange);
 
-      // TODO: merge all the attributes, not only "onchange"
-      if (!string.IsNullOrEmpty(this.OnChange))
-        tb.MergeAttribute(AttributeNames.OnChange, this.OnChange);
-
-      return tb;
-    }
+    return tb;
   }
 }

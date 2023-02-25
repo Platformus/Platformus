@@ -4,18 +4,17 @@
 using System.ComponentModel.DataAnnotations;
 using Platformus.Core.Backend.ViewModels;
 
-namespace Platformus.Website.Backend.ViewModels.Tabs
+namespace Platformus.Website.Backend.ViewModels.Tabs;
+
+public class CreateOrEditViewModel : ViewModelBase
 {
-  public class CreateOrEditViewModel : ViewModelBase
-  {
-    public int? Id { get; set; }
+  public int? Id { get; set; }
 
-    [Display(Name = "Name")]
-    [Required]
-    [StringLength(64)]
-    public string Name { get; set; }
+  [Display(Name = "Name")]
+  [Required]
+  [StringLength(64)]
+  public string Name { get; set; }
 
-    [Display(Name = "Position")]
-    public int? Position { get; set; }
-  }
+  [Display(Name = "Position")]
+  public int? Position { get; set; }
 }

@@ -16,111 +16,110 @@ using Platformus.Core.Data.Entities;
 using Platformus.Core.Events;
 using Platformus.Core.Filters;
 
-namespace Platformus.Core.Backend.Controllers
+namespace Platformus.Core.Backend.Controllers;
+
+[Authorize(Policy = Policies.HasManageRolesPermission)]
+public class RolesController : ControllerBase
 {
-  [Authorize(Policy = Policies.HasManageRolesPermission)]
-  public class RolesController : ControllerBase
+  private IStringLocalizer localizer;
+
+  private IRepository<int, Role, RoleFilter> RoleRepository
   {
-    private IStringLocalizer localizer;
+    get => this.Storage.GetRepository<int, Role, RoleFilter>();
+  }
 
-    private IRepository<int, Role, RoleFilter> RoleRepository
+  private IRepository<int, int, RolePermission, RolePermissionFilter> RolePermissionRepository
+  {
+    get => this.Storage.GetRepository<int, int, RolePermission, RolePermissionFilter>();
+  }
+
+  public RolesController(IStorage storage, IStringLocalizer<SharedResource> localizer)
+    : base(storage)
+  {
+    this.localizer = localizer;
+  }
+
+  public async Task<IActionResult> IndexAsync([FromQuery] RoleFilter filter = null, string sorting = "+position", int offset = 0, int limit = 10)
+  {
+    return this.View(await IndexViewModelFactory.CreateAsync(
+      this.HttpContext, sorting, offset, limit, await this.RoleRepository.CountAsync(filter),
+      await this.RoleRepository.GetAllAsync(filter, sorting, offset, limit)
+    ));
+  }
+
+  [HttpGet]
+  [ImportModelStateFromTempData]
+  public async Task<IActionResult> CreateOrEditAsync(int? id)
+  {
+    return this.View(await CreateOrEditViewModelFactory.CreateAsync(
+      this.HttpContext, id == null ? null : await this.RoleRepository.GetByIdAsync((int)id, new Inclusion<Role>(r => r.RolePermissions))
+    ));
+  }
+
+  [HttpPost]
+  [ExportModelStateToTempData]
+  public async Task<IActionResult> CreateOrEditAsync(CreateOrEditViewModel createOrEdit)
+  {
+    if (!await this.IsCodeUniqueAsync(createOrEdit))
+      this.ModelState.AddModelError("code", this.localizer["Value is already in use"]);
+
+    if (this.ModelState.IsValid)
     {
-      get => this.Storage.GetRepository<int, Role, RoleFilter>();
-    }
+      Role role = CreateOrEditViewModelMapper.Map(
+        createOrEdit.Id == null ? new Role() : await this.RoleRepository.GetByIdAsync((int)createOrEdit.Id, new Inclusion<Role>(r => r.RolePermissions)),
+        createOrEdit
+      );
 
-    private IRepository<int, int, RolePermission, RolePermissionFilter> RolePermissionRepository
-    {
-      get => this.Storage.GetRepository<int, int, RolePermission, RolePermissionFilter>();
-    }
+      if (createOrEdit.Id == null)
+        this.RoleRepository.Create(role);
 
-    public RolesController(IStorage storage, IStringLocalizer<SharedResource> localizer)
-      : base(storage)
-    {
-      this.localizer = localizer;
-    }
+      else this.RoleRepository.Edit(role);
 
-    public async Task<IActionResult> IndexAsync([FromQuery]RoleFilter filter = null, string sorting = "+position", int offset = 0, int limit = 10)
-    {
-      return this.View(await IndexViewModelFactory.CreateAsync(
-        this.HttpContext, sorting, offset, limit, await this.RoleRepository.CountAsync(filter),
-        await this.RoleRepository.GetAllAsync(filter, sorting, offset, limit)
-      ));
-    }
-
-    [HttpGet]
-    [ImportModelStateFromTempData]
-    public async Task<IActionResult> CreateOrEditAsync(int? id)
-    {
-      return this.View(await CreateOrEditViewModelFactory.CreateAsync(
-        this.HttpContext, id == null ? null : await this.RoleRepository.GetByIdAsync((int)id, new Inclusion<Role>(r => r.RolePermissions))
-      ));
-    }
-
-    [HttpPost]
-    [ExportModelStateToTempData]
-    public async Task<IActionResult> CreateOrEditAsync(CreateOrEditViewModel createOrEdit)
-    {
-      if (!await this.IsCodeUniqueAsync(createOrEdit))
-        this.ModelState.AddModelError("code", this.localizer["Value is already in use"]);
-
-      if (this.ModelState.IsValid)
-      {
-        Role role = CreateOrEditViewModelMapper.Map(
-          createOrEdit.Id == null ? new Role() : await this.RoleRepository.GetByIdAsync((int)createOrEdit.Id, new Inclusion<Role>(r => r.RolePermissions)),
-          createOrEdit
-        );
-
-        if (createOrEdit.Id == null)
-          this.RoleRepository.Create(role);
-
-        else this.RoleRepository.Edit(role);
-
-        this.MergeRolePermissions(role);
-        await this.Storage.SaveAsync();
-
-        if (createOrEdit.Id == null)
-          Event<IRoleCreatedEventHandler, HttpContext, Role>.Broadcast(this.HttpContext, role);
-
-        else Event<IRoleEditedEventHandler, HttpContext, Role>.Broadcast(this.HttpContext, role);
-
-        return this.Redirect(this.Request.CombineUrl("/backend/roles"));
-      }
-
-      return this.CreateRedirectToSelfResult();
-    }
-
-    public async Task<IActionResult> DeleteAsync(int id)
-    {
-      Role role = await this.RoleRepository.GetByIdAsync(id);
-
-      this.RoleRepository.Delete(role.Id);
+      this.MergeRolePermissions(role);
       await this.Storage.SaveAsync();
-      Event<IRoleDeletedEventHandler, HttpContext, Role>.Broadcast(this.HttpContext, role);
+
+      if (createOrEdit.Id == null)
+        Event<IRoleCreatedEventHandler, HttpContext, Role>.Broadcast(this.HttpContext, role);
+
+      else Event<IRoleEditedEventHandler, HttpContext, Role>.Broadcast(this.HttpContext, role);
+
       return this.Redirect(this.Request.CombineUrl("/backend/roles"));
     }
 
-    private async Task<bool> IsCodeUniqueAsync(CreateOrEditViewModel createOrEdit)
-    {
-      Role role = (await this.RoleRepository.GetAllAsync(new RoleFilter(code: createOrEdit.Code))).FirstOrDefault();
+    return this.CreateRedirectToSelfResult();
+  }
 
-      return role == null || role.Id == createOrEdit.Id;
-    }
+  public async Task<IActionResult> DeleteAsync(int id)
+  {
+    Role role = await this.RoleRepository.GetByIdAsync(id);
 
-    private void MergeRolePermissions(Role role)
-    {
-      List<int> permissionIds = new List<int>();
+    this.RoleRepository.Delete(role.Id);
+    await this.Storage.SaveAsync();
+    Event<IRoleDeletedEventHandler, HttpContext, Role>.Broadcast(this.HttpContext, role);
+    return this.Redirect(this.Request.CombineUrl("/backend/roles"));
+  }
 
-      foreach (string key in this.Request.Form.Keys)
-        if (key.StartsWith("permission") && this.Request.Form[key].FirstOrDefault().ToBoolWithDefaultValue(false))
-          permissionIds.Add(int.Parse(key.Replace("permission", string.Empty)));
+  private async Task<bool> IsCodeUniqueAsync(CreateOrEditViewModel createOrEdit)
+  {
+    Role role = (await this.RoleRepository.GetAllAsync(new RoleFilter(code: createOrEdit.Code))).FirstOrDefault();
 
-      IEnumerable<RolePermission> currentRolePermissions = role.RolePermissions ?? Array.Empty<RolePermission>();
+    return role == null || role.Id == createOrEdit.Id;
+  }
 
-      foreach (RolePermission rolePermission in currentRolePermissions.Where(crp => !permissionIds.Any(id => id == crp.PermissionId)).ToList())
-        this.RolePermissionRepository.Delete(rolePermission.RoleId, rolePermission.PermissionId);
+  private void MergeRolePermissions(Role role)
+  {
+    List<int> permissionIds = new List<int>();
 
-      foreach (int permissionId in permissionIds.Where(id => !currentRolePermissions.Any(crp => crp.PermissionId == id)))
-        this.RolePermissionRepository.Create(new RolePermission() { Role = role, PermissionId = permissionId });
-    }
+    foreach (string key in this.Request.Form.Keys)
+      if (key.StartsWith("permission") && this.Request.Form[key].FirstOrDefault().ToBoolWithDefaultValue(false))
+        permissionIds.Add(int.Parse(key.Replace("permission", string.Empty)));
+
+    IEnumerable<RolePermission> currentRolePermissions = role.RolePermissions ?? Array.Empty<RolePermission>();
+
+    foreach (RolePermission rolePermission in currentRolePermissions.Where(crp => !permissionIds.Any(id => id == crp.PermissionId)).ToList())
+      this.RolePermissionRepository.Delete(rolePermission.RoleId, rolePermission.PermissionId);
+
+    foreach (int permissionId in permissionIds.Where(id => !currentRolePermissions.Any(crp => crp.PermissionId == id)))
+      this.RolePermissionRepository.Create(new RolePermission() { Role = role, PermissionId = permissionId });
   }
 }

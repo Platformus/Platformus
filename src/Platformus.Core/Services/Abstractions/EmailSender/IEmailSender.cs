@@ -4,20 +4,19 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace Platformus.Core.Services.Abstractions
+namespace Platformus.Core.Services.Abstractions;
+
+/// <summary>
+/// Describes a service for sending emails.
+/// </summary>
+public interface IEmailSender
 {
   /// <summary>
-  /// Describes a service for sending emails.
+  /// Sends an email.
   /// </summary>
-  public interface IEmailSender
-  {
-    /// <summary>
-    /// Sends an email.
-    /// </summary>
-    /// <param name="to">An email recipient's email address.</param>
-    /// <param name="subject">An email subject.</param>
-    /// <param name="body">An email body (HTML).</param>
-    /// <param name="attachmentsByFilenames">An email attachments (by filenames).</param>
-    Task<SendEmailResult> SendEmailAsync(string to, string subject, string body, IDictionary<string, byte[]> attachmentsByFilenames);
-  }
+  /// <param name="to">An email recipient's email address.</param>
+  /// <param name="subject">An email subject.</param>
+  /// <param name="body">An email body (HTML).</param>
+  /// <param name="attachmentsByFilenames">An email attachments (by filenames).</param>
+  Task<SendEmailResult> SendEmailAsync(string to, string subject, string body, IDictionary<string, byte[]> attachmentsByFilenames);
 }

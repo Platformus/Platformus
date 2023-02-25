@@ -3,37 +3,36 @@
 
 using Platformus.Website.Data.Entities;
 
-namespace Platformus.Website
+namespace Platformus.Website;
+
+/// <summary>
+/// Contains the extension methods of the <see cref="Property"/>.
+/// </summary>
+public static class PropertyExtensions
 {
   /// <summary>
-  /// Contains the extension methods of the <see cref="Property"/>.
+  /// Gets a property value according to its type.
   /// </summary>
-  public static class PropertyExtensions
+  /// <param name="property">A property to get the value of.</param>
+  public static object GetValue(this Property property)
   {
-    /// <summary>
-    /// Gets a property value according to its type.
-    /// </summary>
-    /// <param name="property">A property to get the value of.</param>
-    public static object GetValue(this Property property)
+    if (property.IntegerValue != null)
+      return property.IntegerValue;
+
+    else if (property.DecimalValue != null)
+      return property.DecimalValue;
+
+    else if (property.StringValue != null)
     {
-      if (property.IntegerValue != null)
-        return property.IntegerValue;
+      if (property.Member.IsPropertyLocalizable == true)
+        return property.StringValue.GetLocalizationValue();
 
-      else if (property.DecimalValue != null)
-        return property.DecimalValue;
-
-      else if (property.StringValue != null)
-      {
-        if (property.Member.IsPropertyLocalizable == true)
-          return property.StringValue.GetLocalizationValue();
-
-        return property.StringValue.GetNeutralLocalizationValue();
-      }
-
-      else if (property.DateTimeValue != null)
-        return property.DateTimeValue;
-
-      return null;
+      return property.StringValue.GetNeutralLocalizationValue();
     }
+
+    else if (property.DateTimeValue != null)
+      return property.DateTimeValue;
+
+    return null;
   }
 }

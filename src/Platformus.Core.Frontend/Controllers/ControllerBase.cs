@@ -3,13 +3,12 @@
 
 using Magicalizer.Data.Repositories.Abstractions;
 
-namespace Platformus.Core.Frontend.Controllers
+namespace Platformus.Core.Frontend.Controllers;
+
+public abstract class ControllerBase : Core.Controllers.ControllerBase
 {
-  public abstract class ControllerBase : Core.Controllers.ControllerBase
+  public ControllerBase(IStorage storage)
+    : base(storage)
   {
-    public ControllerBase(IStorage storage)
-      : base(storage)
-    {
-    }
   }
 }

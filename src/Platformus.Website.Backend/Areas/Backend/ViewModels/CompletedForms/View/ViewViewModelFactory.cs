@@ -5,17 +5,16 @@ using System.Linq;
 using Platformus.Website.Backend.ViewModels.Shared;
 using Platformus.Website.Data.Entities;
 
-namespace Platformus.Website.Backend.ViewModels.CompletedForms
+namespace Platformus.Website.Backend.ViewModels.CompletedForms;
+
+public static class ViewViewModelFactory
 {
-  public static class ViewViewModelFactory
+  public static ViewViewModel Create(CompletedForm completedForm)
   {
-    public static ViewViewModel Create(CompletedForm completedForm)
+    return new ViewViewModel()
     {
-      return new ViewViewModel()
-      {
-        Id = completedForm.Id,
-        CompletedFields = completedForm.CompletedFields.Select(CompletedFieldViewModelFactory.Create).ToList()
-      };
-    }
+      Id = completedForm.Id,
+      CompletedFields = completedForm.CompletedFields.Select(CompletedFieldViewModelFactory.Create).ToList()
+    };
   }
 }

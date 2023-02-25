@@ -7,15 +7,14 @@ using Microsoft.Extensions.DependencyInjection;
 using Platformus.Core.Services.Abstractions;
 using Platformus.Core.Services.Defaults;
 
-namespace Platformus.Core.Actions
-{
-  public class AddUserManagerAction : IConfigureServicesAction
-  {
-    public int Priority => 1000;
+namespace Platformus.Core.Actions;
 
-    public void Execute(IServiceCollection services, IServiceProvider serviceProvider)
-    {
-      services.AddScoped(typeof(IUserManager), typeof(DefaultUserManager));
-    }
+public class AddUserManagerAction : IConfigureServicesAction
+{
+  public int Priority => 1000;
+
+  public void Execute(IServiceCollection services, IServiceProvider serviceProvider)
+  {
+    services.AddScoped(typeof(IUserManager), typeof(DefaultUserManager));
   }
 }

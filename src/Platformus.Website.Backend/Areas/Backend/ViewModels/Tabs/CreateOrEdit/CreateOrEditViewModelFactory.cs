@@ -3,23 +3,22 @@
 
 using Platformus.Website.Data.Entities;
 
-namespace Platformus.Website.Backend.ViewModels.Tabs
-{
-  public static class CreateOrEditViewModelFactory
-  {
-    public static CreateOrEditViewModel Create(Tab tab)
-    {
-      if (tab == null)
-        return new CreateOrEditViewModel()
-        {
-        };
+namespace Platformus.Website.Backend.ViewModels.Tabs;
 
+public static class CreateOrEditViewModelFactory
+{
+  public static CreateOrEditViewModel Create(Tab tab)
+  {
+    if (tab == null)
       return new CreateOrEditViewModel()
       {
-        Id = tab.Id,
-        Name = tab.Name,
-        Position = tab.Position
       };
-    }
+
+    return new CreateOrEditViewModel()
+    {
+      Id = tab.Id,
+      Name = tab.Name,
+      Position = tab.Position
+    };
   }
 }

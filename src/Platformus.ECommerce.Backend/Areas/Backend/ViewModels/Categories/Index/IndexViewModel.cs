@@ -5,10 +5,9 @@ using System.Collections.Generic;
 using Platformus.Core.Backend.ViewModels;
 using Platformus.ECommerce.Backend.ViewModels.Shared;
 
-namespace Platformus.ECommerce.Backend.ViewModels.Categories
+namespace Platformus.ECommerce.Backend.ViewModels.Categories;
+
+public class IndexViewModel : ViewModelBase
 {
-  public class IndexViewModel : ViewModelBase
-  {
-    public IEnumerable<CategoryViewModel> Categories { get; set; }
-  }
+  public IEnumerable<CategoryViewModel> Categories { get; set; }
 }

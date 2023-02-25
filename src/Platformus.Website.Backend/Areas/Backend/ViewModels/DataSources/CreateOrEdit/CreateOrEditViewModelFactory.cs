@@ -9,33 +9,32 @@ using Platformus.Core.Primitives;
 using Platformus.Website.Data.Entities;
 using Platformus.Website.DataProviders;
 
-namespace Platformus.Website.Backend.ViewModels.DataSources
-{
-  public static class CreateOrEditViewModelFactory
-  {
-    public static CreateOrEditViewModel Create(DataSource dataSource)
-    {
-      if (dataSource == null)
-        return new CreateOrEditViewModel()
-        {
-          DataProviderCSharpClassNameOptions = GetDataProviderCSharpClassNameOptions()
-        };
+namespace Platformus.Website.Backend.ViewModels.DataSources;
 
+public static class CreateOrEditViewModelFactory
+{
+  public static CreateOrEditViewModel Create(DataSource dataSource)
+  {
+    if (dataSource == null)
       return new CreateOrEditViewModel()
       {
-        Id = dataSource.Id,
-        Code = dataSource.Code,
-        DataProviderCSharpClassName = dataSource.DataProviderCSharpClassName,
-        DataProviderCSharpClassNameOptions = GetDataProviderCSharpClassNameOptions(),
-        DataProviderParameters = dataSource.DataProviderParameters
+        DataProviderCSharpClassNameOptions = GetDataProviderCSharpClassNameOptions()
       };
-    }
 
-    private static IEnumerable<Option> GetDataProviderCSharpClassNameOptions()
+    return new CreateOrEditViewModel()
     {
-      return ExtensionManager.GetImplementations<IDataProvider>().Where(t => !t.GetTypeInfo().IsAbstract).Select(
-        t => new Option(t.FullName)
-      ).ToList();
-    }
+      Id = dataSource.Id,
+      Code = dataSource.Code,
+      DataProviderCSharpClassName = dataSource.DataProviderCSharpClassName,
+      DataProviderCSharpClassNameOptions = GetDataProviderCSharpClassNameOptions(),
+      DataProviderParameters = dataSource.DataProviderParameters
+    };
+  }
+
+  private static IEnumerable<Option> GetDataProviderCSharpClassNameOptions()
+  {
+    return ExtensionManager.GetImplementations<IDataProvider>().Where(t => !t.GetTypeInfo().IsAbstract).Select(
+      t => new Option(t.FullName)
+    ).ToList();
   }
 }

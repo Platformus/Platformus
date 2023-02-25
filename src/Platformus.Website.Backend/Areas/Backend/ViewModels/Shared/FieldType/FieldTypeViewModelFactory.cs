@@ -3,18 +3,17 @@
 
 using Platformus.Website.Data.Entities;
 
-namespace Platformus.Website.Backend.ViewModels.Shared
+namespace Platformus.Website.Backend.ViewModels.Shared;
+
+public static class FieldTypeViewModelFactory
 {
-  public static class FieldTypeViewModelFactory
+  public static FieldTypeViewModel Create(FieldType fieldType)
   {
-    public static FieldTypeViewModel Create(FieldType fieldType)
+    return new FieldTypeViewModel()
     {
-      return new FieldTypeViewModel()
-      {
-        Id = fieldType.Id,
-        Code = fieldType.Code,
-        Name = fieldType.Name
-      };
-    }
+      Id = fieldType.Id,
+      Code = fieldType.Code,
+      Name = fieldType.Name
+    };
   }
 }

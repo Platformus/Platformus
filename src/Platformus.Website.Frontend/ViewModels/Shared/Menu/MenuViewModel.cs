@@ -4,12 +4,11 @@
 using System.Collections.Generic;
 using Platformus.Core.Frontend.ViewModels;
 
-namespace Platformus.Website.Frontend.ViewModels.Shared
+namespace Platformus.Website.Frontend.ViewModels.Shared;
+
+public class MenuViewModel : ViewModelBase
 {
-  public class MenuViewModel : ViewModelBase
-  {
-    public IEnumerable<MenuItemViewModel> MenuItems { get; set; }
-    public string PartialViewName { get; set; }
-    public string AdditionalCssClass { get; set; }
-  }
+  public IEnumerable<MenuItemViewModel> MenuItems { get; set; }
+  public string PartialViewName { get; set; }
+  public string AdditionalCssClass { get; set; }
 }

@@ -7,15 +7,14 @@ using Microsoft.Extensions.DependencyInjection;
 using Platformus.Core.Services.Abstractions;
 using Platformus.Core.Services.Defaults;
 
-namespace Platformus.Core.Actions
-{
-  public class AddConfigurationManagerAction : IConfigureServicesAction
-  {
-    public int Priority => 1000;
+namespace Platformus.Core.Actions;
 
-    public void Execute(IServiceCollection services, IServiceProvider serviceProvider)
-    {
-      services.AddScoped<IConfigurationManager, DefaultConfigurationManager>();
-    }
+public class AddConfigurationManagerAction : IConfigureServicesAction
+{
+  public int Priority => 1000;
+
+  public void Execute(IServiceCollection services, IServiceProvider serviceProvider)
+  {
+    services.AddScoped<IConfigurationManager, DefaultConfigurationManager>();
   }
 }

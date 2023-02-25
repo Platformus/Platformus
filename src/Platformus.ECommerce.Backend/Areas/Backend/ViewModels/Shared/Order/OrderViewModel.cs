@@ -4,18 +4,17 @@
 using System;
 using Platformus.Core.Backend.ViewModels;
 
-namespace Platformus.ECommerce.Backend.ViewModels.Shared
+namespace Platformus.ECommerce.Backend.ViewModels.Shared;
+
+public class OrderViewModel : ViewModelBase
 {
-  public class OrderViewModel : ViewModelBase
-  {
-    public int Id { get; set; }
-    public OrderStateViewModel OrderState { get; set; }
-    public DeliveryMethodViewModel DeliveryMethod { get; set; }
-    public PaymentMethodViewModel PaymentMethod { get; set; }
-    public string CustomerFirstName { get; set; }
-    public string CustomerLastName { get; set; }
-    public string CustomerPhone { get; set; }
-    public decimal Total { get; set; }
-    public DateTime Created { get; set; }
-  }
+  public int Id { get; set; }
+  public OrderStateViewModel OrderState { get; set; }
+  public DeliveryMethodViewModel DeliveryMethod { get; set; }
+  public PaymentMethodViewModel PaymentMethod { get; set; }
+  public string CustomerFirstName { get; set; }
+  public string CustomerLastName { get; set; }
+  public string CustomerPhone { get; set; }
+  public decimal Total { get; set; }
+  public DateTime Created { get; set; }
 }

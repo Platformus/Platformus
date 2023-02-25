@@ -4,19 +4,18 @@
 using Magicalizer.Filters.Abstractions;
 using Platformus.Core.Filters;
 
-namespace Platformus.Website.Filters
+namespace Platformus.Website.Filters;
+
+public class EndpointPermissionFilter : IFilter
 {
-  public class EndpointPermissionFilter : IFilter
+  public EndpointFilter Endpoint { get; set; }
+  public PermissionFilter Permission { get; set; }
+
+  public EndpointPermissionFilter() { }
+
+  public EndpointPermissionFilter(EndpointFilter endpoint = null, PermissionFilter permission = null)
   {
-    public EndpointFilter Endpoint { get; set; }
-    public PermissionFilter Permission { get; set; }
-
-    public EndpointPermissionFilter() { }
-
-    public EndpointPermissionFilter(EndpointFilter endpoint = null, PermissionFilter permission = null)
-    {
-      Endpoint = endpoint;
-      Permission = permission;
-    }
+    Endpoint = endpoint;
+    Permission = permission;
   }
 }

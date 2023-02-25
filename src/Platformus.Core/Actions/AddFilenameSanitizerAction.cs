@@ -7,15 +7,14 @@ using Microsoft.Extensions.DependencyInjection;
 using Platformus.Core.Services.Abstractions;
 using Platformus.Core.Services.Defaults;
 
-namespace Platformus.Core.Actions
-{
-  public class AddFilenameSanitizerAction : IConfigureServicesAction
-  {
-    public int Priority => 1000;
+namespace Platformus.Core.Actions;
 
-    public void Execute(IServiceCollection services, IServiceProvider serviceProvider)
-    {
-      services.AddSingleton(typeof(IFilenameSanitizer), typeof(DefaultFilenameSanitizer));
-    }
+public class AddFilenameSanitizerAction : IConfigureServicesAction
+{
+  public int Priority => 1000;
+
+  public void Execute(IServiceCollection services, IServiceProvider serviceProvider)
+  {
+    services.AddSingleton(typeof(IFilenameSanitizer), typeof(DefaultFilenameSanitizer));
   }
 }

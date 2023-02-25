@@ -5,34 +5,33 @@ using System.Collections.Generic;
 using Magicalizer.Data.Entities.Abstractions;
 using Platformus.Core.Data.Entities;
 
-namespace Platformus.ECommerce.Data.Entities
+namespace Platformus.ECommerce.Data.Entities;
+
+/// <summary>
+/// Represents an payment method.
+/// </summary>
+public class PaymentMethod : IEntity
 {
   /// <summary>
-  /// Represents an payment method.
+  /// Gets or sets the unique identifier of the payment method.
   /// </summary>
-  public class PaymentMethod : IEntity
-  {
-    /// <summary>
-    /// Gets or sets the unique identifier of the payment method.
-    /// </summary>
-    public int Id { get; set; }
+  public int Id { get; set; }
 
-    /// <summary>
-    /// Gets or sets the unique code of the payment method. It is set by the user and might be used for the payment method retrieval.
-    /// </summary>
-    public string Code { get; set; }
+  /// <summary>
+  /// Gets or sets the unique code of the payment method. It is set by the user and might be used for the payment method retrieval.
+  /// </summary>
+  public string Code { get; set; }
 
-    /// <summary>
-    /// Gets or sets the dictionary identifier this payment method is related to. It is used to store the localizable payment method name.
-    /// </summary>
-    public int NameId { get; set; }
+  /// <summary>
+  /// Gets or sets the dictionary identifier this payment method is related to. It is used to store the localizable payment method name.
+  /// </summary>
+  public int NameId { get; set; }
 
-    /// <summary>
-    /// Gets or sets the payment method position. Position is used to sort the payment methods (smallest to largest).
-    /// </summary>
-    public int? Position { get; set; }
+  /// <summary>
+  /// Gets or sets the payment method position. Position is used to sort the payment methods (smallest to largest).
+  /// </summary>
+  public int? Position { get; set; }
 
-    public virtual Dictionary Name { get; set; }
-    public virtual ICollection<Order> Orders { get; set; }
-  }
+  public virtual Dictionary Name { get; set; }
+  public virtual ICollection<Order> Orders { get; set; }
 }

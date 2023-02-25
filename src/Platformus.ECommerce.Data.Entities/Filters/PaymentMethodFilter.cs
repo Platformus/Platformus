@@ -4,23 +4,22 @@
 using Magicalizer.Filters.Abstractions;
 using Platformus.Core.Filters;
 
-namespace Platformus.ECommerce.Filters
+namespace Platformus.ECommerce.Filters;
+
+public class PaymentMethodFilter : IFilter
 {
-  public class PaymentMethodFilter : IFilter
+  public int? Id { get; set; }
+  public string Code { get; set; }
+
+  [FilterShortcut("Name.Localizations[]")]
+  public LocalizationFilter Name { get; set; }
+
+  public PaymentMethodFilter() { }
+
+  public PaymentMethodFilter(int? id = null, string code = null, LocalizationFilter name = null)
   {
-    public int? Id { get; set; }
-    public string Code { get; set; }
-
-    [FilterShortcut("Name.Localizations[]")]
-    public LocalizationFilter Name { get; set; }
-
-    public PaymentMethodFilter() { }
-
-    public PaymentMethodFilter(int? id = null, string code = null, LocalizationFilter name = null)
-    {
-      Id = id;
-      Code = code;
-      Name = name;
-    }
+    Id = id;
+    Code = code;
+    Name = name;
   }
 }

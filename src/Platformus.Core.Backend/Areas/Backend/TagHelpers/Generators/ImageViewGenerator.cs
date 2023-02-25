@@ -3,32 +3,31 @@
 
 using Microsoft.AspNetCore.Mvc.Rendering;
 
-namespace Platformus.Core.Backend
+namespace Platformus.Core.Backend;
+
+public static class ImageViewGenerator
 {
-  public static class ImageViewGenerator
+  public static TagBuilder Generate(string identity, string url)
   {
-    public static TagBuilder Generate(string identity, string url)
-    {
-      TagBuilder tb = new TagBuilder(TagNames.Div);
+    TagBuilder tb = new TagBuilder(TagNames.Div);
 
-      tb.AddCssClass("image-view");
-      tb.MergeAttribute("id", identity);
-      tb.InnerHtml.AppendHtml(GenerateImage(url));
-      return tb;
-    }
+    tb.AddCssClass("image-view");
+    tb.MergeAttribute("id", identity);
+    tb.InnerHtml.AppendHtml(GenerateImage(url));
+    return tb;
+  }
 
-    private static TagBuilder GenerateImage(string url)
-    {
-      TagBuilder tb = new TagBuilder(TagNames.Img);
+  private static TagBuilder GenerateImage(string url)
+  {
+    TagBuilder tb = new TagBuilder(TagNames.Img);
 
-      tb.AddCssClass("image-view__image");
+    tb.AddCssClass("image-view__image");
 
-      if (string.IsNullOrEmpty(url))
-        tb.MergeAttribute(AttributeNames.Style, "display: none;");
+    if (string.IsNullOrEmpty(url))
+      tb.MergeAttribute(AttributeNames.Style, "display: none;");
 
-      else tb.MergeAttribute(AttributeNames.Src, url);
+    else tb.MergeAttribute(AttributeNames.Src, url);
 
-      return tb;
-    }
+    return tb;
   }
 }

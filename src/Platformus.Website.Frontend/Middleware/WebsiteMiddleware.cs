@@ -9,87 +9,86 @@ using Platformus.Website.Frontend.Services.Abstractions;
 using Platformus.Website.RequestProcessors;
 using Platformus.Website.ResponseCaches;
 
-namespace Platformus.Website.Frontend.Middleware
+namespace Platformus.Website.Frontend.Middleware;
+
+public class WebsiteMiddleware
 {
-  public class WebsiteMiddleware
+  private readonly RequestDelegate next;
+
+  public WebsiteMiddleware(RequestDelegate next)
   {
-    private readonly RequestDelegate next;
+    this.next = next;
+  }
 
-    public WebsiteMiddleware(RequestDelegate next)
+  public async Task InvokeAsync(HttpContext httpContext, IEndpointResolver endpointResolver)
+  {
+    Data.Entities.Endpoint endpoint = await endpointResolver.ResolveAsync(httpContext);
+
+    if (endpoint != null)
     {
-      this.next = next;
-    }
-
-    public async Task InvokeAsync(HttpContext httpContext, IEndpointResolver endpointResolver)
-    {
-      Data.Entities.Endpoint endpoint = await endpointResolver.ResolveAsync(httpContext);
-
-      if (endpoint != null)
+      if (!endpoint.DisallowAnonymous || (httpContext.User.Identity.IsAuthenticated && endpoint.EndpointPermissions.All(ep => httpContext.User.HasClaim(PlatformusClaimTypes.Permission, ep.Permission.Code))))
       {
-        if (!endpoint.DisallowAnonymous || (httpContext.User.Identity.IsAuthenticated && endpoint.EndpointPermissions.All(ep => httpContext.User.HasClaim(PlatformusClaimTypes.Permission, ep.Permission.Code))))
+        byte[] responseBody;
+        Func<Task<byte[]>> defaultValueFunc = async () =>
         {
-          byte[] responseBody;
-          Func<Task<byte[]>> defaultValueFunc = async () =>
-          {
-            IActionResult actionResult = await this.CreateRequestProcessor(endpoint).ProcessAsync(httpContext, endpoint);
+          IActionResult actionResult = await this.CreateRequestProcessor(endpoint).ProcessAsync(httpContext, endpoint);
 
-            if (actionResult == null)
-              return null;
+          if (actionResult == null)
+            return null;
 
-            return await this.GetResponseBodyAsync(httpContext, actionResult);
-          };
+          return await this.GetResponseBodyAsync(httpContext, actionResult);
+        };
 
-          if (string.IsNullOrEmpty(endpoint.ResponseCacheCSharpClassName))
-            responseBody = await defaultValueFunc();
+        if (string.IsNullOrEmpty(endpoint.ResponseCacheCSharpClassName))
+          responseBody = await defaultValueFunc();
 
-          else
-          {
-            responseBody = await this.CreateResponseCache(endpoint).GetWithDefaultValueAsync(
-              httpContext,
-              defaultValueFunc
-            );
-          }
+        else
+        {
+          responseBody = await this.CreateResponseCache(endpoint).GetWithDefaultValueAsync(
+            httpContext,
+            defaultValueFunc
+          );
+        }
 
-          if (responseBody != null)
-          {
-            await httpContext.Response.Body.WriteAsync(responseBody, 0, responseBody.Length);
-            return;
-          }
+        if (responseBody != null)
+        {
+          await httpContext.Response.Body.WriteAsync(responseBody, 0, responseBody.Length);
+          return;
         }
       }
-
-      await this.next(httpContext);
     }
 
-    private IRequestProcessor CreateRequestProcessor(Data.Entities.Endpoint endpoint)
-    {
-      return StringActivator.CreateInstance<IRequestProcessor>(endpoint.RequestProcessorCSharpClassName);
-    }
+    await this.next(httpContext);
+  }
 
-    private IResponseCache CreateResponseCache(Data.Entities.Endpoint endpoint)
-    {
-      return StringActivator.CreateInstance<IResponseCache>(endpoint.ResponseCacheCSharpClassName);
-    }
+  private IRequestProcessor CreateRequestProcessor(Data.Entities.Endpoint endpoint)
+  {
+    return StringActivator.CreateInstance<IRequestProcessor>(endpoint.RequestProcessorCSharpClassName);
+  }
 
-    private async Task<byte[]> GetResponseBodyAsync(HttpContext httpContext, IActionResult actionResult)
-    {
-      Stream responseBody = httpContext.Response.Body;
+  private IResponseCache CreateResponseCache(Data.Entities.Endpoint endpoint)
+  {
+    return StringActivator.CreateInstance<IResponseCache>(endpoint.ResponseCacheCSharpClassName);
+  }
 
-      using (MemoryStream buffer = new MemoryStream())
+  private async Task<byte[]> GetResponseBodyAsync(HttpContext httpContext, IActionResult actionResult)
+  {
+    Stream responseBody = httpContext.Response.Body;
+
+    using (MemoryStream buffer = new MemoryStream())
+    {
+      try
       {
-        try
-        {
-          httpContext.Response.Body = buffer;
-          await httpContext.ExecuteResultAsync(actionResult);
-        }
-
-        finally
-        {
-          httpContext.Response.Body = responseBody;
-        }
-
-        return buffer.ToArray();
+        httpContext.Response.Body = buffer;
+        await httpContext.ExecuteResultAsync(actionResult);
       }
+
+      finally
+      {
+        httpContext.Response.Body = responseBody;
+      }
+
+      return buffer.ToArray();
     }
   }
 }

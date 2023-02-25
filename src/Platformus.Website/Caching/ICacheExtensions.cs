@@ -5,28 +5,27 @@ using System;
 using System.Threading.Tasks;
 using Platformus.Website.Data.Entities;
 
-namespace Platformus.Website
+namespace Platformus.Website;
+
+public static class ICacheExtensions
 {
-  public static class ICacheExtensions
+  public async static Task<Menu> GetMenuWithDefaultValue(this ICache cache, string code, Func<Task<Menu>> defaultValueFunc)
   {
-    public async static Task<Menu> GetMenuWithDefaultValue(this ICache cache, string code, Func<Task<Menu>> defaultValueFunc)
-    {
-      return await cache.GetWithDefaultValueAsync<Menu>($"menu:{code}", defaultValueFunc);
-    }
+    return await cache.GetWithDefaultValueAsync<Menu>($"menu:{code}", defaultValueFunc);
+  }
 
-    public static void RemoveMenus(this ICache cache)
-    {
-      cache.RemoveAll(k => k.StartsWith("menu:"));
-    }
+  public static void RemoveMenus(this ICache cache)
+  {
+    cache.RemoveAll(k => k.StartsWith("menu:"));
+  }
 
-    public async static Task<Form> GetFormWithDefaultValue(this ICache cache, string code, Func<Task<Form>> defaultValueFunc)
-    {
-      return await cache.GetWithDefaultValueAsync<Form>($"form:{code}", defaultValueFunc);
-    }
+  public async static Task<Form> GetFormWithDefaultValue(this ICache cache, string code, Func<Task<Form>> defaultValueFunc)
+  {
+    return await cache.GetWithDefaultValueAsync<Form>($"form:{code}", defaultValueFunc);
+  }
 
-    public static void RemoveForms(this ICache cache)
-    {
-      cache.RemoveAll(k => k.StartsWith("form:"));
-    }
+  public static void RemoveForms(this ICache cache)
+  {
+    cache.RemoveAll(k => k.StartsWith("form:"));
   }
 }

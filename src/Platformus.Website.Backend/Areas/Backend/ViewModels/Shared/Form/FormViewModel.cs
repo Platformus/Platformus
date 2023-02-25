@@ -4,13 +4,12 @@
 using System.Collections.Generic;
 using Platformus.Core.Backend.ViewModels;
 
-namespace Platformus.Website.Backend.ViewModels.Shared
+namespace Platformus.Website.Backend.ViewModels.Shared;
+
+public class FormViewModel : ViewModelBase
 {
-  public class FormViewModel : ViewModelBase
-  {
-    public int Id { get; set; }
-    public string Name { get; set; }
-    public bool ProduceCompletedForms { get; set; }
-    public IEnumerable<FieldViewModel> Fields { get; set; }
-  }
+  public int Id { get; set; }
+  public string Name { get; set; }
+  public bool ProduceCompletedForms { get; set; }
+  public IEnumerable<FieldViewModel> Fields { get; set; }
 }

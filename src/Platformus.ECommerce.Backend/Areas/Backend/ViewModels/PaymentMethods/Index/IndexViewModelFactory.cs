@@ -6,20 +6,19 @@ using System.Linq;
 using Platformus.ECommerce.Backend.ViewModels.Shared;
 using Platformus.ECommerce.Data.Entities;
 
-namespace Platformus.ECommerce.Backend.ViewModels.PaymentMethods
+namespace Platformus.ECommerce.Backend.ViewModels.PaymentMethods;
+
+public static class IndexViewModelFactory
 {
-  public static class IndexViewModelFactory
+  public static IndexViewModel Create(string sorting, int offset, int limit, int total, IEnumerable<PaymentMethod> paymentMethods)
   {
-    public static IndexViewModel Create(string sorting, int offset, int limit, int total, IEnumerable<PaymentMethod> paymentMethods)
+    return new IndexViewModel()
     {
-      return new IndexViewModel()
-      {
-        Sorting = sorting,
-        Offset = offset,
-        Limit = limit,
-        Total = total,
-        PaymentMethods = paymentMethods.Select(PaymentMethodViewModelFactory.Create).ToList()
-      };
-    }
+      Sorting = sorting,
+      Offset = offset,
+      Limit = limit,
+      Total = total,
+      PaymentMethods = paymentMethods.Select(PaymentMethodViewModelFactory.Create).ToList()
+    };
   }
 }

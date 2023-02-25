@@ -5,15 +5,14 @@ using System;
 using ExtCore.Infrastructure.Actions;
 using Microsoft.AspNetCore.Builder;
 
-namespace Platformus.Core.Actions
-{
-  public class UseAuthorizationConfigureAction : IConfigureAction
-  {
-    public int Priority => 10020;
+namespace Platformus.Core.Actions;
 
-    public void Execute(IApplicationBuilder applicationBuilder, IServiceProvider serviceProvider)
-    {
-      applicationBuilder.UseAuthorization();
-    }
+public class UseAuthorizationConfigureAction : IConfigureAction
+{
+  public int Priority => 10020;
+
+  public void Execute(IApplicationBuilder applicationBuilder, IServiceProvider serviceProvider)
+  {
+    applicationBuilder.UseAuthorization();
   }
 }

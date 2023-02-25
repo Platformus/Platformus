@@ -6,26 +6,25 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc.ModelBinding.Metadata;
 using Microsoft.Extensions.Localization;
 
-namespace Platformus.Core.Backend
+namespace Platformus.Core.Backend;
+
+public class LocalizedValidationMetadataProvider : IValidationMetadataProvider
 {
-  public class LocalizedValidationMetadataProvider : IValidationMetadataProvider
+  private IHttpContextAccessor httpContextAccessor;
+  private IStringLocalizer localizer;
+
+  public LocalizedValidationMetadataProvider(IHttpContextAccessor httpContextAccessor, IStringLocalizer localizer)
   {
-    private IHttpContextAccessor httpContextAccessor;
-    private IStringLocalizer localizer;
+    this.httpContextAccessor = httpContextAccessor;
+    this.localizer = localizer;
+  }
 
-    public LocalizedValidationMetadataProvider(IHttpContextAccessor httpContextAccessor, IStringLocalizer localizer)
-    {
-      this.httpContextAccessor = httpContextAccessor;
-      this.localizer = localizer;
-    }
+  public void CreateValidationMetadata(ValidationMetadataProviderContext context)
+  {
+    if (!httpContextAccessor.HttpContext.Request.Path.StartsWithSegments("/backend")) return;
 
-    public void CreateValidationMetadata(ValidationMetadataProviderContext context)
-    {
-      if (!httpContextAccessor.HttpContext.Request.Path.StartsWithSegments("/backend")) return;
-
-      foreach (object attribute in context.ValidationMetadata.ValidatorMetadata)
-        if (attribute is ValidationAttribute validationAttribute)
-          ValidationAttributeLocalizer.Localize(validationAttribute, localizer);
-    }
+    foreach (object attribute in context.ValidationMetadata.ValidatorMetadata)
+      if (attribute is ValidationAttribute validationAttribute)
+        ValidationAttributeLocalizer.Localize(validationAttribute, localizer);
   }
 }

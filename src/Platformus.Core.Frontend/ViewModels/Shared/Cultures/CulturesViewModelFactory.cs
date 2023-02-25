@@ -5,18 +5,17 @@ using System.Collections.Generic;
 using System.Linq;
 using Platformus.Core.Data.Entities;
 
-namespace Platformus.Core.Frontend.ViewModels.Shared
+namespace Platformus.Core.Frontend.ViewModels.Shared;
+
+public static class CulturesViewModelFactory
 {
-  public static class CulturesViewModelFactory
+  public static CulturesViewModel Create(IEnumerable<Culture> cultures, string partialViewName, string additionalCssClass)
   {
-    public static CulturesViewModel Create(IEnumerable<Culture> cultures, string partialViewName, string additionalCssClass)
+    return new CulturesViewModel()
     {
-      return new CulturesViewModel()
-      {
-        Cultures = cultures.Select(CultureViewModelFactory.Create),
-        PartialViewName = partialViewName ?? "_Cultures",
-        AdditionalCssClass = additionalCssClass
-      };
-    }
+      Cultures = cultures.Select(CultureViewModelFactory.Create),
+      PartialViewName = partialViewName ?? "_Cultures",
+      AdditionalCssClass = additionalCssClass
+    };
   }
 }

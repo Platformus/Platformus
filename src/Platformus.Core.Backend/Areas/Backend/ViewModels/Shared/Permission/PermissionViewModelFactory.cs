@@ -3,18 +3,17 @@
 
 using Platformus.Core.Data.Entities;
 
-namespace Platformus.Core.Backend.ViewModels.Shared
+namespace Platformus.Core.Backend.ViewModels.Shared;
+
+public static class PermissionViewModelFactory
 {
-  public static class PermissionViewModelFactory
+  public static PermissionViewModel Create(Permission permission)
   {
-    public static PermissionViewModel Create(Permission permission)
+    return new PermissionViewModel()
     {
-      return new PermissionViewModel()
-      {
-        Id = permission.Id,
-        Name = permission.Name,
-        Position = permission.Position
-      };
-    }
+      Id = permission.Id,
+      Name = permission.Name,
+      Position = permission.Position
+    };
   }
 }

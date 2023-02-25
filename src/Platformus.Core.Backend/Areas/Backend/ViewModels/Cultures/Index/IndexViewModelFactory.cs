@@ -6,20 +6,19 @@ using System.Linq;
 using Platformus.Core.Backend.ViewModels.Shared;
 using Platformus.Core.Data.Entities;
 
-namespace Platformus.Core.Backend.ViewModels.Cultures
+namespace Platformus.Core.Backend.ViewModels.Cultures;
+
+public static class IndexViewModelFactory
 {
-  public static class IndexViewModelFactory
+  public static IndexViewModel Create(string sorting, int offset, int limit, int total, IEnumerable<Culture> cultures)
   {
-    public static IndexViewModel Create(string sorting, int offset, int limit, int total, IEnumerable<Culture> cultures)
+    return new IndexViewModel()
     {
-      return new IndexViewModel()
-      {
-        Sorting = sorting,
-        Offset = offset,
-        Limit = limit,
-        Total = total,
-        Cultures = cultures.Select(CultureViewModelFactory.Create).ToList()
-      };
-    }
+      Sorting = sorting,
+      Offset = offset,
+      Limit = limit,
+      Total = total,
+      Cultures = cultures.Select(CultureViewModelFactory.Create).ToList()
+    };
   }
 }

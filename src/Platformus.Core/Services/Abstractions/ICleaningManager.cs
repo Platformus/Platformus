@@ -4,17 +4,16 @@
 using System;
 using System.Threading.Tasks;
 
-namespace Platformus.Core.Services.Abstractions
+namespace Platformus.Core.Services.Abstractions;
+
+/// <summary>
+/// Describes a cleaning manager that is used to clean up the unused resources (refresh tokens, saved model states etc.) on schedule.
+/// </summary>
+public interface ICleaningManager
 {
   /// <summary>
-  /// Describes a cleaning manager that is used to clean up the unused resources (refresh tokens, saved model states etc.) on schedule.
+  /// Cleans up the unused resources.
   /// </summary>
-  public interface ICleaningManager
-  {
-    /// <summary>
-    /// Cleans up the unused resources.
-    /// </summary>
-    /// <param name="serviceProvider">A service provider to take the required services from.</param>
-    Task CleanUpAsync(IServiceProvider serviceProvider);
-  }
+  /// <param name="serviceProvider">A service provider to take the required services from.</param>
+  Task CleanUpAsync(IServiceProvider serviceProvider);
 }

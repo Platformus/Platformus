@@ -3,15 +3,14 @@
 
 using Platformus.ECommerce.Data.Entities;
 
-namespace Platformus.ECommerce.Backend.ViewModels.PaymentMethods
+namespace Platformus.ECommerce.Backend.ViewModels.PaymentMethods;
+
+public static class CreateOrEditViewModelMapper
 {
-  public static class CreateOrEditViewModelMapper
+  public static PaymentMethod Map(PaymentMethod paymentMethod, CreateOrEditViewModel createOrEdit)
   {
-    public static PaymentMethod Map(PaymentMethod paymentMethod, CreateOrEditViewModel createOrEdit)
-    {
-      paymentMethod.Code = createOrEdit.Code;
-      paymentMethod.Position = createOrEdit.Position;
-      return paymentMethod;
-    }
+    paymentMethod.Code = createOrEdit.Code;
+    paymentMethod.Position = createOrEdit.Position;
+    return paymentMethod;
   }
 }

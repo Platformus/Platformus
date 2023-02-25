@@ -4,11 +4,10 @@
 using System.Collections.Generic;
 using Platformus.Core.Backend.ViewModels;
 
-namespace Platformus.Website.Backend.ViewModels.Shared
+namespace Platformus.Website.Backend.ViewModels.Shared;
+
+public class RelationSetViewModel : ViewModelBase
 {
-  public class RelationSetViewModel : ViewModelBase
-  {
-    public MemberViewModel Member { get; set; }
-    public IEnumerable<int> PrimaryIds { get; set; }
-  }
+  public MemberViewModel Member { get; set; }
+  public IEnumerable<int> PrimaryIds { get; set; }
 }

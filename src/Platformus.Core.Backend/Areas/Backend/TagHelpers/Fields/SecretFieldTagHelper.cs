@@ -4,38 +4,37 @@
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.AspNetCore.Razor.TagHelpers;
 
-namespace Platformus.Core.Backend
+namespace Platformus.Core.Backend;
+
+public class SecretFieldTagHelper : TextFieldTagHelperBase<string>
 {
-  public class SecretFieldTagHelper : TextFieldTagHelperBase<string>
+  public override void Process(TagHelperContext context, TagHelperOutput output)
   {
-    public override void Process(TagHelperContext context, TagHelperOutput output)
-    {
-      if (this.For == null && string.IsNullOrEmpty(this.Id))
-        return;
+    if (this.For == null && string.IsNullOrEmpty(this.Id))
+      return;
 
-      base.Process(context, output);
-      output.Content.AppendHtml(this.CreateTextBox());
-      output.Content.AppendHtml(this.CreateValidationErrorMessage());
-    }
+    base.Process(context, output);
+    output.Content.AppendHtml(this.CreateTextBox());
+    output.Content.AppendHtml(this.CreateValidationErrorMessage());
+  }
 
-    private TagBuilder CreateTextBox()
-    {
-      TagBuilder tb = TextBoxGenerator.Generate(
-        this.GetIdentity(),
-        InputTypes.Password,
-        validation: this.GetValidation()
-      );
+  private TagBuilder CreateTextBox()
+  {
+    TagBuilder tb = TextBoxGenerator.Generate(
+      this.GetIdentity(),
+      InputTypes.Password,
+      validation: this.GetValidation()
+    );
 
-      tb.AddCssClass("field__text-box");
+    tb.AddCssClass("field__text-box");
 
-      if (this.IsDisabled())
-        tb.MergeAttribute(AttributeNames.Disabled, "disabled");
+    if (this.IsDisabled())
+      tb.MergeAttribute(AttributeNames.Disabled, "disabled");
 
-      // TODO: merge all the attributes, not only "onchange"
-      if (!string.IsNullOrEmpty(this.OnChange))
-        tb.MergeAttribute(AttributeNames.OnChange, this.OnChange);
+    // TODO: merge all the attributes, not only "onchange"
+    if (!string.IsNullOrEmpty(this.OnChange))
+      tb.MergeAttribute(AttributeNames.OnChange, this.OnChange);
 
-      return tb;
-    }
+    return tb;
   }
 }

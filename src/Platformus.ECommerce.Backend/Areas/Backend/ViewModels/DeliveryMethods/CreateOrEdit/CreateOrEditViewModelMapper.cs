@@ -3,15 +3,14 @@
 
 using Platformus.ECommerce.Data.Entities;
 
-namespace Platformus.ECommerce.Backend.ViewModels.DeliveryMethods
+namespace Platformus.ECommerce.Backend.ViewModels.DeliveryMethods;
+
+public static class CreateOrEditViewModelMapper
 {
-  public static class CreateOrEditViewModelMapper
+  public static DeliveryMethod Map(DeliveryMethod deliveryMethod, CreateOrEditViewModel createOrEdit)
   {
-    public static DeliveryMethod Map(DeliveryMethod deliveryMethod, CreateOrEditViewModel createOrEdit)
-    {
-      deliveryMethod.Code = createOrEdit.Code;
-      deliveryMethod.Position = createOrEdit.Position;
-      return deliveryMethod;
-    }
+    deliveryMethod.Code = createOrEdit.Code;
+    deliveryMethod.Position = createOrEdit.Position;
+    return deliveryMethod;
   }
 }

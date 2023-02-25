@@ -6,15 +6,14 @@ using System.Linq;
 using ExtCore.Infrastructure;
 using Microsoft.AspNetCore.Http;
 
-namespace Platformus.Core.Backend.Metadata.Providers
+namespace Platformus.Core.Backend.Metadata.Providers;
+
+public class DefaultScriptsProvider : IScriptsProvider
 {
-  public class DefaultScriptsProvider : IScriptsProvider
+  public IEnumerable<Script> GetScripts(HttpContext httpContext)
   {
-    public IEnumerable<Script> GetScripts(HttpContext httpContext)
-    {
-      return ExtensionManager.GetInstances<IMetadata>()
-        .SelectMany(m => m.GetScripts(httpContext))
-        .OrderBy(s => s.Position);
-    }
+    return ExtensionManager.GetInstances<IMetadata>()
+      .SelectMany(m => m.GetScripts(httpContext))
+      .OrderBy(s => s.Position);
   }
 }

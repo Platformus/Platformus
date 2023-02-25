@@ -7,20 +7,19 @@ using Platformus.Core.Backend;
 using Platformus.Core.Backend.ViewModels;
 using Platformus.Core.Primitives;
 
-namespace Platformus.Website.Backend.ViewModels.FieldOptions
+namespace Platformus.Website.Backend.ViewModels.FieldOptions;
+
+public class CreateOrEditViewModel : ViewModelBase
 {
-  public class CreateOrEditViewModel : ViewModelBase
-  {
-    public int? Id { get; set; }
+  public int? Id { get; set; }
 
-    [Multilingual]
-    [Display(Name = "Value")]
-    [Required]
-    [StringLength(64)]
-    public string Value { get; set; }
-    public IEnumerable<Localization> ValueLocalizations { get; set; }
+  [Multilingual]
+  [Display(Name = "Value")]
+  [Required]
+  [StringLength(64)]
+  public string Value { get; set; }
+  public IEnumerable<Localization> ValueLocalizations { get; set; }
 
-    [Display(Name = "Position")]
-    public int? Position { get; set; }
-  }
+  [Display(Name = "Position")]
+  public int? Position { get; set; }
 }

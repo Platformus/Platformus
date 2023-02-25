@@ -3,21 +3,20 @@
 
 using Magicalizer.Filters.Abstractions;
 
-namespace Platformus.Website.Filters
+namespace Platformus.Website.Filters;
+
+public class DataSourceFilter : IFilter
 {
-  public class DataSourceFilter : IFilter
+  public int? Id { get; set; }
+  public EndpointFilter Endpoint { get; set; }
+  public string Code { get; set; }
+
+  public DataSourceFilter() { }
+
+  public DataSourceFilter(int? id = null, EndpointFilter endpoint = null, string code = null)
   {
-    public int? Id { get; set; }
-    public EndpointFilter Endpoint { get; set; }
-    public string Code { get; set; }
-
-    public DataSourceFilter() { }
-
-    public DataSourceFilter(int? id = null, EndpointFilter endpoint = null, string code = null)
-    {
-      Id = id;
-      Endpoint = endpoint;
-      Code = code;
-    }
+    Id = id;
+    Endpoint = endpoint;
+    Code = code;
   }
 }

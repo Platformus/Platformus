@@ -5,14 +5,13 @@ using System.Collections.Generic;
 using Platformus.Core.Backend.ViewModels;
 using Platformus.ECommerce.Backend.ViewModels.Shared;
 
-namespace Platformus.ECommerce.Backend.ViewModels.PaymentMethods
+namespace Platformus.ECommerce.Backend.ViewModels.PaymentMethods;
+
+public class IndexViewModel : ViewModelBase
 {
-  public class IndexViewModel : ViewModelBase
-  {
-    public string Sorting { get; set; }
-    public int Offset { get; set; }
-    public int Limit { get; set; }
-    public int Total { get; set; }
-    public IEnumerable<PaymentMethodViewModel> PaymentMethods { get; set; }
-  }
+  public string Sorting { get; set; }
+  public int Offset { get; set; }
+  public int Limit { get; set; }
+  public int Total { get; set; }
+  public IEnumerable<PaymentMethodViewModel> PaymentMethods { get; set; }
 }

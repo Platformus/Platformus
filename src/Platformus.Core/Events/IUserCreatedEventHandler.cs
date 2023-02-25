@@ -5,12 +5,11 @@ using ExtCore.Events;
 using Microsoft.AspNetCore.Http;
 using Platformus.Core.Data.Entities;
 
-namespace Platformus.Core.Events
+namespace Platformus.Core.Events;
+
+/// <summary>
+/// Describes an event handler that will be automatically executed just after a <see cref="User"/> is created.
+/// </summary>
+public interface IUserCreatedEventHandler : IEventHandler<HttpContext, User>
 {
-  /// <summary>
-  /// Describes an event handler that will be automatically executed just after a <see cref="User"/> is created.
-  /// </summary>
-  public interface IUserCreatedEventHandler : IEventHandler<HttpContext, User>
-  {
-  }
 }

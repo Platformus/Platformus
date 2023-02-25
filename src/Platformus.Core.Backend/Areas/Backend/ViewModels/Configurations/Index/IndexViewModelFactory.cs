@@ -6,16 +6,15 @@ using System.Linq;
 using Platformus.Core.Backend.ViewModels.Shared;
 using Platformus.Core.Data.Entities;
 
-namespace Platformus.Core.Backend.ViewModels.Configurations
+namespace Platformus.Core.Backend.ViewModels.Configurations;
+
+public static class IndexViewModelFactory
 {
-  public static class IndexViewModelFactory
+  public static IndexViewModel Create(IEnumerable<Configuration> configurations)
   {
-    public static IndexViewModel Create(IEnumerable<Configuration> configurations)
+    return new IndexViewModel()
     {
-      return new IndexViewModel()
-      {
-        Configurations = configurations.Select(ConfigurationViewModelFactory.Create).ToList()
-      };
-    }
+      Configurations = configurations.Select(ConfigurationViewModelFactory.Create).ToList()
+    };
   }
 }

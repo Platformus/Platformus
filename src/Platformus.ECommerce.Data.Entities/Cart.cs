@@ -5,28 +5,27 @@ using System;
 using System.Collections.Generic;
 using Magicalizer.Data.Entities.Abstractions;
 
-namespace Platformus.ECommerce.Data.Entities
+namespace Platformus.ECommerce.Data.Entities;
+
+/// <summary>
+/// Represents a cart.
+/// </summary>
+public class Cart : IEntity
 {
   /// <summary>
-  /// Represents a cart.
+  /// Gets or sets the unique identifier of the cart.
   /// </summary>
-  public class Cart : IEntity
-  {
-    /// <summary>
-    /// Gets or sets the unique identifier of the cart.
-    /// </summary>
-    public int Id { get; set; }
+  public int Id { get; set; }
 
-    /// <summary>
-    /// Gets or sets the unique client-side identifier of the cart.
-    /// </summary>
-    public Guid ClientSideId { get; set; }
+  /// <summary>
+  /// Gets or sets the unique client-side identifier of the cart.
+  /// </summary>
+  public Guid ClientSideId { get; set; }
 
-    /// <summary>
-    /// Gets or sets the date and time this cart is created at.
-    /// </summary>
-    public DateTime Created { get; set; }
+  /// <summary>
+  /// Gets or sets the date and time this cart is created at.
+  /// </summary>
+  public DateTime Created { get; set; }
 
-    public virtual ICollection<Position> Positions { get; set; }
-  }
+  public virtual ICollection<Position> Positions { get; set; }
 }

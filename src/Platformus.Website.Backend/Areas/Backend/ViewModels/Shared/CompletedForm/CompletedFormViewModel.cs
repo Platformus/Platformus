@@ -4,12 +4,11 @@
 using System;
 using Platformus.Core.Backend.ViewModels;
 
-namespace Platformus.Website.Backend.ViewModels.Shared
+namespace Platformus.Website.Backend.ViewModels.Shared;
+
+public class CompletedFormViewModel : ViewModelBase
 {
-  public class CompletedFormViewModel : ViewModelBase
-  {
-    public int Id { get; set; }
-    public FormViewModel Form { get; set; }
-    public DateTime Created { get; set; }
-  }
+  public int Id { get; set; }
+  public FormViewModel Form { get; set; }
+  public DateTime Created { get; set; }
 }

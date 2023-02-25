@@ -4,10 +4,9 @@
 using Platformus.Core.Frontend.ViewModels;
 using Platformus.ECommerce.Frontend.ViewModels.Shared;
 
-namespace Platformus.ECommerce.Frontend.ViewModels.ECommerce
+namespace Platformus.ECommerce.Frontend.ViewModels.ECommerce;
+
+public class ThankYouPageViewModel : ViewModelBase
 {
-  public class ThankYouPageViewModel : ViewModelBase
-  {
-    public OrderViewModel Order { get; set; }
-  }
+  public OrderViewModel Order { get; set; }
 }

@@ -4,25 +4,24 @@
 using Microsoft.AspNetCore.Http;
 using Platformus.Website.Data.Entities;
 
-namespace Platformus.Website.Backend.ViewModels.MenuItems
-{
-  public static class CreateOrEditViewModelFactory
-  {
-    public static CreateOrEditViewModel Create(HttpContext httpContext, MenuItem menuItem)
-    {
-      if (menuItem == null)
-        return new CreateOrEditViewModel()
-        {
-          NameLocalizations = httpContext.GetLocalizations()
-        };
+namespace Platformus.Website.Backend.ViewModels.MenuItems;
 
+public static class CreateOrEditViewModelFactory
+{
+  public static CreateOrEditViewModel Create(HttpContext httpContext, MenuItem menuItem)
+  {
+    if (menuItem == null)
       return new CreateOrEditViewModel()
       {
-        Id = menuItem.Id,
-        NameLocalizations = httpContext.GetLocalizations(menuItem.Name),
-        Url = menuItem.Url,
-        Position = menuItem.Position
+        NameLocalizations = httpContext.GetLocalizations()
       };
-    }
+
+    return new CreateOrEditViewModel()
+    {
+      Id = menuItem.Id,
+      NameLocalizations = httpContext.GetLocalizations(menuItem.Name),
+      Url = menuItem.Url,
+      Position = menuItem.Position
+    };
   }
 }

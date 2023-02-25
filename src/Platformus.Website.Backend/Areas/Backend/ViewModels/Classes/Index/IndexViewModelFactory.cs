@@ -11,36 +11,35 @@ using Platformus.Website.Backend.ViewModels.Shared;
 using Platformus.Website.Data.Entities;
 using Platformus.Website.Filters;
 
-namespace Platformus.Website.Backend.ViewModels.Classes
+namespace Platformus.Website.Backend.ViewModels.Classes;
+
+public static class IndexViewModelFactory
 {
-  public static class IndexViewModelFactory
+  public static async Task<IndexViewModel> CreateAsync(HttpContext httpContext, string sorting, int offset, int limit, int total, IEnumerable<Class> classes)
   {
-    public static async Task<IndexViewModel> CreateAsync(HttpContext httpContext, string sorting, int offset, int limit, int total, IEnumerable<Class> classes)
+    return new IndexViewModel()
     {
-      return new IndexViewModel()
-      {
-        ClassOptions = await GetClassOptionsAsync(httpContext),
-        Sorting = sorting,
-        Offset = offset,
-        Limit = limit,
-        Total = total,
-        Classes = classes.Select(ClassViewModelFactory.Create).ToList()
-      };
-    }
+      ClassOptions = await GetClassOptionsAsync(httpContext),
+      Sorting = sorting,
+      Offset = offset,
+      Limit = limit,
+      Total = total,
+      Classes = classes.Select(ClassViewModelFactory.Create).ToList()
+    };
+  }
 
-    private static async Task<IEnumerable<Option>> GetClassOptionsAsync(HttpContext httpContext)
-    {
-      IStringLocalizer<IndexViewModel> localizer = httpContext.GetStringLocalizer<IndexViewModel>();
-      List<Option> options = new List<Option>();
+  private static async Task<IEnumerable<Option>> GetClassOptionsAsync(HttpContext httpContext)
+  {
+    IStringLocalizer<IndexViewModel> localizer = httpContext.GetStringLocalizer<IndexViewModel>();
+    List<Option> options = new List<Option>();
 
-      options.Add(new Option(localizer["All parent classes"], string.Empty));
-      options.AddRange(
-        (await httpContext.GetStorage().GetRepository<int, Class, ClassFilter>().GetAllAsync(new ClassFilter(isAbstract: true))).Select(
-          c => new Option(c.Name, c.Id.ToString())
-        )
-      );
+    options.Add(new Option(localizer["All parent classes"], string.Empty));
+    options.AddRange(
+      (await httpContext.GetStorage().GetRepository<int, Class, ClassFilter>().GetAllAsync(new ClassFilter(isAbstract: true))).Select(
+        c => new Option(c.Name, c.Id.ToString())
+      )
+    );
 
-      return options;
-    }
+    return options;
   }
 }

@@ -3,9 +3,8 @@
 
 using System;
 
-namespace Platformus.Core.Backend
+namespace Platformus.Core.Backend;
+
+public sealed class MultilingualAttribute : Attribute
 {
-  public sealed class MultilingualAttribute : Attribute
-  {
-  }
 }

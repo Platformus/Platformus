@@ -4,20 +4,19 @@
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Razor.TagHelpers;
 
-namespace Platformus.Core.Backend
+namespace Platformus.Core.Backend;
+
+[RestrictChildren("neutral-button", "positive-button", "negative-button", "delete-button", "partial")]
+public class RowControlsTagHelper : TagHelper
 {
-  [RestrictChildren("neutral-button", "positive-button", "negative-button", "delete-button", "partial")]
-  public class RowControlsTagHelper : TagHelper
+  public override async Task ProcessAsync(TagHelperContext context, TagHelperOutput output)
   {
-    public override async Task ProcessAsync(TagHelperContext context, TagHelperOutput output)
-    {
-      TagHelperContent content = await output.GetChildContentAsync();
+    TagHelperContent content = await output.GetChildContentAsync();
 
-      output.SuppressOutput();
+    output.SuppressOutput();
 
-      RowTagHelper.RowControls rowControls = context.Items["RowControls"] as RowTagHelper.RowControls;
+    RowTagHelper.RowControls rowControls = context.Items["RowControls"] as RowTagHelper.RowControls;
 
-      rowControls.Content = content;
-    }
+    rowControls.Content = content;
   }
 }

@@ -4,10 +4,9 @@
 using System.Collections.Generic;
 using Microsoft.AspNetCore.Http;
 
-namespace Platformus.Core.Backend.Metadata.Providers
+namespace Platformus.Core.Backend.Metadata.Providers;
+
+public interface IStyleSheetsProvider
 {
-  public interface IStyleSheetsProvider
-  {
-    IEnumerable<StyleSheet> GetStyleSheets(HttpContext httpContext);
-  }
+  IEnumerable<StyleSheet> GetStyleSheets(HttpContext httpContext);
 }

@@ -5,15 +5,14 @@ using System;
 using ExtCore.Infrastructure.Actions;
 using Microsoft.AspNetCore.Builder;
 
-namespace Platformus.Core.Actions
-{
-  public class UseHttpExceptionConfigureAction : IConfigureAction
-  {
-    public int Priority => 0;
+namespace Platformus.Core.Actions;
 
-    public void Execute(IApplicationBuilder applicationBuilder, IServiceProvider serviceProvider)
-    {
-      applicationBuilder.UseHttpException();
-    }
+public class UseHttpExceptionConfigureAction : IConfigureAction
+{
+  public int Priority => 0;
+
+  public void Execute(IApplicationBuilder applicationBuilder, IServiceProvider serviceProvider)
+  {
+    applicationBuilder.UseHttpException();
   }
 }

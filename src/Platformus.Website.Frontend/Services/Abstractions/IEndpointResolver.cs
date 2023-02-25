@@ -4,10 +4,9 @@
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 
-namespace Platformus.Website.Frontend.Services.Abstractions
+namespace Platformus.Website.Frontend.Services.Abstractions;
+
+public interface IEndpointResolver
 {
-  public interface IEndpointResolver
-  {
-    Task<Data.Entities.Endpoint> ResolveAsync(HttpContext httpContext);
-  }
+  Task<Data.Entities.Endpoint> ResolveAsync(HttpContext httpContext);
 }

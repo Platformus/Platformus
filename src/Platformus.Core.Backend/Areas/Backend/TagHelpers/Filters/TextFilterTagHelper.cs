@@ -4,40 +4,39 @@
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.AspNetCore.Razor.TagHelpers;
 
-namespace Platformus.Core.Backend
+namespace Platformus.Core.Backend;
+
+public class TextFilterTagHelper : CriterionTagHelperBase
 {
-  public class TextFilterTagHelper : CriterionTagHelperBase
+  public Sizes Width { get; set; } = Sizes.Large;
+
+  public override void Process(TagHelperContext context, TagHelperOutput output)
   {
-    public Sizes Width { get; set; } = Sizes.Large;
+    base.Process(context, output);
+    output.Content.AppendHtml(this.CreateTextBox());
+  }
 
-    public override void Process(TagHelperContext context, TagHelperOutput output)
-    {
-      base.Process(context, output);
-      output.Content.AppendHtml(this.CreateTextBox());
-    }
+  private TagBuilder CreateTextBox()
+  {
+    TagBuilder tb = TextBoxGenerator.Generate(
+      string.Empty,
+      InputTypes.Text,
+      value: this.GetValue()
+    );
 
-    private TagBuilder CreateTextBox()
-    {
-      TagBuilder tb = TextBoxGenerator.Generate(
-        string.Empty,
-        InputTypes.Text,
-        value: this.GetValue()
-      );
+    tb.AddCssClass("filter__criterion");
 
-      tb.AddCssClass("filter__criterion");
+    if (this.Width == Sizes.Small)
+      tb.AddCssClass("filter__criterion--small");
 
-      if (this.Width == Sizes.Small)
-        tb.AddCssClass("filter__criterion--small");
+    else if (this.Width == Sizes.Medium)
+      tb.AddCssClass("filter__criterion--medium");
 
-      else if (this.Width == Sizes.Medium)
-        tb.AddCssClass("filter__criterion--medium");
+    else if (this.Width == Sizes.Large)
+      tb.AddCssClass("filter__criterion--large");
 
-      else if (this.Width == Sizes.Large)
-        tb.AddCssClass("filter__criterion--large");
-
-      tb.MergeAttribute("data-property-path", this.PropertyPath?.ToLower());
-      tb.MergeAttribute(AttributeNames.Placeholder, this.Label);
-      return tb;
-    }
+    tb.MergeAttribute("data-property-path", this.PropertyPath?.ToLower());
+    tb.MergeAttribute(AttributeNames.Placeholder, this.Label);
+    return tb;
   }
 }

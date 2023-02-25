@@ -5,11 +5,10 @@ using System.Collections.Generic;
 using Platformus.Core.Backend.ViewModels;
 using Platformus.ECommerce.Backend.ViewModels.Shared;
 
-namespace Platformus.ECommerce.Backend.ViewModels.ECommerce
+namespace Platformus.ECommerce.Backend.ViewModels.ECommerce;
+
+public class ProductSelectorFormViewModel : ViewModelBase
 {
-  public class ProductSelectorFormViewModel : ViewModelBase
-  {
-    public IEnumerable<ProductViewModel> Products { get; set; }
-    public int? ProductId { get; set; }
-  }
+  public IEnumerable<ProductViewModel> Products { get; set; }
+  public int? ProductId { get; set; }
 }

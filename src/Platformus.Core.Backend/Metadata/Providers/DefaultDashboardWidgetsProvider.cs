@@ -6,15 +6,14 @@ using System.Linq;
 using ExtCore.Infrastructure;
 using Microsoft.AspNetCore.Http;
 
-namespace Platformus.Core.Backend.Metadata.Providers
+namespace Platformus.Core.Backend.Metadata.Providers;
+
+public class DefaultDashboardWidgetsProvider : IDashboardWidgetsProvider
 {
-  public class DefaultDashboardWidgetsProvider : IDashboardWidgetsProvider
+  public IEnumerable<DashboardWidget> GetDashboardWidgets(HttpContext httpContext)
   {
-    public IEnumerable<DashboardWidget> GetDashboardWidgets(HttpContext httpContext)
-    {
-      return ExtensionManager.GetInstances<IMetadata>()
-        .SelectMany(m => m.GetDashboardWidgets(httpContext))
-        .OrderBy(dw => dw.Position);
-    }
+    return ExtensionManager.GetInstances<IMetadata>()
+      .SelectMany(m => m.GetDashboardWidgets(httpContext))
+      .OrderBy(dw => dw.Position);
   }
 }

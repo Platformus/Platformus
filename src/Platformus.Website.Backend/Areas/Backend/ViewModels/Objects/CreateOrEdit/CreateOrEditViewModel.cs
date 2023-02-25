@@ -5,12 +5,11 @@ using System.Collections.Generic;
 using Platformus.Core.Backend.ViewModels;
 using Platformus.Website.Backend.ViewModels.Shared;
 
-namespace Platformus.Website.Backend.ViewModels.Objects
+namespace Platformus.Website.Backend.ViewModels.Objects;
+
+public class CreateOrEditViewModel : ViewModelBase
 {
-  public class CreateOrEditViewModel : ViewModelBase
-  {
-    public int? Id { get; set; }
-    public ClassViewModel Class { get; set; }
-    public IDictionary<TabViewModel, IEnumerable<object>> MembersByTabs { get; set; }
-  }
+  public int? Id { get; set; }
+  public ClassViewModel Class { get; set; }
+  public IDictionary<TabViewModel, IEnumerable<object>> MembersByTabs { get; set; }
 }

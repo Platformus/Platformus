@@ -5,20 +5,19 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Platformus.Core.Backend.Metadata.Providers;
 
-namespace Platformus.Core.Backend.ViewComponents
+namespace Platformus.Core.Backend.ViewComponents;
+
+public class BackendStyleSheetsViewComponent : ViewComponent
 {
-  public class BackendStyleSheetsViewComponent : ViewComponent
+  private IStyleSheetsProvider styleSheetsProvider;
+
+  public BackendStyleSheetsViewComponent(IStyleSheetsProvider styleSheetsProvider)
   {
-    private IStyleSheetsProvider styleSheetsProvider;
+    this.styleSheetsProvider = styleSheetsProvider;
+  }
 
-    public BackendStyleSheetsViewComponent(IStyleSheetsProvider styleSheetsProvider)
-    {
-      this.styleSheetsProvider = styleSheetsProvider;
-    }
-
-    public async Task<IViewComponentResult> InvokeAsync()
-    {
-      return this.View(this.styleSheetsProvider.GetStyleSheets(this.HttpContext));
-    }
+  public async Task<IViewComponentResult> InvokeAsync()
+  {
+    return this.View(this.styleSheetsProvider.GetStyleSheets(this.HttpContext));
   }
 }

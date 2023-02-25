@@ -4,15 +4,14 @@
 using System.Collections.Generic;
 using Platformus.Core.Frontend.ViewModels;
 
-namespace Platformus.Website.Frontend.ViewModels.Shared
+namespace Platformus.Website.Frontend.ViewModels.Shared;
+
+public class FormViewModel : ViewModelBase
 {
-  public class FormViewModel : ViewModelBase
-  {
-    public int Id { get; set; }
-    public string Name { get; set; }
-    public string SubmitButtonTitle { get; set; }
-    public IEnumerable<FieldViewModel> Fields { get; set; }
-    public string PartialViewName { get; set; }
-    public string AdditionalCssClass { get; set; }
-  }
+  public int Id { get; set; }
+  public string Name { get; set; }
+  public string SubmitButtonTitle { get; set; }
+  public IEnumerable<FieldViewModel> Fields { get; set; }
+  public string PartialViewName { get; set; }
+  public string AdditionalCssClass { get; set; }
 }

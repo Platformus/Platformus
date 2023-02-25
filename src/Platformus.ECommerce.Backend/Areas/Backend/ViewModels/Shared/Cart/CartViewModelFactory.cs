@@ -3,18 +3,17 @@
 
 using Platformus.ECommerce.Data.Entities;
 
-namespace Platformus.ECommerce.Backend.ViewModels.Shared
+namespace Platformus.ECommerce.Backend.ViewModels.Shared;
+
+public static class CartViewModelFactory
 {
-  public static class CartViewModelFactory
+  public static CartViewModel Create(Cart cart)
   {
-    public static CartViewModel Create(Cart cart)
+    return new CartViewModel()
     {
-      return new CartViewModel()
-      {
-        Id = cart.Id,
-        Total = cart.GetTotal(),
-        Created = cart.Created
-      };
-    }
+      Id = cart.Id,
+      Total = cart.GetTotal(),
+      Created = cart.Created
+    };
   }
 }

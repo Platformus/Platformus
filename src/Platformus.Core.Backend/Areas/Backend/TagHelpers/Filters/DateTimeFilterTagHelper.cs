@@ -5,36 +5,35 @@ using System;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.AspNetCore.Razor.TagHelpers;
 
-namespace Platformus.Core.Backend
+namespace Platformus.Core.Backend;
+
+public class DateTimeFilterTagHelper : CriterionTagHelperBase
 {
-  public class DateTimeFilterTagHelper : CriterionTagHelperBase
+  public override void Process(TagHelperContext context, TagHelperOutput output)
   {
-    public override void Process(TagHelperContext context, TagHelperOutput output)
-    {
-      base.Process(context, output);
-      output.Content.AppendHtml(this.CreateTextBox());
-    }
+    base.Process(context, output);
+    output.Content.AppendHtml(this.CreateTextBox());
+  }
 
-    protected override string GetValue()
-    {
-      if (DateTime.TryParse(base.GetValue(), out DateTime value))
-        return value.ToFixedLengthDateTimeString();
+  protected override string GetValue()
+  {
+    if (DateTime.TryParse(base.GetValue(), out DateTime value))
+      return value.ToFixedLengthDateTimeString();
 
-      return null;
-    }
+    return null;
+  }
 
-    private TagBuilder CreateTextBox()
-    {
-      TagBuilder tb = TextBoxGenerator.Generate(
-        string.Empty,
-        InputTypes.Text,
-        value: this.GetValue()
-      );
+  private TagBuilder CreateTextBox()
+  {
+    TagBuilder tb = TextBoxGenerator.Generate(
+      string.Empty,
+      InputTypes.Text,
+      value: this.GetValue()
+    );
 
-      tb.AddCssClass("filter__criterion filter__criterion--small");
-      tb.MergeAttribute(AttributeNames.DataType, "date-time");
-      tb.MergeAttribute("data-property-path", this.PropertyPath?.ToLower());
-      return tb;
-    }
+    tb.AddCssClass("filter__criterion filter__criterion--small");
+    tb.MergeAttribute(AttributeNames.DataType, "date-time");
+    tb.MergeAttribute("data-property-path", this.PropertyPath?.ToLower());
+    return tb;
   }
 }

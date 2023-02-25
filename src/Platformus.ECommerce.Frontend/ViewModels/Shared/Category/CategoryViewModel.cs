@@ -4,15 +4,14 @@
 using System.Collections.Generic;
 using Platformus.Core.Frontend.ViewModels;
 
-namespace Platformus.ECommerce.Frontend.ViewModels.Shared
+namespace Platformus.ECommerce.Frontend.ViewModels.Shared;
+
+public class CategoryViewModel : ViewModelBase
 {
-  public class CategoryViewModel : ViewModelBase
-  {
-    public int Id { get; set; }
-    public CategoryViewModel Category { get; set; }
-    public string Url { get; set; }
-    public string Name { get; set; }
-    public int Level { get; set; }
-    public IEnumerable<CategoryViewModel> Categories { get; set; }
-  }
+  public int Id { get; set; }
+  public CategoryViewModel Category { get; set; }
+  public string Url { get; set; }
+  public string Name { get; set; }
+  public int Level { get; set; }
+  public IEnumerable<CategoryViewModel> Categories { get; set; }
 }

@@ -3,39 +3,38 @@
 
 using Platformus.Core.Data.Entities;
 
-namespace Platformus.Core.Services.Abstractions
+namespace Platformus.Core.Services.Abstractions;
+
+/// <summary>
+/// Describes a user signing up result.
+/// </summary>
+public class SignUpResult
 {
   /// <summary>
-  /// Describes a user signing up result.
+  /// The signed up user.
   /// </summary>
-  public class SignUpResult
+  public User User { get; }
+
+  /// <summary>
+  /// Indicates if a user signing up was successful.
+  /// </summary>
+  public bool Success { get; }
+
+  /// <summary>
+  /// A user signing up error details.
+  /// </summary>
+  public SignUpError? Error { get; }
+
+  /// <summary>
+  /// Initializes a new instance of the <see cref="SignUpResult"/> class.
+  /// </summary>
+  /// <param name="user">The signed up user.</param>
+  /// <param name="success">Indicates if a user signing up was successful.</param>
+  /// <param name="error">A user signing up error details.</param>
+  public SignUpResult(User user = null, bool success = false, SignUpError? error = null)
   {
-    /// <summary>
-    /// The signed up user.
-    /// </summary>
-    public User User { get; }
-
-    /// <summary>
-    /// Indicates if a user signing up was successful.
-    /// </summary>
-    public bool Success { get; }
-
-    /// <summary>
-    /// A user signing up error details.
-    /// </summary>
-    public SignUpError? Error { get; }
-
-    /// <summary>
-    /// Initializes a new instance of the <see cref="SignUpResult"/> class.
-    /// </summary>
-    /// <param name="user">The signed up user.</param>
-    /// <param name="success">Indicates if a user signing up was successful.</param>
-    /// <param name="error">A user signing up error details.</param>
-    public SignUpResult(User user = null, bool success = false, SignUpError? error = null)
-    {
-      this.User = user;
-      this.Success = success;
-      this.Error = error;
-    }
+    this.User = user;
+    this.Success = success;
+    this.Error = error;
   }
 }

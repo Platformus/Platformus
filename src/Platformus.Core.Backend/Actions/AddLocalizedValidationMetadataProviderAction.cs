@@ -7,22 +7,21 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Localization;
 
-namespace Platformus.Core.Backend.Actions
+namespace Platformus.Core.Backend.Actions;
+
+public class AddLocalizedValidationMetadataProviderAction : IAddMvcAction
 {
-  public class AddLocalizedValidationMetadataProviderAction : IAddMvcAction
+  public int Priority => 1000;
+
+  public void Execute(IMvcBuilder mvcBuilder, IServiceProvider serviceProvider)
   {
-    public int Priority => 1000;
+    IHttpContextAccessor httpContextAccessor = serviceProvider.GetService<IHttpContextAccessor>();
+    IStringLocalizerFactory localizerFactory = serviceProvider.GetService<IStringLocalizerFactory>();
+    IStringLocalizer localizer = localizerFactory.Create(typeof(SharedResource));
 
-    public void Execute(IMvcBuilder mvcBuilder, IServiceProvider serviceProvider)
+    mvcBuilder.AddMvcOptions(options =>
     {
-      IHttpContextAccessor httpContextAccessor = serviceProvider.GetService<IHttpContextAccessor>();
-      IStringLocalizerFactory localizerFactory = serviceProvider.GetService<IStringLocalizerFactory>();
-      IStringLocalizer localizer = localizerFactory.Create(typeof(SharedResource));
-
-      mvcBuilder.AddMvcOptions(options =>
-      {
-        options.ModelMetadataDetailsProviders.Add(new LocalizedValidationMetadataProvider(httpContextAccessor, localizer));
-      });
-    }
+      options.ModelMetadataDetailsProviders.Add(new LocalizedValidationMetadataProvider(httpContextAccessor, localizer));
+    });
   }
 }

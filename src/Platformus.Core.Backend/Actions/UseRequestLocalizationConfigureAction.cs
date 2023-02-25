@@ -13,20 +13,31 @@ using Microsoft.Extensions.DependencyInjection;
 using Platformus.Core.Data.Entities;
 using Platformus.Core.Services.Abstractions;
 
-namespace Platformus.Core.Backend.Actions
+namespace Platformus.Core.Backend.Actions;
+
+public class UseRequestLocalizationConfigureAction : IConfigureAction
 {
-  public class UseRequestLocalizationConfigureAction : IConfigureAction
+  public int Priority => 1000;
+
+  public void Execute(IApplicationBuilder applicationBuilder, IServiceProvider serviceProvider)
   {
-    public int Priority => 1000;
+    serviceProvider = serviceProvider.CreateScope().ServiceProvider;
 
-    public void Execute(IApplicationBuilder applicationBuilder, IServiceProvider serviceProvider)
+    RequestLocalizationOptions requestLocalizationOptions = new RequestLocalizationOptions();
+    IStorage storage = serviceProvider.GetService<IStorage>();
+
+    if (storage == null)
     {
-      serviceProvider = serviceProvider.CreateScope().ServiceProvider;
+      requestLocalizationOptions.DefaultRequestCulture = new RequestCulture(DefaultCulture.Id);
+      requestLocalizationOptions.SupportedCultures = requestLocalizationOptions.SupportedUICultures =
+        new CultureInfo[] { new CultureInfo(DefaultCulture.Id) }.ToList();
+    }
 
-      RequestLocalizationOptions requestLocalizationOptions = new RequestLocalizationOptions();
-      IStorage storage = serviceProvider.GetService<IStorage>();
+    else
+    {
+      Culture backendDefaultCulture = serviceProvider.GetService<ICultureManager>().GetBackendDefaultCultureAsync().Result;
 
-      if (storage == null)
+      if (backendDefaultCulture == null)
       {
         requestLocalizationOptions.DefaultRequestCulture = new RequestCulture(DefaultCulture.Id);
         requestLocalizationOptions.SupportedCultures = requestLocalizationOptions.SupportedUICultures =
@@ -35,27 +46,15 @@ namespace Platformus.Core.Backend.Actions
 
       else
       {
-        Culture backendDefaultCulture = serviceProvider.GetService<ICultureManager>().GetBackendDefaultCultureAsync().Result;
-
-        if (backendDefaultCulture == null)
-        {
-          requestLocalizationOptions.DefaultRequestCulture = new RequestCulture(DefaultCulture.Id);
-          requestLocalizationOptions.SupportedCultures = requestLocalizationOptions.SupportedUICultures =
-            new CultureInfo[] { new CultureInfo(DefaultCulture.Id) }.ToList();
-        }
-
-        else
-        {
-          requestLocalizationOptions.DefaultRequestCulture = new RequestCulture(backendDefaultCulture.Id);
-          requestLocalizationOptions.SupportedCultures = requestLocalizationOptions.SupportedUICultures =
-            new CultureInfo[] { new CultureInfo(backendDefaultCulture.Id) }.ToList();
-        }
+        requestLocalizationOptions.DefaultRequestCulture = new RequestCulture(backendDefaultCulture.Id);
+        requestLocalizationOptions.SupportedCultures = requestLocalizationOptions.SupportedUICultures =
+          new CultureInfo[] { new CultureInfo(backendDefaultCulture.Id) }.ToList();
       }
-
-      applicationBuilder.UseWhen(
-        context => context.Request.Path.StartsWithSegments(new PathString("/backend")),
-        backendApplicationBuilder => backendApplicationBuilder.UseRequestLocalization(requestLocalizationOptions)
-      );
     }
+
+    applicationBuilder.UseWhen(
+      context => context.Request.Path.StartsWithSegments(new PathString("/backend")),
+      backendApplicationBuilder => backendApplicationBuilder.UseRequestLocalization(requestLocalizationOptions)
+    );
   }
 }

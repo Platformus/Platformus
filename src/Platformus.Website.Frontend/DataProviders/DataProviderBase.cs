@@ -8,26 +8,25 @@ using Platformus.Core.Parameters;
 using Platformus.Website.Data.Entities;
 using Platformus.Website.DataProviders;
 
-namespace Platformus.Website.Frontend.DataProviders
+namespace Platformus.Website.Frontend.DataProviders;
+
+public abstract class DataProviderBase : IDataProvider
 {
-  public abstract class DataProviderBase : IDataProvider
+  public abstract string Description { get; }
+  public abstract IEnumerable<ParameterGroup> ParameterGroups { get; }
+
+  public abstract Task<dynamic> GetDataAsync(HttpContext httpContext, DataSource dataSource);
+
+  protected dynamic CreateViewModel(Object @object)
   {
-    public abstract string Description { get; }
-    public abstract IEnumerable<ParameterGroup> ParameterGroups { get; }
+    ExpandoObjectBuilder expandoObjectBuilder = new ExpandoObjectBuilder();
 
-    public abstract Task<dynamic> GetDataAsync(HttpContext httpContext, DataSource dataSource);
+    expandoObjectBuilder.AddProperty("Id", @object.Id);
+    expandoObjectBuilder.AddProperty("ClassId", @object.ClassId);
 
-    protected dynamic CreateViewModel(Object @object)
-    {
-      ExpandoObjectBuilder expandoObjectBuilder = new ExpandoObjectBuilder();
+    foreach (Property property in @object.Properties)
+      expandoObjectBuilder.AddProperty(property.Member.Code, property.GetValue());
 
-      expandoObjectBuilder.AddProperty("Id", @object.Id);
-      expandoObjectBuilder.AddProperty("ClassId", @object.ClassId);
-
-      foreach (Property property in @object.Properties)
-        expandoObjectBuilder.AddProperty(property.Member.Code, property.GetValue());
-
-      return expandoObjectBuilder.Build();
-    }
+    return expandoObjectBuilder.Build();
   }
 }

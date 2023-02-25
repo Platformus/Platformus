@@ -5,12 +5,11 @@ using ExtCore.Events;
 using Microsoft.AspNetCore.Http;
 using Platformus.ECommerce.Data.Entities;
 
-namespace Platformus.ECommerce.Events
+namespace Platformus.ECommerce.Events;
+
+/// <summary>
+/// Describes an event handler that will be automatically executed just after a <see cref="Category"/> is edited.
+/// </summary>
+public interface ICategoryEditedEventHandler : IEventHandler<HttpContext, Category>
 {
-  /// <summary>
-  /// Describes an event handler that will be automatically executed just after a <see cref="Category"/> is edited.
-  /// </summary>
-  public interface ICategoryEditedEventHandler : IEventHandler<HttpContext, Category>
-  {
-  }
 }

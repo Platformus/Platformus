@@ -4,10 +4,9 @@
 using System.Collections.Generic;
 using Microsoft.AspNetCore.Http;
 
-namespace Platformus.Core.Backend.Metadata.Providers
+namespace Platformus.Core.Backend.Metadata.Providers;
+
+public interface IScriptsProvider
 {
-  public interface IScriptsProvider
-  {
-    IEnumerable<Script> GetScripts(HttpContext httpContext);
-  }
+  IEnumerable<Script> GetScripts(HttpContext httpContext);
 }

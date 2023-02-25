@@ -3,18 +3,17 @@
 
 using Platformus.ECommerce.Data.Entities;
 
-namespace Platformus.ECommerce.Backend.ViewModels.Shared
+namespace Platformus.ECommerce.Backend.ViewModels.Shared;
+
+public static class PaymentMethodViewModelFactory
 {
-  public static class PaymentMethodViewModelFactory
+  public static PaymentMethodViewModel Create(PaymentMethod paymentMethod)
   {
-    public static PaymentMethodViewModel Create(PaymentMethod paymentMethod)
+    return new PaymentMethodViewModel()
     {
-      return new PaymentMethodViewModel()
-      {
-        Id = paymentMethod.Id,
-        Name = paymentMethod.Name.GetLocalizationValue(),
-        Position = paymentMethod.Position
-      };
-    }
+      Id = paymentMethod.Id,
+      Name = paymentMethod.Name.GetLocalizationValue(),
+      Position = paymentMethod.Position
+    };
   }
 }

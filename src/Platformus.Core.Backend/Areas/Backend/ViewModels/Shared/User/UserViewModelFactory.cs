@@ -3,18 +3,17 @@
 
 using Platformus.Core.Data.Entities;
 
-namespace Platformus.Core.Backend.ViewModels.Shared
+namespace Platformus.Core.Backend.ViewModels.Shared;
+
+public static class UserViewModelFactory
 {
-  public static class UserViewModelFactory
+  public static UserViewModel Create(User user)
   {
-    public static UserViewModel Create(User user)
+    return new UserViewModel()
     {
-      return new UserViewModel()
-      {
-        Id = user.Id,
-        Name = user.Name,
-        Created = user.Created
-      };
-    }
+      Id = user.Id,
+      Name = user.Name,
+      Created = user.Created
+    };
   }
 }

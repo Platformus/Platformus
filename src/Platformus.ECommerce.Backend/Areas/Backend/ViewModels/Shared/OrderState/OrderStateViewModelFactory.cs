@@ -3,18 +3,17 @@
 
 using Platformus.ECommerce.Data.Entities;
 
-namespace Platformus.ECommerce.Backend.ViewModels.Shared
+namespace Platformus.ECommerce.Backend.ViewModels.Shared;
+
+public static class OrderStateViewModelFactory
 {
-  public static class OrderStateViewModelFactory
+  public static OrderStateViewModel Create(OrderState orderState)
   {
-    public static OrderStateViewModel Create(OrderState orderState)
+    return new OrderStateViewModel()
     {
-      return new OrderStateViewModel()
-      {
-        Id = orderState.Id,
-        Name = orderState.Name.GetLocalizationValue(),
-        Position = orderState.Position
-      };
-    }
+      Id = orderState.Id,
+      Name = orderState.Name.GetLocalizationValue(),
+      Position = orderState.Position
+    };
   }
 }

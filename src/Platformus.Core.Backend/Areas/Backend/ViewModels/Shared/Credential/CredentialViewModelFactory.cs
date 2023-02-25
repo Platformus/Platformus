@@ -3,18 +3,17 @@
 
 using Platformus.Core.Data.Entities;
 
-namespace Platformus.Core.Backend.ViewModels.Shared
+namespace Platformus.Core.Backend.ViewModels.Shared;
+
+public static class CredentialViewModelFactory
 {
-  public static class CredentialViewModelFactory
+  public static CredentialViewModel Create(Credential credential)
   {
-    public static CredentialViewModel Create(Credential credential)
+    return new CredentialViewModel()
     {
-      return new CredentialViewModel()
-      {
-        Id = credential.Id,
-        CredentialType = CredentialTypeViewModelFactory.Create(credential.CredentialType),
-        Identifier = credential.Identifier
-      };
-    }
+      Id = credential.Id,
+      CredentialType = CredentialTypeViewModelFactory.Create(credential.CredentialType),
+      Identifier = credential.Identifier
+    };
   }
 }

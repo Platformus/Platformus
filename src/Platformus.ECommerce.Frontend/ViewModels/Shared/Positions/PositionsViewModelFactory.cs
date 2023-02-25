@@ -5,18 +5,17 @@ using System.Collections.Generic;
 using System.Linq;
 using Platformus.ECommerce.Data.Entities;
 
-namespace Platformus.ECommerce.Frontend.ViewModels.Shared
+namespace Platformus.ECommerce.Frontend.ViewModels.Shared;
+
+public static class PositionsViewModelFactory
 {
-  public static class PositionsViewModelFactory
+  public static PositionsViewModel Create(IEnumerable<Position> positions, string partialViewName, string additionalCssClass)
   {
-    public static PositionsViewModel Create(IEnumerable<Position> positions, string partialViewName, string additionalCssClass)
+    return new PositionsViewModel()
     {
-      return new PositionsViewModel()
-      {
-        Positions = positions.Select(PositionViewModelFactory.Create),
-        PartialViewName = partialViewName ?? "_Positions",
-        AdditionalCssClass = additionalCssClass
-      };
-    }
+      Positions = positions.Select(PositionViewModelFactory.Create),
+      PartialViewName = partialViewName ?? "_Positions",
+      AdditionalCssClass = additionalCssClass
+    };
   }
 }

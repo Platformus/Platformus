@@ -4,16 +4,15 @@
 using System.Collections.Generic;
 using Platformus.Core.Frontend.ViewModels;
 
-namespace Platformus.Website.Frontend.ViewModels.Shared
+namespace Platformus.Website.Frontend.ViewModels.Shared;
+
+public class FieldViewModel : ViewModelBase
 {
-  public class FieldViewModel : ViewModelBase
-  {
-    public int Id { get; set; }
-    public FieldTypeViewModel FieldType { get; set; }
-    public string Code { get; set; }
-    public string Name { get; set; }
-    public bool IsRequired { get; set; }
-    public int? MaxLength { get; set; }
-    public IEnumerable<FieldOptionViewModel> FieldOptions { get; set; }
-  }
+  public int Id { get; set; }
+  public FieldTypeViewModel FieldType { get; set; }
+  public string Code { get; set; }
+  public string Name { get; set; }
+  public bool IsRequired { get; set; }
+  public int? MaxLength { get; set; }
+  public IEnumerable<FieldOptionViewModel> FieldOptions { get; set; }
 }

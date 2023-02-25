@@ -3,11 +3,10 @@
 
 using Platformus.Core.Frontend.ViewModels;
 
-namespace Platformus.Website.Frontend.ViewModels.Shared
+namespace Platformus.Website.Frontend.ViewModels.Shared;
+
+public class FieldTypeViewModel : ViewModelBase
 {
-  public class FieldTypeViewModel : ViewModelBase
-  {
-    public string Code { get; set; }
-    public string Name { get; set; }
-  }
+  public string Code { get; set; }
+  public string Name { get; set; }
 }

@@ -3,37 +3,36 @@
 
 using Magicalizer.Data.Entities.Abstractions;
 
-namespace Platformus.Website.Data.Entities
+namespace Platformus.Website.Data.Entities;
+
+/// <summary>
+/// Represents a field type. The field types are used to specify how the field should look and behave,
+/// and how it should be processed.
+/// </summary>
+public class FieldType : IEntity<int>
 {
   /// <summary>
-  /// Represents a field type. The field types are used to specify how the field should look and behave,
-  /// and how it should be processed.
+  /// Gets or sets the unique identifier of the field type.
   /// </summary>
-  public class FieldType : IEntity<int>
-  {
-    /// <summary>
-    /// Gets or sets the unique identifier of the field type.
-    /// </summary>
-    public int Id { get; set; }
+  public int Id { get; set; }
 
-    /// <summary>
-    /// Gets or sets the unique code of the field type. It is set by the user and might be used for the field type retrieval.
-    /// </summary>
-    public string Code { get; set; }
+  /// <summary>
+  /// Gets or sets the unique code of the field type. It is set by the user and might be used for the field type retrieval.
+  /// </summary>
+  public string Code { get; set; }
 
-    /// <summary>
-    /// Gets or sets the field type name.
-    /// </summary>
-    public string Name { get; set; }
+  /// <summary>
+  /// Gets or sets the field type name.
+  /// </summary>
+  public string Name { get; set; }
 
-    /// <summary>
-    /// Gets or sets the field type position. Position is used to sort the field types (smallest to largest).
-    /// </summary>
-    public int? Position { get; set; }
+  /// <summary>
+  /// Gets or sets the field type position. Position is used to sort the field types (smallest to largest).
+  /// </summary>
+  public int? Position { get; set; }
 
-    /// <summary>
-    /// Gets or sets the name (including namespace) of the optional validator C# class.
-    /// </summary>
-    public string ValidatorCSharpClassName { get; set; }
-  }
+  /// <summary>
+  /// Gets or sets the name (including namespace) of the optional validator C# class.
+  /// </summary>
+  public string ValidatorCSharpClassName { get; set; }
 }

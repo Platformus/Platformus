@@ -9,40 +9,39 @@ using Microsoft.AspNetCore.Http.Extensions;
 using Platformus.Core.Parameters;
 using Platformus.Website.ResponseCaches;
 
-namespace Platformus.Website.Frontend
+namespace Platformus.Website.Frontend;
+
+public class MemoryResponseCache : IResponseCache
 {
-  public class MemoryResponseCache : IResponseCache
+  private const string response = "response:";
+
+  public string Description => "Caches responses in memory.";
+  public IEnumerable<ParameterGroup> ParameterGroups => new ParameterGroup[] { };
+
+  public async Task<byte[]> GetWithDefaultValueAsync(HttpContext httpContext, Func<Task<byte[]>> defaultValueFunc)
   {
-    private const string response = "response:";
+    ICache cache = httpContext.GetCache();
+    string key = this.GenerateUniqueKeyForUrl(httpContext.Request.GetEncodedPathAndQuery());
+    byte[] responseBody = cache.Get<byte[]>(key);
 
-    public string Description => "Caches responses in memory.";
-    public IEnumerable<ParameterGroup> ParameterGroups => new ParameterGroup[] { };
-
-    public async Task<byte[]> GetWithDefaultValueAsync(HttpContext httpContext, Func<Task<byte[]>> defaultValueFunc)
-    {
-      ICache cache = httpContext.GetCache();
-      string key = this.GenerateUniqueKeyForUrl(httpContext.Request.GetEncodedPathAndQuery());
-      byte[] responseBody = cache.Get<byte[]>(key);
-
-      if (responseBody != null)
-        return responseBody;
-
-      responseBody = await defaultValueFunc();
-
-      cache.Set(key, responseBody);
+    if (responseBody != null)
       return responseBody;
-    }
 
-    public async Task RemoveAllAsync(HttpContext httpContext)
-    {
-      ICache cache = httpContext.GetCache();
+    responseBody = await defaultValueFunc();
 
-      cache.RemoveAll(k => k.StartsWith(response));
-    }
+    cache.Set(key, responseBody);
+    return responseBody;
+  }
 
-    private string GenerateUniqueKeyForUrl(string url)
-    {
-      return string.Concat(response, url);
-    }
+  public async Task RemoveAllAsync(HttpContext httpContext)
+  {
+    ICache cache = httpContext.GetCache();
+
+    cache.RemoveAll(k => k.StartsWith(response));
+  }
+
+  private string GenerateUniqueKeyForUrl(string url)
+  {
+    return string.Concat(response, url);
   }
 }

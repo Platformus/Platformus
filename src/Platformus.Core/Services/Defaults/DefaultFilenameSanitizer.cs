@@ -5,19 +5,18 @@ using System.IO;
 using ExtCore.Infrastructure;
 using Platformus.Core.Services.Abstractions;
 
-namespace Platformus.Core.Services.Defaults
+namespace Platformus.Core.Services.Defaults;
+
+public class DefaultFilenameSanitizer : IFilenameSanitizer
 {
-  public class DefaultFilenameSanitizer : IFilenameSanitizer
+  public string SanitizeFilename(string filename)
   {
-    public string SanitizeFilename(string filename)
-    {
-      filename = filename.ToLower();
+    filename = filename.ToLower();
 
-      foreach (ITransliterator transliterator in ExtensionManager.GetInstances<ITransliterator>())
-        filename = transliterator.Transliterate(filename);
+    foreach (ITransliterator transliterator in ExtensionManager.GetInstances<ITransliterator>())
+      filename = transliterator.Transliterate(filename);
 
-      return string.Join("_", filename.Split(Path.GetInvalidFileNameChars()))
-        .Replace(' ', '_');
-    }
+    return string.Join("_", filename.Split(Path.GetInvalidFileNameChars()))
+      .Replace(' ', '_');
   }
 }

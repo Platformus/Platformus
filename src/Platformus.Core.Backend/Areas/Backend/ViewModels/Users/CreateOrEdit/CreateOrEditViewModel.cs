@@ -5,17 +5,16 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using Platformus.Core.Backend.ViewModels.Shared;
 
-namespace Platformus.Core.Backend.ViewModels.Users
+namespace Platformus.Core.Backend.ViewModels.Users;
+
+public class CreateOrEditViewModel : ViewModelBase
 {
-  public class CreateOrEditViewModel : ViewModelBase
-  {
-    public int? Id { get; set; }
+  public int? Id { get; set; }
 
-    [Display(Name = "Name")]
-    [Required]
-    [StringLength(64)]
-    public string Name { get; set; }
+  [Display(Name = "Name")]
+  [Required]
+  [StringLength(64)]
+  public string Name { get; set; }
 
-    public IEnumerable<UserRoleViewModel> UserRoles { get; set; }
-  }
+  public IEnumerable<UserRoleViewModel> UserRoles { get; set; }
 }

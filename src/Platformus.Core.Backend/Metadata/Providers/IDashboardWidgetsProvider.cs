@@ -4,10 +4,9 @@
 using System.Collections.Generic;
 using Microsoft.AspNetCore.Http;
 
-namespace Platformus.Core.Backend.Metadata.Providers
+namespace Platformus.Core.Backend.Metadata.Providers;
+
+public interface IDashboardWidgetsProvider
 {
-  public interface IDashboardWidgetsProvider
-  {
-    IEnumerable<DashboardWidget> GetDashboardWidgets(HttpContext httpContext);
-  }
+  IEnumerable<DashboardWidget> GetDashboardWidgets(HttpContext httpContext);
 }

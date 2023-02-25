@@ -4,14 +4,13 @@
 using System.Collections.Generic;
 using Platformus.Core.Backend.ViewModels.Shared;
 
-namespace Platformus.Core.Backend.ViewModels.Cultures
+namespace Platformus.Core.Backend.ViewModels.Cultures;
+
+public class IndexViewModel : ViewModelBase
 {
-  public class IndexViewModel : ViewModelBase
-  {
-    public string Sorting { get; set; }
-    public int Offset { get; set; }
-    public int Limit { get; set; }
-    public int Total { get; set; }
-    public IEnumerable<CultureViewModel> Cultures { get; set; }
-  }
+  public string Sorting { get; set; }
+  public int Offset { get; set; }
+  public int Limit { get; set; }
+  public int Total { get; set; }
+  public IEnumerable<CultureViewModel> Cultures { get; set; }
 }

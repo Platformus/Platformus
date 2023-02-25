@@ -1,13 +1,12 @@
 ﻿// Copyright © 2021 Dmitry Sikorsky. All rights reserved.
 // Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information.
 
-namespace Platformus.Core.Backend
+namespace Platformus.Core.Backend;
+
+public class PositiveButtonTagHelper : ButtonTagHelperBase
 {
-  public class PositiveButtonTagHelper : ButtonTagHelperBase
+  protected override string GetClass()
   {
-    protected override string GetClass()
-    {
-      return base.GetClass() + " button--positive";
-    }
+    return base.GetClass() + " button--positive";
   }
 }

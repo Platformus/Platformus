@@ -7,23 +7,22 @@ using Platformus.Core.Backend;
 using Platformus.Core.Backend.ViewModels;
 using Platformus.Core.Primitives;
 
-namespace Platformus.Website.Backend.ViewModels.Menus
+namespace Platformus.Website.Backend.ViewModels.Menus;
+
+public class CreateOrEditViewModel : ViewModelBase
 {
-  public class CreateOrEditViewModel : ViewModelBase
-  {
-    public int? Id { get; set; }
+  public int? Id { get; set; }
 
-    [Display(Name = "Code")]
-    [Required]
-    [StringLength(32)]
-    [RegularExpression(@"^[a-zA-Z_][a-zA-Z0-9_]*$")]
-    public string Code { get; set; }
+  [Display(Name = "Code")]
+  [Required]
+  [StringLength(32)]
+  [RegularExpression(@"^[a-zA-Z_][a-zA-Z0-9_]*$")]
+  public string Code { get; set; }
 
-    [Multilingual]
-    [Display(Name = "Name")]
-    [Required]
-    [StringLength(64)]
-    public string Name { get; set; }
-    public IEnumerable<Localization> NameLocalizations { get; set; }
-  }
+  [Multilingual]
+  [Display(Name = "Name")]
+  [Required]
+  [StringLength(64)]
+  public string Name { get; set; }
+  public IEnumerable<Localization> NameLocalizations { get; set; }
 }

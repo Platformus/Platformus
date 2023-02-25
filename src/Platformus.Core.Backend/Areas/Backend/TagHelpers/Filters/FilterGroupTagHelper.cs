@@ -3,15 +3,14 @@
 
 using Microsoft.AspNetCore.Razor.TagHelpers;
 
-namespace Platformus.Core.Backend
+namespace Platformus.Core.Backend;
+
+[RestrictChildren("filter-label", "text-filter", "integer-filter", "decimal-filter", "drop-down-list-filter", "date-filter", "date-time-filter")]
+public class FilterGroupTagHelper : TagHelper
 {
-  [RestrictChildren("filter-label", "text-filter", "integer-filter", "decimal-filter", "drop-down-list-filter", "date-filter", "date-time-filter")]
-  public class FilterGroupTagHelper : TagHelper
+  public override void Process(TagHelperContext context, TagHelperOutput output)
   {
-    public override void Process(TagHelperContext context, TagHelperOutput output)
-    {
-      output.TagName = TagNames.Div;
-      output.Attributes.SetAttribute(AttributeNames.Class, "filter__group");
-    }
+    output.TagName = TagNames.Div;
+    output.Attributes.SetAttribute(AttributeNames.Class, "filter__group");
   }
 }

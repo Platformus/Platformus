@@ -5,12 +5,11 @@ using System.Collections.Generic;
 using Platformus.Core.Backend.ViewModels;
 using Platformus.ECommerce.Backend.ViewModels.Shared;
 
-namespace Platformus.ECommerce.Backend.ViewModels.Carts
+namespace Platformus.ECommerce.Backend.ViewModels.Carts;
+
+public class ViewViewModel : ViewModelBase
 {
-  public class ViewViewModel : ViewModelBase
-  {
-    public int? Id { get; set; }
-    public IEnumerable<PositionViewModel> Positions { get; set; }
-    public decimal Total { get; set; }
-  }
+  public int? Id { get; set; }
+  public IEnumerable<PositionViewModel> Positions { get; set; }
+  public decimal Total { get; set; }
 }

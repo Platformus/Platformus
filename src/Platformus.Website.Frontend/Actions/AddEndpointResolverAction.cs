@@ -7,15 +7,14 @@ using Microsoft.Extensions.DependencyInjection;
 using Platformus.Website.Frontend.Services.Abstractions;
 using Platformus.Website.Frontend.Services.Defaults;
 
-namespace Platformus.Website.Frontend.Actions
-{
-  public class AddEndpointResolverAction : IConfigureServicesAction
-  {
-    public int Priority => 1000;
+namespace Platformus.Website.Frontend.Actions;
 
-    public void Execute(IServiceCollection services, IServiceProvider serviceProvider)
-    {
-      services.AddScoped(typeof(IEndpointResolver), typeof(DefaultEndpointResolver));
-    }
+public class AddEndpointResolverAction : IConfigureServicesAction
+{
+  public int Priority => 1000;
+
+  public void Execute(IServiceCollection services, IServiceProvider serviceProvider)
+  {
+    services.AddScoped(typeof(IEndpointResolver), typeof(DefaultEndpointResolver));
   }
 }

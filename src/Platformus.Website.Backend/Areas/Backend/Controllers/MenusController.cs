@@ -15,103 +15,102 @@ using Platformus.Website.Data.Entities;
 using Platformus.Website.Events;
 using Platformus.Website.Filters;
 
-namespace Platformus.Website.Backend.Controllers
+namespace Platformus.Website.Backend.Controllers;
+
+[Authorize(Policy = Policies.HasManageMenusPermission)]
+public class MenusController : Core.Backend.Controllers.ControllerBase
 {
-  [Authorize(Policy = Policies.HasManageMenusPermission)]
-  public class MenusController : Core.Backend.Controllers.ControllerBase
+  private IStringLocalizer localizer;
+
+  private IRepository<int, Menu, MenuFilter> Repository
   {
-    private IStringLocalizer localizer;
+    get => this.Storage.GetRepository<int, Menu, MenuFilter>();
+  }
 
-    private IRepository<int, Menu, MenuFilter> Repository
+  public MenusController(IStorage storage, IStringLocalizer<SharedResource> localizer)
+    : base(storage)
+  {
+    this.localizer = localizer;
+  }
+
+  public async Task<IActionResult> IndexAsync()
+  {
+    return this.View(IndexViewModelFactory.Create(
+      await this.Repository.GetAllAsync(
+        inclusions: new Inclusion<Menu>[] {
+          new Inclusion<Menu>(m => m.Name.Localizations),
+          new Inclusion<Menu>("MenuItems.Name.Localizations"),
+          new Inclusion<Menu>("MenuItems.MenuItems.Name.Localizations"),
+          new Inclusion<Menu>("MenuItems.MenuItems.MenuItems.Name.Localizations")
+        }
+      )
+    ));
+  }
+
+  [HttpGet]
+  [ImportModelStateFromTempData]
+  public async Task<IActionResult> CreateOrEditAsync(int? id)
+  {
+    return this.View(CreateOrEditViewModelFactory.Create(
+      this.HttpContext, id == null ? null : await this.Repository.GetByIdAsync(
+        (int)id,
+        new Inclusion<Menu>(m => m.Name.Localizations)
+      )
+    ));
+  }
+
+  [HttpPost]
+  [ExportModelStateToTempData]
+  public async Task<IActionResult> CreateOrEditAsync(CreateOrEditViewModel createOrEdit)
+  {
+    if (!await this.IsCodeUniqueAsync(createOrEdit))
+      this.ModelState.AddModelError("code", this.localizer["Value is already in use"]);
+
+    if (this.ModelState.IsValid)
     {
-      get => this.Storage.GetRepository<int, Menu, MenuFilter>();
-    }
+      Menu menu = CreateOrEditViewModelMapper.Map(
+        createOrEdit.Id == null ?
+          new Menu() :
+          await this.Repository.GetByIdAsync(
+            (int)createOrEdit.Id,
+            new Inclusion<Menu>(m => m.Name.Localizations)
+          ),
+        createOrEdit
+      );
 
-    public MenusController(IStorage storage, IStringLocalizer<SharedResource> localizer)
-      : base(storage)
-    {
-      this.localizer = localizer;
-    }
+      if (createOrEdit.Id == null)
+        this.Repository.Create(menu);
 
-    public async Task<IActionResult> IndexAsync()
-    {
-      return this.View(IndexViewModelFactory.Create(
-        await this.Repository.GetAllAsync(
-          inclusions: new Inclusion<Menu>[] {
-            new Inclusion<Menu>(m => m.Name.Localizations),
-            new Inclusion<Menu>("MenuItems.Name.Localizations"),
-            new Inclusion<Menu>("MenuItems.MenuItems.Name.Localizations"),
-            new Inclusion<Menu>("MenuItems.MenuItems.MenuItems.Name.Localizations")
-          }
-        )
-      ));
-    }
+      else this.Repository.Edit(menu);
 
-    [HttpGet]
-    [ImportModelStateFromTempData]
-    public async Task<IActionResult> CreateOrEditAsync(int? id)
-    {
-      return this.View(CreateOrEditViewModelFactory.Create(
-        this.HttpContext, id == null ? null : await this.Repository.GetByIdAsync(
-          (int)id,
-          new Inclusion<Menu>(m => m.Name.Localizations)
-        )
-      ));
-    }
-
-    [HttpPost]
-    [ExportModelStateToTempData]
-    public async Task<IActionResult> CreateOrEditAsync(CreateOrEditViewModel createOrEdit)
-    {
-      if (!await this.IsCodeUniqueAsync(createOrEdit))
-        this.ModelState.AddModelError("code", this.localizer["Value is already in use"]);
-
-      if (this.ModelState.IsValid)
-      {
-        Menu menu = CreateOrEditViewModelMapper.Map(
-          createOrEdit.Id == null ?
-            new Menu() :
-            await this.Repository.GetByIdAsync(
-              (int)createOrEdit.Id,
-              new Inclusion<Menu>(m => m.Name.Localizations)
-            ),
-          createOrEdit
-        );
-
-        if (createOrEdit.Id == null)
-          this.Repository.Create(menu);
-
-        else this.Repository.Edit(menu);
-
-        await this.MergeEntityLocalizationsAsync(menu);
-        await this.Storage.SaveAsync();
-
-        if (createOrEdit.Id == null)
-          Event<IMenuCreatedEventHandler, HttpContext, Menu>.Broadcast(this.HttpContext, menu);
-
-        else Event<IMenuEditedEventHandler, HttpContext, Menu>.Broadcast(this.HttpContext, menu);
-
-        return this.RedirectToAction("Index");
-      }
-
-      return this.CreateRedirectToSelfResult();
-    }
-
-    public async Task<IActionResult> DeleteAsync(int id)
-    {
-      Menu menu = await this.Repository.GetByIdAsync(id);
-
-      this.Repository.Delete(menu.Id);
+      await this.MergeEntityLocalizationsAsync(menu);
       await this.Storage.SaveAsync();
-      Event<IMenuDeletedEventHandler, HttpContext, Menu>.Broadcast(this.HttpContext, menu);
+
+      if (createOrEdit.Id == null)
+        Event<IMenuCreatedEventHandler, HttpContext, Menu>.Broadcast(this.HttpContext, menu);
+
+      else Event<IMenuEditedEventHandler, HttpContext, Menu>.Broadcast(this.HttpContext, menu);
+
       return this.RedirectToAction("Index");
     }
 
-    private async Task<bool> IsCodeUniqueAsync(CreateOrEditViewModel createOrEdit)
-    {
-      Menu menu = (await this.Repository.GetAllAsync(new MenuFilter(code: createOrEdit.Code))).FirstOrDefault();
+    return this.CreateRedirectToSelfResult();
+  }
 
-      return menu == null || menu.Id == createOrEdit.Id;
-    }
+  public async Task<IActionResult> DeleteAsync(int id)
+  {
+    Menu menu = await this.Repository.GetByIdAsync(id);
+
+    this.Repository.Delete(menu.Id);
+    await this.Storage.SaveAsync();
+    Event<IMenuDeletedEventHandler, HttpContext, Menu>.Broadcast(this.HttpContext, menu);
+    return this.RedirectToAction("Index");
+  }
+
+  private async Task<bool> IsCodeUniqueAsync(CreateOrEditViewModel createOrEdit)
+  {
+    Menu menu = (await this.Repository.GetAllAsync(new MenuFilter(code: createOrEdit.Code))).FirstOrDefault();
+
+    return menu == null || menu.Id == createOrEdit.Id;
   }
 }

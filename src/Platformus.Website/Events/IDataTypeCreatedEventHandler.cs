@@ -5,12 +5,11 @@ using ExtCore.Events;
 using Microsoft.AspNetCore.Http;
 using Platformus.Website.Data.Entities;
 
-namespace Platformus.Website.Events
+namespace Platformus.Website.Events;
+
+/// <summary>
+/// Describes an event handler that will be automatically executed just after a <see cref="DataType"/> is created.
+/// </summary>
+public interface IDataTypeCreatedEventHandler : IEventHandler<HttpContext, DataType>
 {
-  /// <summary>
-  /// Describes an event handler that will be automatically executed just after a <see cref="DataType"/> is created.
-  /// </summary>
-  public interface IDataTypeCreatedEventHandler : IEventHandler<HttpContext, DataType>
-  {
-  }
 }

@@ -3,18 +3,17 @@
 
 using Platformus.Website.Data.Entities;
 
-namespace Platformus.Website.Backend.ViewModels.Shared
+namespace Platformus.Website.Backend.ViewModels.Shared;
+
+public static class CompletedFormViewModelFactory
 {
-  public static class CompletedFormViewModelFactory
+  public static CompletedFormViewModel Create(CompletedForm completedForm)
   {
-    public static CompletedFormViewModel Create(CompletedForm completedForm)
+    return new CompletedFormViewModel()
     {
-      return new CompletedFormViewModel()
-      {
-        Id = completedForm.Id,
-        Form = FormViewModelFactory.Create(completedForm.Form),
-        Created = completedForm.Created
-      };
-    }
+      Id = completedForm.Id,
+      Form = FormViewModelFactory.Create(completedForm.Form),
+      Created = completedForm.Created
+    };
   }
 }

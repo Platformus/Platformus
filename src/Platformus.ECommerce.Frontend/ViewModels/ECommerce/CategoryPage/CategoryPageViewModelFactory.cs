@@ -9,30 +9,29 @@ using Platformus.ECommerce.Data.Entities;
 using Platformus.ECommerce.Frontend.ViewModels.Shared;
 using Platformus.ECommerce.ProductProviders;
 
-namespace Platformus.ECommerce.Frontend.ViewModels.ECommerce
+namespace Platformus.ECommerce.Frontend.ViewModels.ECommerce;
+
+public static class CategoryPageViewModelFactory
 {
-  public static class CategoryPageViewModelFactory
+  public static async Task<CategoryPageViewModel> CreateAsync(HttpContext httpContext, Category category)
   {
-    public static async Task<CategoryPageViewModel> CreateAsync(HttpContext httpContext, Category category)
+    return new CategoryPageViewModel()
     {
-      return new CategoryPageViewModel()
-      {
-        Name = category.Name.GetLocalizationValue(),
-        Description = category.Description.GetLocalizationValue(),
-        Title = category.Title.GetLocalizationValue(),
-        MetaDescription = category.MetaDescription.GetLocalizationValue(),
-        MetaKeywords = category.MetaKeywords.GetLocalizationValue(),
-        Products = await GetProductsAsync(httpContext, category)
-      };
-    }
+      Name = category.Name.GetLocalizationValue(),
+      Description = category.Description.GetLocalizationValue(),
+      Title = category.Title.GetLocalizationValue(),
+      MetaDescription = category.MetaDescription.GetLocalizationValue(),
+      MetaKeywords = category.MetaKeywords.GetLocalizationValue(),
+      Products = await GetProductsAsync(httpContext, category)
+    };
+  }
 
-    private static async Task<IEnumerable<ProductViewModel>> GetProductsAsync(HttpContext httpContext, Category category)
-    {
-      IProductProvider productProvider = StringActivator.CreateInstance<IProductProvider>(category.ProductProviderCSharpClassName);
+  private static async Task<IEnumerable<ProductViewModel>> GetProductsAsync(HttpContext httpContext, Category category)
+  {
+    IProductProvider productProvider = StringActivator.CreateInstance<IProductProvider>(category.ProductProviderCSharpClassName);
 
-      return (await productProvider.GetProductsAsync(httpContext, category)).Select(
-        ProductViewModelFactory.Create
-      );
-    }
+    return (await productProvider.GetProductsAsync(httpContext, category)).Select(
+      ProductViewModelFactory.Create
+    );
   }
 }

@@ -11,38 +11,37 @@ using Platformus.Website.Backend.ViewModels.Shared;
 using Platformus.Website.Data.Entities;
 using Platformus.Website.Filters;
 
-namespace Platformus.Website.Backend.ViewModels.Website
+namespace Platformus.Website.Backend.ViewModels.Website;
+
+public static class ObjectSelectorFormViewModelFactory
 {
-  public static class ObjectSelectorFormViewModelFactory
+  public static async Task<ObjectSelectorFormViewModel> CreateAsync(HttpContext httpContext, ObjectFilter filter, IEnumerable<Object> objects, string objectIds)
   {
-    public static async Task<ObjectSelectorFormViewModel> CreateAsync(HttpContext httpContext, ObjectFilter filter, IEnumerable<Object> objects, string objectIds)
+    Class @class = filter?.Class?.Id == null ? null : await httpContext.GetStorage().GetRepository<int, Class, ClassFilter>().GetByIdAsync(
+      (int)filter.Class.Id,
+      new Inclusion<Class>("Members.PropertyDataType"),
+      new Inclusion<Class>("Members.RelationClass"),
+      new Inclusion<Class>("Parent.Members.PropertyDataType"),
+      new Inclusion<Class>("Parent.Members.RelationClass")
+    );
+
+    objects.ToList().ForEach(o => o.Class = @class);
+
+    return new ObjectSelectorFormViewModel()
     {
-      Class @class = filter?.Class?.Id == null ? null : await httpContext.GetStorage().GetRepository<int, Class, ClassFilter>().GetByIdAsync(
-        (int)filter.Class.Id,
-        new Inclusion<Class>("Members.PropertyDataType"),
-        new Inclusion<Class>("Members.RelationClass"),
-        new Inclusion<Class>("Parent.Members.PropertyDataType"),
-        new Inclusion<Class>("Parent.Members.RelationClass")
-      );
+      Class = ClassViewModelFactory.Create(@class),
+      TableColumns = GetTableColumns(@class),
+      Objects = objects.Select(o => ObjectViewModelFactory.Create(httpContext, o)).ToList(),
+      ObjectIds = string.IsNullOrEmpty(objectIds) ? new int[] { } : objectIds.Split(',').Select(objectId => int.Parse(objectId)).ToList()
+    };
+  }
 
-      objects.ToList().ForEach(o => o.Class = @class);
+  private static IEnumerable<TableTagHelper.Column> GetTableColumns(Class @class)
+  {
+    List<TableTagHelper.Column> tableColumns = @class.GetVisibleInListMembers().Select(
+      m => new TableTagHelper.Column(m.Name)
+    ).ToList();
 
-      return new ObjectSelectorFormViewModel()
-      {
-        Class = ClassViewModelFactory.Create(@class),
-        TableColumns = GetTableColumns(@class),
-        Objects = objects.Select(o => ObjectViewModelFactory.Create(httpContext, o)).ToList(),
-        ObjectIds = string.IsNullOrEmpty(objectIds) ? new int[] { } : objectIds.Split(',').Select(objectId => int.Parse(objectId)).ToList()
-      };
-    }
-
-    private static IEnumerable<TableTagHelper.Column> GetTableColumns(Class @class)
-    {
-      List<TableTagHelper.Column> tableColumns = @class.GetVisibleInListMembers().Select(
-        m => new TableTagHelper.Column(m.Name)
-      ).ToList();
-
-      return tableColumns;
-    }
+    return tableColumns;
   }
 }

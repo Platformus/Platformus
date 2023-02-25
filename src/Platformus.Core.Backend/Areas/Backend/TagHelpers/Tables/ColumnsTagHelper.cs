@@ -3,14 +3,13 @@
 
 using Microsoft.AspNetCore.Razor.TagHelpers;
 
-namespace Platformus.Core.Backend
+namespace Platformus.Core.Backend;
+
+[RestrictChildren("column")]
+public class ColumnsTagHelper : TagHelper
 {
-  [RestrictChildren("column")]
-  public class ColumnsTagHelper : TagHelper
+  public override void Process(TagHelperContext context, TagHelperOutput output)
   {
-    public override void Process(TagHelperContext context, TagHelperOutput output)
-    {
-      output.TagName = null;
-    }
+    output.TagName = null;
   }
 }

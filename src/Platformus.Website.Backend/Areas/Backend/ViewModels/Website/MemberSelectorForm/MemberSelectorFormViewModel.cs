@@ -5,11 +5,10 @@ using System.Collections.Generic;
 using Platformus.Core.Backend.ViewModels;
 using Platformus.Website.Backend.ViewModels.Shared;
 
-namespace Platformus.Website.Backend.ViewModels.Website
+namespace Platformus.Website.Backend.ViewModels.Website;
+
+public class MemberSelectorFormViewModel : ViewModelBase
 {
-  public class MemberSelectorFormViewModel : ViewModelBase
-  {
-    public IDictionary<ClassViewModel, IEnumerable<MemberViewModel>> MembersByClasses { get; set; }
-    public int? MemberId { get; set; }
-  }
+  public IDictionary<ClassViewModel, IEnumerable<MemberViewModel>> MembersByClasses { get; set; }
+  public int? MemberId { get; set; }
 }

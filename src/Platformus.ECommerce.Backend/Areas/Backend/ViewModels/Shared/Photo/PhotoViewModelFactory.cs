@@ -3,19 +3,18 @@
 
 using Platformus.ECommerce.Data.Entities;
 
-namespace Platformus.ECommerce.Backend.ViewModels.Shared
+namespace Platformus.ECommerce.Backend.ViewModels.Shared;
+
+public static class PhotoViewModelFactory
 {
-  public static class PhotoViewModelFactory
+  public static PhotoViewModel Create(Photo photo)
   {
-    public static PhotoViewModel Create(Photo photo)
+    return new PhotoViewModel()
     {
-      return new PhotoViewModel()
-      {
-        Id = photo.Id,
-        Filename = photo.Filename,
-        IsCover = photo.IsCover,
-        Position = photo.Position
-      };
-    }
+      Id = photo.Id,
+      Filename = photo.Filename,
+      IsCover = photo.IsCover,
+      Position = photo.Position
+    };
   }
 }

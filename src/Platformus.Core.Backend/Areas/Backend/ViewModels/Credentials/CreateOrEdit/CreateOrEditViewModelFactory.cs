@@ -9,32 +9,31 @@ using Platformus.Core.Data.Entities;
 using Platformus.Core.Filters;
 using Platformus.Core.Primitives;
 
-namespace Platformus.Core.Backend.ViewModels.Credentials
-{
-  public static class CreateOrEditViewModelFactory
-  {
-    public static async Task<CreateOrEditViewModel> CreateAsync(HttpContext httpContext, Credential credential)
-    {
-      if (credential == null)
-        return new CreateOrEditViewModel()
-        {
-          CredentialTypeOptions = await GetCredentialTypeOptionsAsync(httpContext)
-        };
+namespace Platformus.Core.Backend.ViewModels.Credentials;
 
+public static class CreateOrEditViewModelFactory
+{
+  public static async Task<CreateOrEditViewModel> CreateAsync(HttpContext httpContext, Credential credential)
+  {
+    if (credential == null)
       return new CreateOrEditViewModel()
       {
-        Id = credential.Id,
-        CredentialTypeId = credential.CredentialTypeId,
-        CredentialTypeOptions = await GetCredentialTypeOptionsAsync(httpContext),
-        Identifier = credential.Identifier
+        CredentialTypeOptions = await GetCredentialTypeOptionsAsync(httpContext)
       };
-    }
 
-    private static async Task<IEnumerable<Option>> GetCredentialTypeOptionsAsync(HttpContext httpContext)
+    return new CreateOrEditViewModel()
     {
-      return (await httpContext.GetStorage().GetRepository<int, CredentialType, CredentialTypeFilter>().GetAllAsync()).Select(
-        ct => new Option(ct.Name, ct.Id.ToString())
-      ).ToList();
-    }
+      Id = credential.Id,
+      CredentialTypeId = credential.CredentialTypeId,
+      CredentialTypeOptions = await GetCredentialTypeOptionsAsync(httpContext),
+      Identifier = credential.Identifier
+    };
+  }
+
+  private static async Task<IEnumerable<Option>> GetCredentialTypeOptionsAsync(HttpContext httpContext)
+  {
+    return (await httpContext.GetStorage().GetRepository<int, CredentialType, CredentialTypeFilter>().GetAllAsync()).Select(
+      ct => new Option(ct.Name, ct.Id.ToString())
+    ).ToList();
   }
 }

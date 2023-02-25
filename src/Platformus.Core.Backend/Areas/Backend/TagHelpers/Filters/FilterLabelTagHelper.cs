@@ -3,14 +3,13 @@
 
 using Microsoft.AspNetCore.Razor.TagHelpers;
 
-namespace Platformus.Core.Backend
+namespace Platformus.Core.Backend;
+
+public class FilterLabelTagHelper : TagHelper
 {
-  public class FilterLabelTagHelper : TagHelper
+  public override void Process(TagHelperContext context, TagHelperOutput output)
   {
-    public override void Process(TagHelperContext context, TagHelperOutput output)
-    {
-      output.TagName = TagNames.Label;
-      output.Attributes.SetAttribute(AttributeNames.Class, "filter__label");
-    }
+    output.TagName = TagNames.Label;
+    output.Attributes.SetAttribute(AttributeNames.Class, "filter__label");
   }
 }

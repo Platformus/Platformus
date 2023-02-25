@@ -3,19 +3,18 @@
 
 using Platformus.Core.Data.Entities;
 
-namespace Platformus.Core.Backend.ViewModels.Cultures
-{
-  public static class CreateOrEditViewModelMapper
-  {
-    public static Culture Map(Culture culture, CreateOrEditViewModel createOrEdit)
-    {
-      if (culture.Id == null)
-        culture.Id = createOrEdit.Id;
+namespace Platformus.Core.Backend.ViewModels.Cultures;
 
-      culture.Name = createOrEdit.Name;
-      culture.IsFrontendDefault = createOrEdit.IsFrontendDefault;
-      culture.IsBackendDefault = createOrEdit.IsBackendDefault;
-      return culture;
-    }
+public static class CreateOrEditViewModelMapper
+{
+  public static Culture Map(Culture culture, CreateOrEditViewModel createOrEdit)
+  {
+    if (culture.Id == null)
+      culture.Id = createOrEdit.Id;
+
+    culture.Name = createOrEdit.Name;
+    culture.IsFrontendDefault = createOrEdit.IsFrontendDefault;
+    culture.IsBackendDefault = createOrEdit.IsBackendDefault;
+    return culture;
   }
 }

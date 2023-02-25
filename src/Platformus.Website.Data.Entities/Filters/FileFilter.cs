@@ -3,19 +3,18 @@
 
 using Magicalizer.Filters.Abstractions;
 
-namespace Platformus.Website.Filters
+namespace Platformus.Website.Filters;
+
+public class FileFilter : IFilter
 {
-  public class FileFilter : IFilter
+  public int? Id { get; set; }
+  public StringFilter Name { get; set; }
+
+  public FileFilter() { }
+
+  public FileFilter(int? id = null, StringFilter name = null)
   {
-    public int? Id { get; set; }
-    public StringFilter Name { get; set; }
-
-    public FileFilter() { }
-
-    public FileFilter(int? id = null, StringFilter name = null)
-    {
-      Id = id;
-      Name = name;
-    }
+    Id = id;
+    Name = name;
   }
 }

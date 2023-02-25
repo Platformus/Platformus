@@ -3,18 +3,17 @@
 
 using Microsoft.AspNetCore.Razor.TagHelpers;
 
-namespace Platformus.Core.Backend
-{
-  [RestrictChildren("node", "partial")]
-  public class TreeTagHelper : TagHelper
-  {
-    public string Class { get; set; }
+namespace Platformus.Core.Backend;
 
-    public override void Process(TagHelperContext context, TagHelperOutput output)
-    {
-      output.TagName = TagNames.Div;
-      output.TagMode = TagMode.StartTagAndEndTag;
-      output.Attributes.SetAttribute(AttributeNames.Class, "content__tree tree" + (string.IsNullOrEmpty(this.Class) ? null : $" {this.Class}"));
-    }
+[RestrictChildren("node", "partial")]
+public class TreeTagHelper : TagHelper
+{
+  public string Class { get; set; }
+
+  public override void Process(TagHelperContext context, TagHelperOutput output)
+  {
+    output.TagName = TagNames.Div;
+    output.TagMode = TagMode.StartTagAndEndTag;
+    output.Attributes.SetAttribute(AttributeNames.Class, "content__tree tree" + (string.IsNullOrEmpty(this.Class) ? null : $" {this.Class}"));
   }
 }

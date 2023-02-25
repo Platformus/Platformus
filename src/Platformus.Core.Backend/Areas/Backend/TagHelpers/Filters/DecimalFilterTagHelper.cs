@@ -4,40 +4,39 @@
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.AspNetCore.Razor.TagHelpers;
 
-namespace Platformus.Core.Backend
+namespace Platformus.Core.Backend;
+
+public class DecimalFilterTagHelper : CriterionTagHelperBase
 {
-  public class DecimalFilterTagHelper : CriterionTagHelperBase
+  public Sizes Width { get; set; } = Sizes.Small;
+
+  public override void Process(TagHelperContext context, TagHelperOutput output)
   {
-    public Sizes Width { get; set; } = Sizes.Small;
+    base.Process(context, output);
+    output.Content.AppendHtml(this.CreateNumericBox());
+  }
 
-    public override void Process(TagHelperContext context, TagHelperOutput output)
-    {
-      base.Process(context, output);
-      output.Content.AppendHtml(this.CreateNumericBox());
-    }
+  private TagBuilder CreateNumericBox()
+  {
+    TagBuilder tb = NumericBoxGenerator.Generate(
+      string.Empty,
+      NumericTypes.Decimal,
+      value: this.GetValue()
+    );
 
-    private TagBuilder CreateNumericBox()
-    {
-      TagBuilder tb = NumericBoxGenerator.Generate(
-        string.Empty,
-        NumericTypes.Decimal,
-        value: this.GetValue()
-      );
+    tb.AddCssClass("filter__criterion");
 
-      tb.AddCssClass("filter__criterion");
+    if (this.Width == Sizes.Small)
+      tb.AddCssClass("filter__criterion--small");
 
-      if (this.Width == Sizes.Small)
-        tb.AddCssClass("filter__criterion--small");
+    else if (this.Width == Sizes.Medium)
+      tb.AddCssClass("filter__criterion--medium");
 
-      else if (this.Width == Sizes.Medium)
-        tb.AddCssClass("filter__criterion--medium");
+    else if (this.Width == Sizes.Large)
+      tb.AddCssClass("filter__criterion--large");
 
-      else if (this.Width == Sizes.Large)
-        tb.AddCssClass("filter__criterion--large");
-
-      tb.MergeAttribute("data-property-path", this.PropertyPath?.ToLower());
-      tb.MergeAttribute(AttributeNames.Placeholder, this.Label);
-      return tb;
-    }
+    tb.MergeAttribute("data-property-path", this.PropertyPath?.ToLower());
+    tb.MergeAttribute(AttributeNames.Placeholder, this.Label);
+    return tb;
   }
 }

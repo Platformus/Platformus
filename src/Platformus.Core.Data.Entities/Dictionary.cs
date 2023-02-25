@@ -4,19 +4,18 @@
 using System.Collections.Generic;
 using Magicalizer.Data.Entities.Abstractions;
 
-namespace Platformus.Core.Data.Entities
+namespace Platformus.Core.Data.Entities;
+
+/// <summary>
+/// Represents a dictionary. The dictionaries are used to group the localizations of all the
+/// localizable properties of the entities.
+/// </summary>
+public class Dictionary : IEntity<int>
 {
   /// <summary>
-  /// Represents a dictionary. The dictionaries are used to group the localizations of all the
-  /// localizable properties of the entities.
+  /// Gets or sets the unique identifier of the dictionary.
   /// </summary>
-  public class Dictionary : IEntity<int>
-  {
-    /// <summary>
-    /// Gets or sets the unique identifier of the dictionary.
-    /// </summary>
-    public int Id { get; set; }
+  public int Id { get; set; }
 
-    public virtual ICollection<Localization> Localizations { get; set; }
-  }
+  public virtual ICollection<Localization> Localizations { get; set; }
 }

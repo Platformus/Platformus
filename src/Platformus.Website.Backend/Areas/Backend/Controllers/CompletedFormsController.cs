@@ -9,45 +9,44 @@ using Platformus.Website.Backend.ViewModels.CompletedForms;
 using Platformus.Website.Data.Entities;
 using Platformus.Website.Filters;
 
-namespace Platformus.Website.Backend.Controllers
+namespace Platformus.Website.Backend.Controllers;
+
+[Authorize(Policy = Policies.HasManageFormsPermission)]
+public class CompletedFormsController : Core.Backend.Controllers.ControllerBase
 {
-  [Authorize(Policy = Policies.HasManageFormsPermission)]
-  public class CompletedFormsController : Core.Backend.Controllers.ControllerBase
+  private IRepository<int, CompletedForm, CompletedFormFilter> Repository
   {
-    private IRepository<int, CompletedForm, CompletedFormFilter> Repository
-    {
-      get => this.Storage.GetRepository<int, CompletedForm, CompletedFormFilter>();
-    }
+    get => this.Storage.GetRepository<int, CompletedForm, CompletedFormFilter>();
+  }
 
-    public CompletedFormsController(IStorage storage)
-      : base(storage)
-    {
-    }
+  public CompletedFormsController(IStorage storage)
+    : base(storage)
+  {
+  }
 
-    public async Task<IActionResult> IndexAsync([FromQuery]CompletedFormFilter filter = null, string sorting = "-created", int offset = 0, int limit = 10)
-    {
-      return this.View(await IndexViewModelFactory.CreateAsync(
-        this.HttpContext, filter, sorting, offset, limit, await this.Repository.CountAsync(filter),
-        await this.Repository.GetAllAsync(filter, sorting, offset, limit, new Inclusion<CompletedForm>(cf => cf.Form.Name.Localizations))
-      ));
-    }
+  public async Task<IActionResult> IndexAsync([FromQuery] CompletedFormFilter filter = null, string sorting = "-created", int offset = 0, int limit = 10)
+  {
+    return this.View(await IndexViewModelFactory.CreateAsync(
+      this.HttpContext, filter, sorting, offset, limit, await this.Repository.CountAsync(filter),
+      await this.Repository.GetAllAsync(filter, sorting, offset, limit, new Inclusion<CompletedForm>(cf => cf.Form.Name.Localizations))
+    ));
+  }
 
-    public async Task<IActionResult> ViewAsync(int id)
-    {
-      return this.View(ViewViewModelFactory.Create(
-        await this.Repository.GetByIdAsync(
-          id,
-          new Inclusion<CompletedForm>("CompletedFields.Field.FieldType"),
-          new Inclusion<CompletedForm>("CompletedFields.Field.Name.Localizations")
-        )
-      ));
-    }
+  public async Task<IActionResult> ViewAsync(int id)
+  {
+    return this.View(ViewViewModelFactory.Create(
+      await this.Repository.GetByIdAsync(
+        id,
+        new Inclusion<CompletedForm>("CompletedFields.Field.FieldType"),
+        new Inclusion<CompletedForm>("CompletedFields.Field.Name.Localizations")
+      )
+    ));
+  }
 
-    public async Task<IActionResult> DeleteAsync(int id)
-    {
-      this.Repository.Delete(id);
-      await this.Storage.SaveAsync();
-      return this.Redirect(this.Request.CombineUrl("/backend/completedforms"));
-    }
+  public async Task<IActionResult> DeleteAsync(int id)
+  {
+    this.Repository.Delete(id);
+    await this.Storage.SaveAsync();
+    return this.Redirect(this.Request.CombineUrl("/backend/completedforms"));
   }
 }

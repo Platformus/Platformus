@@ -15,122 +15,122 @@ using SixLabors.ImageSharp.Formats.Jpeg;
 using SixLabors.ImageSharp.Formats.Png;
 using SixLabors.ImageSharp.Processing;
 
-namespace Platformus.Images.Controllers
+namespace Platformus.Images.Controllers;
+
+public class ImagesController : Controller
 {
-  public class ImagesController : Controller
+  private IWebHostEnvironment webHostEnvironment;
+
+  public ImagesController(IWebHostEnvironment webHostEnvironment)
   {
-    private IWebHostEnvironment webHostEnvironment;
+    this.webHostEnvironment = webHostEnvironment;
+  }
 
-    public ImagesController(IWebHostEnvironment webHostEnvironment)
+  [HttpGet]
+  public async Task<IActionResult> IndexAsync(string url, [FromQuery] Rectangle source = null, [FromQuery] Size destination = null, string format = null, int quality = 90, string copyTo = null)
+  {
+    (Image Image, IImageFormat ImageFormat) result = await this.LoadImageFromUrlAsync(url);
+
+    this.ProcessImage(result.Image, source, destination);
+
+    IImageEncoder imageEncoder = this.GetImageEncoder(result.ImageFormat, format, quality);
+
+    if (!string.IsNullOrEmpty(copyTo))
     {
-      this.webHostEnvironment = webHostEnvironment;
+      string filename = this.GetFilenameFromUrl(url);
+      string destinationFilepath = this.GetDestinationFilepath(copyTo, filename);
+
+      await result.Image.SaveAsync(
+        destinationFilepath,
+        imageEncoder
+      );
+
+      this.Response.Headers.Add("DestinationUrl", this.GetDestinationUrl(copyTo, filename));
     }
 
-    [HttpGet]
-    public async Task<IActionResult> IndexAsync(string url, [FromQuery] Rectangle source = null, [FromQuery] Size destination = null, string format = null, int quality = 90, string copyTo = null)
+    Stream output = new MemoryStream();
+
+    await result.Image.SaveAsync(output, imageEncoder);
+    result.Image.Dispose();
+    output.Seek(0, SeekOrigin.Begin);
+    return this.File(output, this.GetImageMimeType(result.ImageFormat, format));
+  }
+
+  private async Task<(Image Image, IImageFormat Format)> LoadImageFromUrlAsync(string url)
+  {
+    if (!Uri.IsWellFormedUriString(url, UriKind.Absolute))
+      url = $"{this.Request.Scheme}://{this.Request.Host}{url}";
+
+    try
     {
-      (Image Image, IImageFormat ImageFormat) result = await this.LoadImageFromUrlAsync(url);
-
-      this.ProcessImage(result.Image, source, destination);
-
-      IImageEncoder imageEncoder = this.GetImageEncoder(result.ImageFormat, format, quality);
-
-      if (!string.IsNullOrEmpty(copyTo))
-      {
-        string filename = this.GetFilenameFromUrl(url);
-        string destinationFilepath = this.GetDestinationFilepath(copyTo, filename);
-
-        await result.Image.SaveAsync(
-          destinationFilepath,
-          imageEncoder
-        );
-
-        this.Response.Headers.Add("DestinationUrl", this.GetDestinationUrl(copyTo, filename));
-      }
-
-      Stream output = new MemoryStream();
-      
-      await result.Image.SaveAsync(output, imageEncoder);
-      result.Image.Dispose();
-      output.Seek(0, SeekOrigin.Begin);
-      return this.File(output, this.GetImageMimeType(result.ImageFormat, format));
+      using (HttpClient httpClient = new HttpClient())
+      using (HttpResponseMessage response = await httpClient.GetAsync(url))
+      using (Stream inputStream = await response.Content.ReadAsStreamAsync())
+        return await Image.LoadWithFormatAsync(inputStream);
     }
 
-    private async Task<(Image Image, IImageFormat Format)> LoadImageFromUrlAsync(string url)
+    catch (Exception e)
     {
-      if (!Uri.IsWellFormedUriString(url, UriKind.Absolute))
-        url = $"{this.Request.Scheme}://{this.Request.Host}{url}";
-
-      try
-      {
-        using (HttpClient httpClient = new HttpClient())
-        using (HttpResponseMessage response = await httpClient.GetAsync(url))
-        using (Stream inputStream = await response.Content.ReadAsStreamAsync())
-          return await Image.LoadWithFormatAsync(inputStream);
-      }
-
-      catch (Exception e)
-      {
-        return default((Image Image, IImageFormat Format));
-      }
+      return default((Image Image, IImageFormat Format));
     }
+  }
 
-    private void ProcessImage(Image image, Rectangle source, Size destination)
+  private void ProcessImage(Image image, Rectangle source, Size destination)
+  {
+    image.Mutate(i =>
     {
-        image.Mutate(i => {
-          i.AutoOrient();
+      i.AutoOrient();
 
-          if (!source.IsEmpty())
-            i.Crop(new SixLabors.ImageSharp.Rectangle(source.X, source.Y, source.Width, source.Height));
+      if (!source.IsEmpty())
+        i.Crop(new SixLabors.ImageSharp.Rectangle(source.X, source.Y, source.Width, source.Height));
 
-          if (!destination.IsEmpty())
-            i.Resize(new SixLabors.ImageSharp.Size(destination.Width, destination.Height));
-        });
-    }
+      if (!destination.IsEmpty())
+        i.Resize(new SixLabors.ImageSharp.Size(destination.Width, destination.Height));
+    });
+  }
 
-    private IImageEncoder GetImageEncoder(IImageFormat imageFormat, string destinationImageFormatName, int destinationImageQuality)
-    {
-      if (string.IsNullOrEmpty(destinationImageFormatName))
-        destinationImageFormatName = imageFormat.Name;
+  private IImageEncoder GetImageEncoder(IImageFormat imageFormat, string destinationImageFormatName, int destinationImageQuality)
+  {
+    if (string.IsNullOrEmpty(destinationImageFormatName))
+      destinationImageFormatName = imageFormat.Name;
 
-      if (string.Equals(destinationImageFormatName, "Gif", StringComparison.OrdinalIgnoreCase))
-        return new GifEncoder();
+    if (string.Equals(destinationImageFormatName, "Gif", StringComparison.OrdinalIgnoreCase))
+      return new GifEncoder();
 
-      else if (string.Equals(destinationImageFormatName, "Jpeg", StringComparison.OrdinalIgnoreCase))
-        return new JpegEncoder() { Quality = destinationImageQuality };
+    else if (string.Equals(destinationImageFormatName, "Jpeg", StringComparison.OrdinalIgnoreCase))
+      return new JpegEncoder() { Quality = destinationImageQuality };
 
-      else return new PngEncoder();
-    }
+    else return new PngEncoder();
+  }
 
-    private string GetImageMimeType(IImageFormat imageFormat, string destinationImageFormatName)
-    {
-      if (string.IsNullOrEmpty(destinationImageFormatName))
-        destinationImageFormatName = imageFormat.Name;
+  private string GetImageMimeType(IImageFormat imageFormat, string destinationImageFormatName)
+  {
+    if (string.IsNullOrEmpty(destinationImageFormatName))
+      destinationImageFormatName = imageFormat.Name;
 
-      if (string.Equals(destinationImageFormatName, "Gif", StringComparison.OrdinalIgnoreCase))
-        return "image/gif";
+    if (string.Equals(destinationImageFormatName, "Gif", StringComparison.OrdinalIgnoreCase))
+      return "image/gif";
 
-      else if (string.Equals(destinationImageFormatName, "Jpeg", StringComparison.OrdinalIgnoreCase))
-        return "image/jpeg";
+    else if (string.Equals(destinationImageFormatName, "Jpeg", StringComparison.OrdinalIgnoreCase))
+      return "image/jpeg";
 
-      else return "image/png";
-    }
+    else return "image/png";
+  }
 
-    private string GetFilenameFromUrl(string url)
-    {
-      return url.Split('/').Last();
-    }
+  private string GetFilenameFromUrl(string url)
+  {
+    return url.Split('/').Last();
+  }
 
-    private string GetDestinationFilepath(string destinationBaseUrl, string filename)
-    {
-      string destinationPath = destinationBaseUrl.Trim('/').Replace('/', Path.DirectorySeparatorChar);
+  private string GetDestinationFilepath(string destinationBaseUrl, string filename)
+  {
+    string destinationPath = destinationBaseUrl.Trim('/').Replace('/', Path.DirectorySeparatorChar);
 
-      return Path.Combine(this.webHostEnvironment.WebRootPath, destinationPath, filename);
-    }
+    return Path.Combine(this.webHostEnvironment.WebRootPath, destinationPath, filename);
+  }
 
-    private string GetDestinationUrl(string destinationBaseUrl, string filename)
-    {
-      return '/' + destinationBaseUrl.Trim('/') + '/' + filename;
-    }
+  private string GetDestinationUrl(string destinationBaseUrl, string filename)
+  {
+    return '/' + destinationBaseUrl.Trim('/') + '/' + filename;
   }
 }

@@ -3,24 +3,23 @@
 
 using Magicalizer.Data.Entities.Abstractions;
 
-namespace Platformus.Core.Data.Entities
+namespace Platformus.Core.Data.Entities;
+
+/// <summary>
+/// Represents a many-to-many relationship between the users and roles.
+/// </summary>
+public class UserRole : IEntity
 {
   /// <summary>
-  /// Represents a many-to-many relationship between the users and roles.
+  /// Gets or sets the user identifier this user role is related to.
   /// </summary>
-  public class UserRole : IEntity
-  {
-    /// <summary>
-    /// Gets or sets the user identifier this user role is related to.
-    /// </summary>
-    public int UserId { get; set; }
+  public int UserId { get; set; }
 
-    /// <summary>
-    /// Gets or sets the role identifier this user role is related to.
-    /// </summary>
-    public int RoleId { get; set; }
+  /// <summary>
+  /// Gets or sets the role identifier this user role is related to.
+  /// </summary>
+  public int RoleId { get; set; }
 
-    public virtual User User { get; set; }
-    public virtual Role Role { get; set; }
-  }
+  public virtual User User { get; set; }
+  public virtual Role Role { get; set; }
 }

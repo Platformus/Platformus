@@ -6,17 +6,16 @@ using System.Linq;
 using Platformus.Website.Backend.ViewModels.Shared;
 using Platformus.Website.Data.Entities;
 
-namespace Platformus.Website.Backend.ViewModels.Website
+namespace Platformus.Website.Backend.ViewModels.Website;
+
+public static class ClassSelectorFormViewModelFactory
 {
-  public static class ClassSelectorFormViewModelFactory
+  public static ClassSelectorFormViewModel Create(IEnumerable<Class> classes, int? classId)
   {
-    public static ClassSelectorFormViewModel Create(IEnumerable<Class> classes, int? classId)
+    return new ClassSelectorFormViewModel()
     {
-      return new ClassSelectorFormViewModel()
-      {
-        Classes = classes.Select(ClassViewModelFactory.Create).ToList(),
-        ClassId = classId
-      };
-    }
+      Classes = classes.Select(ClassViewModelFactory.Create).ToList(),
+      ClassId = classId
+    };
   }
 }

@@ -5,10 +5,9 @@ using System.Collections.Generic;
 using Platformus.Core.Backend.ViewModels;
 using Platformus.Website.Backend.ViewModels.Shared;
 
-namespace Platformus.Website.Backend.ViewModels.Website
+namespace Platformus.Website.Backend.ViewModels.Website;
+
+public class FileSelectorFormViewModel : ViewModelBase
 {
-  public class FileSelectorFormViewModel : ViewModelBase
-  {
-    public IEnumerable<FileViewModel> Files { get; set; }
-  }
+  public IEnumerable<FileViewModel> Files { get; set; }
 }

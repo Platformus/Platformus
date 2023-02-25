@@ -5,20 +5,19 @@ using System;
 using System.Linq;
 using Platformus.ECommerce.Data.Entities;
 
-namespace Platformus.ECommerce.Backend.ViewModels.Shared
+namespace Platformus.ECommerce.Backend.ViewModels.Shared;
+
+public static class CategoryViewModelFactory
 {
-  public static class CategoryViewModelFactory
+  public static CategoryViewModel Create(Category category)
   {
-    public static CategoryViewModel Create(Category category)
+    return new CategoryViewModel()
     {
-      return new CategoryViewModel()
-      {
-        Id = category.Id,
-        Name = category.Name.GetLocalizationValue(),
-        Categories = category.Categories == null?
-          Array.Empty<CategoryViewModel>() :
-          category.Categories.Select(CategoryViewModelFactory.Create).ToList()
-      };
-    }
+      Id = category.Id,
+      Name = category.Name.GetLocalizationValue(),
+      Categories = category.Categories == null ?
+        Array.Empty<CategoryViewModel>() :
+        category.Categories.Select(CategoryViewModelFactory.Create).ToList()
+    };
   }
 }

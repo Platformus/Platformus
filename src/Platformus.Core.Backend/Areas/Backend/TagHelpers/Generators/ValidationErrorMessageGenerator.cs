@@ -3,26 +3,25 @@
 
 using Microsoft.AspNetCore.Mvc.Rendering;
 
-namespace Platformus.Core.Backend
+namespace Platformus.Core.Backend;
+
+public static class ValidationErrorMessageGenerator
 {
-  public static class ValidationErrorMessageGenerator
+  public static TagBuilder Generate(string identity, bool isValid, string text = null)
   {
-    public static TagBuilder Generate(string identity, bool isValid, string text = null)
-    {
-      TagBuilder tb = new TagBuilder(TagNames.Span);
+    TagBuilder tb = new TagBuilder(TagNames.Span);
 
-      if (isValid)
-        tb.AddCssClass("field-validation-valid");
+    if (isValid)
+      tb.AddCssClass("field-validation-valid");
 
-      else tb.AddCssClass("field-validation-error");
+    else tb.AddCssClass("field-validation-error");
 
-      tb.MergeAttribute("data-valmsg-for", identity);
-      tb.MergeAttribute("data-valmsg-replace", "true");
+    tb.MergeAttribute("data-valmsg-for", identity);
+    tb.MergeAttribute("data-valmsg-replace", "true");
 
-      if (!string.IsNullOrEmpty(text))
-        tb.InnerHtml.AppendHtml(text);
+    if (!string.IsNullOrEmpty(text))
+      tb.InnerHtml.AppendHtml(text);
 
-      return tb;
-    }
+    return tb;
   }
 }

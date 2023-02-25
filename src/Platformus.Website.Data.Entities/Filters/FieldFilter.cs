@@ -4,27 +4,26 @@
 using Magicalizer.Filters.Abstractions;
 using Platformus.Core.Filters;
 
-namespace Platformus.Website.Filters
+namespace Platformus.Website.Filters;
+
+public class FieldFilter : IFilter
 {
-  public class FieldFilter : IFilter
+  public int? Id { get; set; }
+  public FormFilter Form { get; set; }
+  public FieldTypeFilter FieldType { get; set; }
+  public string Code { get; set; }
+
+  [FilterShortcut("Name.Localizations[]")]
+  public LocalizationFilter Name { get; set; }
+
+  public FieldFilter() { }
+
+  public FieldFilter(int? id = null, FormFilter form = null, FieldTypeFilter fieldType = null, string code = null, LocalizationFilter name = null)
   {
-    public int? Id { get; set; }
-    public FormFilter Form { get; set; }
-    public FieldTypeFilter FieldType { get; set; }
-    public string Code { get; set; }
-
-    [FilterShortcut("Name.Localizations[]")]
-    public LocalizationFilter Name { get; set; }
-
-    public FieldFilter() { }
-
-    public FieldFilter(int? id = null, FormFilter form = null, FieldTypeFilter fieldType = null, string code = null, LocalizationFilter name = null)
-    {
-      Id = id;
-      Form = form;
-      FieldType = fieldType;
-      Code = code;
-      Name = name;
-    }
+    Id = id;
+    Form = form;
+    FieldType = fieldType;
+    Code = code;
+    Name = name;
   }
 }

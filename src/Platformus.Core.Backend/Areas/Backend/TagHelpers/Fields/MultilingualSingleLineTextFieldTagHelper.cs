@@ -5,48 +5,47 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.AspNetCore.Razor.TagHelpers;
 using Platformus.Core.Primitives;
 
-namespace Platformus.Core.Backend
+namespace Platformus.Core.Backend;
+
+public class MultilingualSingleLineTextFieldTagHelper : MultilingualFieldTagHelperBase<string>
 {
-  public class MultilingualSingleLineTextFieldTagHelper : MultilingualFieldTagHelperBase<string>
+  public override void Process(TagHelperContext context, TagHelperOutput output)
   {
-    public override void Process(TagHelperContext context, TagHelperOutput output)
+    if ((this.For == null && string.IsNullOrEmpty(this.Id)) || this.Localizations == null)
+      return;
+
+    base.Process(context, output);
+
+    foreach (Localization localization in this.Localizations)
     {
-      if ((this.For == null && string.IsNullOrEmpty(this.Id)) || this.Localizations == null)
-        return;
-
-      base.Process(context, output);
-
-      foreach (Localization localization in this.Localizations)
+      if (localization.Culture.Id != NeutralCulture.Id)
       {
-        if (localization.Culture.Id != NeutralCulture.Id)
-        {
-          output.Content.AppendHtml(this.CreateCulture(localization));
-          output.Content.AppendHtml(this.CreateTextBox(localization));
-          output.Content.AppendHtml(this.CreateValidationErrorMessage(localization));
-        }
+        output.Content.AppendHtml(this.CreateCulture(localization));
+        output.Content.AppendHtml(this.CreateTextBox(localization));
+        output.Content.AppendHtml(this.CreateValidationErrorMessage(localization));
       }
     }
+  }
 
-    private TagBuilder CreateTextBox(Localization localization)
-    {
-      TagBuilder tb = TextBoxGenerator.Generate(
-        this.GetIdentity(localization),
-        InputTypes.Text,
-        value: this.GetValue(localization),
-        validation: this.GetValidation(localization)
-      );
+  private TagBuilder CreateTextBox(Localization localization)
+  {
+    TagBuilder tb = TextBoxGenerator.Generate(
+      this.GetIdentity(localization),
+      InputTypes.Text,
+      value: this.GetValue(localization),
+      validation: this.GetValidation(localization)
+    );
 
-      tb.AddCssClass("field__text-box field__multilingual");
-      tb.MergeAttribute(AttributeNames.Lang, localization.Culture.Id);
+    tb.AddCssClass("field__text-box field__multilingual");
+    tb.MergeAttribute(AttributeNames.Lang, localization.Culture.Id);
 
-      if (this.IsDisabled())
-        tb.MergeAttribute(AttributeNames.Disabled, "disabled");
+    if (this.IsDisabled())
+      tb.MergeAttribute(AttributeNames.Disabled, "disabled");
 
-      // TODO: merge all the attributes, not only "onchange"
-      if (!string.IsNullOrEmpty(this.OnChange))
-        tb.MergeAttribute(AttributeNames.OnChange, this.OnChange);
+    // TODO: merge all the attributes, not only "onchange"
+    if (!string.IsNullOrEmpty(this.OnChange))
+      tb.MergeAttribute(AttributeNames.OnChange, this.OnChange);
 
-      return tb;
-    }
+    return tb;
   }
 }

@@ -6,20 +6,19 @@ using System.Linq;
 using Platformus.Website.Backend.ViewModels.Shared;
 using Platformus.Website.Data.Entities;
 
-namespace Platformus.Website.Backend.ViewModels.FileManager
+namespace Platformus.Website.Backend.ViewModels.FileManager;
+
+public static class IndexViewModelFactory
 {
-  public static class IndexViewModelFactory
+  public static IndexViewModel Create(string sorting, int offset, int limit, int total, IEnumerable<File> files)
   {
-    public static IndexViewModel Create(string sorting, int offset, int limit, int total, IEnumerable<File> files)
+    return new IndexViewModel()
     {
-      return new IndexViewModel()
-      {
-        Sorting = sorting,
-        Offset = offset,
-        Limit = limit,
-        Total = total,
-        Files = files.Select(FileViewModelFactory.Create).ToList()
-      };
-    }
+      Sorting = sorting,
+      Offset = offset,
+      Limit = limit,
+      Total = total,
+      Files = files.Select(FileViewModelFactory.Create).ToList()
+    };
   }
 }

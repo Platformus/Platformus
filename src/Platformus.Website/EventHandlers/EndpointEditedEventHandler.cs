@@ -4,16 +4,15 @@
 using Microsoft.AspNetCore.Http;
 using Platformus.Website.Events;
 
-namespace Platformus.Website.EventHandlers
-{
-  public class EndpointEditedEventHandler : IEndpointEditedEventHandler
-  {
-    public int Priority => 1000;
+namespace Platformus.Website.EventHandlers;
 
-    public void HandleEvent(HttpContext httpContext, Data.Entities.Endpoint oldEndpoint, Data.Entities.Endpoint newEndpoint)
-    {
-      httpContext.GetCache().RemoveAll();
-      ResponseCacheManager.RemoveAll(httpContext);
-    }
+public class EndpointEditedEventHandler : IEndpointEditedEventHandler
+{
+  public int Priority => 1000;
+
+  public void HandleEvent(HttpContext httpContext, Data.Entities.Endpoint oldEndpoint, Data.Entities.Endpoint newEndpoint)
+  {
+    httpContext.GetCache().RemoveAll();
+    ResponseCacheManager.RemoveAll(httpContext);
   }
 }

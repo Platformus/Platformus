@@ -6,15 +6,14 @@ using ExtCore.Infrastructure.Actions;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Localization;
 
-namespace Platformus.Core.Actions
-{
-  public class AddStringLocalizerFactoryAction : IConfigureServicesAction
-  {
-    public int Priority => 1000;
+namespace Platformus.Core.Actions;
 
-    public void Execute(IServiceCollection services, IServiceProvider serviceProvider)
-    {
-      services.AddSingleton<IStringLocalizerFactory, StringLocalizerFactory>();
-    }
+public class AddStringLocalizerFactoryAction : IConfigureServicesAction
+{
+  public int Priority => 1000;
+
+  public void Execute(IServiceCollection services, IServiceProvider serviceProvider)
+  {
+    services.AddSingleton<IStringLocalizerFactory, StringLocalizerFactory>();
   }
 }

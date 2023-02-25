@@ -3,12 +3,11 @@
 
 using System;
 
-namespace Platformus.Core.Backend.ViewModels.Shared
+namespace Platformus.Core.Backend.ViewModels.Shared;
+
+public class UserViewModel : ViewModelBase
 {
-  public class UserViewModel : ViewModelBase
-  {
-    public int Id { get; set; }
-    public string Name { get; set; }
-    public DateTime Created { get; set; }
-  }
+  public int Id { get; set; }
+  public string Name { get; set; }
+  public DateTime Created { get; set; }
 }

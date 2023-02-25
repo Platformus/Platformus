@@ -7,46 +7,45 @@ using Platformus.Core.Data.Entities;
 using Platformus.Core.Filters;
 using Platformus.Core.Services.Abstractions;
 
-namespace Platformus.Core.Services.Defaults
+namespace Platformus.Core.Services.Defaults;
+
+public class DefaultConfigurationManager : IConfigurationManager
 {
-  public class DefaultConfigurationManager : IConfigurationManager
+  private ICache cache;
+  private IStorage storage;
+
+  public string this[string configurationCode, string variableCode]
   {
-    private ICache cache;
-    private IStorage storage;
-
-    public string this[string configurationCode, string variableCode]
+    get
     {
-      get
-      {
-        string key = string.Format("{0}:{1}", configurationCode, variableCode);
+      string key = string.Format("{0}:{1}", configurationCode, variableCode);
 
-        return this.cache.GetWithDefaultValueAsync(
-          "configuration:" + key,
-          async () =>
-          {
-            Variable variable = (await this.storage.GetRepository<int, Variable, VariableFilter>().GetAllAsync(
-              new VariableFilter(configuration: new ConfigurationFilter(code: configurationCode), code: variableCode)
-            )).FirstOrDefault();
+      return this.cache.GetWithDefaultValueAsync(
+        "configuration:" + key,
+        async () =>
+        {
+          Variable variable = (await this.storage.GetRepository<int, Variable, VariableFilter>().GetAllAsync(
+            new VariableFilter(configuration: new ConfigurationFilter(code: configurationCode), code: variableCode)
+          )).FirstOrDefault();
 
-            if (variable == null)
-              return null;
+          if (variable == null)
+            return null;
 
-            return variable.Value;
-          },
-          new CacheEntryOptions(priority: CacheEntryPriority.NeverRemove)
-        ).Result;
-      }
+          return variable.Value;
+        },
+        new CacheEntryOptions(priority: CacheEntryPriority.NeverRemove)
+      ).Result;
     }
+  }
 
-    public DefaultConfigurationManager(ICache cache, IStorage storage)
-    {
-      this.cache = cache;
-      this.storage = storage;
-    }
+  public DefaultConfigurationManager(ICache cache, IStorage storage)
+  {
+    this.cache = cache;
+    this.storage = storage;
+  }
 
-    public void InvalidateCache()
-    {
-      this.cache.RemoveAll();
-    }
+  public void InvalidateCache()
+  {
+    this.cache.RemoveAll();
   }
 }

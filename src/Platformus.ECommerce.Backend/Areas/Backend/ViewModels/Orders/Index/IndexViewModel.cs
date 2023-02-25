@@ -6,17 +6,16 @@ using Platformus.Core.Backend.ViewModels;
 using Platformus.Core.Primitives;
 using Platformus.ECommerce.Backend.ViewModels.Shared;
 
-namespace Platformus.ECommerce.Backend.ViewModels.Orders
+namespace Platformus.ECommerce.Backend.ViewModels.Orders;
+
+public class IndexViewModel : ViewModelBase
 {
-  public class IndexViewModel : ViewModelBase
-  {
-    public IEnumerable<Option> OrderStateOptions { get; set; }
-    public IEnumerable<Option> DeliveryMethodOptions { get; set; }
-    public IEnumerable<Option> PaymentMethodOptions { get; set; }
-    public string Sorting { get; set; }
-    public int Offset { get; set; }
-    public int Limit { get; set; }
-    public int Total { get; set; }
-    public IEnumerable<OrderViewModel> Orders { get; set; }
-  }
+  public IEnumerable<Option> OrderStateOptions { get; set; }
+  public IEnumerable<Option> DeliveryMethodOptions { get; set; }
+  public IEnumerable<Option> PaymentMethodOptions { get; set; }
+  public string Sorting { get; set; }
+  public int Offset { get; set; }
+  public int Limit { get; set; }
+  public int Total { get; set; }
+  public IEnumerable<OrderViewModel> Orders { get; set; }
 }

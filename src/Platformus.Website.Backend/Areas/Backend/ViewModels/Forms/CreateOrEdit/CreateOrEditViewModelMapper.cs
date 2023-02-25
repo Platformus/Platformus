@@ -3,17 +3,16 @@
 
 using Platformus.Website.Data.Entities;
 
-namespace Platformus.Website.Backend.ViewModels.Forms
+namespace Platformus.Website.Backend.ViewModels.Forms;
+
+public static class CreateOrEditViewModelMapper
 {
-  public static class CreateOrEditViewModelMapper
+  public static Form Map(Form form, CreateOrEditViewModel createOrEdit)
   {
-    public static Form Map(Form form, CreateOrEditViewModel createOrEdit)
-    {
-      form.Code = createOrEdit.Code;
-      form.ProduceCompletedForms = createOrEdit.ProduceCompletedForms;
-      form.FormHandlerCSharpClassName = createOrEdit.FormHandlerCSharpClassName;
-      form.FormHandlerParameters = createOrEdit.FormHandlerParameters;
-      return form;
-    }
+    form.Code = createOrEdit.Code;
+    form.ProduceCompletedForms = createOrEdit.ProduceCompletedForms;
+    form.FormHandlerCSharpClassName = createOrEdit.FormHandlerCSharpClassName;
+    form.FormHandlerParameters = createOrEdit.FormHandlerParameters;
+    return form;
   }
 }

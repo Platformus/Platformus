@@ -3,14 +3,13 @@
 
 using Platformus.Website.Data.Entities;
 
-namespace Platformus.Website.Backend.ViewModels.Menus
+namespace Platformus.Website.Backend.ViewModels.Menus;
+
+public static class CreateOrEditViewModelMapper
 {
-  public static class CreateOrEditViewModelMapper
+  public static Menu Map(Menu menu, CreateOrEditViewModel createOrEdit)
   {
-    public static Menu Map(Menu menu, CreateOrEditViewModel createOrEdit)
-    {
-      menu.Code = createOrEdit.Code;
-      return menu;
-    }
+    menu.Code = createOrEdit.Code;
+    return menu;
   }
 }

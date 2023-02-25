@@ -5,14 +5,13 @@ using Microsoft.AspNetCore.Http;
 using Platformus.ECommerce.Data.Entities;
 using Platformus.ECommerce.Events;
 
-namespace Platformus.ECommerce.EventHandlers
-{
-  public class ProductCreatedEventHandler : IProductCreatedEventHandler
-  {
-    public int Priority => 1000;
+namespace Platformus.ECommerce.EventHandlers;
 
-    public void HandleEvent(HttpContext httpContext, Product product)
-    {
-    }
+public class ProductCreatedEventHandler : IProductCreatedEventHandler
+{
+  public int Priority => 1000;
+
+  public void HandleEvent(HttpContext httpContext, Product product)
+  {
   }
 }

@@ -4,21 +4,20 @@
 using System.Linq;
 using Platformus.Website.Data.Entities;
 
-namespace Platformus.Website.Frontend.ViewModels.Shared
+namespace Platformus.Website.Frontend.ViewModels.Shared;
+
+public static class FormViewModelFactory
 {
-  public static class FormViewModelFactory
+  public static FormViewModel Create(Form form, string partialViewName, string additionalCssClass)
   {
-    public static FormViewModel Create(Form form, string partialViewName, string additionalCssClass)
+    return new FormViewModel()
     {
-      return new FormViewModel()
-      {
-        Id = form.Id,
-        Name = form.Name.GetLocalizationValue(),
-        SubmitButtonTitle = form.SubmitButtonTitle.GetLocalizationValue(),
-        Fields = form.Fields.Select(FieldViewModelFactory.Create),
-        PartialViewName = partialViewName ?? "_Form",
-        AdditionalCssClass = additionalCssClass
-      };
-    }
+      Id = form.Id,
+      Name = form.Name.GetLocalizationValue(),
+      SubmitButtonTitle = form.SubmitButtonTitle.GetLocalizationValue(),
+      Fields = form.Fields.Select(FieldViewModelFactory.Create),
+      PartialViewName = partialViewName ?? "_Form",
+      AdditionalCssClass = additionalCssClass
+    };
   }
 }

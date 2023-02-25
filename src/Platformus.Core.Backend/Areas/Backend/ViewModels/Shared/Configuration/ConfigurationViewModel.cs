@@ -3,12 +3,11 @@
 
 using System.Collections.Generic;
 
-namespace Platformus.Core.Backend.ViewModels.Shared
+namespace Platformus.Core.Backend.ViewModels.Shared;
+
+public class ConfigurationViewModel : ViewModelBase
 {
-  public class ConfigurationViewModel : ViewModelBase
-  {
-    public int Id { get; set; }
-    public string Name { get; set; }
-    public IEnumerable<VariableViewModel> Variables { get; set; }
-  }
+  public int Id { get; set; }
+  public string Name { get; set; }
+  public IEnumerable<VariableViewModel> Variables { get; set; }
 }

@@ -7,48 +7,47 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.AspNetCore.Mvc.ViewFeatures;
 using Microsoft.AspNetCore.Razor.TagHelpers;
 
-namespace Platformus.Core.Backend
+namespace Platformus.Core.Backend;
+
+public class TitleBarTagHelper : TagHelper
 {
-  public class TitleBarTagHelper : TagHelper
+  [HtmlAttributeNotBound]
+  [ViewContext]
+  public ViewContext ViewContext { get; set; }
+
+  public override async Task ProcessAsync(TagHelperContext context, TagHelperOutput output)
   {
-    [HtmlAttributeNotBound]
-    [ViewContext]
-    public ViewContext ViewContext { get; set; }
+    output.TagName = TagNames.Div;
+    output.TagMode = TagMode.StartTagAndEndTag;
+    output.Attributes.SetAttribute(AttributeNames.Class, "title-bar");
+    output.Content.SetHtmlContent(this.CreateTitle());
+    output.Content.AppendHtml(await this.CreateButtonsAsync(output));
+  }
 
-    public override async Task ProcessAsync(TagHelperContext context, TagHelperOutput output)
-    {
-      output.TagName = TagNames.Div;
-      output.TagMode = TagMode.StartTagAndEndTag;
-      output.Attributes.SetAttribute(AttributeNames.Class, "title-bar");
-      output.Content.SetHtmlContent(this.CreateTitle());
-      output.Content.AppendHtml(await this.CreateButtonsAsync(output));
-    }
+  private TagBuilder CreateTitle()
+  {
+    TagBuilder tb = new TagBuilder(TagNames.H1);
 
-    private TagBuilder CreateTitle()
-    {
-      TagBuilder tb = new TagBuilder(TagNames.H1);
+    tb.AddCssClass("title-bar__title heading heading--h1");
 
-      tb.AddCssClass("title-bar__title heading heading--h1");
+    if (this.ViewContext.ViewBag.Title is string)
+      tb.InnerHtml.Append(this.ViewContext.ViewBag.Title);
 
-      if (this.ViewContext.ViewBag.Title is string)
-        tb.InnerHtml.Append(this.ViewContext.ViewBag.Title);
+    else if (this.ViewContext.ViewBag.Title is LocalizedHtmlString)
+      tb.InnerHtml.Append((this.ViewContext.ViewBag.Title as LocalizedHtmlString).Value);
 
-      else if (this.ViewContext.ViewBag.Title is LocalizedHtmlString)
-        tb.InnerHtml.Append((this.ViewContext.ViewBag.Title as LocalizedHtmlString).Value);
+    return tb;
+  }
 
-      return tb;
-    }
+  private async Task<TagBuilder> CreateButtonsAsync(TagHelperOutput output)
+  {
+    TagBuilder tb = new TagBuilder(TagNames.Div);
 
-    private async Task<TagBuilder> CreateButtonsAsync(TagHelperOutput output)
-    {
-      TagBuilder tb = new TagBuilder(TagNames.Div);
+    tb.AddCssClass("title-bar__buttons buttons");
 
-      tb.AddCssClass("title-bar__buttons buttons");
+    TagHelperContent content = await output.GetChildContentAsync();
 
-      TagHelperContent content = await output.GetChildContentAsync();
-
-      tb.InnerHtml.AppendHtml(content);
-      return tb;
-    }
+    tb.InnerHtml.AppendHtml(content);
+    return tb;
   }
 }

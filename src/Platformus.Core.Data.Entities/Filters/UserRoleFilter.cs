@@ -3,19 +3,18 @@
 
 using Magicalizer.Filters.Abstractions;
 
-namespace Platformus.Core.Filters
+namespace Platformus.Core.Filters;
+
+public class UserRoleFilter : IFilter
 {
-  public class UserRoleFilter : IFilter
+  public UserFilter User { get; set; }
+  public RoleFilter Role { get; set; }
+
+  public UserRoleFilter() { }
+
+  public UserRoleFilter(UserFilter user = null, RoleFilter role = null)
   {
-    public UserFilter User { get; set; }
-    public RoleFilter Role { get; set; }
-
-    public UserRoleFilter() { }
-
-    public UserRoleFilter(UserFilter user = null, RoleFilter role = null)
-    {
-      User = user;
-      Role = role;
-    }
+    User = user;
+    Role = role;
   }
 }

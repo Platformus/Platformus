@@ -4,25 +4,24 @@
 using System.Linq;
 using Platformus.ECommerce.Data.Entities;
 
-namespace Platformus.ECommerce.Frontend.ViewModels.Shared
+namespace Platformus.ECommerce.Frontend.ViewModels.Shared;
+
+public static class OrderViewModelFactory
 {
-  public static class OrderViewModelFactory
+  public static OrderViewModel Create(Order order)
   {
-    public static OrderViewModel Create(Order order)
+    return new OrderViewModel()
     {
-      return new OrderViewModel()
-      {
-        Id = order.Id,
-        PaymentMethod = PaymentMethodViewModelFactory.Create(order.PaymentMethod),
-        DeliveryMethod = DeliveryMethodViewModelFactory.Create(order.DeliveryMethod),
-        CustomerFirstName = order.CustomerFirstName,
-        CustomerLastName = order.CustomerLastName,
-        CustomerPhone = order.CustomerPhone,
-        CustomerEmail = order.CustomerEmail,
-        CustomerAddress = order.CustomerAddress,
-        Note = order.Note,
-        Positions = order.Positions.Select(PositionViewModelFactory.Create)
-      };
-    }
+      Id = order.Id,
+      PaymentMethod = PaymentMethodViewModelFactory.Create(order.PaymentMethod),
+      DeliveryMethod = DeliveryMethodViewModelFactory.Create(order.DeliveryMethod),
+      CustomerFirstName = order.CustomerFirstName,
+      CustomerLastName = order.CustomerLastName,
+      CustomerPhone = order.CustomerPhone,
+      CustomerEmail = order.CustomerEmail,
+      CustomerAddress = order.CustomerAddress,
+      Note = order.Note,
+      Positions = order.Positions.Select(PositionViewModelFactory.Create)
+    };
   }
 }

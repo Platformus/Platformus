@@ -3,16 +3,15 @@
 
 using Platformus.Core.Data.Entities;
 
-namespace Platformus.Core.Backend.ViewModels.Roles
+namespace Platformus.Core.Backend.ViewModels.Roles;
+
+public static class CreateOrEditViewModelMapper
 {
-  public static class CreateOrEditViewModelMapper
+  public static Role Map(Role role, CreateOrEditViewModel createOrEdit)
   {
-    public static Role Map(Role role, CreateOrEditViewModel createOrEdit)
-    {
-      role.Code = createOrEdit.Code;
-      role.Name = createOrEdit.Name;
-      role.Position = createOrEdit.Position;
-      return role;
-    }
+    role.Code = createOrEdit.Code;
+    role.Name = createOrEdit.Name;
+    role.Position = createOrEdit.Position;
+    return role;
   }
 }

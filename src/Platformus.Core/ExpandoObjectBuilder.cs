@@ -4,43 +4,42 @@
 using System.Collections.Generic;
 using System.Dynamic;
 
-namespace Platformus
+namespace Platformus;
+
+/// <summary>
+/// Builds a dynamic object by adding properties to it.
+/// </summary>
+public class ExpandoObjectBuilder
 {
+  private ExpandoObject expandoObject;
+
   /// <summary>
-  /// Builds a dynamic object by adding properties to it.
+  /// Initializes a new instance of the <see cref="ExpandoObjectBuilder"/> class
+  /// and starts building a new dynamic object.
   /// </summary>
-  public class ExpandoObjectBuilder
+  public ExpandoObjectBuilder()
   {
-    private ExpandoObject expandoObject;
+    this.expandoObject = new ExpandoObject();
+  }
 
-    /// <summary>
-    /// Initializes a new instance of the <see cref="ExpandoObjectBuilder"/> class
-    /// and starts building a new dynamic object.
-    /// </summary>
-    public ExpandoObjectBuilder()
-    {
-      this.expandoObject = new ExpandoObject();
-    }
+  /// <summary>
+  /// Adds a property to the current dynamic object.
+  /// </summary>
+  /// <param name="key"></param>
+  /// <param name="value"></param>
+  /// <returns></returns>
+  public ExpandoObjectBuilder AddProperty(string key, object value)
+  {
+    (this.expandoObject as IDictionary<string, object>).Add(key, value);
+    return this;
+  }
 
-    /// <summary>
-    /// Adds a property to the current dynamic object.
-    /// </summary>
-    /// <param name="key"></param>
-    /// <param name="value"></param>
-    /// <returns></returns>
-    public ExpandoObjectBuilder AddProperty(string key, object value)
-    {
-      (this.expandoObject as IDictionary<string, object>).Add(key, value);
-      return this;
-    }
-
-    /// <summary>
-    /// Stops building and returns the created dynamic object.
-    /// </summary>
-    /// <returns></returns>
-    public dynamic Build()
-    {
-      return this.expandoObject;
-    }
+  /// <summary>
+  /// Stops building and returns the created dynamic object.
+  /// </summary>
+  /// <returns></returns>
+  public dynamic Build()
+  {
+    return this.expandoObject;
   }
 }

@@ -3,15 +3,14 @@
 
 using Platformus.Core.Frontend.ViewModels;
 
-namespace Platformus.ECommerce.Frontend.ViewModels.Shared
+namespace Platformus.ECommerce.Frontend.ViewModels.Shared;
+
+public class ProductViewModel : ViewModelBase
 {
-  public class ProductViewModel : ViewModelBase
-  {
-    public int Id { get; set; }
-    public string Url { get; set; }
-    public string Name { get; set; }
-    public string Units { get; set; }
-    public decimal Price { get; set; }
-    public PhotoViewModel Cover { get; set; }
-  }
+  public int Id { get; set; }
+  public string Url { get; set; }
+  public string Name { get; set; }
+  public string Units { get; set; }
+  public decimal Price { get; set; }
+  public PhotoViewModel Cover { get; set; }
 }

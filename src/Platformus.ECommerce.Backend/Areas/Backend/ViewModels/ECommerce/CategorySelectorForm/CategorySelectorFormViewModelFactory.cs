@@ -6,17 +6,16 @@ using System.Linq;
 using Platformus.ECommerce.Backend.ViewModels.Shared;
 using Platformus.ECommerce.Data.Entities;
 
-namespace Platformus.ECommerce.Backend.ViewModels.ECommerce
+namespace Platformus.ECommerce.Backend.ViewModels.ECommerce;
+
+public static class CategorySelectorFormViewModelFactory
 {
-  public static class CategorySelectorFormViewModelFactory
+  public static CategorySelectorFormViewModel Create(IEnumerable<Category> categories, int? categoryId)
   {
-    public static CategorySelectorFormViewModel Create(IEnumerable<Category> categories, int? categoryId)
+    return new CategorySelectorFormViewModel()
     {
-      return new CategorySelectorFormViewModel()
-      {
-        Categories = categories.Select(CategoryViewModelFactory.Create).ToList(),
-        CategoryId = categoryId
-      };
-    }
+      Categories = categories.Select(CategoryViewModelFactory.Create).ToList(),
+      CategoryId = categoryId
+    };
   }
 }

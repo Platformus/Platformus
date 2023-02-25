@@ -9,8 +9,8 @@
   <title>@ViewBag.Title | @Localizer["Platformus"]</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <vc:backend-style-sheets />
-  <vc:backend-scripts />
+  @(await Component.InvokeAsync<BackendStyleSheetsViewComponent>())
+  @(await Component.InvokeAsync<BackendScriptsViewComponent>())
 </head>
 <body class="prevent-animation">
   <div class="master-detail">
@@ -20,7 +20,7 @@
       </a>
       @if (this.User.Identity.IsAuthenticated)
       {
-        <vc:backend-menu />
+        @(await Component.InvokeAsync<BackendMenuViewComponent>())
         <div class="master-detail__user-menu menu" data-code="user">
           <div class="menu__menu-group menu-group" data-code="menuGroupUser">
             <div class="menu-group__title" tabindex="0">@User.Identity.Name</div>

@@ -4,23 +4,22 @@
 using Microsoft.AspNetCore.Authorization;
 using Platformus.Core;
 
-namespace Platformus.Website.PolicyProviders
+namespace Platformus.Website.PolicyProviders;
+
+public class HasManageEndpointsPermissionAuthorizationPolicyProvider : Core.IAuthorizationPolicyProvider
 {
-  public class HasManageEndpointsPermissionAuthorizationPolicyProvider : Core.IAuthorizationPolicyProvider
+  public string Name => Policies.HasManageEndpointsPermission;
+
+  public AuthorizationPolicy GetAuthorizationPolicy()
   {
-    public string Name => Policies.HasManageEndpointsPermission;
+    AuthorizationPolicyBuilder authorizationPolicyBuilder = new AuthorizationPolicyBuilder();
 
-    public AuthorizationPolicy GetAuthorizationPolicy()
-    {
-      AuthorizationPolicyBuilder authorizationPolicyBuilder = new AuthorizationPolicyBuilder();
+    authorizationPolicyBuilder.RequireAssertion(context =>
+      {
+        return context.User.HasClaim(PlatformusClaimTypes.Permission, Permissions.ManageEndpoints) || context.User.HasClaim(PlatformusClaimTypes.Permission, Core.Permissions.DoAnything);
+      }
+    );
 
-      authorizationPolicyBuilder.RequireAssertion(context =>
-        {
-          return context.User.HasClaim(PlatformusClaimTypes.Permission, Permissions.ManageEndpoints) || context.User.HasClaim(PlatformusClaimTypes.Permission, Core.Permissions.DoAnything);
-        }
-      );
-
-      return authorizationPolicyBuilder.Build();
-    }
+    return authorizationPolicyBuilder.Build();
   }
 }

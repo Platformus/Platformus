@@ -14,83 +14,82 @@ using Platformus.Core.Data.Entities;
 using Platformus.Core.Events;
 using Platformus.Core.Filters;
 
-namespace Platformus.Core.Backend.Controllers
+namespace Platformus.Core.Backend.Controllers;
+
+[Authorize(Policy = Policies.HasManageConfigurationsPermission)]
+public class VariablesController : ControllerBase
 {
-  [Authorize(Policy = Policies.HasManageConfigurationsPermission)]
-  public class VariablesController : ControllerBase
+  private IStringLocalizer localizer;
+
+  private IRepository<int, Variable, VariableFilter> Repository
   {
-    private IStringLocalizer localizer;
+    get => this.Storage.GetRepository<int, Variable, VariableFilter>();
+  }
 
-    private IRepository<int, Variable, VariableFilter> Repository
+  public VariablesController(IStorage storage, IStringLocalizer<SharedResource> localizer)
+    : base(storage)
+  {
+    this.localizer = localizer;
+  }
+
+  [HttpGet]
+  [ImportModelStateFromTempData]
+  public async Task<IActionResult> CreateOrEditAsync(int? id)
+  {
+    return this.View(CreateOrEditViewModelFactory.Create(
+      id == null ? null : await this.Repository.GetByIdAsync((int)id)
+    ));
+  }
+
+  [HttpPost]
+  [ExportModelStateToTempData]
+  public async Task<IActionResult> CreateOrEditAsync([FromQuery] VariableFilter filter, CreateOrEditViewModel createOrEdit)
+  {
+    if (!await this.IsCodeUniqueAsync(filter, createOrEdit))
+      this.ModelState.AddModelError("code", this.localizer["Value is already in use"]);
+
+    if (this.ModelState.IsValid)
     {
-      get => this.Storage.GetRepository<int, Variable, VariableFilter>();
-    }
+      Variable variable = CreateOrEditViewModelMapper.Map(
+        filter,
+        createOrEdit.Id == null ? new Variable() : await this.Repository.GetByIdAsync((int)createOrEdit.Id),
+        createOrEdit
+      );
 
-    public VariablesController(IStorage storage, IStringLocalizer<SharedResource> localizer)
-      : base(storage)
-    {
-      this.localizer = localizer;
-    }
+      if (createOrEdit.Id == null)
+        this.Repository.Create(variable);
 
-    [HttpGet]
-    [ImportModelStateFromTempData]
-    public async Task<IActionResult> CreateOrEditAsync(int? id)
-    {
-      return this.View(CreateOrEditViewModelFactory.Create(
-        id == null ? null : await this.Repository.GetByIdAsync((int)id)
-      ));
-    }
+      else this.Repository.Edit(variable);
 
-    [HttpPost]
-    [ExportModelStateToTempData]
-    public async Task<IActionResult> CreateOrEditAsync([FromQuery]VariableFilter filter, CreateOrEditViewModel createOrEdit)
-    {
-      if (!await this.IsCodeUniqueAsync(filter, createOrEdit))
-        this.ModelState.AddModelError("code", this.localizer["Value is already in use"]);
-
-      if (this.ModelState.IsValid)
-      {
-        Variable variable = CreateOrEditViewModelMapper.Map(
-          filter,
-          createOrEdit.Id == null ? new Variable() : await this.Repository.GetByIdAsync((int)createOrEdit.Id),
-          createOrEdit
-        );
-
-        if (createOrEdit.Id == null)
-          this.Repository.Create(variable);
-
-        else this.Repository.Edit(variable);
-
-        await this.Storage.SaveAsync();
-
-        if (createOrEdit.Id == null)
-          Event<IVariableCreatedEventHandler, HttpContext, Variable>.Broadcast(this.HttpContext, variable);
-
-        else Event<IVariableEditedEventHandler, HttpContext, Variable>.Broadcast(this.HttpContext, variable);
-
-        return this.RedirectToAction("Index", "Configurations");
-      }
-
-      return this.CreateRedirectToSelfResult();
-    }
-
-    public async Task<IActionResult> DeleteAsync(int id)
-    {
-      Variable variable = await this.Repository.GetByIdAsync(id);
-
-      this.Repository.Delete(variable.Id);
       await this.Storage.SaveAsync();
-      Event<IVariableDeletedEventHandler, HttpContext, Variable>.Broadcast(this.HttpContext, variable);
+
+      if (createOrEdit.Id == null)
+        Event<IVariableCreatedEventHandler, HttpContext, Variable>.Broadcast(this.HttpContext, variable);
+
+      else Event<IVariableEditedEventHandler, HttpContext, Variable>.Broadcast(this.HttpContext, variable);
+
       return this.RedirectToAction("Index", "Configurations");
     }
 
-    private async Task<bool> IsCodeUniqueAsync(VariableFilter filter, CreateOrEditViewModel createOrEdit)
-    {
-      filter.Code = createOrEdit.Code;
+    return this.CreateRedirectToSelfResult();
+  }
 
-      Variable variable = (await this.Repository.GetAllAsync(filter)).FirstOrDefault();
+  public async Task<IActionResult> DeleteAsync(int id)
+  {
+    Variable variable = await this.Repository.GetByIdAsync(id);
 
-      return variable == null || variable.Id == createOrEdit.Id;
-    }
+    this.Repository.Delete(variable.Id);
+    await this.Storage.SaveAsync();
+    Event<IVariableDeletedEventHandler, HttpContext, Variable>.Broadcast(this.HttpContext, variable);
+    return this.RedirectToAction("Index", "Configurations");
+  }
+
+  private async Task<bool> IsCodeUniqueAsync(VariableFilter filter, CreateOrEditViewModel createOrEdit)
+  {
+    filter.Code = createOrEdit.Code;
+
+    Variable variable = (await this.Repository.GetAllAsync(filter)).FirstOrDefault();
+
+    return variable == null || variable.Id == createOrEdit.Id;
   }
 }

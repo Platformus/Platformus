@@ -3,12 +3,11 @@
 
 using Platformus.Core.Frontend.ViewModels;
 
-namespace Platformus.ECommerce.Frontend.ViewModels.Shared
+namespace Platformus.ECommerce.Frontend.ViewModels.Shared;
+
+public class PhotoViewModel : ViewModelBase
 {
-  public class PhotoViewModel : ViewModelBase
-  {
-    public string Filename { get; set; }
-    public bool IsCover { get; set; }
-    public int? Position { get; set; }
-  }
+  public string Filename { get; set; }
+  public bool IsCover { get; set; }
+  public int? Position { get; set; }
 }

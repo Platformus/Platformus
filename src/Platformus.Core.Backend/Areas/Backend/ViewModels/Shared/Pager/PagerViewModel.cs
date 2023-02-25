@@ -4,13 +4,12 @@
 using System.Collections.Generic;
 using Platformus.Core.Primitives;
 
-namespace Platformus.Core.Backend.ViewModels.Shared
+namespace Platformus.Core.Backend.ViewModels.Shared;
+
+public class PagerViewModel : ViewModelBase
 {
-  public class PagerViewModel : ViewModelBase
-  {
-    public IEnumerable<Option> LimitOptions { get; set; }
-    public int Offset { get; set; }
-    public int Limit { get; set; }
-    public int Total { get; set; }
-  }
+  public IEnumerable<Option> LimitOptions { get; set; }
+  public int Offset { get; set; }
+  public int Limit { get; set; }
+  public int Total { get; set; }
 }

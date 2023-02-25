@@ -5,129 +5,128 @@ using ExtCore.Data.EntityFramework;
 using Microsoft.EntityFrameworkCore;
 using Platformus.Core.Data.Entities;
 
-namespace Platformus.Core.Data.EntityFramework.Sqlite
+namespace Platformus.Core.Data.EntityFramework.Sqlite;
+
+public class EntityRegistrar : IEntityRegistrar
 {
-  public class EntityRegistrar : IEntityRegistrar
+  public void RegisterEntities(ModelBuilder modelBuilder)
   {
-    public void RegisterEntities(ModelBuilder modelBuilder)
-    {
-      modelBuilder.Entity<ModelState>(etb =>
-        {
-          etb.HasKey(e => e.Id);
-          etb.Property(e => e.Id).ValueGeneratedNever();
-          etb.Property(e => e.Value).IsRequired();
-          etb.ToTable("ModelStates");
-        }
-      );
+    modelBuilder.Entity<ModelState>(etb =>
+      {
+        etb.HasKey(e => e.Id);
+        etb.Property(e => e.Id).ValueGeneratedNever();
+        etb.Property(e => e.Value).IsRequired();
+        etb.ToTable("ModelStates");
+      }
+    );
 
-      modelBuilder.Entity<User>(etb =>
-        {
-          etb.HasKey(e => e.Id);
-          etb.Property(e => e.Id).ValueGeneratedOnAdd();
-          etb.Property(e => e.Name).IsRequired().HasMaxLength(64);
-          etb.ToTable("Users");
-        }
-      );
+    modelBuilder.Entity<User>(etb =>
+      {
+        etb.HasKey(e => e.Id);
+        etb.Property(e => e.Id).ValueGeneratedOnAdd();
+        etb.Property(e => e.Name).IsRequired().HasMaxLength(64);
+        etb.ToTable("Users");
+      }
+    );
 
-	  modelBuilder.Entity<CredentialType>(etb =>
-        {
-          etb.HasKey(e => e.Id);
-          etb.Property(e => e.Id).ValueGeneratedOnAdd();
-          etb.Property(e => e.Code).IsRequired().HasMaxLength(32);
-          etb.Property(e => e.Name).IsRequired().HasMaxLength(64);
-          etb.ToTable("CredentialTypes");
-        }
-      );
+    modelBuilder.Entity<CredentialType>(etb =>
+      {
+        etb.HasKey(e => e.Id);
+        etb.Property(e => e.Id).ValueGeneratedOnAdd();
+        etb.Property(e => e.Code).IsRequired().HasMaxLength(32);
+        etb.Property(e => e.Name).IsRequired().HasMaxLength(64);
+        etb.ToTable("CredentialTypes");
+      }
+    );
 
-      modelBuilder.Entity<Credential>(etb =>
-        {
-          etb.HasKey(e => e.Id);
-          etb.Property(e => e.Id).ValueGeneratedOnAdd();
-          etb.Property(e => e.Identifier).IsRequired().HasMaxLength(64);
-          etb.Property(e => e.Secret).HasMaxLength(1024);
-          etb.ToTable("Credentials");
-        }
-      );
+    modelBuilder.Entity<Credential>(etb =>
+      {
+        etb.HasKey(e => e.Id);
+        etb.Property(e => e.Id).ValueGeneratedOnAdd();
+        etb.Property(e => e.Identifier).IsRequired().HasMaxLength(64);
+        etb.Property(e => e.Secret).HasMaxLength(1024);
+        etb.ToTable("Credentials");
+      }
+    );
 
-	  modelBuilder.Entity<Role>(etb =>
-        {
-          etb.HasKey(e => e.Id);
-          etb.Property(e => e.Id).ValueGeneratedOnAdd();
-          etb.Property(e => e.Code).IsRequired().HasMaxLength(32);
-          etb.Property(e => e.Name).IsRequired().HasMaxLength(64);
-          etb.ToTable("Roles");
-        }
-      );
+    modelBuilder.Entity<Role>(etb =>
+      {
+        etb.HasKey(e => e.Id);
+        etb.Property(e => e.Id).ValueGeneratedOnAdd();
+        etb.Property(e => e.Code).IsRequired().HasMaxLength(32);
+        etb.Property(e => e.Name).IsRequired().HasMaxLength(64);
+        etb.ToTable("Roles");
+      }
+    );
 
-	  modelBuilder.Entity<UserRole>(etb =>
-        {
-          etb.HasKey(e => new { e.UserId, e.RoleId });
-          etb.ToTable("UserRoles");
-        }
-      );
+    modelBuilder.Entity<UserRole>(etb =>
+      {
+        etb.HasKey(e => new { e.UserId, e.RoleId });
+        etb.ToTable("UserRoles");
+      }
+    );
 
-      modelBuilder.Entity<Permission>(etb =>
-        {
-          etb.HasKey(e => e.Id);
-          etb.Property(e => e.Id).ValueGeneratedOnAdd();
-          etb.Property(e => e.Code).IsRequired().HasMaxLength(32);
-          etb.Property(e => e.Name).IsRequired().HasMaxLength(64);
-          etb.ToTable("Permissions");
-        }
-      );
+    modelBuilder.Entity<Permission>(etb =>
+      {
+        etb.HasKey(e => e.Id);
+        etb.Property(e => e.Id).ValueGeneratedOnAdd();
+        etb.Property(e => e.Code).IsRequired().HasMaxLength(32);
+        etb.Property(e => e.Name).IsRequired().HasMaxLength(64);
+        etb.ToTable("Permissions");
+      }
+    );
 
-      modelBuilder.Entity<RolePermission>(etb =>
-        {
-          etb.HasKey(e => new { e.RoleId, e.PermissionId });
-          etb.ToTable("RolePermissions");
-        }
-      );
+    modelBuilder.Entity<RolePermission>(etb =>
+      {
+        etb.HasKey(e => new { e.RoleId, e.PermissionId });
+        etb.ToTable("RolePermissions");
+      }
+    );
 
-      modelBuilder.Entity<Configuration>(etb =>
-        {
-          etb.HasKey(e => e.Id);
-          etb.Property(e => e.Id).ValueGeneratedOnAdd();
-          etb.Property(e => e.Code).IsRequired().HasMaxLength(32);
-          etb.Property(e => e.Name).IsRequired().HasMaxLength(64);
-          etb.ToTable("Configurations");
-        }
-      );
+    modelBuilder.Entity<Configuration>(etb =>
+      {
+        etb.HasKey(e => e.Id);
+        etb.Property(e => e.Id).ValueGeneratedOnAdd();
+        etb.Property(e => e.Code).IsRequired().HasMaxLength(32);
+        etb.Property(e => e.Name).IsRequired().HasMaxLength(64);
+        etb.ToTable("Configurations");
+      }
+    );
 
-      modelBuilder.Entity<Variable>(etb =>
-        {
-          etb.HasKey(e => e.Id);
-          etb.Property(e => e.Id).ValueGeneratedOnAdd();
-          etb.Property(e => e.Code).IsRequired().HasMaxLength(32);
-          etb.Property(e => e.Name).IsRequired().HasMaxLength(64);
-          etb.Property(e => e.Value).IsRequired().HasMaxLength(1024);
-          etb.ToTable("Variables");
-        }
-      );
+    modelBuilder.Entity<Variable>(etb =>
+      {
+        etb.HasKey(e => e.Id);
+        etb.Property(e => e.Id).ValueGeneratedOnAdd();
+        etb.Property(e => e.Code).IsRequired().HasMaxLength(32);
+        etb.Property(e => e.Name).IsRequired().HasMaxLength(64);
+        etb.Property(e => e.Value).IsRequired().HasMaxLength(1024);
+        etb.ToTable("Variables");
+      }
+    );
 
-      modelBuilder.Entity<Culture>(etb =>
-        {
-          etb.HasKey(e => e.Id);
-          etb.Property(e => e.Id).IsRequired().HasMaxLength(2);
-          etb.Property(e => e.Name).IsRequired().HasMaxLength(64);
-          etb.ToTable("Cultures");
-        }
-      );
+    modelBuilder.Entity<Culture>(etb =>
+      {
+        etb.HasKey(e => e.Id);
+        etb.Property(e => e.Id).IsRequired().HasMaxLength(2);
+        etb.Property(e => e.Name).IsRequired().HasMaxLength(64);
+        etb.ToTable("Cultures");
+      }
+    );
 
-      modelBuilder.Entity<Dictionary>(etb =>
-        {
-          etb.HasKey(e => e.Id);
-          etb.Property(e => e.Id).ValueGeneratedOnAdd();
-          etb.ToTable("Dictionaries");
-        }
-      );
+    modelBuilder.Entity<Dictionary>(etb =>
+      {
+        etb.HasKey(e => e.Id);
+        etb.Property(e => e.Id).ValueGeneratedOnAdd();
+        etb.ToTable("Dictionaries");
+      }
+    );
 
-      modelBuilder.Entity<Localization>(etb =>
-        {
-          etb.HasKey(e => e.Id);
-          etb.Property(e => e.Id).ValueGeneratedOnAdd();
-          etb.ToTable("Localizations");
-        }
-      );
-    }
+    modelBuilder.Entity<Localization>(etb =>
+      {
+        etb.HasKey(e => e.Id);
+        etb.Property(e => e.Id).ValueGeneratedOnAdd();
+        etb.ToTable("Localizations");
+      }
+    );
   }
 }

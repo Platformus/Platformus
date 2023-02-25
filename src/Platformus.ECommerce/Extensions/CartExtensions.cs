@@ -4,20 +4,19 @@
 using System.Linq;
 using Platformus.ECommerce.Data.Entities;
 
-namespace Platformus.ECommerce
+namespace Platformus.ECommerce;
+
+/// <summary>
+/// Contains the extension methods of the <see cref="Cart"/>.
+/// </summary>
+public static class CartExtensions
 {
   /// <summary>
-  /// Contains the extension methods of the <see cref="Cart"/>.
+  /// Sums up a given cart positions' subtotals.
   /// </summary>
-  public static class CartExtensions
+  /// <param name="cart">A cart to sum up positions' subtotals of.</param>
+  public static decimal GetTotal(this Cart cart)
   {
-    /// <summary>
-    /// Sums up a given cart positions' subtotals.
-    /// </summary>
-    /// <param name="cart">A cart to sum up positions' subtotals of.</param>
-    public static decimal GetTotal(this Cart cart)
-    {
-      return cart.Positions.Sum(p => p.Price * p.Quantity);
-    }
+    return cart.Positions.Sum(p => p.Price * p.Quantity);
   }
 }

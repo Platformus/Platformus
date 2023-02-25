@@ -5,18 +5,17 @@ using System.Linq;
 using Platformus.ECommerce.Backend.ViewModels.Shared;
 using Platformus.ECommerce.Data.Entities;
 
-namespace Platformus.ECommerce.Backend.ViewModels.Carts
+namespace Platformus.ECommerce.Backend.ViewModels.Carts;
+
+public static class ViewViewModelFactory
 {
-  public static class ViewViewModelFactory
+  public static ViewViewModel Create(Cart cart)
   {
-    public static ViewViewModel Create(Cart cart)
+    return new ViewViewModel()
     {
-      return new ViewViewModel()
-      {
-        Id = cart.Id,
-        Positions = cart.Positions.Select(PositionViewModelFactory.Create).ToList(),
-        Total = cart.GetTotal()
-      };
-    }
+      Id = cart.Id,
+      Positions = cart.Positions.Select(PositionViewModelFactory.Create).ToList(),
+      Total = cart.GetTotal()
+    };
   }
 }

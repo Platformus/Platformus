@@ -3,18 +3,17 @@
 
 using Microsoft.AspNetCore.Razor.TagHelpers;
 
-namespace Platformus.Core.Backend
-{
-  public class TabTagHelper : TagHelper
-  {
-    public string Code { get; set; }
+namespace Platformus.Core.Backend;
 
-    public override void Process(TagHelperContext context, TagHelperOutput output)
-    {
-      output.TagName = TagNames.Div;
-      output.TagMode = TagMode.StartTagAndEndTag;
-      output.Attributes.SetAttribute(AttributeNames.Class, "tabs__tab");
-      output.Attributes.SetAttribute("data-tab-page-id", this.Code);
-    }
+public class TabTagHelper : TagHelper
+{
+  public string Code { get; set; }
+
+  public override void Process(TagHelperContext context, TagHelperOutput output)
+  {
+    output.TagName = TagNames.Div;
+    output.TagMode = TagMode.StartTagAndEndTag;
+    output.Attributes.SetAttribute(AttributeNames.Class, "tabs__tab");
+    output.Attributes.SetAttribute("data-tab-page-id", this.Code);
   }
 }

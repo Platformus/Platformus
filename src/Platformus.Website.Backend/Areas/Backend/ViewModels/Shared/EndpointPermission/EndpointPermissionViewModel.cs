@@ -4,11 +4,10 @@
 using Platformus.Core.Backend.ViewModels;
 using Platformus.Core.Backend.ViewModels.Shared;
 
-namespace Platformus.Website.Backend.ViewModels.Shared
+namespace Platformus.Website.Backend.ViewModels.Shared;
+
+public class EndpointPermissionViewModel : ViewModelBase
 {
-  public class EndpointPermissionViewModel : ViewModelBase
-  {
-    public PermissionViewModel Permission { get; set; }
-    public bool IsAssigned { get; set; }
-  }
+  public PermissionViewModel Permission { get; set; }
+  public bool IsAssigned { get; set; }
 }

@@ -3,18 +3,17 @@
 
 using Platformus.Website.Data.Entities;
 
-namespace Platformus.Website.Backend.ViewModels.Shared
+namespace Platformus.Website.Backend.ViewModels.Shared;
+
+public static class DataSourceViewModelFactory
 {
-  public static class DataSourceViewModelFactory
+  public static DataSourceViewModel Create(DataSource dataSource)
   {
-    public static DataSourceViewModel Create(DataSource dataSource)
+    return new DataSourceViewModel()
     {
-      return new DataSourceViewModel()
-      {
-        Id = dataSource.Id,
-        Code = dataSource.Code,
-        DataProviderCShartClassName = dataSource.DataProviderCSharpClassName
-      };
-    }
+      Id = dataSource.Id,
+      Code = dataSource.Code,
+      DataProviderCShartClassName = dataSource.DataProviderCSharpClassName
+    };
   }
 }

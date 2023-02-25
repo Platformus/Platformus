@@ -5,23 +5,22 @@ using ExtCore.WebApplication;
 using ExtCore.WebApplication.Extensions;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace Platformus.WebApplication.Extensions
+namespace Platformus.WebApplication.Extensions;
+
+public static class ServiceCollectionExtensions
 {
-  public static class ServiceCollectionExtensions
+  public static void AddPlatformus(this IServiceCollection services)
   {
-    public static void AddPlatformus(this IServiceCollection services)
-    {
-      services.AddExtCore(null);
-    }
+    services.AddExtCore(null);
+  }
 
-    public static void AddPlatformus(this IServiceCollection services, string extensionsPath)
-    {
-      services.AddExtCore(extensionsPath, true);
-    }
+  public static void AddPlatformus(this IServiceCollection services, string extensionsPath)
+  {
+    services.AddExtCore(extensionsPath, true);
+  }
 
-    public static void AddPlatformus(this IServiceCollection services, string extensionsPath, IAssemblyProvider assemblyProvider)
-    {
-      services.AddExtCore(extensionsPath, true, assemblyProvider);
-    }
+  public static void AddPlatformus(this IServiceCollection services, string extensionsPath, IAssemblyProvider assemblyProvider)
+  {
+    services.AddExtCore(extensionsPath, true, assemblyProvider);
   }
 }

@@ -3,13 +3,12 @@
 
 using Platformus.Core.Backend.ViewModels;
 
-namespace Platformus.Website.Backend.ViewModels.Shared
+namespace Platformus.Website.Backend.ViewModels.Shared;
+
+public class EndpointViewModel : ViewModelBase
 {
-  public class EndpointViewModel : ViewModelBase
-  {
-    public int Id { get; set; }
-    public string Name { get; set; }
-    public string UrlTemplate { get; set; }
-    public int? Position { get; set; }
-  }
+  public int Id { get; set; }
+  public string Name { get; set; }
+  public string UrlTemplate { get; set; }
+  public int? Position { get; set; }
 }

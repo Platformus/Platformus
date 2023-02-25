@@ -6,15 +6,14 @@ using ExtCore.Infrastructure.Actions;
 using Microsoft.AspNetCore.Mvc.ViewFeatures;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace Platformus.Core.Actions
-{
-  public class AddTempDataProviderAction : IConfigureServicesAction
-  {
-    public int Priority => 1000;
+namespace Platformus.Core.Actions;
 
-    public void Execute(IServiceCollection services, IServiceProvider serviceProvider)
-    {
-      services.AddSingleton<ITempDataProvider, CookieTempDataProvider>();
-    }
+public class AddTempDataProviderAction : IConfigureServicesAction
+{
+  public int Priority => 1000;
+
+  public void Execute(IServiceCollection services, IServiceProvider serviceProvider)
+  {
+    services.AddSingleton<ITempDataProvider, CookieTempDataProvider>();
   }
 }

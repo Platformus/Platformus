@@ -4,53 +4,52 @@
 using System;
 using System.Globalization;
 
-namespace Platformus
+namespace Platformus;
+
+/// <summary>
+/// Contains the extension methods of the <see cref="DateTime"/>.
+/// </summary>
+public static class DateTimeExtensions
 {
   /// <summary>
-  /// Contains the extension methods of the <see cref="DateTime"/>.
+  /// Converts a <see cref="DateTime"/> value into a fixed-length date string.
+  /// Example: 1/2/2003 will be converted as 01/02/2003.
   /// </summary>
-  public static class DateTimeExtensions
+  /// <param name="value">A <see cref="DateTime"/> value to convert.</param>
+  public static string ToFixedLengthDateString(this DateTime value)
   {
-    /// <summary>
-    /// Converts a <see cref="DateTime"/> value into a fixed-length date string.
-    /// Example: 1/2/2003 will be converted as 01/02/2003.
-    /// </summary>
-    /// <param name="value">A <see cref="DateTime"/> value to convert.</param>
-    public static string ToFixedLengthDateString(this DateTime value)
-    {
-      string format = CultureInfo.CurrentUICulture.DateTimeFormat.ShortDatePattern;
+    string format = CultureInfo.CurrentUICulture.DateTimeFormat.ShortDatePattern;
 
-      if (!format.Contains("MM"))
-        format = format.Replace("M", "MM");
+    if (!format.Contains("MM"))
+      format = format.Replace("M", "MM");
 
-      if (!format.Contains("dd"))
-        format = format.Replace("d", "dd");
+    if (!format.Contains("dd"))
+      format = format.Replace("d", "dd");
 
-      return value.ToString(format);
-    }
+    return value.ToString(format);
+  }
 
-    /// <summary>
-    /// Converts a <see cref="DateTime"/> value into a fixed-length date and time string.
-    /// Example: 1/2/2003 4:5 will be converted as 01/02/2003 04:05.
-    /// </summary>
-    /// <param name="value">A <see cref="DateTime"/> value to convert.</param>
-    public static string ToFixedLengthDateTimeString(this DateTime value)
-    {
-      string format = $"{CultureInfo.CurrentUICulture.DateTimeFormat.ShortDatePattern} {CultureInfo.CurrentUICulture.DateTimeFormat.ShortTimePattern}";
+  /// <summary>
+  /// Converts a <see cref="DateTime"/> value into a fixed-length date and time string.
+  /// Example: 1/2/2003 4:5 will be converted as 01/02/2003 04:05.
+  /// </summary>
+  /// <param name="value">A <see cref="DateTime"/> value to convert.</param>
+  public static string ToFixedLengthDateTimeString(this DateTime value)
+  {
+    string format = $"{CultureInfo.CurrentUICulture.DateTimeFormat.ShortDatePattern} {CultureInfo.CurrentUICulture.DateTimeFormat.ShortTimePattern}";
 
-      if (!format.Contains("MM"))
-        format = format.Replace("M", "MM");
+    if (!format.Contains("MM"))
+      format = format.Replace("M", "MM");
 
-      if (!format.Contains("dd"))
-        format = format.Replace("d", "dd");
+    if (!format.Contains("dd"))
+      format = format.Replace("d", "dd");
 
-      if (!format.Contains("hh"))
-        format = format.Replace("h", "hh");
+    if (!format.Contains("hh"))
+      format = format.Replace("h", "hh");
 
-      if (!format.Contains("HH"))
-        format = format.Replace("H", "HH");
+    if (!format.Contains("HH"))
+      format = format.Replace("H", "HH");
 
-      return value.ToString(format);
-    }
+    return value.ToString(format);
   }
 }

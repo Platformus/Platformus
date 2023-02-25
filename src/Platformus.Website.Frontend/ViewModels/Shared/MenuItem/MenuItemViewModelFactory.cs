@@ -7,21 +7,20 @@ using Microsoft.AspNetCore.Http;
 using Platformus.Core.Frontend;
 using Platformus.Website.Data.Entities;
 
-namespace Platformus.Website.Frontend.ViewModels.Shared
+namespace Platformus.Website.Frontend.ViewModels.Shared;
+
+public static class MenuItemViewModelFactory
 {
-  public static class MenuItemViewModelFactory
+  public static MenuItemViewModel Create(HttpContext httpContext, MenuItem menuItem)
   {
-    public static MenuItemViewModel Create(HttpContext httpContext, MenuItem menuItem)
+    return new MenuItemViewModel()
     {
-      return new MenuItemViewModel()
-      {
-        Name = menuItem.Name.GetLocalizationValue(),
-        Url = GlobalizedUrlFormatter.Format(httpContext, menuItem.Url),
-        MenuItems = menuItem.MenuItems == null ?
-          Array.Empty<MenuItemViewModel>() :
-          menuItem.MenuItems.OrderBy(mi => mi.Position)
-            .Select(mi => MenuItemViewModelFactory.Create(httpContext, mi)).ToList()
-      };
-    }
+      Name = menuItem.Name.GetLocalizationValue(),
+      Url = GlobalizedUrlFormatter.Format(httpContext, menuItem.Url),
+      MenuItems = menuItem.MenuItems == null ?
+        Array.Empty<MenuItemViewModel>() :
+        menuItem.MenuItems.OrderBy(mi => mi.Position)
+          .Select(mi => MenuItemViewModelFactory.Create(httpContext, mi)).ToList()
+    };
   }
 }

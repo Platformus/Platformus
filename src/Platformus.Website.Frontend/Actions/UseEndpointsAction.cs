@@ -6,15 +6,14 @@ using ExtCore.Mvc.Infrastructure.Actions;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Routing;
 
-namespace Platformus.Website.Frontend.Actions
-{
-  public class UseEndpointsAction : IUseEndpointsAction
-  {
-    public int Priority => 1000;
+namespace Platformus.Website.Frontend.Actions;
 
-    public void Execute(IEndpointRouteBuilder endpointRouteBuilder, IServiceProvider serviceProvider)
-    {
-      endpointRouteBuilder.MapControllerRoute(name: "Send Form", pattern: "{culture}/forms/send", defaults: new { controller = "Forms", action = "Send" });
-    }
+public class UseEndpointsAction : IUseEndpointsAction
+{
+  public int Priority => 1000;
+
+  public void Execute(IEndpointRouteBuilder endpointRouteBuilder, IServiceProvider serviceProvider)
+  {
+    endpointRouteBuilder.MapControllerRoute(name: "Send Form", pattern: "{culture}/forms/send", defaults: new { controller = "Forms", action = "Send" });
   }
 }

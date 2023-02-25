@@ -4,21 +4,20 @@
 using Platformus.Website.Data.Entities;
 using Platformus.Website.Filters;
 
-namespace Platformus.Website.Backend.ViewModels.Fields
-{
-  public static class CreateOrEditViewModelMapper
-  {
-    public static Field Map(FieldFilter filter, Field field, CreateOrEditViewModel createOrEdit)
-    {
-      if (field.Id == 0)
-        field.FormId = (int)filter.Form.Id;
+namespace Platformus.Website.Backend.ViewModels.Fields;
 
-      field.FieldTypeId = createOrEdit.FieldTypeId;
-      field.Code = createOrEdit.Code;
-      field.IsRequired = createOrEdit.IsRequired;
-      field.MaxLength = createOrEdit.MaxLength;
-      field.Position = createOrEdit.Position;
-      return field;
-    }
+public static class CreateOrEditViewModelMapper
+{
+  public static Field Map(FieldFilter filter, Field field, CreateOrEditViewModel createOrEdit)
+  {
+    if (field.Id == 0)
+      field.FormId = (int)filter.Form.Id;
+
+    field.FieldTypeId = createOrEdit.FieldTypeId;
+    field.Code = createOrEdit.Code;
+    field.IsRequired = createOrEdit.IsRequired;
+    field.MaxLength = createOrEdit.MaxLength;
+    field.Position = createOrEdit.Position;
+    return field;
   }
 }

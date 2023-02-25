@@ -3,13 +3,12 @@
 
 using Microsoft.AspNetCore.Builder;
 
-namespace Platformus.Core
+namespace Platformus.Core;
+
+public static class ApplicationBuilderExtensions
 {
-  public static class ApplicationBuilderExtensions
+  public static IApplicationBuilder UseHttpException(this IApplicationBuilder applicationBuilder)
   {
-    public static IApplicationBuilder UseHttpException(this IApplicationBuilder applicationBuilder)
-    {
-      return applicationBuilder.UseMiddleware<HttpExceptionMiddleware>();
-    }
+    return applicationBuilder.UseMiddleware<HttpExceptionMiddleware>();
   }
 }

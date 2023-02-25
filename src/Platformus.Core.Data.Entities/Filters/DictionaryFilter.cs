@@ -3,23 +3,22 @@
 
 using Magicalizer.Filters.Abstractions;
 
-namespace Platformus.Core.Filters
+namespace Platformus.Core.Filters;
+
+public class DictionaryFilter : IFilter
 {
-  public class DictionaryFilter : IFilter
+  public int? Id { get; set; }
+  public CultureFilter Culture { get; set; }
+
+  [FilterShortcut("Localizations[]")]
+  public LocalizationFilter Localization { get; set; }
+
+  public DictionaryFilter() { }
+
+  public DictionaryFilter(int? id = null, CultureFilter culture = null, LocalizationFilter localization = null)
   {
-    public int? Id { get; set; }
-    public CultureFilter Culture { get; set; }
-
-    [FilterShortcut("Localizations[]")]
-    public LocalizationFilter Localization { get; set; }
-
-    public DictionaryFilter() { }
-
-    public DictionaryFilter(int? id = null, CultureFilter culture = null, LocalizationFilter localization = null)
-    {
-      Id = id;
-      Culture = culture;
-      Localization = localization;
-    }
+    Id = id;
+    Culture = culture;
+    Localization = localization;
   }
 }

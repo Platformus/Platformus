@@ -3,24 +3,23 @@
 
 using Magicalizer.Data.Entities.Abstractions;
 
-namespace Platformus.Core.Data.Entities
+namespace Platformus.Core.Data.Entities;
+
+/// <summary>
+/// Represents a many-to-many relationship between the roles and permissions.
+/// </summary>
+public class RolePermission : IEntity
 {
   /// <summary>
-  /// Represents a many-to-many relationship between the roles and permissions.
+  /// Gets or sets the role identifier this role permission is related to.
   /// </summary>
-  public class RolePermission : IEntity
-  {
-    /// <summary>
-    /// Gets or sets the role identifier this role permission is related to.
-    /// </summary>
-    public int RoleId { get; set; }
+  public int RoleId { get; set; }
 
-    /// <summary>
-    /// Gets or sets the permission identifier this role permission is related to.
-    /// </summary>
-    public int PermissionId { get; set; }
+  /// <summary>
+  /// Gets or sets the permission identifier this role permission is related to.
+  /// </summary>
+  public int PermissionId { get; set; }
 
-    public virtual Role Role { get; set; }
-    public virtual Permission Permission { get; set; }
-  }
+  public virtual Role Role { get; set; }
+  public virtual Permission Permission { get; set; }
 }

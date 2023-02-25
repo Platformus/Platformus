@@ -3,18 +3,17 @@
 
 using Platformus.Core.Data.Entities;
 
-namespace Platformus.Core.Backend.ViewModels.Shared
+namespace Platformus.Core.Backend.ViewModels.Shared;
+
+public static class RoleViewModelFactory
 {
-  public static class RoleViewModelFactory
+  public static RoleViewModel Create(Role role)
   {
-    public static RoleViewModel Create(Role role)
+    return new RoleViewModel()
     {
-      return new RoleViewModel()
-      {
-        Id = role.Id,
-        Name = role.Name,
-        Position = role.Position
-      };
-    }
+      Id = role.Id,
+      Name = role.Name,
+      Position = role.Position
+    };
   }
 }

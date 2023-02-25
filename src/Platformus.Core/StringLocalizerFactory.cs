@@ -9,66 +9,65 @@ using Microsoft.Extensions.Localization;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 
-namespace Platformus.Core
+namespace Platformus.Core;
+
+// TODO: consider making internal
+public class StringLocalizerFactory : IStringLocalizerFactory
 {
-  // TODO: consider making internal
-  public class StringLocalizerFactory : IStringLocalizerFactory
+  private readonly IResourceNamesCache resourceNamesCache = new ResourceNamesCache();
+  private readonly string resourcesRelativePath;
+  private readonly ILoggerFactory loggerFactory;
+
+  public StringLocalizerFactory(IOptions<LocalizationOptions> localizationOptions, ILoggerFactory loggerFactory)
   {
-    private readonly IResourceNamesCache resourceNamesCache = new ResourceNamesCache();
-    private readonly string resourcesRelativePath;
-    private readonly ILoggerFactory loggerFactory;
+    resourcesRelativePath = localizationOptions.Value.ResourcesPath ?? string.Empty;
 
-    public StringLocalizerFactory(IOptions<LocalizationOptions> localizationOptions, ILoggerFactory loggerFactory)
+    if (!string.IsNullOrEmpty(resourcesRelativePath))
     {
-      resourcesRelativePath = localizationOptions.Value.ResourcesPath ?? string.Empty;
-
-      if (!string.IsNullOrEmpty(resourcesRelativePath))
-      {
-        resourcesRelativePath = resourcesRelativePath
-          .Replace(Path.AltDirectorySeparatorChar, '.')
-          .Replace(Path.DirectorySeparatorChar, '.') + ".";
-      }
-
-      this.loggerFactory = loggerFactory;
+      resourcesRelativePath = resourcesRelativePath
+        .Replace(Path.AltDirectorySeparatorChar, '.')
+        .Replace(Path.DirectorySeparatorChar, '.') + ".";
     }
 
-    public IStringLocalizer Create(Type resourceSource)
-    {
-      if (resourceSource == null)
-        throw new ArgumentNullException(nameof(resourceSource));
+    this.loggerFactory = loggerFactory;
+  }
 
-      Assembly assembly = Assembly.GetEntryAssembly();
-      string baseName = assembly.GetName().Name + "." + this.resourcesRelativePath + resourceSource.FullName;
+  public IStringLocalizer Create(Type resourceSource)
+  {
+    if (resourceSource == null)
+      throw new ArgumentNullException(nameof(resourceSource));
 
-      // TODO: add caching
-      return this.CreateResourceManagerStringLocalizer(assembly, baseName);
-    }
+    Assembly assembly = Assembly.GetEntryAssembly();
+    string baseName = assembly.GetName().Name + "." + this.resourcesRelativePath + resourceSource.FullName;
 
-    public IStringLocalizer Create(string baseName, string location)
-    {
-      if (baseName == null)
-        throw new ArgumentNullException(nameof(baseName));
+    // TODO: add caching
+    return this.CreateResourceManagerStringLocalizer(assembly, baseName);
+  }
 
-      if (location == null)
-        throw new ArgumentNullException(nameof(location));
+  public IStringLocalizer Create(string baseName, string location)
+  {
+    if (baseName == null)
+      throw new ArgumentNullException(nameof(baseName));
 
-      Assembly assembly = Assembly.GetEntryAssembly();
+    if (location == null)
+      throw new ArgumentNullException(nameof(location));
 
-      baseName = baseName.Replace(assembly.GetName().Name + ".", assembly.GetName().Name + "." + this.resourcesRelativePath);
+    Assembly assembly = Assembly.GetEntryAssembly();
 
-      // TODO: add caching
-      return this.CreateResourceManagerStringLocalizer(assembly, baseName);
-    }
+    baseName = baseName.Replace(assembly.GetName().Name + ".", assembly.GetName().Name + "." + this.resourcesRelativePath);
 
-    protected virtual ResourceManagerStringLocalizer CreateResourceManagerStringLocalizer(Assembly assembly, string baseName)
-    {
-      return new ResourceManagerStringLocalizer(
-        new ResourceManager(baseName, assembly),
-        assembly,
-        baseName,
-        this.resourceNamesCache,
-        this.loggerFactory.CreateLogger<ResourceManagerStringLocalizer>()
-      );
-    }
+    // TODO: add caching
+    return this.CreateResourceManagerStringLocalizer(assembly, baseName);
+  }
+
+  protected virtual ResourceManagerStringLocalizer CreateResourceManagerStringLocalizer(Assembly assembly, string baseName)
+  {
+    return new ResourceManagerStringLocalizer(
+      new ResourceManager(baseName, assembly),
+      assembly,
+      baseName,
+      this.resourceNamesCache,
+      this.loggerFactory.CreateLogger<ResourceManagerStringLocalizer>()
+    );
   }
 }

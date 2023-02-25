@@ -3,19 +3,18 @@
 
 using Platformus.Core.Data.Entities;
 
-namespace Platformus.Core.Backend.ViewModels.Shared
+namespace Platformus.Core.Backend.ViewModels.Shared;
+
+public static class VariableViewModelFactory
 {
-  public static class VariableViewModelFactory
+  public static VariableViewModel Create(Variable variable)
   {
-    public static VariableViewModel Create(Variable variable)
+    return new VariableViewModel()
     {
-      return new VariableViewModel()
-      {
-        Id = variable.Id,
-        ConfigurationId = variable.ConfigurationId,
-        Name = variable.Name,
-        Value = variable.Value
-      };
-    }
+      Id = variable.Id,
+      ConfigurationId = variable.ConfigurationId,
+      Name = variable.Name,
+      Value = variable.Value
+    };
   }
 }

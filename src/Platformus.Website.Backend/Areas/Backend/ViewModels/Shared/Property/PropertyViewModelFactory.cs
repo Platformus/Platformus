@@ -8,25 +8,24 @@ using Platformus.Core;
 using Platformus.Core.Primitives;
 using Platformus.Website.Data.Entities;
 
-namespace Platformus.Website.Backend.ViewModels.Shared
-{
-  public static class PropertyViewModelFactory
-  {
-    public static PropertyViewModel Create(HttpContext httpContext, Property property)
-    {
-      IEnumerable<Localization> localizations = httpContext.GetLocalizations(property.StringValue);
+namespace Platformus.Website.Backend.ViewModels.Shared;
 
-      return new PropertyViewModel()
-      {
-        Id = property.Id,
-        Member = property.Member == null ? null : MemberViewModelFactory.Create(property.Member),
-        Value = property.GetValue(),
-        IntegerValue = property.IntegerValue,
-        DecimalValue = property.DecimalValue,
-        NeutralStringValue = localizations.First(l => l.Culture.Id == NeutralCulture.Id),
-        LocalizedStringValues = localizations.Where(l => l.Culture.Id != NeutralCulture.Id).ToList(),
-        DateTimeValue = property.DateTimeValue
-      };
-    }
+public static class PropertyViewModelFactory
+{
+  public static PropertyViewModel Create(HttpContext httpContext, Property property)
+  {
+    IEnumerable<Localization> localizations = httpContext.GetLocalizations(property.StringValue);
+
+    return new PropertyViewModel()
+    {
+      Id = property.Id,
+      Member = property.Member == null ? null : MemberViewModelFactory.Create(property.Member),
+      Value = property.GetValue(),
+      IntegerValue = property.IntegerValue,
+      DecimalValue = property.DecimalValue,
+      NeutralStringValue = localizations.First(l => l.Culture.Id == NeutralCulture.Id),
+      LocalizedStringValues = localizations.Where(l => l.Culture.Id != NeutralCulture.Id).ToList(),
+      DateTimeValue = property.DateTimeValue
+    };
   }
 }

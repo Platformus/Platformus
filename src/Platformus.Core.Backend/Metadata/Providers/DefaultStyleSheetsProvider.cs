@@ -6,15 +6,14 @@ using System.Linq;
 using ExtCore.Infrastructure;
 using Microsoft.AspNetCore.Http;
 
-namespace Platformus.Core.Backend.Metadata.Providers
+namespace Platformus.Core.Backend.Metadata.Providers;
+
+public class DefaultStyleSheetsProvider : IStyleSheetsProvider
 {
-  public class DefaultStyleSheetsProvider : IStyleSheetsProvider
+  public IEnumerable<StyleSheet> GetStyleSheets(HttpContext httpContext)
   {
-    public IEnumerable<StyleSheet> GetStyleSheets(HttpContext httpContext)
-    {
-      return ExtensionManager.GetInstances<IMetadata>()
-        .SelectMany(m => m.GetStyleSheets(httpContext))
-        .OrderBy(ss => ss.Position);
-    }
+    return ExtensionManager.GetInstances<IMetadata>()
+      .SelectMany(m => m.GetStyleSheets(httpContext))
+      .OrderBy(ss => ss.Position);
   }
 }

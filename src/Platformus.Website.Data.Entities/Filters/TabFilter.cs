@@ -3,21 +3,20 @@
 
 using Magicalizer.Filters.Abstractions;
 
-namespace Platformus.Website.Filters
+namespace Platformus.Website.Filters;
+
+public class TabFilter : IFilter
 {
-  public class TabFilter : IFilter
+  public int? Id { get; set; }
+  public ClassFilter Class { get; set; }
+  public StringFilter Name { get; set; }
+
+  public TabFilter() { }
+
+  public TabFilter(int? id = null, ClassFilter @class = null, StringFilter name = null)
   {
-    public int? Id { get; set; }
-    public ClassFilter Class { get; set; }
-    public StringFilter Name { get; set; }
-
-    public TabFilter() { }
-
-    public TabFilter(int? id = null, ClassFilter @class = null, StringFilter name = null)
-    {
-      Id = id;
-      Class = @class;
-      Name = name;
-    }
+    Id = id;
+    Class = @class;
+    Name = name;
   }
 }

@@ -4,17 +4,16 @@
 using Platformus.Core.Backend.ViewModels.Shared;
 using Platformus.Core.Data.Entities;
 
-namespace Platformus.Website.Backend.ViewModels.Shared
+namespace Platformus.Website.Backend.ViewModels.Shared;
+
+public static class EndpointPermissionViewModelFactory
 {
-  public static class EndpointPermissionViewModelFactory
+  public static EndpointPermissionViewModel Create(Permission permission, bool isAssigned)
   {
-    public static EndpointPermissionViewModel Create(Permission permission, bool isAssigned)
+    return new EndpointPermissionViewModel()
     {
-      return new EndpointPermissionViewModel()
-      {
-        Permission = PermissionViewModelFactory.Create(permission),
-        IsAssigned = isAssigned
-      };
-    }
+      Permission = PermissionViewModelFactory.Create(permission),
+      IsAssigned = isAssigned
+    };
   }
 }

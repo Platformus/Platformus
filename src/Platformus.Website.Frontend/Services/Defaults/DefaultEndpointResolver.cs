@@ -11,61 +11,60 @@ using Microsoft.AspNetCore.Http;
 using Platformus.Website.Filters;
 using Platformus.Website.Frontend.Services.Abstractions;
 
-namespace Platformus.Website.Frontend.Services.Defaults
+namespace Platformus.Website.Frontend.Services.Defaults;
+
+public class DefaultEndpointResolver : IEndpointResolver
 {
-  public class DefaultEndpointResolver : IEndpointResolver
+  public async Task<Data.Entities.Endpoint> ResolveAsync(HttpContext httpContext)
   {
-    public async Task<Data.Entities.Endpoint> ResolveAsync(HttpContext httpContext)
-    {
-      if (httpContext.Request.Path.StartsWithSegments(new PathString("/backend")))
-        return null;
-
-      IEnumerable<Data.Entities.Endpoint> endpoints = await this.GetEndpointsAsync(httpContext);
-
-      foreach (Data.Entities.Endpoint endpoint in endpoints)
-        if (this.IsMatch(endpoint.UrlTemplate, httpContext.Request.GetUrlWithoutCultureSegment().Substring(1)))
-          return endpoint;
-
+    if (httpContext.Request.Path.StartsWithSegments(new PathString("/backend")))
       return null;
-    }
 
-    public async Task<IEnumerable<Data.Entities.Endpoint>> GetEndpointsAsync(HttpContext httpContext)
-    {
-      ICache cache = httpContext.GetCache();
+    IEnumerable<Data.Entities.Endpoint> endpoints = await this.GetEndpointsAsync(httpContext);
 
-      return await cache.GetWithDefaultValueAsync(
-        "endpoints",
-        async () => await httpContext.GetStorage().GetRepository<int, Data.Entities.Endpoint, EndpointFilter>().GetAllAsync(
-          sorting: "+position",
-          inclusions: new Inclusion<Data.Entities.Endpoint>[] {
-            new Inclusion<Data.Entities.Endpoint>("EndpointPermissions.Permission"),
-            new Inclusion<Data.Entities.Endpoint>(e => e.DataSources)
-          }
-        ),
-        new CacheEntryOptions(priority: CacheEntryPriority.NeverRemove)
-      );
-    }
+    foreach (Data.Entities.Endpoint endpoint in endpoints)
+      if (this.IsMatch(endpoint.UrlTemplate, httpContext.Request.GetUrlWithoutCultureSegment().Substring(1)))
+        return endpoint;
 
-    private bool IsMatch(string urlTemplate, string url)
-    {
-      if (urlTemplate == "{*url}")
-        return true;
+    return null;
+  }
 
-      if (string.IsNullOrEmpty(urlTemplate) && string.IsNullOrEmpty(url))
-        return true;
+  public async Task<IEnumerable<Data.Entities.Endpoint>> GetEndpointsAsync(HttpContext httpContext)
+  {
+    ICache cache = httpContext.GetCache();
 
-      if (string.Equals(urlTemplate, url, StringComparison.OrdinalIgnoreCase))
-        return true;
+    return await cache.GetWithDefaultValueAsync(
+      "endpoints",
+      async () => await httpContext.GetStorage().GetRepository<int, Data.Entities.Endpoint, EndpointFilter>().GetAllAsync(
+        sorting: "+position",
+        inclusions: new Inclusion<Data.Entities.Endpoint>[] {
+          new Inclusion<Data.Entities.Endpoint>("EndpointPermissions.Permission"),
+          new Inclusion<Data.Entities.Endpoint>(e => e.DataSources)
+        }
+      ),
+      new CacheEntryOptions(priority: CacheEntryPriority.NeverRemove)
+    );
+  }
 
-      if (string.IsNullOrEmpty(urlTemplate))
-        return false;
+  private bool IsMatch(string urlTemplate, string url)
+  {
+    if (urlTemplate == "{*url}")
+      return true;
 
-      return urlTemplate.Count(ch => ch == '/') == url.Count(ch => ch == '/') && Regex.IsMatch(url, this.GetRegexFromUrlTemplate(urlTemplate));
-    }
+    if (string.IsNullOrEmpty(urlTemplate) && string.IsNullOrEmpty(url))
+      return true;
 
-    private string GetRegexFromUrlTemplate(string urlTemplate)
-    {
-      return Regex.Replace(urlTemplate, "{.+?}", "(.+)");
-    }
+    if (string.Equals(urlTemplate, url, StringComparison.OrdinalIgnoreCase))
+      return true;
+
+    if (string.IsNullOrEmpty(urlTemplate))
+      return false;
+
+    return urlTemplate.Count(ch => ch == '/') == url.Count(ch => ch == '/') && Regex.IsMatch(url, this.GetRegexFromUrlTemplate(urlTemplate));
+  }
+
+  private string GetRegexFromUrlTemplate(string urlTemplate)
+  {
+    return Regex.Replace(urlTemplate, "{.+?}", "(.+)");
   }
 }

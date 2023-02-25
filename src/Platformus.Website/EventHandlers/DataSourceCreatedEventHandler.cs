@@ -5,16 +5,15 @@ using Microsoft.AspNetCore.Http;
 using Platformus.Website.Data.Entities;
 using Platformus.Website.Events;
 
-namespace Platformus.Website.EventHandlers
-{
-  public class DataSourceCreatedEventHandler : IDataSourceCreatedEventHandler
-  {
-    public int Priority => 1000;
+namespace Platformus.Website.EventHandlers;
 
-    public void HandleEvent(HttpContext httpContext, DataSource dataSource)
-    {
-      httpContext.GetCache().RemoveAll();
-      ResponseCacheManager.RemoveAll(httpContext);
-    }
+public class DataSourceCreatedEventHandler : IDataSourceCreatedEventHandler
+{
+  public int Priority => 1000;
+
+  public void HandleEvent(HttpContext httpContext, DataSource dataSource)
+  {
+    httpContext.GetCache().RemoveAll();
+    ResponseCacheManager.RemoveAll(httpContext);
   }
 }

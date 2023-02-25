@@ -4,26 +4,25 @@
 using System;
 using Magicalizer.Data.Entities.Abstractions;
 
-namespace Platformus.Core.Data.Entities
+namespace Platformus.Core.Data.Entities;
+
+/// <summary>
+/// Represents a model state. It is used to keep the form field values during redirects because of the validation errors.
+/// </summary>
+public class ModelState : IEntity<Guid>
 {
   /// <summary>
-  /// Represents a model state. It is used to keep the form field values during redirects because of the validation errors.
+  /// Gets or sets the unique client-side identifier of the model state.
   /// </summary>
-  public class ModelState : IEntity<Guid>
-  {
-    /// <summary>
-    /// Gets or sets the unique client-side identifier of the model state.
-    /// </summary>
-    public Guid Id { get; set; }
+  public Guid Id { get; set; }
 
-    /// <summary>
-    /// Gets or sets the serialized ModelState object.
-    /// </summary>
-    public string Value { get; set; }
+  /// <summary>
+  /// Gets or sets the serialized ModelState object.
+  /// </summary>
+  public string Value { get; set; }
 
-    /// <summary>
-    /// Gets or sets the date and time this model state is created at.
-    /// </summary>
-    public DateTime Created { get; set; }
-  }
+  /// <summary>
+  /// Gets or sets the date and time this model state is created at.
+  /// </summary>
+  public DateTime Created { get; set; }
 }

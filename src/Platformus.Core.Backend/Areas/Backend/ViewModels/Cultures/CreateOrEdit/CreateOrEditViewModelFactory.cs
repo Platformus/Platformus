@@ -3,24 +3,23 @@
 
 using Platformus.Core.Data.Entities;
 
-namespace Platformus.Core.Backend.ViewModels.Cultures
-{
-  public static class CreateOrEditViewModelFactory
-  {
-    public static CreateOrEditViewModel Create(Culture culture)
-    {
-      if (culture == null)
-        return new CreateOrEditViewModel()
-        {
-        };
+namespace Platformus.Core.Backend.ViewModels.Cultures;
 
+public static class CreateOrEditViewModelFactory
+{
+  public static CreateOrEditViewModel Create(Culture culture)
+  {
+    if (culture == null)
       return new CreateOrEditViewModel()
       {
-        Id = culture.Id,
-        Name = culture.Name,
-        IsFrontendDefault = culture.IsFrontendDefault,
-        IsBackendDefault = culture.IsBackendDefault
       };
-    }
+
+    return new CreateOrEditViewModel()
+    {
+      Id = culture.Id,
+      Name = culture.Name,
+      IsFrontendDefault = culture.IsFrontendDefault,
+      IsBackendDefault = culture.IsBackendDefault
+    };
   }
 }

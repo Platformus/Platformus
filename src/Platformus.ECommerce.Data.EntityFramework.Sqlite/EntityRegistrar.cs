@@ -5,96 +5,95 @@ using ExtCore.Data.EntityFramework;
 using Microsoft.EntityFrameworkCore;
 using Platformus.ECommerce.Data.Entities;
 
-namespace Platformus.ECommerce.Data.EntityFramework.Sqlite
+namespace Platformus.ECommerce.Data.EntityFramework.Sqlite;
+
+public class EntityRegistrar : IEntityRegistrar
 {
-  public class EntityRegistrar : IEntityRegistrar
+  public void RegisterEntities(ModelBuilder modelBuilder)
   {
-    public void RegisterEntities(ModelBuilder modelBuilder)
-    {
-      modelBuilder.Entity<Category>(etb =>
-        {
-          etb.HasKey(e => e.Id);
-          etb.Property(e => e.Id).ValueGeneratedOnAdd();
-          etb.ToTable("Categories");
-        }
-      );
+    modelBuilder.Entity<Category>(etb =>
+      {
+        etb.HasKey(e => e.Id);
+        etb.Property(e => e.Id).ValueGeneratedOnAdd();
+        etb.ToTable("Categories");
+      }
+    );
 
-      modelBuilder.Entity<Product>(etb =>
-        {
-          etb.HasKey(e => e.Id);
-          etb.Property(e => e.Id).ValueGeneratedOnAdd();
-          etb.Property(e => e.Url).IsRequired().HasMaxLength(128);
-          etb.Property(e => e.Code).HasMaxLength(64);
-          etb.Property(e => e.Price).HasConversion<double>();
-          etb.ToTable("Products");
-        }
-      );
+    modelBuilder.Entity<Product>(etb =>
+      {
+        etb.HasKey(e => e.Id);
+        etb.Property(e => e.Id).ValueGeneratedOnAdd();
+        etb.Property(e => e.Url).IsRequired().HasMaxLength(128);
+        etb.Property(e => e.Code).HasMaxLength(64);
+        etb.Property(e => e.Price).HasConversion<double>();
+        etb.ToTable("Products");
+      }
+    );
 
-      modelBuilder.Entity<Photo>(etb =>
-        {
-          etb.HasKey(e => e.Id);
-          etb.Property(e => e.Id).ValueGeneratedOnAdd();
-          etb.Property(e => e.Filename).IsRequired().HasMaxLength(64);
-          etb.ToTable("Photos");
-        }
-      );
+    modelBuilder.Entity<Photo>(etb =>
+      {
+        etb.HasKey(e => e.Id);
+        etb.Property(e => e.Id).ValueGeneratedOnAdd();
+        etb.Property(e => e.Filename).IsRequired().HasMaxLength(64);
+        etb.ToTable("Photos");
+      }
+    );
 
-      modelBuilder.Entity<OrderState>(etb =>
-        {
-          etb.HasKey(e => e.Id);
-          etb.Property(e => e.Id).ValueGeneratedOnAdd();
-          etb.Property(e => e.Code).IsRequired().HasMaxLength(32);
-          etb.ToTable("OrderStates");
-        }
-      );
+    modelBuilder.Entity<OrderState>(etb =>
+      {
+        etb.HasKey(e => e.Id);
+        etb.Property(e => e.Id).ValueGeneratedOnAdd();
+        etb.Property(e => e.Code).IsRequired().HasMaxLength(32);
+        etb.ToTable("OrderStates");
+      }
+    );
 
-      modelBuilder.Entity<PaymentMethod>(etb =>
-        {
-          etb.HasKey(e => e.Id);
-          etb.Property(e => e.Id).ValueGeneratedOnAdd();
-          etb.Property(e => e.Code).IsRequired().HasMaxLength(32);
-          etb.ToTable("PaymentMethods");
-        }
-      );
+    modelBuilder.Entity<PaymentMethod>(etb =>
+      {
+        etb.HasKey(e => e.Id);
+        etb.Property(e => e.Id).ValueGeneratedOnAdd();
+        etb.Property(e => e.Code).IsRequired().HasMaxLength(32);
+        etb.ToTable("PaymentMethods");
+      }
+    );
 
-      modelBuilder.Entity<DeliveryMethod>(etb =>
-        {
-          etb.HasKey(e => e.Id);
-          etb.Property(e => e.Id).ValueGeneratedOnAdd();
-          etb.Property(e => e.Code).IsRequired().HasMaxLength(32);
-          etb.ToTable("DeliveryMethods");
-        }
-      );
+    modelBuilder.Entity<DeliveryMethod>(etb =>
+      {
+        etb.HasKey(e => e.Id);
+        etb.Property(e => e.Id).ValueGeneratedOnAdd();
+        etb.Property(e => e.Code).IsRequired().HasMaxLength(32);
+        etb.ToTable("DeliveryMethods");
+      }
+    );
 
-      modelBuilder.Entity<Position>(etb =>
-        {
-          etb.HasKey(e => e.Id);
-          etb.Property(e => e.Id).ValueGeneratedOnAdd();
-          etb.ToTable("Positions");
-        }
-      );
+    modelBuilder.Entity<Position>(etb =>
+      {
+        etb.HasKey(e => e.Id);
+        etb.Property(e => e.Id).ValueGeneratedOnAdd();
+        etb.ToTable("Positions");
+      }
+    );
 
-      modelBuilder.Entity<Cart>(etb =>
-        {
-          etb.HasKey(e => e.Id);
-          etb.Property(e => e.Id).ValueGeneratedOnAdd();
-          etb.ToTable("Carts");
-        }
-      );
+    modelBuilder.Entity<Cart>(etb =>
+      {
+        etb.HasKey(e => e.Id);
+        etb.Property(e => e.Id).ValueGeneratedOnAdd();
+        etb.ToTable("Carts");
+      }
+    );
 
-      modelBuilder.Entity<Order>(etb =>
-        {
-          etb.HasKey(e => e.Id);
-          etb.Property(e => e.Id).ValueGeneratedOnAdd();
-          etb.Property(e => e.CustomerFirstName).IsRequired().HasMaxLength(64);
-          etb.Property(e => e.CustomerLastName).HasMaxLength(64);
-          etb.Property(e => e.CustomerPhone).IsRequired().HasMaxLength(32);
-          etb.Property(e => e.CustomerEmail).HasMaxLength(64);
-          etb.Property(e => e.CustomerAddress).HasMaxLength(128);
-          etb.Property(e => e.Note).HasMaxLength(1024);
-          etb.ToTable("Orders");
-        }
-      );
-    }
+    modelBuilder.Entity<Order>(etb =>
+      {
+        etb.HasKey(e => e.Id);
+        etb.Property(e => e.Id).ValueGeneratedOnAdd();
+        etb.Property(e => e.CustomerFirstName).IsRequired().HasMaxLength(64);
+        etb.Property(e => e.CustomerLastName).HasMaxLength(64);
+        etb.Property(e => e.CustomerPhone).IsRequired().HasMaxLength(32);
+        etb.Property(e => e.CustomerEmail).HasMaxLength(64);
+        etb.Property(e => e.CustomerAddress).HasMaxLength(128);
+        etb.Property(e => e.Note).HasMaxLength(1024);
+        etb.ToTable("Orders");
+      }
+    );
   }
 }

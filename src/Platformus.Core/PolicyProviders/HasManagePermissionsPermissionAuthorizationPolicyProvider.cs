@@ -3,23 +3,22 @@
 
 using Microsoft.AspNetCore.Authorization;
 
-namespace Platformus.Core.PolicyProviders
+namespace Platformus.Core.PolicyProviders;
+
+public class HasManagePermissionsPermissionAuthorizationPolicyProvider : IAuthorizationPolicyProvider
 {
-  public class HasManagePermissionsPermissionAuthorizationPolicyProvider : IAuthorizationPolicyProvider
+  public string Name => Policies.HasManagePermissionsPermission;
+
+  public AuthorizationPolicy GetAuthorizationPolicy()
   {
-    public string Name => Policies.HasManagePermissionsPermission;
+    AuthorizationPolicyBuilder authorizationPolicyBuilder = new AuthorizationPolicyBuilder();
 
-    public AuthorizationPolicy GetAuthorizationPolicy()
-    {
-      AuthorizationPolicyBuilder authorizationPolicyBuilder = new AuthorizationPolicyBuilder();
+    authorizationPolicyBuilder.RequireAssertion(context =>
+      {
+        return context.User.HasClaim(PlatformusClaimTypes.Permission, Permissions.ManagePermissions) || context.User.HasClaim(PlatformusClaimTypes.Permission, Permissions.DoAnything);
+      }
+    );
 
-      authorizationPolicyBuilder.RequireAssertion(context =>
-        {
-          return context.User.HasClaim(PlatformusClaimTypes.Permission, Permissions.ManagePermissions) || context.User.HasClaim(PlatformusClaimTypes.Permission, Permissions.DoAnything);
-        }
-      );
-
-      return authorizationPolicyBuilder.Build();
-    }
+    return authorizationPolicyBuilder.Build();
   }
 }

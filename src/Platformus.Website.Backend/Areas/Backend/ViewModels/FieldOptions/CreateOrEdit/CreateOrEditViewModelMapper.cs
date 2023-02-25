@@ -4,17 +4,16 @@
 using Platformus.Website.Data.Entities;
 using Platformus.Website.Filters;
 
-namespace Platformus.Website.Backend.ViewModels.FieldOptions
-{
-  public static class CreateOrEditViewModelMapper
-  {
-    public static FieldOption Map(FieldOptionFilter filter, FieldOption fieldOption, CreateOrEditViewModel createOrEdit)
-    {
-      if (fieldOption.Id == 0)
-        fieldOption.FieldId = (int)filter.Field.Id;
+namespace Platformus.Website.Backend.ViewModels.FieldOptions;
 
-      fieldOption.Position = createOrEdit.Position;
-      return fieldOption;
-    }
+public static class CreateOrEditViewModelMapper
+{
+  public static FieldOption Map(FieldOptionFilter filter, FieldOption fieldOption, CreateOrEditViewModel createOrEdit)
+  {
+    if (fieldOption.Id == 0)
+      fieldOption.FieldId = (int)filter.Field.Id;
+
+    fieldOption.Position = createOrEdit.Position;
+    return fieldOption;
   }
 }

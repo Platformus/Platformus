@@ -13,52 +13,51 @@ using Platformus.Core.Services.Abstractions;
 using Platformus.Website.Data.Entities;
 using Platformus.Website.FormHandlers;
 
-namespace Platformus.Website.Frontend.FormHandlers
+namespace Platformus.Website.Frontend.FormHandlers;
+
+public class EmailFormHandler : IFormHandler
 {
-  public class EmailFormHandler : IFormHandler
-  {
-    public IEnumerable<ParameterGroup> ParameterGroups =>
-      new ParameterGroup[]
-      {
-        new ParameterGroup(
-          "General",
-          new Parameter("RecipientEmails", "Recipient emails (separated by commas)", Core.ParameterEditorCodes.TextBox, null, true),
-          new Parameter("RedirectUrl", "Redirect URL", Core.ParameterEditorCodes.TextBox)
-        )
-      };
-
-    public string Description => "Sends the form data to the specific email address.";
-
-    public async Task<IActionResult> HandleAsync(HttpContext httpContext, string origin, Form form, IDictionary<Field, string> valuesByFields, IDictionary<string, byte[]> attachmentsByFilenames)
+  public IEnumerable<ParameterGroup> ParameterGroups =>
+    new ParameterGroup[]
     {
-      StringBuilder body = new StringBuilder();
+      new ParameterGroup(
+        "General",
+        new Parameter("RecipientEmails", "Recipient emails (separated by commas)", Core.ParameterEditorCodes.TextBox, null, true),
+        new Parameter("RedirectUrl", "Redirect URL", Core.ParameterEditorCodes.TextBox)
+      )
+    };
 
-      foreach (KeyValuePair<Field, string> valueByField in valuesByFields)
-        body.AppendFormat("<p>{0}: {1}</p>", valueByField.Key.Name.GetLocalizationValue(), valueByField.Value);
+  public string Description => "Sends the form data to the specific email address.";
 
-      ParametersParser parametersParser = new ParametersParser(form.FormHandlerParameters);
-      IEmailSender emailSender = httpContext.RequestServices.GetService<IEmailSender>();
+  public async Task<IActionResult> HandleAsync(HttpContext httpContext, string origin, Form form, IDictionary<Field, string> valuesByFields, IDictionary<string, byte[]> attachmentsByFilenames)
+  {
+    StringBuilder body = new StringBuilder();
 
-      if (emailSender != null)
-      {
-        string recipientEmails = parametersParser.GetStringParameterValue("RecipientEmails");
+    foreach (KeyValuePair<Field, string> valueByField in valuesByFields)
+      body.AppendFormat("<p>{0}: {1}</p>", valueByField.Key.Name.GetLocalizationValue(), valueByField.Value);
 
-        if (!string.IsNullOrEmpty(recipientEmails))
-          foreach (string recipientEmail in recipientEmails.Split(','))
-            await emailSender.SendEmailAsync(
-              recipientEmail,
-              string.Format("{0} form data", form.Name.GetLocalizationValue()),
-              body.ToString(),
-              attachmentsByFilenames
-            );
-      }
+    ParametersParser parametersParser = new ParametersParser(form.FormHandlerParameters);
+    IEmailSender emailSender = httpContext.RequestServices.GetService<IEmailSender>();
 
-      string redirectUrl = parametersParser.GetStringParameterValue("RedirectUrl");
+    if (emailSender != null)
+    {
+      string recipientEmails = parametersParser.GetStringParameterValue("RecipientEmails");
 
-      if (httpContext.GetConfigurationManager()["Globalization", "SpecifyCultureInUrl"] == "yes")
-        return new RedirectResult($"/{CultureInfo.CurrentCulture.TwoLetterISOLanguageName}{redirectUrl}");
-
-      return new RedirectResult(redirectUrl);
+      if (!string.IsNullOrEmpty(recipientEmails))
+        foreach (string recipientEmail in recipientEmails.Split(','))
+          await emailSender.SendEmailAsync(
+            recipientEmail,
+            string.Format("{0} form data", form.Name.GetLocalizationValue()),
+            body.ToString(),
+            attachmentsByFilenames
+          );
     }
+
+    string redirectUrl = parametersParser.GetStringParameterValue("RedirectUrl");
+
+    if (httpContext.GetConfigurationManager()["Globalization", "SpecifyCultureInUrl"] == "yes")
+      return new RedirectResult($"/{CultureInfo.CurrentCulture.TwoLetterISOLanguageName}{redirectUrl}");
+
+    return new RedirectResult(redirectUrl);
   }
 }

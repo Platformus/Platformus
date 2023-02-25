@@ -14,103 +14,102 @@ using Platformus.Website.Data.Entities;
 using Platformus.Website.Events;
 using Platformus.Website.Filters;
 
-namespace Platformus.Website.Backend.Controllers
+namespace Platformus.Website.Backend.Controllers;
+
+[Authorize(Policy = Policies.HasManageFormsPermission)]
+public class FormsController : Core.Backend.Controllers.ControllerBase
 {
-  [Authorize(Policy = Policies.HasManageFormsPermission)]
-  public class FormsController : Core.Backend.Controllers.ControllerBase
+  private IStringLocalizer localizer;
+
+  private IRepository<int, Form, FormFilter> Repository
   {
-    private IStringLocalizer localizer;
+    get => this.Storage.GetRepository<int, Form, FormFilter>();
+  }
 
-    private IRepository<int, Form, FormFilter> Repository
+  public FormsController(IStorage storage, IStringLocalizer<SharedResource> localizer)
+    : base(storage)
+  {
+    this.localizer = localizer;
+  }
+
+  public async Task<IActionResult> IndexAsync()
+  {
+    return this.View(IndexViewModelFactory.Create(
+      await this.Repository.GetAllAsync(
+        inclusions: new Inclusion<Form>[] {
+          new Inclusion<Form>(m => m.Name.Localizations),
+          new Inclusion<Form>("Fields.FieldType"),
+          new Inclusion<Form>("Fields.Name.Localizations"),
+          new Inclusion<Form>("Fields.FieldOptions.Value.Localizations")
+        }
+      )
+    ));
+  }
+
+  [HttpGet]
+  [ImportModelStateFromTempData]
+  public async Task<IActionResult> CreateOrEditAsync(int? id)
+  {
+    return this.View(CreateOrEditViewModelFactory.Create(
+      this.HttpContext, id == null ? null : await this.Repository.GetByIdAsync(
+        (int)id,
+        new Inclusion<Form>(f => f.Name.Localizations),
+        new Inclusion<Form>(f => f.SubmitButtonTitle.Localizations)
+      )
+    ));
+  }
+
+  [HttpPost]
+  [ExportModelStateToTempData]
+  public async Task<IActionResult> CreateOrEditAsync(CreateOrEditViewModel createOrEdit)
+  {
+    if (createOrEdit.Id == null && !await this.IsCodeUniqueAsync(createOrEdit.Code))
+      this.ModelState.AddModelError("code", this.localizer["Value is already in use"]);
+
+    if (this.ModelState.IsValid)
     {
-      get => this.Storage.GetRepository<int, Form, FormFilter>();
-    }
+      Form form = CreateOrEditViewModelMapper.Map(
+        createOrEdit.Id == null ?
+          new Form() :
+          await this.Repository.GetByIdAsync(
+            (int)createOrEdit.Id,
+            new Inclusion<Form>(f => f.Name.Localizations),
+            new Inclusion<Form>(f => f.SubmitButtonTitle.Localizations)
+          ),
+        createOrEdit
+      );
 
-    public FormsController(IStorage storage, IStringLocalizer<SharedResource> localizer)
-      : base(storage)
-    {
-      this.localizer = localizer;
-    }
+      if (createOrEdit.Id == null)
+        this.Repository.Create(form);
 
-    public async Task<IActionResult> IndexAsync()
-    {
-      return this.View(IndexViewModelFactory.Create(
-        await this.Repository.GetAllAsync(
-          inclusions: new Inclusion<Form>[] {
-            new Inclusion<Form>(m => m.Name.Localizations),
-            new Inclusion<Form>("Fields.FieldType"),
-            new Inclusion<Form>("Fields.Name.Localizations"),
-            new Inclusion<Form>("Fields.FieldOptions.Value.Localizations")
-          }
-        )
-      ));
-    }
+      else this.Repository.Edit(form);
 
-    [HttpGet]
-    [ImportModelStateFromTempData]
-    public async Task<IActionResult> CreateOrEditAsync(int? id)
-    {
-      return this.View(CreateOrEditViewModelFactory.Create(
-        this.HttpContext, id == null ? null : await this.Repository.GetByIdAsync(
-          (int)id,
-          new Inclusion<Form>(f => f.Name.Localizations),
-          new Inclusion<Form>(f => f.SubmitButtonTitle.Localizations)
-        )
-      ));
-    }
-
-    [HttpPost]
-    [ExportModelStateToTempData]
-    public async Task<IActionResult> CreateOrEditAsync(CreateOrEditViewModel createOrEdit)
-    {
-      if (createOrEdit.Id == null && !await this.IsCodeUniqueAsync(createOrEdit.Code))
-        this.ModelState.AddModelError("code", this.localizer["Value is already in use"]);
-
-      if (this.ModelState.IsValid)
-      {
-        Form form = CreateOrEditViewModelMapper.Map(
-          createOrEdit.Id == null ?
-            new Form() :
-            await this.Repository.GetByIdAsync(
-              (int)createOrEdit.Id,
-              new Inclusion<Form>(f => f.Name.Localizations),
-              new Inclusion<Form>(f => f.SubmitButtonTitle.Localizations)
-            ),
-          createOrEdit
-        );
-
-        if (createOrEdit.Id == null)
-          this.Repository.Create(form);
-
-        else this.Repository.Edit(form);
-
-        await this.MergeEntityLocalizationsAsync(form);
-        await this.Storage.SaveAsync();
-
-        if (createOrEdit.Id == null)
-          Event<IFormCreatedEventHandler, HttpContext, Form>.Broadcast(this.HttpContext, form);
-
-        else Event<IFormEditedEventHandler, HttpContext, Form>.Broadcast(this.HttpContext, form);
-
-        return this.RedirectToAction("Index");
-      }
-
-      return this.CreateRedirectToSelfResult();
-    }
-
-    public async Task<IActionResult> DeleteAsync(int id)
-    {
-      Form form = await this.Repository.GetByIdAsync(id);
-
-      this.Repository.Delete(form.Id);
+      await this.MergeEntityLocalizationsAsync(form);
       await this.Storage.SaveAsync();
-      Event<IFormDeletedEventHandler, HttpContext, Form>.Broadcast(this.HttpContext, form);
+
+      if (createOrEdit.Id == null)
+        Event<IFormCreatedEventHandler, HttpContext, Form>.Broadcast(this.HttpContext, form);
+
+      else Event<IFormEditedEventHandler, HttpContext, Form>.Broadcast(this.HttpContext, form);
+
       return this.RedirectToAction("Index");
     }
 
-    private async Task<bool> IsCodeUniqueAsync(string code)
-    {
-      return await this.Repository.CountAsync(new FormFilter(code: code)) == 0;
-    }
+    return this.CreateRedirectToSelfResult();
+  }
+
+  public async Task<IActionResult> DeleteAsync(int id)
+  {
+    Form form = await this.Repository.GetByIdAsync(id);
+
+    this.Repository.Delete(form.Id);
+    await this.Storage.SaveAsync();
+    Event<IFormDeletedEventHandler, HttpContext, Form>.Broadcast(this.HttpContext, form);
+    return this.RedirectToAction("Index");
+  }
+
+  private async Task<bool> IsCodeUniqueAsync(string code)
+  {
+    return await this.Repository.CountAsync(new FormFilter(code: code)) == 0;
   }
 }

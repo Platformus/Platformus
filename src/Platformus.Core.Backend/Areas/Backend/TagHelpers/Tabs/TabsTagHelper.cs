@@ -3,16 +3,15 @@
 
 using Microsoft.AspNetCore.Razor.TagHelpers;
 
-namespace Platformus.Core.Backend
+namespace Platformus.Core.Backend;
+
+[RestrictChildren("tab")]
+public class TabsTagHelper : TagHelper
 {
-  [RestrictChildren("tab")]
-  public class TabsTagHelper : TagHelper
+  public override void Process(TagHelperContext context, TagHelperOutput output)
   {
-    public override void Process(TagHelperContext context, TagHelperOutput output)
-    {
-      output.TagName = TagNames.Div;
-      output.TagMode = TagMode.StartTagAndEndTag;
-      output.Attributes.SetAttribute(AttributeNames.Class, "content__tabs tabs");
-    }
+    output.TagName = TagNames.Div;
+    output.TagMode = TagMode.StartTagAndEndTag;
+    output.Attributes.SetAttribute(AttributeNames.Class, "content__tabs tabs");
   }
 }

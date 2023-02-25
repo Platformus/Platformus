@@ -6,18 +6,17 @@ using System.Linq;
 using Microsoft.AspNetCore.Http;
 using Platformus.ECommerce.Data.Entities;
 
-namespace Platformus.ECommerce.Frontend.ViewModels.Shared
+namespace Platformus.ECommerce.Frontend.ViewModels.Shared;
+
+public static class CatalogViewModelFactory
 {
-  public static class CatalogViewModelFactory
+  public static CatalogViewModel Create(HttpContext httpContext, IEnumerable<Category> categories, string partialViewName, string additionalCssClass)
   {
-    public static CatalogViewModel Create(HttpContext httpContext, IEnumerable<Category> categories, string partialViewName, string additionalCssClass)
+    return new CatalogViewModel()
     {
-      return new CatalogViewModel()
-      {
-        Categories = categories.Select(c => CategoryViewModelFactory.Create(httpContext, c)),
-        PartialViewName = partialViewName ?? "_Catalog",
-        AdditionalCssClass = additionalCssClass
-      };
-    }
+      Categories = categories.Select(c => CategoryViewModelFactory.Create(httpContext, c)),
+      PartialViewName = partialViewName ?? "_Catalog",
+      AdditionalCssClass = additionalCssClass
+    };
   }
 }

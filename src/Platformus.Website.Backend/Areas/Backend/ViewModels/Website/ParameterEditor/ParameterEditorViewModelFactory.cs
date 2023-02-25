@@ -8,20 +8,19 @@ using Platformus.Core.Parameters;
 using Platformus.Core.Primitives;
 using Platformus.Website.Data.Entities;
 
-namespace Platformus.Website.Backend.ViewModels.Website
+namespace Platformus.Website.Backend.ViewModels.Website;
+
+public static class ParameterEditorViewModelFactory
 {
-  public static class ParameterEditorViewModelFactory
+  public static ParameterEditorViewModel Create(IEnumerable<DataTypeParameter> dataTypeParameters)
   {
-    public static ParameterEditorViewModel Create(IEnumerable<DataTypeParameter> dataTypeParameters)
+    return new ParameterEditorViewModel()
     {
-      return new ParameterEditorViewModel()
-      {
-        ParameterGroups = new[] {
-          new ParameterGroup(
-            null,
-            dataTypeParameters.Select(dtp => new Parameter(dtp.Code, dtp.Name, dtp.ParameterEditorCode, dtp.DataTypeParameterOptions?.Select(dtpo => new Option(dtpo.Value)))).ToArray())
-        }
-      };
-    }
+      ParameterGroups = new[] {
+        new ParameterGroup(
+          null,
+          dataTypeParameters.Select(dtp => new Parameter(dtp.Code, dtp.Name, dtp.ParameterEditorCode, dtp.DataTypeParameterOptions?.Select(dtpo => new Option(dtpo.Value)))).ToArray())
+      }
+    };
   }
 }

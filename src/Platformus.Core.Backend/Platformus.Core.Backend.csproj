@@ -8,7 +8,7 @@
     <AssemblyName>Platformus.Core.Backend</AssemblyName>
     <PackageId>Platformus.Core.Backend</PackageId>
   </PropertyGroup>
-  
+
   <ItemGroup>
     <EmbeddedResource Include="wwwroot\**" />
   </ItemGroup>

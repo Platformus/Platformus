@@ -4,24 +4,23 @@
 using Magicalizer.Data.Entities.Abstractions;
 using Platformus.Core.Data.Entities;
 
-namespace Platformus.Website.Data.Entities
+namespace Platformus.Website.Data.Entities;
+
+/// <summary>
+/// Represents a many-to-many relationship between the endpoints and permissions.
+/// </summary>
+public class EndpointPermission : IEntity
 {
   /// <summary>
-  /// Represents a many-to-many relationship between the endpoints and permissions.
+  /// Gets or sets the endpoint identifier this endpoint permission is related to.
   /// </summary>
-  public class EndpointPermission : IEntity
-  {
-    /// <summary>
-    /// Gets or sets the endpoint identifier this endpoint permission is related to.
-    /// </summary>
-    public int EndpointId { get; set; }
+  public int EndpointId { get; set; }
 
-    /// <summary>
-    /// Gets or sets the permission identifier this endpoint permission is related to.
-    /// </summary>
-    public int PermissionId { get; set; }
+  /// <summary>
+  /// Gets or sets the permission identifier this endpoint permission is related to.
+  /// </summary>
+  public int PermissionId { get; set; }
 
-    public virtual Endpoint Endpoint { get; set; }
-    public virtual Permission Permission { get; set; }
-  }
+  public virtual Endpoint Endpoint { get; set; }
+  public virtual Permission Permission { get; set; }
 }

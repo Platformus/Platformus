@@ -3,21 +3,20 @@
 
 using Magicalizer.Filters.Abstractions;
 
-namespace Platformus.Core.Filters
+namespace Platformus.Core.Filters;
+
+public class CredentialTypeFilter : IFilter
 {
-  public class CredentialTypeFilter : IFilter
+  public int? Id { get; set; }
+  public string Code { get; set; }
+  public StringFilter Name { get; set; }
+
+  public CredentialTypeFilter() { }
+
+  public CredentialTypeFilter(int? id = null, string code = null, StringFilter name = null)
   {
-    public int? Id { get; set; }
-    public string Code { get; set; }
-    public StringFilter Name { get; set; }
-
-    public CredentialTypeFilter() { }
-
-    public CredentialTypeFilter(int? id = null, string code = null, StringFilter name = null)
-    {
-      Id = id;
-      Code = code;
-      Name = name;
-    }
+    Id = id;
+    Code = code;
+    Name = name;
   }
 }

@@ -6,97 +6,96 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Caching.Memory;
 
-namespace Platformus
+namespace Platformus;
+
+public class DefaultCache : ICache
 {
-  public class DefaultCache : ICache
+  private IMemoryCache memoryCache;
+  private IList<string> keys;
+
+  public DefaultCache(IMemoryCache memoryCache)
   {
-    private IMemoryCache memoryCache;
-    private IList<string> keys;
+    this.memoryCache = memoryCache;
+    this.keys = new List<string>();
+  }
 
-    public DefaultCache(IMemoryCache memoryCache)
+  public T Get<T>(string key)
+  {
+    return this.memoryCache.Get<T>(key);
+  }
+
+  public async Task<T> GetWithDefaultValueAsync<T>(string key, Func<Task<T>> defaultValueFuncAsync)
+  {
+    return await this.GetWithDefaultValueAsync<T>(key, defaultValueFuncAsync, null);
+  }
+
+  public async Task<T> GetWithDefaultValueAsync<T>(string key, Func<Task<T>> defaultValueFuncAsync, CacheEntryOptions options)
+  {
+    T result = this.Get<T>(key);
+
+    if (result == null)
     {
-      this.memoryCache = memoryCache;
-      this.keys = new List<string>();
+      T defaultValue = await defaultValueFuncAsync();
+
+      this.Set(key, defaultValue, options);
+      return defaultValue;
     }
 
-    public T Get<T>(string key)
-    {
-      return this.memoryCache.Get<T>(key);
-    }
+    return result;
+  }
 
-    public async Task<T> GetWithDefaultValueAsync<T>(string key, Func<Task<T>> defaultValueFuncAsync)
-    {
-      return await this.GetWithDefaultValueAsync<T>(key, defaultValueFuncAsync, null);
-    }
+  public void Set<T>(string key, T value)
+  {
+    this.Set<T>(key, value, null);
+  }
 
-    public async Task<T> GetWithDefaultValueAsync<T>(string key, Func<Task<T>> defaultValueFuncAsync, CacheEntryOptions options)
-    {
-      T result = this.Get<T>(key);
+  public void Set<T>(string key, T value, CacheEntryOptions options)
+  {
+    if (options == null)
+      this.memoryCache.Set(key, value);
 
-      if (result == null)
+    else this.memoryCache.Set(
+      key,
+      value,
+      new MemoryCacheEntryOptions()
       {
-        T defaultValue = await defaultValueFuncAsync();
-
-        this.Set(key, defaultValue, options);
-        return defaultValue;
+        AbsoluteExpiration = options.AbsoluteExpiration,
+        SlidingExpiration = options.SlidingExpiration,
+        Priority = (CacheItemPriority)options.Priority
       }
+    );
 
-      return result;
-    }
+    this.keys.Add(key);
+  }
 
-    public void Set<T>(string key, T value)
-    {
-      this.Set<T>(key, value, null);
-    }
+  public void Remove(string key)
+  {
+    this.memoryCache.Remove(key);
+    this.keys.Remove(key);
+  }
 
-    public void Set<T>(string key, T value, CacheEntryOptions options)
-    {
-      if (options == null)
-        this.memoryCache.Set(key, value);
-
-      else this.memoryCache.Set(
-        key,
-        value,
-        new MemoryCacheEntryOptions()
-        {
-          AbsoluteExpiration = options.AbsoluteExpiration,
-          SlidingExpiration = options.SlidingExpiration,
-          Priority = (CacheItemPriority)options.Priority
-        }
-      );
-
-      this.keys.Add(key);
-    }
-
-    public void Remove(string key)
-    {
+  public void RemoveAll()
+  {
+    foreach (string key in this.keys)
       this.memoryCache.Remove(key);
-      this.keys.Remove(key);
-    }
 
-    public void RemoveAll()
+    this.keys.Clear();
+  }
+
+  public void RemoveAll(Func<string, bool> predicate)
+  {
+    IList<string> removedKeys = new List<string>();
+
+    foreach (string key in this.keys)
     {
-      foreach (string key in this.keys)
-        this.memoryCache.Remove(key);
-
-      this.keys.Clear();
-    }
-
-    public void RemoveAll(Func<string, bool> predicate)
-    {
-      IList<string> removedKeys = new List<string>();
-
-      foreach (string key in this.keys)
+      if (predicate(key))
       {
-        if (predicate(key))
-        {
-          this.memoryCache.Remove(key);
-          removedKeys.Add(key);
-        }
+        this.memoryCache.Remove(key);
+        removedKeys.Add(key);
       }
-
-      foreach (string removedKey in removedKeys)
-        this.keys.Remove(removedKey);
     }
+
+    foreach (string removedKey in removedKeys)
+      this.keys.Remove(removedKey);
   }
 }

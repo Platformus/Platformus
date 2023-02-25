@@ -3,31 +3,30 @@
 
 using Microsoft.AspNetCore.Mvc.Rendering;
 
-namespace Platformus.Core.Backend
+namespace Platformus.Core.Backend;
+
+public static class TextAreaGenerator
 {
-  public static class TextAreaGenerator
+  public static TagBuilder Generate(string identity, string value = null, Validation validation = null)
   {
-    public static TagBuilder Generate(string identity, string value = null, Validation validation = null)
-    {
-      TagBuilder tb = new TagBuilder(TagNames.TextArea);
+    TagBuilder tb = new TagBuilder(TagNames.TextArea);
 
-      tb.AddCssClass("text-area");
-      tb.MergeAttribute(AttributeNames.Id, identity);
-      tb.MergeAttribute(AttributeNames.Name, identity);
+    tb.AddCssClass("text-area");
+    tb.MergeAttribute(AttributeNames.Id, identity);
+    tb.MergeAttribute(AttributeNames.Name, identity);
 
-      if (validation?.IsRequired == true)
-        tb.AddRequiredAttributes(validation.IsRequiredValidationErrorMessage);
+    if (validation?.IsRequired == true)
+      tb.AddRequiredAttributes(validation.IsRequiredValidationErrorMessage);
 
-      if (validation?.MinLength != null || validation?.MaxLength != null)
-        tb.AddStringLengthAttributes(validation?.MinLength, validation?.MaxLength, validation.StringLengthValidationErrorMessage);
+    if (validation?.MinLength != null || validation?.MaxLength != null)
+      tb.AddStringLengthAttributes(validation?.MinLength, validation?.MaxLength, validation.StringLengthValidationErrorMessage);
 
-      if (validation?.IsValid == false)
-        tb.AddCssClass("input-validation-error");
+    if (validation?.IsValid == false)
+      tb.AddCssClass("input-validation-error");
 
-      if (!string.IsNullOrEmpty(value))
-        tb.InnerHtml.Append(value);
+    if (!string.IsNullOrEmpty(value))
+      tb.InnerHtml.Append(value);
 
-      return tb;
-    }
+    return tb;
   }
 }

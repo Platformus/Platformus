@@ -4,23 +4,22 @@
 using Microsoft.AspNetCore.Authorization;
 using Platformus.Core;
 
-namespace Platformus.ECommerce.PolicyProviders
+namespace Platformus.ECommerce.PolicyProviders;
+
+public class HasManagePaymentMethodsPermissionAuthorizationPolicyProvider : Platformus.Core.IAuthorizationPolicyProvider
 {
-  public class HasManagePaymentMethodsPermissionAuthorizationPolicyProvider : Platformus.Core.IAuthorizationPolicyProvider
+  public string Name => Policies.HasManagePaymentMethodsPermission;
+
+  public AuthorizationPolicy GetAuthorizationPolicy()
   {
-    public string Name => Policies.HasManagePaymentMethodsPermission;
+    AuthorizationPolicyBuilder authorizationPolicyBuilder = new AuthorizationPolicyBuilder();
 
-    public AuthorizationPolicy GetAuthorizationPolicy()
-    {
-      AuthorizationPolicyBuilder authorizationPolicyBuilder = new AuthorizationPolicyBuilder();
+    authorizationPolicyBuilder.RequireAssertion(context =>
+      {
+        return context.User.HasClaim(PlatformusClaimTypes.Permission, Permissions.ManagePaymentMethods) || context.User.HasClaim(PlatformusClaimTypes.Permission, Core.Permissions.DoAnything);
+      }
+    );
 
-      authorizationPolicyBuilder.RequireAssertion(context =>
-        {
-          return context.User.HasClaim(PlatformusClaimTypes.Permission, Permissions.ManagePaymentMethods) || context.User.HasClaim(PlatformusClaimTypes.Permission, Core.Permissions.DoAnything);
-        }
-      );
-
-      return authorizationPolicyBuilder.Build();
-    }
+    return authorizationPolicyBuilder.Build();
   }
 }

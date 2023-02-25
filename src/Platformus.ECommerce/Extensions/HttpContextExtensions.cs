@@ -2,20 +2,19 @@
 using Microsoft.Extensions.DependencyInjection;
 using Platformus.ECommerce.Services.Abstractions;
 
-namespace Platformus.ECommerce
+namespace Platformus.ECommerce;
+
+/// <summary>
+/// Contains the extension methods of the <see cref="HttpContext"/>.
+/// </summary>
+public static class HttpContextExtensions
 {
   /// <summary>
-  /// Contains the extension methods of the <see cref="HttpContext"/>.
+  /// Gets a cart manager service.
   /// </summary>
-  public static class HttpContextExtensions
+  /// <param name="httpContext">Current <see cref="HttpContext"/> to get the service from.</param>
+  public static ICartManager GetCartManager(this HttpContext httpContext)
   {
-    /// <summary>
-    /// Gets a cart manager service.
-    /// </summary>
-    /// <param name="httpContext">Current <see cref="HttpContext"/> to get the service from.</param>
-    public static ICartManager GetCartManager(this HttpContext httpContext)
-    {
-      return httpContext.RequestServices.GetService<ICartManager>();
-    }
+    return httpContext.RequestServices.GetService<ICartManager>();
   }
 }

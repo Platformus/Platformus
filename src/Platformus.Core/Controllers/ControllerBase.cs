@@ -4,20 +4,19 @@
 using Magicalizer.Data.Repositories.Abstractions;
 using Microsoft.AspNetCore.Mvc;
 
-namespace Platformus.Core.Controllers
+namespace Platformus.Core.Controllers;
+
+public abstract class ControllerBase : Controller
 {
-  public abstract class ControllerBase : Controller
+  public IStorage Storage { get; }
+
+  public ControllerBase(IStorage storage)
   {
-    public IStorage Storage { get; }
+    this.Storage = storage;
+  }
 
-    public ControllerBase(IStorage storage)
-    {
-      this.Storage = storage;
-    }
-
-    protected RedirectResult CreateRedirectToSelfResult()
-    {
-      return this.Redirect(this.Request.Path.Value + this.Request.QueryString.Value);
-    }
+  protected RedirectResult CreateRedirectToSelfResult()
+  {
+    return this.Redirect(this.Request.Path.Value + this.Request.QueryString.Value);
   }
 }

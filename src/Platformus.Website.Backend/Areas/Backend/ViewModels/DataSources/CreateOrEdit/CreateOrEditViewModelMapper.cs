@@ -4,19 +4,18 @@
 using Platformus.Website.Data.Entities;
 using Platformus.Website.Filters;
 
-namespace Platformus.Website.Backend.ViewModels.DataSources
-{
-  public static class CreateOrEditViewModelMapper
-  {
-    public static DataSource Map(DataSourceFilter filter, DataSource dataSource, CreateOrEditViewModel createOrEdit)
-    {
-      if (dataSource.Id == 0)
-        dataSource.EndpointId = (int)filter.Endpoint.Id;
+namespace Platformus.Website.Backend.ViewModels.DataSources;
 
-      dataSource.Code = createOrEdit.Code;
-      dataSource.DataProviderCSharpClassName = createOrEdit.DataProviderCSharpClassName;
-      dataSource.DataProviderParameters = createOrEdit.DataProviderParameters;
-      return dataSource;
-    }
+public static class CreateOrEditViewModelMapper
+{
+  public static DataSource Map(DataSourceFilter filter, DataSource dataSource, CreateOrEditViewModel createOrEdit)
+  {
+    if (dataSource.Id == 0)
+      dataSource.EndpointId = (int)filter.Endpoint.Id;
+
+    dataSource.Code = createOrEdit.Code;
+    dataSource.DataProviderCSharpClassName = createOrEdit.DataProviderCSharpClassName;
+    dataSource.DataProviderParameters = createOrEdit.DataProviderParameters;
+    return dataSource;
   }
 }

@@ -3,10 +3,9 @@
 
 using Platformus.Core.Frontend.ViewModels;
 
-namespace Platformus.Website.Frontend.ViewModels.Shared
+namespace Platformus.Website.Frontend.ViewModels.Shared;
+
+public class FieldOptionViewModel : ViewModelBase
 {
-  public class FieldOptionViewModel : ViewModelBase
-  {
-    public string Value { get; set; }
-  }
+  public string Value { get; set; }
 }

@@ -3,24 +3,23 @@
 
 using Platformus.ECommerce.Data.Entities;
 
-namespace Platformus.ECommerce.Backend.ViewModels.Shared
+namespace Platformus.ECommerce.Backend.ViewModels.Shared;
+
+public static class OrderViewModelFactory
 {
-  public static class OrderViewModelFactory
+  public static OrderViewModel Create(Order order)
   {
-    public static OrderViewModel Create(Order order)
+    return new OrderViewModel()
     {
-      return new OrderViewModel()
-      {
-        Id = order.Id,
-        OrderState = OrderStateViewModelFactory.Create(order.OrderState),
-        DeliveryMethod = DeliveryMethodViewModelFactory.Create(order.DeliveryMethod),
-        PaymentMethod = PaymentMethodViewModelFactory.Create(order.PaymentMethod),
-        CustomerFirstName = order.CustomerFirstName,
-        CustomerLastName = order.CustomerLastName,
-        CustomerPhone = order.CustomerPhone,
-        Total = order.GetTotal(),
-        Created = order.Created
-      };
-    }
+      Id = order.Id,
+      OrderState = OrderStateViewModelFactory.Create(order.OrderState),
+      DeliveryMethod = DeliveryMethodViewModelFactory.Create(order.DeliveryMethod),
+      PaymentMethod = PaymentMethodViewModelFactory.Create(order.PaymentMethod),
+      CustomerFirstName = order.CustomerFirstName,
+      CustomerLastName = order.CustomerLastName,
+      CustomerPhone = order.CustomerPhone,
+      Total = order.GetTotal(),
+      Created = order.Created
+    };
   }
 }

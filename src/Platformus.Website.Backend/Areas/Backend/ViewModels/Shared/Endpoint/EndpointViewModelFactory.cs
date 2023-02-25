@@ -3,19 +3,18 @@
 
 using Platformus.Website.Data.Entities;
 
-namespace Platformus.Website.Backend.ViewModels.Shared
+namespace Platformus.Website.Backend.ViewModels.Shared;
+
+public static class EndpointViewModelFactory
 {
-  public static class EndpointViewModelFactory
+  public static EndpointViewModel Create(Endpoint endpoint)
   {
-    public static EndpointViewModel Create(Endpoint endpoint)
+    return new EndpointViewModel()
     {
-      return new EndpointViewModel()
-      {
-        Id = endpoint.Id,
-        Name = endpoint.Name,
-        UrlTemplate = endpoint.UrlTemplate,
-        Position = endpoint.Position
-      };
-    }
+      Id = endpoint.Id,
+      Name = endpoint.Name,
+      UrlTemplate = endpoint.UrlTemplate,
+      Position = endpoint.Position
+    };
   }
 }

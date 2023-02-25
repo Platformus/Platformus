@@ -4,13 +4,12 @@
 using System.Collections.Generic;
 using Platformus.Core.Frontend.ViewModels;
 
-namespace Platformus.Website.Frontend.ViewModels.Shared
+namespace Platformus.Website.Frontend.ViewModels.Shared;
+
+public class MenuItemViewModel : ViewModelBase
 {
-  public class MenuItemViewModel : ViewModelBase
-  {
-    public string Name { get; set; }
-    public string Url { get; set; }
-    public IEnumerable<MenuItemViewModel> MenuItems { get; set; }
-    public int Level { get; set; }
-  }
+  public string Name { get; set; }
+  public string Url { get; set; }
+  public IEnumerable<MenuItemViewModel> MenuItems { get; set; }
+  public int Level { get; set; }
 }

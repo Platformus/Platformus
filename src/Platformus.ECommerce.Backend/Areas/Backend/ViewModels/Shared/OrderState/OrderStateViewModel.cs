@@ -3,12 +3,11 @@
 
 using Platformus.Core.Backend.ViewModels;
 
-namespace Platformus.ECommerce.Backend.ViewModels.Shared
+namespace Platformus.ECommerce.Backend.ViewModels.Shared;
+
+public class OrderStateViewModel : ViewModelBase
 {
-  public class OrderStateViewModel : ViewModelBase
-  {
-    public int Id { get; set; }
-    public string Name { get; set; }
-    public int? Position { get; set; }
-  }
+  public int Id { get; set; }
+  public string Name { get; set; }
+  public int? Position { get; set; }
 }

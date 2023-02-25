@@ -5,16 +5,15 @@ using System;
 using ExtCore.Infrastructure.Actions;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace Platformus.Core.Actions
-{
-  public class AddCacheAction : IConfigureServicesAction
-  {
-    public int Priority => 1000;
+namespace Platformus.Core.Actions;
 
-    public void Execute(IServiceCollection services, IServiceProvider serviceProvider)
-    {
-      services.AddMemoryCache();
-      services.AddSingleton(typeof(ICache), typeof(DefaultCache));
-    }
+public class AddCacheAction : IConfigureServicesAction
+{
+  public int Priority => 1000;
+
+  public void Execute(IServiceCollection services, IServiceProvider serviceProvider)
+  {
+    services.AddMemoryCache();
+    services.AddSingleton(typeof(ICache), typeof(DefaultCache));
   }
 }

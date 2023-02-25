@@ -5,17 +5,16 @@ using System.Collections.Generic;
 using System.Linq;
 using Platformus.Website.Data.Entities;
 
-namespace Platformus.Website.Backend.ViewModels.Shared
+namespace Platformus.Website.Backend.ViewModels.Shared;
+
+public static class RelationSetViewModelFactory
 {
-  public static class RelationSetViewModelFactory
+  public static RelationSetViewModel Create(Member member, IEnumerable<Relation> relations)
   {
-    public static RelationSetViewModel Create(Member member, IEnumerable<Relation> relations)
+    return new RelationSetViewModel()
     {
-      return new RelationSetViewModel()
-      {
-        Member = MemberViewModelFactory.Create(member),
-        PrimaryIds = relations.Select(r => r.PrimaryId).ToList()
-      };
-    }
+      Member = MemberViewModelFactory.Create(member),
+      PrimaryIds = relations.Select(r => r.PrimaryId).ToList()
+    };
   }
 }

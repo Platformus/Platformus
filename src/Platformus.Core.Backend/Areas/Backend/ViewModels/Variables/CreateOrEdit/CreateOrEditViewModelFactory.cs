@@ -3,25 +3,24 @@
 
 using Platformus.Core.Data.Entities;
 
-namespace Platformus.Core.Backend.ViewModels.Variables
-{
-  public static class CreateOrEditViewModelFactory
-  {
-    public static CreateOrEditViewModel Create(Variable variable)
-    {
-      if (variable == null)
-        return new CreateOrEditViewModel()
-        {
-        };
+namespace Platformus.Core.Backend.ViewModels.Variables;
 
+public static class CreateOrEditViewModelFactory
+{
+  public static CreateOrEditViewModel Create(Variable variable)
+  {
+    if (variable == null)
       return new CreateOrEditViewModel()
       {
-        Id = variable.Id,
-        Code = variable.Code,
-        Name = variable.Name,
-        Value = variable.Value,
-        Position = variable.Position
       };
-    }
+
+    return new CreateOrEditViewModel()
+    {
+      Id = variable.Id,
+      Code = variable.Code,
+      Name = variable.Name,
+      Value = variable.Value,
+      Position = variable.Position
+    };
   }
 }

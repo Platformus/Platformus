@@ -3,11 +3,10 @@
 
 using Platformus.Core.Frontend.ViewModels;
 
-namespace Platformus.ECommerce.Frontend.ViewModels.Shared
+namespace Platformus.ECommerce.Frontend.ViewModels.Shared;
+
+public class PaymentMethodViewModel : ViewModelBase
 {
-  public class PaymentMethodViewModel : ViewModelBase
-  {
-    public int Id { get; set; }
-    public string Name { get; set; }
-  }
+  public int Id { get; set; }
+  public string Name { get; set; }
 }

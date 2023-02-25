@@ -6,16 +6,15 @@ using System.Linq;
 using Platformus.Website.Backend.ViewModels.Shared;
 using Platformus.Website.Data.Entities;
 
-namespace Platformus.Website.Backend.ViewModels.Forms
+namespace Platformus.Website.Backend.ViewModels.Forms;
+
+public static class IndexViewModelFactory
 {
-  public static class IndexViewModelFactory
+  public static IndexViewModel Create(IEnumerable<Form> forms)
   {
-    public static IndexViewModel Create(IEnumerable<Form> forms)
+    return new IndexViewModel()
     {
-      return new IndexViewModel()
-      {
-        Forms = forms.Select(FormViewModelFactory.Create).ToList()
-      };
-    }
+      Forms = forms.Select(FormViewModelFactory.Create).ToList()
+    };
   }
 }

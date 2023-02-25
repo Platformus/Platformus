@@ -4,12 +4,11 @@
 using System.Collections.Generic;
 using Platformus.Core.Frontend.ViewModels;
 
-namespace Platformus.ECommerce.Frontend.ViewModels.Shared
+namespace Platformus.ECommerce.Frontend.ViewModels.Shared;
+
+public class PositionsViewModel : ViewModelBase
 {
-  public class PositionsViewModel : ViewModelBase
-  {
-    public IEnumerable<PositionViewModel> Positions { get; set; }
-    public string PartialViewName { get; set; }
-    public string AdditionalCssClass { get; set; }
-  }
+  public IEnumerable<PositionViewModel> Positions { get; set; }
+  public string PartialViewName { get; set; }
+  public string AdditionalCssClass { get; set; }
 }

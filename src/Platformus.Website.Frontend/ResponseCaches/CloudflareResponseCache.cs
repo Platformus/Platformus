@@ -13,35 +13,34 @@ using Newtonsoft.Json;
 using Platformus.Core.Parameters;
 using Platformus.Website.ResponseCaches;
 
-namespace Platformus.Website.Frontend
+namespace Platformus.Website.Frontend;
+
+public class CloudflareResponseCache : IResponseCache
 {
-  public class CloudflareResponseCache : IResponseCache
+  public string Description => "Caches responses on the Cloudflare side.";
+  public IEnumerable<ParameterGroup> ParameterGroups => new ParameterGroup[] { };
+
+  public async Task<byte[]> GetWithDefaultValueAsync(HttpContext httpContext, Func<Task<byte[]>> defaultValueFunc)
   {
-    public string Description => "Caches responses on the Cloudflare side.";
-    public IEnumerable<ParameterGroup> ParameterGroups => new ParameterGroup[] { };
+    return await defaultValueFunc();
+  }
 
-    public async Task<byte[]> GetWithDefaultValueAsync(HttpContext httpContext, Func<Task<byte[]>> defaultValueFunc)
+  public async Task RemoveAllAsync(HttpContext httpContext)
+  {
+    CloudflareOptions options = httpContext.RequestServices.GetService<IOptions<CloudflareOptions>>()?.Value;
+
+    if (options == null)
+      return;
+
+    using (HttpClient httpClient = new HttpClient())
     {
-      return await defaultValueFunc();
-    }
+      httpClient.DefaultRequestHeaders.Add("X-Auth-Email", options.Email);
+      httpClient.DefaultRequestHeaders.Add("X-Auth-Key", options.Key);
 
-    public async Task RemoveAllAsync(HttpContext httpContext)
-    {
-      CloudflareOptions options = httpContext.RequestServices.GetService<IOptions<CloudflareOptions>>()?.Value;
+      string purgeEverything = JsonConvert.SerializeObject(new { purge_everything = true });
 
-      if (options == null)
-        return;
-
-      using (HttpClient httpClient = new HttpClient())
-      {
-        httpClient.DefaultRequestHeaders.Add("X-Auth-Email", options.Email);
-        httpClient.DefaultRequestHeaders.Add("X-Auth-Key", options.Key);
-
-        string purgeEverything = JsonConvert.SerializeObject(new { purge_everything = true });
-
-        using (HttpContent httpContent = new StringContent(purgeEverything, Encoding.UTF8, "application/json"))
-          await httpClient.PostAsync($"https://api.cloudflare.com/client/v4/zones/{options.ZoneKey}/purge_cache", httpContent);
-      }
+      using (HttpContent httpContent = new StringContent(purgeEverything, Encoding.UTF8, "application/json"))
+        await httpClient.PostAsync($"https://api.cloudflare.com/client/v4/zones/{options.ZoneKey}/purge_cache", httpContent);
     }
   }
 }

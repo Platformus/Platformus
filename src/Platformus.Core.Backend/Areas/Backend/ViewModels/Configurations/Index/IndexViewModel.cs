@@ -4,10 +4,9 @@
 using System.Collections.Generic;
 using Platformus.Core.Backend.ViewModels.Shared;
 
-namespace Platformus.Core.Backend.ViewModels.Configurations
+namespace Platformus.Core.Backend.ViewModels.Configurations;
+
+public class IndexViewModel : ViewModelBase
 {
-  public class IndexViewModel : ViewModelBase
-  {
-    public IEnumerable<ConfigurationViewModel> Configurations { get; set; }
-  }
+  public IEnumerable<ConfigurationViewModel> Configurations { get; set; }
 }

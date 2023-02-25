@@ -3,17 +3,16 @@
 
 using Platformus.Core.Data.Entities;
 
-namespace Platformus.Core.Backend.ViewModels.Shared
+namespace Platformus.Core.Backend.ViewModels.Shared;
+
+public static class CultureViewModelFactory
 {
-  public static class CultureViewModelFactory
+  public static CultureViewModel Create(Culture culture)
   {
-    public static CultureViewModel Create(Culture culture)
+    return new CultureViewModel()
     {
-      return new CultureViewModel()
-      {
-        Id = culture.Id,
-        Name = culture.Name
-      };
-    }
+      Id = culture.Id,
+      Name = culture.Name
+    };
   }
 }

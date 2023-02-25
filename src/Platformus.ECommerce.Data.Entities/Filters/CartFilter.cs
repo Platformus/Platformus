@@ -4,21 +4,20 @@
 using System;
 using Magicalizer.Filters.Abstractions;
 
-namespace Platformus.ECommerce.Filters
+namespace Platformus.ECommerce.Filters;
+
+public class CartFilter : IFilter
 {
-  public class CartFilter : IFilter
+  public int? Id { get; set; }
+  public Guid? ClientSideId { get; set; }
+  public DateTimeFilter Created { get; set; }
+
+  public CartFilter() { }
+
+  public CartFilter(int? id = null, Guid? clientSideId = null, DateTimeFilter created = null)
   {
-    public int? Id { get; set; }
-    public Guid? ClientSideId { get; set; }
-    public DateTimeFilter Created { get; set; }
-
-    public CartFilter() { }
-
-    public CartFilter(int? id = null, Guid? clientSideId = null, DateTimeFilter created = null)
-    {
-      Id = id;
-      ClientSideId = clientSideId;
-      Created = created;
-    }
+    Id = id;
+    ClientSideId = clientSideId;
+    Created = created;
   }
 }

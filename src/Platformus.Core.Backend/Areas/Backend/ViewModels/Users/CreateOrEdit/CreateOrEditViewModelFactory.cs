@@ -9,31 +9,30 @@ using Platformus.Core.Backend.ViewModels.Shared;
 using Platformus.Core.Data.Entities;
 using Platformus.Core.Filters;
 
-namespace Platformus.Core.Backend.ViewModels.Users
-{
-  public static class CreateOrEditViewModelFactory
-  {
-    public static async Task<CreateOrEditViewModel> CreateAsync(HttpContext httpContext, User user)
-    {
-      if (user == null)
-        return new CreateOrEditViewModel()
-        {
-          UserRoles = await GetUserRolesAsync(httpContext)
-        };
+namespace Platformus.Core.Backend.ViewModels.Users;
 
+public static class CreateOrEditViewModelFactory
+{
+  public static async Task<CreateOrEditViewModel> CreateAsync(HttpContext httpContext, User user)
+  {
+    if (user == null)
       return new CreateOrEditViewModel()
       {
-        Id = user.Id,
-        Name = user.Name,
-        UserRoles = await GetUserRolesAsync(httpContext, user)
+        UserRoles = await GetUserRolesAsync(httpContext)
       };
-    }
 
-    public static async Task<IEnumerable<UserRoleViewModel>> GetUserRolesAsync(HttpContext httpContext, User user = null)
+    return new CreateOrEditViewModel()
     {
-      return (await httpContext.GetStorage().GetRepository<int, Role, RoleFilter>().GetAllAsync()).Select(
-        r => UserRoleViewModelFactory.Create(r, user != null && user.UserRoles.Any(ur => ur.RoleId == r.Id))
-      ).ToList();
-    }
+      Id = user.Id,
+      Name = user.Name,
+      UserRoles = await GetUserRolesAsync(httpContext, user)
+    };
+  }
+
+  public static async Task<IEnumerable<UserRoleViewModel>> GetUserRolesAsync(HttpContext httpContext, User user = null)
+  {
+    return (await httpContext.GetStorage().GetRepository<int, Role, RoleFilter>().GetAllAsync()).Select(
+      r => UserRoleViewModelFactory.Create(r, user != null && user.UserRoles.Any(ur => ur.RoleId == r.Id))
+    ).ToList();
   }
 }

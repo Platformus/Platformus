@@ -6,16 +6,15 @@ using System.Linq;
 using Platformus.Website.Backend.ViewModels.Shared;
 using Platformus.Website.Data.Entities;
 
-namespace Platformus.Website.Backend.ViewModels.Menus
+namespace Platformus.Website.Backend.ViewModels.Menus;
+
+public static class IndexViewModelFactory
 {
-  public static class IndexViewModelFactory
+  public static IndexViewModel Create(IEnumerable<Menu> menus)
   {
-    public static IndexViewModel Create(IEnumerable<Menu> menus)
+    return new IndexViewModel()
     {
-      return new IndexViewModel()
-      {
-        Menus = menus.Select(MenuViewModelFactory.Create).ToList()
-      };
-    }
+      Menus = menus.Select(MenuViewModelFactory.Create).ToList()
+    };
   }
 }

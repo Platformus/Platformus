@@ -3,17 +3,16 @@
 
 using Platformus.ECommerce.Data.Entities;
 
-namespace Platformus.ECommerce.Backend.ViewModels.Products
+namespace Platformus.ECommerce.Backend.ViewModels.Products;
+
+public static class CreateOrEditViewModelMapper
 {
-  public static class CreateOrEditViewModelMapper
+  public static Product Map(Product product, CreateOrEditViewModel createOrEdit)
   {
-    public static Product Map(Product product, CreateOrEditViewModel createOrEdit)
-    {
-      product.CategoryId = createOrEdit.CategoryId;
-      product.Url = createOrEdit.Url;
-      product.Code = createOrEdit.Code;
-      product.Price = createOrEdit.Price;
-      return product;
-    }
+    product.CategoryId = createOrEdit.CategoryId;
+    product.Url = createOrEdit.Url;
+    product.Code = createOrEdit.Code;
+    product.Price = createOrEdit.Price;
+    return product;
   }
 }

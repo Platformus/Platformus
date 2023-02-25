@@ -5,22 +5,21 @@ using System;
 using System.Linq;
 using Platformus.Website.Data.Entities;
 
-namespace Platformus.Website.Backend.ViewModels.Shared
+namespace Platformus.Website.Backend.ViewModels.Shared;
+
+public static class MenuViewModelFactory
 {
-  public static class MenuViewModelFactory
+  public static MenuViewModel Create(Menu menu)
   {
-    public static MenuViewModel Create(Menu menu)
+    return new MenuViewModel()
     {
-      return new MenuViewModel()
-      {
-        Id = menu.Id,
-        Name = menu.Name.GetLocalizationValue(),
-        MenuItems = menu.MenuItems == null ?
-          Array.Empty<MenuItemViewModel>() :
-          menu.MenuItems
-            .OrderBy(mi => mi.Position)
-            .Select(MenuItemViewModelFactory.Create).ToList()
-      };
-    }
+      Id = menu.Id,
+      Name = menu.Name.GetLocalizationValue(),
+      MenuItems = menu.MenuItems == null ?
+        Array.Empty<MenuItemViewModel>() :
+        menu.MenuItems
+          .OrderBy(mi => mi.Position)
+          .Select(MenuItemViewModelFactory.Create).ToList()
+    };
   }
 }

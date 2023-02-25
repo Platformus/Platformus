@@ -6,15 +6,14 @@ using ExtCore.Infrastructure.Actions;
 using Microsoft.AspNetCore.Builder;
 using Platformus.Website.Frontend.Middleware;
 
-namespace Platformus.Website.Frontend.Actions
-{
-  public class UseWebsiteMiddlewareConfigureAction : IConfigureAction
-  {
-    public int Priority => 1000;
+namespace Platformus.Website.Frontend.Actions;
 
-    public void Execute(IApplicationBuilder applicationBuilder, IServiceProvider serviceProvider)
-    {
-      applicationBuilder.UseMiddleware<WebsiteMiddleware>();
-    }
+public class UseWebsiteMiddlewareConfigureAction : IConfigureAction
+{
+  public int Priority => 1000;
+
+  public void Execute(IApplicationBuilder applicationBuilder, IServiceProvider serviceProvider)
+  {
+    applicationBuilder.UseMiddleware<WebsiteMiddleware>();
   }
 }

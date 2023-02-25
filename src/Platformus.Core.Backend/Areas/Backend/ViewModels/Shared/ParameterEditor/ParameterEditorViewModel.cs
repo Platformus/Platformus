@@ -4,11 +4,10 @@
 using System.Collections.Generic;
 using Platformus.Core.Parameters;
 
-namespace Platformus.Core.Backend.ViewModels.Shared
+namespace Platformus.Core.Backend.ViewModels.Shared;
+
+public class ParameterEditorViewModel : ViewModelBase
 {
-  public class ParameterEditorViewModel : ViewModelBase
-  {
-    public string Description { get; set; }
-    public IEnumerable<ParameterGroup> ParameterGroups { get; set; }
-  }
+  public string Description { get; set; }
+  public IEnumerable<ParameterGroup> ParameterGroups { get; set; }
 }

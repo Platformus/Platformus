@@ -5,11 +5,10 @@ using System.Collections.Generic;
 using Platformus.Core.Backend.ViewModels;
 using Platformus.ECommerce.Backend.ViewModels.Shared;
 
-namespace Platformus.ECommerce.Backend.ViewModels.ECommerce
+namespace Platformus.ECommerce.Backend.ViewModels.ECommerce;
+
+public class CategorySelectorFormViewModel : ViewModelBase
 {
-  public class CategorySelectorFormViewModel : ViewModelBase
-  {
-    public IEnumerable<CategoryViewModel> Categories { get; set; }
-    public int? CategoryId { get; set; }
-  }
+  public IEnumerable<CategoryViewModel> Categories { get; set; }
+  public int? CategoryId { get; set; }
 }

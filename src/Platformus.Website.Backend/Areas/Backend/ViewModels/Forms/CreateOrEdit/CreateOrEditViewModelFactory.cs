@@ -10,38 +10,37 @@ using Platformus.Core.Primitives;
 using Platformus.Website.Data.Entities;
 using Platformus.Website.FormHandlers;
 
-namespace Platformus.Website.Backend.ViewModels.Forms
-{
-  public static class CreateOrEditViewModelFactory
-  {
-    public static CreateOrEditViewModel Create(HttpContext httpContext, Form form)
-    {
-      if (form == null)
-        return new CreateOrEditViewModel()
-        {
-          NameLocalizations = httpContext.GetLocalizations(),
-          SubmitButtonTitleLocalizations = httpContext.GetLocalizations(),
-          FormHandlerCSharpClassNameOptions = GetFormHandlerCSharpClassNameOptions()
-        };
+namespace Platformus.Website.Backend.ViewModels.Forms;
 
+public static class CreateOrEditViewModelFactory
+{
+  public static CreateOrEditViewModel Create(HttpContext httpContext, Form form)
+  {
+    if (form == null)
       return new CreateOrEditViewModel()
       {
-        Id = form.Id,
-        Code = form.Code,
-        NameLocalizations = httpContext.GetLocalizations(form.Name),
-        SubmitButtonTitleLocalizations = httpContext.GetLocalizations(form.SubmitButtonTitle),
-        ProduceCompletedForms = form.ProduceCompletedForms,
-        FormHandlerCSharpClassName = form.FormHandlerCSharpClassName,
-        FormHandlerCSharpClassNameOptions = GetFormHandlerCSharpClassNameOptions(),
-        FormHandlerParameters = form.FormHandlerParameters
+        NameLocalizations = httpContext.GetLocalizations(),
+        SubmitButtonTitleLocalizations = httpContext.GetLocalizations(),
+        FormHandlerCSharpClassNameOptions = GetFormHandlerCSharpClassNameOptions()
       };
-    }
 
-    private static IEnumerable<Option> GetFormHandlerCSharpClassNameOptions()
+    return new CreateOrEditViewModel()
     {
-      return ExtensionManager.GetImplementations<IFormHandler>().Where(t => !t.GetTypeInfo().IsAbstract).Select(
-        t => new Option(t.FullName)
-      ).ToList();
-    }
+      Id = form.Id,
+      Code = form.Code,
+      NameLocalizations = httpContext.GetLocalizations(form.Name),
+      SubmitButtonTitleLocalizations = httpContext.GetLocalizations(form.SubmitButtonTitle),
+      ProduceCompletedForms = form.ProduceCompletedForms,
+      FormHandlerCSharpClassName = form.FormHandlerCSharpClassName,
+      FormHandlerCSharpClassNameOptions = GetFormHandlerCSharpClassNameOptions(),
+      FormHandlerParameters = form.FormHandlerParameters
+    };
+  }
+
+  private static IEnumerable<Option> GetFormHandlerCSharpClassNameOptions()
+  {
+    return ExtensionManager.GetImplementations<IFormHandler>().Where(t => !t.GetTypeInfo().IsAbstract).Select(
+      t => new Option(t.FullName)
+    ).ToList();
   }
 }

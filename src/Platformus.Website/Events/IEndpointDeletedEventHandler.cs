@@ -4,12 +4,11 @@
 using ExtCore.Events;
 using Microsoft.AspNetCore.Http;
 
-namespace Platformus.Website.Events
+namespace Platformus.Website.Events;
+
+/// <summary>
+/// Describes an event handler that will be automatically executed just after a <see cref="Data.Entities.Endpoint"/> is deleted.
+/// </summary>
+public interface IEndpointDeletedEventHandler : IEventHandler<HttpContext, Data.Entities.Endpoint>
 {
-  /// <summary>
-  /// Describes an event handler that will be automatically executed just after a <see cref="Data.Entities.Endpoint"/> is deleted.
-  /// </summary>
-  public interface IEndpointDeletedEventHandler : IEventHandler<HttpContext, Data.Entities.Endpoint>
-  {
-  }
 }

@@ -7,30 +7,29 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Localization;
 using Platformus.Core.Services.Abstractions;
 
-namespace Platformus.Core.Frontend
+namespace Platformus.Core.Frontend;
+
+public class RouteValueRequestCultureProvider : RequestCultureProvider
 {
-  public class RouteValueRequestCultureProvider : RequestCultureProvider
+  public override async Task<ProviderCultureResult> DetermineProviderCultureResult(HttpContext httpContext)
   {
-    public override async Task<ProviderCultureResult> DetermineProviderCultureResult(HttpContext httpContext)
-    {      
-      string url = httpContext.Request.Path;
+    string url = httpContext.Request.Path;
 
-      if (url.Length >= 4 && url[0] == '/' && url[3] == '/')
-      {
-        string cultureId = httpContext.Request.Path.Value.Substring(1, 2);
-
-        if (await this.CheckCultureAsync(httpContext, cultureId))
-          return new ProviderCultureResult(cultureId);
-      }
-
-      return null;
-    }
-
-    private async Task<bool> CheckCultureAsync(HttpContext httpContext, string cultureId)
+    if (url.Length >= 4 && url[0] == '/' && url[3] == '/')
     {
-      ICultureManager cultureManager = httpContext.GetCultureManager();
+      string cultureId = httpContext.Request.Path.Value.Substring(1, 2);
 
-      return (await cultureManager.GetNotNeutralCulturesAsync()).Any(c => c.Id == cultureId);
+      if (await this.CheckCultureAsync(httpContext, cultureId))
+        return new ProviderCultureResult(cultureId);
     }
+
+    return null;
+  }
+
+  private async Task<bool> CheckCultureAsync(HttpContext httpContext, string cultureId)
+  {
+    ICultureManager cultureManager = httpContext.GetCultureManager();
+
+    return (await cultureManager.GetNotNeutralCulturesAsync()).Any(c => c.Id == cultureId);
   }
 }

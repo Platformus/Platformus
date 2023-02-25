@@ -3,13 +3,12 @@
 
 using System.ComponentModel.DataAnnotations;
 
-namespace Platformus.Core.Backend.ViewModels.Account
+namespace Platformus.Core.Backend.ViewModels.Account;
+
+public class ResetPasswordViewModel : ViewModelBase
 {
-  public class ResetPasswordViewModel : ViewModelBase
-  {
-    [Display(Name = "Email")]
-    [Required]
-    [StringLength(64)]
-    public string Email { get; set; }
-  }
+  [Display(Name = "Email")]
+  [Required]
+  [StringLength(64)]
+  public string Email { get; set; }
 }

@@ -5,20 +5,19 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Platformus.Core.Backend.Metadata.Providers;
 
-namespace Platformus.Core.Backend.ViewComponents
+namespace Platformus.Core.Backend.ViewComponents;
+
+public class BackendScriptsViewComponent : ViewComponent
 {
-  public class BackendScriptsViewComponent : ViewComponent
+  private IScriptsProvider scriptsProvider;
+
+  public BackendScriptsViewComponent(IScriptsProvider scriptsProvider)
   {
-    private IScriptsProvider scriptsProvider;
+    this.scriptsProvider = scriptsProvider;
+  }
 
-    public BackendScriptsViewComponent(IScriptsProvider scriptsProvider)
-    {
-      this.scriptsProvider = scriptsProvider;
-    }
-
-    public async Task<IViewComponentResult> InvokeAsync()
-    {
-      return this.View(this.scriptsProvider.GetScripts(this.HttpContext));
-    }
+  public async Task<IViewComponentResult> InvokeAsync()
+  {
+    return this.View(this.scriptsProvider.GetScripts(this.HttpContext));
   }
 }

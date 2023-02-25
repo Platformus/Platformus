@@ -6,17 +6,16 @@ using System.Collections.Generic;
 using Platformus.Core.Backend.ViewModels;
 using Platformus.Core.Primitives;
 
-namespace Platformus.Website.Backend.ViewModels.Shared
+namespace Platformus.Website.Backend.ViewModels.Shared;
+
+public class PropertyViewModel : ViewModelBase
 {
-  public class PropertyViewModel : ViewModelBase
-  {
-    public int Id { get; set; }
-    public MemberViewModel Member { get; set; }
-    public object Value { get; set; }
-    public int? IntegerValue { get; set; }
-    public decimal? DecimalValue { get; set; }
-    public Localization NeutralStringValue { get; set; }
-    public IEnumerable<Localization> LocalizedStringValues { get; set; }
-    public DateTime? DateTimeValue { get; set; }
-  }
+  public int Id { get; set; }
+  public MemberViewModel Member { get; set; }
+  public object Value { get; set; }
+  public int? IntegerValue { get; set; }
+  public decimal? DecimalValue { get; set; }
+  public Localization NeutralStringValue { get; set; }
+  public IEnumerable<Localization> LocalizedStringValues { get; set; }
+  public DateTime? DateTimeValue { get; set; }
 }

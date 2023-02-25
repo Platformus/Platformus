@@ -5,16 +5,15 @@ using Microsoft.AspNetCore.Http;
 using Platformus.Website.Data.Entities;
 using Platformus.Website.Events;
 
-namespace Platformus.Website.EventHandlers
-{
-  public class MenuDeletedEventHandler : IMenuDeletedEventHandler
-  {
-    public int Priority => 1000;
+namespace Platformus.Website.EventHandlers;
 
-    public void HandleEvent(HttpContext httpContext, Menu menu)
-    {
-      httpContext.GetCache().RemoveMenus();
-      ResponseCacheManager.RemoveAll(httpContext);
-    }
+public class MenuDeletedEventHandler : IMenuDeletedEventHandler
+{
+  public int Priority => 1000;
+
+  public void HandleEvent(HttpContext httpContext, Menu menu)
+  {
+    httpContext.GetCache().RemoveMenus();
+    ResponseCacheManager.RemoveAll(httpContext);
   }
 }

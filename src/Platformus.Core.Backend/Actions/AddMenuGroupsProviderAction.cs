@@ -6,15 +6,14 @@ using ExtCore.Infrastructure.Actions;
 using Microsoft.Extensions.DependencyInjection;
 using Platformus.Core.Backend.Metadata.Providers;
 
-namespace Platformus.Core.Backend.Actions
-{
-  public class AddMenuGroupsProviderAction : IConfigureServicesAction
-  {
-    public int Priority => 1000;
+namespace Platformus.Core.Backend.Actions;
 
-    public void Execute(IServiceCollection services, IServiceProvider serviceProvider)
-    {
-      services.AddSingleton(typeof(IMenuGroupsProvider), typeof(DefaultMenuGroupsProvider));
-    }
+public class AddMenuGroupsProviderAction : IConfigureServicesAction
+{
+  public int Priority => 1000;
+
+  public void Execute(IServiceCollection services, IServiceProvider serviceProvider)
+  {
+    services.AddSingleton(typeof(IMenuGroupsProvider), typeof(DefaultMenuGroupsProvider));
   }
 }

@@ -9,81 +9,80 @@ using Microsoft.AspNetCore.Mvc.ViewFeatures;
 using Microsoft.AspNetCore.Razor.TagHelpers;
 using Platformus.Core.Primitives;
 
-namespace Platformus.Core.Backend
+namespace Platformus.Core.Backend;
+
+public abstract class TagHelperBase<T> : TagHelper
 {
-  public abstract class TagHelperBase<T> : TagHelper
+  [HtmlAttributeNotBound]
+  [ViewContext]
+  public ViewContext ViewContext { get; set; }
+  public string Class { get; set; }
+  public ModelExpression For { get; set; }
+  public T Value { get; set; }
+  public string Id { get; set; }
+  public string Label { get; set; }
+  public bool Disabled { get; set; }
+  public bool Required { get; set; }
+
+  [HtmlAttributeName(AttributeNames.OnChange)]
+  public string OnChange { get; set; }
+
+  protected string GetValue(Localization localization = null)
   {
-    [HtmlAttributeNotBound]
-    [ViewContext]
-    public ViewContext ViewContext { get; set; }
-    public string Class { get; set; }
-    public ModelExpression For { get; set; }
-    public T Value { get; set; }
-    public string Id { get; set; }
-    public string Label { get; set; }
-    public bool Disabled { get; set; }
-    public bool Required { get; set; }
+    if (this.ViewContext.ModelState.TryGetValue(this.GetIdentity(localization), out ModelStateEntry modelState))
+      if (modelState.AttemptedValue != null)
+        return modelState.AttemptedValue;
 
-    [HtmlAttributeName(AttributeNames.OnChange)]
-    public string OnChange { get; set; }
+    if (localization != null)
+      return localization.Value;
 
-    protected string GetValue(Localization localization = null)
-    {
-      if (this.ViewContext.ModelState.TryGetValue(this.GetIdentity(localization), out ModelStateEntry modelState))
-        if (modelState.AttemptedValue != null)
-          return modelState.AttemptedValue;
+    return this.FormatValue(this.For == null ? this.Value : this.For.Model);
+  }
 
-      if (localization != null)
-        return localization.Value;
+  protected virtual string FormatValue(object value)
+  {
+    return value?.ToString();
+  }
 
-      return this.FormatValue(this.For == null ? this.Value : this.For.Model);
-    }
+  protected string GetIdentity(Localization localization = null)
+  {
+    return ((this.For == null ? this.Id : this.For.Name) + localization?.Culture.Id).ToCamelCase();
+  }
 
-    protected virtual string FormatValue(object value)
-    {
-      return value?.ToString();
-    }
+  protected string GetLabel()
+  {
+    return this.For == null ? this.Label : this.For.GetLabel();
+  }
 
-    protected string GetIdentity(Localization localization = null)
-    {
-      return ((this.For == null ? this.Id : this.For.Name) + localization?.Culture.Id).ToCamelCase();
-    }
+  protected bool IsDisabled()
+  {
+    return this.Disabled;
+  }
 
-    protected string GetLabel()
-    {
-      return this.For == null ? this.Label : this.For.GetLabel();
-    }
+  protected bool IsRequired()
+  {
+    return this.For == null ? this.Required : this.For.HasRequiredAttribute();
+  }
 
-    protected bool IsDisabled()
-    {
-      return this.Disabled;
-    }
+  protected bool IsValid(Localization localization = null)
+  {
+    if (this.ViewContext.ModelState.TryGetValue(this.GetIdentity(localization), out ModelStateEntry modelState))
+      return modelState.ValidationState != ModelValidationState.Invalid;
 
-    protected bool IsRequired()
-    {
-      return this.For == null ? this.Required : this.For.HasRequiredAttribute();
-    }
+    return true;
+  }
 
-    protected bool IsValid(Localization localization = null)
-    {
-      if (this.ViewContext.ModelState.TryGetValue(this.GetIdentity(localization), out ModelStateEntry modelState))
-        return modelState.ValidationState != ModelValidationState.Invalid;
+  protected IEnumerable<string> GetValidationErrors(Localization localization = null)
+  {
+    if (this.ViewContext.ModelState.TryGetValue(this.GetIdentity(localization), out ModelStateEntry modelState))
+      if (modelState.ValidationState == ModelValidationState.Invalid)
+        return modelState.Errors.Select(e => e.ErrorMessage);
 
-      return true;
-    }
+    return null;
+  }
 
-    protected IEnumerable<string> GetValidationErrors(Localization localization = null)
-    {
-      if (this.ViewContext.ModelState.TryGetValue(this.GetIdentity(localization), out ModelStateEntry modelState))
-        if (modelState.ValidationState == ModelValidationState.Invalid)
-          return modelState.Errors.Select(e => e.ErrorMessage);
-
-      return null;
-    }
-
-    protected virtual Validation GetValidation()
-    {
-      return ValidationFactory.Create(this.ViewContext, isRequired: this.IsRequired(), isValid: this.IsValid());
-    }
+  protected virtual Validation GetValidation()
+  {
+    return ValidationFactory.Create(this.ViewContext, isRequired: this.IsRequired(), isValid: this.IsValid());
   }
 }

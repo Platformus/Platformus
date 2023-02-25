@@ -6,16 +6,15 @@ using System.Linq;
 using Platformus.Website.Backend.ViewModels.Shared;
 using Platformus.Website.Data.Entities;
 
-namespace Platformus.Website.Backend.ViewModels.Website
+namespace Platformus.Website.Backend.ViewModels.Website;
+
+public static class FileSelectorFormViewModelFactory
 {
-  public static class FileSelectorFormViewModelFactory
+  public static FileSelectorFormViewModel Create(IEnumerable<File> files)
   {
-    public static FileSelectorFormViewModel Create(IEnumerable<File> files)
+    return new FileSelectorFormViewModel()
     {
-      return new FileSelectorFormViewModel()
-      {
-        Files = files.Select(FileViewModelFactory.Create).ToList()
-      };
-    }
+      Files = files.Select(FileViewModelFactory.Create).ToList()
+    };
   }
 }

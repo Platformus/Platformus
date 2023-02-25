@@ -5,32 +5,31 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Http.Features;
 
-namespace Platformus.Core
-{
-  internal class HttpExceptionMiddleware
-  {
-    private readonly RequestDelegate next;
+namespace Platformus.Core;
 
-    public HttpExceptionMiddleware(RequestDelegate next)
+internal class HttpExceptionMiddleware
+{
+  private readonly RequestDelegate next;
+
+  public HttpExceptionMiddleware(RequestDelegate next)
+  {
+    this.next = next;
+  }
+
+  public async Task Invoke(HttpContext context)
+  {
+    try
     {
-      this.next = next;
+      await this.next.Invoke(context);
     }
 
-    public async Task Invoke(HttpContext context)
+    catch (HttpException httpException)
     {
-      try
-      {
-        await this.next.Invoke(context);
-      }
+      context.Response.StatusCode = httpException.StatusCode;
 
-      catch (HttpException httpException)
-      {
-        context.Response.StatusCode = httpException.StatusCode;
+      IHttpResponseFeature httpResponseFeature = context.Features.Get<IHttpResponseFeature>();
 
-        IHttpResponseFeature httpResponseFeature = context.Features.Get<IHttpResponseFeature>();
-
-        httpResponseFeature.ReasonPhrase = httpException.Message;
-      }
+      httpResponseFeature.ReasonPhrase = httpException.Message;
     }
   }
 }

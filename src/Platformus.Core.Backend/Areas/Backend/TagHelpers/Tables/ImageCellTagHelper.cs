@@ -4,32 +4,31 @@
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.AspNetCore.Razor.TagHelpers;
 
-namespace Platformus.Core.Backend
+namespace Platformus.Core.Backend;
+
+public class ImageCellTagHelper : TagHelper
 {
-  public class ImageCellTagHelper : TagHelper
+  public string Class { get; set; }
+  public string Url { get; set; }
+  public int Width { get; set; } = 100;
+  public int Height { get; set; } = 100;
+  public string AlternativeText { get; set; }
+
+  public override void Process(TagHelperContext context, TagHelperOutput output)
   {
-    public string Class { get; set; }
-    public string Url { get; set; }
-    public int Width { get; set; } = 100;
-    public int Height { get; set; } = 100;
-    public string AlternativeText { get; set; }
+    output.TagName = TagNames.TD;
+    output.TagMode = TagMode.StartTagAndEndTag;
+    output.Attributes.SetAttribute(AttributeNames.Class, "table__cell" + (string.IsNullOrEmpty(this.Class) ? null : $" {this.Class}"));
+    output.Content.AppendHtml(this.CreateImage());
+  }
 
-    public override void Process(TagHelperContext context, TagHelperOutput output)
-    {
-      output.TagName = TagNames.TD;
-      output.TagMode = TagMode.StartTagAndEndTag;
-      output.Attributes.SetAttribute(AttributeNames.Class, "table__cell" + (string.IsNullOrEmpty(this.Class) ? null : $" {this.Class}"));
-      output.Content.AppendHtml(this.CreateImage());
-    }
+  private TagBuilder CreateImage()
+  {
+    TagBuilder tb = new TagBuilder(TagNames.Img);
 
-    private TagBuilder CreateImage()
-    {
-      TagBuilder tb = new TagBuilder(TagNames.Img);
-
-      tb.AddCssClass("table__image");
-      tb.MergeAttribute(AttributeNames.Src, $"/img?url={this.Url}&destination.width={this.Width}&destination.height={this.Height}");
-      tb.MergeAttribute(AttributeNames.Alt, this.AlternativeText);
-      return tb;
-    }
+    tb.AddCssClass("table__image");
+    tb.MergeAttribute(AttributeNames.Src, $"/img?url={this.Url}&destination.width={this.Width}&destination.height={this.Height}");
+    tb.MergeAttribute(AttributeNames.Alt, this.AlternativeText);
+    return tb;
   }
 }

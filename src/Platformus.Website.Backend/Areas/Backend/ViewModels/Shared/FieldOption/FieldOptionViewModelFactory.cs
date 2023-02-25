@@ -3,17 +3,16 @@
 
 using Platformus.Website.Data.Entities;
 
-namespace Platformus.Website.Backend.ViewModels.Shared
+namespace Platformus.Website.Backend.ViewModels.Shared;
+
+public static class FieldOptionViewModelFactory
 {
-  public static class FieldOptionViewModelFactory
+  public static FieldOptionViewModel Create(FieldOption fieldOption)
   {
-    public static FieldOptionViewModel Create(FieldOption fieldOption)
+    return new FieldOptionViewModel()
     {
-      return new FieldOptionViewModel()
-      {
-        Id = fieldOption.Id,
-        Value = fieldOption.Value.GetLocalizationValue()
-      };
-    }
+      Id = fieldOption.Id,
+      Value = fieldOption.Value.GetLocalizationValue()
+    };
   }
 }

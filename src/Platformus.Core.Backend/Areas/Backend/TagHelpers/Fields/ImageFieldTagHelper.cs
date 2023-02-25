@@ -4,28 +4,27 @@
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.AspNetCore.Razor.TagHelpers;
 
-namespace Platformus.Core.Backend
+namespace Platformus.Core.Backend;
+
+public class ImageFieldTagHelper : FieldTagHelperBase<string>
 {
-  public class ImageFieldTagHelper : FieldTagHelperBase<string>
+  public override void Process(TagHelperContext context, TagHelperOutput output)
   {
-    public override void Process(TagHelperContext context, TagHelperOutput output)
-    {
-      if (this.For == null && string.IsNullOrEmpty(this.Id))
-        return;
+    if (this.For == null && string.IsNullOrEmpty(this.Id))
+      return;
 
-      base.Process(context, output);
-      output.Content.AppendHtml(this.CreateImageView());
-    }
+    base.Process(context, output);
+    output.Content.AppendHtml(this.CreateImageView());
+  }
 
-    private TagBuilder CreateImageView()
-    {
-      TagBuilder tb = ImageViewGenerator.Generate(
-        this.GetIdentity(),
-        this.GetValue()
-      );
+  private TagBuilder CreateImageView()
+  {
+    TagBuilder tb = ImageViewGenerator.Generate(
+      this.GetIdentity(),
+      this.GetValue()
+    );
 
-      tb.AddCssClass("field__image-view");
-      return tb;
-    }
+    tb.AddCssClass("field__image-view");
+    return tb;
   }
 }

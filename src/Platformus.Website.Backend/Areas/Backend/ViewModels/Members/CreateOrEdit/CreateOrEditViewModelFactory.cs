@@ -10,84 +10,83 @@ using Platformus.Core.Primitives;
 using Platformus.Website.Data.Entities;
 using Platformus.Website.Filters;
 
-namespace Platformus.Website.Backend.ViewModels.Members
-{
-  public static class CreateOrEditViewModelFactory
-  {
-    public static async Task<CreateOrEditViewModel> CreateAsync(HttpContext httpContext, MemberFilter filter, Member member)
-    {
-      if (member == null)
-        return new CreateOrEditViewModel()
-        {
-          TabOptions = await GetTabOptionsAsync(httpContext, (int)filter.Class.Id),
-          PropertyDataTypeOptions = await GetPropertyDataTypeOptionsAsync(httpContext),
-          RelationClassOptions = await GetRelationClassOptionsAsync(httpContext)
-        };
+namespace Platformus.Website.Backend.ViewModels.Members;
 
+public static class CreateOrEditViewModelFactory
+{
+  public static async Task<CreateOrEditViewModel> CreateAsync(HttpContext httpContext, MemberFilter filter, Member member)
+  {
+    if (member == null)
       return new CreateOrEditViewModel()
       {
-        Id = member.Id,
-        TabId = member.TabId,
-        TabOptions = await GetTabOptionsAsync(httpContext, member.ClassId),
-        Code = member.Code,
-        Name = member.Name,
-        Position = member.Position,
-        PropertyDataTypeId = member.PropertyDataTypeId,
+        TabOptions = await GetTabOptionsAsync(httpContext, (int)filter.Class.Id),
         PropertyDataTypeOptions = await GetPropertyDataTypeOptionsAsync(httpContext),
-        IsPropertyLocalizable = member.IsPropertyLocalizable == true,
-        IsPropertyVisibleInList = member.IsPropertyVisibleInList == true,
-        PropertyDataTypeParameters = member.PropertyDataTypeParameters,
-        RelationClassId = member.RelationClassId,
-        RelationClassOptions = await GetRelationClassOptionsAsync(httpContext),
-        IsRelationSingleParent = member.IsRelationSingleParent == true,
-        MinRelatedObjectsNumber = member.MinRelatedObjectsNumber,
-        MaxRelatedObjectsNumber = member.MaxRelatedObjectsNumber
+        RelationClassOptions = await GetRelationClassOptionsAsync(httpContext)
       };
-    }
 
-    private static async Task<IEnumerable<Option>> GetTabOptionsAsync(HttpContext httpContext, int classId)
+    return new CreateOrEditViewModel()
     {
-      IStringLocalizer localizer = httpContext.GetStringLocalizer<CreateOrEditViewModel>();
-      List<Option> options = new List<Option>();
+      Id = member.Id,
+      TabId = member.TabId,
+      TabOptions = await GetTabOptionsAsync(httpContext, member.ClassId),
+      Code = member.Code,
+      Name = member.Name,
+      Position = member.Position,
+      PropertyDataTypeId = member.PropertyDataTypeId,
+      PropertyDataTypeOptions = await GetPropertyDataTypeOptionsAsync(httpContext),
+      IsPropertyLocalizable = member.IsPropertyLocalizable == true,
+      IsPropertyVisibleInList = member.IsPropertyVisibleInList == true,
+      PropertyDataTypeParameters = member.PropertyDataTypeParameters,
+      RelationClassId = member.RelationClassId,
+      RelationClassOptions = await GetRelationClassOptionsAsync(httpContext),
+      IsRelationSingleParent = member.IsRelationSingleParent == true,
+      MinRelatedObjectsNumber = member.MinRelatedObjectsNumber,
+      MaxRelatedObjectsNumber = member.MaxRelatedObjectsNumber
+    };
+  }
 
-      options.Add(new Option(localizer["Tab not specified"], string.Empty));
-      options.AddRange(
-        (await httpContext.GetStorage().GetRepository<int, Tab, TabFilter>().GetAllAsync(new TabFilter(@class: new ClassFilter(id: classId)))).Select(
-          t => new Option(t.Name, t.Id.ToString())
-        )
-      );
+  private static async Task<IEnumerable<Option>> GetTabOptionsAsync(HttpContext httpContext, int classId)
+  {
+    IStringLocalizer localizer = httpContext.GetStringLocalizer<CreateOrEditViewModel>();
+    List<Option> options = new List<Option>();
 
-      return options;
-    }
+    options.Add(new Option(localizer["Tab not specified"], string.Empty));
+    options.AddRange(
+      (await httpContext.GetStorage().GetRepository<int, Tab, TabFilter>().GetAllAsync(new TabFilter(@class: new ClassFilter(id: classId)))).Select(
+        t => new Option(t.Name, t.Id.ToString())
+      )
+    );
 
-    private static async Task<IEnumerable<Option>> GetPropertyDataTypeOptionsAsync(HttpContext httpContext)
-    {
-      IStringLocalizer localizer = httpContext.GetStringLocalizer<CreateOrEditViewModel>();
-      List<Option> options = new List<Option>();
+    return options;
+  }
 
-      options.Add(new Option(localizer["Property data type not specified"], string.Empty));
-      options.AddRange(
-        (await httpContext.GetStorage().GetRepository<int, DataType, DataTypeFilter>().GetAllAsync(sorting: "+position")).Select(
-          dt => new Option(dt.Name, dt.Id.ToString())
-        )
-      );
+  private static async Task<IEnumerable<Option>> GetPropertyDataTypeOptionsAsync(HttpContext httpContext)
+  {
+    IStringLocalizer localizer = httpContext.GetStringLocalizer<CreateOrEditViewModel>();
+    List<Option> options = new List<Option>();
 
-      return options;
-    }
+    options.Add(new Option(localizer["Property data type not specified"], string.Empty));
+    options.AddRange(
+      (await httpContext.GetStorage().GetRepository<int, DataType, DataTypeFilter>().GetAllAsync(sorting: "+position")).Select(
+        dt => new Option(dt.Name, dt.Id.ToString())
+      )
+    );
 
-    private static async Task<IEnumerable<Option>> GetRelationClassOptionsAsync(HttpContext httpContext)
-    {
-      IStringLocalizer localizer = httpContext.GetStringLocalizer<CreateOrEditViewModel>();
-      List<Option> options = new List<Option>();
+    return options;
+  }
 
-      options.Add(new Option(localizer["Relation class not specified"], string.Empty));
-      options.AddRange(
-        (await httpContext.GetStorage().GetRepository<int, Class, ClassFilter>().GetAllAsync()).Select(
-          c => new Option(c.Name, c.Id.ToString())
-        )
-      );
+  private static async Task<IEnumerable<Option>> GetRelationClassOptionsAsync(HttpContext httpContext)
+  {
+    IStringLocalizer localizer = httpContext.GetStringLocalizer<CreateOrEditViewModel>();
+    List<Option> options = new List<Option>();
 
-      return options;
-    }
+    options.Add(new Option(localizer["Relation class not specified"], string.Empty));
+    options.AddRange(
+      (await httpContext.GetStorage().GetRepository<int, Class, ClassFilter>().GetAllAsync()).Select(
+        c => new Option(c.Name, c.Id.ToString())
+      )
+    );
+
+    return options;
   }
 }

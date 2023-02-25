@@ -3,23 +3,22 @@
 
 using Magicalizer.Filters.Abstractions;
 
-namespace Platformus.Website.Filters
+namespace Platformus.Website.Filters;
+
+public class RelationFilter : IFilter
 {
-  public class RelationFilter : IFilter
+  public int? Id { get; set; }
+  public MemberFilter Member { get; set; }
+  public ObjectFilter Primary { get; set; }
+  public ObjectFilter Foreign { get; set; }
+
+  public RelationFilter() { }
+
+  public RelationFilter(int? id = null, MemberFilter member = null, ObjectFilter primary = null, ObjectFilter foreign = null)
   {
-    public int? Id { get; set; }
-    public MemberFilter Member { get; set; }
-    public ObjectFilter Primary { get; set; }
-    public ObjectFilter Foreign { get; set; }
-
-    public RelationFilter() { }
-
-    public RelationFilter(int? id = null, MemberFilter member = null, ObjectFilter primary = null, ObjectFilter foreign = null)
-    {
-      Id = id;
-      Member = member;
-      Primary = primary;
-      Foreign = foreign;
-    }
+    Id = id;
+    Member = member;
+    Primary = primary;
+    Foreign = foreign;
   }
 }

@@ -7,15 +7,14 @@ using Microsoft.Extensions.DependencyInjection;
 using Platformus.ECommerce.Services.Abstractions;
 using Platformus.ECommerce.Services.Defaults;
 
-namespace Platformus.ECommerce.Actions
-{
-  public class AddCartManagerAction : IConfigureServicesAction
-  {
-    public int Priority => 1000;
+namespace Platformus.ECommerce.Actions;
 
-    public void Execute(IServiceCollection services, IServiceProvider serviceProvider)
-    {
-      services.AddScoped<ICartManager, DefaultCartManager>();
-    }
+public class AddCartManagerAction : IConfigureServicesAction
+{
+  public int Priority => 1000;
+
+  public void Execute(IServiceCollection services, IServiceProvider serviceProvider)
+  {
+    services.AddScoped<ICartManager, DefaultCartManager>();
   }
 }

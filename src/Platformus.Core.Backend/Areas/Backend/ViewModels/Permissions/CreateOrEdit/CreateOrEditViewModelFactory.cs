@@ -3,24 +3,23 @@
 
 using Platformus.Core.Data.Entities;
 
-namespace Platformus.Core.Backend.ViewModels.Permissions
-{
-  public static class CreateOrEditViewModelFactory
-  {
-    public static CreateOrEditViewModel Create(Permission permission)
-    {
-      if (permission == null)
-        return new CreateOrEditViewModel()
-        {
-        };
+namespace Platformus.Core.Backend.ViewModels.Permissions;
 
+public static class CreateOrEditViewModelFactory
+{
+  public static CreateOrEditViewModel Create(Permission permission)
+  {
+    if (permission == null)
       return new CreateOrEditViewModel()
       {
-        Id = permission.Id,
-        Code = permission.Code,
-        Name = permission.Name,
-        Position = permission.Position
       };
-    }
+
+    return new CreateOrEditViewModel()
+    {
+      Id = permission.Id,
+      Code = permission.Code,
+      Name = permission.Name,
+      Position = permission.Position
+    };
   }
 }

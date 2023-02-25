@@ -3,14 +3,13 @@
 
 using Platformus.Core.Backend.ViewModels;
 
-namespace Platformus.Website.Backend.ViewModels.Shared
+namespace Platformus.Website.Backend.ViewModels.Shared;
+
+public class ClassViewModel : ViewModelBase
 {
-  public class ClassViewModel : ViewModelBase
-  {
-    public int Id { get; set; }
-    public ClassViewModel Parent { get; set; }
-    public string Name { get; set; }
-    public string PluralizedName { get; set; }
-    public bool IsAbstract { get; set; }
-  }
+  public int Id { get; set; }
+  public ClassViewModel Parent { get; set; }
+  public string Name { get; set; }
+  public string PluralizedName { get; set; }
+  public bool IsAbstract { get; set; }
 }

@@ -15,92 +15,91 @@ using Platformus.Website.Data.Entities;
 using Platformus.Website.Events;
 using Platformus.Website.Filters;
 
-namespace Platformus.Website.Backend.Controllers
+namespace Platformus.Website.Backend.Controllers;
+
+[Authorize(Policy = Policies.HasManageFormsPermission)]
+public class FieldsController : Core.Backend.Controllers.ControllerBase
 {
-  [Authorize(Policy = Policies.HasManageFormsPermission)]
-  public class FieldsController : Core.Backend.Controllers.ControllerBase
+  private IStringLocalizer localizer;
+
+  private IRepository<int, Field, FieldFilter> Repository
   {
-    private IStringLocalizer localizer;
+    get => this.Storage.GetRepository<int, Field, FieldFilter>();
+  }
 
-    private IRepository<int, Field, FieldFilter> Repository
+  public FieldsController(IStorage storage, IStringLocalizer<SharedResource> localizer)
+    : base(storage)
+  {
+    this.localizer = localizer;
+  }
+
+  [HttpGet]
+  [ImportModelStateFromTempData]
+  public async Task<IActionResult> CreateOrEditAsync(int? id)
+  {
+    return this.View(await CreateOrEditViewModelFactory.CreateAsync(
+      this.HttpContext, id == null ? null : await this.Repository.GetByIdAsync(
+        (int)id,
+        new Inclusion<Field>(fo => fo.Name.Localizations)
+      )
+    ));
+  }
+
+  [HttpPost]
+  [ExportModelStateToTempData]
+  public async Task<IActionResult> CreateOrEditAsync([FromQuery] FieldFilter filter, CreateOrEditViewModel createOrEdit)
+  {
+    if (!await this.IsCodeUniqueAsync(filter, createOrEdit))
+      this.ModelState.AddModelError("code", this.localizer["Value is already in use"]);
+
+    if (this.ModelState.IsValid)
     {
-      get => this.Storage.GetRepository<int, Field, FieldFilter>();
-    }
+      Field field = CreateOrEditViewModelMapper.Map(
+        filter,
+        createOrEdit.Id == null ?
+          new Field() :
+          await this.Repository.GetByIdAsync(
+            (int)createOrEdit.Id,
+            new Inclusion<Field>(fo => fo.Name.Localizations)
+          ),
+        createOrEdit
+      );
 
-    public FieldsController(IStorage storage, IStringLocalizer<SharedResource> localizer)
-      : base(storage)
-    {
-      this.localizer = localizer;
-    }
+      if (createOrEdit.Id == null)
+        this.Repository.Create(field);
 
-    [HttpGet]
-    [ImportModelStateFromTempData]
-    public async Task<IActionResult> CreateOrEditAsync(int? id)
-    {
-      return this.View(await CreateOrEditViewModelFactory.CreateAsync(
-        this.HttpContext, id == null ? null : await this.Repository.GetByIdAsync(
-          (int)id,
-          new Inclusion<Field>(fo => fo.Name.Localizations)
-        )
-      ));
-    }
+      else this.Repository.Edit(field);
 
-    [HttpPost]
-    [ExportModelStateToTempData]
-    public async Task<IActionResult> CreateOrEditAsync([FromQuery]FieldFilter filter, CreateOrEditViewModel createOrEdit)
-    {
-      if (!await this.IsCodeUniqueAsync(filter, createOrEdit))
-        this.ModelState.AddModelError("code", this.localizer["Value is already in use"]);
-
-      if (this.ModelState.IsValid)
-      {
-        Field field = CreateOrEditViewModelMapper.Map(
-          filter,
-          createOrEdit.Id == null ?
-            new Field() :
-            await this.Repository.GetByIdAsync(
-              (int)createOrEdit.Id,
-              new Inclusion<Field>(fo => fo.Name.Localizations)
-            ),
-          createOrEdit
-        );
-
-        if (createOrEdit.Id == null)
-          this.Repository.Create(field);
-
-        else this.Repository.Edit(field);
-
-        await this.MergeEntityLocalizationsAsync(field);
-        await this.Storage.SaveAsync();
-        Event<IFormEditedEventHandler, HttpContext, Form>.Broadcast(this.HttpContext, await this.GetFormAsync(field));
-        return this.RedirectToAction("Index", "Forms");
-      }
-
-      return this.CreateRedirectToSelfResult();
-    }
-
-    public async Task<IActionResult> DeleteAsync(int id)
-    {
-      Field field = await this.Repository.GetByIdAsync(id);
-
-      this.Repository.Delete(field.Id);
+      await this.MergeEntityLocalizationsAsync(field);
       await this.Storage.SaveAsync();
       Event<IFormEditedEventHandler, HttpContext, Form>.Broadcast(this.HttpContext, await this.GetFormAsync(field));
       return this.RedirectToAction("Index", "Forms");
     }
 
-    private async Task<bool> IsCodeUniqueAsync(FieldFilter filter, CreateOrEditViewModel createOrEdit)
-    {
-      filter.Code = createOrEdit.Code;
+    return this.CreateRedirectToSelfResult();
+  }
 
-      Field field = (await this.Repository.GetAllAsync(filter)).FirstOrDefault();
+  public async Task<IActionResult> DeleteAsync(int id)
+  {
+    Field field = await this.Repository.GetByIdAsync(id);
 
-      return field == null || field.Id == createOrEdit.Id;
-    }
+    this.Repository.Delete(field.Id);
+    await this.Storage.SaveAsync();
+    Event<IFormEditedEventHandler, HttpContext, Form>.Broadcast(this.HttpContext, await this.GetFormAsync(field));
+    return this.RedirectToAction("Index", "Forms");
+  }
 
-    private async Task<Form> GetFormAsync(Field field)
-    {
-      return await this.Storage.GetRepository<int, Form, FormFilter>().GetByIdAsync(field.FormId);
-    }
+  private async Task<bool> IsCodeUniqueAsync(FieldFilter filter, CreateOrEditViewModel createOrEdit)
+  {
+    filter.Code = createOrEdit.Code;
+
+    Field field = (await this.Repository.GetAllAsync(filter)).FirstOrDefault();
+
+    return field == null || field.Id == createOrEdit.Id;
+  }
+
+  private async Task<Form> GetFormAsync(Field field)
+  {
+    return await this.Storage.GetRepository<int, Form, FormFilter>().GetByIdAsync(field.FormId);
   }
 }

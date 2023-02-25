@@ -3,16 +3,16 @@
 
 using Platformus.Core.Data.Entities;
 
-namespace Platformus.Core.Backend.ViewModels.Shared
+namespace Platformus.Core.Backend.ViewModels.Shared;
+
+public static class RolePermissionViewModelFactory
 {
-  public static class RolePermissionViewModelFactory
+  public static RolePermissionViewModel Create(Permission permission, bool isAssigned)
   {
-    public static RolePermissionViewModel Create(Permission permission, bool isAssigned)
-    {      return new RolePermissionViewModel()
-      {
-        Permission = PermissionViewModelFactory.Create(permission),
-        IsAssigned = isAssigned
+    return new RolePermissionViewModel()
+    {
+      Permission = PermissionViewModelFactory.Create(permission),
+      IsAssigned = isAssigned
     };
-    }
   }
 }

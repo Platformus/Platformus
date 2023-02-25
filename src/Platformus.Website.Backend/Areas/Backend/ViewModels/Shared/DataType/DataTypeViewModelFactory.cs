@@ -3,20 +3,19 @@
 
 using Platformus.Website.Data.Entities;
 
-namespace Platformus.Website.Backend.ViewModels.Shared
+namespace Platformus.Website.Backend.ViewModels.Shared;
+
+public static class DataTypeViewModelFactory
 {
-  public static class DataTypeViewModelFactory
+  public static DataTypeViewModel Create(DataType dataType)
   {
-    public static DataTypeViewModel Create(DataType dataType)
+    return new DataTypeViewModel()
     {
-      return new DataTypeViewModel()
-      {
-        Id = dataType.Id,
-        StorageDataType = dataType.StorageDataType,
-        ParameterEditorCode = dataType.ParameterEditorCode,
-        Name = dataType.Name,
-        Position = dataType.Position
-      };
-    }
+      Id = dataType.Id,
+      StorageDataType = dataType.StorageDataType,
+      ParameterEditorCode = dataType.ParameterEditorCode,
+      Name = dataType.Name,
+      Position = dataType.Position
+    };
   }
 }

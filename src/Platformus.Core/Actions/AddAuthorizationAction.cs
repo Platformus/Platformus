@@ -6,20 +6,19 @@ using ExtCore.Infrastructure;
 using ExtCore.Infrastructure.Actions;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace Platformus.Core.Actions
-{
-  public class AddAuthorizationAction : IConfigureServicesAction
-  {
-    public int Priority => 1000;
+namespace Platformus.Core.Actions;
 
-    public void Execute(IServiceCollection services, IServiceProvider serviceProvider)
-    {
-      services.AddAuthorization(options =>
-        {
-          foreach (IAuthorizationPolicyProvider authorizationPolicyProvider in ExtensionManager.GetInstances<IAuthorizationPolicyProvider>())
-            options.AddPolicy(authorizationPolicyProvider.Name, authorizationPolicyProvider.GetAuthorizationPolicy());
-        }
-      );
-    }
+public class AddAuthorizationAction : IConfigureServicesAction
+{
+  public int Priority => 1000;
+
+  public void Execute(IServiceCollection services, IServiceProvider serviceProvider)
+  {
+    services.AddAuthorization(options =>
+      {
+        foreach (IAuthorizationPolicyProvider authorizationPolicyProvider in ExtensionManager.GetInstances<IAuthorizationPolicyProvider>())
+          options.AddPolicy(authorizationPolicyProvider.Name, authorizationPolicyProvider.GetAuthorizationPolicy());
+      }
+    );
   }
 }

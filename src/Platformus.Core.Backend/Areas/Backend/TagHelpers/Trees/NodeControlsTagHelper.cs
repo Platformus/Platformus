@@ -3,22 +3,21 @@
 
 using Microsoft.AspNetCore.Razor.TagHelpers;
 
-namespace Platformus.Core.Backend
+namespace Platformus.Core.Backend;
+
+[RestrictChildren("neutral-button", "positive-button", "negative-button", "delete-button", "partial")]
+public class NodeControlsTagHelper : TagHelper
 {
-  [RestrictChildren("neutral-button", "positive-button", "negative-button", "delete-button", "partial")]
-  public class NodeControlsTagHelper : TagHelper
+  public string Class { get; set; }
+
+  public override void Process(TagHelperContext context, TagHelperOutput output)
   {
-    public string Class { get; set; }
+    output.TagName = TagNames.Div;
+    output.TagMode = TagMode.StartTagAndEndTag;
 
-    public override void Process(TagHelperContext context, TagHelperOutput output)
-    {
-      output.TagName = TagNames.Div;
-      output.TagMode = TagMode.StartTagAndEndTag;
+    if (context.Items.ContainsKey("IsNodeHeader") && (bool)context.Items["IsNodeHeader"])
+      output.Attributes.SetAttribute(AttributeNames.Class, "node__buttons buttons node__controls" + (string.IsNullOrEmpty(this.Class) ? null : $" {this.Class}"));
 
-      if (context.Items.ContainsKey("IsNodeHeader") && (bool)context.Items["IsNodeHeader"])
-        output.Attributes.SetAttribute(AttributeNames.Class, "node__buttons buttons node__controls" + (string.IsNullOrEmpty(this.Class) ? null : $" {this.Class}"));
-
-      else output.Attributes.SetAttribute(AttributeNames.Class, "node__buttons buttons" + (string.IsNullOrEmpty(this.Class) ? null : $" {this.Class}"));
-    }
+    else output.Attributes.SetAttribute(AttributeNames.Class, "node__buttons buttons" + (string.IsNullOrEmpty(this.Class) ? null : $" {this.Class}"));
   }
 }

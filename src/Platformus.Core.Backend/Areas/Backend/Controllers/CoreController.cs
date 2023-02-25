@@ -6,28 +6,27 @@ using Microsoft.AspNetCore.Mvc;
 using Platformus.Core.Backend.ViewModels.Core;
 using Platformus.Core.Backend.ViewModels.Shared;
 
-namespace Platformus.Core.Backend.Controllers
+namespace Platformus.Core.Backend.Controllers;
+
+public class CoreController : ControllerBase
 {
-  public class CoreController : ControllerBase
+  public CoreController(IStorage storage)
+    : base(storage)
   {
-    public CoreController(IStorage storage)
-      : base(storage)
-    {
-    }
+  }
 
-    public IActionResult ParameterEditor(string cSharpClassName)
-    {
-      return this.PartialView("_ParameterEditor", ParameterEditorViewModelFactory.Create(cSharpClassName));
-    }
+  public IActionResult ParameterEditor(string cSharpClassName)
+  {
+    return this.PartialView("_ParameterEditor", ParameterEditorViewModelFactory.Create(cSharpClassName));
+  }
 
-    public IActionResult DeleteForm(string targetUrl)
-    {
-      return this.PartialView("_DeleteForm", DeleteFormViewModelFactory.Create(targetUrl));
-    }
+  public IActionResult DeleteForm(string targetUrl)
+  {
+    return this.PartialView("_DeleteForm", DeleteFormViewModelFactory.Create(targetUrl));
+  }
 
-    public IActionResult ImageUploaderForm()
-    {
-      return this.PartialView("_ImageUploaderForm", ImageUploaderFormViewModelFactory.Create());
-    }
+  public IActionResult ImageUploaderForm()
+  {
+    return this.PartialView("_ImageUploaderForm", ImageUploaderFormViewModelFactory.Create());
   }
 }

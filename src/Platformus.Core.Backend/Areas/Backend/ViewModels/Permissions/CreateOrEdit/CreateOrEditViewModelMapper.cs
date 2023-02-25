@@ -3,16 +3,15 @@
 
 using Platformus.Core.Data.Entities;
 
-namespace Platformus.Core.Backend.ViewModels.Permissions
+namespace Platformus.Core.Backend.ViewModels.Permissions;
+
+public static class CreateOrEditViewModelMapper
 {
-  public static class CreateOrEditViewModelMapper
+  public static Permission Map(Permission permission, CreateOrEditViewModel createOrEdit)
   {
-    public static Permission Map(Permission permission, CreateOrEditViewModel createOrEdit)
-    {
-      permission.Code = createOrEdit.Code;
-      permission.Name = createOrEdit.Name;
-      permission.Position = createOrEdit.Position;
-      return permission;
-    }
+    permission.Code = createOrEdit.Code;
+    permission.Name = createOrEdit.Name;
+    permission.Position = createOrEdit.Position;
+    return permission;
   }
 }

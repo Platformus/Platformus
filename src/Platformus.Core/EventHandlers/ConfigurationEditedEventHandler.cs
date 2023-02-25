@@ -5,15 +5,14 @@ using Microsoft.AspNetCore.Http;
 using Platformus.Core.Data.Entities;
 using Platformus.Core.Events;
 
-namespace Platformus.Core.EventHandlers
-{
-  public class ConfigurationEditedEventHandler : IConfigurationEditedEventHandler
-  {
-    public int Priority => 1000;
+namespace Platformus.Core.EventHandlers;
 
-    public void HandleEvent(HttpContext httpContext, Configuration configuration)
-    {
-      httpContext.GetConfigurationManager().InvalidateCache();
-    }
+public class ConfigurationEditedEventHandler : IConfigurationEditedEventHandler
+{
+  public int Priority => 1000;
+
+  public void HandleEvent(HttpContext httpContext, Configuration configuration)
+  {
+    httpContext.GetConfigurationManager().InvalidateCache();
   }
 }

@@ -4,13 +4,12 @@
 using System.Collections.Generic;
 using Microsoft.AspNetCore.Http;
 
-namespace Platformus.Core.Backend.Metadata
+namespace Platformus.Core.Backend.Metadata;
+
+public interface IMetadata
 {
-  public interface IMetadata
-  {
-    IEnumerable<StyleSheet> GetStyleSheets(HttpContext httpContext);
-    IEnumerable<Script> GetScripts(HttpContext httpContext);
-    IEnumerable<MenuGroup> GetMenuGroups(HttpContext httpContext);
-    IEnumerable<DashboardWidget> GetDashboardWidgets(HttpContext httpContext);
-  }
+  IEnumerable<StyleSheet> GetStyleSheets(HttpContext httpContext);
+  IEnumerable<Script> GetScripts(HttpContext httpContext);
+  IEnumerable<MenuGroup> GetMenuGroups(HttpContext httpContext);
+  IEnumerable<DashboardWidget> GetDashboardWidgets(HttpContext httpContext);
 }

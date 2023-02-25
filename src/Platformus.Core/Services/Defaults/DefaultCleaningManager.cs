@@ -12,20 +12,19 @@ using Platformus.Core.Data.Entities;
 using Platformus.Core.Filters;
 using Platformus.Core.Services.Abstractions;
 
-namespace Platformus.Core.Services.Defaults
+namespace Platformus.Core.Services.Defaults;
+
+public class DefaultCleaningManager : ICleaningManager
 {
-  public class DefaultCleaningManager : ICleaningManager
+  public async Task CleanUpAsync(IServiceProvider serviceProvider)
   {
-    public async Task CleanUpAsync(IServiceProvider serviceProvider)
-    {
-      IStorage storage = serviceProvider.CreateScope().ServiceProvider.GetService<IStorage>();
-      IRepository<Guid, ModelState, ModelStateFilter> repository = storage.GetRepository<Guid, ModelState, ModelStateFilter>();
-      IEnumerable<ModelState> oldModelStates = await repository.GetAllAsync(new ModelStateFilter(created: new DateTimeFilter(to: DateTime.Now.AddDays(-1).ToUniversalTime())));
+    IStorage storage = serviceProvider.CreateScope().ServiceProvider.GetService<IStorage>();
+    IRepository<Guid, ModelState, ModelStateFilter> repository = storage.GetRepository<Guid, ModelState, ModelStateFilter>();
+    IEnumerable<ModelState> oldModelStates = await repository.GetAllAsync(new ModelStateFilter(created: new DateTimeFilter(to: DateTime.Now.AddDays(-1).ToUniversalTime())));
 
-      for (int i = 0; i != oldModelStates.Count(); i++)
-        repository.Delete(oldModelStates.ElementAt(i).Id);
+    for (int i = 0; i != oldModelStates.Count(); i++)
+      repository.Delete(oldModelStates.ElementAt(i).Id);
 
-      await storage.SaveAsync();
-    }
+    await storage.SaveAsync();
   }
 }

@@ -6,17 +6,16 @@ using ExtCore.Mvc.Infrastructure.Actions;
 using Microsoft.AspNetCore.Mvc.Razor;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace Platformus.Core.Actions
-{
-  public class AddMvcLocalizationAction : IAddMvcAction
-  {
-    public int Priority => 1000;
+namespace Platformus.Core.Actions;
 
-    public void Execute(IMvcBuilder mvcBuilder, IServiceProvider serviceProvider)
-    {
-      mvcBuilder
-        .AddViewLocalization(LanguageViewLocationExpanderFormat.Suffix)
-        .AddDataAnnotationsLocalization();
-    }
+public class AddMvcLocalizationAction : IAddMvcAction
+{
+  public int Priority => 1000;
+
+  public void Execute(IMvcBuilder mvcBuilder, IServiceProvider serviceProvider)
+  {
+    mvcBuilder
+      .AddViewLocalization(LanguageViewLocationExpanderFormat.Suffix)
+      .AddDataAnnotationsLocalization();
   }
 }

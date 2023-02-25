@@ -6,20 +6,19 @@ using System.Linq;
 using Platformus.ECommerce.Backend.ViewModels.Shared;
 using Platformus.ECommerce.Data.Entities;
 
-namespace Platformus.ECommerce.Backend.ViewModels.OrderStates
+namespace Platformus.ECommerce.Backend.ViewModels.OrderStates;
+
+public static class IndexViewModelFactory
 {
-  public static class IndexViewModelFactory
+  public static IndexViewModel Create(string sorting, int offset, int limit, int total, IEnumerable<OrderState> orderStates)
   {
-    public static IndexViewModel Create(string sorting, int offset, int limit, int total, IEnumerable<OrderState> orderStates)
+    return new IndexViewModel()
     {
-      return new IndexViewModel()
-      {
-        Sorting = sorting,
-        Offset = offset,
-        Limit = limit,
-        Total = total,
-        OrderStates = orderStates.Select(OrderStateViewModelFactory.Create).ToList()
-      };
-    }
+      Sorting = sorting,
+      Offset = offset,
+      Limit = limit,
+      Total = total,
+      OrderStates = orderStates.Select(OrderStateViewModelFactory.Create).ToList()
+    };
   }
 }

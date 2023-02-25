@@ -4,18 +4,17 @@
 using Magicalizer.Data.Repositories.Abstractions;
 using Microsoft.AspNetCore.Mvc;
 
-namespace Platformus.Core.Backend.Controllers
-{
-  public class DefaultController : ControllerBase
-  {
-    public DefaultController(IStorage storage)
-      : base(storage)
-    {
-    }
+namespace Platformus.Core.Backend.Controllers;
 
-    public IActionResult Index()
-    {
-      return this.View();
-    }
+public class DefaultController : ControllerBase
+{
+  public DefaultController(IStorage storage)
+    : base(storage)
+  {
+  }
+
+  public IActionResult Index()
+  {
+    return this.View();
   }
 }

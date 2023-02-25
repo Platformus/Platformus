@@ -5,10 +5,9 @@ using System.Collections.Generic;
 using Platformus.Core.Backend.ViewModels;
 using Platformus.Website.Backend.ViewModels.Shared;
 
-namespace Platformus.Website.Backend.ViewModels.Forms
+namespace Platformus.Website.Backend.ViewModels.Forms;
+
+public class IndexViewModel : ViewModelBase
 {
-  public class IndexViewModel : ViewModelBase
-  {
-    public IEnumerable<FormViewModel> Forms { get; set; }
-  }
+  public IEnumerable<FormViewModel> Forms { get; set; }
 }

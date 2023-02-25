@@ -3,18 +3,17 @@
 
 using Platformus.ECommerce.Data.Entities;
 
-namespace Platformus.ECommerce.Backend.ViewModels.Shared
+namespace Platformus.ECommerce.Backend.ViewModels.Shared;
+
+public static class DeliveryMethodViewModelFactory
 {
-  public static class DeliveryMethodViewModelFactory
+  public static DeliveryMethodViewModel Create(DeliveryMethod deliveryMethod)
   {
-    public static DeliveryMethodViewModel Create(DeliveryMethod deliveryMethod)
+    return new DeliveryMethodViewModel()
     {
-      return new DeliveryMethodViewModel()
-      {
-        Id = deliveryMethod.Id,
-        Name = deliveryMethod.Name.GetLocalizationValue(),
-        Position = deliveryMethod.Position
-      };
-    }
+      Id = deliveryMethod.Id,
+      Name = deliveryMethod.Name.GetLocalizationValue(),
+      Position = deliveryMethod.Position
+    };
   }
 }

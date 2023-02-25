@@ -6,16 +6,15 @@ using System.Linq;
 using Platformus.ECommerce.Backend.ViewModels.Shared;
 using Platformus.ECommerce.Data.Entities;
 
-namespace Platformus.ECommerce.Backend.ViewModels.Categories
+namespace Platformus.ECommerce.Backend.ViewModels.Categories;
+
+public static class IndexViewModelFactory
 {
-  public static class IndexViewModelFactory
+  public static IndexViewModel Create(IEnumerable<Category> categories)
   {
-    public static IndexViewModel Create(IEnumerable<Category> categories)
+    return new IndexViewModel()
     {
-      return new IndexViewModel()
-      {
-        Categories = categories.Select(CategoryViewModelFactory.Create).ToList()
-      };
-    }
+      Categories = categories.Select(CategoryViewModelFactory.Create).ToList()
+    };
   }
 }

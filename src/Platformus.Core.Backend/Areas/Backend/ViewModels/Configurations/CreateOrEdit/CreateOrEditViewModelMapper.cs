@@ -3,15 +3,14 @@
 
 using Platformus.Core.Data.Entities;
 
-namespace Platformus.Core.Backend.ViewModels.Configurations
+namespace Platformus.Core.Backend.ViewModels.Configurations;
+
+public static class CreateOrEditViewModelMapper
 {
-  public static class CreateOrEditViewModelMapper
+  public static Configuration Map(Configuration configuration, CreateOrEditViewModel createOrEdit)
   {
-    public static Configuration Map(Configuration configuration, CreateOrEditViewModel createOrEdit)
-    {
-      configuration.Code = createOrEdit.Code;
-      configuration.Name = createOrEdit.Name;
-      return configuration;
-    }
+    configuration.Code = createOrEdit.Code;
+    configuration.Name = createOrEdit.Name;
+    return configuration;
   }
 }

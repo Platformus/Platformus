@@ -3,20 +3,19 @@
 
 using Platformus.ECommerce.Data.Entities;
 
-namespace Platformus.ECommerce.Backend.ViewModels.Shared
+namespace Platformus.ECommerce.Backend.ViewModels.Shared;
+
+public static class ProductViewModelFactory
 {
-  public static class ProductViewModelFactory
+  public static ProductViewModel Create(Product product)
   {
-    public static ProductViewModel Create(Product product)
+    return new ProductViewModel()
     {
-      return new ProductViewModel()
-      {
-        Id = product.Id,
-        Category = CategoryViewModelFactory.Create(product.Category),
-        Name = product.Name.GetLocalizationValue(),
-        Units = product.Units.GetLocalizationValue(),
-        Price = product.Price
-      };
-    }
+      Id = product.Id,
+      Category = CategoryViewModelFactory.Create(product.Category),
+      Name = product.Name.GetLocalizationValue(),
+      Units = product.Units.GetLocalizationValue(),
+      Price = product.Price
+    };
   }
 }

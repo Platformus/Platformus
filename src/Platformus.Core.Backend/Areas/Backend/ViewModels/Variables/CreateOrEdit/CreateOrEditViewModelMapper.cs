@@ -4,20 +4,19 @@
 using Platformus.Core.Data.Entities;
 using Platformus.Core.Filters;
 
-namespace Platformus.Core.Backend.ViewModels.Variables
-{
-  public static class CreateOrEditViewModelMapper
-  {
-    public static Variable Map(VariableFilter filter, Variable variable, CreateOrEditViewModel createOrEdit)
-    {
-      if (variable.Id == 0)
-        variable.ConfigurationId = (int)filter.Configuration.Id;
+namespace Platformus.Core.Backend.ViewModels.Variables;
 
-      variable.Code = createOrEdit.Code;
-      variable.Name = createOrEdit.Name;
-      variable.Value = createOrEdit.Value;
-      variable.Position = createOrEdit.Position;
-      return variable;
-    }
+public static class CreateOrEditViewModelMapper
+{
+  public static Variable Map(VariableFilter filter, Variable variable, CreateOrEditViewModel createOrEdit)
+  {
+    if (variable.Id == 0)
+      variable.ConfigurationId = (int)filter.Configuration.Id;
+
+    variable.Code = createOrEdit.Code;
+    variable.Name = createOrEdit.Name;
+    variable.Value = createOrEdit.Value;
+    variable.Position = createOrEdit.Position;
+    return variable;
   }
 }

@@ -3,32 +3,31 @@
 
 using System.Collections.Generic;
 
-namespace Platformus.Core.Parameters
+namespace Platformus.Core.Parameters;
+
+/// <summary>
+/// Groups the <see cref="Parameter"/> and adds a group title on the client-side.
+/// </summary>
+public class ParameterGroup
 {
   /// <summary>
-  /// Groups the <see cref="Parameter"/> and adds a group title on the client-side.
+  /// A group name. It is displayed on the client-side as the group title.
   /// </summary>
-  public class ParameterGroup
+  public string Name { get; set; }
+
+  /// <summary>
+  /// Parameters of a group.
+  /// </summary>
+  public IEnumerable<Parameter> Parameters { get; set; }
+
+  /// <summary>
+  /// Initializes a new instance of the <see cref="ParameterGroup"/> class.
+  /// </summary>
+  /// <param name="name">A group name. It is displayed on the client-side as the group title.</param>
+  /// <param name="parameters">Parameters of a group.</param>
+  public ParameterGroup(string name, params Parameter[] parameters)
   {
-    /// <summary>
-    /// A group name. It is displayed on the client-side as the group title.
-    /// </summary>
-    public string Name { get; set; }
-
-    /// <summary>
-    /// Parameters of a group.
-    /// </summary>
-    public IEnumerable<Parameter> Parameters { get; set; }
-
-    /// <summary>
-    /// Initializes a new instance of the <see cref="ParameterGroup"/> class.
-    /// </summary>
-    /// <param name="name">A group name. It is displayed on the client-side as the group title.</param>
-    /// <param name="parameters">Parameters of a group.</param>
-    public ParameterGroup(string name, params Parameter[] parameters)
-    {
-      this.Name = name;
-      this.Parameters = parameters;
-    }
+    this.Name = name;
+    this.Parameters = parameters;
   }
 }

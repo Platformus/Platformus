@@ -6,38 +6,37 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.AspNetCore.Razor.TagHelpers;
 using Platformus.Core.Primitives;
 
-namespace Platformus.Core.Backend
+namespace Platformus.Core.Backend;
+
+public class DropDownListTagHelper : TagHelperBase<string>
 {
-  public class DropDownListTagHelper : TagHelperBase<string>
+  public IEnumerable<Option> Options { get; set; }
+
+  public override void Process(TagHelperContext context, TagHelperOutput output)
   {
-    public IEnumerable<Option> Options { get; set; }
+    if ((this.For == null && string.IsNullOrEmpty(this.Id)) || this.Options == null)
+      return;
 
-    public override void Process(TagHelperContext context, TagHelperOutput output)
-    {
-      if ((this.For == null && string.IsNullOrEmpty(this.Id)) || this.Options == null)
-        return;
+    output.SuppressOutput();
+    output.Content.AppendHtml(this.CreateDropDownList());
+  }
 
-      output.SuppressOutput();
-      output.Content.AppendHtml(this.CreateDropDownList());
-    }
+  private TagBuilder CreateDropDownList()
+  {
+    TagBuilder tb = DropDownListGenerator.Generate(
+      this.GetIdentity(),
+      this.Options,
+      value: this.GetValue(),
+      validation: this.GetValidation()
+    );
 
-    private TagBuilder CreateDropDownList()
-    {
-      TagBuilder tb = DropDownListGenerator.Generate(
-        this.GetIdentity(),
-        this.Options,
-        value: this.GetValue(),
-        validation: this.GetValidation()
-      );
+    if (!string.IsNullOrEmpty(this.Class))
+      tb.AddCssClass(this.Class);
 
-      if (!string.IsNullOrEmpty(this.Class))
-        tb.AddCssClass(this.Class);
+    // TODO: merge all the attributes, not only "onchange"
+    if (!string.IsNullOrEmpty(this.OnChange))
+      tb.MergeAttribute(AttributeNames.OnChange, this.OnChange);
 
-      // TODO: merge all the attributes, not only "onchange"
-      if (!string.IsNullOrEmpty(this.OnChange))
-        tb.MergeAttribute(AttributeNames.OnChange, this.OnChange);
-
-      return tb;
-    }
+    return tb;
   }
 }

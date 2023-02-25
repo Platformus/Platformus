@@ -6,24 +6,23 @@ using Microsoft.AspNetCore.Mvc;
 using Platformus.Core.Frontend.ViewModels.Shared;
 using Platformus.Core.Services.Abstractions;
 
-namespace Platformus.Core.Frontend.ViewComponents
+namespace Platformus.Core.Frontend.ViewComponents;
+
+public class CulturesViewComponent : ViewComponent
 {
-  public class CulturesViewComponent : ViewComponent
+  private ICultureManager cultureManager;
+
+  public CulturesViewComponent(ICultureManager cultureManager)
   {
-    private ICultureManager cultureManager;
+    this.cultureManager = cultureManager;
+  }
 
-    public CulturesViewComponent(ICultureManager cultureManager)
-    {
-      this.cultureManager = cultureManager;
-    }
-
-    public async Task<IViewComponentResult> InvokeAsync(string partialViewName = "_Cultures", string additionalCssClass = null)
-    {
-      return this.View(CulturesViewModelFactory.Create(
-        await this.cultureManager.GetNotNeutralCulturesAsync(),
-        partialViewName,
-        additionalCssClass
-      ));
-    }
+  public async Task<IViewComponentResult> InvokeAsync(string partialViewName = "_Cultures", string additionalCssClass = null)
+  {
+    return this.View(CulturesViewModelFactory.Create(
+      await this.cultureManager.GetNotNeutralCulturesAsync(),
+      partialViewName,
+      additionalCssClass
+    ));
   }
 }

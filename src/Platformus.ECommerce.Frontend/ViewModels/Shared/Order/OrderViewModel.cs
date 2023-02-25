@@ -5,20 +5,19 @@ using System;
 using System.Collections.Generic;
 using Platformus.Core.Frontend.ViewModels;
 
-namespace Platformus.ECommerce.Frontend.ViewModels.Shared
+namespace Platformus.ECommerce.Frontend.ViewModels.Shared;
+
+public class OrderViewModel : ViewModelBase
 {
-  public class OrderViewModel : ViewModelBase
-  {
-    public int Id { get; set; }
-    public PaymentMethodViewModel PaymentMethod { get; set; }
-    public DeliveryMethodViewModel DeliveryMethod { get; set; }
-    public string CustomerFirstName { get; set; }
-    public string CustomerLastName { get; set; }
-    public string CustomerPhone { get; set; }
-    public string CustomerEmail { get; set; }
-    public string CustomerAddress { get; set; }
-    public string Note { get; set; }
-    public DateTime Created { get; set; }
-    public IEnumerable<PositionViewModel> Positions { get; set; }
-  }
+  public int Id { get; set; }
+  public PaymentMethodViewModel PaymentMethod { get; set; }
+  public DeliveryMethodViewModel DeliveryMethod { get; set; }
+  public string CustomerFirstName { get; set; }
+  public string CustomerLastName { get; set; }
+  public string CustomerPhone { get; set; }
+  public string CustomerEmail { get; set; }
+  public string CustomerAddress { get; set; }
+  public string Note { get; set; }
+  public DateTime Created { get; set; }
+  public IEnumerable<PositionViewModel> Positions { get; set; }
 }

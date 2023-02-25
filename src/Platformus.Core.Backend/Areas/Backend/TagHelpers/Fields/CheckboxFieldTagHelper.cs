@@ -4,34 +4,33 @@
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.AspNetCore.Razor.TagHelpers;
 
-namespace Platformus.Core.Backend
+namespace Platformus.Core.Backend;
+
+public class CheckboxFieldTagHelper : EmptyFieldTagHelperBase<bool>
 {
-  public class CheckboxFieldTagHelper : EmptyFieldTagHelperBase<bool>
+  public override void Process(TagHelperContext context, TagHelperOutput output)
   {
-    public override void Process(TagHelperContext context, TagHelperOutput output)
-    {
-      if (this.For == null && string.IsNullOrEmpty(this.Id))
-        return;
+    if (this.For == null && string.IsNullOrEmpty(this.Id))
+      return;
 
-      base.Process(context, output);
-      output.Content.AppendHtml(this.CreateCheckbox());
-    }
+    base.Process(context, output);
+    output.Content.AppendHtml(this.CreateCheckbox());
+  }
 
-    private TagBuilder CreateCheckbox()
-    {
-      bool.TryParse(this.GetValue(), out bool value);
+  private TagBuilder CreateCheckbox()
+  {
+    bool.TryParse(this.GetValue(), out bool value);
 
-      TagBuilder tb = CheckboxGenerator.Generate(
-        this.GetIdentity(),
-        this.GetLabel(),
-        value: value
-      );
+    TagBuilder tb = CheckboxGenerator.Generate(
+      this.GetIdentity(),
+      this.GetLabel(),
+      value: value
+    );
 
-      // TODO: merge all the attributes, not only "onchange"
-      if (!string.IsNullOrEmpty(this.OnChange))
-        tb.MergeAttribute(AttributeNames.OnChange, this.OnChange);
+    // TODO: merge all the attributes, not only "onchange"
+    if (!string.IsNullOrEmpty(this.OnChange))
+      tb.MergeAttribute(AttributeNames.OnChange, this.OnChange);
 
-      return tb;
-    }
+    return tb;
   }
 }

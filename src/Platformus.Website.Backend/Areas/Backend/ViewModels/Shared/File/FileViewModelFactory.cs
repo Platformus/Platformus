@@ -3,18 +3,17 @@
 
 using Platformus.Website.Data.Entities;
 
-namespace Platformus.Website.Backend.ViewModels.Shared
+namespace Platformus.Website.Backend.ViewModels.Shared;
+
+public static class FileViewModelFactory
 {
-  public static class FileViewModelFactory
+  public static FileViewModel Create(File file)
   {
-    public static FileViewModel Create(File file)
+    return new FileViewModel()
     {
-      return new FileViewModel()
-      {
-        Id = file.Id,
-        Name = file.Name,
-        Size = file.Size
-      };
-    }
+      Id = file.Id,
+      Name = file.Name,
+      Size = file.Size
+    };
   }
 }

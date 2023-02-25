@@ -5,20 +5,19 @@ using System.Linq;
 using Microsoft.AspNetCore.Http;
 using Platformus.Website.Data.Entities;
 
-namespace Platformus.Website.Frontend.ViewModels.Shared
+namespace Platformus.Website.Frontend.ViewModels.Shared;
+
+public static class MenuViewModelFactory
 {
-  public static class MenuViewModelFactory
+  public static MenuViewModel Create(HttpContext httpContext, Menu menu, string partialViewName, string additionalCssClass)
   {
-    public static MenuViewModel Create(HttpContext httpContext, Menu menu, string partialViewName, string additionalCssClass)
+    return new MenuViewModel()
     {
-      return new MenuViewModel()
-      {
-        MenuItems = menu.MenuItems.OrderBy(mi => mi.Position).Select(
-          mi => MenuItemViewModelFactory.Create(httpContext, mi)
-        ),
-        PartialViewName = partialViewName ?? "_Menu",
-        AdditionalCssClass = additionalCssClass
-      };
-    }
+      MenuItems = menu.MenuItems.OrderBy(mi => mi.Position).Select(
+        mi => MenuItemViewModelFactory.Create(httpContext, mi)
+      ),
+      PartialViewName = partialViewName ?? "_Menu",
+      AdditionalCssClass = additionalCssClass
+    };
   }
 }

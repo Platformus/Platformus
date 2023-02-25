@@ -3,34 +3,33 @@
 
 using Magicalizer.Data.Entities.Abstractions;
 
-namespace Platformus.Website.Data.Entities
+namespace Platformus.Website.Data.Entities;
+
+/// <summary>
+/// Represents a completed field. The completed fields are used to store the user input for further processing.
+/// </summary>
+public class CompletedField : IEntity<int>
 {
   /// <summary>
-  /// Represents a completed field. The completed fields are used to store the user input for further processing.
+  /// Gets or sets the unique identifier of the completed field.
   /// </summary>
-  public class CompletedField : IEntity<int>
-  {
-    /// <summary>
-    /// Gets or sets the unique identifier of the completed field.
-    /// </summary>
-    public int Id { get; set; }
+  public int Id { get; set; }
 
-    /// <summary>
-    /// Gets or sets the completed form identifier this completed field belongs to.
-    /// </summary>
-    public int CompletedFormId { get; set; }
+  /// <summary>
+  /// Gets or sets the completed form identifier this completed field belongs to.
+  /// </summary>
+  public int CompletedFormId { get; set; }
 
-    /// <summary>
-    /// Gets or sets the field identifier this completed field is related to.
-    /// </summary>
-    public int FieldId { get; set; }
+  /// <summary>
+  /// Gets or sets the field identifier this completed field is related to.
+  /// </summary>
+  public int FieldId { get; set; }
 
-    /// <summary>
-    /// Gets or sets the completed field value.
-    /// </summary>
-    public string Value { get; set; }
+  /// <summary>
+  /// Gets or sets the completed field value.
+  /// </summary>
+  public string Value { get; set; }
 
-    public virtual CompletedForm CompletedForm { get; set; }
-    public virtual Field Field { get; set; }
-  }
+  public virtual CompletedForm CompletedForm { get; set; }
+  public virtual Field Field { get; set; }
 }

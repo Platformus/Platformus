@@ -3,12 +3,11 @@
 
 using System.Collections.Generic;
 
-namespace Platformus.Core.Frontend.ViewModels.Shared
+namespace Platformus.Core.Frontend.ViewModels.Shared;
+
+public class CulturesViewModel : ViewModelBase
 {
-  public class CulturesViewModel : ViewModelBase
-  {
-    public IEnumerable<CultureViewModel> Cultures { get; set; }
-    public string PartialViewName { get; set; }
-    public string AdditionalCssClass { get; set; }
-  }
+  public IEnumerable<CultureViewModel> Cultures { get; set; }
+  public string PartialViewName { get; set; }
+  public string AdditionalCssClass { get; set; }
 }

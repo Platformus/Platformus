@@ -7,21 +7,21 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Platformus.Core.Services.Abstractions;
 
-namespace Platformus.WebApplication.Extensions
+namespace Platformus.WebApplication.Extensions;
+
+public static class ApplicationBuilderExtensions
 {
-  public static class ApplicationBuilderExtensions
+  public static void UsePlatformus(this IApplicationBuilder applicationBuilder)
   {
-    public static void UsePlatformus(this IApplicationBuilder applicationBuilder)
+    applicationBuilder.UseExtCore();
+
+    IHostApplicationLifetime hostApplicationLifetime = applicationBuilder.ApplicationServices.GetService<IHostApplicationLifetime>();
+
+    hostApplicationLifetime.ApplicationStarted.Register(() =>
     {
-      applicationBuilder.UseExtCore();
+      ICleaningManager cleaningManager = applicationBuilder.ApplicationServices.GetService<ICleaningManager>();
 
-      IHostApplicationLifetime hostApplicationLifetime = applicationBuilder.ApplicationServices.GetService<IHostApplicationLifetime>();
-
-      hostApplicationLifetime.ApplicationStarted.Register(() => {
-        ICleaningManager cleaningManager = applicationBuilder.ApplicationServices.GetService<ICleaningManager>();
-
-        cleaningManager.CleanUpAsync(applicationBuilder.ApplicationServices);
-      });
-    }
+      cleaningManager.CleanUpAsync(applicationBuilder.ApplicationServices);
+    });
   }
 }

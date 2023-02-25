@@ -3,18 +3,17 @@
 
 using Platformus.Website.Data.Entities;
 
-namespace Platformus.Website.Backend.ViewModels.Shared
+namespace Platformus.Website.Backend.ViewModels.Shared;
+
+public static class TabViewModelFactory
 {
-  public static class TabViewModelFactory
+  public static TabViewModel Create(Tab tab)
   {
-    public static TabViewModel Create(Tab tab)
+    return new TabViewModel()
     {
-      return new TabViewModel()
-      {
-        Id = tab.Id,
-        Name = tab.Name,
-        Position = tab.Position
-      };
-    }
+      Id = tab.Id,
+      Name = tab.Name,
+      Position = tab.Position
+    };
   }
 }

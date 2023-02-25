@@ -5,21 +5,20 @@ using ExtCore.Infrastructure;
 using Microsoft.AspNetCore.Http;
 using Platformus.Website.ResponseCaches;
 
-namespace Platformus.Website
+namespace Platformus.Website;
+
+/// <summary>
+/// Provides ability to invalidate the HTTP(S) response caches and remove all the cached content.
+/// </summary>
+public class ResponseCacheManager
 {
   /// <summary>
-  /// Provides ability to invalidate the HTTP(S) response caches and remove all the cached content.
+  /// Invalidates the HTTP(S) response caches and removes all the cached content.
   /// </summary>
-  public class ResponseCacheManager
+  /// <param name="httpContext">Current <see cref="HttpContext"/> to get the needed services from.</param>
+  public static void RemoveAll(HttpContext httpContext)
   {
-    /// <summary>
-    /// Invalidates the HTTP(S) response caches and removes all the cached content.
-    /// </summary>
-    /// <param name="httpContext">Current <see cref="HttpContext"/> to get the needed services from.</param>
-    public static void RemoveAll(HttpContext httpContext)
-    {
-      foreach (IResponseCache responseCache in ExtensionManager.GetInstances<IResponseCache>())
-        responseCache.RemoveAllAsync(httpContext);
-    }
+    foreach (IResponseCache responseCache in ExtensionManager.GetInstances<IResponseCache>())
+      responseCache.RemoveAllAsync(httpContext);
   }
 }

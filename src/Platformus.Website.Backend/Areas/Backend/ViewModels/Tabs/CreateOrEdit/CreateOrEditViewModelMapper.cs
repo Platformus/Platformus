@@ -4,18 +4,17 @@
 using Platformus.Website.Data.Entities;
 using Platformus.Website.Filters;
 
-namespace Platformus.Website.Backend.ViewModels.Tabs
-{
-  public static class CreateOrEditViewModelMapper
-  {
-    public static Tab Map(TabFilter filter, Tab tab, CreateOrEditViewModel createOrEdit)
-    {
-      if (tab.Id == 0)
-        tab.ClassId = (int)filter.Class.Id;
+namespace Platformus.Website.Backend.ViewModels.Tabs;
 
-      tab.Name = createOrEdit.Name;
-      tab.Position = createOrEdit.Position;
-      return tab;
-    }
+public static class CreateOrEditViewModelMapper
+{
+  public static Tab Map(TabFilter filter, Tab tab, CreateOrEditViewModel createOrEdit)
+  {
+    if (tab.Id == 0)
+      tab.ClassId = (int)filter.Class.Id;
+
+    tab.Name = createOrEdit.Name;
+    tab.Position = createOrEdit.Position;
+    return tab;
   }
 }

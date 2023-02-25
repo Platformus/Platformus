@@ -5,12 +5,11 @@ using ExtCore.Events;
 using Microsoft.AspNetCore.Http;
 using Platformus.ECommerce.Data.Entities;
 
-namespace Platformus.ECommerce.Events
+namespace Platformus.ECommerce.Events;
+
+/// <summary>
+/// Describes an event handler that will be automatically executed just after a <see cref="Product"/> is created.
+/// </summary>
+public interface IProductCreatedEventHandler : IEventHandler<HttpContext, Product>
 {
-  /// <summary>
-  /// Describes an event handler that will be automatically executed just after a <see cref="Product"/> is created.
-  /// </summary>
-  public interface IProductCreatedEventHandler : IEventHandler<HttpContext, Product>
-  {
-  }
 }

@@ -5,12 +5,11 @@ using System.Collections.Generic;
 using Platformus.Core.Backend.ViewModels;
 using Platformus.Website.Backend.ViewModels.Shared;
 
-namespace Platformus.Website.Backend.ViewModels.CompletedForms
+namespace Platformus.Website.Backend.ViewModels.CompletedForms;
+
+public class ViewViewModel : ViewModelBase
 {
-  public class ViewViewModel : ViewModelBase
-  {
-    public int Id { get; set; }
-    
-    public IEnumerable<CompletedFieldViewModel> CompletedFields { get; set; }
-  }
+  public int Id { get; set; }
+
+  public IEnumerable<CompletedFieldViewModel> CompletedFields { get; set; }
 }
