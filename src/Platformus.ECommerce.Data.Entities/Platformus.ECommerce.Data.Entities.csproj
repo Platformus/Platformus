@@ -1,21 +1,12 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
+  <Import Project="..\common.props"></Import>
 
   <PropertyGroup>
-    <Authors>Dmitry Sikorsky</Authors>
-    <Copyright>Copyright © 2015 Dmitry Sikorsky</Copyright>
     <Description>The Platformus.ECommerce extension component.</Description>
-    <VersionPrefix>4.0.0</VersionPrefix>
     <TargetFramework>netstandard2.0</TargetFramework>
     <AssemblyName>Platformus.ECommerce.Data.Entities</AssemblyName>
     <PackageId>Platformus.ECommerce.Data.Entities</PackageId>
-    <PackageIcon>icon.png</PackageIcon>
-    <PackageProjectUrl>https://platformus.net/</PackageProjectUrl>
-    <PackageLicenseExpression>Apache-2.0</PackageLicenseExpression>
   </PropertyGroup>
-
-  <ItemGroup>
-    <None Include="icon.png" Pack="true" PackagePath="\" />
-  </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\Platformus.Core.Data.Entities\Platformus.Core.Data.Entities.csproj" />

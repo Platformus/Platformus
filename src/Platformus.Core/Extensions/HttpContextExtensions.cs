@@ -144,6 +144,12 @@ namespace Platformus
 
       if (result is ViewResult)
         await httpContext.RequestServices.GetRequiredService<IActionResultExecutor<ViewResult>>().ExecuteAsync(actionContext, result as ViewResult);
+
+      else if (result is JsonResult)
+        await httpContext.RequestServices.GetRequiredService<IActionResultExecutor<JsonResult>>().ExecuteAsync(actionContext, result as JsonResult);
+
+      else if (result is ContentResult)
+        await httpContext.RequestServices.GetRequiredService<IActionResultExecutor<ContentResult>>().ExecuteAsync(actionContext, result as ContentResult);
     }
   }
 }

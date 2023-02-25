@@ -1,21 +1,13 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
+  <Import Project="..\common.props"></Import>
 
   <PropertyGroup>
-    <Authors>Dmitry Sikorsky</Authors>
     <Copyright>Copyright © 2018 Dmitry Sikorsky</Copyright>
     <Description>The Platformus.Images extension component.</Description>
-    <VersionPrefix>4.0.0</VersionPrefix>
     <TargetFramework>net7.0</TargetFramework>
     <AssemblyName>Platformus.Images</AssemblyName>
     <PackageId>Platformus.Images</PackageId>
-    <PackageIcon>icon.png</PackageIcon>
-    <PackageProjectUrl>https://platformus.net/</PackageProjectUrl>
-    <PackageLicenseExpression>Apache-2.0</PackageLicenseExpression>
   </PropertyGroup>
-
-  <ItemGroup>
-    <None Include="icon.png" Pack="true" PackagePath="\" />
-  </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="SixLabors.ImageSharp" Version="2.1.3" />

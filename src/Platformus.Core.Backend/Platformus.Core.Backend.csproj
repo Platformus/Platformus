@@ -1,23 +1,14 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk.Razor">
+  <Import Project="..\common.props"></Import>
 
   <PropertyGroup>
-    <Authors>Dmitry Sikorsky</Authors>
-    <Copyright>Copyright © 2015 Dmitry Sikorsky</Copyright>
     <Description>The Platformus.Core extension component.</Description>
-    <VersionPrefix>4.0.0</VersionPrefix>
     <TargetFramework>net7.0</TargetFramework>
     <AddRazorSupportForMvc>true</AddRazorSupportForMvc>
     <AssemblyName>Platformus.Core.Backend</AssemblyName>
     <PackageId>Platformus.Core.Backend</PackageId>
-    <PackageIcon>icon.png</PackageIcon>
-    <PackageProjectUrl>https://platformus.net/</PackageProjectUrl>
-    <PackageLicenseExpression>Apache-2.0</PackageLicenseExpression>
   </PropertyGroup>
-
-  <ItemGroup>
-    <None Include="icon.png" Pack="true" PackagePath="\" />
-  </ItemGroup>
-
+  
   <ItemGroup>
     <EmbeddedResource Include="wwwroot\**" />
   </ItemGroup>
