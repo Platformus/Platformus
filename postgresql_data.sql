@@ -2,7 +2,7 @@ BEGIN TRANSACTION;
 
 --
 -- Extension: Platformus.Core
--- Version: 4.0.0
+-- Version: 5.0.0
 --
 
 INSERT INTO public."Users" ("Id","Name","Created") VALUES (1,'Administrator','2017-01-01 00:00:00.000000');
@@ -42,7 +42,7 @@ INSERT INTO public."Cultures" ("Id","Name","IsNeutral","IsFrontendDefault","IsBa
 
 --
 -- Extension: Platformus.Website
--- Version: 4.0.0
+-- Version: 5.0.0
 --
 
 INSERT INTO public."Permissions" ("Id","Code","Name","Position") VALUES (7,'ManageEndpoints','Manage endpoints',700);
@@ -93,7 +93,7 @@ ALTER SEQUENCE "FieldTypes_Id_seq" RESTART WITH 8;
 
 --
 -- Extension: Platformus.ECommerce
--- Version: 4.0.0
+-- Version: 5.0.0
 --
 
 INSERT INTO public."Permissions" ("Id","Code","Name","Position") VALUES (13,'ManageCategories','Manage categories',1300);

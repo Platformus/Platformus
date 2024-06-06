@@ -3,13 +3,13 @@
 
   <PropertyGroup>
     <Description>The Platformus.Website extension component.</Description>
-    <TargetFramework>net7.0</TargetFramework>
+    <TargetFramework>net8.0</TargetFramework>
     <AssemblyName>Platformus.Website.Data.EntityFramework.PostgreSql</AssemblyName>
     <PackageId>Platformus.Website.Data.EntityFramework.PostgreSql</PackageId>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="ExtCore.Data.EntityFramework.PostgreSql" Version="8.0.0" />
+    <PackageReference Include="ExtCore.Data.EntityFramework.PostgreSql" Version="9.0.0" />
   </ItemGroup>
 
   <ItemGroup>

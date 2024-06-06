@@ -3,7 +3,7 @@
 
   <PropertyGroup>
     <Description>The Platformus.Website extension component.</Description>
-    <TargetFramework>net7.0</TargetFramework>
+    <TargetFramework>net8.0</TargetFramework>
     <AssemblyName>Platformus.Website</AssemblyName>
     <PackageId>Platformus.Website</PackageId>
   </PropertyGroup>

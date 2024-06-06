@@ -2,7 +2,7 @@ BEGIN TRANSACTION;
 
 --
 -- Extension: Platformus.Core
--- Version: 4.0.0
+-- Version: 5.0.0
 --
 
 SET IDENTITY_INSERT [dbo].[Users] ON;
@@ -59,7 +59,7 @@ INSERT INTO [dbo].[Cultures] ([Id], [Name], [IsNeutral], [IsFrontendDefault], [I
 
 --
 -- Extension: Platformus.Website
--- Version: 4.0.0
+-- Version: 5.0.0
 --
 
 SET IDENTITY_INSERT [dbo].[Permissions] ON;
@@ -119,7 +119,7 @@ SET IDENTITY_INSERT [dbo].[FieldTypes] OFF;
 
 --
 -- Extension: Platformus.ECommerce
--- Version: 4.0.0
+-- Version: 5.0.0
 --
 
 SET IDENTITY_INSERT [dbo].[Permissions] ON;

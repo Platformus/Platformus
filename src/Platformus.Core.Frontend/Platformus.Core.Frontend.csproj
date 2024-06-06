@@ -3,7 +3,7 @@
 
   <PropertyGroup>
     <Description>The Platformus.Core extension component.</Description>
-    <TargetFramework>net7.0</TargetFramework>
+    <TargetFramework>net8.0</TargetFramework>
     <AddRazorSupportForMvc>true</AddRazorSupportForMvc>
     <AssemblyName>Platformus.Core.Frontend</AssemblyName>
     <PackageId>Platformus.Core.Frontend</PackageId>

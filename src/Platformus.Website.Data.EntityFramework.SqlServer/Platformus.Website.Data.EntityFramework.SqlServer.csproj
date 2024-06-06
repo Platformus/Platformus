@@ -3,13 +3,13 @@
 
   <PropertyGroup>
     <Description>The Platformus.Website extension component.</Description>
-    <TargetFramework>net7.0</TargetFramework>
+    <TargetFramework>net8.0</TargetFramework>
     <AssemblyName>Platformus.Website.Data.EntityFramework.SqlServer</AssemblyName>
     <PackageId>Platformus.Website.Data.EntityFramework.SqlServer</PackageId>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="ExtCore.Data.EntityFramework.SqlServer" Version="8.0.0" />
+    <PackageReference Include="ExtCore.Data.EntityFramework.SqlServer" Version="9.0.0" />
   </ItemGroup>
 
   <ItemGroup>

@@ -1,6 +1,6 @@
 --
 -- Extension: Platformus.Core
--- Version: 4.0.0
+-- Version: 5.0.0
 --
 
 -- ModelStates
@@ -179,7 +179,7 @@ ALTER TABLE "Localizations" OWNER TO postgres;
 
 --
 -- Extension: Platformus.Website
--- Version: 4.0.0
+-- Version: 5.0.0
 --
 
 -- Endpoints
@@ -569,7 +569,7 @@ ALTER TABLE "Files" OWNER TO postgres;
 
 --
 -- Extension: Platformus.ECommerce
--- Version: 4.0.0
+-- Version: 5.0.0
 --
 
 -- Categories

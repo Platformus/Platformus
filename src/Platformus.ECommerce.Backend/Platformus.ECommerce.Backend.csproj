@@ -3,7 +3,7 @@
 
   <PropertyGroup>
     <Description>The Platformus.ECommerce extension component.</Description>
-    <TargetFramework>net7.0</TargetFramework>
+    <TargetFramework>net8.0</TargetFramework>
     <AddRazorSupportForMvc>true</AddRazorSupportForMvc>
     <AssemblyName>Platformus.ECommerce.Backend</AssemblyName>
     <PackageId>Platformus.ECommerce.Backend</PackageId>

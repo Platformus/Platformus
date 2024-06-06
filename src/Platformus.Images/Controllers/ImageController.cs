@@ -29,18 +29,18 @@ public class ImagesController : Controller
   [HttpGet]
   public async Task<IActionResult> IndexAsync(string url, [FromQuery] Rectangle source = null, [FromQuery] Size destination = null, string format = null, int quality = 90, string copyTo = null)
   {
-    (Image Image, IImageFormat ImageFormat) result = await this.LoadImageFromUrlAsync(url);
+    Image result = await this.LoadImageFromUrlAsync(url);
 
-    this.ProcessImage(result.Image, source, destination);
+    this.ProcessImage(result, source, destination);
 
-    IImageEncoder imageEncoder = this.GetImageEncoder(result.ImageFormat, format, quality);
+    IImageEncoder imageEncoder = this.GetImageEncoder(result.Metadata.DecodedImageFormat, format, quality);
 
     if (!string.IsNullOrEmpty(copyTo))
     {
       string filename = this.GetFilenameFromUrl(url);
       string destinationFilepath = this.GetDestinationFilepath(copyTo, filename);
 
-      await result.Image.SaveAsync(
+      await result.SaveAsync(
         destinationFilepath,
         imageEncoder
       );
@@ -50,13 +50,13 @@ public class ImagesController : Controller
 
     Stream output = new MemoryStream();
 
-    await result.Image.SaveAsync(output, imageEncoder);
-    result.Image.Dispose();
+    await result.SaveAsync(output, imageEncoder);
+    result.Dispose();
     output.Seek(0, SeekOrigin.Begin);
-    return this.File(output, this.GetImageMimeType(result.ImageFormat, format));
+    return this.File(output, this.GetImageMimeType(result.Metadata.DecodedImageFormat, format));
   }
 
-  private async Task<(Image Image, IImageFormat Format)> LoadImageFromUrlAsync(string url)
+  private async Task<Image> LoadImageFromUrlAsync(string url)
   {
     if (!Uri.IsWellFormedUriString(url, UriKind.Absolute))
       url = $"{this.Request.Scheme}://{this.Request.Host}{url}";
@@ -66,12 +66,12 @@ public class ImagesController : Controller
       using (HttpClient httpClient = new HttpClient())
       using (HttpResponseMessage response = await httpClient.GetAsync(url))
       using (Stream inputStream = await response.Content.ReadAsStreamAsync())
-        return await Image.LoadWithFormatAsync(inputStream);
+        return await Image.LoadAsync(inputStream);
     }
 
     catch (Exception e)
     {
-      return default((Image Image, IImageFormat Format));
+      return null;
     }
   }
 
