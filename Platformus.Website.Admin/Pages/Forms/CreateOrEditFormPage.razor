@@ -1,0 +1,55 @@
+﻿@* Copyright © 2025 Dmitry Sikorsky. All rights reserved.                                                       *@
+@* Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information. *@
+@attribute [Authorize]
+@page "/forms/create"
+@page "/forms/{id:int}/edit"
+@inject IApiClient1K<int, Form, FormFilter> FormApiClient
+@inject NavigationManager NavigationManager
+@inject IStringLocalizer<Core.Admin.Resources.Core> CoreLocalizer
+@inject IStringLocalizer<Resources.Website> WebsiteLocalizer
+
+<PageTitle>@(Id == null ? WebsiteLocalizer["Forms.CreatingForm"] : WebsiteLocalizer["Forms.EditingForm"])</PageTitle>
+
+<Breadcrumb Items="BreadcrumbItems" />
+<Heading Text="@(Id == null ? WebsiteLocalizer["Forms.CreatingForm"] : WebsiteLocalizer["Forms.EditingForm"])" />
+<div class="row">
+  <div class="col-md-5">
+    <EditForm Model="Form" OnValidSubmit="OnSubmit">
+      <FluentValidationValidator />
+      <TextField DisplayName="@WebsiteLocalizer["Forms.Name"]" @bind-Value="Form.Name" />
+      <div class="d-flex gap-3">
+        <Button Color="ButtonColor.Primary" Type="ButtonType.Submit">@CoreLocalizer["Save"]</Button>
+        <Button Color="ButtonColor.Primary" Outline="true" Type="ButtonType.Link" To="/forms">@CoreLocalizer["Cancel"]</Button>
+      </div>
+    </EditForm>
+  </div>
+</div>
+
+@code {
+  [Parameter] public int? Id { get; set; }
+
+  private Form Form { get; set; } = new();
+  private List<BreadcrumbItem> BreadcrumbItems { get; set; } = new();
+
+  protected override async Task OnInitializedAsync()
+  {
+    if (this.Id != null)
+    {
+      Form? form = await this.FormApiClient.GetByIdAsync((int)this.Id);
+
+      if (form != null) this.Form = form;
+    }
+
+    this.BreadcrumbItems = [new BreadcrumbItem { Href = "/forms", Text = this.WebsiteLocalizer["Forms"] }];
+  }
+
+  private async Task OnSubmit()
+  {
+    if (this.Id == null)
+      this.Id = (await this.FormApiClient.PostAsync(this.Form))?.Id;
+
+    else await this.FormApiClient.PutAsync(this.Form);
+
+    this.NavigationManager.NavigateTo("/forms");
+  }
+}

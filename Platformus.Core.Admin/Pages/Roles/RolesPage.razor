@@ -1,0 +1,87 @@
+﻿@* Copyright © 2025 Dmitry Sikorsky. All rights reserved.                                                       *@
+@* Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information. *@
+@inherits ListPageBase<int, Role, RoleFilter>
+@attribute [Authorize]
+@page "/roles"
+@inject IApiClient1K<int, Permission, PermissionFilter> PermissionApiClient
+
+<PageTitle>@CoreLocalizer["Roles"]</PageTitle>
+
+<Heading Text="@CoreLocalizer["Roles"]">
+  <ContextActions>
+    <Button Color="ButtonColor.Primary" Outline="true" Type="ButtonType.Link" To="/roles/create">
+      <Icon Name="IconName.Plus"></Icon>
+      @CoreLocalizer["Roles.CreateRole"]
+    </Button>
+  </ContextActions>
+</Heading>
+<Table TItem="Role" Items="Roles" RowClicked="OnRowClick">
+  <TableColumns>
+    <TableColumn TItem="Role" Title="@CoreLocalizer["Roles.Name"]" SortingPropertyPath="name">
+      <FilterTemplate>
+        <TableTextFilter TItem="Role" FilteringPropertyPath="name" />
+      </FilterTemplate>
+      <CellTemplate>
+        @context.Name
+      </CellTemplate>
+    </TableColumn>
+    <TableColumn TItem="Role" Title="@CoreLocalizer["Permissions"]">
+      <FilterTemplate>
+        <TableSelectFilter TItem="Role" FilteringPropertyPath="rolepermissions.any.permission.id">
+          @if (this.Permissions != null)
+          {
+            foreach (var permission in Permissions)
+            {
+              <option value="@permission.Id">@permission.Name</option>
+            }
+          }
+        </TableSelectFilter>
+      </FilterTemplate>
+      <CellTemplate>
+        @string.Join(", ", context.RolePermissions!.Select(rp => rp.Permission!.Name))
+      </CellTemplate>
+    </TableColumn>
+    <TableColumn TItem="Role" CssClass="text-end text-nowrap align-middle" Title="&nbsp;">
+      <CellTemplate>
+        <span @onclick:stopPropagation="true">
+          <Button Color="ButtonColor.Primary" Outline="true" Size="ButtonSize.Small" Type="ButtonType.Link" To="@($"/roles/{context.Id}/edit")">
+            <Icon Name="IconName.PencilFill"></Icon>
+          </Button>
+          <Button Color="ButtonColor.Danger" Outline="true" Size="ButtonSize.Small" @onclick="() => OnDeleteButtonClick(context)">
+            <Icon Name="IconName.Trash3"></Icon>
+          </Button>
+        </span>
+      </CellTemplate>
+    </TableColumn>
+  </TableColumns>
+</Table>
+
+<ConfirmDialog @ref="Dialog" />
+
+@code {
+  private IPagedEnumerable<Role>? Roles { get; set; }
+  private IPagedEnumerable<Permission>? Permissions { get; set; }
+  private ConfirmDialog Dialog { get; set; } = default!;
+
+  protected override async Task LoadAsync()
+  {
+    this.Roles = await this.ApiClient.GetAllAsync(
+      this.FilterMapper.Map<RoleFilter>(), this.Sorting, this.Offset, this.Limit,
+      new InclusionBuilder<Role>().Add(r => r.RolePermissions).ThenAdd(rp => rp.Permission).Build()
+    );
+
+    this.Permissions = await this.PermissionApiClient.GetAllAsync();
+  }
+
+  private void OnRowClick(Role role)
+  {
+    this.NavigationManager.NavigateTo($"/roles/{role.Id}");
+  }
+
+  private async Task OnDeleteButtonClick(Role role)
+  {
+    if (await this.Dialog.ShowDeleteConfirmationAsync(this.CoreLocalizer))
+      if (await this.ApiClient.DeleteAsync(role.Id))
+        await this.LoadAsync();
+  }
+}

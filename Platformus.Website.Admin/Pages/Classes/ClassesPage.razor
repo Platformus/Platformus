@@ -1,0 +1,69 @@
+﻿@* Copyright © 2025 Dmitry Sikorsky. All rights reserved.                                                       *@
+@* Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information. *@
+@inherits ListPageBase<int, Class, ClassFilter>
+@attribute [Authorize]
+@page "/classes"
+@inject IStringLocalizer<Resources.Website> WebsiteLocalizer
+
+<PageTitle>@WebsiteLocalizer["Classes"]</PageTitle>
+
+<Heading Text="@WebsiteLocalizer["Classes"]">
+  <ContextActions>
+    <Button Color="ButtonColor.Primary" Outline="true" Type="ButtonType.Link" To="/classes/create">
+      <Icon Name="IconName.Plus"></Icon>
+      @WebsiteLocalizer["Classes.CreateClass"]
+    </Button>
+  </ContextActions>
+</Heading>
+<Table TItem="Class" Items="Classes" RowClicked="OnRowClick">
+  <TableColumns>
+    <TableColumn TItem="Class" Title="@WebsiteLocalizer["Classes.SingularName"]" SortingPropertyPath="name">
+      <FilterTemplate>
+        <TableTextFilter TItem="Class" FilteringPropertyPath="singularname" />
+      </FilterTemplate>
+      <CellTemplate>
+        @context.SingularName
+      </CellTemplate>
+    </TableColumn>
+    <TableColumn TItem="Class" Title="@WebsiteLocalizer["Classes.PluralName"]" SortingPropertyPath="name">
+      <FilterTemplate>
+        <TableTextFilter TItem="Class" FilteringPropertyPath="pluralname" />
+      </FilterTemplate>
+      <CellTemplate>
+        @context.PluralName
+      </CellTemplate>
+    </TableColumn>
+    <TableColumn TItem="Class" Title="@WebsiteLocalizer["Classes.UrlSegment"]" SortingPropertyPath="name">
+      <FilterTemplate>
+        <TableTextFilter TItem="Class" FilteringPropertyPath="urlsegment" />
+      </FilterTemplate>
+      <CellTemplate>
+        @context.UrlSegment
+      </CellTemplate>
+    </TableColumn>
+  </TableColumns>
+</Table>
+
+<ConfirmDialog @ref="Dialog" />
+
+@code {
+  private IPagedEnumerable<Class>? Classes { get; set; }
+  private ConfirmDialog Dialog { get; set; } = default!;
+
+  protected override async Task LoadAsync()
+  {
+    this.Classes = await this.ApiClient.GetAllAsync(this.FilterMapper.Map<ClassFilter>(), this.Sorting, this.Offset, this.Limit);
+  }
+
+  private void OnRowClick(Class @class)
+  {
+    this.NavigationManager.NavigateTo($"/classes/{@class.Id}");
+  }
+
+  private async Task OnDeleteButtonClick(Class @class)
+  {
+    if (await this.Dialog.ShowDeleteConfirmationAsync(this.CoreLocalizer))
+      if (await this.ApiClient.DeleteAsync(@class.Id))
+        await this.LoadAsync();
+  }
+}

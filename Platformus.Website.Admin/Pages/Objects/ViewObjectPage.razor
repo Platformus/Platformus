@@ -1,0 +1,84 @@
+﻿@* Copyright © 2025 Dmitry Sikorsky. All rights reserved.                                                       *@
+@* Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information. *@
+@attribute [Authorize]
+@page "/objects/{urlSegment}/{id:int}"
+@inject IApiClient1K<int, Class, ClassFilter> ClassApiClient
+@inject IApiClient1K<int, Api.Dto.Object, ObjectFilter> ObjectApiClient
+@inject NavigationManager NavigationManager
+@inject IStringLocalizer<Core.Admin.Resources.Core> CoreLocalizer
+@inject IStringLocalizer<Resources.Website> WebsiteLocalizer
+
+<PageTitle>@Object?.Class?.SingularName</PageTitle>
+
+<Breadcrumb Items="BreadcrumbItems" />
+<Heading Text="@Object?.Class?.SingularName">
+  <ContextActions>
+    <Button Color="ButtonColor.Primary" Outline="true" Type="ButtonType.Link" To="@($"/objects/{UrlSegment}/{Id}/edit")">
+      <Icon Name="IconName.PencilFill"></Icon>
+      @CoreLocalizer["Edit"]
+    </Button>
+    <Button Color="ButtonColor.Danger" Outline="true" @onclick="OnDeleteButtonClick">
+      <Icon Name="IconName.Trash3"></Icon>
+      @CoreLocalizer["Delete"]
+    </Button>
+  </ContextActions>
+</Heading>
+@if (this.Object != null)
+{
+  <dl class="mb-5">
+    @foreach (var member in Object.Class!.Members!)
+    {
+      IEnumerable<Property> properties = Object.Properties!.Where(p => p.Member!.Id == member.Id);
+
+      if (properties.Any())
+      {
+        <dt>
+          @member.Name
+        </dt>
+        @foreach (var property in properties)
+        {
+          if (property != null)
+          {
+            <dd>
+              @property.GetValue(member)
+            </dd>
+          }
+        }
+      }
+    }
+  </dl>
+}
+
+<ConfirmDialog @ref="Dialog" />
+
+@code {
+  [Parameter] public string? UrlSegment { get; set; }
+  [Parameter] public int Id { get; set; }
+
+  private Api.Dto.Object? Object { get; set; }
+  private List<BreadcrumbItem> BreadcrumbItems { get; set; } = [];
+  private ConfirmDialog Dialog { get; set; } = default!;
+
+  protected override async Task OnInitializedAsync()
+  {
+    this.Object = await this.ObjectApiClient.GetByIdAsync(
+      this.Id,
+      inclusions: [
+        new InclusionBuilder<Api.Dto.Object>().Add(o => o.Class).ThenAdd(c => c.Members).Build(),
+        new InclusionBuilder<Api.Dto.Object>().Add(o => o.Properties).ThenAdd(p => p.LocalizedProperties).Build(),
+      ]
+    );
+
+    this.BreadcrumbItems = [
+      new BreadcrumbItem { Text = this.WebsiteLocalizer["Objects"] },
+      new BreadcrumbItem { Href = $"/objects/{this.UrlSegment}", Text = this.Object?.Class?.PluralName }
+    ];
+  }
+
+  private async Task OnDeleteButtonClick()
+  {
+    if (await this.Dialog.ShowDeleteConfirmationAsync(this.CoreLocalizer))
+      if (await this.ObjectApiClient.DeleteAsync(this.Id))
+        this.NavigationManager.NavigateTo($"/objects/{this.UrlSegment}");
+  }
+}

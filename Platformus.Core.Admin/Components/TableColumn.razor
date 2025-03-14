@@ -1,0 +1,44 @@
+﻿@* Copyright © 2025 Dmitry Sikorsky. All rights reserved.                                                       *@
+@* Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information. *@
+@typeparam TItem
+@inject IUrl Url
+
+<th role="@(string.IsNullOrEmpty(SortingPropertyPath) ? null : "button")" @onclick="OnClick">
+  @Title
+  @if (this.IsSortedAscending == true)
+  {
+    <i class="bi bi-sort-alpha-down ms-1"></i>
+  }
+  else if (this.IsSortedAscending == false)
+  {
+    <i class="bi bi-sort-alpha-up ms-1"></i>
+  }
+</th>
+
+@code {
+  [CascadingParameter(Name = "Parent")] public Table<TItem> Parent { get; set; } = default!;
+  [Parameter] public string? CssClass { get; set; }
+  [Parameter] public string Title { get; set; } = string.Empty;
+  [Parameter] public string? SortingPropertyPath { get; set; }
+  [Parameter] public RenderFragment? FilterTemplate { get; set; }
+  [Parameter] public RenderFragment<TItem> CellTemplate { get; set; } = default!;
+
+  [Parameter, SupplyParameterFromQuery]
+  public string? Sorting { get; set; }
+
+  private bool? IsSortedAscending => this.IsSortedByCurrentSortingPropertyPath ? (this.Sorting?[0] == '+' || this.Sorting?[0] == ' ') : null;
+  private bool IsSortedByCurrentSortingPropertyPath => string.Equals(this.Sorting?.Substring(1) ?? string.Empty, this.SortingPropertyPath, StringComparison.OrdinalIgnoreCase);
+
+  protected override void OnInitialized()
+  {
+    this.Parent?.AddColumn(this);
+    base.OnInitialized();
+  }
+
+  private void OnClick()
+  {
+    if (string.IsNullOrEmpty(this.SortingPropertyPath)) return;
+
+    this.Url.Set("sorting", $"{(this.IsSortedAscending == true ? '-' : '+')}{this.SortingPropertyPath}").Go();
+  }
+}

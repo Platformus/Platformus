@@ -1,0 +1,66 @@
+﻿@* Copyright © 2025 Dmitry Sikorsky. All rights reserved.                                                       *@
+@* Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information. *@
+@inherits ListPageBase<string, Culture, CultureFilter>
+@attribute [Authorize]
+@page "/cultures"
+
+<PageTitle>@CoreLocalizer["Cultures"]</PageTitle>
+
+<Heading Text="@CoreLocalizer["Cultures"]">
+  <ContextActions>
+    <Button Color="ButtonColor.Primary" Outline="true" Type="ButtonType.Link" To="/cultures/create">
+      <Icon Name="IconName.Plus"></Icon>
+      @CoreLocalizer["Cultures.CreateCulture"]
+    </Button>
+  </ContextActions>
+</Heading>
+<Table TItem="Culture" Items="Cultures" Sorting="+name" RowClicked="OnRowClick">
+  <TableColumns>
+    <TableColumn TItem="Culture" Title="@CoreLocalizer["Cultures.Name"]" SortingPropertyPath="name">
+      <FilterTemplate>
+        <TableTextFilter TItem="Culture" FilteringPropertyPath="name" />
+      </FilterTemplate>
+      <CellTemplate>
+        @context.Name
+      </CellTemplate>
+    </TableColumn>
+    <TableColumn TItem="Culture" CssClass="text-end text-nowrap align-middle" Title="&nbsp;">
+      <CellTemplate>
+        <span @onclick:stopPropagation="true">
+          <Button Color="ButtonColor.Primary" Outline="true" Size="ButtonSize.Small" Type="ButtonType.Link" To="@($"/cultures/{context.Id}/edit")">
+            <Icon Name="IconName.PencilFill"></Icon>
+          </Button>
+          <Button Color="ButtonColor.Danger" Outline="true" Size="ButtonSize.Small" @onclick="() => OnDeleteButtonClick(context)">
+            <Icon Name="IconName.Trash3"></Icon>
+          </Button>
+        </span>
+      </CellTemplate>
+    </TableColumn>
+  </TableColumns>
+</Table>
+
+<ConfirmDialog @ref="Dialog" />
+
+@code {
+  private IPagedEnumerable<Culture>? Cultures { get; set; }
+  private ConfirmDialog Dialog { get; set; } = default!;
+
+  protected override async Task LoadAsync()
+  {
+    this.Cultures = await this.ApiClient.GetAllAsync(
+      this.FilterMapper.Map<CultureFilter>(), this.Sorting, this.Offset, this.Limit
+    );
+  }
+
+  private void OnRowClick(Culture culture)
+  {
+    this.NavigationManager.NavigateTo($"/cultures/{culture.Id}");
+  }
+
+  private async Task OnDeleteButtonClick(Culture culture)
+  {
+    if (await this.Dialog.ShowDeleteConfirmationAsync(this.CoreLocalizer))
+      if (await this.ApiClient.DeleteAsync(culture.Id!))
+        await this.LoadAsync();
+  }
+}

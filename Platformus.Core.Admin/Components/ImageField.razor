@@ -1,0 +1,52 @@
+﻿@* Copyright © 2025 Dmitry Sikorsky. All rights reserved.                                                       *@
+@* Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information. *@
+@inherits InputText
+@inject ImageApiClient ImageApiClient
+@inject IStringLocalizer<Resources.Core> Localizer
+
+@if (!string.IsNullOrEmpty(CurrentValue))
+{
+  <div class="position-relative mb-3">
+    <img class="img-thumbnail" src="@($"{CurrentPath}/{CurrentValue}")" width="200" height="200" alt="">
+    <Button Class="position-absolute left-0 start-0 m-2" Color="ButtonColor.Danger" Outline="true" Size="ButtonSize.Small" @onclick="OnDeleteButtonClick">
+      <Icon Name="IconName.Trash3"></Icon>
+    </Button>
+  </div>
+}
+<div class="mb-3">
+  @if (!string.IsNullOrWhiteSpace(DisplayName ?? ValueExpression!.GetDisplayName()))
+  {
+    <label class="form-label">@(DisplayName ?? ValueExpression!.GetDisplayName())</label>
+  }
+  <InputFile class="form-control" type="file" disabled="@IsUploading" OnChange="OnChange" />
+</div>
+
+@code {
+  [Parameter, EditorRequired] public string Path { get; set; } = string.Empty;
+
+  private string CurrentPath { get; set; } = string.Empty;
+  private bool IsUploading { get; set; } = false;
+
+  protected override void OnInitialized()
+  {
+    this.CurrentPath = this.Path;
+  }
+
+  private async Task OnChange(InputFileChangeEventArgs e)
+  {
+    if (e.File == null) return;
+
+    this.IsUploading = true;
+
+    Platformus.Core.Api.Dto.Image? image = await this.ImageApiClient.PostAsync(e.File);
+
+    this.CurrentPath = "/temp";
+    this.CurrentValue = e.File.Name;
+    this.IsUploading = false;
+  }
+
+  private void OnDeleteButtonClick()
+  {
+    this.CurrentValue = null;
+  }
+}

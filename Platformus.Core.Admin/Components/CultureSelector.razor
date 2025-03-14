@@ -1,0 +1,42 @@
+﻿@* Copyright © 2025 Dmitry Sikorsky. All rights reserved.                                                       *@
+@* Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information. *@
+@inject ICultureCache CultureCache
+
+@if (Cultures != null)
+{
+
+}
+<div class="d-flex gap-2">
+  <Dropdown Color="DropdownColor.Light">
+    <DropdownToggleButton>
+      @Cultures!.FirstOrDefault(c => c.Id == Culture?.Id)?.Name
+    </DropdownToggleButton>
+    <DropdownMenu>
+      @foreach (var culture in Cultures!)
+      {
+        <DropdownItem Type="DropdownItemType.Link" @onclick='() => OnCultureDropdownItemClick(culture)'>@culture.Name</DropdownItem>
+      }
+    </DropdownMenu>
+  </Dropdown>
+</div>
+
+@code {
+  [Parameter] public Culture? Culture { get; set; }
+  [Parameter] public EventCallback<Culture?> CultureChanged { get; set; }
+
+  private IEnumerable<Culture>? Cultures { get; set; }
+
+  protected override async Task OnInitializedAsync()
+  {
+    this.Cultures = await this.CultureCache.GetCulturesAsync();
+
+    if (this.Culture == null)
+      await this.OnCultureDropdownItemClick(this.Cultures.First());
+  }
+
+  private async Task OnCultureDropdownItemClick(Culture culture)
+  {
+    this.Culture = culture;
+    await CultureChanged.InvokeAsync(culture);
+  }
+}

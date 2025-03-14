@@ -1,0 +1,143 @@
+﻿@* Copyright © 2025 Dmitry Sikorsky. All rights reserved.                                                       *@
+@* Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information. *@
+@attribute [Authorize]
+@page "/objects/{urlSegment}/create"
+@page "/objects/{urlSegment}/{id:int}/edit"
+@using System.Globalization
+@inject ICultureCache CultureCache
+@inject IApiClient1K<int, Class, ClassFilter> ClassApiClient
+@inject IApiClient1K<int, Api.Dto.Object, ObjectFilter> ObjectApiClient
+@inject NavigationManager NavigationManager
+@inject IStringLocalizer<Core.Admin.Resources.Core> CoreLocalizer
+@inject IStringLocalizer<Resources.Website> WebsiteLocalizer
+
+<PageTitle>@(Id == null ? WebsiteLocalizer["Objects.CreatingObject"] : WebsiteLocalizer["Objects.EditingObject"])</PageTitle>
+
+<Breadcrumb Items="BreadcrumbItems" />
+<Heading Text="@(Id == null ? WebsiteLocalizer["Objects.CreatingObject"] : WebsiteLocalizer["Objects.EditingObject"])">
+  <ContextActions>
+    <CultureSelector @bind-Culture="Culture" />
+  </ContextActions>
+</Heading>
+@if (Cultures == null || Class == null)
+{
+}
+else
+{
+  <div class="row">
+    <div class="col-md-5">
+      <EditForm Model="Object" OnValidSubmit="OnSubmit">
+        <FluentValidationValidator />
+        @foreach (var member in Class.Members!)
+        {
+          Property property = Object.Properties!.First(p => p.Member!.Id == member.Id);
+
+          if (member.MemberType!.Id == Domain.MemberTypes.TextBox)
+          {
+            if (member.IsLocalizable)
+            {
+              <TextField DisplayName="@member.Name" Culture="Culture" @bind-Value="property.Localized(Culture.Id!).StringValue" />
+            }
+
+            else
+            {
+              <TextField DisplayName="@member.Name" @bind-Value="property.StringValue" />
+            }
+          }
+
+          else if (member.MemberType!.Id == Domain.MemberTypes.Html)
+          {
+            if (member.IsLocalizable)
+            {
+              <TinyMCEField DisplayName="@member.Name" Culture="Culture" @bind-Value="property.Localized(Culture.Id!).StringValue" />
+            }
+
+            else
+            {
+              <TinyMCEField DisplayName="@member.Name" @bind-Value="property.StringValue" />
+            }
+          }
+        }
+        <div class="d-flex gap-3">
+          <Button Color="ButtonColor.Primary" Type="ButtonType.Submit">@CoreLocalizer["Save"]</Button>
+          <Button Color="ButtonColor.Primary" Outline="true" Type="ButtonType.Link" To="@($"/objects/{UrlSegment}{(Id == null ? null : $"/{Id}")}")">@CoreLocalizer["Cancel"]</Button>
+        </div>
+      </EditForm>
+    </div>
+  </div>
+}
+
+@code {
+  [Parameter] public string? UrlSegment { get; set; }
+  [Parameter] public int? Id { get; set; }
+
+  private Class? Class { get; set; }
+  private Api.Dto.Object Object { get; set; } = new();
+  private IEnumerable<Culture>? Cultures { get; set; }
+  private Culture Culture { get; set; } = new Culture { Id = CultureInfo.CurrentCulture.TwoLetterISOLanguageName };
+  private List<BreadcrumbItem> BreadcrumbItems { get; set; } = [];
+
+  protected override async Task OnInitializedAsync()
+  {
+    this.Class = (await this.ClassApiClient.GetAllAsync(
+      new ClassFilter { UrlSegment = new StringFilter { Equals = this.UrlSegment } },
+      inclusions: new InclusionBuilder<Class>().Add(c => c.Members).Build())
+    )?.FirstOrDefault();
+
+    if (this.Id != null)
+    {
+      Api.Dto.Object? @object = await this.ObjectApiClient.GetByIdAsync(
+        (int)this.Id,
+        inclusions: new InclusionBuilder<Api.Dto.Object>().Add(o => o.Properties).ThenAdd(p => p.LocalizedProperties).Build()
+      );
+
+      if (@object != null) this.Object = @object;
+    }
+
+    else this.Object.Class = this.Class;
+
+    this.Cultures = await this.CultureCache.GetCulturesAsync();
+    this.FixMissingProperties();
+    this.BreadcrumbItems = [
+      new BreadcrumbItem { Text = this.WebsiteLocalizer["Objects"] },
+      new BreadcrumbItem { Href = $"/objects/{this.UrlSegment}", Text = this.Class?.PluralName }
+    ];
+  }
+
+  private async Task OnSubmit()
+  {
+    if (this.Id == null)
+      this.Id = (await this.ObjectApiClient.PostAsync(this.Object))?.Id;
+
+    else await this.ObjectApiClient.PutAsync(this.Object);
+
+    this.NavigationManager.NavigateTo($"/objects/{this.UrlSegment}/{this.Id}");
+  }
+
+  private void FixMissingProperties()
+  {
+    List<Property> properties = [];
+
+    foreach (Member member in this.Class!.Members!)
+    {
+      Property property = this.Object.Properties?.FirstOrDefault(p => p.Member!.Id == member.Id) ?? new Property { Member = member, LocalizedProperties = [] };
+
+      if (member.IsLocalizable)
+        this.FixMissingLocalizedProperties(property);
+
+      properties.AddRange(property);
+    }
+
+    this.Object.Properties = properties;
+  }
+
+  private void FixMissingLocalizedProperties(Property property)
+  {
+    List<LocalizedProperty> localizedProperties = [];
+
+    foreach (Culture culture in this.Cultures!)
+      localizedProperties.Add(property.LocalizedProperties?.FirstOrDefault(lp => lp.Culture!.Id == culture.Id) ?? new LocalizedProperty { Culture = culture });
+
+    property.LocalizedProperties = localizedProperties;
+  }
+}

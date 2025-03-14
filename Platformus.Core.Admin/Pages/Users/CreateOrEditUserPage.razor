@@ -1,0 +1,56 @@
+﻿@* Copyright © 2025 Dmitry Sikorsky. All rights reserved.                                                       *@
+@* Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information. *@
+@attribute [Authorize]
+@page "/users/create"
+@page "/users/{id:int}/edit"
+@inject IApiClient1K<int, User, UserFilter> UserApiClient
+@inject NavigationManager NavigationManager
+@inject IStringLocalizer<Resources.Core> Localizer
+
+<PageTitle>@(Id == null ? Localizer["Users.CreatingUser"] : Localizer["Users.EditingUser"])</PageTitle>
+
+<Breadcrumb Items="BreadcrumbItems" />
+<Heading Text="@(Id == null ? Localizer["Users.CreatingUser"] : Localizer["Users.EditingUser"])" />
+<div class="row">
+  <div class="col-md-5">
+    <EditForm Model="User" OnValidSubmit="OnSubmit">
+      <FluentValidationValidator />
+      <TextField DisplayName="@Localizer["Users.FullName"]" @bind-Value="User.Name" />
+      <div class="d-flex gap-3">
+        <Button Color="ButtonColor.Primary" Type="ButtonType.Submit">@Localizer["Save"]</Button>
+        <Button Color="ButtonColor.Primary" Outline="true" Type="ButtonType.Link" To="@($"/users{(Id == null ? null : $"/{Id}")}")">@Localizer["Cancel"]</Button>
+      </div>
+    </EditForm>
+  </div>
+</div>
+
+@code {
+  [Parameter] public int? Id { get; set; }
+
+  private User User { get; set; } = new();
+  private List<BreadcrumbItem> BreadcrumbItems { get; set; } = [];
+
+  protected override async Task OnInitializedAsync()
+  {
+    if (this.Id != null)
+    {
+      this.BreadcrumbItems.Add(new BreadcrumbItem { Href = $"/users/{@Id}", Text = "User" });
+
+      User? user = await this.UserApiClient.GetByIdAsync((int)this.Id);
+
+      if (user != null) this.User = user;
+    }
+
+    this.BreadcrumbItems = [new BreadcrumbItem { Href = "/users", Text = this.Localizer["Users"] }];
+  }
+
+  private async Task OnSubmit()
+  {
+    if (this.Id == null)
+      this.Id = (await this.UserApiClient.PostAsync(this.User))?.Id;
+
+    else await this.UserApiClient.PutAsync(this.User);
+
+    this.NavigationManager.NavigateTo($"/users/{this.Id}");
+  }
+}

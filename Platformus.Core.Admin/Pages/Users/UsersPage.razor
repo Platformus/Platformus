@@ -1,0 +1,107 @@
+﻿@* Copyright © 2025 Dmitry Sikorsky. All rights reserved.                                                       *@
+@* Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information. *@
+@inherits ListPageBase<int, User, UserFilter>
+@attribute [Authorize]
+@page "/users"
+@inject IApiClient1K<int, Role, RoleFilter> RoleApiClient
+
+<PageTitle>@CoreLocalizer["Users"]</PageTitle>
+
+<Heading Text="@CoreLocalizer["Users"]">
+  <ContextActions>
+    <Button Color="ButtonColor.Primary" Outline="true" Type="ButtonType.Link" To="/users/create">
+      <Icon Name="IconName.Plus"></Icon>
+      @CoreLocalizer["Users.CreateUser"]
+    </Button>
+  </ContextActions>
+</Heading>
+<Table TItem="User" Items="Users" RowClicked="OnRowClick">
+  <TableColumns>
+    <TableColumn TItem="User" Title="@CoreLocalizer["Users.FullName"]" SortingPropertyPath="name">
+      <FilterTemplate>
+        <TableTextFilter TItem="User" FilteringPropertyPath="name" />
+      </FilterTemplate>
+      <CellTemplate>
+        @context.Name
+      </CellTemplate>
+    </TableColumn>
+    <TableColumn TItem="User" Title="@CoreLocalizer["Credentials"]">
+      <FilterTemplate>
+        <TableTextFilter TItem="User" FilteringPropertyPath="credentials.any.identifier" />
+      </FilterTemplate>
+      <CellTemplate>
+        @foreach (var credential in context.Credentials!)
+        {
+          @credential.Identifier
+          <br />
+        }
+      </CellTemplate>
+    </TableColumn>
+    <TableColumn TItem="User" Title="@CoreLocalizer["Roles"]">
+      <FilterTemplate>
+        <TableSelectFilter TItem="User" FilteringPropertyPath="userroles.any.role.id">
+          @if (this.Roles != null)
+          {
+            foreach (var role in Roles)
+            {
+              <option value="@role.Id">@role.Name</option>
+            }
+          }
+        </TableSelectFilter>
+      </FilterTemplate>
+      <CellTemplate>
+        @string.Join(", ", context.UserRoles!.Select(ur => ur.Role!.Name))
+      </CellTemplate>
+    </TableColumn>
+    <TableColumn TItem="User" Title="@CoreLocalizer["Users.Registered"]" SortingPropertyPath="created">
+      <CellTemplate>
+        @context.Created
+      </CellTemplate>
+    </TableColumn>
+    <TableColumn TItem="User" CssClass="text-end text-nowrap align-middle" Title="&nbsp;">
+      <CellTemplate>
+        <span @onclick:stopPropagation="true">
+          <Button Color="ButtonColor.Primary" Outline="true" Size="ButtonSize.Small" Type="ButtonType.Link" To="@($"/users/{context.Id}/edit")">
+            <Icon Name="IconName.PencilFill"></Icon>
+          </Button>
+          <Button Color="ButtonColor.Danger" Outline="true" Size="ButtonSize.Small" @onclick="() => OnDeleteButtonClick(context)">
+            <Icon Name="IconName.Trash3"></Icon>
+          </Button>
+        </span>
+      </CellTemplate>
+    </TableColumn>
+  </TableColumns>
+</Table>
+
+<ConfirmDialog @ref="Dialog" />
+
+@code {
+  private IPagedEnumerable<User>? Users { get; set; }
+  private IPagedEnumerable<Role>? Roles { get; set; }
+  private ConfirmDialog Dialog { get; set; } = default!;
+
+  protected override async Task LoadAsync()
+  {
+    this.Users = await this.ApiClient.GetAllAsync(
+      this.FilterMapper.Map<UserFilter>(), this.Sorting, this.Offset, this.Limit,
+      [
+        new InclusionBuilder<User>().Add(u => u.Credentials).ThenAdd(c => c.CredentialType).Build(),
+        new InclusionBuilder<User>().Add(u => u.UserRoles).ThenAdd(ur => ur.Role).Build()
+      ]
+    );
+
+    this.Roles = await this.RoleApiClient.GetAllAsync();
+  }
+
+  private void OnRowClick(User user)
+  {
+    this.NavigationManager.NavigateTo($"/users/{user.Id}");
+  }
+
+  private async Task OnDeleteButtonClick(User user)
+  {
+    if (await this.Dialog.ShowDeleteConfirmationAsync(this.CoreLocalizer))
+      if (await this.ApiClient.DeleteAsync(user.Id))
+        await this.LoadAsync();
+  }
+}

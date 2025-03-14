@@ -1,0 +1,29 @@
+﻿@* Copyright © 2025 Dmitry Sikorsky. All rights reserved.                                                       *@
+@* Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information. *@
+@page "/login"
+@inject IAuthService AuthService
+@inject NavigationManager NavigationManager
+
+<PageTitle>Login</PageTitle>
+
+<h1 class="mb-3">Login</h1>
+<div class="row">
+  <div class="col-md-5">
+    <EditForm Model="Model" OnValidSubmit="OnSubmit">
+      <DataAnnotationsValidator />
+      <TextField @bind-Value="Model.Email" />
+      <SecretField @bind-Value="Model.Password" />
+      <button class="btn btn-primary" type="submit">Log in</button>
+    </EditForm>
+  </div>
+</div>
+
+@code {
+  public LoginPageModel Model { get; set; } = new();
+
+  private async Task OnSubmit()
+  {
+    if (await this.AuthService.SignInAsync(this.Model.Email!, this.Model.Password!))
+      this.NavigationManager.NavigateTo("/");
+  }
+}

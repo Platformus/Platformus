@@ -1,0 +1,125 @@
+﻿@* Copyright © 2025 Dmitry Sikorsky. All rights reserved.                                                       *@
+@* Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information. *@
+@attribute [Authorize]
+@page "/configurations"
+@inject IApiClient1K<int, Configuration, ConfigurationFilter> ConfigurationApiClient
+@inject IApiClient1K<int, Variable, VariableFilter> VariableApiClient
+@inject ICookiesService CookiesService
+@inject NavigationManager NavigationManager
+@inject IStringLocalizer<Resources.Core> Localizer
+
+<PageTitle>@Localizer["Configurations"]</PageTitle>
+
+<Heading Text="@Localizer["Configurations"]">
+  <ContextActions>
+    <Button Color="ButtonColor.Primary" Outline="true" Type="ButtonType.Link" To="/configurations/create">
+      <Icon Name="IconName.Plus"></Icon>
+      @Localizer["Configurations.CreateConfiguration"]
+    </Button>
+  </ContextActions>
+</Heading>
+@if (Configurations == null)
+{
+}
+else
+{
+  <Accordion AlwaysOpen="true" OnShown="OnAccordionItemShownAsync" OnHidden="OnAccordionItemHiddenAsync">
+    @foreach (var configuration in Configurations)
+    {
+      <AccordionItem Name="@configuration.Id.ToString()" Active="AccordionItemStates[configuration.Id]">
+        <TitleTemplate>
+          <div class="w-100 d-flex align-items-center justify-content-between me-3">
+            @configuration.Name
+            <div @onclick:stopPropagation="true">
+              <Button Color="ButtonColor.Primary" Outline="true" Size="ButtonSize.Small" Type="ButtonType.Link" To="@($"/configurations/{configuration.Id}/edit")">
+                <Icon Name="IconName.PencilFill"></Icon>
+              </Button>
+              <Button Color="ButtonColor.Danger" Outline="true" Size="ButtonSize.Small" @onclick="() => OnDeleteButtonClick(configuration)">
+                <Icon Name="IconName.Trash3"></Icon>
+              </Button>
+            </div>
+          </div>
+        </TitleTemplate>
+        <Content>
+          <div class="d-flex align-items-center justify-content-end">
+            <Button Color="ButtonColor.Primary" Outline="true" Size="ButtonSize.Small" Type="ButtonType.Link" To="@($"/configurations/{configuration.Id}/variables/create")">
+              <Icon Name="IconName.Plus"></Icon>
+              @Localizer["Variables.CreateVariable"]
+            </Button>
+          </div>
+          <dl>
+            @foreach (var variable in configuration.Variables!)
+            {
+              <dt>@variable.Name</dt>
+              <dd>
+                <div class="d-flex align-items-center justify-content-between">
+                  @(string.IsNullOrEmpty(variable.Value) ? @Localizer["Configurations.NoValue"] : variable.Value)
+                  <div @onclick:stopPropagation="true">
+                    <Button Color="ButtonColor.Primary" Outline="true" Size="ButtonSize.Small" Type="ButtonType.Link" To="@($"/configurations/{configuration.Id}/variables/{variable.Id}/edit")">
+                      <Icon Name="IconName.PencilFill"></Icon>
+                    </Button>
+                    <Button Color="ButtonColor.Danger" Outline="true" Size="ButtonSize.Small" @onclick="() => OnDeleteButtonClick(variable)">
+                      <Icon Name="IconName.Trash3"></Icon>
+                    </Button>
+                  </div>
+                </div>
+              </dd>
+            }
+          </dl>
+        </Content>
+      </AccordionItem>
+    }
+  </Accordion>
+}
+
+<ConfirmDialog @ref="Dialog" />
+
+@code {
+  private IPagedEnumerable<Configuration>? Configurations { get; set; }
+  private Dictionary<int, bool> AccordionItemStates = [];
+  private ConfirmDialog Dialog { get; set; } = default!;
+
+  protected override async Task OnInitializedAsync()
+  {
+    this.Configurations = await this.ConfigurationApiClient.GetAllAsync(
+      inclusions: new InclusionBuilder<Configuration>().Add(c => c.Variables).Build()
+    );
+
+    this.AccordionItemStates.Clear();
+
+    foreach (Configuration configuration in this.Configurations!)
+      this.AccordionItemStates[configuration.Id] = await this.CookiesService.GetCookieAsync(GetAccordionItemCookieName(configuration.Id)) == true.ToString();
+  }
+
+  private static string GetAccordionItemCookieName(int configurationId) => $"accordionItemConfiguration{configurationId}";
+
+  private async Task OnAccordionItemShownAsync(AccordionEventArgs args)
+  {
+    int configurationId = int.Parse(args.Name);
+
+    this.AccordionItemStates[configurationId] = true;
+    await this.CookiesService.SetCookieAsync(GetAccordionItemCookieName(configurationId), true.ToString(), 365);
+  }
+
+  private async Task OnAccordionItemHiddenAsync(AccordionEventArgs args)
+  {
+    int configurationId = int.Parse(args.Name);
+
+    this.AccordionItemStates[configurationId] = false;
+    await this.CookiesService.SetCookieAsync(GetAccordionItemCookieName(configurationId), false.ToString(), 365);
+  }
+
+  private async Task OnDeleteButtonClick(Configuration configuration)
+  {
+    if (await this.Dialog.ShowDeleteConfirmationAsync(this.Localizer))
+      if (await this.ConfigurationApiClient.DeleteAsync(configuration.Id))
+        await this.OnInitializedAsync();
+  }
+
+  private async Task OnDeleteButtonClick(Variable variable)
+  {
+    if (await this.Dialog.ShowDeleteConfirmationAsync(this.Localizer))
+      if (await this.VariableApiClient.DeleteAsync(variable.Id))
+        await this.OnInitializedAsync();
+  }
+}

@@ -1,0 +1,122 @@
+﻿@* Copyright © 2025 Dmitry Sikorsky. All rights reserved.                                                       *@
+@* Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information. *@
+@attribute [Authorize]
+@page "/forms"
+@inject IApiClient1K<int, Form, FormFilter> FormApiClient
+@inject IApiClient1K<int, Field, FieldFilter> FieldApiClient
+@inject ICookiesService CookiesService
+@inject NavigationManager NavigationManager
+@inject IStringLocalizer<Core.Admin.Resources.Core> CoreLocalizer
+@inject IStringLocalizer<Resources.Website> WebsiteLocalizer
+
+<PageTitle>@WebsiteLocalizer["Forms"]</PageTitle>
+
+<Heading Text="@WebsiteLocalizer["Forms"]">
+  <ContextActions>
+    <Button Color="ButtonColor.Primary" Outline="true" Type="ButtonType.Link" To="/forms/create">
+      <Icon Name="IconName.Plus" />
+      @WebsiteLocalizer["Forms.CreateForm"]
+    </Button>
+  </ContextActions>
+</Heading>
+@if (Forms == null)
+{
+}
+else
+{
+  <Accordion AlwaysOpen="true" OnShown="OnAccordionItemShownAsync" OnHidden="OnAccordionItemHiddenAsync">
+    @foreach (var form in Forms)
+    {
+      <AccordionItem Name="@form.Id.ToString()" Active="AccordionItemStates[form.Id]">
+        <TitleTemplate>
+          <div class="w-100 d-flex align-items-center justify-content-between me-3">
+            @form.Name
+            <div @onclick:stopPropagation="true">
+              <Button Color="ButtonColor.Primary" Outline="true" Size="ButtonSize.Small" Type="ButtonType.Link" To="@($"/forms/{form.Id}/edit")">
+                <Icon Name="IconName.PencilFill" />
+              </Button>
+              <Button Color="ButtonColor.Danger" Outline="true" Size="ButtonSize.Small" @onclick="() => OnDeleteButtonClick(form)">
+                <Icon Name="IconName.Trash3" />
+              </Button>
+            </div>
+          </div>
+        </TitleTemplate>
+        <Content>
+          <div class="d-flex align-items-center justify-content-end">
+            <Button Color="ButtonColor.Primary" Outline="true" Size="ButtonSize.Small" Type="ButtonType.Link" To="@($"/forms/{form.Id}/fields/create")">
+              <Icon Name="IconName.Plus"></Icon>
+              @WebsiteLocalizer["Fields.CreateField"]
+            </Button>
+          </div>
+          <dl>
+            @foreach (var field in form.Fields!)
+            {
+              <dt>
+                <div class="mt-3 d-flex align-items-center justify-content-between">
+                  @field.Localized().Name
+                  <div @onclick:stopPropagation="true">
+                    <Button Color="ButtonColor.Primary" Outline="true" Size="ButtonSize.Small" Type="ButtonType.Link" To="@($"/forms/{form.Id}/fields/{field.Id}/edit")">
+                      <Icon Name="IconName.PencilFill"></Icon>
+                    </Button>
+                    <Button Color="ButtonColor.Danger" Outline="true" Size="ButtonSize.Small" @onclick="() => OnDeleteButtonClick(field)">
+                      <Icon Name="IconName.Trash3"></Icon>
+                    </Button>
+                  </div>
+                </div>
+              </dt>
+            }
+          </dl>
+        </Content>
+      </AccordionItem>
+    }
+  </Accordion>
+}
+
+<ConfirmDialog @ref="Dialog" />
+
+@code {
+  private IPagedEnumerable<Form>? Forms { get; set; }
+  private Dictionary<int, bool> AccordionItemStates = [];
+  private ConfirmDialog Dialog { get; set; } = default!;
+
+  protected override async Task OnInitializedAsync()
+  {
+    this.Forms = await this.FormApiClient.GetAllAsync(inclusions: new InclusionBuilder<Form>().Add(f => f.Fields).ThenAdd(f => f.LocalizedFields).Build());
+    this.AccordionItemStates.Clear();
+
+    foreach (Form form in this.Forms!)
+      this.AccordionItemStates[form.Id] = await this.CookiesService.GetCookieAsync(GetAccordionItemCookieName(form.Id)) == true.ToString();
+  }
+
+  private static string GetAccordionItemCookieName(int formId) => $"accordionItemForm{formId}";
+
+  private async Task OnAccordionItemShownAsync(AccordionEventArgs args)
+  {
+    int formId = int.Parse(args.Name);
+
+    this.AccordionItemStates[formId] = true;
+    await this.CookiesService.SetCookieAsync(GetAccordionItemCookieName(formId), true.ToString(), 365);
+  }
+
+  private async Task OnAccordionItemHiddenAsync(AccordionEventArgs args)
+  {
+    int formId = int.Parse(args.Name);
+
+    this.AccordionItemStates[formId] = false;
+    await this.CookiesService.SetCookieAsync(GetAccordionItemCookieName(formId), false.ToString(), 365);
+  }
+
+  private async Task OnDeleteButtonClick(Form form)
+  {
+    if (await this.Dialog.ShowDeleteConfirmationAsync(this.CoreLocalizer))
+      if (await this.FormApiClient.DeleteAsync(form.Id))
+        await this.OnInitializedAsync();
+  }
+
+  private async Task OnDeleteButtonClick(Field field)
+  {
+    if (await this.Dialog.ShowDeleteConfirmationAsync(this.CoreLocalizer))
+      if (await this.FieldApiClient.DeleteAsync(field.Id))
+        await this.OnInitializedAsync();
+  }
+}

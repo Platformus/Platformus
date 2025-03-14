@@ -1,0 +1,104 @@
+﻿@* Copyright © 2025 Dmitry Sikorsky. All rights reserved.                                                       *@
+@* Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information. *@
+@attribute [Authorize]
+@page "/classes/{classId:int}/members/create"
+@page "/classes/{classId:int}/members/{id:int}/edit"
+@inject IApiClient1K<int, Class, ClassFilter> ClassApiClient
+@inject IApiClient1K<string, MemberType, MemberTypeFilter> MemberTypeApiClient
+@inject IApiClient1K<int, Member, Filters.MemberFilter> MemberApiClient
+@inject NavigationManager NavigationManager
+@inject IStringLocalizer<Core.Admin.Resources.Core> CoreLocalizer
+@inject IStringLocalizer<Resources.Website> WebsiteLocalizer
+
+<PageTitle>@(Id == null ? WebsiteLocalizer["Members.CreatingMember"] : WebsiteLocalizer["Members.EditingMember"])</PageTitle>
+
+<Breadcrumb Items="BreadcrumbItems" />
+<Heading Text="@(Id == null ? WebsiteLocalizer["Members.CreatingMember"] : WebsiteLocalizer["Members.EditingMember"])" />
+<div class="row">
+  <div class="col-md-5">
+    <EditForm Model="Member" OnValidSubmit="OnSubmit">
+      <FluentValidationValidator />
+      <SelectField DisplayName="@WebsiteLocalizer["Members.Type"]" @bind-Value="MemberTypeId">
+        @if (MemberTypes != null)
+        {
+          foreach (var memberType in MemberTypes)
+          {
+            <option value="@memberType.Id">@WebsiteLocalizer[memberType.Name!]</option>
+          }
+        }
+      </SelectField>
+      <TextField DisplayName="@WebsiteLocalizer["Members.Name"]" @bind-Value="Member.Name" />
+      <div class="form-check mb-3">
+        <input class="form-check-input" id="isLocalizable" type="checkbox" @bind="Member.IsLocalizable">
+        <label class="form-check-label" for="isLocalizable">
+          @WebsiteLocalizer["Members.Localizable"]
+        </label>
+      </div>
+      <div class="form-check mb-3">
+        <input class="form-check-input" id="isShownInList" type="checkbox" @bind="Member.IsShownInList">
+        <label class="form-check-label" for="isShownInList">
+          @WebsiteLocalizer["Members.ShownInList"]
+        </label>
+      </div>
+      <TextField DisplayName="@WebsiteLocalizer["Members.CSharpName"]" @bind-Value="Member.CSharpName" />
+      <div class="d-flex gap-3">
+        <Button Color="ButtonColor.Primary" Type="ButtonType.Submit">@CoreLocalizer["Save"]</Button>
+        <Button Color="ButtonColor.Primary" Outline="true" Type="ButtonType.Link" To="@($"/classes/{@ClassId}{(this.Id == null ? null : $"/members/{Id}")}")">@CoreLocalizer["Cancel"]</Button>
+      </div>
+    </EditForm>
+  </div>
+</div>
+
+@code {
+  [Parameter] public int ClassId { get; set; }
+  [Parameter] public int? Id { get; set; }
+
+  private Class? Class { get; set; }
+  private Member Member { get; set; } = new();
+  private string? MemberTypeId
+  {
+    get => this.Member.MemberType?.Id;
+
+    set
+    {
+      if (string.IsNullOrEmpty(value))
+        this.Member.MemberType = null;
+
+      else this.Member.MemberType = this.MemberTypes?.FirstOrDefault(mt => mt.Id == value);
+    }
+  }
+
+  private IEnumerable<MemberType>? MemberTypes { get; set; }
+  private List<BreadcrumbItem> BreadcrumbItems { get; set; } = [];
+
+  protected override async Task OnInitializedAsync()
+  {
+    this.Class = await this.ClassApiClient.GetByIdAsync(this.ClassId);
+
+    if (this.Id != null)
+    {
+      Member? member = await this.MemberApiClient.GetByIdAsync((int)this.Id);
+
+      if (member != null) this.Member = member;
+    }
+
+    else this.Member.Class = new Class { Id = this.ClassId };
+
+    this.MemberTypes = await this.MemberTypeApiClient.GetAllAsync();
+    this.BreadcrumbItems =
+    [
+      new BreadcrumbItem{ Href = "/classes", Text = this.WebsiteLocalizer["Classes"] },
+      new BreadcrumbItem{ Href = $"/classes/{ClassId}", Text = this.Class!.SingularName }
+    ];
+  }
+
+  private async Task OnSubmit()
+  {
+    if (this.Id == null)
+      this.Id = (await this.MemberApiClient.PostAsync(this.Member))?.Id;
+    
+    else await this.MemberApiClient.PutAsync(this.Member);
+
+    this.NavigationManager.NavigateTo($"/classes/{this.ClassId}/members/{this.Id}");
+  }
+}

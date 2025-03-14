@@ -1,0 +1,66 @@
+﻿@* Copyright © 2025 Dmitry Sikorsky. All rights reserved.                                                       *@
+@* Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information. *@
+@attribute [Authorize]
+@page "/configurations/{configurationId:int}/variables/create"
+@page "/configurations/{configurationId:int}/variables/{id:int}/edit"
+@inject IApiClient1K<int, Configuration, ConfigurationFilter> ConfigurationApiClient
+@inject IApiClient1K<int, Variable, VariableFilter> VariableApiClient
+@inject NavigationManager NavigationManager
+@inject IStringLocalizer<Resources.Core> Localizer
+
+<PageTitle>@(Id == null ? Localizer["Variables.CreatingVariable"] : Localizer["Variables.EditingVariable"])</PageTitle>
+
+<Breadcrumb Items="BreadcrumbItems" />
+<Heading Text="@(Id == null ? Localizer["Variables.CreatingVariable"] : Localizer["Variables.EditingVariable"])" />
+<div class="row">
+  <div class="col-md-5">
+    <EditForm Model="Variable" OnValidSubmit="OnSubmit">
+      <FluentValidationValidator />
+      <TextField DisplayName="@Localizer["Variables.Code"]" @bind-Value="Variable.Code" />
+      <TextField DisplayName="@Localizer["Variables.Name"]" @bind-Value="Variable.Name" />
+      <TextField DisplayName="@Localizer["Variables.Value"]" @bind-Value="Variable.Value" />
+      <div class="d-flex gap-3">
+        <Button Color="ButtonColor.Primary" Type="ButtonType.Submit">@Localizer["Save"]</Button>
+        <Button Color="ButtonColor.Primary" Outline="true" Type="ButtonType.Link" To="/configurations">@Localizer["Cancel"]</Button>
+      </div>
+    </EditForm>
+  </div>
+</div>
+
+@code {
+  [Parameter] public int ConfigurationId { get; set; }
+  [Parameter] public int? Id { get; set; }
+
+  private Configuration? Configuration { get; set; }
+  private Variable Variable { get; set; } = new();
+  private List<BreadcrumbItem> BreadcrumbItems { get; set; } = [];
+
+  protected override async Task OnInitializedAsync()
+  {
+    this.Configuration = await this.ConfigurationApiClient.GetByIdAsync(this.ConfigurationId);
+
+    if (this.Id != null)
+    {
+      Variable? variable = await this.VariableApiClient.GetByIdAsync((int)this.Id);
+
+      if (variable != null) this.Variable = variable;
+    }
+
+    else this.Variable.Configuration = new Configuration { Id = this.ConfigurationId };
+
+    this.BreadcrumbItems = [
+      new BreadcrumbItem { Href = "/configurations", Text = this.Localizer["Configurations"] },
+      new BreadcrumbItem{ Href = $"/configurations#configuration{this.ConfigurationId}", Text = this.Configuration!.Name }
+    ];
+  }
+
+  private async Task OnSubmit()
+  {
+    if (this.Id == null)
+      this.Id = (await this.VariableApiClient.PostAsync(this.Variable))?.Id;
+
+    else await this.VariableApiClient.PutAsync(this.Variable);
+
+    this.NavigationManager.NavigateTo($"/configurations");
+  }
+}

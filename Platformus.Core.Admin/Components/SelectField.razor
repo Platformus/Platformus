@@ -1,0 +1,19 @@
+﻿@* Copyright © 2025 Dmitry Sikorsky. All rights reserved.                                                       *@
+@* Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information. *@
+@inherits InputSelect<TValue>
+@typeparam TValue
+
+<div class="mb-3">
+  @if (!string.IsNullOrWhiteSpace(DisplayName ?? ValueExpression!.GetDisplayName()))
+  {
+    <label class="form-label">@(DisplayName ?? ValueExpression!.GetDisplayName())</label>
+  }
+  <select class="@CssClass form-select" @bind="@CurrentValue" @attributes="AdditionalAttributes">
+    <option></option>
+    @ChildContent
+  </select>
+  @if (this.ValueExpression != null)
+  {
+    <ValidationMessage class="text-danger" For=@ValueExpression />
+  }
+</div>

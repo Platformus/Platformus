@@ -1,0 +1,60 @@
+﻿@* Copyright © 2025 Dmitry Sikorsky. All rights reserved.                                                       *@
+@* Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information. *@
+@attribute [Authorize]
+@page "/classes/create"
+@page "/classes/{id:int}/edit"
+@inject IApiClient1K<int, Class, ClassFilter> ClassApiClient
+@inject NavigationManager NavigationManager
+@inject IStringLocalizer<Core.Admin.Resources.Core> CoreLocalizer
+@inject IStringLocalizer<Resources.Website> WebsiteLocalizer
+
+<PageTitle>@(Id == null ? WebsiteLocalizer["Classes.CreatingClass"] : WebsiteLocalizer["Classes.EditingClass"])</PageTitle>
+
+<Breadcrumb Items="BreadcrumbItems" />
+<Heading Text="@(Id == null ? WebsiteLocalizer["Classes.CreatingClass"] : WebsiteLocalizer["Classes.EditingClass"])" />
+<div class="row">
+  <div class="col-md-5">
+    <EditForm Model="Class" OnValidSubmit="OnSubmit">
+      <FluentValidationValidator />
+      <TextField DisplayName="@WebsiteLocalizer["Classes.SingularName"]" @bind-Value="Class.SingularName" />
+      <TextField DisplayName="@WebsiteLocalizer["Classes.PluralName"]" @bind-Value="Class.PluralName" />
+      <TextField DisplayName="@WebsiteLocalizer["Classes.UrlSegment"]" @bind-Value="Class.UrlSegment" />
+      <TextField DisplayName="@WebsiteLocalizer["Classes.CSharpName"]" @bind-Value="Class.CSharpName" />
+      <div class="d-flex gap-3">
+        <Button Color="ButtonColor.Primary" Type="ButtonType.Submit">@CoreLocalizer["Save"]</Button>
+        <Button Color="ButtonColor.Primary" Outline="true" Type="ButtonType.Link" To="@($"/classes{(Id == null ? null : $"/{Id}")}")">@CoreLocalizer["Cancel"]</Button>
+      </div>
+    </EditForm>
+  </div>
+</div>
+
+@code {
+  [Parameter] public int? Id { get; set; }
+
+  private Class Class { get; set; } = new();
+  private List<BreadcrumbItem> BreadcrumbItems { get; set; } = [];
+
+  protected override async Task OnInitializedAsync()
+  {
+    if (this.Id != null)
+    {
+      this.BreadcrumbItems.Add(new BreadcrumbItem { Href = $"/classes/{@Id}", Text = "Class" });
+
+      Class? @class = await this.ClassApiClient.GetByIdAsync((int)this.Id);
+
+      if (@class != null) this.Class = @class;
+    }
+
+    this.BreadcrumbItems = [new BreadcrumbItem { Href = "/classes", Text = this.WebsiteLocalizer["Classes"] }];
+  }
+
+  private async Task OnSubmit()
+  {
+    if (this.Id == null)
+      this.Id = (await this.ClassApiClient.PostAsync(this.Class))?.Id;
+
+    else await this.ClassApiClient.PutAsync(this.Class);
+
+    this.NavigationManager.NavigateTo($"/classes/{this.Id}");
+  }
+}

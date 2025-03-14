@@ -1,0 +1,27 @@
+﻿@* Copyright © 2025 Dmitry Sikorsky. All rights reserved.                                                       *@
+@* Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information. *@
+@using Microsoft.Extensions.Options
+@inherits InputText
+@inject IOptions<TinyMCEOptions> TinyMCEOptions
+
+<div class="mb-3">
+  @if (!string.IsNullOrWhiteSpace(DisplayName ?? ValueExpression!.GetDisplayName()))
+  {
+    <label class="form-label">
+      @if (Culture != null)
+      {
+        <span class="badge text-bg-light me-1">@Culture!.Id</span>
+      }
+      @(DisplayName ?? ValueExpression!.GetDisplayName())
+    </label>
+  }
+  <TinyMCE.Blazor.Editor ScriptSrc="@TinyMCEOptions.Value.ScriptSrc" Conf="TinyMCEOptions.Value.Configuration" LicenseKey="@TinyMCEOptions.Value.LicenseKey" Field="() => CurrentValue" @bind-Value="CurrentValue" @attributes="AdditionalAttributes" />
+  @if (this.ValueExpression != null)
+  {
+    <ValidationMessage class="text-danger" For=@ValueExpression />
+  }
+</div>
+
+@code {
+  [Parameter] public Culture? Culture { get; set; }
+}

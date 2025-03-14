@@ -1,0 +1,94 @@
+﻿@* Copyright © 2025 Dmitry Sikorsky. All rights reserved.                                                       *@
+@* Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information. *@
+@attribute [Authorize]
+@page "/classes/{classId:int}/members/{id:int}"
+@inject IApiClient1K<int, Member, Filters.MemberFilter> MemberApiClient
+@inject NavigationManager NavigationManager
+@inject IStringLocalizer<Core.Admin.Resources.Core> CoreLocalizer
+@inject IStringLocalizer<Resources.Website> WebsiteLocalizer
+
+<PageTitle>@Member?.Name</PageTitle>
+
+<Breadcrumb Items="BreadcrumbItems" />
+<Heading Text="@Member?.Name">
+  <ContextActions>
+    <Button Color="ButtonColor.Primary" Outline="true" Type="ButtonType.Link" To="@($"/classes/{ClassId}/members/{Id}/edit")">
+      <Icon Name="IconName.PencilFill"></Icon>
+      @CoreLocalizer["Edit"]
+    </Button>
+    <Button Color="ButtonColor.Danger" Outline="true" @onclick="OnDeleteButtonClick">
+      <Icon Name="IconName.Trash3"></Icon>
+      @CoreLocalizer["Delete"]
+    </Button>
+  </ContextActions>
+</Heading>
+@if (this.Member != null)
+{
+  <dl>
+    <dt>
+      @WebsiteLocalizer["Members.Type"]
+    </dt>
+    <dd>
+      @WebsiteLocalizer[Member.MemberType!.Name!]
+    </dd>
+    <dt>
+      @WebsiteLocalizer["Members.Name"]
+    </dt>
+    <dd>
+      @Member.Name
+    </dd>
+    <dt>
+      @WebsiteLocalizer["Members.Localizable"]
+    </dt>
+    <dd>
+      @(Member.IsLocalizable ? this.CoreLocalizer["Yes"] : this.CoreLocalizer["No"])
+    </dd>
+    <dt>
+      @WebsiteLocalizer["Members.ShownInList"]
+    </dt>
+    <dd>
+      @(Member.IsShownInList ? this.CoreLocalizer["Yes"] : this.CoreLocalizer["No"])
+    </dd>
+    <dt>
+      @WebsiteLocalizer["Members.CSharpName"]
+    </dt>
+    <dd>
+      @Member.CSharpName
+    </dd>
+  </dl>
+}
+
+<ConfirmDialog @ref="Dialog" />
+
+@code {
+  [Parameter] public int ClassId { get; set; }
+  [Parameter] public int Id { get; set; }
+
+  private Member? Member { get; set; }
+  private List<BreadcrumbItem> BreadcrumbItems { get; set; } = [];
+  private ConfirmDialog Dialog { get; set; } = default!;
+
+  protected override async Task OnInitializedAsync()
+  {
+    this.Member = await this.MemberApiClient.GetByIdAsync(
+      this.Id,
+      [
+        new Inclusion<Member>(m => m.Class),
+        new Inclusion<Member>(m => m.MemberType),
+      ]
+    );
+
+    this.BreadcrumbItems =
+    [
+      new BreadcrumbItem{ Href = "/classes", Text = this.WebsiteLocalizer["Classes"] },
+      new BreadcrumbItem{ Href = $"/classes/{ClassId}", Text = this.Member!.Class!.SingularName }
+    ];
+  }
+
+  private async Task OnDeleteButtonClick()
+  {
+    if (await this.Dialog.ShowDeleteConfirmationAsync(this.CoreLocalizer))
+      if (await this.MemberApiClient.DeleteAsync(this.Id))
+        this.NavigationManager.NavigateTo($"/classes/{this.ClassId}");
+  }
+}

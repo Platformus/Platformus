@@ -1,0 +1,74 @@
+﻿@* Copyright © 2025 Dmitry Sikorsky. All rights reserved.                                                       *@
+@* Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information. *@
+@inherits ListPageBase<int, Api.Dto.Object, ObjectFilter>
+@attribute [Authorize]
+@page "/objects/{urlSegment}"
+@inject IApiClient1K<int, Class, ClassFilter> ClassApiClient
+@inject IStringLocalizer<Resources.Website> WebsiteLocalizer
+
+<PageTitle>@(Class == null ? string.Empty : Class.PluralName)</PageTitle>
+
+<Breadcrumb Items="BreadcrumbItems" />
+<Heading Text="@(Class == null ? string.Empty : Class.PluralName)">
+  <ContextActions>
+    <Button Color="ButtonColor.Primary" Outline="true" Type="ButtonType.Link" To="@($"/objects/{UrlSegment}/create")">
+      <Icon Name="IconName.Plus"></Icon>
+      @WebsiteLocalizer["Objects.CreateObject"]
+    </Button>
+  </ContextActions>
+</Heading>
+<Table TItem="Api.Dto.Object" Items="Objects" RowClicked="OnRowClick">
+  <TableColumns>
+    @if (Class != null)
+    {
+      foreach (var member in Class.Members!.Where(m => m.IsShownInList))
+      {
+        <TableColumn TItem="Api.Dto.Object" Title="@member.Name">
+          <CellTemplate>
+            @context.Properties!.FirstOrDefault(p => p.Member!.Id == member.Id)?.GetValue()
+          </CellTemplate>
+        </TableColumn>
+      }
+    }
+  </TableColumns>
+</Table>
+
+<ConfirmDialog @ref="Dialog" />
+
+@code {
+  [Parameter] public string? UrlSegment { get; set; }
+
+  private Class? Class { get; set; }
+  private IPagedEnumerable<Api.Dto.Object>? Objects { get; set; }
+  private List<BreadcrumbItem> BreadcrumbItems { get; set; } = [];
+  private ConfirmDialog Dialog { get; set; } = default!;
+
+  protected override async Task LoadAsync()
+  {
+    this.Class = (await this.ClassApiClient.GetAllAsync(
+      new ClassFilter { UrlSegment = new StringFilter { Equals = this.UrlSegment } },
+      inclusions: new InclusionBuilder<Class>().Add(c => c.Members).Build()
+    ))?.FirstOrDefault();
+    this.Objects = await this.ApiClient.GetAllAsync(
+      new ObjectFilter { Class = new ClassFilter { Id = new IntegerFilter { Equals = this.Class!.Id } } }, this.Sorting, this.Offset, this.Limit,
+      inclusions: [
+        new InclusionBuilder<Api.Dto.Object>().Add(o => o.Properties).ThenAdd(p => p.Member).ThenAdd(m => m.MemberType).Build(),
+        new InclusionBuilder<Api.Dto.Object>().Add(o => o.Properties).ThenAdd(p => p.LocalizedProperties).Build(),
+      ]
+    );
+
+    this.BreadcrumbItems = [new BreadcrumbItem { Text = this.WebsiteLocalizer["Objects"] }];
+  }
+
+  private void OnRowClick(Api.Dto.Object @object)
+  {
+    this.NavigationManager.NavigateTo($"/objects/{this.UrlSegment}/{@object.Id}");
+  }
+
+  private async Task OnDeleteButtonClick(Api.Dto.Object @object)
+  {
+    if (await this.Dialog.ShowDeleteConfirmationAsync(this.CoreLocalizer))
+      if (await this.ApiClient.DeleteAsync(@object.Id))
+        await this.LoadAsync();
+  }
+}

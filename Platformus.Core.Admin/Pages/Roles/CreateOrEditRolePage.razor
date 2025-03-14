@@ -1,0 +1,57 @@
+﻿@* Copyright © 2025 Dmitry Sikorsky. All rights reserved.                                                       *@
+@* Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information. *@
+@attribute [Authorize]
+@page "/roles/create"
+@page "/roles/{id:int}/edit"
+@inject IApiClient1K<int, Role, RoleFilter> RoleApiClient
+@inject NavigationManager NavigationManager
+@inject IStringLocalizer<Resources.Core> Localizer
+
+<PageTitle>@(Id == null ? Localizer["Roles.CreatingRole"] : Localizer["Roles.EditingRole"])</PageTitle>
+
+<Breadcrumb Items="BreadcrumbItems" />
+<Heading Text="@(Id == null ? Localizer["Roles.CreatingRole"] : Localizer["Roles.EditingRole"])" />
+<div class="row">
+  <div class="col-md-5">
+    <EditForm Model="Role" OnValidSubmit="OnSubmit">
+      <FluentValidationValidator />
+      <TextField DisplayName="@Localizer["Roles.Code"]" @bind-Value="Role.Code" />
+      <TextField DisplayName="@Localizer["Roles.Name"]" @bind-Value="Role.Name" />
+      <div class="d-flex gap-3">
+        <Button Color="ButtonColor.Primary" Type="ButtonType.Submit">@Localizer["Save"]</Button>
+        <Button Color="ButtonColor.Primary" Outline="true" Type="ButtonType.Link" To="@($"/roles{(Id == null ? null : $"/{Id}")}")">@Localizer["Cancel"]</Button>
+      </div>
+    </EditForm>
+  </div>
+</div>
+
+@code {
+  [Parameter] public int? Id { get; set; }
+
+  private Role Role { get; set; } = new();
+  private List<BreadcrumbItem> BreadcrumbItems { get; set; } = [];
+
+  protected override async Task OnInitializedAsync()
+  {
+    if (this.Id != null)
+    {
+      this.BreadcrumbItems.Add(new BreadcrumbItem { Href = $"/roles/{@Id}", Text = "Role" });
+
+      Role? role = await this.RoleApiClient.GetByIdAsync((int)this.Id);
+
+      if (role != null) this.Role = role;
+    }
+
+    this.BreadcrumbItems = [new BreadcrumbItem { Href = "/roles", Text = this.Localizer["Roles"] }];
+  }
+
+  private async Task OnSubmit()
+  {
+    if (this.Id == null)
+      this.Id = (await this.RoleApiClient.PostAsync(this.Role))?.Id;
+
+    else await this.RoleApiClient.PutAsync(this.Role);
+
+    this.NavigationManager.NavigateTo($"/roles/{this.Id}");
+  }
+}

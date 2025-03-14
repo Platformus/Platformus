@@ -1,0 +1,63 @@
+﻿@* Copyright © 2025 Dmitry Sikorsky. All rights reserved.                                                       *@
+@* Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information. *@
+@attribute [Authorize]
+@page "/cultures/{id}"
+@inject IApiClient1K<string, Culture, CultureFilter> CultureApiClient
+@inject NavigationManager NavigationManager
+@inject IStringLocalizer<Resources.Core> Localizer
+
+<PageTitle>@Culture?.Name</PageTitle>
+
+<Breadcrumb Items="BreadcrumbItems" />
+<Heading Text="@Culture?.Name">
+  <ContextActions>
+    <Button Color="ButtonColor.Primary" Outline="true" Type="ButtonType.Link" To="@($"/cultures/{Id}/edit")">
+      <Icon Name="IconName.PencilFill"></Icon>
+      @Localizer["Edit"]
+    </Button>
+    <Button Color="ButtonColor.Danger" Outline="true" @onclick="OnDeleteButtonClick">
+      <Icon Name="IconName.Trash3"></Icon>
+      @Localizer["Delete"]
+    </Button>
+  </ContextActions>
+</Heading>
+@if (this.Culture != null)
+{
+  <dl>
+    <dt>
+      @Localizer["Cultures.Code"]
+    </dt>
+    <dd>
+      @Culture.Id
+    </dd>
+    <dt>
+      @Localizer["Cultures.Name"]
+    </dt>
+    <dd>
+      @Culture.Name
+    </dd>
+  </dl>
+}
+
+<ConfirmDialog @ref="Dialog" />
+
+@code {
+  [Parameter] public string Id { get; set; } = string.Empty;
+
+  private Culture? Culture { get; set; }
+  private List<BreadcrumbItem> BreadcrumbItems { get; set; } = [];
+  private ConfirmDialog Dialog { get; set; } = default!;
+
+  protected override async Task OnInitializedAsync()
+  {
+    this.Culture = await this.CultureApiClient.GetByIdAsync(this.Id);
+    this.BreadcrumbItems = [new BreadcrumbItem { Href = "/cultures", Text = this.Localizer["Cultures"] }];
+  }
+
+  private async Task OnDeleteButtonClick()
+  {
+    if (await this.Dialog.ShowDeleteConfirmationAsync(this.Localizer))
+      if (await this.CultureApiClient.DeleteAsync(this.Id))
+        this.NavigationManager.NavigateTo("/cultures");
+  }
+}

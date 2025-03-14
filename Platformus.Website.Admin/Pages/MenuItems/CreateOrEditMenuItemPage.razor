@@ -1,0 +1,94 @@
+﻿@* Copyright © 2025 Dmitry Sikorsky. All rights reserved.                                                       *@
+@* Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information. *@
+@attribute [Authorize]
+@page "/menus/{menuId:int}/menu-items/create"
+@page "/menus/{menuId:int}/menu-items/{id:int}/edit"
+@using System.Globalization
+@inject ICultureCache CultureCache
+@inject IApiClient1K<int, Menu, MenuFilter> MenuApiClient
+@inject IApiClient1K<int, MenuItem, MenuItemFilter> MenuItemApiClient
+@inject NavigationManager NavigationManager
+@inject IStringLocalizer<Core.Admin.Resources.Core> CoreLocalizer
+@inject IStringLocalizer<Resources.Website> WebsiteLocalizer
+
+<PageTitle>@(Id == null ? WebsiteLocalizer["MenuItems.CreatingMenuItem"] : WebsiteLocalizer["MenuItems.EditingMenuItem"])</PageTitle>
+
+<Breadcrumb Items="BreadcrumbItems" />
+<Heading Text="@(Id == null ? WebsiteLocalizer["MenuItems.CreatingMenuItem"] : WebsiteLocalizer["MenuItems.EditingMenuItem"])">
+  <ContextActions>
+    <CultureSelector @bind-Culture="Culture" />
+  </ContextActions>
+</Heading>
+@if (Cultures == null)
+{
+}
+else
+{
+  <div class="row">
+    <div class="col-md-5">
+      <EditForm Model="MenuItem" OnValidSubmit="OnSubmit">
+        <FluentValidationValidator />
+        @{
+          var localizedMenuItem = MenuItem.Localized(Culture.Id!);
+        }
+        <TextField DisplayName="@WebsiteLocalizer["MenuItems.Name"]" Culture="Culture" @bind-Value="localizedMenuItem.Name" />
+        <div class="d-flex gap-3">
+          <Button Color="ButtonColor.Primary" Type="ButtonType.Submit">@CoreLocalizer["Save"]</Button>
+          <Button Color="ButtonColor.Primary" Outline="true" Type="ButtonType.Link" To="/menus">@CoreLocalizer["Cancel"]</Button>
+        </div>
+      </EditForm>
+    </div>
+  </div>
+}
+
+@code {
+  [Parameter] public int MenuId { get; set; }
+  [Parameter] public int? Id { get; set; }
+
+  private Menu? Menu { get; set; }
+  private MenuItem MenuItem { get; set; } = new();
+  private IEnumerable<Culture>? Cultures { get; set; }
+  private Culture Culture { get; set; } = new Culture { Id = CultureInfo.CurrentCulture.TwoLetterISOLanguageName };
+  private List<BreadcrumbItem> BreadcrumbItems { get; set; } = [];
+
+  protected override async Task OnInitializedAsync()
+  {
+    this.Menu = await this.MenuApiClient.GetByIdAsync(this.MenuId);
+
+    if (this.Id != null)
+    {
+      MenuItem? menuItem = await this.MenuItemApiClient.GetByIdAsync((int)this.Id, inclusions: new Inclusion<MenuItem>(mi => mi.LocalizedMenuItems));
+
+      if (menuItem != null) this.MenuItem = menuItem;
+    }
+
+    else this.MenuItem.Menu = new Menu { Id = this.MenuId };
+
+    this.Cultures = await this.CultureCache.GetCulturesAsync();
+    this.FixMissingLocalizedMenuItems();
+    this.BreadcrumbItems = [
+      new BreadcrumbItem { Href = "/menus", Text = this.WebsiteLocalizer["Menus"] },
+      new BreadcrumbItem { Href = $"/menus#menu{this.MenuId}", Text = this.Menu!.Name },
+    ];
+  }
+
+  private async Task OnSubmit()
+  {
+    if (this.Id == null)
+      this.Id = (await this.MenuItemApiClient.PostAsync(this.MenuItem))?.Id;
+
+    else await this.MenuItemApiClient.PutAsync(this.MenuItem);
+
+    this.NavigationManager.NavigateTo($"/menus");
+  }
+
+  private void FixMissingLocalizedMenuItems()
+  {
+    List<LocalizedMenuItem> localizedMenuItems = [];
+
+    foreach (Culture culture in this.Cultures!)
+      localizedMenuItems.Add(this.MenuItem.LocalizedMenuItems?.FirstOrDefault(lmi => lmi.Culture!.Id == culture.Id) ?? new LocalizedMenuItem { Culture = culture });
+
+    this.MenuItem.LocalizedMenuItems = localizedMenuItems;
+  }
+}

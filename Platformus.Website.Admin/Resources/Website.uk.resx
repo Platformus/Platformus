@@ -1,0 +1,255 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="Classes" xml:space="preserve">
+    <value>Класи</value>
+  </data>
+  <data name="Classes.CreateClass" xml:space="preserve">
+    <value>Створити клас</value>
+  </data>
+  <data name="Classes.CreatingClass" xml:space="preserve">
+    <value>Створення класу</value>
+  </data>
+  <data name="Classes.EditingClass" xml:space="preserve">
+    <value>Редагування класу</value>
+  </data>
+  <data name="Classes.CSharpName" xml:space="preserve">
+    <value>Назва в C#</value>
+  </data>
+  <data name="Classes.PluralName" xml:space="preserve">
+    <value>Назва в множині</value>
+  </data>
+  <data name="Classes.SingularName" xml:space="preserve">
+    <value>Назва в однині</value>
+  </data>
+  <data name="Classes.UrlSegment" xml:space="preserve">
+    <value>Сегмент URL</value>
+  </data>
+  <data name="Fields.CreateField" xml:space="preserve">
+    <value>Створити поле</value>
+  </data>
+  <data name="Fields.CreatingField" xml:space="preserve">
+    <value>Створення поля</value>
+  </data>
+  <data name="Fields.EditingField" xml:space="preserve">
+    <value>Редагування поля</value>
+  </data>
+  <data name="Fields.Name" xml:space="preserve">
+    <value>Назва</value>
+  </data>
+  <data name="Fields.Type" xml:space="preserve">
+    <value>Тип</value>
+  </data>
+  <data name="FieldTypes.DropDownList" xml:space="preserve">
+    <value>Випадаючий список</value>
+  </data>
+  <data name="FieldTypes.TextArea" xml:space="preserve">
+    <value>Текстова область</value>
+  </data>
+  <data name="FieldTypes.TextBox" xml:space="preserve">
+    <value>Текстове поле</value>
+  </data>
+  <data name="Forms" xml:space="preserve">
+    <value>Форми</value>
+  </data>
+  <data name="Forms.CreateForm" xml:space="preserve">
+    <value>Створити форму</value>
+  </data>
+  <data name="Forms.CreatingForm" xml:space="preserve">
+    <value>Створення форми</value>
+  </data>
+  <data name="Forms.EditingForm" xml:space="preserve">
+    <value>Редагування форми</value>
+  </data>
+  <data name="Forms.Name" xml:space="preserve">
+    <value>Назва</value>
+  </data>
+  <data name="Members" xml:space="preserve">
+    <value>Члени</value>
+  </data>
+  <data name="Members.CreateMember" xml:space="preserve">
+    <value>Створити член</value>
+  </data>
+  <data name="Members.CreatingMember" xml:space="preserve">
+    <value>Створення члену</value>
+  </data>
+  <data name="Members.EditingMember" xml:space="preserve">
+    <value>Редагування члену</value>
+  </data>
+  <data name="Members.Localizable" xml:space="preserve">
+    <value>Локалізується</value>
+  </data>
+  <data name="Members.CSharpName" xml:space="preserve">
+    <value>Назва в C#</value>
+  </data>
+  <data name="Members.Name" xml:space="preserve">
+    <value>Назва</value>
+  </data>
+  <data name="Members.ShownInList" xml:space="preserve">
+    <value>Показується в списку</value>
+  </data>
+  <data name="Members.Type" xml:space="preserve">
+    <value>Тип</value>
+  </data>
+  <data name="MemberTypes.TextBox" xml:space="preserve">
+    <value>Текстове поле</value>
+  </data>
+  <data name="MenuItems.CreateMenuItem" xml:space="preserve">
+    <value>Створити пункт меню</value>
+  </data>
+  <data name="MenuItems.CreatingMenuItem" xml:space="preserve">
+    <value>Створення пункту меню</value>
+  </data>
+  <data name="MenuItems.EditingMenuItem" xml:space="preserve">
+    <value>Редагування пункту меню</value>
+  </data>
+  <data name="MenuItems.Name" xml:space="preserve">
+    <value>Назва</value>
+  </data>
+  <data name="Menus" xml:space="preserve">
+    <value>Меню</value>
+  </data>
+  <data name="Menus.CreateMenu" xml:space="preserve">
+    <value>Створити меню</value>
+  </data>
+  <data name="Menus.CreatingMenu" xml:space="preserve">
+    <value>Створення меню</value>
+  </data>
+  <data name="Menus.EditingMenu" xml:space="preserve">
+    <value>Редагування меню</value>
+  </data>
+  <data name="Menus.Name" xml:space="preserve">
+    <value>Назва</value>
+  </data>
+  <data name="Objects" xml:space="preserve">
+    <value>Об’єкти</value>
+  </data>
+  <data name="Objects.CreateObject" xml:space="preserve">
+    <value>Створити об’єкт</value>
+  </data>
+  <data name="Objects.CreatingObject" xml:space="preserve">
+    <value>Створення об’єкта</value>
+  </data>
+  <data name="Objects.EditingObject" xml:space="preserve">
+    <value>Редагування об’єкта</value>
+  </data>
+  <data name="MemberTypes.Html" xml:space="preserve">
+    <value>HTML</value>
+  </data>
+</root>

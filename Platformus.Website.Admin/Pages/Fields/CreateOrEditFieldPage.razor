@@ -1,0 +1,119 @@
+﻿@* Copyright © 2025 Dmitry Sikorsky. All rights reserved.                                                       *@
+@* Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information. *@
+@attribute [Authorize]
+@page "/forms/{formId:int}/fields/create"
+@page "/forms/{formId:int}/fields/{id:int}/edit"
+@using System.Globalization
+@inject ICultureCache CultureCache
+@inject IApiClient1K<int, Form, FormFilter> FormApiClient
+@inject IApiClient1K<string, FieldType, FieldTypeFilter> FieldTypeApiClient
+@inject IApiClient1K<int, Field, FieldFilter> FieldApiClient
+@inject NavigationManager NavigationManager
+@inject IStringLocalizer<Core.Admin.Resources.Core> CoreLocalizer
+@inject IStringLocalizer<Resources.Website> WebsiteLocalizer
+
+<PageTitle>@(Id == null ? WebsiteLocalizer["Fields.CreatingField"] : WebsiteLocalizer["Fields.EditingField"])</PageTitle>
+
+<Breadcrumb Items="BreadcrumbItems" />
+<Heading Text="@(Id == null ? WebsiteLocalizer["Fields.CreatingField"] : WebsiteLocalizer["Fields.EditingField"])">
+  <ContextActions>
+    <CultureSelector @bind-Culture="Culture" />
+  </ContextActions>
+</Heading>
+@if (Cultures == null)
+{
+}
+else
+{
+  <div class="row">
+    <div class="col-md-5">
+      <EditForm Model="Field" OnValidSubmit="OnSubmit">
+        <FluentValidationValidator />
+        <SelectField DisplayName="@WebsiteLocalizer["Fields.Type"]" @bind-Value="FieldTypeId">
+          @if (FieldTypes != null)
+          {
+            foreach (var fieldType in FieldTypes)
+            {
+              <option value="@fieldType.Id">@WebsiteLocalizer[fieldType.Name!]</option>
+            }
+          }
+        </SelectField>
+        @{
+          var localizedField = Field.Localized(Culture.Id!);
+        }
+        <TextField DisplayName="@WebsiteLocalizer["Fields.Name"]" Culture="Culture" @bind-Value="localizedField.Name" />
+        <div class="d-flex gap-3">
+          <Button Color="ButtonColor.Primary" Type="ButtonType.Submit">@CoreLocalizer["Save"]</Button>
+          <Button Color="ButtonColor.Primary" Outline="true" Type="ButtonType.Link" To="/forms">@CoreLocalizer["Cancel"]</Button>
+        </div>
+      </EditForm>
+    </div>
+  </div>
+}
+
+@code {
+  [Parameter] public int FormId { get; set; }
+  [Parameter] public int? Id { get; set; }
+
+  private Form? Form { get; set; }
+  private Field Field { get; set; } = new();
+  private string? FieldTypeId
+  {
+    get => this.Field.FieldType?.Id;
+
+    set
+    {
+      if (string.IsNullOrEmpty(value))
+        this.Field.FieldType = null;
+
+      else this.Field.FieldType = this.FieldTypes?.FirstOrDefault(ft => ft.Id == value);
+    }
+  }
+
+  private IEnumerable<FieldType>? FieldTypes { get; set; }
+  private IEnumerable<Culture>? Cultures { get; set; }
+  private Culture Culture { get; set; } = new Culture { Id = CultureInfo.CurrentCulture.TwoLetterISOLanguageName };
+  private List<BreadcrumbItem> BreadcrumbItems { get; set; } = [];
+
+  protected override async Task OnInitializedAsync()
+  {
+    this.Form = await this.FormApiClient.GetByIdAsync(this.FormId);
+
+    if (this.Id != null)
+    {
+      Field? field = await this.FieldApiClient.GetByIdAsync((int)this.Id, inclusions: new Inclusion<Field>(f => f.LocalizedFields));
+
+      if (field != null) this.Field = field;
+    }
+
+    else this.Field.Form = new Form { Id = this.FormId };
+
+    this.FieldTypes = await this.FieldTypeApiClient.GetAllAsync();
+    this.Cultures = await this.CultureCache.GetCulturesAsync();
+    this.FixMissingLocalizedFields();
+    this.BreadcrumbItems = [
+      new BreadcrumbItem { Href = "/forms", Text = this.WebsiteLocalizer["Forms"] },
+      new BreadcrumbItem { Href = $"/forms#form{this.FormId}", Text = this.Form!.Name }
+    ];
+  }
+
+  private async Task OnSubmit()
+  {
+    if (this.Id == null)
+      this.Id = (await this.FieldApiClient.PostAsync(this.Field))?.Id;
+
+    else await this.FieldApiClient.PutAsync(this.Field);
+
+    this.NavigationManager.NavigateTo($"/forms");
+  }
+
+  private void FixMissingLocalizedFields()
+  {
+    List<LocalizedField> localizedFields = [];
+
+    foreach (Culture culture in this.Cultures!)
+      localizedFields.Add(this.Field.LocalizedFields?.FirstOrDefault(lf => lf.Culture!.Id == culture.Id) ?? new LocalizedField { Culture = culture });
+
+    this.Field.LocalizedFields = localizedFields;
+  }
+}

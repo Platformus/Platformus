@@ -1,0 +1,162 @@
+﻿@* Copyright © 2025 Dmitry Sikorsky. All rights reserved.                                                       *@
+@* Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information. *@
+@attribute [Authorize]
+@page "/users/{id:int}"
+@inject IApiClient1K<int, User, UserFilter> UserApiClient
+@inject IApiClient1K<int, Credential, CredentialFilter> CredentialApiClient
+@inject IApiClient1K<int, Role, RoleFilter> RoleApiClient
+@inject IApiClient2K<int, int, UserRole, UserRoleFilter> UserRoleApiClient
+@inject NavigationManager NavigationManager
+@inject IStringLocalizer<Resources.Core> Localizer
+
+<PageTitle>@User?.Name</PageTitle>
+
+<Breadcrumb Items="BreadcrumbItems" />
+<Heading Text="@User?.Name">
+  <ContextActions>
+    <Button Color="ButtonColor.Primary" Outline="true" Type="ButtonType.Link" To="@($"/users/{Id}/edit")">
+      <Icon Name="IconName.PencilFill"></Icon>
+      @Localizer["Edit"]
+    </Button>
+    <Button Color="ButtonColor.Danger" Outline="true" @onclick="OnDeleteButtonClick">
+      <Icon Name="IconName.Trash3"></Icon>
+      @Localizer["Delete"]
+    </Button>
+  </ContextActions>
+</Heading>
+@if (this.User != null)
+{
+  <dl class="mb-5">
+    <dt>
+      @Localizer["Users.FullName"]
+    </dt>
+    <dd>
+      @User.Name
+    </dd>
+  </dl>
+  <Heading Level="2" Text="@Localizer["Credentials"]">
+    <ContextActions>
+      <Button Color="ButtonColor.Primary" Outline="true" Size="ButtonSize.Small" Type="ButtonType.Link" To="@($"/users/{Id}/credentials/create")">
+        <Icon Name="IconName.Plus"></Icon>
+        @Localizer["Credentials.CreateCredential"]
+      </Button>
+    </ContextActions>
+  </Heading>
+  <div class="table-responsive mb-5">
+    <table class="table table-sm table-bordered table-hover">
+      <thead>
+        <tr class="table-light">
+          <th>@Localizer["Credentials.CredentialType"]</th>
+          <th>@Localizer["Credentials.Identifier"]</th>
+          <th>&nbsp;</th>
+        </tr>
+      </thead>
+      <tbody>
+        @foreach (var credential in User.Credentials!)
+        {
+          <tr role="button" @onclick="() => OnCredentialRowClick(credential)">
+            <td class="align-middle">@Localizer[credential.CredentialType!.Name!]</td>
+            <td class="align-middle">@credential.Identifier</td>
+            <td class="text-end text-nowrap align-middle">
+              <span @onclick:stopPropagation="true">
+                <Button Color="ButtonColor.Primary" Outline="true" Size="ButtonSize.Small" Type="ButtonType.Link" To="@($"/users/{Id}/credentials/{credential.Id}/edit")">
+                  <Icon Name="IconName.PencilFill"></Icon>
+                </Button>
+                <Button Color="ButtonColor.Danger" Outline="true" Size="ButtonSize.Small" @onclick="() => OnDeleteCredentialButtonClick(credential)">
+                  <Icon Name="IconName.Trash3"></Icon>
+                </Button>
+              </span>
+            </td>
+          </tr>
+        }
+      </tbody>
+    </table>
+  </div>
+  <Heading Level="2" Text="@Localizer["Roles"]" />
+  @if (this.Roles != null)
+  {
+    foreach (var role in Roles)
+    {
+      <div class="form-check">
+        <input class="form-check-input" id="role@(role.Id)" type="checkbox" value="" checked="@HasRole(role)" @onchange="() => OnRoleCheckboxChange(role)">
+        <label class="form-check-label" for="role@(role.Id)">
+          @role.Name
+        </label>
+      </div>
+    }
+  }
+}
+
+<ConfirmDialog @ref="Dialog" />
+
+@code {
+  [Parameter] public int Id { get; set; }
+
+  private User? User { get; set; }
+  private IEnumerable<Role>? Roles { get; set; }
+  private List<BreadcrumbItem> BreadcrumbItems { get; set; } = [];
+  private ConfirmDialog Dialog { get; set; } = default!;
+
+  protected override async Task OnInitializedAsync()
+  {
+    this.User = await this.UserApiClient.GetByIdAsync(
+      this.Id,
+      inclusions: [
+        new InclusionBuilder<User>().Add(u => u.Credentials).ThenAdd(c => c.CredentialType).Build(),
+        new InclusionBuilder<User>().Add(u => u.UserRoles).ThenAdd(ur => ur.Role).Build()
+      ]
+    );
+
+    this.Roles = await this.RoleApiClient.GetAllAsync(null);
+    this.BreadcrumbItems = [new BreadcrumbItem { Href = "/users", Text = this.Localizer["Users"] }];
+  }
+
+  private async Task OnDeleteButtonClick()
+  {
+    if (await this.Dialog.ShowDeleteConfirmationAsync(this.Localizer))
+      if (await this.UserApiClient.DeleteAsync(this.Id))
+        this.NavigationManager.NavigateTo("/users");
+  }
+
+  private void OnCredentialRowClick(Credential credential)
+  {
+    this.NavigationManager.NavigateTo($"/users/{this.Id}/credentials/{credential.Id}");
+  }
+
+  private async Task OnDeleteCredentialButtonClick(Credential credential)
+  {
+    if (await this.Dialog.ShowDeleteConfirmationAsync(this.Localizer))
+      if (await this.CredentialApiClient.DeleteAsync(credential.Id))
+        await this.OnInitializedAsync();
+  }
+
+  private async Task OnRoleCheckboxChange(Role role)
+  {
+    if (this.HasRole(role))
+    {
+      await this.UserRoleApiClient.DeleteAsync(this.User!.Id, role.Id);
+      this.User.UserRoles = this.User!.UserRoles!
+        .Where(ur => ur.Role?.Id != role.Id)
+        .ToList();
+    }
+
+    else
+    {
+      UserRole userRole = new UserRole
+      {
+        User = new User { Id = this.User!.Id },
+        Role = role
+      };
+
+      await this.UserRoleApiClient.PostAsync(userRole);
+      this.User!.UserRoles = this.User!.UserRoles!
+        .Append(userRole)
+        .ToList();
+    }
+  }
+
+  private bool HasRole(Role role)
+  {
+    return this.User!.UserRoles!.Any(ur => ur.Role!.Id == role.Id);
+  }
+}

@@ -1,0 +1,57 @@
+﻿@* Copyright © 2025 Dmitry Sikorsky. All rights reserved.                                                       *@
+@* Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information. *@
+@attribute [Authorize]
+@page "/cultures/create"
+@page "/cultures/{id}/edit"
+@inject IApiClient1K<string, Culture, CultureFilter> CultureApiClient
+@inject NavigationManager NavigationManager
+@inject IStringLocalizer<Resources.Core> Localizer
+
+<PageTitle>@(Id == null ? Localizer["Cultures.CreatingCulture"] : Localizer["Cultures.EditingCulture"])</PageTitle>
+
+<Breadcrumb Items="BreadcrumbItems" />
+<Heading Text="@(Id == null ? Localizer["Cultures.CreatingCulture"] : Localizer["Cultures.EditingCulture"])" />
+<div class="row">
+  <div class="col-md-5">
+    <EditForm Model="Culture" OnValidSubmit="OnSubmit">
+      <FluentValidationValidator />
+      <TextField DisplayName="@Localizer["Cultures.Code"]" @bind-Value="Culture.Id" />
+      <TextField DisplayName="@Localizer["Cultures.Name"]" @bind-Value="Culture.Name" />
+      <div class="d-flex gap-3">
+        <Button Color="ButtonColor.Primary" Type="ButtonType.Submit">@Localizer["Save"]</Button>
+        <Button Color="ButtonColor.Primary" Outline="true" Type="ButtonType.Link" To="@($"/cultures{(Id == null ? null : $"/{Id}")}")">@Localizer["Cancel"]</Button>
+      </div>
+    </EditForm>
+  </div>
+</div>
+
+@code {
+  [Parameter] public string? Id { get; set; }
+
+  private Culture Culture { get; set; } = new();
+  private List<BreadcrumbItem> BreadcrumbItems { get; set; } = [];
+
+  protected override async Task OnInitializedAsync()
+  {
+    if (this.Id != null)
+    {
+      this.BreadcrumbItems.Add(new BreadcrumbItem { Href = $"/cultures/{@Id}", Text = "Culture" });
+
+      Culture? culture = await this.CultureApiClient.GetByIdAsync(this.Id);
+
+      if (culture != null) this.Culture = culture;
+    }
+
+    this.BreadcrumbItems = [new BreadcrumbItem { Href = "/cultures", Text = this.Localizer["Cultures"] }];
+  }
+
+  private async Task OnSubmit()
+  {
+    if (this.Id == null)
+      this.Id = (await this.CultureApiClient.PostAsync(this.Culture))?.Id;
+
+    else await this.CultureApiClient.PutAsync(this.Culture);
+
+    this.NavigationManager.NavigateTo($"/cultures/{this.Id}");
+  }
+}

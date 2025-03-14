@@ -1,0 +1,113 @@
+﻿@* Copyright © 2025 Dmitry Sikorsky. All rights reserved.                                                       *@
+@* Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information. *@
+@attribute [Authorize]
+@page "/roles/{id:int}"
+@inject IApiClient1K<int, Role, RoleFilter> RoleApiClient
+@inject IApiClient1K<int, Permission, PermissionFilter> PermissionApiClient
+@inject IApiClient2K<int, int, RolePermission, RolePermissionFilter> RolePermissionApiClient
+@inject NavigationManager NavigationManager
+@inject IStringLocalizer<Resources.Core> Localizer
+
+<PageTitle>@Role?.Name</PageTitle>
+
+<Breadcrumb Items="BreadcrumbItems" />
+<Heading Text="@Role?.Name">
+  <ContextActions>
+    <Button Color="ButtonColor.Primary" Outline="true" Type="ButtonType.Link" To="@($"/roles/{Id}/edit")">
+      <Icon Name="IconName.PencilFill"></Icon>
+      @Localizer["Edit"]
+    </Button>
+    <Button Color="ButtonColor.Danger" Outline="true" @onclick="OnDeleteButtonClick">
+      <Icon Name="IconName.Trash3"></Icon>
+      @Localizer["Delete"]
+    </Button>
+  </ContextActions>
+</Heading>
+@if (this.Role != null)
+{
+  <dl class="mb-5">
+    <dt>
+      @Localizer["Roles.Code"]
+    </dt>
+    <dd>
+      @Role.Code
+    </dd>
+    <dt>
+      @Localizer["Roles.Name"]
+    </dt>
+    <dd>
+      @Role.Name
+    </dd>
+  </dl>
+  <Heading Level="2" Text="@Localizer["Permissions"]" />
+  @if (this.Permissions != null)
+  {
+    foreach (var permission in Permissions)
+    {
+      <div class="form-check">
+        <input class="form-check-input" id="permission@(permission.Id)" type="checkbox" value="" checked="@HasPermission(permission)" @onchange="() => OnPermissionCheckboxChange(permission)">
+        <label class="form-check-label" for="permission@(permission.Id)">
+          @permission.Name
+        </label>
+      </div>
+    }
+  }
+}
+
+<ConfirmDialog @ref="Dialog" />
+
+@code {
+  [Parameter] public int Id { get; set; }
+
+  private Role? Role { get; set; }
+  private IEnumerable<Permission>? Permissions { get; set; }
+  private List<BreadcrumbItem> BreadcrumbItems { get; set; } = [];
+  private ConfirmDialog Dialog { get; set; } = default!;
+
+  protected override async Task OnInitializedAsync()
+  {
+    this.Role = await this.RoleApiClient.GetByIdAsync(
+      this.Id,
+      inclusions: new InclusionBuilder<Role>().Add(r => r.RolePermissions).ThenAdd(rp => rp.Permission).Build()
+    );
+
+    this.Permissions = await this.PermissionApiClient.GetAllAsync(null);
+    this.BreadcrumbItems = [new BreadcrumbItem { Href = "/roles", Text = this.Localizer["Roles"] }];
+  }
+
+  private async Task OnDeleteButtonClick()
+  {
+    if (await this.Dialog.ShowDeleteConfirmationAsync(this.Localizer))
+      if (await this.RoleApiClient.DeleteAsync(this.Id))
+        this.NavigationManager.NavigateTo("/roles");
+  }
+
+  private async Task OnPermissionCheckboxChange(Permission permission)
+  {
+    if (this.HasPermission(permission))
+    {
+      await this.RolePermissionApiClient.DeleteAsync(this.Role!.Id, permission.Id);
+      this.Role.RolePermissions = this.Role!.RolePermissions!
+        .Where(rp => rp.Permission?.Id != permission.Id)
+        .ToList();
+    }
+
+    else
+    {
+      RolePermission rolePermission = new RolePermission {
+        Role = new Role { Id = this.Role!.Id },
+        Permission = permission
+      };
+
+      await this.RolePermissionApiClient.PostAsync(rolePermission);
+      this.Role!.RolePermissions = this.Role!.RolePermissions!
+        .Append(rolePermission)
+        .ToList();
+    }
+  }
+
+  private bool HasPermission(Permission permission)
+  {
+    return this.Role!.RolePermissions!.Any(rp => rp.Permission!.Id == permission.Id);
+  }
+}

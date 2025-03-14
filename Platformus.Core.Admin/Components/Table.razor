@@ -1,0 +1,90 @@
+﻿@* Copyright © 2025 Dmitry Sikorsky. All rights reserved.                                                       *@
+@* Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information. *@
+@typeparam TItem
+@inject IUrl Url
+@inject IStringLocalizer<Resources.Core> Localizer
+
+<CascadingValue Value="this" Name="Parent" IsFixed="true">
+  <div class="table-responsive mb-3">
+    <table class="table table-bordered table-hover">
+      <thead>
+        <tr class="table-light">
+          @TableColumns
+        </tr>
+        @if (Columns.Any(c => c.FilterTemplate != null))
+        {
+          <tr>
+            @foreach (var column in Columns)
+            {
+              <th>
+                @if (column.FilterTemplate == null)
+                {
+                  @:&nbsp;
+                }
+                else
+                {
+                  @column.FilterTemplate
+                }
+              </th>
+            }
+          </tr>
+        }
+      </thead>
+      <tbody>
+        @if (Items != null)
+        {
+          foreach (var item in Items)
+          {
+            <tr role="button" @onclick="() => RowClicked.InvokeAsync(item)">
+              @foreach (var column in Columns)
+              {
+                <td class="@(column.CssClass ?? "align-middle")">
+                  @column.CellTemplate!(item)
+                </td>
+              }
+            </tr>
+          }
+        }
+      </tbody>
+    </table>
+  </div>
+  <div class="d-flex justify-content-between align-items-center">
+    <Pagination FirstLinkIcon="IconName.ChevronDoubleLeft"
+    PreviousLinkIcon="IconName.ChevronLeft"
+    NextLinkIcon="IconName.ChevronRight"
+    LastLinkIcon="IconName.ChevronDoubleRight"
+    ActivePageNumber="Items?.ActivePageNumber ?? 0"
+    TotalPages="Items?.TotalPages ?? 0"
+    PageChanged="OnPageChanged" />
+    <span class="mb-3">
+      @{
+        int offset = (Items?.Offset ?? 0) + 1;
+        int limit = Math.Min((Items?.Offset ?? 0) + (Items?.Limit ?? 0), Items?.TotalCount ?? 0);
+        int totalCount = Items?.TotalCount ?? 0;
+      }
+      @offset–@limit @Localizer["Table.Of"] @totalCount @Localizer["Table.Items"]
+    </span>
+  </div>
+</CascadingValue>
+
+@code {
+  [Parameter] public RenderFragment TableColumns { get; set; } = default!;
+  [Parameter] public IPagedEnumerable<TItem> Items { get; set; } = default!;
+  [Parameter] public string Sorting { get; set; } = string.Empty;
+  [Parameter] public EventCallback<TItem> RowClicked { get; set; }
+
+  internal List<TableColumn<TItem>> Columns { get; set; } = [];
+
+  internal void AddColumn(TableColumn<TItem> column)
+  {
+    this.Columns.Add(column);
+    this.StateHasChanged();
+  }
+
+  private void OnPageChanged(int pageNumber)
+  {
+    int offset = (pageNumber - 1) * this.Items.Limit;
+
+    this.Url.Set("offset", offset.ToString()).Go();
+  }
+}

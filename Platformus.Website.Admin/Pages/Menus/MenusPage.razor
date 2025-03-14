@@ -1,0 +1,122 @@
+﻿@* Copyright © 2025 Dmitry Sikorsky. All rights reserved.                                                       *@
+@* Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information. *@
+@attribute [Authorize]
+@page "/menus"
+@inject IApiClient1K<int, Menu, MenuFilter> MenuApiClient
+@inject IApiClient1K<int, MenuItem, MenuItemFilter> MenuItemApiClient
+@inject ICookiesService CookiesService
+@inject NavigationManager NavigationManager
+@inject IStringLocalizer<Core.Admin.Resources.Core> CoreLocalizer
+@inject IStringLocalizer<Resources.Website> WebsiteLocalizer
+
+<PageTitle>@WebsiteLocalizer["Menus"]</PageTitle>
+
+<Heading Text="@WebsiteLocalizer["Menus"]">
+  <ContextActions>
+    <Button Color="ButtonColor.Primary" Outline="true" Type="ButtonType.Link" To="/menus/create">
+      <Icon Name="IconName.Plus" />
+      @WebsiteLocalizer["Menus.CreateMenu"]
+    </Button>
+  </ContextActions>
+</Heading>
+@if (Menus == null)
+{
+}
+else
+{
+  <Accordion AlwaysOpen="true" OnShown="OnAccordionItemShownAsync" OnHidden="OnAccordionItemHiddenAsync">
+    @foreach (var menu in Menus)
+    {
+      <AccordionItem Name="@menu.Id.ToString()" Active="AccordionItemStates[menu.Id]">
+        <TitleTemplate>
+          <div class="w-100 d-flex align-items-center justify-content-between me-3">
+            @menu.Name
+            <div @onclick:stopPropagation="true">
+              <Button Color="ButtonColor.Primary" Outline="true" Size="ButtonSize.Small" Type="ButtonType.Link" To="@($"/menus/{menu.Id}/edit")">
+                <Icon Name="IconName.PencilFill" />
+              </Button>
+              <Button Color="ButtonColor.Danger" Outline="true" Size="ButtonSize.Small" @onclick="() => OnDeleteButtonClick(menu)">
+                <Icon Name="IconName.Trash3" />
+              </Button>
+            </div>
+          </div>
+        </TitleTemplate>
+        <Content>
+          <div class="d-flex align-items-center justify-content-end">
+            <Button Color="ButtonColor.Primary" Outline="true" Size="ButtonSize.Small" Type="ButtonType.Link" To="@($"/menus/{menu.Id}/menu-items/create")">
+              <Icon Name="IconName.Plus"></Icon>
+              @WebsiteLocalizer["MenuItems.CreateMenuItem"]
+            </Button>
+          </div>
+          <dl>
+            @foreach (var menuItem in menu.MenuItems!)
+            {
+              <dt>
+                <div class="mt-3 d-flex align-items-center justify-content-between">
+                  @menuItem.Localized().Name
+                  <div @onclick:stopPropagation="true">
+                    <Button Color="ButtonColor.Primary" Outline="true" Size="ButtonSize.Small" Type="ButtonType.Link" To="@($"/menus/{menu.Id}/menu-items/{menuItem.Id}/edit")">
+                      <Icon Name="IconName.PencilFill"></Icon>
+                    </Button>
+                    <Button Color="ButtonColor.Danger" Outline="true" Size="ButtonSize.Small" @onclick="() => OnDeleteButtonClick(menuItem)">
+                      <Icon Name="IconName.Trash3"></Icon>
+                    </Button>
+                  </div>
+                </div>
+              </dt>
+            }
+          </dl>
+        </Content>
+      </AccordionItem>
+    }
+  </Accordion>
+}
+
+<ConfirmDialog @ref="Dialog" />
+
+@code {
+  private IPagedEnumerable<Menu>? Menus { get; set; }
+  private Dictionary<int, bool> AccordionItemStates = [];
+  private ConfirmDialog Dialog { get; set; } = default!;
+
+  protected override async Task OnInitializedAsync()
+  {
+    this.Menus = await this.MenuApiClient.GetAllAsync(inclusions: new InclusionBuilder<Menu>().Add(m => m.MenuItems).ThenAdd(mi => mi.LocalizedMenuItems).Build());
+    this.AccordionItemStates.Clear();
+
+    foreach (Menu menu in this.Menus!)
+      this.AccordionItemStates[menu.Id] = await this.CookiesService.GetCookieAsync(GetAccordionItemCookieName(menu.Id)) == true.ToString();
+  }
+
+  private static string GetAccordionItemCookieName(int menuId) => $"accordionItemMenu{menuId}";
+
+  private async Task OnAccordionItemShownAsync(AccordionEventArgs args)
+  {
+    int menuId = int.Parse(args.Name);
+
+    this.AccordionItemStates[menuId] = true;
+    await this.CookiesService.SetCookieAsync(GetAccordionItemCookieName(menuId), true.ToString(), 365);
+  }
+
+  private async Task OnAccordionItemHiddenAsync(AccordionEventArgs args)
+  {
+    int menuId = int.Parse(args.Name);
+
+    this.AccordionItemStates[menuId] = false;
+    await this.CookiesService.SetCookieAsync(GetAccordionItemCookieName(menuId), false.ToString(), 365);
+  }
+
+  private async Task OnDeleteButtonClick(Menu menu)
+  {
+    if (await this.Dialog.ShowDeleteConfirmationAsync(this.CoreLocalizer))
+      if (await this.MenuApiClient.DeleteAsync(menu.Id))
+        await this.OnInitializedAsync();
+  }
+
+  private async Task OnDeleteButtonClick(MenuItem menuItem)
+  {
+    if (await this.Dialog.ShowDeleteConfirmationAsync(this.CoreLocalizer))
+      if (await this.MenuItemApiClient.DeleteAsync(menuItem.Id))
+        await this.OnInitializedAsync();
+  }
+}

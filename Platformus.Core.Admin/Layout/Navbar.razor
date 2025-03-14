@@ -1,0 +1,85 @@
+﻿@* Copyright © 2025 Dmitry Sikorsky. All rights reserved.                                                       *@
+@* Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information. *@
+@using Microsoft.Extensions.DependencyInjection
+@inject IServiceProvider ServiceProvider
+@inject IAuthService AuthService
+@inject NavigationManager NavigationManager
+@inject IStringLocalizer<Resources.Core> Localizer
+
+<nav class="navbar navbar-expand-md bg-light fixed-top">
+  <div class="container-fluid">
+    <img src="_content/Platformus.Core.Admin/platformus.svg" alt="Platformus" width="32" />
+    <a class="navbar-brand" href="/">Platformus</a>
+    <button class="navbar-toggler" type="button" data-bs-target="#navbarCollapse" data-bs-toggle="collapse">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="navbar-collapse collapse" id="navbarCollapse">
+      <ul class="navbar-nav me-auto">
+        <NavLink class="nav-link" href="/" ActiveClass="active" Match="NavLinkMatch.All">@Localizer["Home"]</NavLink>
+        @if (this.Links != null)
+        {
+          foreach (var link in this.Links)
+          {
+            if (link.Links?.Any() == true)
+            {
+              <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">
+                  @link.Label
+                </a>
+                <ul class="dropdown-menu">
+                  @foreach (var subLink in link.Links)
+                  {
+                    <li>
+                      <NavLink class="dropdown-item" href="@subLink.Url" ActiveClass="active">
+                        @subLink.Label
+                      </NavLink>
+                    </li>
+                  }
+                </ul>
+              </li>
+            }
+            else
+            {
+              <NavLink class="nav-link" href="@link.Url" ActiveClass="active">@link.Label</NavLink>
+            }
+          }
+        }
+      </ul>
+      <AuthorizeView>
+        <Authorized>
+          <ul class="navbar-nav">
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle d-flex align-items-center" href="#" role="button" data-bs-toggle="dropdown">
+                <i class="bi bi-person-fill me-2"></i>
+                @context.User.Identity!.Name
+              </a>
+              <ul class="dropdown-menu dropdown-menu-end">
+                <li><a class="dropdown-item" href="#" @onclick="OnLogOutClick">@Localizer["LogOut"]</a></li>
+              </ul>
+            </li>
+          </ul>
+        </Authorized>
+      </AuthorizeView>
+    </div>
+  </div>
+</nav>
+
+@code {
+  private IEnumerable<Link>? Links { get; set; }
+
+  protected override async Task OnInitializedAsync()
+  {
+    List<Link> links = [];
+   
+    foreach (IMetadata metadata in this.ServiceProvider.GetServices<IMetadata>())
+      links.AddRange(await metadata.GetLinksAsync());
+
+    this.Links = links.OrderBy(l => l.Position).ToList();
+  }
+
+  private async Task OnLogOutClick()
+  {
+    await this.AuthService.SignOutAsync();
+    this.NavigationManager.NavigateTo("/");
+  }
+}

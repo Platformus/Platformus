@@ -1,0 +1,50 @@
+﻿@* Copyright © 2025 Dmitry Sikorsky. All rights reserved.                                                       *@
+@* Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information. *@
+@typeparam TItem
+@inject IUrl Url
+@inject IStringLocalizer<Resources.Core> Localizer
+
+<div class="d-flex gap-2">
+  <Dropdown Color="DropdownColor.Light" Size="DropdownSize.Small">
+    <DropdownToggleButton>
+      @if (Condition == "equals")
+      {
+        @Localizer["Equals"]
+      }
+      else if (Condition == "notequals")
+      {
+        @Localizer["Not equals"]
+      }
+    </DropdownToggleButton>
+    <DropdownMenu>
+      <DropdownItem Type="DropdownItemType.Link" @onclick='() => OnConditionDropdownItemClick("equals")'>@Localizer["Equals"]</DropdownItem>
+      <DropdownItem Type="DropdownItemType.Link" @onclick='() => OnConditionDropdownItemClick("notequals")'>@Localizer["Not equals"]</DropdownItem>
+    </DropdownMenu>
+  </Dropdown>
+  <select class="form-select form-select-sm" @bind="Value" @bind:after="OnValueChange">
+    <option></option>
+    @ChildContent
+  </select>
+</div>
+
+@code {
+  [Parameter, EditorRequired] public string FilteringPropertyPath { get; set; } = string.Empty;
+  [Parameter, EditorRequired] public RenderFragment? ChildContent { get; set; }
+
+  private string Condition { get; set; } = "equals";
+  private string? Value { get; set; }
+
+  private void OnConditionDropdownItemClick(string condition)
+  {
+    this.Condition = condition;
+    this.OnValueChange();
+  }
+
+  private void OnValueChange()
+  {
+    if (string.IsNullOrEmpty(this.Value?.ToString()))
+      this.Url.Remove($"{this.FilteringPropertyPath}.{this.Condition}").Go();
+
+    else this.Url.Set($"{this.FilteringPropertyPath}.{this.Condition}", this.Value!.ToString()!).Go();
+  }
+}

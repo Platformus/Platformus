@@ -1,0 +1,24 @@
+﻿@* Copyright © 2025 Dmitry Sikorsky. All rights reserved.                                                       *@
+@* Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information. *@
+<div class="d-flex justify-content-between align-items-center mb-3">
+  @RenderHN()
+  @if (ContextActions != null)
+  {
+    <div class="d-flex gap-3">
+      @ContextActions
+    </div>
+  }
+</div>
+
+@code {
+  [Parameter] public int Level { get; set; } = 1;
+  [Parameter] public string Text { get; set; } = string.Empty;
+  [Parameter] public RenderFragment? ContextActions { get; set; }
+
+  private RenderFragment RenderHN() => builder =>
+  {
+    builder.OpenElement(0, $"h{this.Level}");
+    builder.AddContent(1, this.Text);
+    builder.CloseElement();
+  };
+}

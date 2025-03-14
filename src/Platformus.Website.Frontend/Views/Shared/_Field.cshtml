@@ -1,7 +1,0 @@
-﻿@* Copyright © 2020 Dmitry Sikorsky. All rights reserved. *@
-@* Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information. *@
-@model Platformus.Website.Frontend.ViewModels.Shared.FieldViewModel
-<div class="form__field field">
-  <label class="field__label label" for="field@(this.Model.Code)">@Model.Name</label>
-  <partial name="_@Model.FieldType.Code" for="@Model" />
-</div>

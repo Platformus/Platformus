@@ -1,0 +1,56 @@
+﻿@* Copyright © 2025 Dmitry Sikorsky. All rights reserved.                                                       *@
+@* Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information. *@
+@attribute [Authorize]
+@page "/configurations/create"
+@page "/configurations/{id:int}/edit"
+@inject IApiClient1K<int, Configuration, ConfigurationFilter> ConfigurationApiClient
+@inject NavigationManager NavigationManager
+@inject IStringLocalizer<Resources.Core> Localizer
+
+<PageTitle>@(Id == null ? Localizer["Configurations.CreatingConfiguration"] : Localizer["Configurations.EditingConfiguration"])</PageTitle>
+
+<Breadcrumb Items="BreadcrumbItems" />
+<Heading Text="@(Id == null ? Localizer["Configurations.CreatingConfiguration"] : Localizer["Configurations.EditingConfiguration"])" />
+<div class="row">
+  <div class="col-md-5">
+    <EditForm Model="Configuration" OnValidSubmit="OnSubmit">
+      <FluentValidationValidator />
+      <TextField DisplayName="@Localizer["Configurations.Code"]" @bind-Value="Configuration.Code" />
+      <TextField DisplayName="@Localizer["Configurations.Name"]" @bind-Value="Configuration.Name" />
+      <NumberField DisplayName="@Localizer["Configurations.Position"]" @bind-Value="Configuration.Position" />
+      <div class="d-flex gap-3">
+        <Button Color="ButtonColor.Primary" Type="ButtonType.Submit">@Localizer["Save"]</Button>
+        <Button Color="ButtonColor.Primary" Outline="true" Type="ButtonType.Link" To="/configurations">@Localizer["Cancel"]</Button>
+      </div>
+    </EditForm>
+  </div>
+</div>
+
+@code {
+  [Parameter] public int? Id { get; set; }
+
+  private Configuration Configuration { get; set; } = new();
+  private List<BreadcrumbItem> BreadcrumbItems { get; set; } = [];
+
+  protected override async Task OnInitializedAsync()
+  {
+    if (this.Id != null)
+    {
+      Configuration? configuration = await this.ConfigurationApiClient.GetByIdAsync((int)this.Id);
+
+      if (configuration != null) this.Configuration = configuration;
+    }
+
+    this.BreadcrumbItems = [new BreadcrumbItem { Href = "/configurations", Text = this.Localizer["Configurations"] }];
+  }
+
+  private async Task OnSubmit()
+  {
+    if (this.Id == null)
+      this.Id = (await this.ConfigurationApiClient.PostAsync(this.Configuration))?.Id;
+
+    else await this.ConfigurationApiClient.PutAsync(this.Configuration);
+
+    this.NavigationManager.NavigateTo($"/configurations");
+  }
+}

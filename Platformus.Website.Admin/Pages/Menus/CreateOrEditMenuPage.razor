@@ -1,0 +1,55 @@
+﻿@* Copyright © 2025 Dmitry Sikorsky. All rights reserved.                                                       *@
+@* Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information. *@
+@attribute [Authorize]
+@page "/menus/create"
+@page "/menus/{id:int}/edit"
+@inject IApiClient1K<int, Menu, MenuFilter> MenuApiClient
+@inject NavigationManager NavigationManager
+@inject IStringLocalizer<Core.Admin.Resources.Core> CoreLocalizer
+@inject IStringLocalizer<Resources.Website> WebsiteLocalizer
+
+<PageTitle>@(Id == null ? WebsiteLocalizer["Menus.CreatingMenu"] : WebsiteLocalizer["Menus.EditingMenu"])</PageTitle>
+
+<Breadcrumb Items="BreadcrumbItems" />
+<Heading Text="@(Id == null ? WebsiteLocalizer["Menus.CreatingMenu"] : WebsiteLocalizer["Menus.EditingMenu"])" />
+<div class="row">
+  <div class="col-md-5">
+    <EditForm Model="Menu" OnValidSubmit="OnSubmit">
+      <FluentValidationValidator />
+      <TextField DisplayName="@WebsiteLocalizer["Menus.Name"]" @bind-Value="Menu.Name" />
+      <div class="d-flex gap-3">
+        <Button Color="ButtonColor.Primary" Type="ButtonType.Submit">@CoreLocalizer["Save"]</Button>
+        <Button Color="ButtonColor.Primary" Outline="true" Type="ButtonType.Link" To="/menus">@CoreLocalizer["Cancel"]</Button>
+      </div>
+    </EditForm>
+  </div>
+</div>
+
+@code {
+  [Parameter] public int? Id { get; set; }
+
+  private Menu Menu { get; set; } = new();
+  private List<BreadcrumbItem> BreadcrumbItems { get; set; } = new();
+
+  protected override async Task OnInitializedAsync()
+  {
+    if (this.Id != null)
+    {
+      Menu? menu = await this.MenuApiClient.GetByIdAsync((int)this.Id);
+
+      if (menu != null) this.Menu = menu;
+    }
+
+    this.BreadcrumbItems = [new BreadcrumbItem { Href = "/menus", Text = this.WebsiteLocalizer["Menus"] }];
+  }
+
+  private async Task OnSubmit()
+  {
+    if (this.Id == null)
+      this.Id = (await this.MenuApiClient.PostAsync(this.Menu))?.Id;
+
+    else await this.MenuApiClient.PutAsync(this.Menu);
+
+    this.NavigationManager.NavigateTo("/menus");
+  }
+}
