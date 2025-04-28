@@ -2,11 +2,16 @@
 // Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information.
 
 using Magicalizer.Api.Dto.Abstractions;
+using HttpMethod = Magicalizer.Api.Dto.Abstractions.HttpMethod;
 
 namespace Platformus.Core.Api.Dto;
 
 [Magicalized("/api/v1/variables")]
-[AuthenticatedOnly]
+[AuthorizedOnly($"{nameof(Variable)}.{nameof(HttpMethod.Get)}", HttpMethod.Get)]
+[AuthorizedOnly($"{nameof(Variable)}.{nameof(HttpMethod.Post)}", HttpMethod.Post)]
+[AuthorizedOnly($"{nameof(Variable)}.{nameof(HttpMethod.Put)}", HttpMethod.Put)]
+[AuthorizedOnly($"{nameof(Variable)}.{nameof(HttpMethod.Patch)}", HttpMethod.Patch)]
+[AuthorizedOnly($"{nameof(Variable)}.{nameof(HttpMethod.Patch)}", HttpMethod.Delete)]
 public class Variable : IDto<Domain.Models.Variable>
 {
   public int Id { get; set; }

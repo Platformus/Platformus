@@ -282,4 +282,19 @@
   <data name="Credentials.Password" xml:space="preserve">
     <value>Пароль</value>
   </data>
+  <data name="Login.LogIn" xml:space="preserve">
+    <value>Увійти</value>
+  </data>
+  <data name="Login.PasswordIsInvalid" xml:space="preserve">
+    <value>Неправильний пароль.</value>
+  </data>
+  <data name="Login.Email" xml:space="preserve">
+    <value>Електронна пошта</value>
+  </data>
+  <data name="Login.Password" xml:space="preserve">
+    <value>Пароль</value>
+  </data>
+  <data name="Login" xml:space="preserve">
+    <value>Вхід</value>
+  </data>
 </root>

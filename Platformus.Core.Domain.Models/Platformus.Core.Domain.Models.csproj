@@ -6,8 +6,8 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Magicalizer.Domain.Models.Abstractions" Version="5.0.0" />
-    <PackageReference Include="Magicalizer.Validators.Abstractions" Version="5.0.0" />
+    <PackageReference Include="Magicalizer.Domain.Models.Abstractions" Version="5.0.2" />
+    <PackageReference Include="Magicalizer.Validators.Abstractions" Version="5.0.2" />
   </ItemGroup>
 
   <ItemGroup>

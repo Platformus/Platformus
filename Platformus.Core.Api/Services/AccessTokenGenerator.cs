@@ -46,7 +46,7 @@ public class AccessTokenGenerator : IAccessTokenGenerator
       new Claim(JwtRegisteredClaimNames.Sub, user.Id.ToString()),
       new Claim(ClaimTypes.Name, user.Name!),
       ..user.UserRoles!.Select(ur => new Claim("Role", ur.Role!.Code!)).ToList(),
-      ..user.UserRoles!.SelectMany(ur => ur.Role!.RolePermissions!.Select(rp => new Claim("Permission", rp.Permission!.Code!))).ToList(),
+      ..user.UserRoles!.SelectMany(ur => ur.Role!.RolePermissions!.Select(rp => new Claim(Constants.ClaimTypes.Permission, rp.Permission!.Code!))).ToList(),
     ];
 
     return claims;

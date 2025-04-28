@@ -2,11 +2,16 @@
 // Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information.
 
 using Magicalizer.Api.Dto.Abstractions;
+using HttpMethod = Magicalizer.Api.Dto.Abstractions.HttpMethod;
 
 namespace Platformus.Core.Api.Dto;
 
 [Magicalized("/api/v1/cultures")]
-[AuthenticatedOnly]
+[AuthorizedOnly($"{nameof(Culture)}.{nameof(HttpMethod.Get)}", HttpMethod.Get)]
+[AuthorizedOnly($"{nameof(Culture)}.{nameof(HttpMethod.Post)}", HttpMethod.Post)]
+[AuthorizedOnly($"{nameof(Culture)}.{nameof(HttpMethod.Put)}", HttpMethod.Put)]
+[AuthorizedOnly($"{nameof(Culture)}.{nameof(HttpMethod.Patch)}", HttpMethod.Patch)]
+[AuthorizedOnly($"{nameof(Culture)}.{nameof(HttpMethod.Patch)}", HttpMethod.Delete)]
 public class Culture : IDto<Domain.Models.Culture>
 {
   public string? Id { get; set; }

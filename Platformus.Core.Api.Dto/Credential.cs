@@ -23,8 +23,6 @@ public class Credential : IDto<Domain.Models.Credential>
     this.User = _credential.User == null ? null : new User(_credential.User);
     this.CredentialType = _credential.CredentialType == null ? null : new CredentialType(_credential.CredentialType);
     this.Identifier = _credential.Identifier;
-    this.Secret = _credential.Secret;
-    this.Extra = _credential.Extra;
   }
 
   public Domain.Models.Credential ToModel()

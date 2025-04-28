@@ -3,27 +3,38 @@
 @page "/login"
 @inject IAuthService AuthService
 @inject NavigationManager NavigationManager
+@inject IStringLocalizer<Resources.Core> Localizer
 
-<PageTitle>Login</PageTitle>
+<PageTitle>@Localizer["Login"]</PageTitle>
 
-<h1 class="mb-3">Login</h1>
+<Heading Text="@Localizer["Login"]" />
 <div class="row">
   <div class="col-md-5">
     <EditForm Model="Model" OnValidSubmit="OnSubmit">
-      <DataAnnotationsValidator />
-      <TextField @bind-Value="Model.Email" />
-      <SecretField @bind-Value="Model.Password" />
-      <button class="btn btn-primary" type="submit">Log in</button>
+      <FluentValidationValidator />
+      <TextField DisplayName="@Localizer["Login.Email"]" @bind-Value="Model.Email" />
+      <SecretField DisplayName="@Localizer["Login.Password"]" @bind-Value="Model.Password" />
+      <div class="d-flex gap-3 align-items-center">
+        <Button Color="ButtonColor.Primary" Type="ButtonType.Submit">@Localizer["Login.LogIn"]</Button>
+        @if (!IsPasswordValid)
+        {
+          <div class="text-danger">@Localizer["Login.PasswordIsInvalid"]</div>
+        }
+      </div>
     </EditForm>
   </div>
 </div>
 
 @code {
-  public LoginPageModel Model { get; set; } = new();
+  public Login Model { get; set; } = new();
+  public bool IsPasswordValid { get; set; } = true;
 
   private async Task OnSubmit()
   {
-    if (await this.AuthService.SignInAsync(this.Model.Email!, this.Model.Password!))
-      this.NavigationManager.NavigateTo("/");
+    this.IsPasswordValid = await this.AuthService.SignInAsync(this.Model.Email!, this.Model.Password!);
+
+    if (this.IsPasswordValid) this.NavigationManager.NavigateTo("/");
+
+    else this.Model.Password = string.Empty;
   }
 }

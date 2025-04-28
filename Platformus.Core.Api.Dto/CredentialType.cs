@@ -2,11 +2,12 @@
 // Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information.
 
 using Magicalizer.Api.Dto.Abstractions;
+using HttpMethod = Magicalizer.Api.Dto.Abstractions.HttpMethod;
 
 namespace Platformus.Core.Api.Dto;
 
-[Magicalized("/api/v1/credential-types", Magicalizer.Api.Dto.Abstractions.HttpMethod.Get)]
-[AuthenticatedOnly]
+[Magicalized("/api/v1/credential-types", HttpMethod.Get)]
+[AuthorizedOnly($"{nameof(CredentialType)}.{nameof(HttpMethod.Get)}", HttpMethod.Get)]
 public class CredentialType : IDto<Domain.Models.CredentialType>
 {
   public string? Id { get; set; }

@@ -6,8 +6,8 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Magicalizer.Data.Entities.Abstractions" Version="5.0.0" />
-    <PackageReference Include="Magicalizer.Filters.Abstractions" Version="5.0.0" />
+    <PackageReference Include="Magicalizer.Data.Entities.Abstractions" Version="5.0.2" />
+    <PackageReference Include="Magicalizer.Filters.Abstractions" Version="5.0.2" />
   </ItemGroup>
 
 </Project>

@@ -2,11 +2,12 @@
 // Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information.
 
 using Magicalizer.Api.Dto.Abstractions;
+using HttpMethod = Magicalizer.Api.Dto.Abstractions.HttpMethod;
 
 namespace Platformus.Core.Api.Dto;
 
-[Magicalized("/api/v1/permissions")]
-[AuthenticatedOnly]
+[Magicalized("/api/v1/permissions", HttpMethod.Get)]
+[AuthorizedOnly($"{nameof(Permission)}.{nameof(HttpMethod.Get)}", HttpMethod.Get)]
 public class Permission : IDto<Domain.Models.Permission>
 {
   public int Id { get; set; }

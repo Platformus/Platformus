@@ -6,7 +6,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Magicalizer.Api.Dto.Abstractions" Version="5.0.0" />
+    <PackageReference Include="Magicalizer.Api.Dto.Abstractions" Version="5.0.2" />
   </ItemGroup>
 
   <ItemGroup>

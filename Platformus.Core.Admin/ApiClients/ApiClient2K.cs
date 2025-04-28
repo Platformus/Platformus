@@ -29,13 +29,13 @@ public class ApiClient2K<TKey1, TKey2, TDto, TFilter> : IApiClient2K<TKey1, TKey
   {
     string uri = $"{urlSegment}/{id1}/{id2}?fields={string.Join(',', inclusions.Select(i => i.PropertyPath).ToList())}";
 
-    return await httpClient.GetFromJsonAsync<TDto>(uri);
+    return await this.httpClient.GetFromJsonAsync<TDto>(uri);
   }
 
   public virtual async Task<IPagedEnumerable<TDto>?> GetAllAsync(TFilter? filter = null, string? sorting = null, int? offset = null, int? limit = null, params Inclusion<TDto>[] inclusions)
   {
     string uri = $"{urlSegment}?{filter?.ToQueryString()}&sorting={sorting}&offset={offset ?? 0}&limit={limit ?? 10}&fields={string.Join(',', inclusions.Select(i => i.PropertyPath).ToList())}";
-    HttpResponseMessage response = await httpClient.GetAsync(uri);
+    HttpResponseMessage response = await this.httpClient.GetAsync(uri);
 
     if (!response.IsSuccessStatusCode)
       return null;
@@ -60,7 +60,7 @@ public class ApiClient2K<TKey1, TKey2, TDto, TFilter> : IApiClient2K<TKey1, TKey
 
   public virtual async Task<TDto?> PostAsync(TDto dto)
   {
-    HttpResponseMessage response = await httpClient.PostAsJsonAsync(urlSegment, dto);
+    HttpResponseMessage response = await this.httpClient.PostAsJsonAsync(urlSegment, dto);
 
     if (response.IsSuccessStatusCode)
       return await response.Content.ReadFromJsonAsync<TDto>();
@@ -70,14 +70,14 @@ public class ApiClient2K<TKey1, TKey2, TDto, TFilter> : IApiClient2K<TKey1, TKey
 
   public virtual async Task<bool> PutAsync(TDto dto)
   {
-    HttpResponseMessage response = await httpClient.PutAsJsonAsync(urlSegment, dto);
+    HttpResponseMessage response = await this.httpClient.PutAsJsonAsync(urlSegment, dto);
 
     return response.IsSuccessStatusCode;
   }
 
   public virtual async Task<bool> DeleteAsync(TKey1 id1, TKey2 id2)
   {
-    HttpResponseMessage response = await httpClient.DeleteAsync($"{urlSegment}/{id1}/{id2}");
+    HttpResponseMessage response = await this.httpClient.DeleteAsync($"{urlSegment}/{id1}/{id2}");
 
     return response.IsSuccessStatusCode;
   }

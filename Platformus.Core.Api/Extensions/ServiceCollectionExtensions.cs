@@ -6,9 +6,12 @@ using System.Runtime.Loader;
 using System.Text;
 using Magicalizer.Extensions;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
+using Platformus.Core.Api.Constants;
+using Platformus.Core.Api.Dto;
 using Platformus.Core.Api.Services;
 using Platformus.Core.Api.Services.Abstractions;
 
@@ -17,6 +20,11 @@ namespace Platformus.Core.Api.Extensions;
 public static class ServiceCollectionExtensions
 {
   public static void AddPlatformusCoreApi(this IServiceCollection services)
+  {
+    services.AddPlatformusCoreApi(null);
+  }
+
+  public static void AddPlatformusCoreApi(this IServiceCollection services, Action<AuthorizationOptions>? configureAuthorization)
   {
     AssemblyLoadContext.Default.LoadFromAssemblyName(new AssemblyName("Platformus.Core.Data.Entities"));
     AssemblyLoadContext.Default.LoadFromAssemblyName(new AssemblyName("Platformus.Core.Domain.Models"));
@@ -28,8 +36,7 @@ public static class ServiceCollectionExtensions
     services.AddScoped<IAccessTokenGenerator, AccessTokenGenerator>();
     services.AddScoped<IRefreshTokenGenerator, RefreshTokenGenerator>();
     services.AddScoped<IPasswordHasher, PasswordHasher>();
-    services.AddAuthentication(options =>
-    {
+    services.AddAuthentication(options => {
       options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
       options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
     }).AddJwtBearer(options => {
@@ -43,7 +50,21 @@ public static class ServiceCollectionExtensions
       };
     });
 
-    services.AddAuthorization();
+    services.AddAuthorization(options => {
+      options.AddCrudPolicies<User>(Permissions.AccessView, Permissions.AccessManage);
+      options.AddRPolicies<CredentialType>(Permissions.AccessView, Permissions.AccessManage);
+      options.AddCrudPolicies<Credential>(Permissions.AccessView, Permissions.AccessManage);
+      options.AddRPolicies<Role>(Permissions.AccessView, Permissions.AccessManage);
+      options.AddCrudPolicies<UserRole>(Permissions.AccessView, Permissions.AccessManage);
+      options.AddCrudPolicies<Permission>(Permissions.AccessView, Permissions.AccessManage);
+      options.AddCrudPolicies<RolePermission>(Permissions.AccessView, Permissions.AccessManage);
+      options.AddCrudPolicies<Culture>(Permissions.ConfigurationView, Permissions.ConfigurationManage);
+      options.AddCrudPolicies<Configuration>(Permissions.ConfigurationView, Permissions.ConfigurationManage);
+      options.AddCrudPolicies<Variable>(Permissions.ConfigurationView, Permissions.ConfigurationManage);
+
+      if (configureAuthorization != null)
+        configureAuthorization(options);
+    });
   }
 
   public static void AddPlatformusApi(this IServiceCollection services)

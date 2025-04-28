@@ -282,4 +282,19 @@
   <data name="Credentials.Password" xml:space="preserve">
     <value>Password</value>
   </data>
+  <data name="Login.LogIn" xml:space="preserve">
+    <value>Log in</value>
+  </data>
+  <data name="Login.PasswordIsInvalid" xml:space="preserve">
+    <value>Password is invalid</value>
+  </data>
+  <data name="Login.Email" xml:space="preserve">
+    <value>Email</value>
+  </data>
+  <data name="Login.Password" xml:space="preserve">
+    <value>Password</value>
+  </data>
+  <data name="Login" xml:space="preserve">
+    <value>Login</value>
+  </data>
 </root>
