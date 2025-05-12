@@ -11,7 +11,7 @@ namespace Platformus.Core.Api.Dto;
 [AuthorizedOnly($"{nameof(Variable)}.{nameof(HttpMethod.Post)}", HttpMethod.Post)]
 [AuthorizedOnly($"{nameof(Variable)}.{nameof(HttpMethod.Put)}", HttpMethod.Put)]
 [AuthorizedOnly($"{nameof(Variable)}.{nameof(HttpMethod.Patch)}", HttpMethod.Patch)]
-[AuthorizedOnly($"{nameof(Variable)}.{nameof(HttpMethod.Patch)}", HttpMethod.Delete)]
+[AuthorizedOnly($"{nameof(Variable)}.{nameof(HttpMethod.Delete)}", HttpMethod.Delete)]
 public class Variable : IDto<Domain.Models.Variable>
 {
   public int Id { get; set; }

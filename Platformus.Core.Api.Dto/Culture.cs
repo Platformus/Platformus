@@ -11,7 +11,7 @@ namespace Platformus.Core.Api.Dto;
 [AuthorizedOnly($"{nameof(Culture)}.{nameof(HttpMethod.Post)}", HttpMethod.Post)]
 [AuthorizedOnly($"{nameof(Culture)}.{nameof(HttpMethod.Put)}", HttpMethod.Put)]
 [AuthorizedOnly($"{nameof(Culture)}.{nameof(HttpMethod.Patch)}", HttpMethod.Patch)]
-[AuthorizedOnly($"{nameof(Culture)}.{nameof(HttpMethod.Patch)}", HttpMethod.Delete)]
+[AuthorizedOnly($"{nameof(Culture)}.{nameof(HttpMethod.Delete)}", HttpMethod.Delete)]
 public class Culture : IDto<Domain.Models.Culture>
 {
   public string? Id { get; set; }

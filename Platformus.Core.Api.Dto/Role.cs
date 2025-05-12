@@ -11,7 +11,7 @@ namespace Platformus.Core.Api.Dto;
 [AuthorizedOnly($"{nameof(Role)}.{nameof(HttpMethod.Post)}", HttpMethod.Post)]
 [AuthorizedOnly($"{nameof(Role)}.{nameof(HttpMethod.Put)}", HttpMethod.Put)]
 [AuthorizedOnly($"{nameof(Role)}.{nameof(HttpMethod.Patch)}", HttpMethod.Patch)]
-[AuthorizedOnly($"{nameof(Role)}.{nameof(HttpMethod.Patch)}", HttpMethod.Delete)]
+[AuthorizedOnly($"{nameof(Role)}.{nameof(HttpMethod.Delete)}", HttpMethod.Delete)]
 public class Role : IDto<Domain.Models.Role>
 {
   public int Id { get; set; }

@@ -11,7 +11,7 @@ namespace Platformus.Core.Api.Dto;
 [AuthorizedOnly($"{nameof(User)}.{nameof(HttpMethod.Post)}", HttpMethod.Post)]
 [AuthorizedOnly($"{nameof(User)}.{nameof(HttpMethod.Put)}", HttpMethod.Put)]
 [AuthorizedOnly($"{nameof(User)}.{nameof(HttpMethod.Patch)}", HttpMethod.Patch)]
-[AuthorizedOnly($"{nameof(User)}.{nameof(HttpMethod.Patch)}", HttpMethod.Delete)]
+[AuthorizedOnly($"{nameof(User)}.{nameof(HttpMethod.Delete)}", HttpMethod.Delete)]
 public class User : IDto<Domain.Models.User>
 {
   public int Id { get; set; }

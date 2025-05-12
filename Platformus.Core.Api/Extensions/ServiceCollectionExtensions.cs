@@ -54,9 +54,9 @@ public static class ServiceCollectionExtensions
       options.AddCrudPolicies<User>(Permissions.AccessView, Permissions.AccessManage);
       options.AddRPolicies<CredentialType>(Permissions.AccessView, Permissions.AccessManage);
       options.AddCrudPolicies<Credential>(Permissions.AccessView, Permissions.AccessManage);
-      options.AddRPolicies<Role>(Permissions.AccessView, Permissions.AccessManage);
+      options.AddCrudPolicies<Role>(Permissions.AccessView, Permissions.AccessManage);
       options.AddCrudPolicies<UserRole>(Permissions.AccessView, Permissions.AccessManage);
-      options.AddCrudPolicies<Permission>(Permissions.AccessView, Permissions.AccessManage);
+      options.AddRPolicies<Permission>(Permissions.AccessView, Permissions.AccessManage);
       options.AddCrudPolicies<RolePermission>(Permissions.AccessView, Permissions.AccessManage);
       options.AddCrudPolicies<Culture>(Permissions.ConfigurationView, Permissions.ConfigurationManage);
       options.AddCrudPolicies<Configuration>(Permissions.ConfigurationView, Permissions.ConfigurationManage);
