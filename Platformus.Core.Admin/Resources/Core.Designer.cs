@@ -142,6 +142,15 @@ namespace Platformus.Core.Admin.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Contains.
+        /// </summary>
+        public static string Contains {
+            get {
+                return ResourceManager.GetString("Contains", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Credentials.
         /// </summary>
         public static string Credentials {

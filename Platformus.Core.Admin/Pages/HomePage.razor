@@ -1,8 +1,30 @@
 ﻿@* Copyright © 2025 Dmitry Sikorsky. All rights reserved.                                                       *@
 @* Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information. *@
 @page "/"
+@using Platformus.Core.Admin.HomePageWidgets
 @inject IStringLocalizer<Resources.Core> Localizer
 
 <PageTitle>@Localizer["Home"]</PageTitle>
 
-<h1>@Localizer["Home"]</h1>
+<Heading Text="@Localizer["Home"]" />
+@if (Widgets != null)
+{
+  foreach (IHomePageWidget widget in Widgets)
+  {
+    <DynamicComponent Type="widget.Type" />
+  }
+}
+
+@code {
+  private IEnumerable<IHomePageWidget>? Widgets { get; set; }
+
+  protected override void OnInitialized()
+  {
+    this.Widgets = AppDomain.CurrentDomain.GetAssemblies()
+      .SelectMany(assembly => assembly.GetTypes())
+      .Where(t => typeof(IHomePageWidget).IsAssignableFrom(t) && t.IsClass && !t.IsAbstract)
+      .Select(t => (Activator.CreateInstance(t) as IHomePageWidget)!)
+      .OrderBy(w => w.Position)
+      .ToList();
+  }
+}

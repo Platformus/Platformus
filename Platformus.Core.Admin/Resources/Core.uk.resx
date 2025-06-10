@@ -297,4 +297,7 @@
   <data name="Login" xml:space="preserve">
     <value>Вхід</value>
   </data>
+  <data name="Contains" xml:space="preserve">
+    <value>Містить</value>
+  </data>
 </root>

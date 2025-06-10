@@ -297,4 +297,7 @@
   <data name="Login" xml:space="preserve">
     <value>Login</value>
   </data>
+  <data name="Contains" xml:space="preserve">
+    <value>Contains</value>
+  </data>
 </root>

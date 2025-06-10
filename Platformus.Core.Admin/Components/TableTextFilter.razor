@@ -7,7 +7,11 @@
 <div class="d-flex gap-2">
   <Dropdown Color="DropdownColor.Light" Size="DropdownSize.Small">
     <DropdownToggleButton>
-      @if (Condition == "equals")
+      @if (Condition == "contains")
+      {
+        @Localizer["Contains"]
+      }
+      else if (Condition == "equals")
       {
         @Localizer["Equals"]
       }
@@ -17,6 +21,7 @@
       }
     </DropdownToggleButton>
     <DropdownMenu>
+      <DropdownItem Type="DropdownItemType.Link" @onclick='() => OnConditionDropdownItemClick("contains")'>@Localizer["Contains"]</DropdownItem>
       <DropdownItem Type="DropdownItemType.Link" @onclick='() => OnConditionDropdownItemClick("equals")'>@Localizer["Equals"]</DropdownItem>
       <DropdownItem Type="DropdownItemType.Link" @onclick='() => OnConditionDropdownItemClick("notequals")'>@Localizer["Not equals"]</DropdownItem>
     </DropdownMenu>
@@ -27,7 +32,7 @@
 @code {
   [Parameter, EditorRequired] public string FilteringPropertyPath { get; set; } = string.Empty;
 
-  private string Condition { get; set; } = "equals";
+  private string Condition { get; set; } = "contains";
   private string? Value { get; set; }
 
   private void OnConditionDropdownItemClick(string condition)
