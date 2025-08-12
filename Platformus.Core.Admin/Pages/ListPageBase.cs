@@ -9,6 +9,7 @@ using Microsoft.Extensions.Localization;
 using Platformus.Core.Admin.Services.Abstractions;
 
 namespace Platformus.Core.Admin.Pages;
+
 public abstract class ListPageBase<TKey, TDto, TFilter> : ComponentBase, IDisposable
   where TDto : class, IDto, new()
   where TFilter : class, IFilter, new()
