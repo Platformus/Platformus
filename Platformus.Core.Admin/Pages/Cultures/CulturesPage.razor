@@ -14,17 +14,17 @@
     </Button>
   </ContextActions>
 </Heading>
+<Filter>
+  <TextFilter Label="@CoreLocalizer["Cultures.Name"]" FilteringPropertyPath="name" />
+</Filter>
 <Table TItem="Culture" Items="Cultures" Sorting="+name" RowClicked="OnRowClick">
   <TableColumns>
-    <TableColumn TItem="Culture" Title="@CoreLocalizer["Cultures.Name"]" SortingPropertyPath="name">
-      <FilterTemplate>
-        <TableTextFilter TItem="Culture" FilteringPropertyPath="name" />
-      </FilterTemplate>
+    <TableColumn Title="@CoreLocalizer["Cultures.Name"]" SortingPropertyPath="name">
       <CellTemplate>
         @context.Name
       </CellTemplate>
     </TableColumn>
-    <TableColumn TItem="Culture" CssClass="text-end text-nowrap align-middle" Title="&nbsp;">
+    <TableColumn CssClass="text-end text-nowrap align-middle" Title="&nbsp;">
       <CellTemplate>
         <span @onclick:stopPropagation="true">
           <Button Color="ButtonColor.Primary" Outline="true" Size="ButtonSize.Small" Type="ButtonType.Link" To="@($"/cultures/{context.Id}/edit")">

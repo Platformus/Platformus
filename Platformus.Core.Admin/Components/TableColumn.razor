@@ -20,7 +20,6 @@
   [Parameter] public string? CssClass { get; set; }
   [Parameter] public string Title { get; set; } = string.Empty;
   [Parameter] public string? SortingPropertyPath { get; set; }
-  [Parameter] public RenderFragment? FilterTemplate { get; set; }
   [Parameter] public RenderFragment<TItem> CellTemplate { get; set; } = default!;
 
   [Parameter, SupplyParameterFromQuery]

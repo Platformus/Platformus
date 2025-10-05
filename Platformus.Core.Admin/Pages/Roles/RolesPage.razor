@@ -15,33 +15,31 @@
     </Button>
   </ContextActions>
 </Heading>
+<Filter>
+  <TextFilter Label="@CoreLocalizer["Roles.Name"]" FilteringPropertyPath="name" />
+  <SelectFilter Label="@CoreLocalizer["Permission"]" FilteringPropertyPath="rolepermissions.any.permission.id">
+    @if (this.Permissions != null)
+    {
+      foreach (var permission in Permissions)
+      {
+        <option value="@permission.Id">@permission.Name</option>
+      }
+    }
+  </SelectFilter>
+</Filter>
 <Table TItem="Role" Items="Roles" RowClicked="OnRowClick">
   <TableColumns>
-    <TableColumn TItem="Role" Title="@CoreLocalizer["Roles.Name"]" SortingPropertyPath="name">
-      <FilterTemplate>
-        <TableTextFilter TItem="Role" FilteringPropertyPath="name" />
-      </FilterTemplate>
+    <TableColumn Title="@CoreLocalizer["Roles.Name"]" SortingPropertyPath="name">
       <CellTemplate>
         @context.Name
       </CellTemplate>
     </TableColumn>
-    <TableColumn TItem="Role" Title="@CoreLocalizer["Permissions"]">
-      <FilterTemplate>
-        <TableSelectFilter TItem="Role" FilteringPropertyPath="rolepermissions.any.permission.id">
-          @if (this.Permissions != null)
-          {
-            foreach (var permission in Permissions)
-            {
-              <option value="@permission.Id">@permission.Name</option>
-            }
-          }
-        </TableSelectFilter>
-      </FilterTemplate>
+    <TableColumn Title="@CoreLocalizer["Permissions"]">
       <CellTemplate>
         @string.Join(", ", context.RolePermissions!.Select(rp => rp.Permission!.Name))
       </CellTemplate>
     </TableColumn>
-    <TableColumn TItem="Role" CssClass="text-end text-nowrap align-middle" Title="&nbsp;">
+    <TableColumn CssClass="text-end text-nowrap align-middle" Title="&nbsp;">
       <CellTemplate>
         <span @onclick:stopPropagation="true">
           <Button Color="ButtonColor.Primary" Outline="true" Size="ButtonSize.Small" Type="ButtonType.Link" To="@($"/roles/{context.Id}/edit")">

@@ -32,6 +32,12 @@ public class Url : IUrl
     return this;
   }
 
+  public void Reset()
+  {
+    this.parameters.Clear();
+    this.skippedParameters.Clear();
+  }
+
   public string Build()
   {
     Uri url = new Uri(this.navigationManager.Uri);

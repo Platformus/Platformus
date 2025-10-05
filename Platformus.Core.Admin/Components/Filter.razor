@@ -1,0 +1,63 @@
+@using Platformus.Core.Admin.Services
+@* Copyright © 2025 Dmitry Sikorsky. All rights reserved.                                                       *@
+@* Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information. *@
+@inject IUrl Url
+@inject IStringLocalizer<Resources.Core> Localizer
+
+<CascadingValue Value="this" Name="Parent" IsFixed="true">
+  <div class="card bg-light mb-3">
+    <div class="card-body p-2">
+      <div class="row g-3">
+        @ChildContent
+        <div class="col-auto ms-auto">
+          <Button Color="ButtonColor.Primary" Outline="true" Size="ButtonSize.Small" @onclick="OnSearchButtonClick">
+            <Icon Name="IconName.Search"></Icon>
+            @Localizer["Search"]
+          </Button>
+          <Button Color="ButtonColor.Secondary" Outline="true" Size="ButtonSize.Small" @onclick="OnResetButtonClick">
+            <Icon Name="IconName.XLg"></Icon>
+            @Localizer["Reset"]
+          </Button>
+        </div>
+      </div>
+    </div>
+  </div>
+</CascadingValue>
+
+@code {
+  [Parameter] public RenderFragment? ChildContent { get; set; }
+
+  internal List<IFilterField> FilterFields { get; set; } = [];
+
+  internal void AddFilterField(IFilterField filterField)
+  {
+    this.FilterFields.Add(filterField);
+    this.StateHasChanged();
+  }
+
+  private void OnSearchButtonClick()
+  {
+    this.Url.Reset();
+
+    foreach (IFilterField filterField in this.FilterFields)
+    {
+      foreach (KeyValuePair<string, string?> kvp in filterField.GetValues())
+      {
+        if (string.IsNullOrEmpty(kvp.Value))
+          this.Url.Remove(kvp.Key.ToLower());
+
+        else this.Url.Set(kvp.Key.ToLower(), kvp.Value);
+      }
+    }
+
+    this.Url.Go();
+  }
+
+  private void OnResetButtonClick()
+  {
+    foreach (IFilterField filterField in this.FilterFields)
+      filterField.Reset();
+
+    this.OnSearchButtonClick();
+  }
+}

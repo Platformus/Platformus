@@ -23,7 +23,7 @@
     {
       foreach (var member in Class.Members!.Where(m => m.IsShownInList))
       {
-        <TableColumn TItem="Api.Dto.Object" Title="@member.Name">
+        <TableColumn Title="@member.Name">
           <CellTemplate>
             @context.Properties!.FirstOrDefault(p => p.Member!.Id == member.Id)?.GetValue()
           </CellTemplate>

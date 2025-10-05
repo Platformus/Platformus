@@ -1,0 +1,64 @@
+﻿@* Copyright © 2025 Dmitry Sikorsky. All rights reserved.                                                       *@
+@* Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information. *@
+@inject IUrl Url
+@inject IStringLocalizer<Resources.Core> Localizer
+@implements IFilterField
+
+<div class="col-auto">
+  <div class="row g-2 align-items-center">
+    <div class="col-auto">
+      <label class="col-form-label col-form-label-sm">@Label</label>
+    </div>
+
+    <div class="col-auto">
+      <InputDate TValue="DateOnly?" @bind-Value="FromValue" class="form-control form-control-sm" />
+    </div>
+
+    <div class="col-auto">
+      <span class="text-muted">–</span>
+    </div>
+
+    <div class="col-auto">
+      <InputDate TValue="DateOnly?" @bind-Value="ToValue" class="form-control form-control-sm" />
+    </div>
+  </div>
+</div>
+
+@code {
+  [CascadingParameter(Name = "Parent")] public Filter Parent { get; set; } = default!;
+  [Parameter, EditorRequired] public string Label { get; set; } = string.Empty;
+  [Parameter, EditorRequired] public string FilteringPropertyPath { get; set; } = string.Empty;
+
+  private DateOnly? FromValue { get; set; }
+  private DateOnly? ToValue { get; set; }
+
+  public IReadOnlyDictionary<string, string?> GetValues()
+  {
+    DateOnly? from = FromValue;
+    DateOnly? to = ToValue;
+
+    if (from.HasValue && to.HasValue && from.Value > to.Value)
+    {
+      (from, to) = (to, from);
+    }
+
+    return new Dictionary<string, string?>
+    {
+      { $"{FilteringPropertyPath}.from", from?.ToString("yyyy-MM-dd") },
+      { $"{FilteringPropertyPath}.to", to?.ToString("yyyy-MM-dd") }
+    };
+  }
+
+  public void Reset()
+  {
+    this.FromValue = null;
+    this.ToValue = null;
+    StateHasChanged();
+  }
+
+  protected override void OnInitialized()
+  {
+    this.Parent?.AddFilterField(this);
+    base.OnInitialized();
+  }
+}

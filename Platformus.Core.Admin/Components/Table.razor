@@ -1,34 +1,17 @@
 ﻿@* Copyright © 2025 Dmitry Sikorsky. All rights reserved.                                                       *@
 @* Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information. *@
 @typeparam TItem
+@attribute [CascadingTypeParameter(nameof(TItem))]
 @inject IUrl Url
 @inject IStringLocalizer<Resources.Core> Localizer
 
 <CascadingValue Value="this" Name="Parent" IsFixed="true">
-  <div class="table-responsive mb-3">
-    <table class="table table-bordered table-hover">
-      <thead>
-        <tr class="table-light">
+  <div class="table-responsive rounded-top mb-3">
+    <table class="table table-hover">
+      <thead class="table-light">
+        <tr>
           @TableColumns
         </tr>
-        @if (Columns.Any(c => c.FilterTemplate != null))
-        {
-          <tr>
-            @foreach (var column in Columns)
-            {
-              <th>
-                @if (column.FilterTemplate == null)
-                {
-                  @:&nbsp;
-                }
-                else
-                {
-                  @column.FilterTemplate
-                }
-              </th>
-            }
-          </tr>
-        }
       </thead>
       <tbody>
         @if (Items != null)

@@ -15,20 +15,28 @@
     </Button>
   </ContextActions>
 </Heading>
+<Filter>
+  <TextFilter Label="@CoreLocalizer["Users.FullName"]" FilteringPropertyPath="name" />
+  <TextFilter Label="@CoreLocalizer["Users.CredentialIdentifier"]" FilteringPropertyPath="credentials.any.identifier" />
+  <SelectFilter Label="@CoreLocalizer["Role"]" FilteringPropertyPath="userroles.any.role.id">
+    @if (this.Roles != null)
+    {
+      foreach (var role in Roles)
+      {
+        <option value="@role.Id">@role.Name</option>
+      }
+    }
+  </SelectFilter>
+  <DateRangeFilter Label="@CoreLocalizer["Users.Registered"]" FilteringPropertyPath="created" />
+</Filter>
 <Table TItem="User" Items="Users" RowClicked="OnRowClick">
   <TableColumns>
-    <TableColumn TItem="User" Title="@CoreLocalizer["Users.FullName"]" SortingPropertyPath="name">
-      <FilterTemplate>
-        <TableTextFilter TItem="User" FilteringPropertyPath="name" />
-      </FilterTemplate>
+    <TableColumn Title="@CoreLocalizer["Users.FullName"]" SortingPropertyPath="name">
       <CellTemplate>
         @context.Name
       </CellTemplate>
     </TableColumn>
-    <TableColumn TItem="User" Title="@CoreLocalizer["Credentials"]">
-      <FilterTemplate>
-        <TableTextFilter TItem="User" FilteringPropertyPath="credentials.any.identifier" />
-      </FilterTemplate>
+    <TableColumn Title="@CoreLocalizer["Credentials"]">
       <CellTemplate>
         @foreach (var credential in context.Credentials!)
         {
@@ -37,28 +45,17 @@
         }
       </CellTemplate>
     </TableColumn>
-    <TableColumn TItem="User" Title="@CoreLocalizer["Roles"]">
-      <FilterTemplate>
-        <TableSelectFilter TItem="User" FilteringPropertyPath="userroles.any.role.id">
-          @if (this.Roles != null)
-          {
-            foreach (var role in Roles)
-            {
-              <option value="@role.Id">@role.Name</option>
-            }
-          }
-        </TableSelectFilter>
-      </FilterTemplate>
+    <TableColumn Title="@CoreLocalizer["Roles"]">
       <CellTemplate>
         @string.Join(", ", context.UserRoles!.Select(ur => ur.Role!.Name))
       </CellTemplate>
     </TableColumn>
-    <TableColumn TItem="User" Title="@CoreLocalizer["Users.Registered"]" SortingPropertyPath="created">
+    <TableColumn Title="@CoreLocalizer["Users.Registered"]" SortingPropertyPath="created">
       <CellTemplate>
         @context.Created
       </CellTemplate>
     </TableColumn>
-    <TableColumn TItem="User" CssClass="text-end text-nowrap align-middle" Title="&nbsp;">
+    <TableColumn CssClass="text-end text-nowrap align-middle" Title="&nbsp;">
       <CellTemplate>
         <span @onclick:stopPropagation="true">
           <Button Color="ButtonColor.Primary" Outline="true" Size="ButtonSize.Small" Type="ButtonType.Link" To="@($"/users/{context.Id}/edit")">

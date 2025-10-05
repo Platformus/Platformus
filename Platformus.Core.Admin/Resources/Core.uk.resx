@@ -300,4 +300,19 @@
   <data name="Contains" xml:space="preserve">
     <value>Містить</value>
   </data>
+  <data name="Search" xml:space="preserve">
+    <value>Шукати</value>
+  </data>
+  <data name="Reset" xml:space="preserve">
+    <value>Скинути</value>
+  </data>
+  <data name="Users.CredentialIdentifier" xml:space="preserve">
+    <value>Ідентифікатор посвідчення</value>
+  </data>
+  <data name="Role" xml:space="preserve">
+    <value>Роль</value>
+  </data>
+  <data name="Permission" xml:space="preserve">
+    <value>Дозвіл</value>
+  </data>
 </root>

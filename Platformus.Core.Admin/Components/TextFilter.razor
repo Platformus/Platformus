@@ -1,0 +1,44 @@
+﻿@* Copyright © 2025 Dmitry Sikorsky. All rights reserved.                                                       *@
+@* Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information. *@
+@inject IUrl Url
+@inject IStringLocalizer<Resources.Core> Localizer
+@implements IFilterField
+
+<div class="col-auto">
+  <div class="row g-2 align-items-center">
+    <div class="col-auto">
+      <label class="col-form-label col-form-label-sm">@Label</label>
+    </div>
+    <div class="col-auto">
+      <input class="form-control form-control-sm" @bind="Value" />
+    </div>
+  </div>
+</div>
+
+@code {
+  [CascadingParameter(Name = "Parent")] public Filter Parent { get; set; } = default!;
+  [Parameter, EditorRequired] public string Label { get; set; } = string.Empty;
+  [Parameter, EditorRequired] public string FilteringPropertyPath { get; set; } = string.Empty;
+
+  private string? Value { get; set; }
+
+  public IReadOnlyDictionary<string, string?> GetValues()
+  {
+    return new Dictionary<string, string?>
+    {
+      { $"{this.FilteringPropertyPath}.contains", this.Value }
+    };
+  }
+
+  public void Reset()
+  {
+    this.Value = null;
+    this.StateHasChanged();
+  }
+
+  protected override void OnInitialized()
+  {
+    this.Parent?.AddFilterField(this);
+    base.OnInitialized();
+  }
+}

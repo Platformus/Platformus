@@ -403,11 +403,38 @@ namespace Platformus.Core.Admin.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Permission.
+        /// </summary>
+        public static string Permission {
+            get {
+                return ResourceManager.GetString("Permission", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Permissions.
         /// </summary>
         public static string Permissions {
             get {
                 return ResourceManager.GetString("Permissions", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Reset.
+        /// </summary>
+        public static string Reset {
+            get {
+                return ResourceManager.GetString("Reset", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Role.
+        /// </summary>
+        public static string Role {
+            get {
+                return ResourceManager.GetString("Role", resourceCulture);
             }
         }
         
@@ -475,6 +502,15 @@ namespace Platformus.Core.Admin.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Search.
+        /// </summary>
+        public static string Search {
+            get {
+                return ResourceManager.GetString("Search", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to items.
         /// </summary>
         public static string Table_Items {
@@ -516,6 +552,15 @@ namespace Platformus.Core.Admin.Resources {
         public static string Users_CreatingUser {
             get {
                 return ResourceManager.GetString("Users.CreatingUser", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Credential identifier.
+        /// </summary>
+        public static string Users_CredentialIdentifier {
+            get {
+                return ResourceManager.GetString("Users.CredentialIdentifier", resourceCulture);
             }
         }
         

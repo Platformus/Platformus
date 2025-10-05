@@ -15,28 +15,24 @@
     </Button>
   </ContextActions>
 </Heading>
+<Filter>
+  <TextFilter Label="@WebsiteLocalizer["Classes.SingularName"]" FilteringPropertyPath="singularname" />
+  <TextFilter Label="@WebsiteLocalizer["Classes.PluralName"]" FilteringPropertyPath="pluralname" />
+  <TextFilter Label="@WebsiteLocalizer["Classes.UrlSegment"]" FilteringPropertyPath="urlsegment" />
+</Filter>
 <Table TItem="Class" Items="Classes" RowClicked="OnRowClick">
   <TableColumns>
-    <TableColumn TItem="Class" Title="@WebsiteLocalizer["Classes.SingularName"]" SortingPropertyPath="name">
-      <FilterTemplate>
-        <TableTextFilter TItem="Class" FilteringPropertyPath="singularname" />
-      </FilterTemplate>
+    <TableColumn Title="@WebsiteLocalizer["Classes.SingularName"]" SortingPropertyPath="name">
       <CellTemplate>
         @context.SingularName
       </CellTemplate>
     </TableColumn>
-    <TableColumn TItem="Class" Title="@WebsiteLocalizer["Classes.PluralName"]" SortingPropertyPath="name">
-      <FilterTemplate>
-        <TableTextFilter TItem="Class" FilteringPropertyPath="pluralname" />
-      </FilterTemplate>
+    <TableColumn Title="@WebsiteLocalizer["Classes.PluralName"]" SortingPropertyPath="name">
       <CellTemplate>
         @context.PluralName
       </CellTemplate>
     </TableColumn>
-    <TableColumn TItem="Class" Title="@WebsiteLocalizer["Classes.UrlSegment"]" SortingPropertyPath="name">
-      <FilterTemplate>
-        <TableTextFilter TItem="Class" FilteringPropertyPath="urlsegment" />
-      </FilterTemplate>
+    <TableColumn Title="@WebsiteLocalizer["Classes.UrlSegment"]" SortingPropertyPath="name">
       <CellTemplate>
         @context.UrlSegment
       </CellTemplate>

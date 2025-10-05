@@ -7,6 +7,7 @@ public interface IUrl
 {
   Url Set(string name, string value);
   Url Remove(string name);
+  void Reset();
   string Build();
   void Go();
 }

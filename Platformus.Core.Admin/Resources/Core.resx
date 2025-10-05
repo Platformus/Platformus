@@ -300,4 +300,19 @@
   <data name="Contains" xml:space="preserve">
     <value>Contains</value>
   </data>
+  <data name="Search" xml:space="preserve">
+    <value>Search</value>
+  </data>
+  <data name="Reset" xml:space="preserve">
+    <value>Reset</value>
+  </data>
+  <data name="Users.CredentialIdentifier" xml:space="preserve">
+    <value>Credential identifier</value>
+  </data>
+  <data name="Role" xml:space="preserve">
+    <value>Role</value>
+  </data>
+  <data name="Permission" xml:space="preserve">
+    <value>Permission</value>
+  </data>
 </root>

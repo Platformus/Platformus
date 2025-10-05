@@ -13,7 +13,14 @@
       @(DisplayName ?? ValueExpression!.GetDisplayName())
     </label>
   }
-  <input class="@CssClass form-control" type="text" @bind="@CurrentValue" @attributes="AdditionalAttributes" />
+  @if (IsMultiline)
+  {
+    <textarea class="@CssClass form-control" rows="@Rows" @bind="@CurrentValue" @attributes="AdditionalAttributes"></textarea>
+  }
+  else
+  {
+    <input class="@CssClass form-control" type="text" @bind="@CurrentValue" @attributes="AdditionalAttributes" />
+  }
   @if (this.ValueExpression != null)
   {
     <ValidationMessage class="text-danger" For=@ValueExpression />
@@ -22,4 +29,6 @@
 
 @code {
   [Parameter] public Culture? Culture { get; set; }
+  [Parameter] public bool IsMultiline { get; set; } = false;
+  [Parameter] public int? Rows { get; set; }
 }
