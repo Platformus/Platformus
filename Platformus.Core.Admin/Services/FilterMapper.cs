@@ -42,7 +42,7 @@ public class FilterMapper : IFilterMapper
 
       if (IsFilter(property))
       {
-        IFilter? nestedFilter = Activator.CreateInstance(property.PropertyType) as IFilter;
+        IFilter? nestedFilter = property.GetValue(filter) as IFilter ?? Activator.CreateInstance(property.PropertyType) as IFilter;
 
         if (nestedFilter != null)
         {

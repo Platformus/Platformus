@@ -26,15 +26,15 @@ public static class FilterExtensions
 
       if (propertyValue == null) continue;
 
-      propertyPath = [..propertyPath, property.Name];
+      string[] currentPropertyPath = [..propertyPath, property.Name];
 
       if (IsValue(property))
-        parameters.Add($"{string.Join('.', propertyPath).ToLower()}={Uri.EscapeDataString(propertyValue.ToString() ?? string.Empty)}");
+        parameters.Add($"{string.Join('.', currentPropertyPath).ToLower()}={Uri.EscapeDataString(FormatValue(propertyValue))}");
 
       // TODO: process IEnumerable.
 
       else if (IsFilter(property))
-        BuildQueryString((propertyValue as IFilter)!, propertyPath, parameters);
+        BuildQueryString((propertyValue as IFilter)!, currentPropertyPath, parameters);
     }
   }
 
@@ -51,5 +51,16 @@ public static class FilterExtensions
   private static bool IsFilter(PropertyInfo property)
   {
     return typeof(IFilter).IsAssignableFrom(property.PropertyType);
+  }
+
+  private static string FormatValue(object? value)
+  {
+    if (value == null)
+      return string.Empty;
+
+    if (value is DateTime dateTime)
+      return dateTime.ToString("o");
+
+    return value.ToString() ?? string.Empty;
   }
 }
