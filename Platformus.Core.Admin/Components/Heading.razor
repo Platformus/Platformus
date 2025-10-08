@@ -18,6 +18,7 @@
   private RenderFragment RenderHN() => builder =>
   {
     builder.OpenElement(0, $"h{this.Level}");
+    builder.AddAttribute(1, "class", "text-truncate");
     builder.AddContent(1, this.Text);
     builder.CloseElement();
   };

@@ -47,7 +47,10 @@
   private async Task OnSubmit()
   {
     if (this.Id == null)
+    {
+      this.User.Created = DateTime.UtcNow;
       this.Id = (await this.UserApiClient.PostAsync(this.User))?.Id;
+    }
 
     else await this.UserApiClient.PutAsync(this.User);
 

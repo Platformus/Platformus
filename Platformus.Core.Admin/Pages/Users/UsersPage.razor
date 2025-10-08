@@ -52,7 +52,7 @@
     </TableColumn>
     <TableColumn Title="@CoreLocalizer["Users.Registered"]" SortingPropertyPath="created">
       <CellTemplate>
-        @context.Created
+        @context.Created.ToLocalTime()
       </CellTemplate>
     </TableColumn>
     <TableColumn CssClass="text-end text-nowrap align-middle" Title="&nbsp;">
