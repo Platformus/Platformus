@@ -12,8 +12,8 @@
     <PackageReference Include="ExtCore.Events" Version="9.0.0" />
     <PackageReference Include="ExtCore.Mvc" Version="9.0.0" />
     <PackageReference Include="Magicalizer.Data.Repositories.Abstractions" Version="4.0.0" />
-    <PackageReference Include="MailKit" Version="4.6.0" />
-    <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
+    <PackageReference Include="MailKit" Version="4.16.0" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.4" />
   </ItemGroup>
 
   <ItemGroup>
